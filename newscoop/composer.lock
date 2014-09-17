@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "25c73500eeb1ca1aa803ca400aaee64e",
+    "hash": "a05bb28839bfa72509014c45f6df9399",
     "packages": [
         {
             "name": "behat/behat",
@@ -4788,16 +4788,16 @@
     "packages-dev": [
         {
             "name": "liip/rmt",
-            "version": "1.1.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/RMT.git",
-                "reference": "75824e57299d4826f63a09895d427950cea9eddd"
+                "reference": "27672a72b06f434dc4889baf3603e8b4f3ba1582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/RMT/zipball/75824e57299d4826f63a09895d427950cea9eddd",
-                "reference": "75824e57299d4826f63a09895d427950cea9eddd",
+                "url": "https://api.github.com/repos/liip/RMT/zipball/27672a72b06f434dc4889baf3603e8b4f3ba1582",
+                "reference": "27672a72b06f434dc4889baf3603e8b4f3ba1582",
                 "shasum": ""
             },
             "require": {
@@ -4805,7 +4805,7 @@
                 "symfony/console": "~2.0",
                 "symfony/process": "~2.0",
                 "symfony/yaml": "~2.0",
-                "vierbergenlars/php-semver": "3.0.0-rc2"
+                "vierbergenlars/php-semver": "~3.0"
             },
             "bin": [
                 "RMT"
@@ -4842,7 +4842,7 @@
                 "vcs tag",
                 "version"
             ],
-            "time": "2014-07-28 08:56:45"
+            "time": "2014-09-11 14:05:56"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -5061,7 +5061,7 @@
         },
         {
             "name": "vierbergenlars/php-semver",
-            "version": "3.0.0-rc2",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vierbergenlars/php-semver.git",
