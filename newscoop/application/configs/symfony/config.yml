@@ -9,7 +9,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    templating:      { engines: ['twig', 'smarty', 'php'] }
+    templating:      { engines: ['twig', 'php'] }
     trusted_proxies: ~
     session:
         storage_id: newscoop_newscoop.session.storage
@@ -152,12 +152,6 @@ newscoop_gimme:
     allow_origin:
         - "*"
 
-smarty:
-    options:
-        left_delimiter: "{{"
-        right_delimiter: "}}"
-        caching: false
-
 bazinga_expose_translation:
     locale_fallback: "en"
 
@@ -174,7 +168,6 @@ ewz_recaptcha:
 
 parameters:
     smarty.class: "CampTemplate"
-    templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
 
 ewz_recaptcha:
     public_key:   6LeVFuASAAAAAJvc6hlYEHZnlEIBakblsE54bTwA
