@@ -135,6 +135,12 @@ class ArticlesController extends FOSRestController
     public function patchArticleAction(Request $request, $number, $language)
     {
         $params = array();
+        $user = $this->getUser();
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        // Fetch article
+        $articleObj = $this->getArticle($number, $language);
+
+
         $content = $this->get("request")->getContent();
         if (!empty($content)) {
             $params = json_decode($content, true); // 2nd param to get as array
@@ -159,7 +165,8 @@ class ArticlesController extends FOSRestController
         if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created', 'checkIfExists' => true))) {
             $clean['creationDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created'))), 'Y-m-d H:i:s');
         }
-        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
+        
+        if ($articleObj->isPublished() && $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
             $clean['publishDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
         }
 
@@ -181,12 +188,6 @@ class ArticlesController extends FOSRestController
                 }
             }
         }
-
-        $user = $this->getUser();
-        $translator = \Zend_Registry::get('container')->getService('translator');
-
-        // Fetch article
-        $articleObj = $this->getArticle($number, $language);
 
         $articleTypeObj = $articleObj->getArticleData();
         $articleType = new \ArticleType($articleTypeObj->m_articleTypeName);

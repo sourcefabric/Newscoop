@@ -1355,7 +1355,7 @@ class Article implements DocumentInterface
     public function removeSnippet(Snippet $snippet)
     {
         if ($this->snippets->contains($snippet)) {
-            $this->snippets->remove($snippet);
+            $this->snippets->removeElement($snippet);
             $snippet->removeArticle($this);
         }
 

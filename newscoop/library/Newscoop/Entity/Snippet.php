@@ -305,7 +305,7 @@ class Snippet
     {
         if ($this->articles->contains($article)) {
             $article->removeSnippet($this);
-            $this->articles->remove($article);
+            $this->articles->removeElement($article);
         }
 
         return $this;
