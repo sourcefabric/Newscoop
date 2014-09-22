@@ -1,0 +1,31 @@
+<?php 
+regGS("No attachment", "Ingen vedhæfning");
+regGS("You are about to permanently delete multiple messages.", "Du er ved at slette flere meddelelser permanent.");
+regGS("You are about to permanently delete a message.", "Du er ved at slette nen meddelelse permanent.");
+regGS("Are you sure you want to do it?", "Er du sikker på det er det du vil?");
+regGS("Approve", "Godkend");
+regGS("Approved.", "Godkendt.");
+regGS("at", "på");
+regGS("Attachment", "Vedhæftning");
+regGS("Ban/Unban user", "Bloker/afbloker bruger");
+regGS("Change selected messages status", "Skift status for valgte beskeder");
+regGS("Deleted", "Slettet");
+regGS("Full article", "Fuld artikel");
+regGS("Message", "Besked");
+regGS("Message deleted.", "Besked slettet.");
+regGS("Messages deleted.", "Beskeder slettet.");
+regGS("Messages status change to $1.", "Beskeders status ændret til $1.");
+regGS("Message status change to $1.", "Beskeds status ændret til $1.");
+regGS("Messages updated.", "Beskeder opdateret.");
+regGS("Message updated.", "Besked opdateret.");
+regGS("Processed", "Behandlet");
+regGS("Reply", "Svar");
+regGS("Reply to message", "Send svar");
+regGS("Star", "Stjernemarkér");
+regGS("Starred", "Stjernemarkeret");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.");
+regGS("With document attachment", "Med vedhæftet dokument");
+regGS("With image attachment", "Med vedhæftet billede");
+regGS("With no attachment", "Uden vedhæftninger");
+regGS("Feedback Messages", "Feedback beskeder");
+?>
