@@ -10,7 +10,7 @@ $installerDatabaseService->importDB('path to sql', $databaseConnection);
 If you use standard Sourcefabric plugins like debate, pool etc. then please use new (fixed) versions from our sourceforge/github.
 
 
-## Newscoop core api chnages
+## Newscoop core api changes
 
 #### System preferences changes:
 System preferences are now implemented as an service.
@@ -161,6 +161,18 @@ Full list of parameters:
 * ```string``` ```environment``` - Development environment for this job
 * ```string``` ```runAs``` - Run as this user, if crontab user has `sudo` privileges
 
+## Upgrading Newscoop version 4.2.4 to 4.3
+
+We recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha`. 
+
+How to do this?:
+
+* Make a backup of `newscoop/plugins/` directory.
+* Remove the whole `newscoop/plugins/` content(Linux command: `sudo rm -r newscoop/plugins/*`).
+* Download the fixed package of legacy plugins from [here][3].
+* Extract archive and copy it to `newscoop/plugins/` directory.
+* Go to newscoop root folder (`../newscoop/`) and execute `php composer.phar dump-autoload —-optimize`
+* Clear the cache folder: `sudo rm -r cache/*`
 
 ## Other changes
 
@@ -175,7 +187,9 @@ Full list of parameters:
  * add new topic on "enter" hit in Article Edit Screen
  * More can be found here: [Topic Management][1]
 * Community Feeds (Community Ticker):
- * Community Ticker has been removed from Newscoop core. Available as a plugin: Community ticker
+ * Community Ticker has been removed from Newscoop core. Available as a plugin: Community ticker (will be installed by default with Newscoop)
+* Widget called `Google gadget` has been removed
 
 [1]: https://wiki.sourcefabric.org/display/WOBS/Topic+Management
 [2]: http://symfony.com/doc/current/book/translation.html
+[3]: https://github.com/newscoop/newscoop-legacy-plugins

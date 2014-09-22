@@ -12,7 +12,6 @@ before_script:
   - sudo a2enmod rewrite
   - sudo service apache2 restart
   - mysql -e 'create database newscoop;' -uroot
-  - sudo cp -r dependencies/include/* newscoop/include/
   - cd newscoop/
   - composer install --prefer-dist
   - ./application/console newscoop:install --fix --database_name newscoop --database_user root
