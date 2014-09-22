@@ -55,8 +55,8 @@ define('EVENT_DISPATCHER_GLOBAL', '');
  *
  * The Event_Dispatcher acts acts as a notification dispatch table.
  * It is used to notify other objects of interesting things, if
- * they meet certain criteria. This information is encapsulated 
- * in {@link Event_Notification} objects. Client objects register 
+ * they meet certain criteria. This information is encapsulated
+ * in {@link Event_Notification} objects. Client objects register
  * themselves with the Event_Dispatcher as observers of specific
  * notifications posted by other objects. When an event occurs,
  * an object posts an appropriate notification to the Event_Dispatcher.
@@ -65,7 +65,7 @@ define('EVENT_DISPATCHER_GLOBAL', '');
  *
  * The Event_Dispatcher is actually a combination of three design
  * patterns: the Singleton, {@link http://c2.com/cgi/wiki?MediatorPattern Mediator},
- * and Observer patterns. The idea behind Event_Dispatcher is borrowed from 
+ * and Observer patterns. The idea behind Event_Dispatcher is borrowed from
  * {@link http://developer.apple.com/documentation/Cocoa/Conceptual/Notifications/index.html Apple's Cocoa framework}.
  *
  * @category   Event
@@ -84,48 +84,35 @@ class Event_Dispatcher
      * @var array
      * @access private
      */
-    var $_ro = array();
-    
+    public $_ro = array();
+
     /**
      * Pending notifications
      * @var array
      * @access private
      */
-    var $_pending = array();
+    public $_pending = array();
 
     /**
      * Nested observers
      * @var array
      * @access private
      */
-    var $_nestedDispatchers = array();
+    public $_nestedDispatchers = array();
 
     /**
      * Name of the dispatcher
      * @var string
      * @access private
      */
-    var $_name = null;
+    public $_name = null;
 
     /**
      * Class used for notifications
      * @var string
      * @access private
      */
-    var $_notificationClass = null;
-
-    /**
-     * PHP4 constructor
-     *
-     * Please use {@link getInstance()} instead.
-     *
-     * @access  private
-     * @param   string      Name of the notification dispatcher.
-     */
-    function Event_Dispatcher($name)
-    {
-        Event_Dispatcher::__construct($name);
-    }
+    public $_notificationClass = null;
 
     /**
      * PHP5 constructor
@@ -135,10 +122,23 @@ class Event_Dispatcher
      * @access  private
      * @param   string      Name of the notification dispatcher.
      */
-    function __construct($name)
+    public function __construct($name)
     {
         $this->_name = $name;
         $this->_notificationClass = $GLOBALS['_Event_Dispatcher']['NotificationClass'];
+    }
+
+    /**
+     * PHP4 constructor
+     *
+     * Please use {@link getInstance()} instead.
+     *
+     * @access  private
+     * @param   string      Name of the notification dispatcher.
+     */
+    public function Event_Dispatcher($name)
+    {
+        Event_Dispatcher::__construct($name);
     }
 
     /**
@@ -150,7 +150,7 @@ class Event_Dispatcher
      *
      * @param string    Name of the notification dispatcher.
      *                  The default notification dispatcher is named __default.
-     * 
+     *
      * @return object Event_Dispatcher
      */
     function &getInstance($name = '__default')
@@ -170,7 +170,7 @@ class Event_Dispatcher
      * This method registers a {@link http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback callback}
      * which is called when the notification corresponding to the
      * criteria given at registration time is posted.
-     * The criteria are the notification name and eventually the 
+     * The criteria are the notification name and eventually the
      * class of the object posted with the notification.
      *
      * If there are any pending notifications corresponding to the criteria
@@ -185,7 +185,7 @@ class Event_Dispatcher
      * @param   string      Expected contained object class, serves as a filter
      * @return void
      */
-    function addObserver($callback, $nName = EVENT_DISPATCHER_GLOBAL, $class = null)
+    public function addObserver($callback, $nName = EVENT_DISPATCHER_GLOBAL, $class = null)
     {
         if (is_array($callback)) {
             if (is_object($callback[0])) {
@@ -223,17 +223,17 @@ class Event_Dispatcher
      * Creates and posts a notification object
      *
      * The purpose of the optional associated object is generally to pass
-     * the object posting the notification to the observers, so that the 
+     * the object posting the notification to the observers, so that the
      * observers can query the posting object for more information about
      * the event.
      *
      * Notifications are by default added to a pending notification list.
-     * This way, if an observer is not registered by the time they are 
+     * This way, if an observer is not registered by the time they are
      * posted, it will still be notified when it is added as an observer.
      * This behaviour can be turned off in order to make sure that only
      * the registered observers will be notified.
      *
-     * The info array serves as a container for any kind of useful 
+     * The info array serves as a container for any kind of useful
      * information. It is added to the notification object and posted along.
      *
      * @access  public
@@ -242,11 +242,12 @@ class Event_Dispatcher
      * @param   array       Optional user information
      * @param   bool        Whether the notification is pending
      * @param   bool        Whether you want the notification to bubble up
-     * @return  object  The notification object
+     * @return object The notification object
      */
     function &post(&$object, $nName, $info = array(), $pending = true, $bubble = true)
     {
         $notification =& new $this->_notificationClass($object, $nName, $info);
+
         return $this->postNotification($notification, $pending, $bubble);
     }
 
@@ -258,7 +259,7 @@ class Event_Dispatcher
      * @param   bool        Whether to post the notification immediately
      * @param   bool        Whether you want the notification to bubble up
      * @see Event_Dispatcher::post()
-     * @return  object  The notification object
+     * @return object The notification object
      */
     function &postNotification(&$notification, $pending = true, $bubble = true)
     {
@@ -276,7 +277,7 @@ class Event_Dispatcher
                     return $notification;
                 }
                 if (empty($rObserver['class']) ||
-                	strcasecmp($rObserver['class'], $objClass) == 0) {
+                    strcasecmp($rObserver['class'], $objClass) == 0) {
                     call_user_func_array($rObserver['callback'], array(&$notification));
                     $notification->increaseNotificationCount();
                 }
@@ -290,8 +291,8 @@ class Event_Dispatcher
                 if ($notification->isNotificationCancelled()) {
                     return $notification;
                 }
-                if (empty($rObserver['class']) || 
-                	strcasecmp($rObserver['class'], $objClass) == 0) {
+                if (empty($rObserver['class']) ||
+                    strcasecmp($rObserver['class'], $objClass) == 0) {
                     call_user_func_array($rObserver['callback'], array(&$notification));
                     $notification->increaseNotificationCount();
                 }
@@ -301,7 +302,7 @@ class Event_Dispatcher
         if ($bubble === false) {
             return $notification;
         }
-        
+
         // Notify in nested dispatchers
         foreach (array_keys($this->_nestedDispatchers) as $nested) {
             $notification =& $this->_nestedDispatchers[$nested]->postNotification($notification, $pending);
@@ -317,9 +318,9 @@ class Event_Dispatcher
      * @param   mixed       A PHP callback
      * @param   string      Notification name
      * @param   string      Contained object class
-     * @return  bool    True if an observer was removed, false otherwise
+     * @return bool True if an observer was removed, false otherwise
      */
-    function removeObserver($callback, $nName = EVENT_DISPATCHER_GLOBAL, $class = null)
+    public function removeObserver($callback, $nName = EVENT_DISPATCHER_GLOBAL, $class = null)
     {
         if (is_array($callback)) {
             if (is_object($callback[0])) {
@@ -347,6 +348,7 @@ class Event_Dispatcher
         if (isset($this->_ro[$nName]) && count($this->_ro[$nName]) == 0) {
             unset($this->_ro[$nName]);
         }
+
         return $removed;
     }
 
@@ -358,9 +360,9 @@ class Event_Dispatcher
      * @param   mixed       A PHP callback
      * @param   string      Notification name
      * @param   string      Contained object class
-     * @return  bool        True if the observer has been registered, false otherwise
+     * @return bool True if the observer has been registered, false otherwise
     */
-    function observerRegistered($callback, $nName = EVENT_DISPATCHER_GLOBAL, $class = null)
+    public function observerRegistered($callback, $nName = EVENT_DISPATCHER_GLOBAL, $class = null)
     {
         if (is_array($callback)) {
             if (is_object($callback[0])) {
@@ -381,6 +383,7 @@ class Event_Dispatcher
         if (strcasecmp($this->_ro[$nName][$reg]['class'], $class) == 0) {
             return true;
         }
+
         return false;
     }
 
@@ -390,31 +393,32 @@ class Event_Dispatcher
      * @access  public
      * @param   string      Notification name
      * @param   string      Contained object class
-     * @return  array       List of all observers
+     * @return array List of all observers
     */
-    function getObservers($nName = EVENT_DISPATCHER_GLOBAL, $class = null)
+    public function getObservers($nName = EVENT_DISPATCHER_GLOBAL, $class = null)
     {
-        $observers = array();        
+        $observers = array();
         if (!isset($this->_ro[$nName])) {
             return $observers;
         }
         foreach ($this->_ro[$nName] as $reg => $observer) {
-        	if ($class == null || $observer['class'] == null ||  strcasecmp($observer['class'], $class) == 0) {
-        		$observers[] = $reg;
-        	}
+            if ($class == null || $observer['class'] == null ||  strcasecmp($observer['class'], $class) == 0) {
+                $observers[] = $reg;
+            }
         }
+
         return $observers;
     }
-    
+
     /**
      * Get the name of the dispatcher.
      *
      * The name is the unique identifier of a dispatcher.
      *
      * @access   public
-     * @return   string     name of the dispatcher
+     * @return string name of the dispatcher
      */
-    function getName()
+    public function getName()
     {
         return $this->_name;
     }
@@ -428,7 +432,7 @@ class Event_Dispatcher
      * @access   public
      * @param    Event_Dispatcher    The nested dispatcher
      */
-    function addNestedDispatcher(&$dispatcher)
+    public function addNestedDispatcher(&$dispatcher)
     {
         $name = $dispatcher->getName();
         $this->_nestedDispatchers[$name] =& $dispatcher;
@@ -441,7 +445,7 @@ class Event_Dispatcher
     * @param    Event_Dispatcher    Dispatcher to remove
     * @return   boolean
     */
-    function removeNestedDispatcher($dispatcher)
+    public function removeNestedDispatcher($dispatcher)
     {
         if (is_object($dispatcher)) {
             $dispatcher = $dispatcher->getName();
@@ -450,6 +454,7 @@ class Event_Dispatcher
             return false;
         }
         unset($this->_nestedDispatchers[$dispatcher]);
+
         return true;
     }
 
@@ -462,17 +467,18 @@ class Event_Dispatcher
      *
      * @access   public
      * @param    string     name of the notification class
-     * @return   boolean
+     * @return boolean
      */
-    function setNotificationClass($class)
+    public function setNotificationClass($class)
     {
         if (isset($this) && is_a($this, 'Event_Dispatcher')) {
             $this->_notificationClass = $class;
+
             return true;
         }
         $GLOBALS['_Event_Dispatcher']['NotificationClass'] = $class;
+
         return true;
     }
 
 }
-?>
