@@ -117,7 +117,7 @@ class PluginsController extends Controller
         $client = new \Buzz\Client\Curl();
         $client->setTimeout(3600);
         $browser = new \Buzz\Browser($client);
-        $packagistResponse =  $browser->get('https://packagist.org/search.json?type=newscoop-plugi&q='.$query);
+        $packagistResponse =  $browser->get('https://packagist.org/search.json?type=newscoop-plugin&q='.$query);
         $packages = json_decode($packagistResponse->getContent(), true);
         $results = $packages['results'];
         $this->aasort($results, 'downloads');
