@@ -18,16 +18,16 @@ Quick links to our resources are:
 
 ## Installation
 
-The recommended way to install Newscoop is [through composer](http://getcomposer.org). 
+The recommended way to install Newscoop is [through composer](http://getcomposer.org).
 Just run the composer:
-    
+
     curl -s https://getcomposer.org/installer | php
     php composer.phar create-project sourcefabric/newscoop path/to/install dev-master
 
 ## How to contribute
 
 Only 4 steps:
- 
+
 * Fork sourcefabric/Newscoop repository - [how to fork][2].
 * Clone your fork
 * Create new local feature branch - [how to create branch][3]

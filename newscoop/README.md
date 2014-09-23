@@ -1,6 +1,6 @@
 Newscoop
-version     : 4.2.3
-release date: May 19, 2014 
+version     : 4.2.4
+release date: Sep 23, 2014
 contact     : contact@sourcefabric.org
 url         : http://www.sourcefabric.org
 copyright   : (C) 2010-2013 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
@@ -63,9 +63,9 @@ See the INSTALL.txt file
 
 #Newscoop REST API
 
-Codename: Gimme  
-Full Name: Newscoop REST API  
-Endpoint: example.com/api/  
+Codename: Gimme
+Full Name: Newscoop REST API
+Endpoint: example.com/api/
 Documentation: https://wiki.sourcefabric.org/display/CS/Newscoop+REST+API+Reference
 
 ## Available SDK's
