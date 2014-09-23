@@ -186,8 +186,6 @@ How to do this?:
  * implemented as an service
  * add new topic on "enter" hit in Article Edit Screen
  * More can be found here: [Topic Management][1]
-* Community Feeds (Community Ticker):
- * Community Ticker has been removed from Newscoop core. Available as a plugin: Community ticker (will be installed by default with Newscoop)
 * Widget called `Google gadget` has been removed
 
 [1]: https://wiki.sourcefabric.org/display/WOBS/Topic+Management
