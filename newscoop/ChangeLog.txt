@@ -1,3 +1,19 @@
+4.2.4 (Sep 23, 2014)
+  Prepare Newscoop 4.2.x for upgrade to Newscoop 4.3
+  Bug fixes
+ -------------
+ - IM-1572: Fixes the issue for non upgraded sites
+ - CS-5410: Sets config-dir parameter when URL is not valid and is handled via exception
+ - CS-5410: Removes testing code
+ - CS-5400: newscoop-restore script doesn't restore content of public/files folder
+ - CS-5418: newscoop-restore script breaks on mysql error
+ - CS-5365: Removes duplicate files (with same namespaces) from plugin
+ - CS-4914: Dates end in capital S in sample site
+ - AZ-31: Azerbaijani localization backport
+ - IM-1941: Preview iFrame with protocol agnostic url
+ - Backported Danish localization from master branch
+ - CS-5503 - Upgrading Newscoop from 4.2 -> 4.3 issues
+
 4.2.3 (May 19, 2014)
   Improvements
  -------------
