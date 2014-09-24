@@ -54,6 +54,10 @@ $folderToBeChecked[] = $newscoopDir .'extensions/google-gadgets';
 $folderToBeChecked[] = $newscoopDir .'install/cron_jobs';
 $folderToBeChecked[] = $newscoopDir .'install/sample_data';
 
+$folderToBeChecked[] = $rootDir .'cookbooks';
+$folderToBeChecked[] = $rootDir .'dependencies';
+$folderToBeChecked[] = $rootDir .'scripts';
+
 foreach ($folderToBeChecked as $folder) {
 
     if (is_dir($folder)) {
@@ -81,7 +85,7 @@ foreach ($folderToBeChecked as $folder) {
 }
 
 // Make system calls
-system("php ${newscoopDir}application/console assets:install ${newscoopDir}public/");
+system("php ${newscoopDir}application/console assets:install ${newscoopDir}public/ > /dev/null");
 
 // Update composer
 system("php ${newscoopDir}composer.phar -q --working-dir=\"${newscoopDir}\" dump-autoload --optimize");
