@@ -4,11 +4,23 @@ $newscoopDir = realpath(dirname(__FILE__).'/../../../../../../').'/';
 $rootDir = realpath($newscoopDir.'../').'/';
 $currentDir = dirname(__FILE__) .'/';
 $diffFile = 'delete_diff.txt';
+$upgradeErrors = array();
 
 require_once $newscoopDir.'vendor/autoload.php';
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Monolog\Logger;
+
+$app = new Silex\Application();
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => $newscoopDir.'log/upgrade.log',
+    'monolog.level' => Logger::NOTICE,
+    'monolog.name' => 'upgrade'
+));
+
+$logger = $app['monolog'];
 
 // Remove files
 $finder = new Finder();
@@ -35,11 +47,21 @@ if (count($filesToBeDeleted) > 0) {
 
         if (is_file($fullPath) && is_readable($fullPath)) {
 
-            $filesystem->remove(array($fullPath));
-
-            if (strpos($file, '/') !== false && strpos($file, 'newscoop/admin-files/lang') === false) {
-                $folderToBeChecked[] = dirname($fullPath);
+            try {
+                $filesystem->remove(array($fullPath));
+            } catch (IOException $e) {
+                $msg = 'Could not remove file '.str_replace($newscoopDir, '', $fullPath).', please remove it manually.';
+                $logger->addError($msg);
+                $upgradeErrors[] = $msg;
+            } catch (\Exception $e) {
+                $msg = 'Could not remove file '.str_replace($newscoopDir, '', $fullPath).', please remove it manually.';
+                $logger->addError($msg);
+                $upgradeErrors[] = $msg;
             }
+        }
+
+        if (strpos($file, '/') !== false && strpos($file, 'newscoop/admin-files/lang') === false) {
+            $folderToBeChecked[] = dirname($fullPath);
         }
     }
 }
@@ -75,17 +97,29 @@ foreach ($folderToBeChecked as $folder) {
                     }
                 }
             } catch (\Exception $e) {
-                continue;
+                $msg = 'Could not remove or check subdirectories of '.str_replace($newscoopDir, '', $fullPath).'. Please see newscoop/install/Resources/sql/upgrade/4.3.x/2014.09.22/delete_diff.txt and remove the empty directories manually.';
+                $logger->addError($msg);
+                $upgradeErrors[] = $msg;
             }
 
-            // Remove parent directory
-            $filesystem->remove(array($folder));
+            try {
+                // Remove parent directory
+                $filesystem->remove(array($folder));
+            } catch (\Exception $e) {
+                $msg = 'Could not remove folder '.str_replace($newscoopDir, '', $folder).', please remove it manually.';
+                $logger->addError($msg);
+                $upgradeErrors[] = $msg;
+            }
         }
     }
 }
 
-// Make system calls
-system("php ${newscoopDir}application/console assets:install ${newscoopDir}public/ > /dev/null");
-
-// Update composer
-system("php ${newscoopDir}composer.phar -q --working-dir=\"${newscoopDir}\" dump-autoload --optimize");
+if (count($upgradeErrors) > 0) {
+    $msg = "Some files or directories could not automatically be removed. This is "
+        . "most likely caused by permissions. \n"
+        . "You can either remove the files manually (see ${newscoopDir}install/Resources/sql/upgrade/4.3.x/2014.09.22/delete_diff.txt) "
+        . "or execute this file with root permissions, e.g.: \n"
+        . "sudo php ${newscoopDir}install/Resources/sql/upgrade/4.3.x/2014.09.22/upgrade.php";
+    $logger->addError($msg);
+    array_splice($upgradeErrors, 0, 0, array($msg));
+}
