@@ -250,6 +250,13 @@ class DatabaseService
                 $command_path = $this->combinePaths($command_path, $command_script);
 
                 require_once($command_path);
+
+                if (isset($upgradeErrors) && is_array($upgradeErrors) && count($upgradeErrors) > 0) {
+                    foreach ($upgradeErrors as $upgradeError) {
+                        $errors++;
+                        $this->errorQueries[] = $upgradeError;
+                    }
+                }
             }
         }
 
