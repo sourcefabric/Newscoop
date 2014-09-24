@@ -69,7 +69,7 @@ foreach ($folderToBeChecked as $folder) {
 
             try {
                 // Remove subdirectories
-                foreach ($finder->directories()->sortByName() AS $subFolder) {
+                foreach ($finder->directories()->sortByName() as $subFolder) {
                     if (is_dir($subFolder)) {
                         $filesystem->remove(array($subFolder));
                     }
