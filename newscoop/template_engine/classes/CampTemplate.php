@@ -115,7 +115,6 @@ final class CampTemplate extends Smarty
             }
         }
 
-        $directoryPath = realpath(__DIR__ . '/../../plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/Resources/smartyPlugins');
         //legacy plugins
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
