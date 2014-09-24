@@ -49,6 +49,10 @@ arsort($folderToBeChecked);
 
 // Add extra directories to remove recusively
 $folderToBeChecked[] = $newscoopDir .'admin-files/lang';
+$folderToBeChecked[] = $newscoopDir .'example';
+$folderToBeChecked[] = $newscoopDir .'extensions/google-gadgets';
+$folderToBeChecked[] = $newscoopDir .'install/cron_jobs';
+$folderToBeChecked[] = $newscoopDir .'install/sample_data';
 
 foreach ($folderToBeChecked as $folder) {
 
@@ -74,12 +78,6 @@ foreach ($folderToBeChecked as $folder) {
             $filesystem->remove(array($folder));
         }
     }
-}
-
-// Remove google gadget
-$googleExtensionDir = $newscoopDir . 'extensions/google-gadgets/';
-if (is_dir($googleExtensionDir)) {
-    $filesystem->remove(array($googleExtensionDir));
 }
 
 // Make system calls
