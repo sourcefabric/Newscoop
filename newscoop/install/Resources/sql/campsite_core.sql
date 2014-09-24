@@ -3387,3 +3387,16 @@ CREATE TABLE IF NOT EXISTS `cron_jobs` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `community_ticker_event`;
+
+CREATE TABLE `community_ticker_event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
+  `params` longtext COLLATE utf8_unicode_ci,
+  `created` datetime NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
