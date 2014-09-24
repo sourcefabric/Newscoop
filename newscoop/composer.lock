@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be6ec6da77fb3c2df65abfd97f7e271c",
+    "hash": "a05bb28839bfa72509014c45f6df9399",
     "packages": [
         {
             "name": "behat/behat",
@@ -327,12 +327,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "024c39e4ca0372b1df761b1cba21fb7f4a2e5e98"
+                "reference": "6634069ada56fd169de5e3ca29bc407d9d9a11b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/024c39e4ca0372b1df761b1cba21fb7f4a2e5e98",
-                "reference": "024c39e4ca0372b1df761b1cba21fb7f4a2e5e98",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/6634069ada56fd169de5e3ca29bc407d9d9a11b6",
+                "reference": "6634069ada56fd169de5e3ca29bc407d9d9a11b6",
                 "shasum": ""
             },
             "require": {
@@ -387,7 +387,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-09-17 14:44:13"
+            "time": "2014-09-04 13:31:34"
         },
         {
             "name": "doctrine/cache",
@@ -395,12 +395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7"
+                "reference": "daba57d377f2620ce0355797acad538fc682e3a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/cf483685798a72c93bf4206e3dd6358ea07d64e7",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/daba57d377f2620ce0355797acad538fc682e3a4",
+                "reference": "daba57d377f2620ce0355797acad538fc682e3a4",
                 "shasum": ""
             },
             "require": {
@@ -456,7 +456,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-09-17 14:24:04"
+            "time": "2014-08-30 05:24:19"
         },
         {
             "name": "doctrine/collections",
@@ -1374,7 +1374,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-03-11 22:42:27"
+            "time": "2014-09-16 21:19:27"
         },
         {
             "name": "hellogerard/jobby",
@@ -1430,12 +1430,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "fc79bfdee66a900420b316886e0d8de1f27215bf"
+                "reference": "b4e0766477d25f53aa213c88ae7488d3d051fd4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/fc79bfdee66a900420b316886e0d8de1f27215bf",
-                "reference": "fc79bfdee66a900420b316886e0d8de1f27215bf",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/b4e0766477d25f53aa213c88ae7488d3d051fd4e",
+                "reference": "b4e0766477d25f53aa213c88ae7488d3d051fd4e",
                 "shasum": ""
             },
             "require": {
@@ -1471,7 +1471,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-09-21 23:14:41"
+            "time": "2014-09-14 15:28:52"
         },
         {
             "name": "imagine/imagine",
@@ -1771,12 +1771,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "d1cb450e67247aa6839032d39c3b800f9a7baf3d"
+                "reference": "da8623410dc1bb6d532ad4218e306574efd1a5b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/d1cb450e67247aa6839032d39c3b800f9a7baf3d",
-                "reference": "d1cb450e67247aa6839032d39c3b800f9a7baf3d",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/da8623410dc1bb6d532ad4218e306574efd1a5b5",
+                "reference": "da8623410dc1bb6d532ad4218e306574efd1a5b5",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1831,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2014-09-22 10:01:27"
+            "time": "2014-07-29 21:41:51"
         },
         {
             "name": "jms/serializer-bundle",
@@ -2068,7 +2068,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2484,12 +2484,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "6bcd5e8d8132d3eab8c0c750e88454fc78aeed26"
+                "reference": "3f3580f9c3d0fc379f0c0851d35d78397eb474bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/6bcd5e8d8132d3eab8c0c750e88454fc78aeed26",
-                "reference": "6bcd5e8d8132d3eab8c0c750e88454fc78aeed26",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/3f3580f9c3d0fc379f0c0851d35d78397eb474bd",
+                "reference": "3f3580f9c3d0fc379f0c0851d35d78397eb474bd",
                 "shasum": ""
             },
             "require": {
@@ -2550,54 +2550,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2014-09-22 08:19:00"
-        },
-        {
-            "name": "newscoop/community-ticker-plugin",
-            "version": "dev-master",
-            "target-dir": "Newscoop/CommunityTickerBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/takeit/plugin-CommunityTicker.git",
-                "reference": "4d78326ab831266288c65cace49f0a82a7c8862e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/takeit/plugin-CommunityTicker/zipball/4d78326ab831266288c65cace49f0a82a7c8862e",
-                "reference": "4d78326ab831266288c65cace49f0a82a7c8862e",
-                "shasum": ""
-            },
-            "require": {
-                "newscoop/plugins-installer": ">=v0.2",
-                "php": ">=5.3.3"
-            },
-            "type": "newscoop-plugin",
-            "autoload": {
-                "psr-0": {
-                    "Newscoop\\CommunityTickerBundle\\NewscoopCommunityTickerBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Rafał Muszyński",
-                    "email": "rafal.muszynski@sourcefabric.org"
-                }
-            ],
-            "description": "Community ticker plugin bundle for Newscoop",
-            "keywords": [
-                "blog",
-                "cms",
-                "community",
-                "integration",
-                "newscoop",
-                "plugin",
-                "ticker"
-            ],
-            "time": "2014-02-26 13:42:34"
+            "time": "2014-09-11 08:34:36"
         },
         {
             "name": "newscoop/plugins-installer",
@@ -3140,12 +3093,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5ee7af96d62a3fe9cf466fab1b505ac8dc1796c6"
+                "reference": "26c47181a919805059b9e78137da38a9ecdf0f73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5ee7af96d62a3fe9cf466fab1b505ac8dc1796c6",
-                "reference": "5ee7af96d62a3fe9cf466fab1b505ac8dc1796c6",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/26c47181a919805059b9e78137da38a9ecdf0f73",
+                "reference": "26c47181a919805059b9e78137da38a9ecdf0f73",
                 "shasum": ""
             },
             "require": {
@@ -3203,7 +3156,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-09-19 08:44:28"
+            "time": "2014-09-17 07:14:43"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4014,12 +3967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "49f63fd0d387789509f682216c2a65e24ca2e74d"
+                "reference": "73652ba0def522feabba738d7ef31c714cfaab0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/49f63fd0d387789509f682216c2a65e24ca2e74d",
-                "reference": "49f63fd0d387789509f682216c2a65e24ca2e74d",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/73652ba0def522feabba738d7ef31c714cfaab0e",
+                "reference": "73652ba0def522feabba738d7ef31c714cfaab0e",
                 "shasum": ""
             },
             "require": {
@@ -4077,11 +4030,14 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
+                    "email": "igor@wiedler.ch",
+                    "homepage": "http://wiedler.ch/igor/"
                 }
             ],
             "description": "The PHP micro-framework based on the Symfony2 Components",
@@ -4089,7 +4045,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2014-09-22 07:39:03"
+            "time": "2014-07-08 12:52:22"
         },
         {
             "name": "smarty/smarty",
@@ -4141,16 +4097,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "cd12d60cdd3b03de69a68a49089d85e119491b4d"
+                "reference": "8a2bcc6045e92acfbfea252cb6b444bc8c3f171e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/cd12d60cdd3b03de69a68a49089d85e119491b4d",
-                "reference": "cd12d60cdd3b03de69a68a49089d85e119491b4d",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8a2bcc6045e92acfbfea252cb6b444bc8c3f171e",
+                "reference": "8a2bcc6045e92acfbfea252cb6b444bc8c3f171e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.2.4"
             },
             "require-dev": {
                 "mockery/mockery": "~0.9.1"
@@ -4158,7 +4114,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.3-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -4185,7 +4141,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-09-20 11:30:50"
+            "time": "2014-08-27 09:29:44"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -4426,12 +4382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "369aebf431d0b007d06d206a782ebfeba79c136e"
+                "reference": "3da421f2c2aa927c770e0d825a9c65dbbd3ca837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/369aebf431d0b007d06d206a782ebfeba79c136e",
-                "reference": "369aebf431d0b007d06d206a782ebfeba79c136e",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/3da421f2c2aa927c770e0d825a9c65dbbd3ca837",
+                "reference": "3da421f2c2aa927c770e0d825a9c65dbbd3ca837",
                 "shasum": ""
             },
             "require": {
@@ -4526,7 +4482,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-09-22 08:32:35"
+            "time": "2014-09-17 11:01:55"
         },
         {
             "name": "twig/extensions",
@@ -5156,9 +5112,7 @@
             "time": "2013-12-21 17:10:13"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "symfony/symfony": 20,
@@ -5175,14 +5129,11 @@
         "nelmio/api-doc-bundle": 20,
         "hellogerard/jobby": 20,
         "pimple/pimple": 20,
-        "newscoop/community-ticker-plugin": 20,
         "phpspec/phpspec": 20
     },
     "prefer-stable": false,
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }

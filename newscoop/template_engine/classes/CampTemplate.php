@@ -10,6 +10,8 @@
  * @link http://www.sourcefabric.org
  */
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * Class CampTemplate
  */
@@ -113,9 +115,18 @@ final class CampTemplate extends Smarty
             }
         }
 
+        $directoryPath = realpath(__DIR__ . '/../../plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/Resources/smartyPlugins');
         //legacy plugins
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
+        }
+
+        // src/Newscoop
+        $finder = new Finder();
+        $finder->directories()->name('smartyPlugins')->in(__DIR__ . '/../../src/Newscoop/*/Resources');
+
+        foreach ($finder as $file) {
+            $dirs[] = $file->getRealpath();
         }
 
         return $dirs;
