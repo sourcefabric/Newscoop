@@ -2,6 +2,7 @@ Capfile
 PLUGINS.md
 Vagrantfile
 config/deploy.rb
+cookbooks/newscoop/README.md
 cookbooks/newscoop/metadata.rb
 cookbooks/newscoop/recipes/default.rb
 cookbooks/newscoop/templates/default/default-site.erb
@@ -183,6 +184,7 @@ dependencies/include/peclcmd.php
 dependencies/include/versions.txt
 newscoop/CREDITS.txt
 newscoop/INSTALL.txt
+newscoop/README.md
 newscoop/admin-files/articles/images/do_edit.php
 newscoop/admin-files/articles/images/edit.php
 newscoop/admin-files/do_login.php
@@ -1614,6 +1616,7 @@ newscoop/install/sample_templates/quetzal/name.txt
 newscoop/install/sample_templates/quetzal/screenshot.jpg
 newscoop/install/sample_templates/quetzal/screenshot_large.jpg
 newscoop/install/sample_templates/quetzal/templates/set_quetzal/404.tpl
+newscoop/install/sample_templates/quetzal/templates/set_quetzal/README.md
 newscoop/install/sample_templates/quetzal/templates/set_quetzal/_conf/English.conf
 newscoop/install/sample_templates/quetzal/templates/set_quetzal/_conf/Spanish.conf
 newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/1140.css
@@ -1903,6 +1906,7 @@ newscoop/install/sample_templates/rockstar/description.txt
 newscoop/install/sample_templates/rockstar/name.txt
 newscoop/install/sample_templates/rockstar/screenshot.jpg
 newscoop/install/sample_templates/rockstar/screenshot_large.jpg
+newscoop/install/sample_templates/rockstar/templates/set_rockstar/README.md
 newscoop/install/sample_templates/rockstar/templates/set_rockstar/_conf/English.conf
 newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/_edit-article.tpl
 newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/_html-foot.tpl
@@ -2048,6 +2052,7 @@ newscoop/install/sample_templates/the_new_custodian/name.txt
 newscoop/install/sample_templates/the_new_custodian/screenshot.jpg
 newscoop/install/sample_templates/the_new_custodian/screenshot_large.jpg
 newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/404.tpl
+newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/README.md
 newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_conf/English.conf
 newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/1140.css
 newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/colors.css
