@@ -35,7 +35,6 @@ if (count($filesToBeDeleted) > 0) {
 
         if (is_file($fullPath) && is_readable($fullPath)) {
 
-            // echo 'file: '.$fullPath.'<br>';
             $filesystem->remove(array($fullPath));
 
             if (strpos($file, '/') !== false && strpos($file, 'newscoop/admin-files/lang') === false) {
