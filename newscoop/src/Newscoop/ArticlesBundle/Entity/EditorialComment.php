@@ -227,7 +227,7 @@ class EditorialComment
      *
      * @return self
      */
-    public function setComment(text $comment)
+    public function setComment($comment)
     {
         $this->comment = $comment;
 

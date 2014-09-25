@@ -6,6 +6,8 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Newscoop\Services\UserService;
 use Newscoop\Entity\Article;
+use Newscoop\Entity\User;
+use Newscoop\ArticlesBundle\Entity\EditorialComment;
 
 class EditorialCommentsServiceSpec extends ObjectBehavior
 {
@@ -19,9 +21,9 @@ class EditorialCommentsServiceSpec extends ObjectBehavior
         $em->flush(Argument::any())->willReturn(true);
         $em->remove(Argument::any())->willReturn(true);
 
-        $userService->getCurrentUser()->willReturn($user);
+        $user->getId()->willReturn(1);
 
-        $this->beConstructedWith($em, $userService);
+        $this->beConstructedWith($em);
     }
 
     public function it_is_initializable()
@@ -29,26 +31,39 @@ class EditorialCommentsServiceSpec extends ObjectBehavior
         $this->shouldHaveType('Newscoop\ArticlesBundle\Services\EditorialCommentsService');
     }
 
-    public function it_should_create_comment(Article $article, $user)
+    public function it_should_create_comment(Article $article, User $user)
     {
         $this->create('comment', $article, $user, false)
             ->shouldReturn(true);
     }
 
-    public function it_should_edit_comment()
+    /**
+     * @param  \Newscoop\ArticlesBundle\Entity\EditorialComment $comment
+     * @param  \Newscoop\Entity\User                            $user
+     */
+    public function it_should_edit_comment(EditorialComment $comment, User $user)
     {
+        $comment->getUser()->willReturn($user);
+        $comment->setComment(Argument::type('string'))->willReturn(true);
+
         $this->edit('updated comment', $comment, $user)
             ->shouldReturn(true);
     }
 
-    public function it_should_resolve_comment()
+    public function it_should_resolve_comment(EditorialComment $comment, User $user)
     {
+        $comment->getUser()->willReturn($user);
+        $comment->setResolved(Argument::type('bool'))->willReturn(true);
+
         $this->resolve($comment, $user)
             ->shouldReturn(true);
     }
 
-    public function it_should_remove_comment()
+    public function it_should_remove_comment(EditorialComment $comment, User $user)
     {
+        $comment->getUser()->willReturn($user);
+        $comment->setIsActive(Argument::type('bool'))->willReturn(true);
+
         $this->remove($comment, $user)
             ->shouldReturn(true);
     }
