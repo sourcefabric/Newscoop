@@ -36,6 +36,7 @@ class AppKernel extends Kernel
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
             new Newscoop\NewscoopBundle\NewscoopNewscoopBundle(),
             new Newscoop\CommunityTickerBundle\NewscoopCommunityTickerBundle(),
+            new Newscoop\ArticlesBundle\NewscoopArticlesBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
