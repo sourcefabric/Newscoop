@@ -1,5 +1,5 @@
 <?php 
-regGS("No attachment", "");
+regGS("No attachment", "No attachment");
 regGS("at", "at");
 regGS("With no attachment", "With no attachment");
 regGS("With image attachment", "With image attachment");
