@@ -212,6 +212,7 @@ CREATE TABLE `ArticleTypeMetadata` (
   `field_type_param` varchar(255) DEFAULT NULL,
   `is_content_field` tinyint(1) NOT NULL DEFAULT '0',
   `max_size` int(10) unsigned DEFAULT NULL,
+  `show_in_editor` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`type_name`,`field_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1669,7 +1670,7 @@ CREATE TABLE `audit_event` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `resource_type` varchar(80) NOT NULL,
-  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_id` varchar(255) DEFAULT NULL,
   `resource_title` varchar(255) DEFAULT NULL,
   `resource_diff` longtext,
   `action` varchar(80) NOT NULL,
