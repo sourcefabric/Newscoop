@@ -212,6 +212,7 @@ CREATE TABLE `ArticleTypeMetadata` (
   `field_type_param` varchar(255) DEFAULT NULL,
   `is_content_field` tinyint(1) NOT NULL DEFAULT '0',
   `max_size` int(10) unsigned DEFAULT NULL,
+  `show_in_editor` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`type_name`,`field_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1669,7 +1670,7 @@ CREATE TABLE `audit_event` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `resource_type` varchar(80) NOT NULL,
-  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_id` varchar(255) DEFAULT NULL,
   `resource_title` varchar(255) DEFAULT NULL,
   `resource_diff` longtext,
   `action` varchar(80) NOT NULL,
@@ -2755,6 +2756,21 @@ CREATE TABLE `community_ticker_event` (
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `editorial_comments`;
+
+CREATE TABLE IF NOT EXISTS `editorial_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_article_number` int(11) NOT NULL,
+  `fk_language_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `resolved` int(1) NOT NULL DEFAULT '0',
+  `fk_parent_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `is_active` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
