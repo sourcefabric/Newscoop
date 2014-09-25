@@ -1,0 +1,30 @@
+services:
+    newscoop_ticker_plugin.lifecyclesubscriber:
+        class: Newscoop\CommunityTickerBundle\EventListener\LifecycleSubscriber
+        arguments:
+            - @em
+        tags:
+            - { name: kernel.event_subscriber}
+
+    newscoop.criteria.communityticker:
+        class: Newscoop\CommunityTickerBundle\TemplateList\ListCriteria
+
+    newscoop.template_lists.communityticker:
+        class:      Newscoop\CommunityTickerBundle\TemplateList\CommunityFeedsList
+        arguments:  ["@newscoop.criteria.communityticker"]
+        tags:
+            -  { name: newscoop.template_lists }
+
+    newscoop_ticker_plugin.service:
+        class:      Newscoop\CommunityTickerBundle\Services\CommunityFeedService
+        arguments:  ["@em"]
+        tags:
+            -  { name: kernel.event_listener, event: user.register, method: update }
+            -  { name: kernel.event_listener, event: comment.recommended, method: update }
+            -  { name: kernel.event_listener, event: topic.follow, method: update }
+            -  { name: kernel.event_listener, event: blog.published, method: update }
+
+    newscoop_ticker_plugin.list_objects.listener:
+        class: Newscoop\CommunityTickerBundle\EventListener\ListObjectsListener
+        tags:
+          - { name: kernel.event_listener, event: newscoop.listobjects.register, method: registerObjects }

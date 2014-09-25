@@ -37,7 +37,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_codeName = 'Vitor';
+    private $m_codeName = 'Elsa';
 
     /**
      * @var string

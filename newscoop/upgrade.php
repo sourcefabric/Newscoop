@@ -38,7 +38,7 @@ use Monolog\Logger;
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/log/upgrade.log',
-    'monolog.level' =>Logger::NOTICE,
+    'monolog.level' => Logger::NOTICE,
     'monolog.name' => 'upgrade'
 ));
 
