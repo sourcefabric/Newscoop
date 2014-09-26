@@ -50,6 +50,19 @@ class EditorialCommentsServiceSpec extends ObjectBehavior
             ->shouldReturn(true);
     }
 
+    public function it_shouldnt_edit_comment(EditorialComment $comment, User $user, User $newUser)
+    {
+        $comment->getUser()->willReturn($user);
+        $comment->setComment(Argument::type('string'))->willReturn(true);
+
+        $newUser->getId()->willReturn(5);
+        $newUser->isAdmin()->willReturn(false);
+
+        $this
+            ->shouldThrow('Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException')
+            ->during('edit', array('updated comment', $comment, $newUser));
+    }
+
     public function it_should_resolve_comment(EditorialComment $comment, User $user)
     {
         $comment->getUser()->willReturn($user);
