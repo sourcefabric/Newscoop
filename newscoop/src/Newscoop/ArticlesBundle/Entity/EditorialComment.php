@@ -67,6 +67,12 @@ class EditorialComment
     protected $parent;
 
     /**
+     * @ORM\Column(type="integer", name="fk_parent_id")
+     * @var integer
+     */
+    protected $parentId;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
@@ -227,7 +233,7 @@ class EditorialComment
      *
      * @return self
      */
-    public function setComment(text $comment)
+    public function setComment($comment)
     {
         $this->comment = $comment;
 
@@ -326,6 +332,30 @@ class EditorialComment
     public function setCreated(\DateTime $created)
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of parentId.
+     *
+     * @return integer
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * Sets the value of parentId.
+     *
+     * @param integer $parentId the parent id
+     *
+     * @return self
+     */
+    protected function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
 
         return $this;
     }

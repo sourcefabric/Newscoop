@@ -11,6 +11,7 @@ namespace Newscoop\ArticlesBundle\Services;
 use Newscoop\Entity\Article;
 use Newscoop\Entity\User;
 use \Doctrine\ORM\EntityManager;
+use Newscoop\ArticlesBundle\Entity\EditorialComment;
 
 class EditorialCommentsService
 {
