@@ -115,6 +115,17 @@ foreach ($folderToBeChecked as $folder) {
     }
 }
 
+try {
+    $configFile = realpath(__DIR__ . '/../../../../../../conf/configuration.php');
+    $databaseService = new DatabaseService($logger);
+    $databaseService->renderFile('_configuration.twig', $configFile, array());
+} catch (\Exception $e) {
+    $msg = "Could not update '" . $configFile . "', please update it manually."
+    . " Copy content of '" . realpath(__DIR__ . '/../../../../../Resources/templates/_configuration.twig') . "' file to '" . $configFile . "' and save.\n";
+    $logger->addError($msg);
+    array_splice($upgradeErrors, 0, 0, array($msg));
+}
+
 if (count($upgradeErrors) > 0) {
     $msg = "Some files or directories could not automatically be removed. This is "
         . "most likely caused by permissions. \n"
@@ -124,6 +135,3 @@ if (count($upgradeErrors) > 0) {
     $logger->addError($msg);
     array_splice($upgradeErrors, 0, 0, array($msg));
 }
-
-$databaseService = new DatabaseService($logger);
-$databaseService->renderFile('_configuration.twig', __DIR__ . '/../../../../../../conf/configuration.php', array());
