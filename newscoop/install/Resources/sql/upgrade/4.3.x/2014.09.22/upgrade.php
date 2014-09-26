@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Monolog\Logger;
+use Newscoop\Installer\Services\DatabaseService;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -123,3 +124,6 @@ if (count($upgradeErrors) > 0) {
     $logger->addError($msg);
     array_splice($upgradeErrors, 0, 0, array($msg));
 }
+
+$databaseService = new DatabaseService($logger);
+$databaseService->renderFile('_configuration.twig', __DIR__ . '/../../../../../../conf/configuration.php', array());

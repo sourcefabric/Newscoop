@@ -345,7 +345,7 @@ class DatabaseService
      *
      * @return boolean
      */
-    protected function renderFile($template, $target, $parameters)
+    public function renderFile($template, $target, $parameters)
     {
         if (!is_dir(dirname($target))) {
             mkdir(dirname($target), 0777, true);
