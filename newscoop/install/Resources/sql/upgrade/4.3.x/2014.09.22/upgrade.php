@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Monolog\Logger;
+use Newscoop\Installer\Services\DatabaseService;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -112,6 +113,17 @@ foreach ($folderToBeChecked as $folder) {
             }
         }
     }
+}
+
+try {
+    $configFile = realpath(__DIR__ . '/../../../../../../conf/configuration.php');
+    $databaseService = new DatabaseService($logger);
+    $databaseService->renderFile('_configuration.twig', $configFile, array());
+} catch (\Exception $e) {
+    $msg = "Could not update '" . $configFile . "', please update it manually."
+    . " Copy content of '" . realpath(__DIR__ . '/../../../../../Resources/templates/_configuration.twig') . "' file to '" . $configFile . "' and save.\n";
+    $logger->addError($msg);
+    array_splice($upgradeErrors, 0, 0, array($msg));
 }
 
 if (count($upgradeErrors) > 0) {
