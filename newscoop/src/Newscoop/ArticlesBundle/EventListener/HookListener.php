@@ -1,24 +1,48 @@
 <?php
-/**
- * @package   Newscoop\ArticlesBundle
- * @author    Rafał Muszyński <rafal.muszynski@sourcefabric.org>
- * @copyright 2014 Sourcefabric ź.u.
- * @license   http://www.gnu.org/licenses/gpl-3.0.txt
- */
 
 namespace Newscoop\ArticlesBundle\EventListener;
 
+use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
+use Newscoop\EventDispatcher\Events\PluginHooksEvent;
 use Doctrine\ORM\EntityManager;
 
-/**
- * Editorial comments hook listener
- */
 class HookListener
 {
-	protected $em;
+    /**
+     * @var EntityManager
+     */
+    protected $em;
 
-    public function __construct(EntityManager $em)
+    /**
+     * @var DelegatingEngine
+     */
+    protected $templating;
+
+    /**
+     * Construct
+     *
+     * @param EntityManager    $em         Entity manager
+     * @param DelegatingEngine $templating Templating
+     */
+    public function __construct(EntityManager $em, DelegatingEngine $templating)
     {
-        // TODO: write logic here
+        $this->em = $em;
+        $this->templating = $templating;
+    }
+
+    public function listEditorialComments(PluginHooksEvent $event)
+    {
+        $articleNumber = $event->getArgument('articleNumber');
+        $editorialComments = $this->em->getRepository('Newscoop\ArticlesBundle\Entity\EditorialComment')->getAllByArticleNumber($articleNumber);
+
+        $response = $this->templating->renderResponse(
+            'NewscoopArticlesBundle:Hook:editorialComments.html.twig',
+            array(
+                'editorialComments' => $editorialComments,
+                'articleNumber' => $articleNumber
+            )
+        );
+
+        $event->addHookResponse($response);
     }
 }

@@ -36,8 +36,8 @@ class EditorialCommentsControllerSpec extends ObjectBehavior
         $this->shouldBeAnInstanceOf('Symfony\Component\DependencyInjection\ContainerAware');
     }
 
-    function its_getAction_should_render_a_list_of_EditorialCommentArray(
-    	$entityManager, 
+    /*function its_getAction_should_render_a_list_of_EditorialCommentArray(
+    	$entityManager,
     	\Newscoop\ArticlesBundle\Entity\Repository\EditorialCommentRepository $repository,
     	Request $request
     	) {
@@ -45,5 +45,5 @@ class EditorialCommentsControllerSpec extends ObjectBehavior
         $repository->getAllByArticleNumber(1)->willReturn(Argument::type('array'));
 
         $this->getAction($request)->shouldReturn(Argument::type('array'));
-    }
+    }*/
 }

@@ -16,7 +16,7 @@ class EditorialCommentsServiceSpec extends ObjectBehavior
         \Doctrine\ORM\EntityManager $em,
         UserService $userService,
         \Newscoop\Entity\User $user
-    ){
+    ) {
         $em->persist(Argument::any())->willReturn(true);
         $em->flush(Argument::any())->willReturn(true);
         $em->remove(Argument::any())->willReturn(true);
@@ -38,8 +38,8 @@ class EditorialCommentsServiceSpec extends ObjectBehavior
     }
 
     /**
-     * @param  \Newscoop\ArticlesBundle\Entity\EditorialComment $comment
-     * @param  \Newscoop\Entity\User                            $user
+     * @param \Newscoop\ArticlesBundle\Entity\EditorialComment $comment
+     * @param \Newscoop\Entity\User                            $user
      */
     public function it_should_edit_comment(EditorialComment $comment, User $user)
     {

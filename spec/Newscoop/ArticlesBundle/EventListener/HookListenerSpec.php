@@ -4,21 +4,22 @@ namespace spec\Newscoop\ArticlesBundle\EventListener;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class HookListenerSpec extends ObjectBehavior
 {
-    public function let(
-        $die,
-        \Doctrine\ORM\EntityManager $em,
-        \Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine $templating,
-        EntityRepository $repository
-    ) {
-        $em->persist(Argument::any())->willReturn(true);
-        $em->flush(Argument::any())->willReturn(true);
-        $em->remove(Argument::any())->willReturn(true);
-
+    /**
+     * @param \Doctrine\ORM\EntityManager                                           $em
+     * @param \Symfony\Bundle\FrameworkBundle\Templating\EngineInterface            $templating
+     * @param \Newscoop\Entity\Article                                              $article
+     * @param \Newscoop\ArticlesBundle\Entity\Repository\EditorialCommentRepository $repository
+     */
+    public function let($die, $em, $templating, $article, $repository, Registry $doctrine)
+    {
+        $doctrine->getManager()->willReturn($em);
+        $em->getRepository(Argument::exact('Newscoop\ArticlesBundle\Entity\EditorialComment'))->willReturn($repository);
+        $repository->getAllByArticleNumber(Argument::any(), Argument::any())->willReturn(Argument::any());
+        $article->getNumber()->willReturn(1);
         $this->beConstructedWith($em, $templating);
     }
 
@@ -27,59 +28,28 @@ class HookListenerSpec extends ObjectBehavior
         $this->shouldHaveType('Newscoop\ArticlesBundle\EventListener\HookListener');
     }
 
-    public function it_will_display_form_and_list_of_editorial_comments(
-        \Newscoop\EventDispatcher\Events\PluginHooksEvent $event,
-        $em,
-        \Newscoop\ArticlesBundle\Entity\Repository\EditorialCommentRepository $repository,
-        $form,
-        $formFactory
-    )
+    /**
+     * @param \Newscoop\EventDispatcher\Events\PluginHooksEvent $event
+     * @param \Symfony\Component\HttpFoundation\Response        $response
+     */
+    public function it_will_display_list_of_editorial_comments_for_article($event, $response, $article, $em, $repository, $templating)
     {
-        $em->getRepository(Argument::exact('Newscoop\ArticlesBundle\Entity\EditorialComment'))->willReturn($repository);
+        $event->getArgument('articleNumber')->willReturn($article->getNumber()->willReturn(1));
         $repository->getAllByArticleNumber(1)->willReturn(Argument::type('array'));
 
-        //$classBook = Argument::exact('Acme\DemoBundle\Entity\Book')->getValue();
-        //$book = new $classBook;
-        $classBookType = Argument::exact('Newscoop\ArticlesBundle\Form\EditorialCommentType')->getValue();
-        $booktype = new $classBookType;
-
-        $formFactory->create($booktype, $book)->willReturn($form);
-        $form->bind($request)->willReturn($form);
-        $form->isValid()->willReturn(true);
-
-        $form = $this->container->get('form.factory')->create(new CommentButtonType(), array(
-            'lists' => $listsArray
-        ), array('em' => $em));
-
-        $response = $this->container->get('templating')->renderResponse(
-            'NewscoopCommentListsBundle:Hooks:listsButton.html.twig',
+        $templating->renderResponse(
+            'NewscoopArticlesBundle:Hook:editorialComments.html.twig',
             array(
-                'form' => $form->createView(),
-                'lists' => $lists,
-                'commentId' => $commentId
+                'articleNumber' => 1,
+                'editorialComments' => [0 => array(
+                    'id' => 1,
+                    'articleNumber' => 1
+                )]
             )
-        );
+        )->willReturn($response);
 
         $event->addHookResponse($response);
 
-        //$this->getAction($request)->shouldReturn(Argument::type('array'));
-    }
-
-    public function its_createAction_should_save_the_BookObject_when_form_is_valid($request, $form, $formFactory, $entityManager)
-    {
-        $classBook = Argument::exact('Acme\DemoBundle\Entity\Book')->getValue();
-        $book = new $classBook;
-        $classBookType = Argument::exact('Acme\DemoBundle\Form\BookType')->getValue();
-        $booktype = new $classBookType;
-
-        $formFactory->create($booktype, $book)->willReturn($form);
-        $form->bind($request)->willReturn($form);
-        $form->isValid()->willReturn(true);
-
-        $entityManager->persist($book)->shouldBeCalled();
-        $entityManager->flush()->shouldBeCalled();
-
-        $response = $this->createAction($request);
-        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse');
+        $this->listEditorialComments($event)->shouldReturn(null);
     }
 }
