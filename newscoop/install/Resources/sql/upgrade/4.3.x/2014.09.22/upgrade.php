@@ -7,31 +7,17 @@ $diffFile = 'delete_diff.txt';
 $upgradeErrors = array();
 
 require_once $newscoopDir.'vendor/autoload.php';
-require_once $newscoopDir.'/conf/database_conf.php';
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Monolog\Logger;
-use Newscoop\Installer\Services\DatabaseService;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => $newscoopDir.'log/upgrade.log',
     'monolog.level' => Logger::NOTICE,
     'monolog.name' => 'upgrade'
-));
-
-$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-    'db.options' => array(
-        'driver'    => 'pdo_mysql',
-        'host'      => $Campsite['db']['host'],
-        'dbname'    => $Campsite['db']['name'],
-        'user'      => $Campsite['db']['user'],
-        'password'  => $Campsite['db']['pass'],
-        'port'      => $Campsite['db']['port'],
-        'charset'   => 'utf8',
-    )
 ));
 
 $logger = $app['monolog'];
@@ -126,35 +112,6 @@ foreach ($folderToBeChecked as $folder) {
             }
         }
     }
-}
-
-try {
-    $app['db']->query('ALTER TABLE `Plugins` DROP PRIMARY KEY');
-} catch(\Exception $e) {
-    if ($app['db']->errorCode() !== '42000') {
-        $upgradeErrors[] = $e->getMessage();
-        $logger->addError($e->getMessage());
-    }
-}
-
-try {
-    $app['db']->query('ALTER TABLE `Plugins` ADD `Id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST, ADD `Description` TEXT NOT NULL');
-} catch(\Exception $e) {
-    if ($app['db']->errorCode() !== '42S21') {
-        $upgradeErrors[] = $e->getMessage();
-        $logger->addError($e->getMessage());
-    }
-}
-
-try {
-    $configFile = realpath(__DIR__ . '/../../../../../../conf/configuration.php');
-    $databaseService = new DatabaseService($logger);
-    $databaseService->renderFile('_configuration.twig', $configFile, array());
-} catch (\Exception $e) {
-    $msg = "Could not update '" . $configFile . "', please update it manually."
-    . " Copy content of '" . realpath(__DIR__ . '/../../../../../Resources/templates/_configuration.twig') . "' file to '" . $configFile . "' and save.\n";
-    $logger->addError($msg);
-    array_splice($upgradeErrors, 0, 0, array($msg));
 }
 
 if (count($upgradeErrors) > 0) {
