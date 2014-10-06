@@ -41,7 +41,7 @@ try {
 try {
     $app['db']->query('ALTER TABLE `Plugins` ADD `Id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST, ADD `Description` TEXT NOT NULL');
 } catch (\Exception $e) {
-    if ($app['db']->errorCode() !== '42S21' || $app['db']->errorCode() !== '42000') {
+    if ($app['db']->errorCode() !== '42S21' && $app['db']->errorCode() !== '42000') {
         $upgradeErrors[] = $e->getMessage();
         $logger->addError($e->getMessage());
     }

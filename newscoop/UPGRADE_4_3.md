@@ -6,10 +6,10 @@
 2. Copy Newscoop 4.3 files over the 4.2.3/4.2.4 files (e.g. `sudo cp -r /home/user/Newscoop43/newscoop/ /var/www/newscoop/`).
 3. Run `upgrade.php` script. (Go to `http://www.example.com/upgrade.php`)
 4. Check if there are any instructions to follow in the output of upgrade script. If so, then follow the steps.
-5. If upgrade script is done, clear the cache folder: `sudo rm -r cache/*`.
-6. Run `php composer.phar dump-autoload --optimize` command in `../newscoop/` directory - this will autoload new classes.
-7. Run `php application/console assets:install public/` command in `../newscoop/` directory - it will install assets.
-8. Run `php scripts/fixer.php` script in `../newscoop/` directory - it will fix files permissions.
+5. Run `php composer.phar dump-autoload --optimize` command in `../newscoop/` directory - this will autoload new classes.
+6. Run `php application/console assets:install public/` command in `../newscoop/` directory - it will install assets.
+7. Run `php scripts/fixer.php` script in `../newscoop/` directory - it will fix files permissions.
+8. Clear the cache folder: `sudo rm -rf cache/*`.
 9. You are done!
 
 Above steps are required to upgrade Newscoop 4.2.3/4.2.4 to 4.3.
