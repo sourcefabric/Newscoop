@@ -240,7 +240,7 @@ class DatabaseService
                 }
                 if (!$command_known) {
                     $errors++;
-                    $errorQueries[] = $query;
+                    $this->errorQueries[] = $query;
                     $logger->addError('Error with query "'.$query.'"');
 
                     continue;
