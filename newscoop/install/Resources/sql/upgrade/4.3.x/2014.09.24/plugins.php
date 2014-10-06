@@ -3,7 +3,7 @@
 $newscoopDir = realpath(dirname(__FILE__).'/../../../../../../').'/';
 
 require_once $newscoopDir.'vendor/autoload.php';
-require_once $newscoopDir.'/conf/database_conf.php';
+require $newscoopDir.'conf/database_conf.php';
 
 use Monolog\Logger;
 
@@ -28,8 +28,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'charset'   => 'utf8',
     )
 ));
-
-$app['db']->connect();
 
 try {
     $app['db']->query('ALTER TABLE `Plugins` DROP PRIMARY KEY');
