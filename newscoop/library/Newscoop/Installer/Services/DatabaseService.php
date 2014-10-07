@@ -238,11 +238,8 @@ class DatabaseService
                         $command_script = trim($command_parts[2], ";");
                     }
                 }
-                if (!$command_known) {
-                    $errors++;
-                    $errorQueries[] = $query;
-                    $logger->addError('Error with query "'.$query.'"');
 
+                if (!$command_known) {
                     continue;
                 }
 

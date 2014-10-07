@@ -1,3 +1,30 @@
+## Upgrading Newscoop version 4.2.3/4.2.4 to 4.3
+
+**Important!** Remember to backup all your data before performing upgrade.
+
+1. Remove `newscoop/vendor` directory and its content from your current Newscoop instance (`sudo rm -rf newscoop/vendor`).
+2. Copy Newscoop 4.3 files over the 4.2.3/4.2.4 files (e.g. `sudo cp -r /home/user/Newscoop43/newscoop/ /var/www/newscoop/`).
+3. Run `upgrade.php` script. (Go to `http://www.example.com/upgrade.php`)
+4. Check if there are any instructions to follow in the output of upgrade script. If so, then follow the steps.
+5. Run `php composer.phar dump-autoload --optimize` command in `../newscoop/` directory - this will autoload new classes.
+6. Run `php application/console assets:install public/` command in `../newscoop/` directory - it will install assets.
+7. Run `php scripts/fixer.php` script in `../newscoop/` directory - it will fix files permissions.
+8. Clear the cache folder: `sudo rm -rf cache/*`.
+9. You are done!
+
+Above steps are required to upgrade Newscoop 4.2.3/4.2.4 to 4.3.
+
+We also recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha`. 
+
+How to do this?:
+
+* Make a backup of `newscoop/plugins/` directory.
+* Remove the whole `newscoop/plugins/` content(Linux command: `sudo rm -r newscoop/plugins/*`).
+* Download the fixed package of legacy plugins from [here][3].
+* Extract archive and copy it to `newscoop/plugins/` directory.
+* Go to newscoop root folder (`../newscoop/`) and execute `php composer.phar dump-autoload —-optimize`
+* Clear the cache folder: `sudo rm -r cache/*`
+
 ## Break Changes for old plugins:
 
 #### CampInstallationBaseHelper is removed.
@@ -160,19 +187,6 @@ Full list of parameters:
 * ```string``` ```runOnHost``` - Run jobs only on this hostname
 * ```string``` ```environment``` - Development environment for this job
 * ```string``` ```runAs``` - Run as this user, if crontab user has `sudo` privileges
-
-## Upgrading Newscoop version 4.2.4 to 4.3
-
-We recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha`. 
-
-How to do this?:
-
-* Make a backup of `newscoop/plugins/` directory.
-* Remove the whole `newscoop/plugins/` content(Linux command: `sudo rm -r newscoop/plugins/*`).
-* Download the fixed package of legacy plugins from [here][3].
-* Extract archive and copy it to `newscoop/plugins/` directory.
-* Go to newscoop root folder (`../newscoop/`) and execute `php composer.phar dump-autoload —-optimize`
-* Clear the cache folder: `sudo rm -r cache/*`
 
 ## Other changes
 
