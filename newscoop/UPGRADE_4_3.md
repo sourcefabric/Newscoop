@@ -15,7 +15,7 @@
 
 Above steps are required to upgrade Newscoop 4.2.3/4.2.4 to 4.3.
 
-We also recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha` or remove them, because they will not be compatible with Newscoop 4.3 anymore.
+We also recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha`, because they will not be compatible with Newscoop 4.3 anymore.
 
 How to do this?:
 
