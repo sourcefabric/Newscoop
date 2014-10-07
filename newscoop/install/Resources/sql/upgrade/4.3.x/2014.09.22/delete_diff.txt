@@ -1530,6 +1530,7 @@ newscoop/get_img.php
 newscoop/htaccess
 newscoop/include/get_ip.php
 newscoop/include/var_hook.php
+newscoop/include/smarty/campsite_plugins/block.list_community_feeds.php
 newscoop/install/classes/CampInstallation.php
 newscoop/install/classes/CampInstallationBase.php
 newscoop/install/classes/CampInstallationView.php
