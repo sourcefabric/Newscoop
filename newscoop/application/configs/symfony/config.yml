@@ -9,7 +9,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    templating:      { engines: ['twig', 'smarty', 'php'] }
+    templating:      { engines: ['twig', 'php'] }
     trusted_proxies: ~
     session:
         storage_id: newscoop_newscoop.session.storage
@@ -61,12 +61,13 @@ fos_rest:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
             'Newscoop\Exception\InvalidParametersException': 422
-            'Newscoop\Exception\ResourceIsEmptyException': 404
+            'Newscoop\Exception\ResourceIsEmptyException': 204
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
+            'Newscoop\Exception\ResourceNotModifiedException': 304
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
             'Newscoop\Exception\InvalidParametersException': true
@@ -76,6 +77,7 @@ fos_rest:
             'Symfony\Component\Form\Exception\InvalidArgumentException' : true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
+            'Newscoop\Exception\ResourceNotModifiedException': false
 
 fos_oauth_server:
     service:
@@ -102,6 +104,12 @@ jms_serializer:
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Image:
                 namespace_prefix: Newscoop\Image
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Snippet:
+                namespace_prefix: Newscoop\Entity\Snippet
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_SnippetTemplate:
+                namespace_prefix: Newscoop\Entity\Snippet\SnippetTemplate
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
@@ -144,12 +152,6 @@ newscoop_gimme:
     allow_origin:
         - "*"
 
-smarty:
-    options:
-        left_delimiter: "{{"
-        right_delimiter: "}}"
-        caching: false
-
 bazinga_expose_translation:
     locale_fallback: "en"
 
@@ -166,7 +168,6 @@ ewz_recaptcha:
 
 parameters:
     smarty.class: "CampTemplate"
-    templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
 
 ewz_recaptcha:
     public_key:   6LeVFuASAAAAAJvc6hlYEHZnlEIBakblsE54bTwA

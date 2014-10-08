@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new Newscoop\GimmeBundle\NewscoopGimmeBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new NoiseLabs\Bundle\SmartyBundle\SmartyBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),

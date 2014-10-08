@@ -200,6 +200,8 @@ services:
     newscoop.cache:
         class: Newscoop\Services\CacheService
         arguments: ["@system_preferences_service"]
+    newscoop.input_manipulator:
+        class: Newscoop\Services\InputManipulator
     user.garbage:
         class: Newscoop\Services\GarbageCollectionService
         arguments: ["@em"]
@@ -216,4 +218,3 @@ services:
     #     arguments:  ["@em", "@search.index"]
     #     tags:
     #         -  { name: kernel.event_listener, event: article.delete, method: update }
-

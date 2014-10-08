@@ -34,14 +34,12 @@
         "incenteev\/composer-parameter-handler":"~2.0",
         "bombayworks\/zendframework1":"1.11.*",
         "friendsofsymfony\/rest-bundle":"0.13.*@dev",
-        "behat\/behat":"2.5.1",
-        "behat\/common-contexts":"1.2.*@dev",
         "kriswallsmith\/buzz":">=0.7",
         "knplabs\/knp-paginator-bundle":"v2.3.2",
         "jms\/serializer-bundle":"0.12.0",
         "guzzle\/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "hybridauth\/hybridauth":"dev-master",
-        "noiselabs\/smarty-bundle":"dev-master",
+        "smarty/smarty":"3.1.19",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
         "knplabs\/knp-menu":"2.0.*@dev",
         "raulfraile\/ladybug-bundle":"0.*@dev",
@@ -64,7 +62,9 @@
     "require-dev":{
         "phpunit\/phpunit":"~4.0",
         "phpspec\/phpspec":"2.0.*@dev",
-        "liip/rmt": "1.1.4"
+        "liip/rmt": "1.1.4",
+        "behat\/behat":"2.5.1",
+        "behat\/common-contexts":"1.2.*@dev"
     },
     "autoload":{
         "psr-0":{
