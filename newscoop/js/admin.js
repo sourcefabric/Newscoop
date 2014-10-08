@@ -307,7 +307,7 @@ $(document.body).data('loginDialog',false)
  * @param {callback} p_handle
  * @return bool
  */
-function callServer(p_callback, p_args, p_handle, p_direct)
+function callServer(p_callback, p_args, p_handle, p_direct, p_custom_url)
 {
     if (!p_args) {
         p_args = [];
@@ -315,10 +315,17 @@ function callServer(p_callback, p_args, p_handle, p_direct)
 	if (undefined === p_direct) {
 		p_direct = false;
 	}
+    if (undefined === p_custom_url) {
+        p_custom_url = false;
+    }
 
     var use_method = 'POST';
 
 	var use_url = (p_direct) ? (p_callback) : (g_admin_url + '/json.php');
+
+    if (p_custom_url) {
+        use_url = p_custom_url;
+    }
 
     if(typeof(use_url) == 'object') {
         if (typeof use_url['method'] != 'undefined') {

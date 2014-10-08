@@ -2575,9 +2575,7 @@ class Article extends DatabaseObject {
                 }
             } elseif ($leftOperand == 'insection') {
                 $selectClauseObj->addWhere("Articles.NrSection IN " . $comparisonOperation['right']);
-            }
-            elseif ($leftOperand == 'complex_date')
-            {
+            } elseif ($leftOperand == 'complex_date') {
                 /* @var $param ComparisonOperation */
                 $fieldName = key(($roper = $param->getRightOperand()));
                 $searchValues = array();
@@ -2593,8 +2591,7 @@ class Article extends DatabaseObject {
                     $whereCondition = "Articles.Number IN (\n$sqlQuery)";
                     $selectClauseObj->addWhere($whereCondition);
                 }
-            }
-            else {
+            } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
                 $sqlQuery = self::ProcessCustomField($comparisonOperation, $languageId);
@@ -3054,6 +3051,9 @@ class Article extends DatabaseObject {
                 case 'bypublication':
                     $dbField = 'Articles.IdPublication';
                     break;
+                case 'bystatus':
+                    $dbField = 'Articles.Published';
+                    break;
                 case 'byissue':
                     $dbField = 'Articles.NrIssue';
                     break;
@@ -3096,8 +3096,23 @@ class Article extends DatabaseObject {
                                                         'IdLanguage'=>'fk_language_id');
                     $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
                     break;
-
-                default: // 'bycustom.ci/cs/num.__custom_field__.__default_value__'
+                case 'byauthor':
+                    //@todo change this with DOCTRINE2 when refactor
+                    $dbField = 'article_authors.last_name';
+                    $joinTable = "(SELECT CONCAT_WS(' ', a.last_name, a.first_name) AS name, a.last_name AS last_name, aa.fk_article_number, aa.fk_language_id \n"
+                               . "    FROM ArticleAuthors aa, Authors a \n"
+                               . "    WHERE aa.fk_author_id = a.id \n"
+                               . "    AND aa.fk_type_id = 1 \n"
+                               . "    AND (aa.order = 1 OR aa.order IS NULL) \n"
+                               // . "    GROUP BY fk_thread_id, fk_language_id \n" // needed?
+                               . "    ORDER BY aa.order ASC \n"
+                               . "    )"; // Only sort by first author
+                    $p_otherTables[$joinTable] =  array('__TABLE_ALIAS'=>'article_authors',
+                                                        'Number'=>'fk_article_number',
+                                                        'IdLanguage'=>'fk_language_id');
+                    $p_whereConditions[] = "`article_authors`.`name` IS NOT NULL";
+                    break;
+                default: // 'bycustom.ci/cs/num.Frep_news_paid.0
                     $field_parts = self::CheckCustomOrder($field);
                     if (!$field_parts['status']) {
                         break;
