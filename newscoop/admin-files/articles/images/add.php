@@ -77,7 +77,7 @@ camp_html_display_msgs();
 <script type="text/javascript" src="../../../js/jquery/ColVis.min.js"></script>
 <script type="text/javascript" src="../../../js/jquery/jquery.widgets.js"></script>
 <script type="text/javascript" src="../../../js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<script type="text/javascript" src="../../../js/admin.js"></script>
+<script type="text/javascript" src="../../../js/admin.js?v=1.0"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="../../../js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
 
