@@ -46,11 +46,11 @@
         <ul>
         {{ if ($current - 1) > 0 }}
             <li>
-                <a href="{{ generate_url route=$data['route'] parameters=$data['route_params']|array_merge:[$data['pageParameterName'] => ($data['current'] - 1)] }}">&laquo;&nbsp;Previous</a>
+                <a href="{{ generate_url route=$data['route'] parameters=$data['route_params']|array_merge:[$data['pageParameterName'] => ($data['current'] - 1)] }}">&laquo;&nbsp;{{ 'Previous'|translate:'messages' }}</a>
             </li>
         {{ else }}
             <li class="disabled">
-                <span>&laquo;&nbsp;Previous</span>
+                <span>&laquo;&nbsp;{{ 'Previous'|translate:'messages' }}</span>
             </li>
         {{ /if }}
 
@@ -100,11 +100,11 @@
 
         {{ if ($current +1) <= $pageCount }}
             <li>
-                <a href="{{ generate_url route=$data['route'] parameters=$data['route_params']|array_merge:[$data['pageParameterName'] => $current +1] }}">Next&nbsp;&raquo;</a>
+                <a href="{{ generate_url route=$data['route'] parameters=$data['route_params']|array_merge:[$data['pageParameterName'] => $current +1] }}">{{ 'Next'|translate:'messages' }}&nbsp;&raquo;</a>
             </li>
         {{ else }}
             <li class="disabled">
-                <span>Next&nbsp;&raquo;</span>
+                <span>{{ 'Next'|translate:'messages' }}&nbsp;&raquo;</span>
             </li>
         {{ /if }}
         </ul>
