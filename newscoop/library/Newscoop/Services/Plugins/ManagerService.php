@@ -25,8 +25,8 @@ use Symfony\Component\Process\Process;
  */
 class ManagerService
 {
-    /** 
-     * @var Doctrine\ORM\EntityManager 
+    /**
+     * @var Doctrine\ORM\EntityManager
      */
     protected $em;
 
@@ -60,10 +60,16 @@ class ManagerService
     public $pluginsDir;
 
     /**
+     * Config array
+     * @var array
+     */
+    protected $config = array();
+
+    /**
      * @param Doctrine\ORM\EntityManager $em
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
      */
-    public function __construct(EntityManager $em, $dispatcher, $pluginsService, Logger $logger)
+    public function __construct(EntityManager $em, $dispatcher, $pluginsService, Logger $logger, array $config)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
@@ -71,6 +77,7 @@ class ManagerService
         $this->logger = $logger;
         $this->newsoopDir = __DIR__ . '/../../../../';
         $this->pluginsDir = $this->newsoopDir . 'plugins';
+        $this->handleConfig($config);
     }
 
     /**
@@ -91,7 +98,7 @@ class ManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require --no-update ' . $pluginName .':' . $version .' && php composer.phar update ' . $pluginName .'  --prefer-dist --no-dev -n');
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require --no-update ' . $pluginName .':' . $version .' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update ' . $pluginName .'  --prefer-dist --no-dev -n');
 
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
@@ -121,7 +128,7 @@ class ManagerService
         $this->clearCache($output);
 
         if ($notify) {
-            $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' install');
+            $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' application/console plugins:dispatch ' . $pluginName.' install');
             $process->setTimeout(3600);
             $process->run(function ($type, $buffer) use ($output) {
                 if ('err' === $type) {
@@ -141,9 +148,9 @@ class ManagerService
 
     /**
      * Dispatch events for plugins
-     * @param  string $pluginName 
-     * @param  string $eventName  
-     * @param  mixed $output                  
+     * @param  string $pluginName
+     * @param  string $eventName
+     * @param  mixed $output
      */
     public function dispatchEventForPlugin($pluginName, $eventName, $output = null)
     {
@@ -156,7 +163,7 @@ class ManagerService
         }
 
         $this->dispatcher->dispatch(
-            'plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)), 
+            'plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)),
             new GenericEvent($this, array(
                 'plugin_name' => $pluginName
             ))
@@ -169,10 +176,10 @@ class ManagerService
 
     /**
      * Remove plugin from newscoop (composer+database+cleaning)
-     * 
-     * @param  string          $pluginName 
-     * @param  OutputInterface $output     
-     * @param  boolean         $notify     
+     *
+     * @param  string          $pluginName
+     * @param  OutputInterface $output
+     * @param  boolean         $notify
      */
     public function removePlugin($pluginName, OutputInterface $output, $notify = true)
     {
@@ -187,12 +194,12 @@ class ManagerService
 
         $composerFile = $this->newsoopDir . 'composer.json';
         $composerDefinitions = json_decode(file_get_contents($composerFile), true);
-        
+
         foreach ($composerDefinitions['require'] as $package => $version) {
             if ($package == $pluginName) {
 
                 if ($notify) {
-                    $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' remove');
+                    $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' application/console plugins:dispatch ' . $pluginName.' remove');
                     $process->setTimeout(3600);
                     $process->run(function ($type, $buffer) use ($output) {
                         if ('err' === $type) {
@@ -212,7 +219,7 @@ class ManagerService
 
                 file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
 
-                $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar update --no-dev ' . $pluginName);
+                $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --no-dev ' . $pluginName);
                 $process->setTimeout(3600);
                 $process->run(function ($type, $buffer) use ($output) {
                     if ('err' === $type) {
@@ -249,18 +256,18 @@ class ManagerService
 
     /**
      * Update installed plugin
-     * 
-     * @param  string          $pluginName 
-     * @param  string          $version    
-     * @param  OutputInterface $output     
-     * @param  boolean         $notify     
+     *
+     * @param  string          $pluginName
+     * @param  string          $version
+     * @param  OutputInterface $output
+     * @param  boolean         $notify
      */
     public function updatePlugin($pluginName, $version, OutputInterface $output, $notify = true)
     {
         $this->installComposer();
 
         $output->writeln('<info>Update "'.$pluginName.'"</info>');sleep(10);
-        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar update --prefer-dist --no-dev ' . $pluginName);
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --prefer-dist --no-dev ' . $pluginName);
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
@@ -280,7 +287,7 @@ class ManagerService
         $this->prepareCacheDir();
 
         if ($notify) {
-            $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update');
+            $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' application/console plugins:dispatch ' . $pluginName.' update');
             $process->setTimeout(3600);
             $process->run(function ($type, $buffer) use ($output) {
                 if ('err' === $type) {
@@ -313,8 +320,8 @@ class ManagerService
 
     /**
      * Enable plugin
-     * 
-     * @param  Plugin $plugin 
+     *
+     * @param  Plugin $plugin
      */
     public function enablePlugin(Plugin $plugin)
     {
@@ -326,7 +333,7 @@ class ManagerService
 
     /**
      * Disable plugin
-     * @param  Plugin $plugin 
+     * @param  Plugin $plugin
      */
     public function disablePlugin(Plugin $plugin)
     {
@@ -372,10 +379,10 @@ class ManagerService
         $update = implode(' ', $update);
 
         if ($doUpdate) {
-            $doUpdate = ' && php composer.phar update ' . $update . ' --no-dev';
+            $doUpdate = ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update ' . $update . ' --no-dev';
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require ' . $require.' --no-update'.$doUpdate);
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require ' . $require.' --no-update'.$doUpdate);
         $output->writeln('<info>require ' . $require.' --no-update</info>');
         if ($doUpdate) {
             $output->writeln('<info>update ' . $update.'</info>');
@@ -416,7 +423,7 @@ class ManagerService
     /**
      * Check if plugin is installed
      * TODO
-     * 
+     *
      * @param  string  $pluginName
      * @return boolean
      */
@@ -427,11 +434,11 @@ class ManagerService
 
     /**
      * Clear cache after plugin installation
-     * 
+     *
      * @param  OutputInterface $output
      */
     private function clearCache($output)
-    {   
+    {
         $output->writeln('<info>remove '.realpath($this->newsoopDir.'cache/').'/*</info>');
         $process = new Process('rm -rf '.realpath($this->newsoopDir.'cache/').'/*');
         $process->setTimeout(3600);
@@ -509,5 +516,21 @@ class ManagerService
             $filesystem->mkdir($this->newsoopDir.'/cache/prod');
             $filesystem->mkdir($this->newsoopDir.'/cache/dev');
         }
+    }
+
+    private function handleConfig(array $config) {
+
+        foreach ($config AS $key => $value) {
+            if (trim($value) == '') {
+                unset($config[$key]);
+            }
+        }
+
+        // Make sure internal_memory_limit is always set
+        if (!isset($config['internal_memory_limit'])) {
+            $config['internal_memory_limit'] = ini_get('memory_limit');
+        }
+
+        $this->config = array_merge($this->config, $config);
     }
 }
