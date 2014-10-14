@@ -101,7 +101,7 @@ class FinishService
     /**
      * Save newscoop cronjobs in user cronjob file
      *
-     * @param SchedulerService $scheduler Cron job scheduler service
+     * @param  SchedulerService $scheduler Cron job scheduler service
      * @return bolean
      */
     public function saveCronjobs(SchedulerServiceInterface $scheduler)
@@ -205,5 +205,25 @@ class FinishService
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
         $stmt->execute();
+
+        $this->setupHtaccess();
+    }
+
+    /**
+     * Makes backup of current .htaccess file and copy the latest one
+     *
+     * @return boolean
+     */
+    public function setupHtaccess()
+    {
+        $htaccess = '/.htaccess';
+        if ($this->filesystem->exists($this->newscoopDir . $htaccess)) {
+            $this->filesystem->copy($this->newscoopDir . $htaccess, $this->newscoopDir . '/htaccess.bak');
+            $this->filesystem->copy($this->newscoopDir . '/htaccess.dist', $this->newscoopDir . $htaccess, true);
+
+            return true;
+        }
+
+        return false;
     }
 }
