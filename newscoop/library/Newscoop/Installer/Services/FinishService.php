@@ -16,6 +16,7 @@ use Newscoop\Entity\User;
 use Newscoop\SchedulerServiceInterface;
 use Crontab\Crontab;
 use Crontab\Job;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * Finish Newscoop installation tasks
@@ -206,7 +207,10 @@ class FinishService
         $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
         $stmt->execute();
 
-        $this->setupHtaccess();
+        $result = $this->setupHtaccess();
+        if ($result) {
+            throw new IOException($result);
+        }
     }
 
     /**
@@ -216,14 +220,15 @@ class FinishService
      */
     public function setupHtaccess()
     {
-        $htaccess = '/.htaccess';
-        if ($this->filesystem->exists($this->newscoopDir . $htaccess)) {
-            $this->filesystem->copy($this->newscoopDir . $htaccess, $this->newscoopDir . '/htaccess.bak');
+        try {
+            $htaccess = '/.htaccess';
+            if ($this->filesystem->exists($this->newscoopDir . $htaccess)) {
+                $this->filesystem->copy($this->newscoopDir . $htaccess, $this->newscoopDir . '/htaccess.bak');
+            }
+
             $this->filesystem->copy($this->newscoopDir . '/htaccess.dist', $this->newscoopDir . $htaccess, true);
-
-            return true;
+        } catch (IOException $e) {
+            return $e->getMessage();
         }
-
-        return false;
     }
 }
