@@ -16,6 +16,7 @@ use Newscoop\Entity\User;
 use Newscoop\SchedulerServiceInterface;
 use Crontab\Crontab;
 use Crontab\Job;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * Finish Newscoop installation tasks
@@ -101,7 +102,7 @@ class FinishService
     /**
      * Save newscoop cronjobs in user cronjob file
      *
-     * @param SchedulerService $scheduler Cron job scheduler service
+     * @param  SchedulerService $scheduler Cron job scheduler service
      * @return bolean
      */
     public function saveCronjobs(SchedulerServiceInterface $scheduler)
@@ -205,5 +206,29 @@ class FinishService
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
         $stmt->execute();
+
+        $result = $this->setupHtaccess();
+        if ($result) {
+            throw new IOException($result);
+        }
+    }
+
+    /**
+     * Makes backup of current .htaccess file and copy the latest one
+     *
+     * @return boolean
+     */
+    public function setupHtaccess()
+    {
+        try {
+            $htaccess = '/.htaccess';
+            if ($this->filesystem->exists($this->newscoopDir . $htaccess)) {
+                $this->filesystem->copy($this->newscoopDir . $htaccess, $this->newscoopDir . '/htaccess.bak');
+            }
+
+            $this->filesystem->copy($this->newscoopDir . '/htaccess.dist', $this->newscoopDir . $htaccess, true);
+        } catch (IOException $e) {
+            return $e->getMessage();
+        }
     }
 }
