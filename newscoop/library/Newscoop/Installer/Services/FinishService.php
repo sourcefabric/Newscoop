@@ -16,6 +16,7 @@ use Newscoop\Entity\User;
 use Newscoop\SchedulerServiceInterface;
 use Crontab\Crontab;
 use Crontab\Job;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * Finish Newscoop installation tasks
@@ -101,7 +102,7 @@ class FinishService
     /**
      * Save newscoop cronjobs in user cronjob file
      *
-     * @param SchedulerService $scheduler Cron job scheduler service
+     * @param  SchedulerService $scheduler Cron job scheduler service
      * @return bolean
      */
     public function saveCronjobs(SchedulerServiceInterface $scheduler)
@@ -205,5 +206,39 @@ class FinishService
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
         $stmt->execute();
+
+        $result = $this->setupHtaccess();
+        if (!empty($result)) {
+            throw new IOException(implode(" ", $result) . " Most likely it's caused by wrong permissions.");
+        }
+    }
+
+    /**
+     * Makes backup of current .htaccess file and copy the latest one
+     *
+     * @return array
+     */
+    public function setupHtaccess()
+    {
+        $htaccess = '/.htaccess';
+        $errors = array();
+
+        try {
+            if ($this->filesystem->exists($this->newscoopDir . $htaccess)) {
+                $this->filesystem->copy(realpath($this->newscoopDir . $htaccess), realpath($this->newscoopDir) . '/htaccess.bak');
+            }
+        } catch (IOException $e) {
+            $errors[] = $e->getMessage();
+
+            return $errors;
+        }
+
+        try {
+            $this->filesystem->copy(realpath($this->newscoopDir . '/htaccess.dist'), realpath($this->newscoopDir) . $htaccess, true);
+        } catch (IOException $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        return $errors;
     }
 }
