@@ -6,10 +6,11 @@ require_once $newscoopDir.'vendor/autoload.php';
 
 use Newscoop\Installer\Services\FinishService;
 
+$upgradeErrors =array();
 $finishService = new FinishService();
 $result = $finishService->setupHtaccess();
-if ($result) {
-    $msg = $result . " Please copy it manually.";
+if (!empty($result)) {
+    $msg = implode(" ", $result) . " Most likely it's caused by wrong permissions. Make a backup of .htaccess manually.\nThen copy " . $newscoopDir ."htaccess.dist to " . $newscoopDir . ".htaccess";
     $logger->addError($msg);
-    array_splice($upgradeErrors, 0, 0, array($msg));
+    $upgradeErrors[] = $msg;
 }
