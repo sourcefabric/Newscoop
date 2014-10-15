@@ -37,3 +37,5 @@ parameters:
         frontController:
             params:
                 displayExceptions: true
+    jobby:
+        environment: 'test'

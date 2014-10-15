@@ -55,10 +55,6 @@ class SchedulerService implements SchedulerServiceInterface
                     $cronJob->{$setter}($value);
                 }
 
-                if (array_key_exists('environment', $this->$config) && !empty($this->config['environment'])) {
-                    $cronJob->setEnvironment($this->config['environment']);
-                }
-
                 $cronJob->setName($jobName);
                 $this->em->persist($cronJob);
                 $this->em->flush($cronJob);
@@ -96,6 +92,10 @@ class SchedulerService implements SchedulerServiceInterface
      */
     public function addSchedulerJob($jobName, array $config)
     {
+        if (array_key_exists('environment', $this->config) && !empty($this->config['environment'])) {
+            $config['environment'] = $this->config['environment'];
+        }
+
         $this->jobby->add($jobName, $config);
     }
 
