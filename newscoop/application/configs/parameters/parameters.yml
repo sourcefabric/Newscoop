@@ -149,5 +149,5 @@ parameters:
     search.article:
         type: ["news"]
         rendition: ''
-    jobby:
+    scheduler:
         environment: 'prod'

@@ -14,5 +14,5 @@ parameters:
                 displayExceptions: "1"
     session:
         cookie_domain: ""
-    jobby:
+    scheduler:
         environment: 'dev'
