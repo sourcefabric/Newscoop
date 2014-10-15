@@ -41,6 +41,10 @@ NewscoopGimmeBundleConfigureApi:
 newscoop:
     prefix: /
     resource: "@NewscoopNewscoopBundle/Resources/config/routing.yml"
+articles:
+    prefix: /
+    prefix: /api
+    resource: "@NewscoopArticlesBundle/Resources/config/routing.yml"
 plugins:
     resource: .
     type: plugins

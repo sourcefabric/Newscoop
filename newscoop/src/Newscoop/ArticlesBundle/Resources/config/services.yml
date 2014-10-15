@@ -4,3 +4,7 @@ services:
         arguments: ["@templating"]
         tags:
           - { name: kernel.event_listener, event: newscoop_admin.interface.articles.editorialcomments, method: listEditorialComments }
+
+    newscoop.editorial_comments:
+        class: Newscoop\ArticlesBundle\Services\EditorialCommentsService
+        arguments:  ["@em"]
