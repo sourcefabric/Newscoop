@@ -1,4 +1,4 @@
-'Usage at automatic statistics': null
+'Usage at automatic statistics': 'Brug af automatisk statistik'
 'Event Color': 'Farve på begivenhed'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Indtast et tal større end $1 og mindre end $2 i $3 feltet.'
 'You do not have the right to translate article types.': 'Du har ikke rettigheder til at oversætte artikel typer.'
@@ -16,12 +16,12 @@
 Custom: Brugerdefineret
 'Characters limit': 'Tegn begrænsning'
 'The template name may only contain letters and the underscore (_) character.': 'Skabelonens navn må kun indeholde bogstaver og underscore tegnet (_)'
-'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': null
+'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 'Feltnavnent er i brug som en grundegenskab for artiklen. Feltets indhold bliver ikke vist i skabelonerne.'
 'The property $1 is already in use.': 'Egenskaben $1 er allerede i brug.'
 Precision: Præcision
 'Can not convert the field $1 from $2 to type $3.': 'Feltet $1 kan ikke konverteres fra type $2 til type $3.'
 'Are you sure you want to make $1 a $2 field?': 'Vil du lave $1 til et $2 felt?'
-'Is Content': null
+'Is Content': 'Er Indhold'
 'Back to Article Types List': 'Tilbage til artikel type liste'
 show: vis
 hide: skjul
@@ -37,8 +37,8 @@ hide: skjul
 Show/Hide: Vis/Skjul
 'Renaming article type field': 'Omdøber artikel type felt'
 'Rename field': 'Omdøb felt'
-'Reassign a field type': null
-'Display Name': null
+'Reassign a field type': 'Tildel en ny felttype'
+'Display Name': 'Vist navn'
 'Are you sure you want to $1 the article type field $2?': 'Vil du $1 artikel type feltet $2?'
 'Adding new article type': 'Tilføjer ny artikel type'
 'Add translation:': 'Tilføj oversættelse:'

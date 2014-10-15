@@ -1,27 +1,27 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
-'Delete anyway': null
-'Reset order': null
-'Order changes will be lost. Are you sure you want to continue?': null
-'Topics order saved.': null
-'Show languages': null
-'Save order': null
-'Click to edit': null
-'Add root topic': null
-'Topic was deleted.': null
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'Ha folytatod, akkor a téma és minden altéma leválasztásra kerül az összes cikkről, és törlésre fog kerülni.'
+'Delete anyway': 'Törlés mindenképp'
+'Reset order': 'Sorrend visszaállítása'
+'Order changes will be lost. Are you sure you want to continue?': 'El fognak veszni a sorrend módosításai. Biztosan folytatni akarod?'
+'Topics order saved.': 'A témák sorrendjének mentése megtörtént.'
+'Show languages': 'Nyelvek megjelenítése'
+'Save order': 'Sorrend mentése'
+'Click to edit': 'Kattints a szerkesztéshez'
+'Add root topic': 'Gyökértéma hozzáadása'
+'Topic was deleted.': 'A téma törlése megtörtént.'
 'The topic name is already in use by another topic.': 'Egy másik téma már használja a téma nevét.'
-'You must enter a name for the topic.': null
-'You must choose a language for the topic.': null
-'This topic has subtopics, therefore it cannot be deleted.': null
-'Add translation:': null
-'Add subtopic:': null
+'You must enter a name for the topic.': 'Meg kell adnia a téma nevét.'
+'You must choose a language for the topic.': 'Ki kell választanod a téma nyelvét.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Ez a téma tartalmaz altémákat, ezért nem törölhető.'
+'Add translation:': 'Fordítás hozzáadása:'
+'Add subtopic:': 'Altéma hozzáadása:'
 Top: null
-'You do not have the right to add topics.': null
-'You do not have the right to delete topics.': null
-'Are you sure you want to delete the topic $1?': null
-'You do not have the right to change topic name.': null
-'The topic $1 could not be deleted.': null
-'Adding new topic': null
-'Deleting topic': null
-'Change topic name': null
-'There are $1 articles using the topic.': null
-'Search for topics': null
+'You do not have the right to add topics.': 'Nincs jogod a témák hozzáadásához.'
+'You do not have the right to delete topics.': 'Nincs jogod a témák törléséhez.'
+'Are you sure you want to delete the topic $1?': 'Biztosan törölni akarod a/z $1 témát?'
+'You do not have the right to change topic name.': 'Nincs jogod a téma nevének módosításához.'
+'The topic $1 could not be deleted.': 'A/z $1 témát nem lehet törölni.'
+'Adding new topic': 'Új téma hozzáadása'
+'Deleting topic': 'Téma törlése'
+'Change topic name': 'Téma nevének módosítása'
+'There are $1 articles using the topic.': 'Jelenleg $1 cikk használja a témát.'
+'Search for topics': 'Témák keresése'

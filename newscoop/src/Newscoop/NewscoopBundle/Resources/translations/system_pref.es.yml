@@ -64,6 +64,9 @@ newscoop:
             imagewidth: null
             imageheight: null
             zoom: null
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: null
             usereplication: null
             serverdb: null
@@ -144,6 +147,8 @@ newscoop:
             separator: null
             stats: null
             zoom: null
+            richtext_status: null
+            richtext_length: null
             ratio: 'La tasa de cambio de tamaño toma precedencia sobre cualquier valor de "Anchura para cambio de tamaño" o "Altura para cambio de tamaño" que sea fijada aquí. Si no se elije una tasa pero sí se eligen tanto la anchura como la altura, entonces Newscoop utilizará el valor que dé como resultado el tamaño de imagen más pequeño. Los ajustes por defecto definidos aquí pueden siempre ser anulados por la tasa, anchura o altura definidas en una imagen específica, en una página de edición de artículo.'
             replication: 'Le permite configurar Newscoop para operar en dos servidores a la vez, lo cual es una característica de seguridad en caso de problemas de hardware o de red.'
             filter: 'Ingrese las palabras clave para las plantillas que usted desee ocultar en el editor de plantillas, accesible desde la página de Administración de Plantillas. Por ejemplo, plantillas que ya no están en uso, pero que usted no desea borrar del servidor.'

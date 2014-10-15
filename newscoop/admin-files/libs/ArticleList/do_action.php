@@ -95,7 +95,7 @@ case 'delete':
         $creatorId = $article->getCreatorId();
         if ($article->delete()) {
             \Zend_Registry::get('container')->getService('dispatcher')
-                ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array('user' => $creatorId)));
+                ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent(null, array('user' => $creatorId)));
             $success = true;
             $affectedArticles += 1;
         } else {

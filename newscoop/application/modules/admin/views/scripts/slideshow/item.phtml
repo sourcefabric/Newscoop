@@ -1,5 +1,6 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferenceService = \Zend_Registry::get('container')->getService('preferences');
 ?>
 <li id="item-<?php echo $this->item->getId(); ?>"<?php echo $this->current !== null && $this->current->getId() === $this->item->getId() ? ' class="active"' : ''; ?>>
     <a href="<?php echo $this->url(array(
@@ -11,7 +12,17 @@ $translator = \Zend_Registry::get('container')->getService('translator');
     )); ?>">
         <figure>
             <div><?php echo $this->item->isImage() ? $this->renditionPreview($this->item->getRendition(), 150, 150, $this->item->getImage()) : $this->videoPreview($this->item->getVideoUrl()); ?></div>
-            <figcaption><?php echo $this->item->getCaption() ? $this->escape($this->item->getCaption()) : $translator->trans('no caption', array(), 'article_images'); ?></figcaption>
+            <figcaption><?php
+                if ($this->item->getCaption()) {
+                    if ($preferenceService->MediaRichTextCaptions == 'Y') {
+                        echo $this->item->getCaption();
+                    } else {
+                        echo $this->escape($this->item->getCaption());
+                    }
+                } else {
+                    echo $translator->trans('no caption', array(), 'article_images');
+                }
+                ?></figcaption>
         </figure>
     </a>
     <a href="<?php echo $this->url(array(

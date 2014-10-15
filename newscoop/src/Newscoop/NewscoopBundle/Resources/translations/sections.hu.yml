@@ -1,53 +1,53 @@
-default: null
-'before you can configure the section templates.': null
-'You have to assign a theme to the issue': null
-'The section number $1 was already in use.': null
-'Delete all articles written in $1 language from this section': null
-'Delete all articles and all of their translations': null
-'Delete only this section ($1)': null
-'Delete all translations of this section': null
-'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': null
-'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': null
-'Section updated': null
-'There are $1 subscriptions which will be affected.': null
-'There are $1 articles in this section.': null
-'Go To Articles': null
-'Add section to all subscriptions.': null
-'Delete section from all subscriptions.': null
-'A total of $1 subscriptions were updated.': null
-'Name<BR><SMALL>(click to see articles)</SMALL>': null
-'Delete section $1': null
-'Adding new section': null
-'You do not have the right to add sections.': null
-'The section $1 has been successfuly added.': null
-'Please check if another section with the same number or URL name does not exist already.': null
-'Delete section': null
-'You do not have the right to delete sections.': null
-'Are you sure you want to delete the section $1?': null
-'Deleting section': null
-'The section $1 has been deleted.': null
-'Configure section': null
-'The section could not be changed.': null
-'Duplicate section': null
-'The destination issue is the same as the source issue.': null
-'Error updating subscriptions.': null
-'Duplicating section': null
-'The section $1 could not be duplicated': null
-'Section $1 has been duplicated to $2. $3 of $4': null
-'You do not have the right to modify sections.': null
-'A total of $1 articles were deleted.': null
-'Duplicate Section:': null
-'Existing Section': null
-'Go to new section': null
-'Go to source section': null
-'New Section': null
-'Please select either $1 or $2.': 'Válasszon a/z $1 vagy a/z $2 közül.'
-'Select destination section:': null
-OR: null
-'URL Name': null
-'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': null
-Warning: null
-'You must select a section.': null
-'You must specify a name for the section.': null
-'The section could not be added.': null
-'Add new section': null
+default: alapértelmezett
+'before you can configure the section templates.': 'mielőtt beállíthatod a rovatsablonokat.'
+'You have to assign a theme to the issue': 'Hozzá kell rendelned egy témát a számhoz.'
+'The section number $1 was already in use.': 'A/z $1 számú rovat már foglalt volt.'
+'Delete all articles written in $1 language from this section': 'A/z $1 nyelven írott összes cikk törlése ebből a rovatból'
+'Delete all articles and all of their translations': 'Minden cikk és összes fordításuk törlése'
+'Delete only this section ($1)': 'Csak ezen rovat ($1) törlése'
+'Delete all translations of this section': 'Ezen szekció összes fordításának törlése'
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 'Cikkek számai<BR><SMALL>(Közzétéve/Összes)</SMALL>'
+'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 'Az URL-névnek ezen szám összes rovatához egyedinek kell lennie.<br>Az általad megadott URL-név ($1) ütközik a/z $2$3 rovattal. $4$5'
+'Section updated': 'A rovat frissítése megtörtént'
+'There are $1 subscriptions which will be affected.': '$1 előfizetés van, amelyek érintettek lesznek'
+'There are $1 articles in this section.': 'Ebben a rovatban $1 cikk van. '
+'Go To Articles': 'Ugrás a cikkekhez'
+'Add section to all subscriptions.': 'Rovat hozzáadása az összes előfizetéshez.'
+'Delete section from all subscriptions.': 'A rovat törlése az összes előfizetésből.'
+'A total of $1 subscriptions were updated.': 'Összesen $1 előfizetés került frissítésre.'
+'Name<BR><SMALL>(click to see articles)</SMALL>': 'Név<BR><SMALL>(kattints ide a cikkek megtekintéséhez)</SMALL>'
+'Delete section $1': 'A/z $1 rovat törlése'
+'Adding new section': 'Új rovat hozzáadása'
+'You do not have the right to add sections.': 'Nincs jogod a rovatok hozzáadásához.'
+'The section $1 has been successfuly added.': 'A/z $1 rovat hozzáadása sikerült.'
+'Please check if another section with the same number or URL name does not exist already.': 'Ellenőrizd, hogy létezik-e már másik, azonos számú vagy URL-nevű rovat.'
+'Delete section': 'Rovat törlése'
+'You do not have the right to delete sections.': 'Nincs jogod a rovatok törléséhez.'
+'Are you sure you want to delete the section $1?': 'Biztosan törölni akarod a/z $1 rovatot?'
+'Deleting section': 'Rovat törlése'
+'The section $1 has been deleted.': 'A/z $1 rovat törlése megtörtént.'
+'Configure section': 'Rovat konfigurálása'
+'The section could not be changed.': 'Nem lehet módosítani a rovatot.'
+'Duplicate section': 'Rovat megkettőzése'
+'The destination issue is the same as the source issue.': 'A célszám azonos a forrásszámmal.'
+'Error updating subscriptions.': 'Hiba történt az előfizetések frissítésekor.'
+'Duplicating section': 'Rovat megkettőzése'
+'The section $1 could not be duplicated': 'Nem lehet megkettőzni a/z $1 rovatot'
+'Section $1 has been duplicated to $2. $3 of $4': 'A/z $1 rovat megkettőzése a/z $2 rovatba megtörtént. $3 / $4'
+'You do not have the right to modify sections.': 'Nincs jogod a rovatok módosításához.'
+'A total of $1 articles were deleted.': 'Összesen $1 cikk került törlésre.'
+'Duplicate Section:': 'Rovat megkettőzése'
+'Existing Section': 'Létező rovat'
+'Go to new section': 'Ugrás az új rovathoz'
+'Go to source section': 'Ugrás a forrásrovathoz'
+'New Section': 'Új rovat'
+'Please select either $1 or $2.': 'Válassz a/z $1 vagy a/z $2 közül.'
+'Select destination section:': 'Célrovat kiválasztása:'
+OR: VAGY
+'URL Name': URL-név
+'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'A megadott rovatszám már létezik, adj meg másik értéket vagy keress egy meglévő rovatot a legördülőben.'
+Warning: Figyelmeztetás
+'You must select a section.': 'Ki kell választanod egy rovatot.'
+'You must specify a name for the section.': 'Meg kell adnod a rovat nevét.'
+'The section could not be added.': 'Nem lehet hozzáadni a rovatot.'
+'Add new section': 'Új rovat hozzáadása'

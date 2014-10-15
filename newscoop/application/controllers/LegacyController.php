@@ -63,7 +63,9 @@ class LegacyController extends Zend_Controller_Action
         // dispatches campsite
         $campsite->dispatch();
 
-        set_error_handler(create_function('', 'return true;'));
+        if (APPLICATION_ENV !== 'development' || APPLICATION_ENV !== 'dev') {
+            set_error_handler(create_function('', 'return true;'));
+        }
 
         // renders the site
         $campsite->render();

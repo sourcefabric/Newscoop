@@ -20,16 +20,16 @@ statusbar: statusbar
 'source view': 'se kilde'
 publish: udgiv
 notify: underret
-moderate: null
+moderate: moderer
 manage: administrer
-'list number': null
-'list bullet': null
+'list number': 'liste med tal'
+'list bullet': 'liste med punkter'
 link: link
 italic: kursiv
 indent: indryk
 image: billede
 'horizontal rule': 'vandret linje'
-handle: null
+handle: håndtag
 guest: gæst
 'font size': skriftstørrelse
 'font face': skrifttype
@@ -44,11 +44,11 @@ clear: ryd
 'character map': tegnoversigt
 bold: fed
 attach: vedhæft
-'any resource': null
+'any resource': 'valgfri ressource'
 admin: admin
 add: tilføj
-'You cant deny yourself to manage $1': null
-'You are not allowed to $1 $2.': null
+'You cant deny yourself to manage $1': 'Du kan ikke forbyde dig selv at administrere $1'
+'You are not allowed to $1 $2.': 'Du har ikke tilladelse til at $1 $2.'
 'User type saved.': 'Brugertype gemt.'
 'User type deleted.': 'Brugertype slettet.'
 'User type added.': 'Brugertype tilføjet.'
@@ -58,7 +58,7 @@ Themes: Temaer
 System: System
 Structure: Struktur
 'Search Indexer': 'Søge indexer'
-'Rich-Text Editor Preferences': null
+'Rich-Text Editor Preferences': 'Indstillinger for tekstredigering'
 ReCaptcha: ReCaptcha
 Polls: Afstemninger
 'Permissions:': 'Tilladelser:'

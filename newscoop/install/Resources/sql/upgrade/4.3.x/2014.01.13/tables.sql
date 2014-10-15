@@ -1,7 +1,3 @@
-# Introduce the Snippet Entity
----
---- Snippets
----
 DROP TABLE IF EXISTS `Snippets`;
 CREATE TABLE Snippets (
   Id INT AUTO_INCREMENT NOT NULL,
@@ -12,7 +8,6 @@ CREATE TABLE Snippets (
   UNIQUE INDEX UNIQ_1457978AF846113F (TemplateId),
   PRIMARY KEY(Id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
 DROP TABLE IF EXISTS `SnippetTemplates`;
 CREATE TABLE SnippetTemplates (
   Id INT AUTO_INCREMENT NOT NULL,
@@ -25,9 +20,7 @@ CREATE TABLE SnippetTemplates (
   IconActive LONGTEXT NOT NULL,
   PRIMARY KEY(Id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
 ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
-
 DROP TABLE IF EXISTS `ArticleSnippets`;
 CREATE TABLE ArticleSnippets (
   ArticleId INT NOT NULL,

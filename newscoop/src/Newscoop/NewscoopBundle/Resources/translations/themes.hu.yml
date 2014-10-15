@@ -1,88 +1,88 @@
 'Duplicate assignment': null
-Templates: null
-'Import theme': null
-'Import succeded!': null
-'Import failed!': null
-'Edit template: $1': null
+Templates: Sablonok
+'Import theme': 'Téma importálása'
+'Import succeded!': 'Sikerült az importálás!'
+'Import failed!': 'Nem sikerült az importálás!'
+'Edit template: $1': 'Sablon szerkesztése: $1'
 'Set new name to': null
-'Rename file': null
-'Caching templates in:': null
-'Caching templates finished': null
-'Theme name': null
-'Theme is assigned and can not be deleted': null
-'Theme export was not successful. Check please that the server is not out of disk space.': null
-'The theme can not be unassigned because it is in use by issues ($1) in this publication': null
-zip: null
-version: null
-uploaded: null
-updated: null
+'Rename file': 'Fájl átnevezése'
+'Caching templates in:': 'Sablonok gyorsítótárazásának helye:'
+'Caching templates finished': 'A sablonok gyorsítótárazása befejeződött'
+'Theme name': 'A téma neve'
+'Theme is assigned and can not be deleted': 'A téma hozzá van rendelve és nem törölhető'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'A téma exportálása nem sikerült. Ellenőrizd, hogy nem fogyott-e el a lemezterület a kiszolgálón.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Nem lehet megszüntetni a téma hozzárendelését, mert használják számok ($1) ebben a kiadványban'
+zip: zip
+version: verzió
+uploaded: feltöltve
+updated: frissítve
 'or higher': null
-moved: null
-installed: null
-deleted: null
-'You must select at least one template to perform an action.': null
-Upload: null
-'Unassign theme': null
-'Unassign successful': null
-Unassign: null
-'Theme version': null
-'Theme settings updated.': null
-'Theme settings saved.': null
-'Theme name / version': null
-'Theme management': null
-'Theme $1': null
-'The file $1 is empty.': null
-'Template object $1 was renamed to $2.': null
-'Template object $1 was deleted.': null
-'Template $1 was duplicated into $2.': null
-'Template $1 $2.': null
-'Something broke': null
-'Section page template': null
-Saving..: null
-'Saving settings failed.': null
-'Save All': null
-'Required Newscoop version': null
-Replace: null
-'New template $1 created.': null
-'New name': null
-'Name cant be empty': null
-'Last modified': null
+moved: áthelyezve
+installed: telepítve
+deleted: törölve
+'You must select at least one template to perform an action.': 'Művelet végrehajtásához ki kell választanod legalább egy sablont.'
+Upload: Feltöltés
+'Unassign theme': 'Téma hozzárendelésének megszüntetése'
+'Unassign successful': 'A hozzárendelés megszüntetése sikerült'
+Unassign: 'Hozzárendelés megszüntetése'
+'Theme version': 'Téma verziószáma'
+'Theme settings updated.': 'A téma beállításainak frissítése megtörtént.'
+'Theme settings saved.': 'A téma beállításainak mentése megtörtént.'
+'Theme name / version': 'Téma neve / verziója'
+'Theme management': 'Téma kezelése'
+'Theme $1': '$1 téma'
+'The file $1 is empty.': 'A/z $1 fájl üres.'
+'Template object $1 was renamed to $2.': 'A/z $1 sablonobjektum átnevezése $2 névre megtörtént.'
+'Template object $1 was deleted.': 'A/z $1 sablonobjektum törlése megtörtént.'
+'Template $1 was duplicated into $2.': 'A/z $1 sablon másolásra került a/z $2 sablonba.'
+'Template $1 $2.': '$1 sablon $2.'
+'Something broke': 'Valami elromlott'
+'Section page template': 'Rovatlap sablonja'
+Saving..: Mentés...
+'Saving settings failed.': 'Nem sikerült menteni a beállításokat.'
+'Save All': 'Az összes mentése'
+'Required Newscoop version': 'Szükséges Newscoop-verzió'
+Replace: Csere
+'New template $1 created.': 'Az új $1 sablon létrehozása megtörtént.'
+'New name': 'Új név'
+'Name cant be empty': 'A név nem lehet üres'
+'Last modified': 'Utolsó módosítás'
 'Issue page': null
-'Go to parent': null
-'Go to $1': null
-'Geo Filtering': null
-'Front page template': null
-'File size': null
-'File name': null
-'File $1 was replaced.': null
-'Failed unassigning theme': null
-Export: null
-'Error page template': null
-'Edit $1': null
-'Done uploading': null
-'Do you want to override $1?': null
-'Directory is empty': null
-'Directory $1 created.': null
+'Go to parent': 'Ugrás a szülőre'
+'Go to $1': 'Ugrás a következőre: $1 '
+'Geo Filtering': 'Földrajzi szűrés'
+'Front page template': Címlapsablon
+'File size': Fájlméret
+'File name': Fájlnév
+'File $1 was replaced.': 'A/z $1 fájl kicserélése megtörtént.'
+'Failed unassigning theme': 'Nem sikerült megszüntetni a téma hozzárendelését'
+Export: Exportálás
+'Error page template': Hibaoldalsablon
+'Edit $1': 'A/z $1 szerkesztése'
+'Done uploading': 'A feltöltés kész'
+'Do you want to override $1?': 'Kívánod felülbírálni a következőt: $1?'
+'Directory is empty': 'A könyvtár üres'
+'Directory $1 created.': 'A/z $1 könyvtár létrehozása megtörtént.'
 Design: null
-'Delete theme': null
-'Current directory:': null
-'Create folder': null
-'Create file': null
-'Copy to available themes': null
-'Copied successfully': null
-Compatibility: null
-'Click to enlarge': null
-'Choose destination': null
-'Cant override directory $1.': null
-'Cache Lifetime': null
-'Browse for the theme': null
-'Assigned successfully': null
-'Article page template': null
-'Article page': null
-'Are you sure you want to unassign this theme?': null
-'Are you sure you want to delete this theme?': null
-'Add to publication': null
-'$1 is not writable': null
-'$1 $2': null
-'$1 files $2': null
-'Available themes': null
+'Delete theme': 'Téma törlése'
+'Current directory:': 'Jelenlegi könyvtár:'
+'Create folder': 'Mappa létrehozása'
+'Create file': 'Fájl létrehozása'
+'Copy to available themes': 'Másolás létező témákba'
+'Copied successfully': 'A másolás sikerült'
+Compatibility: Kompatibilitás
+'Click to enlarge': 'Kattints a nagyításhoz'
+'Choose destination': 'Válassz célt'
+'Cant override directory $1.': 'A/z $1 könyvtár nem írható felül.'
+'Cache Lifetime': 'Gyorsítótár élettartama'
+'Browse for the theme': 'A téma keresése'
+'Assigned successfully': 'A hozzárendelés sikerült.'
+'Article page template': Cikkoldalsablon
+'Article page': Cikkoldal
+'Are you sure you want to unassign this theme?': 'Biztosan meg akarod szüntetni ennek a témának a hozzárendelését?'
+'Are you sure you want to delete this theme?': 'Biztosan törölni akarod ezt a témát?'
+'Add to publication': 'Hozzáadás kiadványhoz'
+'$1 is not writable': 'A/z $1 nem írható'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 fájlok $2'
+'Available themes': 'Elérhető témák'

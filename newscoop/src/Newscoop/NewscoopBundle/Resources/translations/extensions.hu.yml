@@ -1,26 +1,26 @@
 Loading...: Betöltés...
-'Latest 20 articles by popularity': null
-'Articles diagrams': null
-'Sourcefabric.org blog reader': null
-'Sourcefabric.org News reader': null
-'Feed reader': null
-Go: null
-'Wikipedia Search': null
-Files: null
-'Sourcefabric.org newsletter subscription': null
-'Maps search': null
-'Default location': null
+'Latest 20 articles by popularity': 'Az utolsó 20 cikk népszerűség szerint'
+'Articles diagrams': Cikkdiagramok
+'Sourcefabric.org blog reader': 'Sourcefabric.org blogolvasó'
+'Sourcefabric.org News reader': 'Sourcefabric.org hírek olvasó'
+'Feed reader': Hírolvasó
+Go: Ugrás
+'Wikipedia Search': Wikipédia-kereső
+Files: Fájlok
+'Sourcefabric.org newsletter subscription': 'Feliratkozás a Sourcefabric.org hírlevelére'
+'Maps search': 'Térképek keresése'
+'Default location': 'Alapértelmezett tartózkodási hely'
 Title: Cím
-'Sourcefabric.org feed reader': null
-'Sourcefabric.org dev feed reader': null
-'Recently Published Articles': null
-'Recently Modified Articles': null
-'Pending Articles': null
-'Paste google generated code': null
-'Most Popular Articles': null
-'Media files': null
-'Hello world!': null
-'Hello World!': null
-'Google gadget': null
-'Feed url': null
-'Access Denied': null
+'Sourcefabric.org feed reader': 'Sourcefabric.org hírolvasó'
+'Sourcefabric.org dev feed reader': 'Sourcefabric.org fejlesztői hírolvasó'
+'Recently Published Articles': 'Mostanában közzétett cikkek'
+'Recently Modified Articles': 'Mostanában módosított cikkek'
+'Pending Articles': 'Függőben lévő cikkek'
+'Paste google generated code': 'A Google által generált kód beillesztése'
+'Most Popular Articles': 'Legnépszerűbb cikkek'
+'Media files': Médiafájlok
+'Hello world!': 'Helló, világ!'
+'Hello World!': 'Helló, Világ!'
+'Google gadget': Google-modul
+'Feed url': 'Hírcsatorna URL-címe'
+'Access Denied': 'A hozzáférés megtagadva'

@@ -22,9 +22,8 @@ class AuditMaintenanceService
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
 
-
     /**
-     * @param array $config
+     * @param array                      $config
      * @param Doctrine\ORM\EntityManager $em
      */
     public function __construct(EntityManager $em)
@@ -35,19 +34,18 @@ class AuditMaintenanceService
     /**
      * Flush audit data
      *
-     * @return void 
+     * @return void
      */
     public function flush()
     {
         $events = $this->getEvents();
         try {
             $this->writeCsv($events);
-        } catch(\Exception $e) {
-            var_dump($e);
+        } catch (\Exception $e) {
             exit;
         }
 
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $this->em->remove($event);
         }
         $this->em->flush();
@@ -78,7 +76,7 @@ class AuditMaintenanceService
             throw new \Exception('Couldn\'t open the log file');
         }
 
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $e = array(
                 $event->getId(),
                 $event->getUser() ? $event->getUser()->getId() : NULL,

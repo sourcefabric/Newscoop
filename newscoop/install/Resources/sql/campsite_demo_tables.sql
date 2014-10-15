@@ -76,7 +76,7 @@ CREATE TABLE `ArticleImageCaptions` (
   `IdLanguage` int(11) NOT NULL,
   `IdImage` int(11) NOT NULL,
   `NrArticle` int(11) NOT NULL,
-  `caption` varchar(255) NOT NULL,
+  `caption` TEXT DEFAULT NULL,
   `articleImage_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `imageId` (`IdImage`,`NrArticle`,`IdLanguage`),
@@ -588,7 +588,7 @@ CREATE TABLE `Images` (
   `TimeCreated` datetime DEFAULT NULL,
   `LastModified` datetime DEFAULT NULL,
   `URL` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `width` int(11) DEFAULT NULL,
   `height` int(11) DEFAULT NULL,
   `Photographer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -2743,6 +2743,18 @@ CREATE TABLE user_oauth_clients (
   INDEX IDX_FD402C5119EB6921 (client_id),
   PRIMARY KEY(user_id, client_id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `community_ticker_event`;
+
+CREATE TABLE `community_ticker_event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
+  `params` longtext COLLATE utf8_unicode_ci,
+  `created` datetime NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

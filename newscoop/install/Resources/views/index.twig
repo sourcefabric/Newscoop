@@ -1,18 +1,43 @@
 {% extends "layout.twig" %}
 
+{% block header %}System compatibility{% endblock %}
 {% block content %}
-	{% if checkPassed %}All tests passed! <a href="{{ url('license') }}" type="button" class="btn btn-success">Next</a>{% else %} Flease fix you issues and refresh that page {% endif %}
-	<h4>Requirements:</h4>
-	<ul>
-	{% for req in requirements %}
-		<li>{% if req.isFulfilled() %}<span class="label label-success">OK</span>{% else %} {% if req.isOptional() %}<span class="label label-warning">WARNING</span>{% else %}<span class="label label-danger">ERROR</span>{% endif %}{% endif %} {{ req.getTestMessage() }}</li>
-	{% endfor %}
-	</ul>
+<div class="middle">
+				<h3>Requirements</h3>
+				<ul>
+					{% for req in requirements %}
+						<li class="{% if req.isFulfilled() %}{% else %}
+							{% if req.isOptional() %}
+									alert
+								{% else %}
+									fail
+								{% endif %}
+							{% endif %}">{{ req.getTestMessage() }}
+						</li>
+					{% endfor %}
+				</ul>
 
-	<h4>Recommendations</h4>
-	<ul>
-	{% for req in recommendations %}
-		<li>{% if req.isFulfilled() %}<span class="label label-success">OK</span>{% else %} {% if req.isOptional() %}<span class="label label-warning">WARNING</span>{% else %}<span class="label label-danger">ERROR</span>{% endif %}{% endif %} {{ req.getTestMessage() }}</li>
-	{% endfor %}
-	</ul>
+				<h3>Recommendations</h3>
+				<ul>
+					{% for req in recommendations %}
+						<li class="{% if req.isFulfilled() %}{% else %}
+							{% if req.isOptional() %}
+									alert
+								{% else %}
+									fail
+								{% endif %}
+							{% endif %}">{{ req.getTestMessage() }}
+						</li>
+					{% endfor %}
+				</ul>
+
+			</div>
+
+			<div class="bottom notification {% if checkPassed == false %}fail{% else %}{% if warning %}alert{% endif %}{% endif %}">
+			{% if checkPassed %}
+				<span>All is well! {% if warning %}There are some warnings but you can continue installation.{% endif %}</span>
+				<a href="{{ url('license') }}" class="btn btn-blue">Next</a>
+			{% else %}<span>Your configuration is not compatible. Please make required changes.</span>{% endif %}
+				<a href="{{ url('index') }}" class="btn btn-white">Refresh</a>
+			</div>
 {% endblock %}

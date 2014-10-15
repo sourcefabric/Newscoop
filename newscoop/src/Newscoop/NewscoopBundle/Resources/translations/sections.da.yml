@@ -23,14 +23,14 @@ default: standard
 'Please check if another section with the same number or URL name does not exist already.': 'Kontroller om en anden sektion bruger samme nummer eller URL.'
 'Delete section': 'Slet sektion'
 'You do not have the right to delete sections.': 'Du har ikke rettigheder til at slette sektioner.'
-'Are you sure you want to delete the section $1?': 'Er du sikker på du vil slette sektionen $1?'
+'Are you sure you want to delete the section $1?': 'Vil du slette sektionen $1?'
 'Deleting section': 'Sletter sektion'
 'The section $1 has been deleted.': 'Sektionen $1 blev slettet.'
 'Configure section': 'Rediger sektion'
 'The section could not be changed.': 'Sektionen kunne ikke ændres.'
 'Duplicate section': 'Kopier sektion'
-'The destination issue is the same as the source issue.': null
-'Error updating subscriptions.': null
+'The destination issue is the same as the source issue.': 'Kilde udgivelse og destinations udgivelse er identiske.'
+'Error updating subscriptions.': 'Abonnementer kunne ikke opdateres.'
 'Duplicating section': 'Kopierer sektion'
 'The section $1 could not be duplicated': 'Sektionen $1 kunne ikke kopieres'
 'Section $1 has been duplicated to $2. $3 of $4': 'Sektionen $1 blev kopieret til $2. $3 af $4'
@@ -39,13 +39,13 @@ default: standard
 'Duplicate Section:': 'Kopier sektion:'
 'Existing Section': 'Eksisterende sektion'
 'Go to new section': 'Gå til ny sektion'
-'Go to source section': null
+'Go to source section': 'Gå til kilde sektionen'
 'New Section': 'Ny sektion'
 'Please select either $1 or $2.': 'Vælg enten $1 eller $2.'
-'Select destination section:': null
+'Select destination section:': 'Vælg destinations sektionen:'
 OR: ELLER
 'URL Name': 'URL navn'
-'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': null
+'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'Sektionsnummeret eksisterer allerede. Angiv en anden værdi eller find en eksisterende sektion i menuen.'
 Warning: Advarsel
 'You must select a section.': 'Vælg en sektion.'
 'You must specify a name for the section.': 'Angiv et navn for sektionen.'

@@ -35,6 +35,9 @@ class BridgeController extends Controller
             }
         }
 
+        $logger = $this->container->get('monolog.logger.sentry');
+        \Monolog\ErrorHandler::register($logger);
+
         $application = \Zend_Registry::get('zend_application');
         $bootstrap = $application->getBootstrap();
 
@@ -51,7 +54,7 @@ class BridgeController extends Controller
         $front->setParam('bootstrap', $bootstrap);
         $front->setBaseUrl('/');
         $response = $front->dispatch();
-        
+
         //copy headers
         $symfonyHeaders = array();
         foreach ($response->getHeaders() as $key => $header) {

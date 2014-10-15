@@ -288,8 +288,6 @@ final class CampHTMLDocument
         $siteinfo['description'] = $this->getMetaTag('description');
         $tpl = CampTemplate::singleton();
         $tpl->template_dir = array_unique($tpl->template_dir);
-
-        array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         if (!$template) {
             $siteinfo['error_message'] = "No template set for display.";
         } elseif (!$this->templateExists($template, $tpl)) {
@@ -299,7 +297,6 @@ final class CampHTMLDocument
         if (!is_null($siteinfo['error_message'])) {
             $siteinfo['templates_path'] = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
             $template = '_campsite_error.tpl';
-            array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         }
 
         $tpl->assign('gimme', $context);
@@ -328,7 +325,11 @@ final class CampHTMLDocument
 
         try {
             $tpl->display($template);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            // log samrty errors to sentry channel
+            $logger = \Zend_Registry::get('container')->get('monolog.logger.sentry');
+            $logger->log(\Psr\Log\LogLevel::CRITICAL, 'Uncaught exception', array('exception' => $e));
+
             CampTemplate::trigger_error($e->getMessage(), $tpl);
         }
     } // fn render

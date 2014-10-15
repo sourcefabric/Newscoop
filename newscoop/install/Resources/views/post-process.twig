@@ -1,23 +1,42 @@
 {% extends "layout.twig" %}
 
+{% block header %}Newscoop has been successfully installed!{% endblock %}
 {% block content %}
-Cron jobs
+<div class="middle">
+<div class="text_links">
+	<p>
+		<strong>Find out more</strong> <br>
+			Please read the <em>Newscoop for Journalists and Editors</em> manual, which covers everything required to begin publishing news.
+	</p>
+		<a href="http://sourcefabric.booktype.pro/newscoop-43-for-journalists-and-editors/getting-started/" target="_blank" class="btn btn-white">Read manual</a>
 
-Autopublish: Modifies the status of issues and articles scheduled for certain actions.
+	<p>
+		<strong>The administration interface</strong> <br>
+			You can start creating and editing content right now, using Newscoop's special interface for the staff of your publication.
+	</p>
+		<a href="/admin" target="_blank" class="btn btn-blue">Admin interface</a>
+</div>
 
-Events Notifier: Sends emails to administrative users containing the latest events that took place in Newscoop.
+<br>
+	<p><strong>Cron jobs</strong> <br>
+	<em>Newscoop</em> needs some tasks to be run automatically, in order to keep specific content up to date. At this step, we will install them for you.</p>
 
-Indexer: Indexes the article content (update the search engine database).
+	<p>These tasks will run as cron jobs on your system, so you will be able to edit and customize them to meet your publication's requirements.</p>
 
-Statistics: Updates Web site statistics.
+	<p><strong>Autopublish:</strong> <br>
+	Modifies the status of issues and articles scheduled for certain actions.</p>
 
-Subscriptions Notifier: Sends emails to subscribers alerting them when their subscription ends.
+	<p><strong>Events Notifier:</strong> <br>
+	Sends emails to administrative users containing the latest events that took place in Newscoop.</p>
 
+	<p><strong>Indexer:</strong> <br>
+	Indexes the article content (updates the search engine database).</p>
 
-You can read more on this in the Newscoop manual.
+	<p><strong>Statistics:</strong> <br>
+	Updates Web site statistics for your publication.</p>
 
-{% for key, message in app.session.getFlashBag() %}
-	<div class="alert alert-{{ key }}">{{ message.0|raw }}</div>
-{% endfor %}
+	<p><strong>Subscriptions Notifier:</strong> <br>
+	Sends emails to subscribers alerting them when their subscription ends.</p>
 
+</div>
 {% endblock %}

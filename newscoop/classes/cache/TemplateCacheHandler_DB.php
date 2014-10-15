@@ -164,7 +164,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         . "content = '" . addslashes($cache_content) . "' WHERE "
                         . $cacheParams[$tpl_file]['where'];
                     } else {
-                        $queryStr = 'INSERT INTO Cache (' . implode(',', array_keys($campsiteVector))
+                        $queryStr = 'INSERT IGNORE INTO Cache (' . implode(',', array_keys($campsiteVector))
                         . ',template,expired,content) VALUES (';
                         foreach ($campsiteVector as $key => $value) {
                             $queryStr .= !isset($value) ? ($key == 'params' ? "''" : '0') . ','
@@ -173,7 +173,9 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         $queryStr .= "'$tpl_file',$exp_time,'" . addslashes($cache_content) . "')";
                     }
                     unset($cacheParams[$tpl_file]);
+
                     $g_ado_db->executeUpdate($queryStr);
+
                     $return = $g_ado_db->affected_rows() > 0;
                 }
                 break;

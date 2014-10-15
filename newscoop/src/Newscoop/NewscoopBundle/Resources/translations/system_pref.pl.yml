@@ -64,6 +64,9 @@ newscoop:
             imagewidth: 'Długość pomniejszanych zdjęć:'
             imageheight: 'Wysokość pomniejszanych zdjęć:'
             zoom: 'Włączyć zoom dla zdjęć w obrębie artykułu??'
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: 'Subskrypcje czytelników zarządzane zewnętrznie?'
             usereplication: 'Ustawić Serwer Replikacji Newscoop?'
             serverdb: 'Baza danych serwera Newscoop'
@@ -144,6 +147,8 @@ newscoop:
             separator: 'Określa separator słów kluczowych na stronie Edycji artykułu (przecinek lub myślnik).'
             stats: 'Ta opcja pozwala na gromadzenie statystyk dostępu czytelników do publikacji na serwerze. Jeśli używasz innej usługi do statystyk, wybierz ''Nie''. Wyłaczenie zbierania statystyk może zmniejszyć obciążenie serwera Newscoop.'
             zoom: 'Jeśli jest ustawiona na Tak, czytelnicy mogą powiększać obrazy artykułów w publikacjach stron, klikając na nie. Ta funkcja powiększania działa na wszelkie obrazy wstawiane do tekstu artykułu.'
+            richtext_status: null
+            richtext_length: null
             ratio: 'Wskaźnik zmiany rozmiaru ma pierwszeństwo przed każdą zmianą szerokości lub wartości zmiany wysokości, który jest ustawiony tutaj. Jeśli współczynnik nie jest ustawiony, ale wysokość i szerokość są ustawione to Newscoop użyje tych ostatnich wartości, co skutkuje mniejszym rozmiarem. Domyślne ustawienia mogą być przesłonięte przez stosunek szerokości lub wysokości ustawienia dla konkretnego obrazu ustawionej na inline stronie Edycji artykułu.'
             replication: 'Pozwala ustawić Newscoop aby działał na dwóch serwerach jednocześnie, co jest cechą bezpieczeństwa w przypadku sprzętu lub problemu z siecią.'
             filter: 'Wprowadź słowa kluczowe dla szablonów, które chcesz ukryć przed edytorami szablonów dostępnych za pośrednictwem strony ''Szablony''. Na przykład szablony, które są już w użyciu, ale nie chcesz, aby zostały usunięte z serwera.'

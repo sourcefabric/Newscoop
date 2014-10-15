@@ -448,15 +448,21 @@ class SymfonyRequirements extends RequirementCollection
         );
 
         $this->addRequirement(
-            is_writable(__DIR__.'/../public/files/'),
-            "public/files/ directory must be writable",
-            "Change the permissions of the \"<strong>$baseDir/public/files/</strong>\" directory so that the web server can write into it."
+            is_writable(__DIR__.'/../public/'),
+            "public/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/public/</strong>\" directory so that the web server can write into it."
         );
 
         $this->addRequirement(
             is_writable(__DIR__.'/../images/'),
             "images/ directory must be writable",
             "Change the permissions of the \"<strong>$baseDir/images/</strong>\" directory so that the web server can write into it."
+        );
+
+        $this->addRecommendation(
+            function_exists('mail'),
+            "sendmail should be installed",
+            "Install 'sendmail' package so that the Newscoop can send mails."
         );
 
         $this->addPhpIniRequirement(

@@ -129,7 +129,7 @@ $color_list = array(
 <TBODY>
 <TR>
     <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/left_arrow.png"></A></TD>
-    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/"></A></B></TD>
+    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/"><?php echo $translator->trans('Back to Article Types List', array(), 'article_type_fields'); ?></A></B></TD>
 </TR>
 </TBODY>
 </TABLE>
@@ -142,7 +142,7 @@ $color_list = array(
             echo '
                 <TD><A HREF="/'.$ADMIN.'/article_types/fields/add.php?f_article_type='.urlencode($articleTypeName).'" ><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/add.png" BORDER="0"></A></TD>
                 <TD><B><A HREF="/'.$ADMIN.'/article_types/fields/add.php?f_article_type='.urlencode($articleTypeName).'" >';
-                putGS("Add new field");
+                echo $translator->trans("Add new field");
                 echo '</A></B></TD>
             ';
         }

@@ -1,16 +1,20 @@
 {% extends "layout.twig" %}
 
+{% block fixed %}{% endblock %}
+{% block header %}Main settings{% endblock %}
 {% block content %}
-Main settings
-
-{% for key, message in app.session.getFlashBag() %}
-	<div class="alert alert-{{ key }}">{{ message.0|raw }}</div>
-{% endfor %}
-
 <form role="form" action="#" method="post">
-    {{ form_widget(form) }}
-
-    <input type="submit" name="submit" />
+    {{ form_row(form.site_title) }}
+    {{ form_row(form.recheck_user_password) }}
+    {{ form_row(form.user_email) }}
+    {{ form_widget(form._token) }}
+    {% set messages = app.session.flashbag.get('danger') %}
+	<div class="bottom {% if messages %}notification fail{% endif %}">
+    	{% for key, message in messages %}
+    		<span>{{ message|raw }}</span>{% if messages|length > 1 %}<br>{% endif %}
+		{% endfor %}
+		<input class="btn btn-blue" type="submit" value="Finish">
+		<input class="btn btn-white" type="reset" value="Reset">
+	</div>
 </form>
-
 {% endblock %}

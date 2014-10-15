@@ -238,11 +238,8 @@ class DatabaseService
                         $command_script = trim($command_parts[2], ";");
                     }
                 }
-                if (!$command_known) {
-                    $errors++;
-                    $errorQueries[] = $query;
-                    $logger->addError('Error with query "'.$query.'"');
 
+                if (!$command_known) {
                     continue;
                 }
 
@@ -250,6 +247,13 @@ class DatabaseService
                 $command_path = $this->combinePaths($command_path, $command_script);
 
                 require_once($command_path);
+
+                if (isset($upgradeErrors) && is_array($upgradeErrors) && count($upgradeErrors) > 0) {
+                    foreach ($upgradeErrors as $upgradeError) {
+                        $errors++;
+                        $this->errorQueries[] = $upgradeError;
+                    }
+                }
             }
         }
 
@@ -338,7 +342,7 @@ class DatabaseService
      *
      * @return boolean
      */
-    protected function renderFile($template, $target, $parameters)
+    public function renderFile($template, $target, $parameters)
     {
         if (!is_dir(dirname($target))) {
             mkdir(dirname($target), 0777, true);

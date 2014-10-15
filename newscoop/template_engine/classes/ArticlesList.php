@@ -84,7 +84,7 @@ class ArticlesList extends ListObject
     private $m_ignoreSection = false;
 
 
-    /**
+  /**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original
 	 * list (from which this was truncated) after the last element of this
@@ -98,18 +98,12 @@ class ArticlesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('articleList', serialize($this->m_constraints), serialize($this->m_order), $p_start, $p_limit, $p_count), 'article');
-        if ($cacheService->contains($cacheKey)) {
-            $articlesList = $cacheService->fetch($cacheKey);
-        } else {
-            $articlesList = Article::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count, false, false);
-            $cacheService->save($cacheKey, $articlesList);
-        }
+        $articlesList = Article::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count, false, false);
         $metaArticlesList = array();
         foreach ($articlesList as $article) {
             $metaArticlesList[] = new MetaArticle($article['language_id'], $article['number']);
         }
+
         return $metaArticlesList;
 	}
 

@@ -47,7 +47,6 @@ if (count($missingReq) > 0) {
 
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Newscoop\Installer\Services;
 use Symfony\Component\Validator\Constraints as Assert;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
@@ -135,33 +134,55 @@ $app->get('/', function (Silex\Application $app) use ($symfonyRequirements, $req
         }
     }
 
+    $warning = false;
+    foreach ($symfonyRequirements->getRecommendations() as $req) {
+        if (!$req->isFulfilled()) {
+            if ($req->isOptional()) {
+                $warning = true;
+            }
+        }
+    }
+
     return $app['twig']->render('index.twig', array(
         'requirements' => $requirements,
         'recommendations' => $symfonyRequirements->getRecommendations(),
-        'checkPassed' => $checkPassed
+        'checkPassed' => $checkPassed,
+        'NewscoopVersion' => new \CampVersion(),
+        'warning' => $warning
     ));
-});
+})
+->assert('_method', 'GET')
+->bind('index');
 
 $app->get('/license', function (Request $request) use ($app) {
     $form = $app['form.factory']->createNamedBuilder('license', 'form', array())
-        ->add('accept_terms', 'choice', array(
-            'choices'   => array('accept_terms'   => 'I accept license terms'),
-            'multiple'  => true,
-            'expanded'  => true,
+        ->setAction($app['url_generator']->generate('license'))
+        ->add('accept_terms', 'checkbox', array(
+            'label'     => 'I accept the license terms',
             'required' => true,
-            'constraints' => array(new Assert\NotBlank())
+            'constraints' => array(new Assert\NotBlank()),
+            'error_bubbling' => true
+        ))
+        ->add('submit', 'submit', array(
+            'label' => "Next",
         ))
         ->getForm();
 
     if ('POST' == $request->getMethod()) {
         $form->bind($request);
-
         if ($form->isValid()) {
             return $app->redirect($app['url_generator']->generate('prepare'));
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $app['session']->getFlashBag()->add('danger', $error->getMessage());
+            }
         }
     }
 
-    return $app['twig']->render('license.twig', array('form' => $form->createView()));
+    return $app['twig']->render('license.twig', array(
+        'form' => $form->createView(),
+        'NewscoopVersion' => new \CampVersion(),
+    ));
 })
 ->assert('_method', 'POST|GET')
 ->bind('license');
@@ -172,15 +193,37 @@ $app->get('/prepare', function (Request $request) use ($app) {
             'database_name' => 'newscoop',
             'server_port' => '3306'
         ))
-        ->add('server_name', null, array('constraints' => array(new Assert\NotBlank())))
-        ->add('server_port', null, array('required' => false))
-        ->add('user_name', null, array('constraints' => array(new Assert\NotBlank())))
-        ->add('user_password', 'password', array('constraints' => array(new Assert\NotBlank())))
-        ->add('database_name', null, array('constraints' => array(new Assert\NotBlank())))
-        ->add('override_database', 'choice', array(
-            'choices'   => array('override_database'   => 'Overwrite existing database?'),
-            'multiple'  => true,
-            'expanded'  => true,
+        ->add('server_name', null, array(
+            'constraints' => array(new Assert\NotBlank(array('message' => 'Server name value should not be blank.'))),
+            'required' => true,
+            'label' => "Server name:",
+            'error_bubbling' => true,
+        ))
+        ->add('server_port', null, array(
+            'required' => false,
+            'label' => "Server port:"
+        ))
+        ->add('user_name', null, array(
+            'constraints' => array(new Assert\NotBlank(array('message' => 'User name value should not be blank.'))),
+            'required' => true,
+            'label' => "User name:",
+            'error_bubbling' => true,
+        ))
+        ->add('user_password', 'password', array(
+            'constraints' => array(new Assert\NotBlank(array('message' => 'User password value should not be blank.'))),
+            'required' => true,
+            'label' => "Password:",
+            'error_bubbling' => true,
+        ))
+        ->add('database_name', null, array(
+            'constraints' => array(new Assert\NotBlank(array('message' => 'Database name value should not be blank.'))),
+            'required' => true,
+            'label' => "Database name:",
+            'error_bubbling' => true,
+        ))
+        ->add('override_database', 'checkbox', array(
+            'label' => 'Overwrite existing database?',
+            'required' => false,
         ))
         ->getForm();
 
@@ -198,39 +241,56 @@ $app->get('/prepare', function (Request $request) use ($app) {
                 }
 
                 if ($e->getCode() == '1045') {
-                    $app['session']->getFlashBag()->add('danger', 'Database parameters invalid. Could not connect to database server.');
+                    $app['session']->getFlashBag()->set('danger', 'Invalid database parameters. Could not connect to database server.');
 
-                    return $app['twig']->render('prepare.twig', array('form' => $form->createView()));
+                    return $app['twig']->render('prepare.twig', array(
+                        'form' => $form->createView(),
+                        'NewscoopVersion' => new \CampVersion(),
+                    ));
                 }
             }
 
             $tables = $app['db']->fetchAll('SHOW TABLES', array());
-            if (count($tables) == 0 || $data['override_database'][0]) {
+            if (count($tables) == 0 || $data['override_database']) {
                 $app['database_service']->fillNewscoopDatabase($app['db']);
                 $app['database_service']->loadGeoData($app['db']);
                 $app['database_service']->saveDatabaseConfiguration($app['db']);
 
             } else {
-                $app['session']->getFlashBag()->add('danger', '<p>There is already a database named <i>' . $app['db']->getDatabase() . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.');
+                $app['session']->getFlashBag()->add('danger', 'Database <i>' . $app['db']->getDatabase() . '</i> already exists. Change name or overwrite it.');
 
-                return $app->redirect($app['url_generator']->generate('prepare'));
+                return $app['twig']->render('prepare.twig', array(
+                    'form' => $form->createView(),
+                    'NewscoopVersion' => new \CampVersion(),
+                ));
             }
 
             // redirect somewhere
             $app['session']->set('db_data', $data);
 
             return $app->redirect($app['url_generator']->generate('process'));
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $app['session']->getFlashBag()->add('danger', $error->getMessage());
+            }
         }
     }
 
-    return $app['twig']->render('prepare.twig', array('form' => $form->createView()));
+    return $app['twig']->render('prepare.twig', array(
+        'form' => $form->createView(),
+        'NewscoopVersion' => new \CampVersion(),
+    ));
 })
 ->assert('_method', 'POST|GET')
 ->bind('prepare');
 
 $app->get('/process', function (Request $request) use ($app) {
     $form = $app['form.factory']->createNamedBuilder('main_config', 'form', array())
-        ->add('site_title', null, array('constraints' => array(new Assert\NotBlank())))
+        ->add('site_title', null, array(
+            'constraints' => array(new Assert\NotBlank(array('message' => 'Site title value should not be blank.'))),
+            'required' => true,
+            'error_bubbling' => true
+        ))
         ->add(
             'recheck_user_password',
             'repeated',
@@ -241,10 +301,18 @@ $app->get('/process', function (Request $request) use ($app) {
                 'required' => true,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
-                'constraints' => array(new Assert\NotBlank())
+                'constraints' => array(new Assert\NotBlank(array('message' => 'Password value should not be blank.'))),
+                'required' => true,
+                'error_bubbling' => true
             )
         )
-        ->add('user_email', null, array('constraints' => array(new Assert\Email())))
+        ->add('user_email', 'email', array(
+            'constraints' => array(
+                new Assert\Email(array('message' => 'Email value is not a valid email address.')),
+                new Assert\NotBlank(array('message' => 'Email value should not be blank.'))),
+            'required' => true,
+            'error_bubbling' => true
+        ))
         ->getForm();
 
     if ('POST' == $request->getMethod()) {
@@ -257,10 +325,17 @@ $app->get('/process', function (Request $request) use ($app) {
             $app['demosite_service']->installEmptyTheme();
 
             return $app->redirect($app['url_generator']->generate('post-process'));
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $app['session']->getFlashBag()->add('danger', $error->getMessage());
+            }
         }
     }
 
-    return $app['twig']->render('process.twig', array('form' => $form->createView()));
+    return $app['twig']->render('process.twig', array(
+        'form' => $form->createView(),
+        'NewscoopVersion' => new \CampVersion(),
+    ));
 })
 ->assert('_method', 'POST|GET')
 ->bind('process');
@@ -271,13 +346,9 @@ $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->installAssets();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
 
-    return $app['twig']->render('post-process.twig', array());
+    return $app['twig']->render('post-process.twig', array('NewscoopVersion' => new \CampVersion(),));
 })
 ->assert('_method', 'POST|GET')
 ->bind('post-process');
-
-$app->get('/finish', function (Silex\Application $app) {
-    return $app['twig']->render('index.twig', array());
-});
 
 $app->run();

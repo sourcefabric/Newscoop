@@ -17,13 +17,13 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 class Admin_ImageController extends Zend_Controller_Action
 {
     const LIMIT = 24;
-    
+
     protected $renditions = array();
 
     public function init()
     {
         $this->renditions = $this->_helper->service('image.rendition')->getRenditions();
-        
+
         $this->_helper->contextSwitch()
             ->addActionContext('edit', 'json')
             ->addActionContext('set-rendition', 'json')
@@ -46,7 +46,7 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->view->images = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
         $this->view->articleRenditions = $this->_helper->service('image.rendition')->getArticleRenditions($this->_getParam('article_number'));
     }
-    
+
     public function articleAttachAction()
     {
         $this->_helper->layout->setLayout('iframe');
@@ -122,33 +122,33 @@ class Admin_ImageController extends Zend_Controller_Action
     }
 
     public function setAttachAction()
-    {        
+    {
         $this->_helper->layout->disableLayout();
-        
+
         try {
             $articleNumber = $this->_getParam('article_number');
             $imageId = $this->_getParam('image_id');
-            
+
             //$image = $this->_helper->service('image')->find($imageId);
             //$articleImage = $this->_helper->service('image')->addArticleImage($articleNumber, $image);
-            
+
             ArticleImage::AddImageToArticle($imageId, $articleNumber);
-            
+
             $this->view->articleImages = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
         } catch (\InvalidArgumentException $e) {
             $this->view->exception= $e->getMessage();
         }
     }
-    
+
     public function setDetachAction()
-    {        
+    {
         $this->_helper->layout->disableLayout();
-        
+
         try {
             $articleNumber = $this->_getParam('article_number');
             $imageId = $this->_getParam('image_id');
             $languageId = $this->_getParam('image_id');
-            
+
             $article = new Article($languageId, $articleNumber);
             $image = new Image($imageId);
             $articleImage = new ArticleImage($articleNumber, $imageId);
@@ -157,28 +157,28 @@ class Admin_ImageController extends Zend_Controller_Action
             $this->view->exception= $e->getMessage();
         }
     }
-    
+
     public function uploadAction()
-    {        
+    {
         $this->_helper->layout->disableLayout();
-        
+
         global $Campsite;
-        
+
         $files = Plupload::OnMultiFileUpload($Campsite['IMAGE_DIRECTORY']);
         //var_dump($files);
         die;
     }
-    
+
     public function editImageDataAction()
     {
         if ($this->getRequest()->isPost()) {
             $data = $this->_getParam('data');
-            
+
             if (is_array($data)) {
                 foreach ($data as $id => $values) {
                     if (!empty($values['description']) || !empty($values['place']) || !empty($values['photographer'])) {
                         $image = $this->_helper->service('image')->find($id);
-                
+
                         $image->setDescription($values['description']);
                         $image->setPlace($values['place']);
                         $image->setPhotographer($values['photographer']);
@@ -200,12 +200,12 @@ class Admin_ImageController extends Zend_Controller_Action
                 ));
             }
         }
-        
+
         $this->view->article = $this->_getParam('article_number');
         $this->view->languageId = $this->_getParam('language_id');
-        
+
         $this->_helper->layout->setLayout('iframe');
-        
+
         $images = array();
         $articleImages = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
         foreach ($articleImages as $k => $articleImage) {
@@ -214,12 +214,12 @@ class Admin_ImageController extends Zend_Controller_Action
             unset($iptcPlace);
             unset($iptcPhotographer);
             unset($iptcDescription);
-            
+
             $image = $articleImage->getImage();
             $allowedExtensions = array('jpg', 'jpeg', 'tiff', 'tif');
             $imagePathParts = explode('.', $image->getPath());
             $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
-            
+
             if (in_array($imageExtension, $allowedExtensions)) {
                 $exif = @exif_read_data($image->getPath());
                 if (isset($exif['DateTime'])) {
@@ -277,9 +277,8 @@ class Admin_ImageController extends Zend_Controller_Action
                 }
 
                 $images[] = $image;
-            }
+            } elseif ($this->_getParam('force_edit')) {
 
-            if ($this->_getParam('force_edit')) {
                 $images[] = $image;
             }
         }
@@ -289,7 +288,7 @@ class Admin_ImageController extends Zend_Controller_Action
     }
 
     public function setRenditionAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $this->_helper->layout->disableLayout();
 

@@ -1,8 +1,8 @@
 <div class="meta-bar row">
     {% if NewscoopUser %}
     <ul class="pull-right">
-        <li>{{ "Signed in: $1"|trans({'$1': '<strong>' ~ NewscoopUser.getFirstName() ~ ' ' ~ NewscoopUser.getLastName() ~ '</strong>'})|raw }}</li>
-        <li><a href="{{ Newscoop['site']['help_url'] }}" target="_blank">{{ 'Help'|trans }}</a></li>
+        <li>{{ "Signed in: $1"|trans({'$1': '<strong>' ~ NewscoopUser.getFirstName() ~ ' ' ~ NewscoopUser.getLastName() ~ '</strong>'}, 'home')|raw }}</li>
+        <li><a href="{{ generateZendUrl('application', 'help', 'admin') }}" target="_blank">{{ 'Help'|trans({}, 'home') }}</a></li>
         <li><a href="/{{ Newscoop['ADMIN'] }}/logout">{{ 'Logout'|trans({}, 'messages') }}</a></li>
     </ul>
     {% endif %}

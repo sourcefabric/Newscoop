@@ -38,6 +38,8 @@ EOT
         $audit = $this->getApplication()->getKernel()->getContainer()->getService('audit.maintenance');
         $audit->flush();
 
-        $output->writeln('Log data processed.');
+        if ($input->getOption('verbose')) {
+            $output->writeln('Log data processed.');
+        }
     }
 }

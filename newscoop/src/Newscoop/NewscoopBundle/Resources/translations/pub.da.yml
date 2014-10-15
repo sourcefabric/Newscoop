@@ -1,4 +1,4 @@
-'Make sure to enter the Moderator Address below': null
+'Make sure to enter the Moderator Address below': 'Indtast moderators adresse'
 'click to see issues': 'klik for at se udgivelser'
 'Moderator Address': 'Moderator adresse'
 'From Address': 'Fra adresse'
@@ -6,30 +6,30 @@
 'Public allowed to comment?': 'Tillad anonyme kommentarer?'
 'Enable spam blocking?': 'Brug spam blokering?'
 'The subscription settings for $1 could not be added.': 'Abonnements indstillingerne for $1 kunne ikke tilføjes.'
-'The publication name you specified conflicts with publication $1.': null
+'The publication name you specified conflicts with publication $1.': 'Publikationsnavnet bruges allerede af publikationen $1.'
 'The publication alias you specified conflicts with publication $1.': 'Det angivne publikations alias er i brug af publikationen $1.'
 'Subscription defaults': 'Abonnements standarder'
 'Subscription Settings by Country': 'Abonnements indstillinger efter land'
 'Set subscription settings for a country': 'Rediger abonnements indstillinger for et land'
 'Set subscription settings by country': 'Rediger abonnements indstillinger efter land'
 'Default time periods:': 'Standard perioder:'
-'Country subscription settings updated.': null
-'Country subscription settings deleted.': null
-'Change country subscription settings': null
-'Are you sure you want to delete the subscription settings for $1?': null
+'Country subscription settings updated.': 'Abonnementsindstillinger for landet blev opdateret.'
+'Country subscription settings deleted.': 'Abonnementsindstillinger for landet blev slettet.'
+'Change country subscription settings': 'Rediger abonnementsindstillinger for landet.'
+'Are you sure you want to delete the subscription settings for $1?': 'Vil du slette abonnementsindstillingerne for $1?'
 'Publication updated': 'Publikation opdateret'
-'Subscriber comments moderated?': null
-'Public comments moderated?': null
+'Subscriber comments moderated?': 'Kræv godkendelse af abonnenters kommentarer?'
+'Public comments moderated?': 'Kræv godkendelse af anonyme kommentarer?'
 'Comments enabled?': 'Slå kommentarer til?'
 'Comments enabled': 'Kommentarer slået til'
-'Article comments default to enabled?': null
+'Article comments default to enabled?': 'Slå artikelkommentarer til som standard?'
 'trial subscription': 'prøve abonnement'
 'paid subscription': 'betalt abonnement'
 'time units': tidsenheder
 'one language': 'et sprog'
 'all languages': 'alle sprog'
 'Trial subscriptions': 'Prøve abonnementer'
-'Time unit cost per one section': null
+'Time unit cost per one section': 'Pris per sektion per tidsenhed'
 'Paid subscriptions': 'Betalte abonnementer'
 'Default time period': 'Standard periode'
 'Go To Issues': 'Gå til udgivelser'
@@ -43,9 +43,9 @@
 'You do not have the right to edit publication information.': 'Du har ikke rettigheder til at redigere publikationer.'
 'General attributes': 'Grundlæggende indstillinger'
 'You do not have the right to change publication information.': 'Du har ikke rettigheder til at redigere publikationer.'
-'The publication information could not be updated.': null
+'The publication information could not be updated.': 'Publikationen kunne ikke opdateres.'
 'You do not have the right to delete publications.': 'Du har ikke rettigheder til at slette publikationer.'
-'Are you sure you want to delete the publication $1?': null
+'Are you sure you want to delete the publication $1?': 'Vil du slette publikationen $1?'
 'Deleting publication': 'Sletter publikation'
 'There are $1 subscription(s) left.': 'Der er $1 abonnement(er) tilbage.'
 'The publication $1 could not be deleted.': 'Publikationen $1 kunne ikke slettes.'

@@ -1,6 +1,6 @@
 'Based on GeoNames.org and OpenStreetMap.org data': 'Baseret på GeoNames.org og OpenStreetMap.org data'
 'selected marker icon': 'valgt markør ikon'
-'add location to map': 'føj placering til kort'
+'add location to map': 'føj sted til kort'
 'Video source': 'Video kilde'
 'The point will be removed from all translations of the article.': 'Punktet fjernes fra alle artiklens oversættelser.'
 'Specify country (optional)': 'Land (valgfrit)'
@@ -9,22 +9,22 @@
 'Search for place or coordinate': 'Søg efter sted eller koordinat'
 'Return to edit': 'Tilbage til redigering'
 'Really delete this point?': 'Slet punktet?'
-'Name and describe this location': 'Giv placeringen et navn og en beskrivelse'
+'Name and describe this location': 'Giv stedet et navn og en beskrivelse'
 'Map size': 'Kort størrelse'
-'Location label': null
-'Location description:': 'Beskrivelse:'
-'Label url': null
+'Location label': 'Sted label'
+'Location description:': 'Stedets beskrivelse:'
+'Label url': 'Label url'
 'Hide search results': 'Skjul søgeresultater'
 Geo-filtering: Geo-filtrering
 'Fill in youtube ID or link, e.g.': 'YouTube ID eller link, f.eks.'
 'Fill in vimeo ID or link, e.g': 'Vimeo ID eller link, f.eks.'
 'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Video ID, link eller filnavn for YouTube, Vimeo eller flash video.'
-'Fill in location label': null
+'Fill in location label': 'Udfyld stedets label'
 'Fill in local swf flash file name or link, e.g.': 'Udfyld filnavn på lokal swf flash fil eller link, f.eks.'
 'Fill in local flv flash file name or link, e.g.': 'Udfyld filnavn på lokal flv flash fil eller link, f.eks.'
 'Fill in image link, like': 'Indtast billede link, f.eks.'
-'Describe the location...': 'Beskriv placeringen...'
-'Delete location': 'Slet placering'
+'Describe the location...': 'Beskriv stedet...'
+'Delete location': 'Slet sted'
 Coordinates: Koordinater
 'Change video display size': 'Skift visningsstørrelse på videoen'
 'Change image display size': 'Skift visningsstørrelse på billedet'
@@ -43,7 +43,7 @@ Center: Centrér
 'Last Saved Map View': 'Sidst gemte kort visning'
 'List of locations updated': 'Liste med opdaterede steder'
 width: bredde
-'show initial map view': null
+'show initial map view': 'vis indledende kortvisning'
 'problem at point processing, please send error report': 'problem ved behandling af punkt, send venligst en fejl rapport'
 'plain text': 'Ren tekst'
 'html content': 'html indhold'
@@ -63,4 +63,4 @@ video: video
 text: tekst
 image: billede
 icon: ikon
-'Setting Map Locations': null
+'Setting Map Locations': 'Indstiller steder på kortet'

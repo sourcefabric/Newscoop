@@ -240,6 +240,21 @@ class PreferencesType extends AbstractType
             'expanded' => true,
             'required' => true,
         ))
+        ->add('mediaRichTextCaptions', 'choice', array(
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption',
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
+            'error_bubbling' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'required' => true,
+        ))
+         ->add('mediaCaptionLength', 'integer', array(
+            'attr' => array('max' <= 999999, 'min' => 0),
+            'error_bubbling' => true,
+            'required' => true
+        ))
         ->add('use_replication', 'choice', array(
             'choices'   => array(
                 'Y' => 'newscoop.preferences.label.yesoption',

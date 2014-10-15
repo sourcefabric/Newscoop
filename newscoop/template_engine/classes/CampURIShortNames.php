@@ -246,7 +246,7 @@ class CampURIShortNames extends CampURI
     private function _getLanguage($code, MetaPublication $publication)
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, $publication), 'language');
+        $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, serialize($publication)), 'language');
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         } else {
@@ -406,15 +406,18 @@ class CampURIShortNames extends CampURI
         $this->m_publication = $this->_getPublication();
         $controller = $request->getParam('controller');
         if ($controller != 'index') {
-            if ($controller == 'legacy') {
+            if ($controller == 'legacy' && $request->getParam('language') == false) {
                $publication_service = \Zend_Registry::get('container')->getService('newscoop.publication_service');
                $language = $publication_service->getPublication()->getLanguage()->getCode();
+            } if ($request->getParam('language') !== false) {
+                $language = $request->getParam('language');
             } else {
-               $language = $controller;
+                $language = $controller;
             }
         } else {
             $language = $request->getParam('language');
         }
+
         if ($request->getParam('webcode')) {
             if (!empty($language)) {
                 $webcodeLanguageId = Language::GetLanguageIdByCode($language);

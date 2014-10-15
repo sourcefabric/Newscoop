@@ -8,64 +8,25 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Comment;
 use Newscoop\Entity\Article;
-use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Email service
  */
 class EmailService
 {
-    /** @var Doctrine\ORM\EntityManager */
-    protected $em;
-
-    /** @var Newscoop\Services\UserTokenService */
-    protected $tokenService;
-
-    /** @var Newscoop\NewscoopBundle\Services\SystemPreferencesService */
-    protected $preferencesService;
-
-    /** @var Swift_Mailer */
-    protected $mailer;
-
-    /** @var Newscoop\Services\TemplatesService */
-    protected $templatesService;
-
-    /** @var Newscoop\Services\PlaceholdersService */
-    protected $placeholdersService;
-
-    /** @var Newscoop\Services\PublicationService */
-    protected $publicationService;
+    /** @var Container */
+    protected $container;
 
     /**
-     * @param Doctrine\ORM\EntityManager                                $em
-     * @param Newscoop\Services\UserTokenService                        $tokenService
-     * @param Newscoop\NewscoopBundle\Services\SystemPreferencesService $preferencesService
-     * @param Swift_Mailer                                              $mailer
-     * @param Newscoop\Services\TemplatesService                        $templatesService
-     * @param Newscoop\Services\PlaceholdersService                     $placeholdersService
-     * @param Newscoop\Services\PublicationService                      $publicationService
+     * @param Container $container
      */
-    public function __construct(
-        EntityManager $em,
-        UserTokenService $tokenService,
-        SystemPreferencesService $preferencesService,
-        \Swift_Mailer $mailer,
-        $templatesService,
-        $placeholdersService,
-        $publicationService
-    )
+    public function __construct(Container $container)
     {
-        $this->em = $em;
-        $this->tokenService = $tokenService;
-        $this->preferencesService = $preferencesService;
-        $this->mailer = $mailer;
-        $this->templatesService = $templatesService;
-        $this->placeholdersService = $placeholdersService;
-        $this->publicationService = $publicationService;
+        $this->container = $container;
     }
 
     /**
@@ -77,12 +38,17 @@ class EmailService
      */
     public function sendConfirmationToken(User $user)
     {
-        $smarty = $this->templatesService->getSmarty();
+        $tokenService = $this->container->get('user.token');
+        $publicationService = $this->container->get('newscoop_newscoop.publication_service');
+        $templatesService = $this->container->get('newscoop.templates.service');
+        $placeholdersService = $this->container->get('newscoop.placeholders.service');
+        $preferencesService = $this->container->get('preferences');
+        $smarty = $templatesService->getSmarty();
         $smarty->assign('user', new \MetaUser($user));
-        $smarty->assign('token', $this->tokenService->generateToken($user, 'email.confirm'));
-        $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
-        $message = $this->templatesService->fetchTemplate("email_confirm.tpl");
-        $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $this->preferencesService->EmailFromAddress);
+        $smarty->assign('token', $tokenService->generateToken($user, 'email.confirm'));
+        $smarty->assign('site', $publicationService->getPublicationAlias()->getName());
+        $message = $templatesService->fetchTemplate("email_confirm.tpl");
+        $this->send($placeholdersService->get('subject'), $message, $user->getEmail(), $preferencesService->EmailFromAddress);
     }
 
     /**
@@ -94,12 +60,17 @@ class EmailService
      */
     public function sendPasswordRestoreToken(User $user)
     {
-        $smarty = $this->templatesService->getSmarty();
+        $tokenService = $this->container->get('user.token');
+        $publicationService = $this->container->get('newscoop_newscoop.publication_service');
+        $templatesService = $this->container->get('newscoop.templates.service');
+        $placeholdersService = $this->container->get('newscoop.placeholders.service');
+        $preferencesService = $this->container->get('preferences');
+        $smarty = $templatesService->getSmarty();
         $smarty->assign('user', new \MetaUser($user));
-        $smarty->assign('token', $this->tokenService->generateToken($user, 'password.restore'));
-        $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
-        $message = $this->templatesService->fetchTemplate("email_password-restore.tpl");
-        $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $this->preferencesService->EmailFromAddress);
+        $smarty->assign('token', $tokenService->generateToken($user, 'password.restore'));
+        $smarty->assign('site', $publicationService->getPublicationAlias()->getName());
+        $message = $templatesService->fetchTemplate("email_password-restore.tpl");
+        $this->send($placeholdersService->get('subject'), $message, $user->getEmail(), $preferencesService->EmailFromAddress);
     }
 
     /**
@@ -116,8 +87,10 @@ class EmailService
      */
     public function send($placeholder, $message, $to, $from = null, $attachmentDir = null)
     {
+        $publicationService = $this->container->get('newscoop_newscoop.publication_service');
+        $mailer = $this->container->get('mailer');
         if (empty($from)) {
-            $from = 'no-reply@' . $this->publicationService->getPublicationAlias()->getName();
+            $from = 'no-reply@' . $publicationService->getPublicationAlias()->getName();
         }
 
         try {
@@ -140,7 +113,7 @@ class EmailService
                 $messageToSend->attach(\Swift_Attachment::fromPath($attachmentDir));
             }
 
-            $this->mailer->send($messageToSend);
+            $mailer->send($messageToSend);
         } catch (\Exception $exception) {
             throw new \Exception("Error sending email.", 1);
         }
@@ -158,6 +131,10 @@ class EmailService
      */
     public function sendCommentNotification(Comment $comment, Article $article, array $authors, User $user = null)
     {
+        $publicationService = $this->container->get('newscoop_newscoop.publication_service');
+        $templatesService = $this->container->get('newscoop.templates.service');
+        $placeholdersService = $this->container->get('newscoop.placeholders.service');
+        $preferencesService = $this->container->get('preferences');
         $emails = array_unique(array_filter(array_map(function ($author) {
             return $author->getEmail();
         }, $authors)));
@@ -166,7 +143,7 @@ class EmailService
             return;
         }
 
-        $smarty = $this->templatesService->getSmarty();
+        $smarty = $templatesService->getSmarty();
         $uri = \CampSite::GetURIInstance();
         if ($user) {
             $smarty->assign('username', $user->getUsername());
@@ -178,15 +155,15 @@ class EmailService
         $smarty->assign('article', new \MetaArticle($article->getLanguageId(), $article->getNumber()));
         $smarty->assign('publication', $uri->getBase());
         $smarty->assign('articleLink', \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueId(), $article->getSectionId(), $article->getNumber()));
-        $moderatorFrom = $this->publicationService->getPublication()->getModeratorFrom();
+        $moderatorFrom = $publicationService->getPublication()->getModeratorFrom();
 
-        if ($this->publicationService->getPublication()->getCommentsPublicModerated()) {
-            $moderatorTo = $this->publicationService->getPublication()->getModeratorTo();
+        if ($publicationService->getPublication()->getCommentsPublicModerated()) {
+            $moderatorTo = $publicationService->getPublication()->getModeratorTo();
             $moderatorTo ? $emails['moderator'] = $moderatorTo : null;
         }
 
-        $message = $this->templatesService->fetchTemplate("email_comment-notify.tpl");
-        $this->send($this->placeholdersService->get('subject'), $message, $emails, $moderatorFrom ?: $this->preferencesService->EmailFromAddress);
+        $message = $templatesService->fetchTemplate("email_comment-notify.tpl");
+        $this->send($placeholdersService->get('subject'), $message, $emails, $moderatorFrom ?: $preferencesService->EmailFromAddress);
     }
 
     /**

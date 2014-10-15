@@ -1,285 +1,285 @@
-Plugins: null
+Plugins: Bővítmények
 'Manage Plugins': 'Bővítmények kezelése'
-Account: null
-'Items per page': null
-'Add new': null
+Account: Fiók
+'Items per page': 'Elemek oldalanként'
+'Add new': 'Új hozzáadása'
 Home: null
-Logout: null
+Logout: Kijelentkezés
 More...: null
-Content: null
-Languages: null
-Countries: null
-Themes: null
-Topics: null
-Configure: null
-'Image Archive': null
-'Add Article': null
-Fields: null
-Delete: null
-Type: null
-Name: null
-Code: null
-Edit: null
-Login: null
-Password: null
-Site: null
-Path: null
-'Go up': null
-URL: null
-Order: null
-Hide: null
+Content: Tartalom
+Languages: Nyelvek
+Countries: Országok
+Themes: Témák
+Topics: Cikktémák
+Configure: Beállítás
+'Image Archive': Képarchívum
+'Add Article': 'Cikk hozzáadása'
+Fields: Mezők
+Delete: Törlés
+Type: Típus
+Name: Név
+Code: Kód
+Edit: Szerkesztés
+Login: Bejelentkezés
+Password: Jelszó
+Site: Webhely
+Path: 'Elérési út'
+'Go up': 'Egy szinttel feljebb'
+URL: URL-cím
+Order: Rendezés
+Hide: Elrejtés
 Duplicate: null
-Subscription: null
-expires: null
-starts: null
-before: null
-after: null
+Subscription: Előfizetés
+expires: lejár
+starts: kezdődik
+before: előtte
+after: utána
 on: null
-status: null
-active: null
-inactive: null
-Subscribers: null
-Staff: null
-'Select destination': null
-'No languages': null
-'---Select language---': null
-'No publications': null
-'---Select publication---': null
-'No issues': null
-'---Select issue---': null
-'No sections': null
-'---Select section---': null
-Language: null
-Country: null
-'Account name': null
-Publication: null
-'Default language': null
-Subscriptions: null
-Issue: null
-Number: null
-Section: null
-Keywords: null
-Topic: null
-'URL Name': null
+status: állapot
+active: aktív
+inactive: inaktív
+Subscribers: Előfizetők
+Staff: Szerkesztőség
+'Select destination': 'Cél kiválasztása'
+'No languages': 'Nincsenek nyelvek'
+'---Select language---': '---Válassz nyelvet---'
+'No publications': 'Nincsenek kiadványok'
+'---Select publication---': '---Válassz kiadványt---'
+'No issues': 'Nincsenek számok'
+'---Select issue---': '---Válassz számot---'
+'No sections': 'Nincsenek rovatok '
+'---Select section---': '---Válassz rovatot---'
+Language: Nyelv
+Country: Ország
+'Account name': Fióknév
+Publication: Kiadvány
+'Default language': 'Alapértelmezett nyelv'
+Subscriptions: Előfizetések
+Issue: Szám
+Number: Sorszám
+Section: Rovat
+Keywords: Kulcsszavak
+Topic: Téma
+'URL Name': URL-név
 'Left to pay': null
-Active: null
+Active: Aktív
 Trial: null
-Next: null
-Previous: null
-Translate: null
-View: null
-'Scheduled Publishing': null
-Time: null
-Action: null
-'Schedule a new action': null
-'Scheduling a new publish action': null
-'Delete scheduled publish action': null
-Date/Time: null
-'You must select an action.': null
-'You do not have the right to schedule issues or articles for automatic publishing.': null
-'Front page': null
-'Section page': null
-'Show on front page': null
-'Remove from front page': null
-'Show on section page': null
-'Remove from section page': null
-Actions: null
-Publishing: null
-Show: null
-Remove: null
-'Article Types': null
-'Staff User Types': null
-Publications: null
-Issues: null
-Sections: null
-Articles: null
-Images: null
-Change: null
-'Add new issue': null
-'Section Template': null
-'Article Template': null
-'Default Language': null
-'Paid Period': null
-Preview: null
-'You must fill in the $1 field.': null
-Error: null
-'Invalid input: $1': null
-'Language does not exist.': null
-'Publication does not exist.': null
-'Issue does not exist.': null
-'You must select a language.': null
-'Section does not exist.': null
-'No articles.': null
-'Article does not exist.': null
-'Image does not exist.': null
-'Access denied': null
-'Invalid parameters received': null
-'Add new article': null
-Status: null
-Published: null
-'Not published': null
-Submitted: null
-New: null
-Article: null
-Publish: null
-Unpublish: null
-Unlock: null
-Uploaded: null
-YYYY-MM-DD: null
-Submit: null
-Image: null
-Description: null
-Photographer: null
-Place: null
-Date: null
-Thumbnail: null
-'In use': null
-'Additional searches': null
-'Most Recently Added': null
-'Most Recently Modified': null
-'$1 images found': null
-'Reset search conditions': null
+Next: Következő
+Previous: Előző
+Translate: Fordítás
+View: Megtekintés
+'Scheduled Publishing': 'Beütemezett közzététel'
+Time: Idő
+Action: Művelet
+'Schedule a new action': 'Új művelet beütemezése'
+'Scheduling a new publish action': 'Új közzétételi művelet beütemezése'
+'Delete scheduled publish action': 'Beütemezett közzétételi művelet törlése'
+Date/Time: Dátum/Idő
+'You must select an action.': 'Ki kell választanod egy műveletet.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Nincs jogod a számok vagy cikkek automatikus közzétételre való beütemezéséhez.'
+'Front page': Címlap
+'Section page': Rovatlap
+'Show on front page': 'Megjelenítés a címlapon'
+'Remove from front page': 'Eltávolítás a címlapról'
+'Show on section page': 'Megjelenítés a rovatlapon'
+'Remove from section page': 'Eltávolítás a rovatlapról'
+Actions: Műveletek
+Publishing: Közzététel
+Show: Megjelenítés
+Remove: Eltávolítás
+'Article Types': Cikktípusok
+'Staff User Types': 'Szerkesztőség felhasználótípusai'
+Publications: Kiadványok
+Issues: Számok
+Sections: Rovatok
+Articles: Cikkek
+Images: Képek
+Change: Módosítás
+'Add new issue': 'Új szám hozzáadása'
+'Section Template': Rovatsablon
+'Article Template': Cikksablon
+'Default Language': 'Alapértelmezett nyelv'
+'Paid Period': 'Fizetett időszak'
+Preview: Előnézet
+'You must fill in the $1 field.': 'Ki kell töltened a/z $1 mezőt.'
+Error: Hiba
+'Invalid input: $1': 'Érvénytelen bevitel: $1'
+'Language does not exist.': 'A nyelv nem létezik.'
+'Publication does not exist.': 'A kiadvány nem létezik.'
+'Issue does not exist.': 'A szám nem létezik.'
+'You must select a language.': 'Ki kell választanod egy nyelvet.'
+'Section does not exist.': 'A rovat nem létezik.'
+'No articles.': 'Nincsenek cikkek.'
+'Article does not exist.': 'A cikk nem létezik.'
+'Image does not exist.': 'A kép nem létezik.'
+'Access denied': 'Hozzáférés megtagadva'
+'Invalid parameters received': 'Érvénytelen fogadott paraméterek'
+'Add new article': 'Új cikk hozzáadása'
+Status: Állapot
+Published: Közzétéve
+'Not published': 'Nincs közzétéve'
+Submitted: Elküldve
+New: Új
+Article: Cikk
+Publish: Közzététel
+Unpublish: Visszavonás
+Unlock: 'Zárolás feloldása'
+Uploaded: Feltöltve
+YYYY-MM-DD: ÉÉÉÉ-HH-NN
+Submit: Küldés
+Image: Kép
+Description: Leírás
+Photographer: Fényképész
+Place: Hely
+Date: Dátum
+Thumbnail: Bélyegkép
+'In use': Használatban
+'Additional searches': 'További keresések'
+'Most Recently Added': 'Legutóbb hozzáadva'
+'Most Recently Modified': 'Legutóbb módosítva'
+'$1 images found': '$1 kép található'
+'Reset search conditions': 'Keresési feltételek visszaállítása'
 'Image number': null
-Users: null
-Localizer: null
-'Adding new translation': null
-'No more languages.': null
-'The $1 field may only contain letters, digits and underscore (_) character.': null
-'Add new publication': null
-'Upload new template': null
-'Add new staff member': null
-'Staff member deleted.': null
-'Add new subscriber': null
-'Add new user type': null
-'Add new article type': null
-'Add new country': null
-'Add new language': null
-'View logs': null
-'Change your password': null
-'Your Articles': null
-'Submitted Articles': null
-Logs: null
-'There are $1 article(s) left.': null
-'There are $1 issues(s) left.': null
-'There are $1 section(s) left.': null
-'There are $1 publication(s) left.': null
-'There are $1 countries left.': null
-'Name <SMALL>(click to edit)</SMALL>': null
-'Add new subscription': null
-'You do not have the right to add subscriptions.': null
-'Adding subscription': null
-'Delete subscription': null
-'You do not have the right to delete subscriptions.': null
-'No such subscription.': null
-Yes: null
-No: null
-Close: null
-'No issues.': null
-'Back to Edit Article': null
-'No topics': null
-'You do not have the right to add articles.': null
-Start: null
-Days: null
-'The sections could not be added successfully. Some of them were already added !': null
-'Add another': null
-Cancel: null
-Done: null
-OK: null
-Save: null
-Search: null
-'Make a selection': null
-'You must input a number greater than 0 into the $1 field.': null
-'You must input a valid date.': null
-'Add new field': null
-'Article automatic publishing schedule': null
-'Are you sure you want to delete this scheduled action?': null
-Unlink: null
-'Are you sure you want to delete the image $1?': null
-'No such issue.': null
-'Are you sure you want to delete the subscription to the publication $1?': null
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': null
-GB: null
-MB: null
-KB: null
-bytes: null
-Attach: null
-Back: null
-File: null
-'Save and Close': null
-Add: null
-'Select All': null
-'Select None': null
-'Add Event': null
-N/A: null
-'On Front Page': null
-'On Section Page': null
-'Created by': null
-'Creation date': null
-'Publication List': null
-'Issue List': null
-'Section List': null
-All: null
+Users: Felhasználók
+Localizer: Fordító
+'Adding new translation': 'Új fordítás hozzáadása'
+'No more languages.': 'Nincs több nyelv.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'A/z $1 mező csak betűket, számokat és aláhúzásjelet (_) tartalmazhat.'
+'Add new publication': 'Új kiadvány hozzáadása'
+'Upload new template': 'Új sablon feltöltése'
+'Add new staff member': 'Új szerkesztőségi tag hozzáadása'
+'Staff member deleted.': 'A szerkesztőségi tag törlése megtörtént.'
+'Add new subscriber': 'Új előfizető hozzáadása'
+'Add new user type': 'Új felhasználótípus hozzáadása'
+'Add new article type': 'Új cikktípus hozzáadása'
+'Add new country': 'Új ország hozzáadása'
+'Add new language': 'Új nyelv hozzáadása'
+'View logs': 'Naplók megtekintése'
+'Change your password': 'Jelszó megváltoztatása'
+'Your Articles': 'A cikkeid'
+'Submitted Articles': 'Beküldött cikkek'
+Logs: Naplók
+'There are $1 article(s) left.': '$1 cikk maradt.'
+'There are $1 issues(s) left.': '$1 szám maradt.'
+'There are $1 section(s) left.': '$1 rovat maradt.'
+'There are $1 publication(s) left.': '$1 kiadvány maradt.'
+'There are $1 countries left.': '$1 ország maradt.'
+'Name <SMALL>(click to edit)</SMALL>': 'Név <SMALL>(kattints a szerkesztéshez)</SMALL>'
+'Add new subscription': 'Új előfizetés hozzáadása'
+'You do not have the right to add subscriptions.': 'Nincs jogod az előfizetések hozzáadásához.'
+'Adding subscription': 'Előfizetés hozzáadása'
+'Delete subscription': 'Előfizetés törlése'
+'You do not have the right to delete subscriptions.': 'Nincs jogod az előfizetések törléséhez.'
+'No such subscription.': 'Nincs ilyen előfizetés.'
+Yes: Igen
+No: Nem
+Close: Bezárás
+'No issues.': 'Nincsenek számok.'
+'Back to Edit Article': 'Vissza a Cikk szerkesztéséhez'
+'No topics': 'Nincsenek témák'
+'You do not have the right to add articles.': 'Nincs jogod a cikkek hozzáadásához.'
+Start: Indítás
+Days: Napok
+'The sections could not be added successfully. Some of them were already added !': 'Nem sikerült hozzáadni a rovatokat. Némelyikük hozzáadása már megtörtént!'
+'Add another': 'További hozzáadása'
+Cancel: Mégse
+Done: Kész
+OK: OK
+Save: Mentés
+Search: Keresés
+'Make a selection': 'Kijelölés készítése'
+'You must input a number greater than 0 into the $1 field.': 'A/z $1 mezőben nullánál nagyobb számot kell megadnod.'
+'You must input a valid date.': 'Érvényes dátumot kell megadnod.'
+'Add new field': 'Új mező hozzáadása'
+'Article automatic publishing schedule': 'A cikk automatikus közzétételének beütemezése'
+'Are you sure you want to delete this scheduled action?': 'Biztosan törölni akarod ezt a beütemezett műveletet?'
+Unlink: 'Hivatkozás megszüntetése'
+'Are you sure you want to delete the image $1?': 'Biztosan törölni akarod a/z $1 képet?'
+'No such issue.': 'Nincs ilyen szám.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Biztosan törölni akarod az előfizetést a/z $1 kiadványra?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nem lehet menteni a/z $1 szám változtatásait. Győződj meg róla, hogy a szám $2 URL-nevét nem használták-e korábban a/z $3 kiadványban.'
+GB: GB
+MB: MB
+KB: KB
+bytes: bájt
+Attach: Csatolás
+Back: Vissza
+File: Fájl
+'Save and Close': 'Mentés és bezárás'
+Add: Hozzáadás
+'Select All': 'Az összes kijelölése'
+'Select None': 'Kijelölés megszüntetése'
+'Add Event': 'Esemény hozzáadása'
+N/A: N.a.
+'On Front Page': 'A címlapon'
+'On Section Page': 'A rovatlapon'
+'Created by': Létrehozta
+'Creation date': 'Létrehozás dátuma'
+'Publication List': Kiadványlista
+'Issue List': Számlista
+'Section List': Rovatlista
+All: Mind
 duplicate: null
-move: null
-Move: null
+move: áthelyez
+Move: Áthelyezés
 'From:': null
-'Date:': null
-Hidden: null
-Comments: null
-Comment: null
-Approved: null
-Subject: null
-'IP address:': null
-'Email:': null
-Author: null
-'Article name': null
-'Hide article': null
-'Show article': null
-'Article Type Fields': null
-'Article Images': null
-'Log Messages': null
-'Article Files': null
-'Article Comments': null
-'Are you sure you want to deactivate the subscription?': null
-'Are you sure you want to activate the subscription?': null
-Other: null
-'Time:': null
-'No events.': null
-'Default templates': null
-'System Preferences': null
-'The date must be in the future.': null
-Send: null
-'Thank you.': null
-'Please take a minute to send us an email.': null
-(optional): null
+'Date:': 'Dátum:'
+Hidden: Rejtett
+Comments: Hozzászólások
+Comment: Hozzászólás
+Approved: Jóváhagyva
+Subject: Tárgy
+'IP address:': 'IP-cím:'
+'Email:': 'E-mail:'
+Author: Szerző
+'Article name': 'Cikk neve'
+'Hide article': 'Cikk elrejtése'
+'Show article': 'Cikk megjelenítése'
+'Article Type Fields': 'Cikktípus mezők'
+'Article Images': 'Cikk képei'
+'Log Messages': 'Üzenetek naplózása'
+'Article Files': 'Cikk fájljai'
+'Article Comments': 'Cikk hozzászólásai'
+'Are you sure you want to deactivate the subscription?': 'Biztosan inaktiválni akarod az előfizetést?'
+'Are you sure you want to activate the subscription?': 'Biztosan aktiválni akarod az előfizetést?'
+Other: Egyéb
+'Time:': 'Idő:'
+'No events.': 'Nincsenek események.'
+'Default templates': 'Alapértelmezett sablonok'
+'System Preferences': Rendszerbeállítások
+'The date must be in the future.': 'A dátumnak a jövőben kell lennie.'
+Send: Küldés
+'Thank you.': Köszönjük.
+'Please take a minute to send us an email.': 'Kérjük, szánj egy percet arra, hogy e-mailt küldesz nekünk.'
+(optional): (elhagyható)
 'The URL you entered is invalid: $1': 'Az Ön által megadott URL-cím érvénytelen: $1'
-Reads: null
+Reads: Elolvasások
 'Publish with issue': 'Közzététel folyóiratszámmal'
-'Universal List': null
-'Invalid security token!': null
-Authors: null
+'Universal List': 'Univerzális lista'
+'Invalid security token!': 'Érvénytelen biztonsági jogkivonat!'
+Authors: Szerzők
 Title: Cím
-'Edit country': null
-'Entry $1 prepared for publishing': null
-'Entry deleted': null
-'Feed saved': null
-'Item published': null
-'Settings saved': null
+'Edit country': 'Ország szerkesztése'
+'Entry $1 prepared for publishing': 'A/z $1 bejegyzés közzétételre előkészítése megtörtént.'
+'Entry deleted': 'A bejegyzés törlése megtörtént.'
+'Feed saved': 'A hírcsatorna mentése megtörtént.'
+'Item published': 'Az elem közzététele megtörtént'
+'Settings saved': 'A beállítások mentése megtörtént.'
 'Self-delete is not permitted.': null
-'Edit staff member $1': null
-'Delete staff member $1': null
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
-'Changing user type would prevent you to manage users. Aborted.': null
-'Staff member saved.': null
-'Permissions: $1': null
+'Edit staff member $1': 'A/z $1 nevű szerkesztőségi tag szerkesztése'
+'Delete staff member $1': 'A/z $1 nevű szerkesztőségi tag törlése'
+'Could not save user $1. Please make sure it does not already exist': 'A/z $1 nevű felhasználó nem menthető. Győződj meg róla, hogy nem létezik-e már.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'A/z $1 e-mail címmel rendelkező felhasználó nem menthető. Győződj meg róla, hogy nem létezik-e már.'
+'Changing user type would prevent you to manage users. Aborted.': 'A felhasználótípus módosítása megakadályozná a felhasználók kezelését. Megszakítva.'
+'Staff member saved.': 'A szerkesztőségi tag mentése megtörtént.'
+'Permissions: $1': 'Engedélyek: $1'
 'Change user account information': 'Felhasználói fiók adatainak módosítása'
-'Staff management': null
-Updated: null
-Options: null
-Verified: null
-Confirm: null
+'Staff management': 'Szerkesztőség kezelése'
+Updated: Frissítve
+Options: Beállítások
+Verified: Ellenőrizve
+Confirm: Megerősítés
 at: null
-published: null
-unpublished: null
+published: közzétéve
+unpublished: visszavonva
 nopermissions: 'A hozzáférés ehhez az erőforrásoz az Ön számára nem engedélyezett.'

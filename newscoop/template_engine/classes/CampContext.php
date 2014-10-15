@@ -1287,4 +1287,22 @@ final class CampContext
 
         return $this->userCount;
     }
+
+    /**
+     * Check if plugin is installed and enabled
+     *
+     * @param string $pluginName Plugin name ex. "vendor/plugin-name"
+     *
+     * @return boolean
+     */
+    public function isPluginEnabled($pluginName)
+    {
+        $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
+
+        if ($pluginsService->isInstalled($pluginName) && $pluginsService->isEnabled($pluginName)) {
+            return true;
+        }
+
+        return false;
+    }
 }
