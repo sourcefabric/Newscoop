@@ -238,11 +238,8 @@ class DatabaseService
                         $command_script = trim($command_parts[2], ";");
                     }
                 }
-                if (!$command_known) {
-                    $errors++;
-                    $errorQueries[] = $query;
-                    $logger->addError('Error with query "'.$query.'"');
 
+                if (!$command_known) {
                     continue;
                 }
 
@@ -345,7 +342,7 @@ class DatabaseService
      *
      * @return boolean
      */
-    protected function renderFile($template, $target, $parameters)
+    public function renderFile($template, $target, $parameters)
     {
         if (!is_dir(dirname($target))) {
             mkdir(dirname($target), 0777, true);

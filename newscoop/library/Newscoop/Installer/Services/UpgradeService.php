@@ -87,6 +87,7 @@ class UpgradeService
 
         $first = true;
         $errorsCount = 0;
+        $temp = 0;
         $skipped = array();
         $sqlVersions = array_map('basename', glob($this->newscoopDir . '/install/Resources/sql/upgrade/[2-9].[0-9]*'));
         usort($sqlVersions, array($databaseService, 'versionCompare'));
@@ -136,6 +137,7 @@ class UpgradeService
 
                     $error_queries = array();
                     $errorsCount = $databaseService->importDB($upgrade_dir.$script, $this->connection, $this->logger);
+                    $temp = $temp + $errorsCount;
 
                     if ($errorsCount) {
                         $this->logger->addError('* '.$script.' ('.$db_version.') errors');
@@ -155,7 +157,7 @@ class UpgradeService
         }
 
         flock($lockFile, LOCK_UN); // release the lock
-
+        $errorsCount = $temp;
         if ($errorsCount) {
             return $databaseService->errorQueries;
         }

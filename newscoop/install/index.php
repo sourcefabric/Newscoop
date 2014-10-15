@@ -47,7 +47,6 @@ if (count($missingReq) > 0) {
 
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Newscoop\Installer\Services;
 use Symfony\Component\Validator\Constraints as Assert;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
@@ -252,13 +251,13 @@ $app->get('/prepare', function (Request $request) use ($app) {
             }
 
             $tables = $app['db']->fetchAll('SHOW TABLES', array());
-            if (count($tables) == 0 || $data['override_database'][0]) {
+            if (count($tables) == 0 || $data['override_database']) {
                 $app['database_service']->fillNewscoopDatabase($app['db']);
                 $app['database_service']->loadGeoData($app['db']);
                 $app['database_service']->saveDatabaseConfiguration($app['db']);
 
             } else {
-                $app['session']->getFlashBag()->add('danger', 'There is already a database named <i>' . $app['db']->getDatabase() . '</i>. Change or overwrite it.');
+                $app['session']->getFlashBag()->add('danger', 'Database <i>' . $app['db']->getDatabase() . '</i> already exists. Change name or overwrite it.');
 
                 return $app['twig']->render('prepare.twig', array(
                     'form' => $form->createView(),

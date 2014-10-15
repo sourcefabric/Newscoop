@@ -9,6 +9,7 @@
     {{ form_row(form.user_name) }}
     {{ form_row(form.user_password) }}
     {{ form_row(form.database_name) }}
+    {{ form_row(form.override_database) }}
     {{ form_widget(form._token) }}
     {% set messages = app.session.flashbag.get('danger') %}
     <div class="bottom{% if messages %} notification fail{% endif %}">
