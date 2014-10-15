@@ -118,6 +118,8 @@ $sortOptions = array(
     'Reads' => 'bypopularity',
     'CreateDate' => 'bycreationdate',
     'PublishDate' => 'bypublishdate',
+    'Author' => 'byauthor',
+    'Status' => 'bystatus'
 );
 
 $sortBy = 'bysectionorder';
