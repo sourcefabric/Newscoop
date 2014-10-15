@@ -32,24 +32,28 @@ class HookListenerSpec extends ObjectBehavior
      * @param \Newscoop\EventDispatcher\Events\PluginHooksEvent $event
      * @param \Symfony\Component\HttpFoundation\Response        $response
      */
-    public function it_will_display_list_of_editorial_comments_for_article($event, $response, $article, $em, $repository, $templating)
+    public function it_will_display_list_of_editorial_comments_for_article($event, $response, $em, $repository, $templating)
     {
-        $event->getArgument('articleNumber')->willReturn($article->getNumber()->willReturn(1));
-        $repository->getAllByArticleNumber(1)->willReturn(Argument::type('array'));
+        $event->getArgument('articleNumber')->willReturn(4);
+        $repository->getAllByArticleNumber(4)->willReturn(array(
+            'id' => 1,
+            'articleNumber' => 4,
+            'comment' => 'test comment'
+        ));
 
         $templating->renderResponse(
             'NewscoopArticlesBundle:Hook:editorialComments.html.twig',
             array(
-                'articleNumber' => 1,
-                'editorialComments' => [0 => array(
+                'editorialComments' => array(
                     'id' => 1,
-                    'articleNumber' => 1
-                )]
+                    'articleNumber' => 4,
+                    'comment' => 'test comment'
+                ),
+            'articleNumber' => 4
             )
         )->willReturn($response);
 
-        $event->addHookResponse($response);
-
-        $this->listEditorialComments($event)->shouldReturn(null);
+        $event->addHookResponse($response)->willReturn(null);
+        $this->listEditorialComments($event)->shouldReturn(true);
     }
 }

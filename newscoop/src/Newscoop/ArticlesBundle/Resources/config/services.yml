@@ -1,7 +1,7 @@
 services:
-	articles.hooks.listener:
+    articles.hooks.listener:
         class: "Newscoop\ArticlesBundle\EventListener\HookListener"
-        arguments: ["@templating"]
+        arguments: ["@em", "@templating"]
         tags:
           - { name: kernel.event_listener, event: newscoop_admin.interface.articles.editorialcomments, method: listEditorialComments }
 
