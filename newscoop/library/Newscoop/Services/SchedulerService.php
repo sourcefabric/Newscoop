@@ -21,14 +21,17 @@ class SchedulerService implements SchedulerServiceInterface
 {
     protected $em;
 
+    protected $config;
+
     protected $jobby;
 
     /**
      * Construct
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $config = array())
     {
         $this->em = $em;
+        $this->config = $config;
         $this->jobby = new Jobby();
     }
 
@@ -50,6 +53,10 @@ class SchedulerService implements SchedulerServiceInterface
                 foreach ($config as $key => $value) {
                     $setter = "set" . ucfirst($key);
                     $cronJob->{$setter}($value);
+                }
+
+                if (array_key_exists('environment', $this->$config) && !empty($this->config['environment'])) {
+                    $cronJob->setEnvironment($this->config['environment']);
                 }
 
                 $cronJob->setName($jobName);
