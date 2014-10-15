@@ -10,7 +10,7 @@ require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_t
 <h1><?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="<?php
     if ($preferencesService->MediaRichTextCaptions == 'Y') {
-        return validateTinyMCEEditors();
+        echo 'return validateTinyMCEEditors();';
     }
 ?>">
 
