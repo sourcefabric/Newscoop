@@ -210,7 +210,7 @@ services:
         arguments: ["@em"]
     newscoop.scheduler:
         class: Newscoop\Services\SchedulerService
-        arguments: ["@em", "%jobby%"]
+        arguments: ["@em", "%scheduler%"]
 
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
