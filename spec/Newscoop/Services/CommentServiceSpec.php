@@ -3,6 +3,7 @@
 namespace spec\Newscoop\Services;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class CommentServiceSpec extends ObjectBehavior
 {
@@ -12,14 +13,14 @@ class CommentServiceSpec extends ObjectBehavior
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager           $em
-     * @param \Doctrine\ORM\EntityRepository        $repository
-     * @param \Doctrine\ORM\QueryBuilder            $queryBuilder
-     * @param \Doctrine\ORM\Query\Expr              $expr
-     * @param \Doctrine\ORM\AbstractQuery           $query
-     * @param \Newscoop\Services\PublicationService $publicationService
+     * @param \Doctrine\ORM\EntityManager                                       $em
+     * @param \Newscoop\Entity\Repository\Comment\AcceptanceRepository          $repository
+     * @param \Doctrine\ORM\QueryBuilder                                        $queryBuilder
+     * @param \Doctrine\ORM\Query\Expr                                          $expr
+     * @param \Doctrine\ORM\AbstractQuery                                       $query
+     * @param \Newscoop\Services\PublicationService                             $publicationService
      */
-    public function let($em, $repository, $queryBuilder, $expr, $query)
+    public function let($em, $repository, $queryBuilder, $expr, $query, $publicationService)
     {
         $em
             ->getRepository('Newscoop\Entity\Comment\Acceptance')
@@ -28,6 +29,10 @@ class CommentServiceSpec extends ObjectBehavior
         $repository
             ->createQueryBuilder('a')
             ->willReturn($queryBuilder);
+
+        $repository
+            ->isBanned(Argument::any(), Argument::any())
+            ->willReturn(array());
 
         $queryBuilder->select('a.search')->willReturn($queryBuilder);
         $queryBuilder->where(null)->willReturn($queryBuilder);
