@@ -187,7 +187,7 @@ services:
         arguments: ["@em"]
     newscoop.plugins.manager:
         class: Newscoop\Services\Plugins\ManagerService
-        arguments: ["@em", "@event_dispatcher", "@newscoop.plugins.service", "@logger"]
+        arguments: ["@em", "@event_dispatcher", "@newscoop.plugins.service", "@logger", "%plugins%"]
     newscoop.plugins.service:
         class: Newscoop\Services\Plugins\PluginsService
         arguments: ["@dispatcher", "@em"]

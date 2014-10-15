@@ -149,5 +149,7 @@ parameters:
     search.article:
         type: ["news"]
         rendition: ''
+    plugins:
+        internal_memory_limit: ''
     scheduler:
         environment: 'prod'
