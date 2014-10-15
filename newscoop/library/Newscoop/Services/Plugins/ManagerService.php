@@ -520,7 +520,7 @@ class ManagerService
 
     private function handleConfig(array $config) {
 
-        foreach ($config AS $key => $value) {
+        foreach ($config as $key => $value) {
             if (trim($value) == '') {
                 unset($config[$key]);
             }
