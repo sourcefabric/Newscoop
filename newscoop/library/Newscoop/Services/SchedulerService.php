@@ -21,14 +21,17 @@ class SchedulerService implements SchedulerServiceInterface
 {
     protected $em;
 
+    protected $config;
+
     protected $jobby;
 
     /**
      * Construct
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $config = array())
     {
         $this->em = $em;
+        $this->config = $config;
         $this->jobby = new Jobby();
     }
 
@@ -89,6 +92,10 @@ class SchedulerService implements SchedulerServiceInterface
      */
     public function addSchedulerJob($jobName, array $config)
     {
+        if (array_key_exists('environment', $this->config) && !empty($this->config['environment'])) {
+            $config['environment'] = $this->config['environment'];
+        }
+
         $this->jobby->add($jobName, $config);
     }
 

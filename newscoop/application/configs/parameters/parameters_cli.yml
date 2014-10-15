@@ -5,3 +5,5 @@ parameters:
                 cache: "Doctrine\Common\Cache\ArrayCache"
     doctrine:
         cache: "array"
+    scheduler:
+        environment: 'cli'
