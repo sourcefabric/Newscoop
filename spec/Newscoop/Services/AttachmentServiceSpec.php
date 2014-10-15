@@ -9,11 +9,35 @@ use Newscoop\Entity\Language;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Newscoop\Services\UserService;
+use Prophecy\Argument;
 
 class AttachmentServiceSpec extends ObjectBehavior
 {
-    public function let($die, \Doctrine\ORM\EntityManager $em, \Symfony\Component\Routing\Router $router, UserService $userService)
-    {
+    public function let(
+        $die,
+        \Doctrine\ORM\EntityManager $em,
+        \Symfony\Component\Routing\Router $router,
+        UserService $userService,
+        \Newscoop\Entity\Repository\AutoIdRepository $repository,
+        \Newscoop\Entity\User $user
+    ){
+        $em
+            ->getRepository('Newscoop\Entity\AutoId')
+            ->willReturn($repository);
+
+        $em->persist(Argument::any())->willReturn(true);
+        $em->flush(Argument::any())->willReturn(true);
+        $em->remove(Argument::any())->willReturn(true);
+
+        $repository->getNextTranslationPhraseId()->willReturn('7');
+        $user
+            ->hasPermission('AddFile')
+            ->willReturn(true);
+
+        $userService
+            ->getCurrentUser()
+            ->willReturn($user);
+
         $this->beConstructedWith(array(
             'file_base_url' => "files/",
             'file_directory' => realpath(__DIR__ . '/../../../newscoop/public/files').'/',
