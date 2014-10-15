@@ -3,7 +3,7 @@
 $newscoopDir = realpath(dirname(__FILE__).'/../../../../../../').'/';
 $rootDir = realpath($newscoopDir.'../').'/';
 $currentDir = dirname(__FILE__) .'/';
-$diffFile = 'delete_diff.txt';
+$diffFile = 'auto_delete_diff.txt';
 $upgradeErrors = array();
 
 require_once $newscoopDir.'vendor/autoload.php';
@@ -40,11 +40,11 @@ if (count($filesToBeDeleted) > 0) {
 
     foreach ($filesToBeDeleted as $file) {
 
-        if (strpos($file, 'newscoop/') === 0) {
-            $fullPath = $newscoopDir.substr($file, 9);
-        } else {
-            $fullPath = $rootDir.$file;
+        if (strpos($file, 'newscoop/') === false) {
+            continue;
         }
+
+        $fullPath = $newscoopDir.substr($file, 9);
 
         if (is_file($fullPath) && is_readable($fullPath)) {
 
