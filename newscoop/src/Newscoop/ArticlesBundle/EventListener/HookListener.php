@@ -36,6 +36,13 @@ class HookListener
         $this->templating = $templating;
     }
 
+    /**
+     * Lists editorial comments for given article
+     *
+     * @param  PluginHooksEvent $event Plugins hook event
+     *
+     * @return boolean
+     */
     public function listEditorialComments(PluginHooksEvent $event)
     {
         $articleNumber = $event->getArgument('articleNumber');
