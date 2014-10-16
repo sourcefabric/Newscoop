@@ -71,15 +71,10 @@ $folderToBeChecked = array_unique($folderToBeChecked);
 arsort($folderToBeChecked);
 
 // Add extra directories to remove recusively
-$folderToBeChecked[] = $newscoopDir .'admin-files/lang';
 $folderToBeChecked[] = $newscoopDir .'example';
 $folderToBeChecked[] = $newscoopDir .'extensions/google-gadgets';
 $folderToBeChecked[] = $newscoopDir .'install/cron_jobs';
 $folderToBeChecked[] = $newscoopDir .'install/sample_data';
-
-$folderToBeChecked[] = $rootDir .'cookbooks';
-$folderToBeChecked[] = $rootDir .'dependencies';
-$folderToBeChecked[] = $rootDir .'scripts';
 
 foreach ($folderToBeChecked as $folder) {
 
@@ -111,6 +106,25 @@ foreach ($folderToBeChecked as $folder) {
                 $logger->addError($msg);
                 $upgradeErrors[] = $msg;
             }
+        }
+    }
+}
+
+$foldersToBeRemovedCompletely = array(
+    $newscoopDir .'admin-files/lang'
+);
+
+foreach ($foldersToBeRemovedCompletely as $folder) {
+
+    if (is_dir($folder)) {
+
+        try {
+            // Remove parent directory
+            $filesystem->remove(array($folder));
+        } catch (\Exception $e) {
+            $msg = 'Could not remove folder '.str_replace($newscoopDir, '', $folder).', please remove it and it\'s contents manually.';
+            $logger->addError($msg);
+            $upgradeErrors[] = $msg;
         }
     }
 }
