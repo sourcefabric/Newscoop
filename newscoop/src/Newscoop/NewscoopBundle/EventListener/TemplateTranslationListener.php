@@ -10,7 +10,7 @@ namespace Newscoop\NewscoopBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\LoggingTranslator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -24,9 +24,9 @@ class TemplateTranslationListener
     protected $cacheService;
 
     /**
-     * @param Translator $translator
+     * @param LoggingTranslator $translator
      */
-    public function __construct(Translator $translator, $cacheService)
+    public function __construct(LoggingTranslator $translator, $cacheService)
     {
         $this->translator = $translator;
         $this->cacheService = $cacheService;

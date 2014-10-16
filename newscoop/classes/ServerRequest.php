@@ -42,11 +42,10 @@ class ServerRequest
         $this->callback = $callback;
         $this->args = (array) $args;
 
-        $translator = \Zend_Registry::get('container')->getService('translator');
         // check if callable
         if (!is_callable($this->callback, false, $this->callable_name)) {
             throw new InvalidArgumentException(
-                $translator->trans("Callback $1 is not callable.", array('$1' => $this->callable_name), 'api'),
+                "Callback $1 is not callable.", array('$1' => $this->callable_name),
                 self::ERROR_NOT_CALLABLE
             );
         }
@@ -69,12 +68,11 @@ class ServerRequest
      * @return mixed
      */
     public function execute()
-    {   
-        $translator = \Zend_Registry::get('container')->getService('translator');
+    {
         // token check
         if (!$this->checkToken()) {
             throw new InvalidArgumentException(
-                $translator->trans('Invalid security token.'),
+                'Invalid security token.',
                 self::ERROR_SECURITY_TOKEN
             );
         }
@@ -82,7 +80,7 @@ class ServerRequest
         // authorisation check
         if (!$this->checkPermission()) {
             throw new LogicException(
-                $translator->trans('Access denied.', array(), 'api'),
+                'Access denied.',
                 self::ERROR_PERMISSION
             );
         }

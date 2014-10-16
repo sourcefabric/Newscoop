@@ -159,8 +159,6 @@ services:
     topic:
         class: Newscoop\Topic\TopicService
         arguments: ["@em"]
-    http.client.factory:
-        class: Newscoop\Http\ClientFactory
     index_client.default:
         class: Newscoop\Search\DefaultIndexClient
         arguments: ["@service_container"]

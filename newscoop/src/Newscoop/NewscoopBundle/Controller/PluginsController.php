@@ -107,45 +107,6 @@ class PluginsController extends Controller
     }
 
     /**
-     * @Route("/admin/plugins/getPackagesFromPackagist")
-     */
-    public function searchOnPackagistAction(Request $request)
-    {
-        $response = new JsonResponse();
-        $query = $request->get('q', '');
-
-        $client = new \Buzz\Client\Curl();
-        $client->setTimeout(3600);
-        $browser = new \Buzz\Browser($client);
-        $packagistResponse =  $browser->get('https://packagist.org/search.json?type=newscoop-plugin&q='.$query);
-        $packages = json_decode($packagistResponse->getContent(), true);
-        $results = $packages['results'];
-        $this->aasort($results, 'downloads');
-
-        // hide already installed plugins
-        $cleanResults = array();
-        $pluginService = $this->container->get('newscoop.plugins.service');
-        foreach ($results as $resultKey => $package) {
-            $installed = false;
-            foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
-                if ($package['name'] == $plugin->getName()) {
-                    $installed = true;
-                    $packages['total'] = $packages['total']-1;
-                }
-            }
-
-            if (!$installed) {
-                $cleanResults[] = $package;
-            }
-        }
-
-        $packages['results'] = $cleanResults;
-
-        return $response->setData($packages);
-    }
-
-
-    /**
      * @Route("/admin/plugins/getStream/{action}/{name}", requirements={"name" = ".+"})
      */
     public function getStreamAction($action, $name)

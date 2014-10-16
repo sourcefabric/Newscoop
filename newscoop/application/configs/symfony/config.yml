@@ -15,7 +15,7 @@ framework:
         storage_id: newscoop_newscoop.session.storage
         handler_id: ~
     fragments: ~
-    translator: { fallback: en }
+    translator: { fallback: en, logging: true }
 
 monolog:
     channels: ["sentry"]

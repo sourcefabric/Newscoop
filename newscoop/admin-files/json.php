@@ -24,8 +24,6 @@ require_once WWW_DIR . '/classes/GeoMap.php';
 require_once WWW_DIR . '/classes/Article.php';
 require_once WWW_DIR . '/classes/ArticleData.php';
 
-$translator = \Zend_Registry::get('container')->getService('translator');
-
 try {
     // init request
     $serverRequest = new ServerRequest($_POST['callback'], isset($_POST['args']) ? $_POST['args'] : array());
@@ -78,7 +76,7 @@ try {
 } catch (Exception $e) {
     echo json_encode(array(
         'error_code' => $e->getCode(),
-        'error_message' => $translator->trans('Error') . ': ' . $e->getMessage(),
+        'error_message' => 'Error: '.$e->getMessage(),
         'error_file' => $e->getFile(),
         'error_line' => $e->getLine(),
     ));

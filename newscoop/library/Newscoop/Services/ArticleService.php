@@ -93,7 +93,7 @@ class ArticleService
         }
 
         // if key 4 does not exist, it's probably not an article
-        if (array_key_exists(4, $uriExplode)) {
+        if (array_key_exists(4, $uriExplode) && $uriExplode[4] !== '') {
             $articleInfo['id'] = $uriExplode[4];
             $articleInfo['lang'] = $uriExplode[1];
             $articleInfo['section'] = $uriExplode[3];
