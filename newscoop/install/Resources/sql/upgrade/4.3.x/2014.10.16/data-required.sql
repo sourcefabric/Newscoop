@@ -1,0 +1,1 @@
+UPDATE `Languages` SET Code="sh" WHERE Code="sr@latin";
