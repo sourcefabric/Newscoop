@@ -18,8 +18,9 @@ else {
 }
 
 if (!defined('APPLICATION_PATH')) {
+    ob_start();
     require_once __DIR__ . '/../application.php';
-    $application->bootstrap();
+    $req = ob_get_clean();
 }
 
 // check if script is included
