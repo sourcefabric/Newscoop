@@ -3,7 +3,7 @@ services:
         class: "Newscoop\ArticlesBundle\EventListener\HookListener"
         arguments: ["@em", "@templating"]
         tags:
-          - { name: kernel.event_listener, event: newscoop_admin.interface.articles.editorialcomments, method: listEditorialComments }
+          - { name: kernel.event_listener, event: newscoop_admin.interface.article.edit.sidebar.editorialComments, method: listEditorialComments }
 
     newscoop.editorial_comments:
         class: Newscoop\ArticlesBundle\Services\EditorialCommentsService
