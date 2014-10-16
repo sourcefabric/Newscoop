@@ -83,7 +83,7 @@ $app->get('/', function (Silex\Application $app) {
 
         echo "Your Newscoop instance is upgraded from " . $oldVersions['dbInfo'] . " to " . $newVersions['dbInfo'] . " without errors. \n";
 
-        return true;
+        return false;
     }
 
     if (is_array($response)) {
