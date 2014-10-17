@@ -4,11 +4,6 @@
 use Symfony\Component\Filesystem\Filesystem;
 use Newscoop\Services\FilesystemService;
 
-if (php_sapi_name() == 'cli') {
-    require_once __DIR__ . '/../application.php';
-    $application->bootstrap();
-}
-
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 require_once $CAMPSITE_DIR . '/classes/CampPlugin.php';
 
