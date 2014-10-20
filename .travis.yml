@@ -1,24 +1,31 @@
 language: php
 php:
-  - "5.4"
-  - "5.3"
+- '5.4'
+- '5.3'
 notifications:
   email: false
+  hipchat:
+    rooms:
+      secure: ArA/zjwjNhHWUQauavuyqkHGD6vGoiav1DJrnw2dl6qPDKXe220i/Y0AbbcSh2BazG1cf2B/nkgoWPPCz+xRN7/6tbNV7AkYuN+y0WomBqx/BMaFr6uofgGa0OABZ3XN/Madx9yOE+3q0iJnje41ymJtdpzC23urZ5ma3jxltBs=
 before_script:
-  - sudo apt-get update > /dev/null
-  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl php5-gd
-  - echo "$(curl -fsSL https://gist.github.com/ahilles107/8255528/raw/fa949a791fe882323a34decd3b0caf130b6d52d6/travis_newscoop.dev)" | sed -e "s,PATH,`pwd`/newscoop,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
-  - echo "127.0.0.1 newscoop.dev" | sudo tee -a /etc/hosts
-  - sudo a2enmod rewrite
-  - sudo service apache2 restart
-  - mysql -e 'create database newscoop;' -uroot
-  - cd newscoop/
-  - composer install --prefer-dist
-  - ./application/console newscoop:install --fix --database_name newscoop --database_user root
-  - sudo php upgrade.php
-  - ./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test
-  - cd ..
-  - sudo php newscoop/scripts/fixer.php
-
+- sudo apt-get update > /dev/null
+- sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql
+  php5-intl php5-gd
+- echo "$(curl -fsSL https://gist.github.com/ahilles107/8255528/raw/fa949a791fe882323a34decd3b0caf130b6d52d6/travis_newscoop.dev)"
+  | sed -e "s,PATH,`pwd`/newscoop,g" | sudo tee /etc/apache2/sites-available/default
+  > /dev/null
+- echo "127.0.0.1 newscoop.dev" | sudo tee -a /etc/hosts
+- sudo a2enmod rewrite
+- sudo service apache2 restart
+- mysql -e 'create database newscoop;' -uroot
+- cd newscoop/
+- composer install --prefer-dist
+- "./application/console newscoop:install --fix --database_name newscoop --database_user
+  root"
+- sudo php upgrade.php
+- "./application/console oauth:create-client testclient newscoop.dev newscoop.dev
+  --test"
+- cd ..
+- sudo php newscoop/scripts/fixer.php
 script:
-  - newscoop/vendor/bin/phpspec run --format pretty
+- newscoop/vendor/bin/phpspec run --format pretty
