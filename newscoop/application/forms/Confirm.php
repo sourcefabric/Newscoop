@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\MailChimp\ListApi;
-
 /**
  */
 class Application_Form_Confirm extends Zend_Form
@@ -76,6 +74,8 @@ class Application_Form_Confirm extends Zend_Form
             ),
             'errorMessages' => array($translator->trans('You must accept the terms of use.', array(), 'users')),
         ));
+
+        $this->getElement('terms_of_use')->setOrder(7);
 
         $this->addElement('submit', 'submit', array(
             'label' => $translator->trans('Login'),
