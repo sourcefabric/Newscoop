@@ -1168,11 +1168,11 @@ abstract class CampURI
             $parIndex++;
             if (!in_array($parameter,
                             array('number', 'ratio', 'width', 'height', 'crop'))) {
-                CampTemplate::trigger_error("Invalid image parameter '$parameter' in URL statement");
+                CampTemplate::singleton()->trigger_error("Invalid image parameter '$parameter' in URL statement");
                 break;
             }
             if (!isset($p_params[$parIndex]) || !is_numeric($p_params[$parIndex])) {
-                CampTemplate::trigger_error("Invalid image $parameter in URL statement");
+                CampTemplate::singleton()->trigger_error("Invalid image $parameter in URL statement");
                 break;
             }
             if ($parameter == 'number') {
@@ -1200,13 +1200,13 @@ abstract class CampURI
             while (isset($p_params[0])) {
                 $option = strtolower(array_shift($p_params));
                 if ($option != 'width' && $option != 'height' && $option != 'crop' && $option != 'forcecrop') {
-                    CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
+                    CampTemplate::singleton()->trigger_error("Invalid image attribute '$option' in URL statement.");
                     break;
                 }
                 if (isset($p_params[0])) {
                     $option_value = array_shift($p_params);
                 } else {
-                    CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
+                    CampTemplate::singleton()->trigger_error("Value not set for '$option' image attribute in URL statement.");
                     break;
                 }
                 $param = 'Image' . ucfirst($option);
