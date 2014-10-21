@@ -1,0 +1,222 @@
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'Veb sajt'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Geolokacija
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Nema zapisa'
+'No entries to show': 'Nema unosa za prikaz'
+'Display _MENU_ records': 'Prikaži _MENU_ zapise'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': '- filtriranje među _MAX_ zapisa'
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: Nijedan
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': 'Uredi svoju lozinku'
+'Edit user $1': null
+'Edit subscriptions': 'Uredi pretplate'
+'Edit profile': null
+'Edit permissions': 'Uredi korisnička prava'
+'Create new account': 'Napravi novi nalog'
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
+Username: 'Korisničko ime'
+'Last Name': Prezime
+'First Name': Ime
+Email: email
+'You were logged out.': 'Sada ste odjavljeni'
+'Newscoop Subhead': 'Newscoop podnaslov'
+Filters: Filteri
+'Add new Author': 'Dodaj novog autora'
+'Loading Data': 'Učitavanje podataka'
+'Delete author type': 'Obriši tip autora'
+'Cannot remove author type.': 'Nije moguće ukloniti tip autora'
+'Cannot remove author alias.': 'Nije moguće ukloniti autorov alias '
+'Author alias removed.': 'Autorov alias je uklonjen'
+'Are you sure you want to delete this author?': 'Da li ste sigurni da želite da obrišeteovog autora?'
+'Are you sure you want to delete this author alias?': 'Da li ste sigurni da želite da obrišete alias ovog autora?'
+'All Author Types': 'Svi tipovi autora'
+'Add author type': 'Dodaj tip autora'
+'You do not have the permission to change authors.': 'Nemate pravo da menjate autore.'
+'Please fill at least first name and last name.': 'Molimo unesite barem ime i prezime.'
+'Cannot add author type, this type already exists.': 'Nije moguće dodati tip autora, pošto već postoji.'
+'Author type removed.': 'tip autora uklonjen,'
+'Author type must be at least three characters long.': 'Naziv tip autora mora biti bar tri karaktera dug.'
+'Author type added.': 'Tip autora dodat.'
+'Are you sure you want to delete this author type?': 'Da li ste sigurni da želite da obrišete ovaj tip autora?'
+'User may change authors': 'Korisnik može da menja autore'
+'Unable to add new image, target directory is not writable.': 'Nije moguće dodati novu sliku, ciljani direktorijum nema pravo upisa.'
+'Author saved.': 'Autor snimljen.'
+'Author deleted.': 'Autor obrisan.'
+'Enable Firefox spell checking by default': 'Omogući Firefox proveru ispravnosti unosa teksta'
+'User may use the editor status bar': 'Korisnik može da koristi status bar editora'
+'User may clear up the system cache': 'Korisnik može da briše sistemski keš'
+'Another user is registered with that e-mail address, please choose a different one.': 'Drugi korisnik je već registrovan sa tom e-mail adresom, molimo izaberite drugu.'
+'There was an error when trying to update the user info.': 'Došlo je do greške pri pokušaju izmene podataka o informacijama.'
+'User may moderate comments': 'Korisnik može da moderiše komentare'
+'User may enable comments': 'Korsnik može da odobrava komentare'
+'User may translate articles': 'Korisnik može da prevodi tekstove'
+'User may move articles': 'Korisnik može da premešta tekstove'
+'User may find and replace': 'Korisnik može da koristi opciju traži/zameni'
+'User may change system preferences': 'Korisnik može da menja sistemske postavke'
+'User may attach topics to articles': 'Korisnik može da dodaje teme tekstovima'
+'User may attach images to articles': 'Korisnik može da kači slike uz tekstove'
+'User may add special characters': 'Korisnik može da dodaje specijalne znakove'
+'That user name already exists, please choose a different login name.': 'To korisničko ime već postoji, izaberite neko drugo ime.'
+'User may delete article attachments': 'Korisnik može da briše fajlove zakačene uz tekstove'
+'User may change article attachments': 'Korsnik može da menja fajlove prikačene uz tekstove'
+'User may add article attachments': 'Korsinik može da kači fajlove uz tekstove'
+'You do not have the right to create user accounts.': 'Nemate pravo da kreirate korisničke naloge.'
+'You must select a $1': 'Morate izabrati $1'
+'The password must be at least 6 characters long and both passwords should match.': 'Lozinka mora biti dugačka najmanje 6 karaktera i obe lozinke se moraju poklapati'
+'The user account could not be created.': 'Korisnički nalog ne može biti kreiran'
+'User account $1 was created successfully.': 'Korisnički nalog $1 je uspešno napravljen.'
+'You do not have the right to change user account permissions.': 'Nemate pravo da menjate dodeljena prava za korisničke naloge'
+'You do not have the right to change user account information.': 'Nemate pravo da promenite podatke za korisnički nalog'
+'The password you typed is incorrect.': 'Lozinka koju ste uneli je neispravna'
+'You do not have the right to delete user accounts.': 'Nemate pravo da brišete korisničke naloge'
+'User account $1 was deleted successfully.': 'Korisnički nalog $1 je uspešno obrisan.'
+'The IP Group $1 has been created.': 'Grupa zasnovana na IP adresi je kreirana'
+'There was an error creating the IP address group.': 'Došlo je do greške pri kreiranju grupe zasnovane na IP adresi.'
+'The IP address group $1 has been deleted.': 'Grupa zasnovana na IP adresi $1 je obrisana'
+'User $1 information was changed successfully.': 'Podaci o korisniku $1 su uspešno promenjeni.'
+'User Type': 'Tip korisnika'
+'The IP address group $1:$2 conflicts with another existing group.': 'IP adresna grupa  $1:$2 se sukobljava sa drugom, već postojećom grupom.'
+'User may add/change publications': 'Korisnik može da dodaje/menja publikacije'
+'Invalid value of user type parameter': 'Pogrešna vrednost parametra za tip korisnika'
+'User may delete publications': 'Korisnik može da briše publikacije'
+'User may add/change issues': 'Korisnik može da dodaje/menja izdanja'
+'User may delete issues': 'Korisnik može da briše izdanja'
+'User may add/change sections': 'Korisnik može da dodaje/menja rubrike'
+'User may delete sections': 'Korisnik može da briše rubrike'
+'User may add articles': 'Korisnik može da dodaje tekstove'
+'User may change articles': 'Korisnik može da menja tekstove'
+'User may delete articles': 'Korisnik može da briše tekstove'
+'User may add images': 'Korisnik može da dodaje slike'
+'User may change images': 'Korisnik može da menja slike'
+'User may delete images': 'Korisnik može da briše slike'
+'User may delete templates': 'Korisnik može da briše šablone'
+'User may add/change staff accounts and passwords': 'Korisnik može da dodaje/menja saradničke naloge i lozinke'
+'User may add/change subscribers accounts and passwords': 'Korisnik može da dodaje/menja pretplatničke naloge i lozinke'
+'User may delete staff accounts': 'Korisnik može da briše saradničke naloge'
+'User may manage user subscriptions': 'Korisnik može da administrira pretplate'
+'User may manage account types': 'Korisnik može da administrira tipove naloga'
+'User may add/change article types': 'Korisnik može da dodaje/menja tipove tekstova'
+'User may delete article types': 'Korisnik može da briše tipove tekstova'
+'User may manage templates': 'Korisnik može da upravlja šablonima'
+'User may add/change country entries': 'Korisnik može da dodaje/menja podatke o državama'
+'User may add languages and manage language information': 'Korisnik može da dodaje jezike i upravlja informacijama o jeziku'
+'User may delete languages': 'Korisnik može da briše jezike'
+'User may view audit logs': 'Korisnik ima pristup logovima'
+'User may delete country entries': 'Korisnik može da briše podatke o državama'
+'User may manage localizer': 'Korisnik ima pristup lokalizatoru'
+'User may publish articles': 'Korisnik može da objavljuje članke'
+'User may manage topics': 'Korisnik može da upravlja temama'
+'User may use bold': 'Korisnik može da koristi masna slova (bold)'
+'User may use italic': 'Korisnik može da koristi kurziv (italic)'
+'User may use underline': 'Korisnik može da koristi podvučena slova (underline)'
+'User may use strikethrough': 'Korisnik može da koristi precrtana slova (strikethrough)'
+'User may change text alignment': 'Korisnik može da koristi poravnavanje teksta'
+'User may copy, cut, and paste': 'Korisnik može da koristi kopiraj/zalepi/iseci (copy/paste/cut)'
+'User may undo/redo': 'Korisnik može da koristi  undo/redo'
+'User may change text direction': 'Korisnik može da menja pravac teksta'
+'User may set indents': 'Korisnik može da podešava uvlačenje'
+'User may add links': 'Korisnik može da dodaje linkove'
+'User may add subheads': 'Korisnik može da pravi međunaslove'
+'User may insert images': 'Korisnik može da ubacuje slike'
+'User may view the HTML source': 'Korisnik ima pristup HTML kodu'
+'User may enlarge the editor': 'Korisnik može da uvećava editor'
+'User may change the font face': 'Korisnik može da menja fontove'
+'User may change the font size': 'Korisnik može da menja veličinu slova'
+'User may create bulleted lists': 'Korisnik može da pravi liste bez rednih brojeva'
+'User may create numbered lists': 'Korisnik može da pravi liste sa rednim brojevima'
+'User may insert tables': 'Korisnik može da dodaje tabele'
+'User may insert horizontal rules': 'Korisnik može da ubacuje horizontalne linije'
+'User may change the font color': 'Korisnik može da menja boju slova'
+'User may use superscripts': 'Korisink može da koristi tekst u eksponentu'
+'User may use subscripts': 'Korisink može da koristi tekst u imeniocu'
+'User may backup and restore the site data': 'Korisnik može bekapovati i vraćati podatke o sajtu'
+Miscellaneous: Razno
+'Staff/Subscribers Management': 'Upravljanje saradničkim/pretplatničkim nalozima'
+'Editor Basic Settings': 'Osnovno podešavanje editora'
+'Editor Advanced Font Settings': 'Napredno podešavanje osobina fonta u editoru'
+'Editor Table Settings': 'Podešavanje osobina tabela u editoru'
+'Administrative tasks': 'Administratorski poslovi'
+'User will be notified on several events': 'Korisnik će biti obavešten o određenim sistemskim aktivnostima'
+'Editor Miscellaneous Settings': 'Podešavanje raznih osobina u editoru'
+'No such user account.': 'Nema takvog korisničkog naloga.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: null
+    created: null
+    updated: null
+    status:
+        status: null
+        registered: null
+        pending: null
+        deleted: null
+        active: null
+    table:
+        actions:
+            actions: null
+            edit: null
+            resend_email: null
+            rename: null
+            remove: null
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: null
+    chart:
+        title: null

@@ -1,0 +1,13 @@
+line: linija
+template: šablon
+'Unknown error: $1': $1
+'Unrecognized tag <em>$1</em>': 'Unrecognized tag <em>$1</em>'
+'Unknown reference <em>$1</em>': 'Unknown reference <em>$1</em>'
+'Invalid property <em>$1</em> of object <em>$2</em>': 'Invalid property <em>$1</em> of object <em>$2</em>'
+'Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>': 'Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>'
+'Invalid parameter <em>$1</em> in statement <em>$2</em>': 'Invalid parameter <em>$1</em> in statement <em>$2</em>'
+'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>'
+'Missing parameter <em>$1</em> in statement <em>$2</em>': 'Missing parameter <em>$1</em> in statement <em>$2</em>'
+'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>'
+'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': 'Pogrešan atribut <em>$1</em> u komandi <em>$2</em<em>$3</em> parametar'
+'Invalid template <em>$1</em> specified in the <em>$2</em> form': 'Pogrešan šablon <em>$1</em> naveden u formi <em>$2</em>'

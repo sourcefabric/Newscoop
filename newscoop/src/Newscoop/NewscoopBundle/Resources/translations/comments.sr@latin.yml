@@ -1,0 +1,100 @@
+'No attachment': null
+at: u
+'With no attachment': null
+'With image attachment': null
+'With document attachment': null
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop nije dostupan. Proverite svoju interent vezu.'
+Starred: null
+Star: null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
+'Reply to message': null
+Reply: Odgovori
+Processed: null
+'No records found.': 'Nema zapisa'
+'No entries to show': 'Nema unosa za prikaz'
+'Messages updated.': null
+'Messages status change to $1.': null
+'Messages deleted.': null
+'Message updated.': null
+'Message status change to $1.': null
+'Message deleted.': null
+Message: null
+Last: Poslednji
+'Full article': 'Ceo tekst'
+First: Prvi
+'Feedback Messages': 'Poruke sa povratnom informacijom'
+'Display _MENU_ records': 'Prikaži _MENU_ zapise'
+Deleted: Obrisano
+'Change selected messages status': null
+Attachment: null
+Approved.: null
+Approve: null
+Anonymous: null
+' - filtering from _MAX_ records': '- filtriranje među _MAX_ zapisa'
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+User: Korisnik
+None: Nijedan
+'Coming from': null
+'Ban/Unban user': null
+Ip: null
+'Bans can be applied to a users name, email address or IP address.': 'Zabrane mogu biti primenjene na korisničko ime, email adresu ili IP adresu.'
+'You are about to permanently delete multiple comments.': 'Nepovaratno ćete Izbrisati više komentara.'
+'You are about to permanently delete a comment.': 'Nepovaratno ćete Izbrisati komentar.'
+Website: 'Veb sajt'
+'Value is not $1 characters long': 'Vrednost nije dugačka $1 karaktera'
+Username: 'Korisničko ime'
+'User id': 'Korisnički id'
+'User ban settings': 'Podešavanje zabrane za korisnika'
+'Update comment': 'Izmeni komentar'
+Unrecommended: Nepreporučen
+Unrecommend: Nepreporučen
+'Subject is not $1 characters long': 'Naslov nije dugačak $1 karaktera'
+'Sort by Thread order': 'Sortiraj po redosledu u diskusiji'
+'Show parent comment': 'Prikažimatični komentar'
+'Show commenter details': 'Prikaži detalje o komentatoru'
+'Show commenter': 'Prikaži komentatora'
+'Show comment user details': 'Prikaži detalje o komentatoru'
+'Show comment user': 'Prikaži komentatora'
+'Show comment details': 'Prikaži detalje komentara'
+'Select status': 'Izaberi status'
+'Search Type': 'Tip pretrage'
+'Reply to comment': 'Odgovorite na komentar'
+Recommended: Preporučeni
+Recommend: Preporučen
+'Quick edit': 'Brzo uređivanje'
+Parent: Matični
+ID: Id
+'Go to edit article': 'Idi na uređivanje teksta'
+Forum: Forum
+'For Column': 'Za kolonu'
+Email: email
+'Edit acceptance criteria': 'Uredi kriterijum prihvatljivosti'
+E-mail: E-mail
+'Delete all comments?': 'Obriši sve komentare?'
+'Date Created': 'Datum kreiranja'
+'Comments updated.': 'Komentari izmenjeni.'
+'Comments status change to $1.': 'Promena statusa komentara u $1.'
+'Comments deleted.': 'Komentari obrisani'
+'Commenter $1 saved.': 'Komentator $1 sačuvan.'
+'Commenter $1 deleted.': 'Komentator $1 obrisan.'
+Commenter: Komentator
+'Comment updated.': 'Komentar izmenjen.'
+'Comment status change to $1.': 'Promena statusa komentara u $1.'
+'Comment id': 'Id komentara'
+'Comment deleted.': 'Komentar izbrisan'
+'Comment delete by $1 from the article $2 ($3)': 'Komentar obrisan od strane $1 iz teksta $2 ($3)'
+'Comment Acceptance': 'Prihvatljivost komentara'
+'Comment $4 by $1 in the article $2 ($3)': 'Komentar $4 od $1 u tekstu $2 ($3)'
+'Comment $1 saved.': 'Komentar $1 snimljen.'
+Column: Kolona
+'Change subscriber information': 'Promeni informacije o pretplatniku'
+'Ban for commenter $1 saved.': 'Zabrana za komentatora $1 sačuvana.'
+Ban: Zabrani
+'Are you sure you want to do it?': 'Siguri ste da želite to da uradite?'
+'Add rating': 'dodaj rejting'
+'Add new comment commenter': 'Dodaj novog komentatora'
+'Add new comment': 'dodaj novi komentar'
+'Add new acceptance criteria': 'Dodaj novi kriterijum prihvatljivosti'
+'Acceptance $1 saved.': 'Prihvatljivost $1 sačuvana.'
+'Acceptance $1 deleted.': 'Prihvatljivost $1 obrisana.'

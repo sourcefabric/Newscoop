@@ -1,0 +1,72 @@
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
+'Sorry that image is too small. Image needs to be at least %dx%d.': null
+'Slideshow rendition': null
+'Renditions reloaded': null
+'Reload renditions': null
+'Edit images': 'Uredi slike'
+'Specify image url if you want to load it.': 'Odredite URL slike ako želite da je učitate.'
+'Items: ': null
+'Attach slideshows': null
+'original size:': null
+'no caption': null
+'Video URL': null
+'Use for all': 'Koristi za sve.'
+'Use default': null
+'Slug must be unique': null
+Slug: null
+'Slideshow headline': null
+Slideshow: null
+'Set selected as default image': null
+'Set as default': null
+Saving...: null
+Saved: Sačuvano
+'Save headline': null
+'Place Images': null
+'No renditions defined.': null
+'No images found.': null
+'No images attached to article.': null
+'No images': null
+'Next: Upload and Edit Metadata': null
+'Next: Place Images': null
+'Media Archive': 'Arhiva medijskih zapisa'
+Location: null
+Items: null
+Item: null
+'Image files': Slike
+'Image Files: ': null
+Headline: null
+Finish: null
+'Edit Image Data': null
+'Edit $1': 'Uredi $1'
+'Done editing': null
+Detach: null
+Create: Napravi
+Caption: null
+'Attached images': null
+'Attach & Place': null
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
+'Add video': null
+'Add caption': null
+'Show all': 'Prikaži sve'
+'The image has been removed from the article.': 'Slika je uklonjena iz teksta'
+'Unable to add new image.': 'Nije moguće dodati novu sliku.'
+'Image number $1 already exists': 'Slika broj $1 već postoji'
+'You do not have the right to change image information.': 'Nemate pravo menjanja podataka o slikama.'
+'The image number specified is already in use.': 'Broj slike koji ste uneli je već upotrebljen.'
+'Image $1 updated.': 'slika $1 je izmenjena.'
+'Image $1 added.': 'Slika $1 je dodata.'
+'Edit article': 'Uredi tekst'
+'You do not have the right to attach images to articles.': 'Nemate pravo da kačite slike uz tekstove.'
+'You do not have the right to add images.': 'Nemate pravo da dodajete slike.'
+'Image information': 'Podaci o slici'
+'Attach New Image': 'Zakači novu sliku'
+'Attach Image To Article': 'Prikači sliku uz tekst'
+'Attach Existing Image': 'Prikači postojeću sliku'
+'Add New Image': 'Dodaj novu sliku'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Datum<br><small>(gggg-mm-dd)</small>
+'You must select an image file to upload.': 'Morate izabrati sliku koju želite da aploudujete.'
+'Change image information': 'Promeni podatke o slici'
+'You do not have the right to add images': 'Nemate pravo da dodajete slike'
+'Filter by uploader...': null
