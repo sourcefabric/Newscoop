@@ -11,12 +11,12 @@ namespace Newscoop\NewscoopBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Translation\LoggingTranslator;
+use Symfony\Component\Translation\Translator;
 
 class AccessDeniedExceptionListener
 {
     /**
-     * @var LoggingTranslator
+     * @var Translator
      */
     private $translator;
 
@@ -27,10 +27,10 @@ class AccessDeniedExceptionListener
 
     /**
      * Construct
-     * @param LoggingTranslator $translator
+     * @param Translator $translator
      * @param Templating $templatingService
      */
-    public function __construct(LoggingTranslator $translator, $templatingService)
+    public function __construct(Translator $translator, $templatingService)
     {
         $this->translator = $translator;
         $this->templatingService = $templatingService;
