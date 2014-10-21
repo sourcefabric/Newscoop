@@ -70,7 +70,7 @@ class MetaDbObject {
     	if (strncasecmp($className, 'Meta', 4) == 0) {
     		$className = strtolower(substr($className, 4));
     	}
-    	CampTemplate::trigger_error("Invalid use of object of type '$className'. Use \$campsite->${className}->[property_name] to display a property of this object.");
+    	CampTemplate::singleton()->trigger_error("Invalid use of object of type '$className'. Use \$campsite->${className}->[property_name] to display a property of this object.");
     	return '';
     }
 

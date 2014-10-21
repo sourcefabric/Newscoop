@@ -38,9 +38,7 @@ if ($f_article_language <= 0) {
 if (count($publications) == 1) {
     $singlePublication = camp_array_peek($publications);
     $f_destination_publication_id = $singlePublication->getPublicationId();
-    $f_article_language = $singlePublication->getDefaultLanguageId();
 }
-
 
 $allIssues = array();
 if ($f_destination_publication_id > 0) {
@@ -258,7 +256,7 @@ if (sizeof($allArticleTypes) == 0) {
 <TR>
 	<TD COLSPAN="2" align="center">
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
-		<INPUT TYPE="submit" NAME="save" VALUE="<?php  echo $translator->trans('Save'); ?>" class="button" onclick="document.forms.add_article.action='do_add.php';">
+        <INPUT TYPE="submit" NAME="save" VALUE="<?php  echo $translator->trans('Save'); ?>" class="button" onclick="document.forms.add_article.action='do_add.php';" <?php if (count($allIssues) == 0) { echo 'disabled="disabled"'; } ?>>
 	</TD>
 </TR>
 </TABLE>

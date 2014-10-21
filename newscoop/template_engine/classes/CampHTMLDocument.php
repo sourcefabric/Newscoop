@@ -330,7 +330,7 @@ final class CampHTMLDocument
             $logger = \Zend_Registry::get('container')->get('monolog.logger.sentry');
             $logger->log(\Psr\Log\LogLevel::CRITICAL, 'Uncaught exception', array('exception' => $e));
 
-            CampTemplate::trigger_error($e->getMessage(), $tpl);
+            CampTemplate::singleton()->trigger_error($e->getMessage(), $tpl);
         }
     } // fn render
 

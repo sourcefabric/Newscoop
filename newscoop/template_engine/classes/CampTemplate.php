@@ -15,7 +15,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Class CampTemplate
  */
-final class CampTemplate extends Smarty
+final class CampTemplate extends SmartyBC
 {
     const PLUGINS = '/../include/smarty/campsite_plugins';
     const SCRIPTS = '/views/scripts';
@@ -194,7 +194,7 @@ final class CampTemplate extends Smarty
      *
      * @return void
      */
-    public static function trigger_error($p_message, $p_smarty = null)
+    public function trigger_error($p_message, $p_smarty = null)
     {
         if (!self::singleton()->m_preview) {
             return;
