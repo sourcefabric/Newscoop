@@ -41,8 +41,6 @@ function camp_get_permission_list()
     $users_group = array(
 	'ManageUsers'=>$translator->trans('User may add/change staff accounts and passwords', array(), 'users', array(), 'users'),
 	'DeleteUsers'=>$translator->trans('User may delete staff accounts', array(), 'users', array(), 'users'),
-	'ManageReaders'=>$translator->trans('User may add/change subscribers accounts and passwords', array(), 'users', array(), 'users'),
-	'ManageSubscriptions'=>$translator->trans('User may manage user subscriptions', array(), 'users', array(), 'users'),
 	'ManageUserTypes'=>$translator->trans('User may manage account types', array(), 'users', array(), 'users'),
          'EditAuthors'=>$translator->trans('User may change authors', array(), 'users', array(), 'users')
         );
@@ -101,7 +99,7 @@ function camp_get_permission_list()
 
     $rights = array($translator->trans('Content')=>$content_group,
 		    $translator->trans('Templates', array(), 'users')=>$templates_group,
-		    $translator->trans('Staff/Subscribers Management', array(), 'users')=>$users_group,
+		    $translator->trans('Staff Management', array(), 'users')=>$users_group,
 		    $translator->trans('Administrative tasks', array(), 'users')=>$administrative_group,
 		    $translator->trans('Article Types')=>$article_types_group,
 		    $translator->trans('Languages')=>$languages_group,

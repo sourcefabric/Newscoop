@@ -33,13 +33,7 @@ function onCommentsModerated(p_checkbox)
 <tr>
     <td>
         <!-- Begin left column -->
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px;
-		<?php
-			if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions")) {
-				echo 'border-right: 1px solid black;';
-			}
-		?>
-		">
+        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px;">
         <tr>
             <td colspan="2">
                 <font size="+1"><b><?php echo $translator->trans("General attributes", array(), 'pub'); ?></b></font>
@@ -217,87 +211,6 @@ function onCommentsModerated(p_checkbox)
         </table>
         <!-- END left column -->
     </td>
-	<?php
-		if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions")) {
-	?>
-    <!-- BEGIN right column -->
-    <td style="" valign="top">
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;">
-        <tr>
-            <td colspan="2">
-                <font size="+1"><b><?php echo $translator->trans("Subscription defaults"); ?></b></font>
-            </td>
-        </tr>
-
-        <TR>
-        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Time Unit", array(), 'pub'); ?>:</TD>
-        	<TD>
-            <SELECT NAME="f_time_unit" class="input_select">
-        	<?php
-        	$selectedTimeUnit = '';
-        	if (isset($publicationObj)) {
-        	    $selectedTimeUnit = $publicationObj->getTimeUnit();
-        	}
-        	foreach ($timeUnits as $timeUnit) {
-        		camp_html_select_option($timeUnit->getUnit(), $selectedTimeUnit, $timeUnit->getName());
-        	}
-        	?>
-            </SELECT>
-        	</TD>
-        </TR>
-        <tr>
-        	<td colspan="2" align="left"><b><?php echo $translator->trans('Paid subscriptions', array(), 'pub'); ?></b></td>
-        </tr>
-        <TR>
-        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Currency"); ?>:</TD>
-        	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_currency" VALUE="<?php if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getCurrency())); } ?>" SIZE="10" MAXLENGTH="10">
-        	</TD>
-        </TR>
-        <tr>
-        	<td colspan="2" align="left"><?php  echo $translator->trans("Time unit cost per one section", array(), 'pub'); ?>:</td>
-        </tr>
-        <TR>
-        	<TD ALIGN="RIGHT">- <?php echo $translator->trans('one language', array(), 'pub'); ?>:</TD>
-        	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_unit_cost" VALUE="<?php  if (isset($publicationObj)) { p($publicationObj->getUnitCost()); } ?>" SIZE="10" MAXLENGTH="10">
-        	</TD>
-        </TR>
-        <TR>
-        	<TD ALIGN="RIGHT">- <?php echo $translator->trans('all languages', array(), 'pub'); ?>:</TD>
-        	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_unit_cost_all_lang" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getUnitCostAllLang()); } ?>" SIZE="10" MAXLENGTH="10">
-        	</TD>
-        </TR>
-        <TR>
-        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Default time period", array(), 'pub'); ?>:</TD>
-        	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_paid" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getPaidTime()); } ?>" SIZE="10" MAXLENGTH="10"> <?php echo $translator->trans('time units', array(), 'pub'); ?>
-        	</TD>
-        </TR>
-        <tr>
-        	<td colspan="2" align="left" style="padding-top: 1em;"><b><?php echo $translator->trans('Trial subscriptions', array(), 'pub'); ?></b></td>
-        </tr>
-        <TR>
-        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Default time period", array(), 'pub'); ?>:</TD>
-        	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_trial" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getTrialTime()); } ?>" SIZE="10" MAXLENGTH="10"> <?php echo $translator->trans('time units', array(), 'pub'); ?>
-        	</TD>
-        </TR>
-
-        <?php if (isset($publicationObj)) { ?>
-        <tr>
-            <td colspan="2" align="center" style="padding-top: 1em;">
-                <a href="/<?php echo $ADMIN; ?>/pub/deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php echo $translator->trans("Set subscription settings by country", array(), 'pub'); ?></a>
-            </td>
-        </tr>
-        <?php } ?>
-        </TABLE>
-    </td>
-    <!-- END right column -->
-    <?php
-		}
-    ?>
 </tr>
 <?php if (isset($publicationObj)) { ?>
 <tr>

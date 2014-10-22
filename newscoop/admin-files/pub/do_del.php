@@ -1,6 +1,5 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/Subscription.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Issue.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Section.php");
@@ -46,12 +45,6 @@ if (count($sectionsRemaining) > 0) {
 $articlesRemaining = Article::GetNumUniqueArticles($Pub);
 if ($articlesRemaining > 0) {
 	$errorMsgs[] = $translator->trans('There are $1 article(s) left.', array('$1' => $articlesRemaining));
-	$doDelete = false;
-}
-
-$subscriptionsRemaining = Subscription::GetNumSubscriptions($Pub);
-if ($subscriptionsRemaining > 0) {
-	$errorMsgs[] = $translator->trans('There are $1 subscription(s) left.', array('$1' => $subscriptionsRemaining));
 	$doDelete = false;
 }
 

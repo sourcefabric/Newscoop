@@ -1,6 +1,0 @@
-<?php 
-$translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Edit all sections', array(), 'user_subscription_sections')); 
-?>
-
-<?php echo $this->form; ?>

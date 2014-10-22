@@ -71,42 +71,6 @@ class Publication
     protected $moderator_from;
 
     /**
-     * @ORM\Column(name="TimeUnit", nullable=True)
-     * @var string
-     */
-    protected $timeUnit;
-
-    /**
-     * @ORM\Column(type="decimal", name="UnitCost", nullable=True)
-     * @var float
-     */
-    protected $unitCost;
-
-    /**
-     * @ORM\Column(type="decimal", name="UnitCostAllLang", nullable=True)
-     * @var float
-     */
-    protected $unitCostAll;
-
-    /**
-     * @ORM\Column(name="Currency", nullable=True)
-     * @var string
-     */
-    protected $currency;
-
-    /**
-     * @ORM\Column(type="integer", name="TrialTime", nullable=True)
-     * @var int
-     */
-    protected $trialTime;
-
-    /**
-     * @ORM\Column(type="integer", name="PaidTime", nullable=True)
-     * @var int
-     */
-    protected $paidTime;
-
-    /**
      * @ORM\Column(type="integer", name="IdDefaultAlias", nullable=True)
      * @var int
      */

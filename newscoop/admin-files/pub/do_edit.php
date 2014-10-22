@@ -27,30 +27,6 @@ $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int');
 
 $publicationObj = new Publication($f_publication_id);
-if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions") ) {
-    $f_time_unit = Input::Get('f_time_unit');
-	$f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
-	$f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'));
-	$f_currency = trim(Input::Get('f_currency'));
-	$f_paid = Input::Get('f_paid', 'int');
-	$f_trial = Input::get('f_trial', 'int');
-} else {
-	if (isset($publicationObj)) {
-    	$f_time_unit = $publicationObj->getTimeUnit();
-		$f_unit_cost = p($publicationObj->getUnitCost());
-		$f_unit_cost_all_lang = p($publicationObj->getUnitCostAllLang());
-		$f_currency = p(htmlspecialchars($publicationObj->getCurrency()));
-		$f_paid = p($publicationObj->getPaidTime());
-		$f_trial = p($publicationObj->getTrialTime());
-    } else {
-		$f_time_unit = 'D';
-		$f_unit_cost = '';
-		$f_unit_cost_all_lang = '';
-		$f_currency	= '';
-		$f_paid = '';
-		$f_trial = '';
-    }
-}
 
 $f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
 $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
@@ -100,12 +76,6 @@ $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,
 				 'IdDefaultLanguage' => $f_language,
 				 'IdURLType' => $f_url_type,
-                 'TimeUnit' => $f_time_unit,
-				 'PaidTime' => $f_paid,
-				 'TrialTime' => $f_trial,
-				 'UnitCost' => $f_unit_cost,
-				 'UnitCostAllLang' => $f_unit_cost_all_lang,
-				 'Currency' => $f_currency,
 				 'comments_enabled' => $f_comments_enabled,
 				 'comments_article_default_enabled'=> $f_comments_article_default,
 				 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
