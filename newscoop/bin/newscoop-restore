@@ -426,7 +426,7 @@ if ($doPrompt) {
 // Remove all existing files...
 //
 foreach ($destDirs as $dir) {
-    echo " * Removing files in $dir...";
+    echo " * Removing files in " . realpath($dir) . "...";
     flush_output($flush);
     if ($dir == $templatesDestDir) {
         camp_remove_dir($dir."/*", '', array('system_templates'));
@@ -563,7 +563,7 @@ if ($dbVersion < '2.6.0') {
 }
 
 // Upgrade the database
-echo " * Upgrading (if necessary)...";
+echo " * Upgrading the database (if necessary)...";
 flush_output($flush);
 $res = camp_upgrade_database($destDbName);
 if ($res !== 0) {
