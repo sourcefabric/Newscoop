@@ -1886,6 +1886,11 @@ div.image-thumbnail-container {
     width:80px;
 }
 
+ul span.caption p {
+    margin: 0;
+    padding: 0;
+}
+
 ul#edit-files h2 {
     margin: 0;
     padding: 8px;

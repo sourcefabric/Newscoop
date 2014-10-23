@@ -148,10 +148,14 @@ echo $breadcrumbs;
         // CHeck if language is this is valid
         $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
         $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+        $editorOptions = array(
+            'max_chars' => $captionLimit,
+            'toolbar_length' => 28,
+        );
 
         $iptcDescriptionCode = "tinyMCE.editors['f_image_description'].setContent('". addcslashes($iptcDescription, "'")."');";
 
-        editor_load_tinymce('f_image_description', $g_user, $editorLanguage, array('max_chars' => $captionLimit));
+        editor_load_tinymce('f_image_description', $g_user, $editorLanguage, $editorOptions);
 ?>
 <TR>
     <TD ALIGN="RIGHT" style="width:115px;"><?php
@@ -179,7 +183,7 @@ echo $breadcrumbs;
 <TR>
         <TD ALIGN="RIGHT" ><?php echo $translator->trans('Description'); ?>:</TD>
         <TD align="left">
-            <INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text" maxlength="<?php echo $captionLimit; ?>">
+            <INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars(strip_tags($imageObj->getDescription())); ?>" SIZE="32" class="input_text" maxlength="<?php echo $captionLimit; ?>">
             <?php
                 if (!empty($iptcDescription)) {
                     ?>

@@ -17,8 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Item
 {
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer") 
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      * @var int
      */
@@ -44,8 +44,8 @@ class Item
     protected $offset;
 
     /**
-     * @ORM\Column(nullable=True)
-     * @var string
+     * @ORM\Column(type="text", nullable=True)
+     * @var text
      */
     protected $caption;
 

@@ -59,8 +59,8 @@ class ArticleImageCaption
     protected $articleNumber;
 
     /**
-     * @ORM\Column(length=255)
-     * @var string
+     * @ORM\Column(type="text")
+     * @var text
      */
     protected $caption;
 

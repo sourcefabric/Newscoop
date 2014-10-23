@@ -11,8 +11,13 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/media-archive/editor_load_tinymce.php");
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('preferences');
+
+$captionStatus = $preferencesService->MediaRichTextCaptions;
+$captionLimit = $preferencesService->MediaCaptionLength;
 
 if (!$g_user->hasPermission('AddImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");
@@ -42,7 +47,11 @@ camp_html_display_msgs();
 
 <div class="ui-widget-content padded-strong block-shadow">
 
-<form name="image_multiedit" method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_multiedit.php" enctype="multipart/form-data">
+<form name="image_multiedit" method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_multiedit.php" enctype="multipart/form-data" onsubmit="<?php
+    if ($preferencesService->MediaRichTextCaptions  == 'Y') {
+        echo 'return validateTinyMCEEditors();';
+    }
+?>">
 
 <fieldset class="plain">
 
@@ -55,12 +64,12 @@ camp_html_display_msgs();
         unset($iptcPlace);
         unset($iptcPhotographer);
         unset($iptcDescription);
-        
+
         $imageObj = new Image($image['id']);
         $allowedExtensions = array('jpg', 'jpeg', 'tiff', 'tif');
         $imagePathParts = explode('.', $imageObj->getImageFileName());
         $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
-        
+
         if (in_array($imageExtension, $allowedExtensions)) {
             $exif = @exif_read_data($imageObj->getImageStorageLocation());
             if (isset($exif['DateTime'])) {
@@ -99,9 +108,9 @@ camp_html_display_msgs();
                 $iptcPlace = implode(', ', $iptcPlace);
             }
         }
-                
+
         $image['date'] = date('Y-m-d');
-        
+
         if (isset($exifDate)) {
             $image['date'] = $exifDate;
         }
@@ -125,8 +134,19 @@ camp_html_display_msgs();
 		    <legend><?php  echo $translator->trans("Change image information", array(), 'media_archive'); ?></legend>
 
 		    <dl>
-		        <dt><?php  echo $translator->trans("Description"); ?>:</dt>
-		        <dd><input type="text" name="image[<?php echo $image['id']; ?>][f_description]" value="<?php echo htmlspecialchars($image['description']); ?>" size="32" class="input_text"></dd>
+                <dt><?php  echo $translator->trans("Description"); ?>:</dt>
+                <dd><?php
+
+                    if ($captionStatus == 'Y') {
+
+                        $loadAsRichtext[]   = 'image_description_'.$image['id'];
+
+                        echo '<textarea name="image['.$image['id'].'][f_description]" id="image_description_'.$image['id'].'" rows="4" class="image-description">'.$image['description'].'</textarea>';
+                    } else {
+
+                        echo '<input type="text" name="image['.$image['id'].'][f_description]" value="'.strip_tags($image['description']).'" size="32" class="input_text">';
+                    }
+                ?></dd>
 		    </dl>
 		    <dl>
 		        <dt><?php  echo $translator->trans("Photographer"); ?>:</dt>
@@ -166,6 +186,22 @@ camp_html_display_msgs();
 </form>
 
 </div>
+
+<?php
+    // Load tinymce once for all textareas
+    if (count($loadAsRichtext) > 0) {
+
+        $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
+        $editorOptions  = array(
+            'max_chars' => $captionLimit,
+            'toolbar_length' => 15,
+        );
+
+        editor_load_tinymce($loadAsRichtext, $g_user, $editorLanguage, $editorOptions);
+    }
+?>
 
 <script type="text/javascript">
 /**

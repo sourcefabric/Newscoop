@@ -87,17 +87,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ArticleImageCaptions`;
 
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ArticleImageCaptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `IdLanguage` int(11) NOT NULL,
   `IdImage` int(11) NOT NULL,
   `NrArticle` int(11) NOT NULL,
-  `caption` varchar(255) NOT NULL,
+  `caption` TEXT DEFAULT NULL,
   `articleImage_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `imageId` (`IdImage`,`NrArticle`,`IdLanguage`),
   KEY `IDX_1E9BFCA410F3034D6CB384EF` (`IdImage`,`NrArticle`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ArticleImageCaptions`
@@ -3204,7 +3207,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
   `package_id` int(11) DEFAULT NULL,
   `image_id` int(11) DEFAULT NULL,
   `offset` int(11) NOT NULL,
-  `caption` varchar(255) DEFAULT NULL,
+  `caption` text DEFAULT NULL,
   `coords` varchar(255) DEFAULT NULL,
   `video_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),

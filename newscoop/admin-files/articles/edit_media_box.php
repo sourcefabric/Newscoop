@@ -65,18 +65,24 @@
                 </div>
 
                 <strong><?php echo $articleImage->getTemplateId(); ?></strong> <small><?php echo $image->getStatus() == 'approved' ? $translator->trans('Approved', array(), 'articles') : $translator->trans('Unapproved', array(), 'articles'); ?></small><br />
-                <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php
+                <span id="image-<?php echo $image->getImageId(); ?>-caption" class="caption"><?php
                     if ($preferenceService->MediaRichTextCaptions == 'Y') {
                         echo $imageService->getCaption($localImage, $f_article_number, $f_language_selected);
                     } else {
                         echo $this->view->escape($imageService->getCaption($localImage, $f_article_number, $f_language_selected));
                     }
-                ?></span><br />
+                ?></span><?php
+                    if ($preferenceService->MediaRichTextCaptions == 'N') {
+                        echo '<br />';
+                    }
+                ?>
 
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
                 <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>
-                <a class="corner-button" href="<?php p($detachUrl); ?>" onclick="return confirm('<?php echo $translator->trans("Are you sure you want to remove the image $1 from the article?", array('$1' => camp_javascriptspecialchars($image->getDescription())), 'articles'); ?>');"><span class="ui-icon ui-icon-closethick"></span></a>
+                <a class="corner-button" href="<?php p($detachUrl); ?>" onclick="return confirm('<?php
+                    echo $translator->trans("Are you sure you want to remove the image $1 from the article?", array('$1' => 'image_caption'), 'articles');
+                ?>'.replace('image_caption', $('#image-<?php echo $image->getImageId(); ?>-caption').text()));"><span class="ui-icon ui-icon-closethick"></span></a>
                 <?php } ?>
             </li>
             <?php } ?>
