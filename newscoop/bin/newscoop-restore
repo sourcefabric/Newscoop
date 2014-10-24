@@ -3,6 +3,7 @@
 
 use Symfony\Component\Filesystem\Filesystem;
 use Newscoop\Services\FilesystemService;
+use Symfony\Component\Process\Process;
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 require_once $CAMPSITE_DIR . '/classes/CampPlugin.php';
@@ -433,7 +434,17 @@ foreach ($destDirs as $dir) {
     } else if ($dir == $themesDestDir) {
         camp_remove_dir($dir."/*", '', array('system_templates'));
     } else {
-        camp_remove_dir($dir."/*");
+        if (strpos($dir, 'cache') !== false) {
+            $newscoopConsole = escapeshellarg(__FILE__ . '/../application/console');
+            $process = new Process('$php $newscoopConsole cache:clear --no-optional-warmers');
+            $process->run();
+            // executes after the command finishes
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            }
+        } else {
+            camp_remove_dir($dir."/*");
+        }
     }
     echo "done.\n";
 }
