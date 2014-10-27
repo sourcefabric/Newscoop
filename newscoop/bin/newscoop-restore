@@ -435,13 +435,8 @@ foreach ($destDirs as $dir) {
         camp_remove_dir($dir."/*", '', array('system_templates'));
     } else {
         if (strpos($dir, 'cache') !== false) {
-            $newscoopConsole = escapeshellarg(__FILE__ . '/../application/console');
-            $process = new Process('$php $newscoopConsole cache:clear --no-optional-warmers');
-            $process->run();
-            // executes after the command finishes
-            if (!$process->isSuccessful()) {
-                throw new \RuntimeException($process->getErrorOutput());
-            }
+            $newscoopConsole = escapeshellarg(__DIR__ . '/../application/console');
+            exec('php $newscoopConsole cache:clear --no-optional-warmers');
         } else {
             camp_remove_dir($dir."/*");
         }
