@@ -1,0 +1,4 @@
+services:
+    newscoop.editorial_comments:
+        class: Newscoop\ArticlesBundle\Services\EditorialCommentsService
+        arguments:  ["@em"]

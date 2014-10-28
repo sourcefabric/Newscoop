@@ -803,7 +803,7 @@ class Article extends DatabaseObject
             $this->setProperty('LockTime', 'NOW()', true, true);
         } else {
             $this->setProperty('LockUser', '0', false);
-            $this->setProperty('LockTime', '0', false);
+            $this->setProperty('LockTime', '0000-00-00 00:00:00', false);
         }
         $this->setProperty('time_updated', $lastModified);
         $this->commit();
