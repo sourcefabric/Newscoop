@@ -4,6 +4,7 @@
 use Symfony\Component\Filesystem\Filesystem;
 use Newscoop\Services\FilesystemService;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 require_once $CAMPSITE_DIR . '/classes/CampPlugin.php';
@@ -434,15 +435,32 @@ foreach ($destDirs as $dir) {
     } else if ($dir == $themesDestDir) {
         camp_remove_dir($dir."/*", '', array('system_templates'));
     } else {
-        if (strpos($dir, 'cache') !== false) {
-            $newscoopConsole = escapeshellarg(__DIR__ . '/../application/console');
-            exec('php $newscoopConsole cache:clear --no-optional-warmers');
-        } else {
-            camp_remove_dir($dir."/*");
-        }
+        camp_remove_dir($dir."/*");
     }
     echo "done.\n";
 }
+
+
+echo " * Recreating cache...";
+$env = 'prod';
+if (defined('APPLICATION_ENV') && (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev')) {
+    $env = 'dev';
+}
+
+$newscoopConsole = escapeshellarg(__DIR__ . '/../application/console');
+$phpFinder = new PhpExecutableFinder();
+$phpPath = $phpFinder->find();
+if (!$phpPath) {
+    throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+}
+
+$php = escapeshellarg($phpPath);
+$process = new Process("$php $newscoopConsole cache:clear --no-optional-warmers --env=$env", null, null, null, 300);
+$process->run();
+if (!$process->isSuccessful()) {
+    throw new \RuntimeException($process->getErrorOutput());
+}
+echo "done.\n";
 
 //
 // Restore files from backup...
