@@ -455,7 +455,7 @@ if (!$phpPath) {
 }
 
 $php = escapeshellarg($phpPath);
-$process = new Process("$php $newscoopConsole cache:clear --no-optional-warmers --env=$env", null, null, null, 300);
+$process = new Process("$php $newscoopConsole cache:clear --no-optional-warmers --env=$env");
 $process->run();
 if (!$process->isSuccessful()) {
     throw new \RuntimeException($process->getErrorOutput());
