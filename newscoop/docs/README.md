@@ -16,7 +16,7 @@
 - [PHP 5.3+](http://php.net/downloads.php)
 - [Exim4](http://www.exim.org/mirrors.html)
 
-# How Do I restore backup package from Newscoop 4.2.3/4.2.4 on 4.3?
+### How Do I restore backup package from Newscoop 4.2.3/4.2.4 on 4.3?
 
 - [Restore guide][restore]
 
