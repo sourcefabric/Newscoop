@@ -21,5 +21,5 @@
 - [Restore guide][restore]
 
 [swap]: https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04
-[ubuntu]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
-[restore]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/UPGRADE_4_3.md#restoring-backup-package-from-newscoop-version-423424-on-43
+[ubuntu]: https://github.com/sourcefabric/Newscoop/blob/v4.3/newscoop/docs/INSTALL-ubuntu.md
+[restore]: https://github.com/sourcefabric/Newscoop/blob/v4.3/newscoop/docs/UPGRADE_4_3.md#restoring-backup-package-from-newscoop-version-423424-on-43
