@@ -89,27 +89,27 @@ final class CampContext
     // Defines the list objects
     private $m_listObjects = array(
         'languages'=>array(
-            'class' =>'Languages', 
+            'class' =>'Languages',
             'list'  =>'languages',
             'url_id'=>'lang'
         ),
         'issues'=>array(
-            'class'=>'Issues', 
+            'class'=>'Issues',
             'list'=>'issues',
             'url_id'=>'iss'
         ),
         'sections'=>array(
-            'class'=>'Sections', 
+            'class'=>'Sections',
             'list'=>'sections',
             'url_id'=>'sec'
         ),
         'articles'=>array(
-            'class'=>'Articles', 
+            'class'=>'Articles',
             'list'=>'articles',
             'url_id'=>'art'
         ),
         'maparticles'=>array(
-            'class'=>'MapArticles', 
+            'class'=>'MapArticles',
             'list'=>'map_articles',
             'url_id'=>'mart'
         ),
@@ -149,18 +149,18 @@ final class CampContext
             'url_id'=>'acm'
         ),
         'subtitles'=>array(
-            'class'=>'Subtitles', 
+            'class'=>'Subtitles',
             'list'=>'subtitles',
             'url_id'=>'st'
         ),
         'articletopics'=>array(
             'class'=>'ArticleTopics',
-            'list'=>'article_topics', 
+            'list'=>'article_topics',
             'url_id'=>'atp'
         ),
         'searchresults'=>array(
             'class'=>'SearchResults',
-            'list'=>'search_results', 
+            'list'=>'search_results',
             'url_id'=>'src'
         ),
         'searchresultssolr' => array(
@@ -169,13 +169,13 @@ final class CampContext
             'url_id' => 'solr'
         ),
         'subtopics'=>array(
-            'class'=>'Subtopics', 
+            'class'=>'Subtopics',
             'list'=>'subtopics',
             'url_id'=>'tp'
         ),
         'images'=>array(
-            'class'=>'Images', 
-            'list'=>'images', 
+            'class'=>'Images',
+            'list'=>'images',
             'url_id'=>'img'
         ),
         'users' => array(
@@ -303,7 +303,6 @@ final class CampContext
         $this->m_readonlyProperties['default_url'] = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
         if (!$this->m_readonlyProperties['default_url']->is_valid) {
-            header('HTTP/1.0 404 Not Found');
             if (!$this->m_readonlyProperties['url']->language->defined) {
                 $this->m_readonlyProperties['url']->language = $this->m_readonlyProperties['url']->publication->default_language;
                 $this->m_readonlyProperties['default_url'] = $this->m_readonlyProperties['url'];
@@ -354,7 +353,7 @@ final class CampContext
         $requestActionName = $this->m_readonlyProperties['request_action']->name;
 
         $runAction = true;
-        if ($pluginsService->isInstalled('terwey/plugin-newscoop-comments') && $requestActionName == 'submit_comment') {
+        if ($requestActionName == 'submit_comment' && $pluginsService->isInstalled('terwey/plugin-newscoop-comments')) {
             $runAction = false;
         }
 
@@ -406,8 +405,8 @@ final class CampContext
     /**
      * Overloaded method call to give access to context properties.
      *
-     * @param string $p_element - the property name
-     * @return mix - the property value
+     * @param  string $p_element - the property name
+     * @return mix    - the property value
      */
     final public function __get($p_element)
     {
@@ -421,6 +420,7 @@ final class CampContext
                 || is_null($this->m_objects[$p_element])) {
                     $this->createObject($p_element);
                 }
+
                 return $this->m_objects[$p_element];
             }
 
@@ -441,6 +441,7 @@ final class CampContext
         } catch (InvalidObjectException $e) {
             $this->trigger_invalid_object_error($e->getClassName());
         }
+
         return null;
     } // fn __get
 
@@ -448,9 +449,9 @@ final class CampContext
     /**
      * Overloade method call to set the context properties.
      *
-     * @param string $p_element - property name
-     * @param string $p_value - value of the property
-     * @return mix - the property value
+     * @param  string $p_element - property name
+     * @param  string $p_value   - value of the property
+     * @return mix    - the property value
      */
     final public function __set($p_element, $p_value)
     {
@@ -468,7 +469,7 @@ final class CampContext
 
                 if (file_exists($classFullPath)) {
                     require_once($classFullPath);
-                } else if (class_exists(CampContext::$m_objectTypes[$p_element]['class'])) {
+                } elseif (class_exists(CampContext::$m_objectTypes[$p_element]['class'])) {
                     $className = CampContext::ObjectType($p_element);
                 } else {
                     $pluginImplementsClassFullPath = false;
@@ -510,6 +511,7 @@ final class CampContext
                 return isset($this->m_objects[$p_element]) ? $this->m_objects[$p_element] : null;
             } catch (InvalidObjectException $e) {
                 $this->trigger_invalid_object_error($e->getClassName());
+
                 return null;
             }
         }
@@ -522,6 +524,7 @@ final class CampContext
 
         // No object of this type of property with this name exist.
         $this->trigger_invalid_property_error($p_element);
+
         return null;
     } // fn __set
 
@@ -534,6 +537,7 @@ final class CampContext
     public function has_property($p_property)
     {
         $p_property = CampContext::TranslateProperty($p_property);
+
         return !is_null(CampContext::ObjectType($p_property))
         || array_key_exists($p_property, $this->m_properties)
         || array_key_exists($p_property, $this->m_readonlyProperties);
@@ -548,6 +552,7 @@ final class CampContext
     public function has_object($p_object)
     {
         $p_object = CampContext::TranslateProperty($p_object);
+
         return !is_null(CampContext::ObjectType($p_object));
     } // fn has_object
 
@@ -555,7 +560,7 @@ final class CampContext
     /**
      * Returns the object name from the list class name.
      *
-     * @param string $p_listClassName
+     * @param  string $p_listClassName
      * @return string
      */
     private function GetListObjectName($p_listClassName)
@@ -568,6 +573,7 @@ final class CampContext
         if (strtolower($tail) != 'list') {
             return '';
         }
+
         return strtolower(substr($p_listClassName, 0, ($nameLength - 4)));
     } // fn GetListObjectName
 
@@ -576,7 +582,7 @@ final class CampContext
      * Returns the list name of the current list.
      *
      * @return string
-     *      The name of the list
+     *                The name of the list
      */
     public function getCurrentListName()
     {
@@ -683,6 +689,7 @@ final class CampContext
         $propertiesNames[]= 'subtitle';
         $propertiesNames[]= 'topic';
         $propertiesNames[]= 'user';
+
         return $propertiesNames;
     }
 
@@ -690,7 +697,7 @@ final class CampContext
     /**
      * Sets the current list.
      *
-     * @param object $p_list
+     * @param  object $p_list
      * @return void
      */
     public function setCurrentList(&$p_list, array $p_savePropertiesList = array())
@@ -724,7 +731,7 @@ final class CampContext
         $this->m_readonlyProperties['current_list'] =& $p_list;
         $this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
         $this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
-        
+
         return $this->m_readonlyProperties;
     } // fn setCurrentList
 
@@ -756,7 +763,7 @@ final class CampContext
             return;
         }
 
-        $this->m_readonlyProperties['prev_list_empty'] = (int)($this->m_readonlyProperties['current_list']->count == 0);
+        $this->m_readonlyProperties['prev_list_empty'] = (int) ($this->m_readonlyProperties['current_list']->count == 0);
 
         $this->RestoreProperties();
 
@@ -779,12 +786,14 @@ final class CampContext
      *
      * @return int - the current list identifier
      */
-    public function current_list_id() {
+    public function current_list_id()
+    {
         $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
         $listName = $this->m_listObjects[$objectName]['list'];
         if (!isset($this->m_readonlyProperties['current_list'])) {
             return null;
         }
+
         return $this->m_readonlyProperties['current_list']->id;
     }
 
@@ -794,7 +803,8 @@ final class CampContext
      *
      * @param string $p_className
      */
-    public function next_list_id($p_className) {
+    public function next_list_id($p_className)
+    {
         $objectName = $this->GetListObjectName($p_className);
         if (is_null($objectName) || $objectName == '') {
             return null;
@@ -804,15 +814,18 @@ final class CampContext
         if (!isset($this->m_list_count[$listName.'_lists'])) {
             return $prefix . '0';
         }
+
         return $prefix . $this->m_list_count[$listName.'_lists'];
     }
 
 
-    public function list_id_prefix($p_className) {
+    public function list_id_prefix($p_className)
+    {
         $objectName = $this->GetListObjectName($p_className);
         if (is_null($objectName) || $objectName == '') {
             return null;
         }
+
         return 'ls-'.$this->m_listObjects[$objectName]['url_id'];
     }
 
@@ -822,11 +835,13 @@ final class CampContext
      *
      * @param string $p_className
      */
-    public function next_list_start($p_className) {
+    public function next_list_start($p_className)
+    {
         $nextListId = $this->next_list_id($p_className);
         if (is_null($nextListId)) {
             return null;
         }
+
         return $this->m_readonlyProperties['default_url']->get_parameter($nextListId);
     }
 
@@ -834,7 +849,7 @@ final class CampContext
     /**
      * Creates an object of the given type. Returns the created object.
      *
-     * @param string $p_objectType
+     * @param  string $p_objectType
      * @return object
      */
     private function createObject($p_objectType)
@@ -846,7 +861,7 @@ final class CampContext
 
         if (file_exists($classFullPath)) {
             require_once($classFullPath);
-        } else if (class_exists(CampContext::$m_objectTypes[$p_objectType]['class'])) {
+        } elseif (class_exists(CampContext::$m_objectTypes[$p_objectType]['class'])) {
             $className = CampContext::ObjectType($p_objectType);
         } else {
             $pluginImplementsClassFullPath = false;
@@ -875,7 +890,7 @@ final class CampContext
     /**
      * Processes a property name; returns a valid property name.
      *
-     * @param string $p_property
+     * @param  string $p_property
      * @return string
      */
     public static function TranslateProperty($p_property)
@@ -912,7 +927,7 @@ final class CampContext
      * Register an new object type
      *
      * @param array $p_objectType
-     * structure: array(object name => object class name)
+     *                            structure: array(object name => object class name)
      */
     final private function registerObjectType(array $p_objectType)
     {
@@ -936,7 +951,7 @@ final class CampContext
      * Register an list object
      *
      * @param array $p_listObject
-     * structure: array(list object name => array('class' => class name, 'list' => list class name))
+     *                            structure: array(list object name => array('class' => class name, 'list' => list class name))
      */
     final private function registerListObject(array $listObject)
     {
@@ -970,10 +985,12 @@ final class CampContext
      *
      * @return MetaIssue
      */
-    final protected function getLanguage() {
+    final protected function getLanguage()
+    {
         if (!isset($this->m_objects['language'])) {
             $this->createObject('language');
         }
+
         return $this->m_objects['language'];
     }
 
@@ -986,10 +1003,12 @@ final class CampContext
      *
      * @return MetaPublication
      */
-    final protected function getPublication() {
+    final protected function getPublication()
+    {
         if (!isset($this->m_objects['publication'])) {
             $this->createObject('publication');
         }
+
         return $this->m_objects['publication'];
     }
 
@@ -1002,10 +1021,12 @@ final class CampContext
      *
      * @return MetaIssue
      */
-    final protected function getIssue() {
+    final protected function getIssue()
+    {
         if (!isset($this->m_objects['issue'])) {
             $this->createObject('issue');
         }
+
         return $this->m_objects['issue'];
     }
 
@@ -1018,10 +1039,12 @@ final class CampContext
      *
      * @return MetaIssue
      */
-    final protected function getSection() {
+    final protected function getSection()
+    {
         if (!isset($this->m_objects['section'])) {
             $this->createObject('section');
         }
+
         return $this->m_objects['section'];
     }
 
@@ -1034,10 +1057,12 @@ final class CampContext
      *      *
      * @return MetaIssue
      */
-    final protected function getArticle() {
+    final protected function getArticle()
+    {
         if (!isset($this->m_objects['article'])) {
             $this->createObject('article');
         }
+
         return $this->m_objects['article'];
     }
 
@@ -1224,7 +1249,8 @@ final class CampContext
      * @param MetaComment $p_oldComment
      * @param MetaComment $p_newComment
      */
-    private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
+    private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment)
+    {
         if (!$p_oldComment->same_as($p_newComment)) {
             if ($p_newComment->defined()) {
                 $this->setArticleHandler($this->article, $p_newComment->article);
@@ -1234,14 +1260,16 @@ final class CampContext
     }
 
 
-    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle) {
+    private function setSubtitleHandler(MetaSubtitle $p_oldSubtitle, MetaSubtitle $p_newSubtitle)
+    {
         if (!$p_oldSubtitle->same_as($p_newSubtitle)) {
             $this->m_objects['subtitle'] = $p_newSubtitle;
         }
     }
 
 
-    private function setTopicHandler(MetaTopic $p_oldTopic, MetaTopic $p_newTopic) {
+    private function setTopicHandler(MetaTopic $p_oldTopic, MetaTopic $p_newTopic)
+    {
         if (!$p_oldTopic->same_as($p_newTopic)) {
             $this->m_readonlyProperties['url']->set_parameter('tpid', $p_newTopic->identifier);
             $this->m_objects['topic'] = $p_newTopic;
@@ -1264,12 +1292,12 @@ final class CampContext
                 strpos(CampContext::$m_objectTypes[$p_property]['class'], '\\') !== false &&
                 class_exists(CampContext::$m_objectTypes[$p_property]['class'])
             ) {
-
                 return CampContext::$m_objectTypes[$p_property]['class'];
             }
-        
+
             return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];
         }
+
         return null;
     }
 

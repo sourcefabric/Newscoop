@@ -1040,7 +1040,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false, $p_showRolls = fals
 
     $first = true;
     $skipped = array();
-    $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
+    $versions = array_map('basename', glob($campsite_dir . '/install/Resources/sql/upgrade/[2-9].[0-9]*'));
     usort($versions, 'camp_version_compare');
 
     if (-1 == camp_version_compare($old_version, '3.5.x')) {
@@ -1090,7 +1090,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false, $p_showRolls = fals
         }
         $output = array();
 
-        $upgrade_base_dir = $campsite_dir . "/install/sql/upgrade/$db_version/";
+        $upgrade_base_dir = $campsite_dir . "/install/Resources/sql/upgrade/$db_version/";
         $rolls = camp_search_db_rolls($upgrade_base_dir, $cur_old_roll);
 
         $db_conf_file = $etc_dir . '/database_conf.php';
@@ -1159,6 +1159,28 @@ Please save the following list of skipped queries:\n";
 
     return 0;
 } // fn camp_upgrade_database
+
+function camp_save_database_version($p_db, $version, $roll)
+{
+    $version = str_replace(array('"', '\''), array('_', '_'), $version);
+    $roll = str_replace(array('"', '\''), array('_', '_'), $roll);
+
+    $ins_db_version = 'INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_version", "' . $version . '") ON DUPLICATE KEY UPDATE ver_value = "' . $version . '"';
+    $ins_db_roll = 'INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_roll", "' . $roll . '") ON DUPLICATE KEY UPDATE ver_value = "' . $roll . '"';
+
+    if (is_object($p_db)) {
+        $p_db->Execute($ins_db_version);
+        $p_db->Execute($ins_db_roll);
+
+        return true;
+    }
+
+    global $g_ado_db;
+    $g_ado_db->executeUpdate($ins_db_version);
+    $g_ado_db->executeUpdate($ins_db_roll);
+
+    return 0;
+}
 
 /**
  * Find out which version is the given database.
