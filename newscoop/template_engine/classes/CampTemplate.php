@@ -95,6 +95,13 @@ final class CampTemplate extends SmartyBC
         $this->assign('view', \Zend_Registry::get('container')->get('view'));
         $this->assign('userindex', false);
         $this->assign('user', new MetaUser());
+        $siteinfo = array(
+            'title' => $preferencesService->SiteTitle,
+            'keywords' => $preferencesService->SiteMetaKeywords,
+            'description' => $preferencesService->SiteMetaDescription,
+        );
+
+        $this->assing('siteinfo', $siteinfo);
     }
 
     /**
