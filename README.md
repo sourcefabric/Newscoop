@@ -14,10 +14,11 @@ Quick links to our resources are:
 * Public source code hosting: [http://github.com/sourcefabric/Newscoop][9]
 * Download link: [https://sourceforge.net/projects/newscoop/][10]
 * Developer's wiki: [https://wiki.sourcefabric.org/display/CS/][11]
+* Developer's blog: [https://dev-blog.sourcefabric.org][12]
 
 ## Installation
 
-The recommended way to install Newscoop is [through composer](http://getcomposer.org). 
+The recommended way to install Newscoop is [through composer](http://getcomposer.org).
 Just run the composer:
     
     curl -s https://getcomposer.org/installer | php
@@ -51,3 +52,5 @@ Newscoop is licensed under the GPL3 license.
 [9]: http://github.com/sourcefabric/Newscoop
 [10]: https://sourceforge.net/projects/newscoop/
 [11]: https://wiki.sourcefabric.org/display/CS/
+[12]: https://dev-blog.sourcefabric.org/en/blogs/?filter=1
+[13]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md

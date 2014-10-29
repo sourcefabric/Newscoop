@@ -1,4 +1,4 @@
-UPGRADE
+UPGRADE BELOW VERSION 4.2.3
 =======
 
 ### Warning! Backup your site before performing the upgrade!

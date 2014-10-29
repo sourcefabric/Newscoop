@@ -2,6 +2,9 @@
 
 - [Newscoop Ubuntu 14.04 Install Guide][ubuntu]
 
+# How Do I restore backup package from Newscoop 4.2.3/4.2.4 on 4.3?
+
+- [Restore guide][restore]
 
 ### Hardware Requirements
 
@@ -18,4 +21,5 @@
 - [Exim4](http://www.exim.org/mirrors.html)
 
 [swap]: https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04
-[ubuntu]: https://github.com/sourcefabric/Newscoop/tree/master/docs/INSTALL-ubuntu.md
+[ubuntu]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
+[restore]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/UPGRADE_4_3.md#restoring-backup-package-from-newscoop-version-4.2.3/4.2.4-on-4.3
