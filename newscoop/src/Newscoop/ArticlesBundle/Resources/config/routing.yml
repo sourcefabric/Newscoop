@@ -1,4 +1,4 @@
-NewscoopArticlesBundleEditorialComments:
-    resource: "@NewscoopArticlesBundle/Controller/EditorialCommentsApiController.php"
-    prefix:   /
-    type:     annotation
+articles:
+    resource: "@NewscoopArticlesBundle/Controller/"
+    type: annotation
+    prefix: /

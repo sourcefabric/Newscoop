@@ -48,6 +48,9 @@ articles:
 plugins:
     resource: .
     type: plugins
+articles:
+    prefix: /
+    resource: "@NewscoopArticlesBundle/Resources/config/routing.yml"
 zendBridge:
     prefix: /
     resource: "@NewscoopZendBridgeBundle/Resources/config/routing.yml"
