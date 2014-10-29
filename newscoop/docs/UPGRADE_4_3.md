@@ -28,11 +28,11 @@ How to do this?:
 
 ## Restoring backup package from Newscoop version 4.2.3/4.2.4 on 4.3
 
-For backup/restore use ["Backup/Restore utility"][4] which can be found in Newscoop Admin Panel.
+For a backup/restore use the ["Backup/Restore utility"][4] which can be found in the Newscoop Admin Panel.
 
-If your current 4.2.3/4.2.4 instance contained old legacy plugins (`debate`, `poll`, `soundcloud`, `recaptcha`) and you perfomed the backup action, you will have to update these plugins after restore process in version 4.3 of Newscoop.
+If your current 4.2.3/4.2.4 instance contained old legacy plugins (`debate`, `poll`, `soundcloud`, `recaptcha`) and you created a backup, you will have to update these plugins after the restore process in version 4.3 of Newscoop.
 
-It's because there were more adjustments done to make these old plugins compatible to work with Newscoop 4.3. 
+This is required because more adjustments have been done to make the legacy plugins compatible with Newscoop 4.3.
 
 How to install old legacy plugins?:
 
