@@ -101,7 +101,7 @@ final class CampTemplate extends SmartyBC
             'description' => $preferencesService->SiteMetaDescription,
         );
 
-        $this->assing('siteinfo', $siteinfo);
+        $this->assign('siteinfo', $siteinfo);
     }
 
     /**
