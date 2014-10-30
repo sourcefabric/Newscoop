@@ -18,7 +18,6 @@ class EditorialCommentRepository extends EntityRepository
     public function getAllByArticleNumber($articleNumber, $fetchReplies = true)
     {
         $qb = $this->createQueryBuilder('ec');
-
         $qb
             ->select('ec', 'u')
             ->join('ec.user', 'u')
@@ -33,6 +32,48 @@ class EditorialCommentRepository extends EntityRepository
             $qb->andWhere($qb->expr()->isNull('ec.parentId'));
         }
 
-        return $qb->getQuery()->getArrayResult();
+        return $qb->getQuery();
+    }
+
+    public function getOneByArticleAndCommentId($articleNumber, $languageId, $commentId, $fetchReplies = true)
+    {
+        $qb = $this->createQueryBuilder('ec');
+        $qb
+            ->select('ec', 'u')
+            ->join('ec.user', 'u')
+            ->where('ec.articleNumber = :articleNumber')
+            ->andWhere('ec.languageId = :languageId')
+            ->andWhere('ec.id = :commentId')
+            ->andWhere('ec.is_active = :is_active')
+            ->setParameters(array(
+                'articleNumber' => $articleNumber,
+                'languageId' => $languageId,
+                'commentId' => $commentId,
+                'is_active' => true,
+            ));
+
+        if (!$fetchReplies) {
+            $qb->andWhere($qb->expr()->isNull('ec.parentId'));
+        }
+
+        return $qb->getQuery();
+    }
+
+    public function getAll($fetchReplies = true)
+    {
+        $qb = $this->createQueryBuilder('ec');
+        $qb
+            ->select('ec', 'u')
+            ->join('ec.user', 'u')
+            ->andWhere('ec.is_active = :is_active')
+            ->setParameters(array(
+                'is_active' => true,
+            ));
+
+        if (!$fetchReplies) {
+            $qb->andWhere($qb->expr()->isNull('ec.parentId'));
+        }
+
+        return $qb->getQuery();
     }
 }

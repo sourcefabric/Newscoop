@@ -165,7 +165,7 @@ class ArticlesController extends FOSRestController
         if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created', 'checkIfExists' => true))) {
             $clean['creationDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created'))), 'Y-m-d H:i:s');
         }
-        
+
         if ($articleObj->isPublished() && $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
             $clean['publishDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
         }

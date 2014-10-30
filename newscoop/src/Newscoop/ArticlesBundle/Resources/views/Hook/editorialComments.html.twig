@@ -1,0 +1,50 @@
+<style type="text/css" media="screen">
+.pure-button {
+    font-family: inherit;
+    font-size: 100%;
+    padding: .5em 1em;
+    color: #444;
+    border: 1px solid #999;
+    border: 0 rgba(0,0,0,0);
+    background-color: #E6E6E6;
+    text-decoration: none;
+    border-radius: 2px;
+}
+</style>
+<div class="articlebox" title="{{ pluginName }}">
+
+{% for comment in editorialComments %}
+<div>
+    <div>
+        <div>
+            <div>
+                <div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img width="32" height="32" alt="" id="dcs-img-0" src="//lh5.googleusercontent.com/-MbqKPk_Xx3Y/AAAAAAAAAAI/AAAAAAAAALQ/_iC2MAMwH_I/s96-k-no/photo.jpg" data-userid="104375839512982465556">
+                                    <div style="background-color: rgb(31, 161, 93);"></div>
+                                </td>
+                                <td style="width: 100%">
+                                    <div>
+                                        <div>
+                                            <div>{{ comment.user.username }}</div>
+                                            <div>{{ comment.created|date('Y-m-d') }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div role="button" class="pure-button" tabindex="0" title="Mark as resolved and hide discussion" style="-webkit-user-select: none;">Resolve</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div><div style="text-align: left;">{{ comment.comment }}</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>

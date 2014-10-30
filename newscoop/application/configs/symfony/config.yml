@@ -111,6 +111,9 @@ jms_serializer:
             Newscoop_SnippetTemplate:
                 namespace_prefix: Newscoop\Entity\Snippet\SnippetTemplate
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Articles:
+                namespace_prefix: Newscoop\ArticlesBundle\Entity
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
 # SensioExtraBundle Configuration
@@ -165,12 +168,3 @@ ewz_recaptcha:
     private_key:
     enabled: true
     locale_key: kernel.default_locale
-
-parameters:
-    smarty.class: "CampTemplate"
-
-ewz_recaptcha:
-    public_key:   6LeVFuASAAAAAJvc6hlYEHZnlEIBakblsE54bTwA
-    private_key:  6LeVFuASAAAAAGhz6dWgsO6WVGY_pcg_7wAt61eQ
-    secure:       false
-    locale_key:   kernel.default_locale

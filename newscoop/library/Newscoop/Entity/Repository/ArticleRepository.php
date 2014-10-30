@@ -146,6 +146,65 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    public function getArticlesForAuthor($author, \Newscoop\Criteria $criteria)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a')
+            ->where('au.id = :author')
+            ->andWhere('a.workflowStatus = :status')
+            ->join('a.authors', 'au')
+            ->setParameter('author', $author)
+            ->setParameter('status', 'Y');
+
+        if ($criteria->query) {
+            $queryBuilder
+                ->andWhere('a.name = :query')
+                ->setParameter('query', $criteria->query);
+        }
+
+        $countQueryBuilder = clone $queryBuilder;
+        $countQueryBuilder->select('COUNT(a)');
+
+        $queryBuilder->setMaxResults($criteria->maxResults);
+        $queryBuilder->setFirstResult($criteria->firstResult);
+
+        foreach ($criteria->orderBy as $key => $order) {
+            $key = 'a.' . $key;
+            $queryBuilder->orderBy($key, $order);
+        }
+
+        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $articlesCount);
+
+        return $query;
+    }
+
+    public function getArticlesForAuthorPerDay($author, $range = '-60 days')
+    {
+        $em = $this->getEntityManager();
+        $date = new \DateTime();
+        $date->modify($range);
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('COUNT(a.number) as number', "DATE_FORMAT(a.published, '%Y-%m-%d') as date")
+            ->where('au.id = :author')
+            ->andWhere('a.workflowStatus = :status')
+            ->andWhere('a.published > :date')
+            ->join('a.authors', 'au')
+            ->setParameter('author', $author)
+            ->setParameter('status', 'Y')
+            ->setParameter('date', $date)
+            ->groupBy('date');
+
+        return $queryBuilder->getQuery();
+    }
+
     public function getArticlesForSection($publication, $sectionNumber)
     {
         $em = $this->getEntityManager();

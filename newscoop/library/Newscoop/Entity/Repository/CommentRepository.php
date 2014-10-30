@@ -692,4 +692,22 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\Comment c SET c.indexed = NULL')
             ->execute();
     }
+
+    public function getCommentsForAuthorArticlesPerDay($author, $range = '-60 days')
+    {
+        $qb = $this->createQueryBuilder('c');
+        $date = new \DateTime();
+        $date->modify($range);
+
+        $qb->select('COUNT(c.id) as number', "DATE_FORMAT(c.time_created, '%Y-%m-%d') as date")
+            ->leftJoin('c.article', 'a')
+            ->leftJoin('a.authors', 'aa')
+            ->andwhere('aa.id = :authorId')
+            ->andWhere('c.time_created > :date')
+            ->setParameter('authorId', $author->getId())
+            ->setParameter('date', $date)
+            ->groupBy('date');
+
+        return $qb->getQuery();
+    }
 }

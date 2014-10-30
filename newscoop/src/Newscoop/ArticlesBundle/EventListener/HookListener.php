@@ -46,7 +46,9 @@ class HookListener
     public function listEditorialComments(PluginHooksEvent $event)
     {
         $article = $event->getArgument('article');
-        $editorialComments = $this->em->getRepository('Newscoop\ArticlesBundle\Entity\EditorialComment')->getAllByArticleNumber($article->getArticleNumber());
+        $editorialComments = $this->em->getRepository('Newscoop\ArticlesBundle\Entity\EditorialComment')
+            ->getAllByArticleNumber($article->getArticleNumber())
+            ->getArrayResult();
 
         $response = $this->templating->renderResponse('NewscoopArticlesBundle:Hook:editorialComments.html.twig', array(
             'editorialComments' => $editorialComments,

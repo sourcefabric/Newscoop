@@ -52,7 +52,7 @@ class EditorialCommentsService
         $this->em->persist($editorialComment);
         $this->em->flush();
 
-        return true;
+        return $editorialComment;
     }
 
     /**
@@ -79,10 +79,10 @@ class EditorialCommentsService
      * @param EditorialComment $comment
      * @param User             $user
      */
-    public function resolve(EditorialComment $comment, User $user)
+    public function resolve(EditorialComment $comment, User $user, $value = true)
     {
         if ($comment->getUser()->getId() == $user->getId() || $user->isAdmin()) {
-            $comment->setResolved(true);
+            $comment->setResolved($value);
         } else {
             throw new AccessDeniedHttpException("User is not allowed to resolve comment");
         }
@@ -100,7 +100,7 @@ class EditorialCommentsService
     public function remove(EditorialComment $comment, User $user)
     {
         if ($comment->getUser()->getId() == $user->getId() || $user->isAdmin()) {
-            $comment->setIsActive(true);
+            $comment->setIsActive(false);
         } else {
             throw new AccessDeniedHttpException("User is not allowed to remove comment");
         }

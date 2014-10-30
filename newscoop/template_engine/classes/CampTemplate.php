@@ -48,7 +48,6 @@ final class CampTemplate extends SmartyBC
         // cache settings
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $cacheHandler = $preferencesService->TemplateCacheHandler;
-        $auth = Zend_Auth::getInstance();
         if ($cacheHandler) {
             $this->caching = 1;
             $this->caching_type = 'newscoop';
@@ -57,7 +56,7 @@ final class CampTemplate extends SmartyBC
             $this->caching = 0;
         }
 
-        if (self::isDevelopment()) {
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
             $this->force_compile = true;
         }
 
@@ -176,17 +175,6 @@ final class CampTemplate extends SmartyBC
     }
 
     /**
-     * Clear cache
-     *
-     * @return void
-     */
-    public function clearCache($template_name = null, $cache_id = NULL, $compile_id = NULL, $exp_time = NULL, $type = NULL)
-    {
-        $this->clearCompiledTemplate();
-        $this->clearAllCache();
-    }
-
-    /**
      * Inserts an error message into the errors list.
      *
      * @param string $p_message
@@ -205,34 +193,5 @@ final class CampTemplate extends SmartyBC
         } else {
             trigger_error("Newscoop error: $p_message");
         }
-    }
-
-    /**
-     * get a concrete filename for automagically created content
-     *
-     * @param string $auto_base
-     * @param string $auto_source
-     * @param string $auto_id
-     *
-     * @return string
-     */
-    public function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
-    {
-        $show_spec = '';
-        if (isset($this->m_context)) {
-            $show_spec .= hash('sha1', ($this->m_context->template ? $this->m_context->template->theme_dir : ''));
-        }
-
-        return parent::_get_auto_filename($auto_base, $auto_source, $auto_id) . '%%' . $show_spec;
-    }
-
-    /**
-     * Test if is development environment
-     *
-     * @return bool
-     */
-    private static function isDevelopment()
-    {
-        return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
     }
 }

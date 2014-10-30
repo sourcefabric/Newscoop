@@ -63,3 +63,8 @@ NewscoopGimmeBundleSnippetTemplates:
     resource: "@NewscoopGimmeBundle/Controller/SnippetTemplatesController.php"
     prefix:   /
     type:     annotation
+
+NewscoopEditorialCommentsApiController:
+    resource: "@NewscoopGimmeBundle/Controller/EditorialCommentsApiController.php"
+    prefix:   /
+    type:     annotation

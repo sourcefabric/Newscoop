@@ -83,9 +83,11 @@ class Builder
             return $menu;
         }
 
-        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
-
         if ($modern) {
+            $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => '#'))
+                ->setAttribute('dropdown', true)
+                ->setLinkAttribute('data-toggle', 'dropdown');
+
             $menu->addChild($translator->trans('Content'), array('uri' => '#'))
                 ->setAttribute('dropdown', true)
                 ->setLinkAttribute('data-toggle', 'dropdown');
@@ -112,6 +114,8 @@ class Builder
                 $this->prepareUsersMenu($menu[$translator->trans('Users')]);
             }
         } else {
+            $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => '#'));
+
             $menu->addChild($translator->trans('Content'), array('uri' => '#'));
             $this->prepareContentMenu($menu[$translator->trans('Content')], $modern);
 
@@ -128,6 +132,17 @@ class Builder
                 $this->prepareUsersMenu($menu[$translator->trans('Users')]);
             }
         }
+
+        $this->addChild(
+            $menu[$translator->trans('Dashboard', array(), 'home')],
+            'General Dashboard',
+            array('uri' => $this->generateZendRoute('admin'))
+        );
+        $this->addChild(
+            $menu[$translator->trans('Dashboard', array(), 'home')],
+            'Journalist Dashboard',
+            array('uri' => $this->container->get('router')->generate('newscoop_newscoop_dashboard_journalist'))
+        );
 
         $this->preparePluginsMenu($menu);
 

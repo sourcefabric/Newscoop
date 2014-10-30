@@ -1859,10 +1859,6 @@ ul.navigation li {
     float: left;
 }
 
-ul.navigation li:first-child a {
-    padding-right: 11px;
-}
-
 .content .pager {
     margin: 8px 0;
     font-size: 1.2em;
@@ -2245,10 +2241,6 @@ ul.navigation {
 
 ul.navigation li {
     float: left;
-}
-
-ul.navigation li:first-child a {
-    padding-right: 11px;
 }
 
 .content .pager {

@@ -31,6 +31,7 @@ class PublicResourcesListener
         $request = $event->getRequest();
         $route = $request->attributes->get('_route');
 
+        // todo add caching here
         $unprotected = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
         $rootsArray = array(
             'newscoop_gimme_users_login',

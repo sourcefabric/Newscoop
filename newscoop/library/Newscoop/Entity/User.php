@@ -1002,6 +1002,16 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
+     * Get author
+     *
+     * @return int
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
      * @ORM\PreUpdate
      */
     public function preUpdate()

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Newscoop\ArticlesBundle\Controller;
+namespace spec\Newscoop\GimmeBundle\Controller;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -38,7 +38,7 @@ class EditorialCommentsApiControllerSpec extends ObjectBehavior
         Router $router,
         EditorialCommentsService $editorialCommentService,
         EditorialComment $editorialComment,
-        EntityRepository $editorialCommentRepository,
+        EditorialCommentRepository $editorialCommentRepository,
         User $user,
         UserService $userService,
         Article $article,
@@ -64,13 +64,23 @@ class EditorialCommentsApiControllerSpec extends ObjectBehavior
         $articleRepository->getArticle(Argument::cetera())->willReturn($query);
         $editorialCommentService->create(Argument::cetera())->willReturn($editorialComment);
         $editorialCommentService->edit(Argument::cetera())->willReturn($editorialComment);
+        $editorialCommentService->resolve(
+            Argument::type('\Newscoop\ArticlesBundle\Entity\EditorialComment'),
+            Argument::type('\Newscoop\Entity\User'),
+            Argument::type('bool')
+        )->willReturn($editorialComment);
+
+        $editorialCommentService->remove(
+            Argument::type('\Newscoop\ArticlesBundle\Entity\EditorialComment'),
+            Argument::type('\Newscoop\Entity\User')
+        )->willReturn(true);
 
         $this->setContainer($container);
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Newscoop\ArticlesBundle\Controller\EditorialCommentsApiController');
+        $this->shouldHaveType('Newscoop\GimmeBundle\Controller\EditorialCommentsApiController');
         $this->shouldImplement('FOS\RestBundle\Controller\FOSRestController');
     }
 
@@ -87,12 +97,13 @@ class EditorialCommentsApiControllerSpec extends ObjectBehavior
         $response->getStatusCode()->shouldReturn(201);
     }
 
-    function it_should_edit_editorial_comment(Request $request, EditorialComment $comment, $form, $editorialCommentRepository)
+    function it_should_edit_editorial_comment(Request $request, EditorialComment $comment, $form, $editorialCommentRepository, $query)
     {
         $form->getData()->willReturn(array(
             'comment' => 'edit editorial comment',
         ));
-        $editorialCommentRepository->findOneBy(array('id' => 1))->willReturn($comment);
+        $editorialCommentRepository->getOneByArticleAndCommentId(1,1,1)->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($comment);
 
         $response = $this->editCommentAction($request, 1, 1, 1);
 
@@ -100,15 +111,28 @@ class EditorialCommentsApiControllerSpec extends ObjectBehavior
         $response->getStatusCode()->shouldReturn(200);
     }
 
-    function it_should_resolve_editorial_comment(EditorialComment $comment)
+    function it_should_resolve_editorial_comment(Request $request, EditorialComment $comment, $form, $editorialCommentRepository, $query)
     {
-        // create form data
+        $form->getData()->willReturn(array(
+            'resolved' => true,
+        ));
+        $editorialCommentRepository->getOneByArticleAndCommentId(1,1,1)->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($comment);
 
-        $this->editCommentAction($comment)->shouldReturn(Argument::type('array'));
+        $response = $this->editCommentAction($request, 1, 1, 1);
+
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
+        $response->getStatusCode()->shouldReturn(200);
     }
 
-    function it_should_remove_editorial_comment(EditorialComment $comment)
+    function it_should_remove_editorial_comment(Request $request, EditorialComment $comment, $editorialCommentRepository, $query)
     {
-        $this->removeCommentAction($comment)->shouldReturn(Argument::type('array'));
+        $editorialCommentRepository->getOneByArticleAndCommentId(1,1,1)->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($comment);
+
+        $response = $this->removeCommentAction($request, 1, 1, 1);
+
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
+        $response->getStatusCode()->shouldReturn(204);
     }
 }
