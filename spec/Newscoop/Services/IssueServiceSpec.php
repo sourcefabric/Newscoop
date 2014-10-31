@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Repository\IssueRepository;
 use Newscoop\Entity\Publication;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class IssueServiceSpec extends ObjectBehavior
 {
@@ -38,24 +39,23 @@ class IssueServiceSpec extends ObjectBehavior
 
     public function it_resolves_issue_from_request_data(Request $request, Issue $issue, ParameterBag $attributes)
     {
+        $request->getRequestUri()->willReturn('/en/may2014/60/test-article.htm');
         $issue->getId()->willReturn(1);
         $issue->getNumber()->willReturn(10);
         $issue->getName()->willReturn("May 2014");
         $issue->getShortName()->willReturn("may2014");
-        $request->getRequestUri()->willReturn('/en/may2014/60/test-article.htm');
         $request->attributes = $attributes;
-        $request->attributes->set('_newscoop_issue_metadata', array(
-            'id' => $issue->getId(),
-            'number' => $issue->getNumber(),
-            'name' => $issue->getName(),
-            'shortName' => $issue->getShortName()
-        ));
-
         $this->issueResolver($request)->shouldReturn($issue);
+        $this->getIssueMetadata()->shouldBeLike(array("id" => 1, "number" => 10, "name" => "May 2014", "shortName" => "may2014"));
     }
 
-    public function it_gets_current_issue_meta_data(ParameterBag $attributes, Issue $issue)
+    public function it_gets_the_latest_issue_for_current_publication(Issue $issue, Publication $publication)
     {
-        $this->getIssueMetadata()->shouldReturn(array());
+        $pub = new Publication();
+        $pub->setId(1);
+        $issue = new Issue(1, $pub);
+        $issue->setWorkflowStatus('Y');
+        $publication->getIssues()->willReturn(new ArrayCollection(array($issue)));
+        $this->getLatestPublishedIssue()->shouldReturn($issue);
     }
 }

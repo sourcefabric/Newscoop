@@ -41,7 +41,7 @@ class IssueListener
      */
     public function onRequest(GetResponseEvent $event)
     {
-        $pos = strpos($event->getRequest()->getRequestUri(), 'admin');
+        $pos = strpos($event->getRequest()->getRequestUri(), '/admin');
         if ($pos === false) {
             $this->issueService->issueResolver($event->getRequest());
         }

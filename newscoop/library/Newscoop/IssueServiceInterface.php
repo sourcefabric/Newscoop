@@ -9,6 +9,7 @@
 namespace Newscoop;
 
 use Symfony\Component\HttpFoundation\Request;
+use Newscoop\Entity\Issue;
 
 /**
  * Issue service interface
@@ -30,4 +31,25 @@ interface IssueServiceInterface
      * @return array Issue meta data
      */
     public function getIssueMetadata();
+
+    /**
+     * Get Issue object
+     *
+     * @return Newscoop\Entity\Issue Issue entity object
+     */
+    public function getIssue();
+
+    /**
+     * Set Issue object
+     *
+     * @param Issue $issue Issue entity object
+     */
+    public function setIssue(Issue $issue);
+
+    /**
+     * Get latest published issue from current publication
+     *
+     * @return Issue|null Returns Issue object or null
+     */
+    public function getLatestPublishedIssue();
 }
