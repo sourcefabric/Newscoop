@@ -42,7 +42,7 @@ comments:
         reply: null
         edit: null
         close: null
-        okay: null
+        okay: 成功
         filter: null
     msg:
         deleted: null

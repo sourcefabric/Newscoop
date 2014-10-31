@@ -29,7 +29,7 @@ removed: removed
 deleted: deleted
 deactivated: deactivated
 activated: activated
-'Value is required and cant be empty': 'Value is required and cant be empty'
+'Value is required and cant be empty': 'Value is required and can not be empty'
 'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
 'That $1 already exists, please choose a different $2.': 'That $1 already exists, please choose a different $2.'
 'Subscriptions exist for all available publications.': 'Subscriptions exist for all available publications.'
