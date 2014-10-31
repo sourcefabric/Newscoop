@@ -15,6 +15,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class EditorialCommentRepository extends EntityRepository
 {
+    /**
+     * Get all editorial comments for article
+     *
+     * @param integer   $articleNumber
+     * @param boolean   $fetchReplies
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getAllByArticleNumber($articleNumber, $fetchReplies = true)
     {
         $qb = $this->createQueryBuilder('ec');
@@ -35,6 +43,16 @@ class EditorialCommentRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Get one editorial comment by article and comment id
+     *
+     * @param integer   $articleNumber
+     * @param integer   $languageId
+     * @param integer   $commentId
+     * @param boolean   $fetchReplies
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getOneByArticleAndCommentId($articleNumber, $languageId, $commentId, $fetchReplies = true)
     {
         $qb = $this->createQueryBuilder('ec');
@@ -59,6 +77,13 @@ class EditorialCommentRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Get all editorial comments
+     *
+     * @param  boolean $fetchReplies
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getAll($fetchReplies = true)
     {
         $qb = $this->createQueryBuilder('ec');

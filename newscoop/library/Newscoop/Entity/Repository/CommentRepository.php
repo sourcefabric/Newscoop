@@ -693,6 +693,14 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             ->execute();
     }
 
+    /**
+     * Get Comments for all authors articles grouped by day
+     *
+     * @param \Newscoop\Entity\Author   $author
+     * @param string $range
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getCommentsForAuthorArticlesPerDay($author, $range = '-60 days')
     {
         $qb = $this->createQueryBuilder('c');

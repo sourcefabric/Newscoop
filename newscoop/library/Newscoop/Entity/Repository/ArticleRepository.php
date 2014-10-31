@@ -20,6 +20,15 @@ use Newscoop\Entity\User;
  */
 class ArticleRepository extends DatatableSource implements RepositoryInterface
 {
+    /**
+     * Get All Articles from choosen publication (optional: article type and language)
+     *
+     * @param int      $publication Publication id
+     * @param string   $type        Article type name
+     * @param int      $language    Language id
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticles($publication, $type = null, $language = null)
     {
         $em = $this->getEntityManager();
@@ -74,6 +83,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get Single Article
+     *
+     * @param int               $number   Article number
+     * @param mixed[int|string] $language Language id
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticle($number, $language = null)
     {
         $em = $this->getEntityManager();
@@ -108,6 +125,16 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get Articles for choosen topic
+     *
+     * @param int       $publication
+     * @param int       $topicId
+     * @param int       $language
+     * @param boolean   $getResultAndCount
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false)
     {
         $em = $this->getEntityManager();
@@ -146,6 +173,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get Articles for author
+     *
+     * @param  \Newscoop\Entity\Author          $author
+     * @param  \Newscoop\Criteria               $criteria
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticlesForAuthor($author, \Newscoop\Criteria $criteria)
     {
         $em = $this->getEntityManager();
@@ -184,6 +219,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get Articles for author per day for choosen period back from now
+     *
+     * @param \Newscoop\Entity\Author   $author
+     * @param  string                   $range
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticlesForAuthorPerDay($author, $range = '-60 days')
     {
         $em = $this->getEntityManager();
@@ -205,6 +248,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $queryBuilder->getQuery();
     }
 
+    /**
+     * Get Articles for choosen section
+     *
+     * @param int $publication
+     * @param int $sectionNumber
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticlesForSection($publication, $sectionNumber)
     {
         $em = $this->getEntityManager();
@@ -229,6 +280,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get Articles for Playlist
+     *
+     * @param int $publication
+     * @param int $playlistId
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticlesForPlaylist($publication, $playlistId)
     {
         $em = $this->getEntityManager();
@@ -255,6 +314,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get Article translations
+     *
+     * @param int $articleNumber
+     * @param int $languageId
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticleTranslations($articleNumber, $languageId)
     {
         $em = $this->getEntityManager();

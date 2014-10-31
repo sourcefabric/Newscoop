@@ -47,25 +47,6 @@ class RouterFactory
             ))
         );
 
-         $router->addRoute(
-            'webcode',
-            new \Zend_Controller_Router_Route(':webcode', array(
-                'module' => 'default'
-            ), array(
-                'webcode' => '[\+\s@][0-9a-z]{5,6}',
-            ))
-        );
-
-         $router->addRoute(
-            'language/webcode',
-            new \Zend_Controller_Router_Route(':language/:webcode', array(
-            ), array(
-                'module' => 'default',
-                'language' => '[a-z]{2}',
-                'webcode' => '^[\+\s@][0-9a-z]{5,6}',
-            ))
-        );
-
         $router->addRoute(
             'confirm-email',
             new \Zend_Controller_Router_Route('confirm-email/:user/:token', array(
