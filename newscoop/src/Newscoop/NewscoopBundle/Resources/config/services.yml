@@ -107,12 +107,6 @@ services:
         class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
         arguments:  ['@em']
 
-    newscoop_newscoop.translation_template_listener:
-        class: Newscoop\NewscoopBundle\EventListener\TemplateTranslationListener
-        arguments:  ['@translator', '@newscoop.cache']
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
-
     newscoop_newscoop.session.storage:
         class:     %newscoop_newscoop.session.storage.class%
         arguments: [%session.storage.options%]
