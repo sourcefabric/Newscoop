@@ -61,7 +61,9 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     )
 ));
 
-$app['debug'] = true;
+if (defined('APPLICATION_ENV') && (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev')) {
+    $app['debug'] = true;
+}
 
 $app['upgrade_service'] = $app->share(function () use ($app) {return new Services\UpgradeService($app['db'], $app['monolog']);});
 

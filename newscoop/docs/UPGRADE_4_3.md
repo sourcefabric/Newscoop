@@ -26,6 +26,21 @@ How to do this?:
 * Go to newscoop root folder (`../newscoop/`) and execute `php composer.phar dump-autoload —-optimize`
 * Clear the cache folder: `sudo rm -rf cache/*`
 
+## Restoring backup package from Newscoop version 4.2.3/4.2.4 on 4.3
+
+For a backup/restore use the ["Backup/Restore utility"][4] which can be found in the Newscoop Admin Panel.
+
+If your current 4.2.3/4.2.4 instance contained old legacy plugins (`debate`, `poll`, `soundcloud`, `recaptcha`) and you created a backup, you will have to update these plugins after the restore process in version 4.3 of Newscoop.
+
+This is required because more adjustments have been done to make the legacy plugins compatible with Newscoop 4.3.
+
+How to install old legacy plugins?:
+
+* Download the fixed package of legacy plugins from [here][3].
+* Extract archive and copy it to `newscoop/plugins/` directory.
+* Go to newscoop root folder (`../newscoop/`) and execute `php composer.phar dump-autoload —-optimize`
+* Clear the cache folder: `sudo rm -rf cache/*`
+
 ## Break Changes for old plugins:
 
 #### CampInstallationBaseHelper is removed.
@@ -206,3 +221,4 @@ Full list of parameters:
 [1]: https://wiki.sourcefabric.org/display/WOBS/Topic+Management
 [2]: http://symfony.com/doc/current/book/translation.html
 [3]: https://github.com/newscoop/newscoop-legacy-plugins
+[4]: http://sourcefabric.booktype.pro/newscoop-43-for-journalists-and-editors/backup-and-upgrade/
