@@ -34,7 +34,7 @@ class ArticleListener
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        $pos = strpos($request->getRequestUri(), '_profiler');
+        $pos = strpos($request->getRequestUri(), '/admin');
         if ($pos === false) {
             $this->articleService->articleResolver($request);
         }

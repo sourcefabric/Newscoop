@@ -191,6 +191,7 @@ services:
         arguments: ["@dispatcher", "@em"]
     newscoop.templates.service:
         class: Newscoop\Services\TemplatesService
+        arguments: ["@newscoop_newscoop.themes_service"]
     newscoop.placeholders.service:
         class: Newscoop\Services\PlaceholdersService
     newscoop.listpaginator.service:

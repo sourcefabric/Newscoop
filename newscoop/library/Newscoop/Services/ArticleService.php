@@ -100,7 +100,7 @@ class ArticleService
                 ->getArticle($articleInfo['id'], $articleInfo['lang'])
                 ->getArrayResult();
 
-            if (!is_null($article)) {
+            if (!empty($article)) {
                 // fill the article meta data
                 $this->articleMetadata['id']            = $article[0][0]['number'];
                 $this->articleMetadata['name']          = $article[0][0]['name'];

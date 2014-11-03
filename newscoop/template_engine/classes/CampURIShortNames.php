@@ -42,14 +42,14 @@ class CampURIShortNames extends CampURI
      *
      * @var array
      */
-    static private $m_restrictedParameters = array(
+    private static $m_restrictedParameters = array(
     );
 
     /**
      * Class constructor
      *
      * @param string $p_uri
-     *      The full URI string
+     *                      The full URI string
      */
     public function __construct($p_uri = null)
     {
@@ -92,7 +92,7 @@ class CampURIShortNames extends CampURI
      * Gets the language URI path.
      *
      * @return string
-     *      The language URI path
+     *                The language URI path
      */
     private function getURILanguage()
     {
@@ -111,7 +111,7 @@ class CampURIShortNames extends CampURI
      * It fetches the issue URL name from URI or current issue list if any.
      *
      * @return string
-     *      The issue URI path
+     *                The issue URI path
      */
     private function getURIIssue()
     {
@@ -136,7 +136,7 @@ class CampURIShortNames extends CampURI
      * It fetches the section URL name from URI or current section list if any.
      *
      * @return string
-     *      The section URI path
+     *                The section URI path
      */
     private function getURISection()
     {
@@ -161,7 +161,7 @@ class CampURIShortNames extends CampURI
      * It fetches the article URL name from URI or current article list if any.
      *
      * @return string
-     *      The article URI path
+     *                The article URI path
      */
     private function getURIArticle()
     {
@@ -183,7 +183,7 @@ class CampURIShortNames extends CampURI
 
     /**
      * @return array
-     *      An array containing all the form parameters to print out
+     *               An array containing all the form parameters to print out
      */
     public function getFormParameters()
     {
@@ -208,7 +208,7 @@ class CampURIShortNames extends CampURI
      * Returns true if the given parameter is restricted and can not
      * be set from outside the URL object.
      *
-     * @param string $p_parameterName
+     * @param  string $p_parameterName
      * @return bool
      */
     public function isRestrictedParameter($p_parameterName)
@@ -232,15 +232,15 @@ class CampURIShortNames extends CampURI
         if (!$publication) {
             throw new InvalidArgumentException("Invalid site name '$alias' in URL.", self::INVALID_SITE_NAME);
         }
-        
+
         return new MetaPublication($publication->getId());
     }
 
     /**
      * Get language by code
      *
-     * @param string $code
-     * @param MetaPublication $publication
+     * @param  string          $code
+     * @param  MetaPublication $publication
      * @return MetaLanguage
      */
     private function _getLanguage($code, MetaPublication $publication)
@@ -264,6 +264,7 @@ class CampURIShortNames extends CampURI
             }
 
             $cacheService->save($cacheKey, $language);
+
             return $language;
         }
     }
@@ -271,7 +272,7 @@ class CampURIShortNames extends CampURI
     /**
      * Get issue
      *
-     * @param string $name
+     * @param  string    $name
      * @return MetaIssue
      */
     private function _getIssue($name, MetaLanguage $language, MetaPublication $publication)
@@ -317,10 +318,10 @@ class CampURIShortNames extends CampURI
     /**
      * Get section
      *
-     * @param string $name
-     * @param MetaIssue $issue
-     * @param MetaLanguage $language
-     * @param MetaPublication $publication
+     * @param  string          $name
+     * @param  MetaIssue       $issue
+     * @param  MetaLanguage    $language
+     * @param  MetaPublication $publication
      * @return MetaSection
      */
     private function _getSection($name, MetaIssue $issue, MetaLanguage $language, MetaPublication $publication)
@@ -349,8 +350,8 @@ class CampURIShortNames extends CampURI
     /**
      * Get article
      *
-     * @param int $articleNo
-     * @param MetaLanguage $language
+     * @param  int          $articleNo
+     * @param  MetaLanguage $language
      * @return MetaArticle
      */
     private function _getArticle($articleNo, MetaLanguage $language)
@@ -372,6 +373,7 @@ class CampURIShortNames extends CampURI
             $metaArticle = new MetaArticle($language->number, $articleObj->getArticleNumber());
             $cacheService->save($cacheKey, $metaArticle);
         }
+
         return $metaArticle;
     }
 
@@ -397,7 +399,7 @@ class CampURIShortNames extends CampURI
     /**
      * Sets the URL values
      *
-     * @param Zend_Controller_Request_Abstract $request
+     * @param  Zend_Controller_Request_Abstract $request
      * @return void|PEAR_Error
      */
     private function setURL(Zend_Controller_Request_Abstract $request)
@@ -475,10 +477,10 @@ class CampURIShortNames extends CampURI
     /**
      * Sets the URI path and query values based on given parameters.
      *
-     * @param array $p_params
-     *      An array of valid URL parameters
+     * @param array   $p_params
+     *                           An array of valid URL parameters
      * @param boolean $p_preview
-     *      If true, will keep the preview parameters in the URL
+     *                           If true, will keep the preview parameters in the URL
      *
      * @return void
      */
@@ -534,11 +536,7 @@ class CampURIShortNames extends CampURI
                 if (is_null($option)) {
                     break;
                 }
-                if (is_null($this->_themePath)) {
-                    $this->_themePath = CampSystem::GetThemePath($this->m_language->number,
-                                    $this->m_publication->identifier,
-                                    $this->m_issue->number);
-                }
+
                 $pathRsc = new Resource();
                 $pathRsc->setName('buildPage');
                 $pathRsc->setPath($this->_themePath.$option);
@@ -575,7 +573,6 @@ class CampURIShortNames extends CampURI
                 }
             }
         }
-
 
         if (is_null($this->m_buildQuery)) {
             $this->m_buildQuery = CampURI::QueryArrayToString($this->m_buildQueryArray);
