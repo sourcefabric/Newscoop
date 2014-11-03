@@ -42,7 +42,7 @@ Off: null
 'You do not have the right to moderate comments.': null
 'You can not schedule opposing events at the same time': null
 'Unable to reach Newscoop. Please check your internet connection.': null
-Title: null
+Title: 标题
 'There already is an article with the same name. Please change the name and try again.': null
 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
 Geolocation: null
@@ -99,7 +99,7 @@ Saved: null
 'Save All': null
 'Online Server: On': null
 'Online Server: Off': null
-Download: null
+Download: 下载
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
 'Visible to non-subscribers': null
 'The article could not be published.': null
@@ -113,8 +113,8 @@ Download: null
 'Article translation created.': null
 'Article order changed.': null
 'Article moved.': null
-'Article deleted.': null
-'Article created.': null
+'Article deleted.': 文章删除。
+'Article created.': 文章创建。
 '$1 toggled.': null
 'Total:': null
 'Show Comments': null
@@ -188,19 +188,19 @@ articles:
     images:
         edit:
             edit_image_metadata: null
-            save: null
+            save: 保存
             form:
                 use: null
-                number: null
-                caption: null
+                number: 数字编号
+                caption: 标题
                 status_approved: null
                 status_unapproved: null
-                status: null
-                description: null
-                photographer: null
+                status: 状态
+                description: 描述
+                photographer: 摄影师
                 photographer_url: null
-                place: null
-                date: null
+                place: 地点
+                date: 日期
                 article_specific: null
                 global: null
                 other_captions: null
