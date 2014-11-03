@@ -111,10 +111,10 @@ final class CampTemplate extends SmartyBC
         $request = \Zend_Registry::get('container')->getService('request');
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $translator = \Zend_Registry::get('container')->getService('translator');
-
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $locale = $request->getLocale();
 
-        $cacheKey = $cacheService->getCacheKey(array('templates_translations', 'publication_1/theme_1', $locale), 'templates_translations');
+        $cacheKey = $cacheService->getCacheKey(array('templates_translations', $themesService->getThemePath(), $locale), 'templates_translations');
         $templateTranslations = array();
         if ($cacheService->contains($cacheKey)) {
             $templateTranslations = $cacheService->fetch($cacheKey);
@@ -126,7 +126,7 @@ final class CampTemplate extends SmartyBC
         }
 
         $filesystem = new Filesystem();
-        $dir = __DIR__.'/../../themes/publication_1/theme_1/translations';
+        $dir = __DIR__.'/../../themes/' . $themesService->getThemePath() . 'translations';
         if ($filesystem->exists($dir)) {
             $finder = new Finder();
             $translator->addLoader('yaml', new YamlFileLoader());

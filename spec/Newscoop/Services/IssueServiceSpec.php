@@ -6,6 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
 use Newscoop\Entity\Issue;
 use Newscoop\Services\IssueService;
+use Newscoop\Services\CacheService;
 use Newscoop\Services\PublicationService;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Repository\IssueRepository;
@@ -21,7 +22,13 @@ class IssueServiceSpec extends ObjectBehavior
         $this->shouldImplement('Newscoop\IssueServiceInterface');
     }
 
-    public function let(EntityManager $em, PublicationService $publicationService, IssueRepository $repository, Issue $issue, Publication $publication)
+    public function let(
+        EntityManager $em,
+        PublicationService $publicationService,
+        IssueRepository $repository,
+        Issue $issue,
+        Publication $publication,
+        CacheService $cacheService)
     {
         $em
             ->getRepository('Newscoop\Entity\Issue')
@@ -34,7 +41,7 @@ class IssueServiceSpec extends ObjectBehavior
             'shortName' => 'may2014'
         ))->willReturn($issue);
 
-        $this->beConstructedWith($em, $publicationService);
+        $this->beConstructedWith($em, $publicationService, $cacheService);
     }
 
     public function it_resolves_issue_from_request_data(Request $request, Issue $issue, ParameterBag $attributes)

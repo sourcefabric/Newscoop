@@ -47,12 +47,20 @@ class IssueService implements IssueServiceInterface
     protected $issue;
 
     /**
+     * Cache Service
+     *
+     * @var CacheService
+     */
+    protected $cacheService;
+
+    /**
      * Construct
      */
-    public function __construct(EntityManager $em, PublicationService $publicationService)
+    public function __construct(EntityManager $em, PublicationService $publicationService, CacheService $cacheService)
     {
         $this->em = $em;
         $this->publicationService = $publicationService;
+        $this->cacheService = $cacheService;
     }
 
     /**
@@ -88,12 +96,26 @@ class IssueService implements IssueServiceInterface
     {
         $uriParts = explode('/', $request->getRequestUri());
         $uriPartsCount = count(array_filter($uriParts));
+        $issue = null;
         if ($uriPartsCount >= 2 && $uriPartsCount <= 5) {
             $publication = $this->publicationService->getPublication();
-            $issue = $this->em->getRepository('Newscoop\Entity\Issue')->findOneBy(array(
-                'publication' => $publication,
-                'shortName' => $uriParts[2]
-            ));
+            $cacheKey = $this->cacheService->getCacheKey(array(
+                'resolver',
+                $publication->getId(),
+                $uriParts[1],
+                $uriParts[2]
+            ), 'issue');
+
+            if ($this->cacheService->contains($cacheKey)) {
+                $issue = $this->cacheService->fetch($cacheKey);
+            } else {
+                $issue = $this->em->getRepository('Newscoop\Entity\Issue')->findOneBy(array(
+                    'publication' => $publication,
+                    'shortName' => $uriParts[2]
+                ));
+
+                $this->cacheService->save($cacheKey, $issue);
+            }
 
             if ($issue) {
                 $this->issueMetadata = array(

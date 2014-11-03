@@ -10,6 +10,9 @@ namespace Newscoop\Services;
 
 use Newscoop\ThemesServiceInterface;
 use Newscoop\IssueServiceInterface;
+use Newscoop\Entity\Issue;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\Output;
 
 /**
  * Themes service
@@ -38,13 +41,26 @@ class ThemesService implements ThemesServiceInterface
     protected $publicationService;
 
     /**
+     * Entity Manager
+     *
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
      * Construct
      */
-    public function __construct(IssueServiceInterface $issueService, CacheService $cacheService, PublicationService $publicationService)
+    public function __construct(
+        IssueServiceInterface $issueService,
+        CacheService $cacheService,
+        PublicationService $publicationService,
+        EntityManager $em
+    )
     {
         $this->issueService = $issueService;
         $this->cacheService = $cacheService;
         $this->publicationService = $publicationService;
+        $this->em = $em;
     }
 
     /**
@@ -52,25 +68,97 @@ class ThemesService implements ThemesServiceInterface
      */
     public function getThemePath()
     {
-       $issue = $this->issueService->getIssue();
-       $language = $issue->getLanguageId();
-       $publication = $this->publicationService->getPublication();
-       $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $language, $publication->getId(), $issue->getNumber()), 'issue');
+        $issue = $this->issueService->getIssue();
+        $languageId = $issue->getLanguageId();
+        $publication = $this->publicationService->getPublication();
+        $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $languageId, $publication->getId(), $issue->getNumber()), 'issue');
 
-       if ($this->cacheService->contains($cacheKeyThemePath)) {
+        $themePath = null;
+        $webOutput = null;
+        $outSetIssues = null;
+        if ($this->cacheService->contains($cacheKeyThemePath)) {
             $themePath = $this->cacheService->fetch($cacheKeyThemePath);
         } else {
-            $cacheKey = $this->cacheService->getCacheKey(array('issue', $publication->getId(), $language, $issue->getNumber()), 'issue');
-            if ($this->cacheService->contains($cacheKey)) {
-                $issue = $this->cacheService->fetch($cacheKey);
+            $cacheKeyWebOutput = $this->cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
+            if ($this->cacheService->contains($cacheKeyWebOutput)) {
+                $webOutput = $this->cacheService->fetch($cacheKeyWebOutput);
             } else {
-                $this->cacheService->save($cacheKey, $issue);
+                $webOutput = $this->findByName('Web');
+                $this->cacheService->save($cacheKeyWebOutput, $webOutput);
             }
 
-            //$resourceId = new ResourceId('template_engine/classes/CampSystem');
-            //$outputService = $resourceId->getService(IOutputService::NAME);
+            $cacheKeyOutSetIssues = $this->cacheService->getCacheKey(array('outSetIssues', $issue->getId(), 'webOutput'));
+            if ($this->cacheService->contains($cacheKeyOutSetIssues)) {
+                $outSetIssues = $this->cacheService->fetch($cacheKeyOutSetIssues);
+            } else {
+                $outSetIssues = $this->findByIssueAndOutput($issue->getId(), $webOutput);
+                $this->cacheService->save($cacheKeyOutSetIssues, $outSetIssues);
+            }
+
+            if (!is_null($outSetIssues)) {
+                $themePath = $outSetIssues->getThemePath()->getPath();
+            }
+
+            $this->cacheService->save($cacheKeyThemePath, $themePath);
+
         }
 
-       return '';
+       return $themePath;
+    }
+
+    /**
+     * Finds output by name
+     *
+     * @param string $name Output name ('Web' in this case)
+     *
+     * @return string|null
+     * @throws Exception   when wrong parameter supplied
+     */
+    public function findByName($name)
+    {
+        if (is_null($name)) {
+            throw new \Exception("Please provide a value for the parameter 'name'");
+        } elseif (is_string($name) && trim($name) == '') {
+            throw new \Exception("Please provide a none empty value for the parameter 'name'.");
+        }
+
+        $outputs = $this->em->getRepository('Newscoop\Entity\Output')->findBy(array('name' => $name));
+        if (isset($outputs) && count($outputs) > 0) {
+            return $outputs[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds output for issue by issue and output
+     *
+     * @param Issue  $issue  Issue object
+     * @param Output $output Output object
+     *
+     * @return string|null
+     */
+    public function findByIssueAndOutput($issue, $output)
+    {
+        $outputId = $output;
+        if ($output instanceof Output) {
+            $outputId = $output->getId();
+        }
+
+        $issueId = $issue;
+        if ($issue instanceof Issue) {
+            $issueId = $issue->getId();
+        }
+
+        $resources = $this->em->getRepository('Newscoop\Entity\Output\OutputSettingsIssue')->findBy(array(
+            'issue' => $issueId,
+            'output' => $outputId
+        ));
+
+        if (!empty($resources)) {
+            return $resources[0];
+        }
+
+        return null;
     }
 }

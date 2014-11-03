@@ -131,11 +131,11 @@ services:
 
     newscoop_newscoop.issue_service:
         class: Newscoop\Services\IssueService
-        arguments:  ["@em", "@newscoop_newscoop.publication_service"]
+        arguments:  ["@em", "@newscoop_newscoop.publication_service", "@newscoop.cache"]
 
     newscoop_newscoop.themes_service:
         class: Newscoop\Services\ThemesService
-        arguments:  ["@newscoop_newscoop.issue_service", "@newscoop.cache"]
+        arguments:  ["@newscoop_newscoop.issue_service", "@newscoop.cache", "@newscoop_newscoop.publication_service", "@em"]
 
     newscoop_newscoop.listener.publication:
         class: Newscoop\NewscoopBundle\EventListener\PublicationListener
