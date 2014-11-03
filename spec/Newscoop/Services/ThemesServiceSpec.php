@@ -68,11 +68,15 @@ class ThemesServiceSpec extends ObjectBehavior
         $this->findByIssueAndOutput($issue, $output)->shouldReturn($issueOutput);
     }
 
-    public function it_should_throw_exception_when_name_is_empty()
+    public function it_should_throw_exception_when_name_param_is_empty_or_null()
     {
         $this
             ->shouldThrow('Exception')
             ->during('findByName', array(null));
+
+        $this
+            ->shouldThrow('Exception')
+            ->during('findByName', array(''));
     }
 
     public function it_gets_theme_path(OutputSettingsIssue $issueOutput, Resource $resource)
