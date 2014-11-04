@@ -33,9 +33,6 @@ class PublicationListener
 
     public function onRequest(GetResponseEvent $event)
     {
-        $pos = strpos($event->getRequest()->getRequestUri(), '/admin');
-        if ($pos === false) {
-            $this->publicationService->publicationResolver($event->getRequest());
-        }
+        $this->publicationService->publicationResolver($event->getRequest());
     }
 }

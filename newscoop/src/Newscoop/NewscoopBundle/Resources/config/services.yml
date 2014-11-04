@@ -104,12 +104,11 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
     system_preferences_service:
-        class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
-        arguments:  ['@em']
+        alias: preferences
 
     newscoop_newscoop.session.storage:
         class:     %newscoop_newscoop.session.storage.class%
-        arguments: [%session.storage.options%]
+        arguments: [%session.storage.options%, "@system_preferences_service"]
 
     newscoop_newscoop.criteria.users:
         class: Newscoop\User\UserCriteria
@@ -127,7 +126,10 @@ services:
 
     newscoop_newscoop.publication_service:
         class: Newscoop\Services\PublicationService
-        arguments:  ["@em"]
+        arguments:  ["@em", "@newscoop.cache"]
+
+    newscoop.publication_service:
+        alias: newscoop_newscoop.publication_service
 
     newscoop_newscoop.issue_service:
         class: Newscoop\Services\IssueService
