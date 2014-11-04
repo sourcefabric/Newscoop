@@ -97,9 +97,11 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('a', 'p', 'i')
+            ->select('a', 'p', 'i', 's.name', 'l.code')
             ->leftJoin('a.packages', 'p')
-            ->leftJoin('a.issue', 'i');
+            ->leftJoin('a.issue', 'i')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('a.language', 'l');
 
         $queryBuilder->where('a.number = :number')
             ->setParameter('number', $number);
@@ -107,16 +109,11 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         if (!is_null($language)) {
 
             if (!is_numeric($language)) {
-                $languageObject = $em->getRepository('Newscoop\Entity\Language')
-                    ->findOneByCode($language);
+                $queryBuilder->andWhere('l.code = :code')
+                    ->setParameter('code', $language);
             } else {
-                $languageObject = $em->getRepository('Newscoop\Entity\Language')
-                    ->findOneById($language);
-            }
-
-            if ($languageObject instanceof \Newscoop\Entity\Language) {
-                $queryBuilder->andWhere('a.language = :languageId')
-                    ->setParameter('languageId', $languageObject->getId());
+                $queryBuilder->andWhere('l.id = :id')
+                    ->setParameter('id', $id);
             }
         }
 

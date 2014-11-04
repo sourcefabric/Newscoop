@@ -18,7 +18,7 @@ vertices: vertices
 'Edit Polygon': 'Edit Polygon'
 'Create Polygon': 'Create Polygon'
 'Communication error: ': 'Communication error: '
-'Cant fetch news from $1': 'Cant fetch news from $1'
+'Cant fetch news from $1': 'Can not fetch news from $1'
 Loading...: Loading...
 Version: Version
 License: License

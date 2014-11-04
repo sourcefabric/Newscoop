@@ -11,9 +11,9 @@ class EmailController extends Zend_Controller_Action
 {
     public function preDispatch()
     {
-        $uri = CampSite::GetURIInstance();
-        $themePath = $uri->getThemePath();
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+        $themePath = $themesService->getThemePath();
 
         $this->view = new Newscoop\SmartyView();
         $this->view
@@ -74,7 +74,7 @@ class EmailController extends Zend_Controller_Action
             'f_language_selected' => $article->getLanguageId(),
         );
 
-        $queryString = implode('&', array_map(function($property) use ($params) {
+        $queryString = implode('&', array_map(function ($property) use ($params) {
             return $property . '=' . $params[$property];
         }, array_keys($params)));
 

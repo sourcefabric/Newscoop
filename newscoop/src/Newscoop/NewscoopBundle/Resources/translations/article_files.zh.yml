@@ -14,10 +14,10 @@
 'Please make sure you upgraded the database correctly: run $1 in a shell.': null
 'Maximum Upload Size': null
 'File Size': null
-'File Name': null
-Download: null
+'File Name': 文件名
+Download: 下载
 'File $1 updated.': null
-'Edit article': null
+'Edit article': 编辑文章
 'You do not have the right to delete file attachments.': null
 'You must select a file to upload.': null
 'You do not have the right to delete files.': null

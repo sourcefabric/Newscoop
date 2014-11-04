@@ -12,22 +12,20 @@ use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 
 /**
  * Newscoop Session Storage adapter.
- * Newscoop still uses the Zend_Session and we now have a custom wrapper for it (PhpBridgeSessionStorage). 
+ * Newscoop still uses the Zend_Session and we now have a custom wrapper for it (PhpBridgeSessionStorage).
  * This class provides support for a custom session lifetime value.
  */
 class Storage extends PhpBridgeSessionStorage
 {
     /**
-     * @param array  														   $options
+     * @param array                                                            $options
      * @param AbstractProxy|NativeSessionHandler|\SessionHandlerInterface|null $handler
      * @param MetadataBag                                                      $metaBag MetadataBag
     */
-    public function __construct(array $options = array(), $handler = null, MetadataBag $metaBag = null)
-    {   
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-
+    public function __construct(array $options = array(), $preferencesService, $handler = null, MetadataBag $metaBag = null)
+    {
         $seconds = $preferencesService->SiteSessionLifeTime;
-        
+
         $options['cookie_lifetime'] = $seconds;
         $options['gc_maxlifetime'] = $seconds;
 

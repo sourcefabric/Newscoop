@@ -10,8 +10,6 @@
  * @version $Revision$
  * @link http://www.sourcefabric.org
  */
-use Newscoop\Service\Resource\ResourceId;
-use Newscoop\Service\ITemplateSearchService;
 
 /**
  * Class CampSite
@@ -58,7 +56,7 @@ final class CampSite extends CampSystem
      * Loads the configuration options.
      *
      * @param string $p_configFile
-     *      The path to the config file
+     *                             The path to the config file
      */
     public function loadConfiguration($p_configFile = null)
     {
@@ -96,6 +94,7 @@ final class CampSite extends CampSystem
     {
         global $g_errorList;
 
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $errors = array();
         if (array_key_exists('controller', $GLOBALS)) {
             $errors = $GLOBALS['controller']->getRequest()->getParam('errors', null);
@@ -141,7 +140,7 @@ final class CampSite extends CampSystem
                     $template = '_campsite_error.tpl';
                     break;
                 default:
-                    $themePath = $uri->getThemePath();
+                    $themePath = $themesService->getThemePath();
                     $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
             }
         }
@@ -185,7 +184,7 @@ final class CampSite extends CampSystem
      * Returns a CampConfig instance.
      *
      * @return object
-     *      A CampConfig instance
+     *                A CampConfig instance
      */
     public static function GetConfigInstance()
     {
@@ -196,7 +195,7 @@ final class CampSite extends CampSystem
      * Returns a CampHTMLDocument instance.
      *
      * @return object
-     *      The CampHTMLDocument instance.
+     *                The CampHTMLDocument instance.
      */
     public static function GetHTMLDocumentInstance()
     {
@@ -206,6 +205,7 @@ final class CampSite extends CampSystem
             'charset' => $config->getSetting('site.charset'),
             'language' => CampRequest::GetVar('language', 'en')
         );
+
         return CampHTMLDocument::singleton($attributes);
     }// fn GetHTMLDocumentInstance
 
@@ -213,7 +213,7 @@ final class CampSite extends CampSystem
      * Returns a CampSession instance.
      *
      * @return object
-     *    A CampSession instance
+     *                A CampSession instance
      */
     public static function GetSessionInstance()
     {
@@ -223,8 +223,8 @@ final class CampSite extends CampSystem
     /**
      * Returns the appropiate URI instance.
      *
-     * @param string $p_uri
-     *      The URI to work with
+     * @param  string  $p_uri
+     *                        The URI to work with
      * @return CampURI
      */
     public static function GetURIInstance()

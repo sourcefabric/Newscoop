@@ -49,7 +49,7 @@ abstract class CampURI
      * @var array
      */
     protected $m_parts = array('scheme', 'user', 'password', 'host', 'port', 'path', 'query', 'fragment');
-    static protected $m_objects = array('publication' => 'Publication', 'issue' => 'Issue',
+    protected static $m_objects = array('publication' => 'Publication', 'issue' => 'Issue',
         'section' => 'Section', 'article' => 'Article', 'language' => 'Language');
     /**
      * @var string
@@ -166,7 +166,7 @@ abstract class CampURI
      * The list of parameters used in preview mode
      * @var array
      */
-    static protected $m_previewParameters = array('LoginUserId',
+    protected static $m_previewParameters = array('LoginUserId',
         'LoginUserKey', 'AdminAccess', 'previewLang', 'preview');
     /**
      * @var object
@@ -177,7 +177,7 @@ abstract class CampURI
      * Class constructor
      *
      * @param string $p_uri
-     *    The full URI string
+     *                      The full URI string
      */
     public function __construct($p_uri = 'SELF')
     {
@@ -229,7 +229,7 @@ abstract class CampURI
      * Returns true if the given parameter is restricted and can not
      * be set from outside the URL object.
      *
-     * @param string $p_parameterName
+     * @param  string $p_parameterName
      * @return bool
      */
     abstract public function isRestrictedParameter($p_parameterName);
@@ -238,10 +238,10 @@ abstract class CampURI
      * Parses the given URI.
      *
      * @param string $p_uri
-     *      The URI string
+     *                      The URI string
      *
      * @return boolean
-     *    true on success, false on failure
+     *                 true on success, false on failure
      */
     private function parse($p_uri)
     {
@@ -279,10 +279,10 @@ abstract class CampURI
      * Builds a URI string from the given parts.
      *
      * @param array $p_parts
-     *      The array of URI parts
+     *                       The array of URI parts
      *
      * @return string $uriString
-     *      The rendered URI
+     *                The rendered URI
      */
     protected function render(array $p_parts = array())
     {
@@ -329,7 +329,7 @@ abstract class CampURI
      * Gets the URL from the object attributes.
      *
      * @return string $url
-     *      The full URL
+     *                The full URL
      */
     public function getURL()
     {
@@ -344,6 +344,7 @@ abstract class CampURI
                     'fragment'
                         )
         );
+
         return $url;
     }
 
@@ -353,7 +354,7 @@ abstract class CampURI
      * Gets the requested URI.
      *
      * @return string
-     *      The requested URI string
+     *                The requested URI string
      */
     public function getRequestURI()
     {
@@ -370,7 +371,7 @@ abstract class CampURI
      * Gets the URI base, it is the scheme, host and (if exists) port.
      *
      * @return string $base
-     *      The URI base
+     *                The URI base
      */
     public function getBase()
     {
@@ -388,7 +389,7 @@ abstract class CampURI
      * Gets the relative URI base, it is '//', host and (if exists) port.
      *
      * @return string $relativeBase
-     *      The relative URI base
+     *                The relative URI base
      */
     public function getRelativeBase()
     {
@@ -404,7 +405,7 @@ abstract class CampURI
      * Gets the base plus the path from the current URI.
      *
      * @return string
-     *    The URI base path
+     *                The URI base path
      */
     public function getBasePath()
     {
@@ -417,13 +418,14 @@ abstract class CampURI
      * Gets the query part from the current URI.
      *
      * @return string $m_query
-     *      The query part
+     *                The query part
      */
     public function getQuery()
     {
         if (!$this->isValidCache()) {
             $this->m_query = CampURI::QueryArrayToString($this->getQueryArray());
         }
+
         return $this->m_query;
     }
 
@@ -433,10 +435,10 @@ abstract class CampURI
      * Gets the given variable from the URI query.
      *
      * @param string $p_varName
-     *      The variable name
+     *                          The variable name
      *
      * @return string
-     *      null on failure, otherwise the variable value
+     *                null on failure, otherwise the variable value
      */
     public function getQueryVar($p_varName)
     {
@@ -454,7 +456,7 @@ abstract class CampURI
      * Gets the array containing the query variables.
      *
      * @return array $m_queryArray
-     *      The array of query vars
+     *               The array of query vars
      */
     public function getQueryArray(array $p_keepParameters = array(),
             array $p_removeParameters = array())
@@ -470,6 +472,7 @@ abstract class CampURI
                     array_fill(0, count($p_keepParameters), null));
             $queryArray = array_intersect_key($queryArray, $keepKeys);
         }
+
         return $queryArray;
     }
 
@@ -479,7 +482,7 @@ abstract class CampURI
      * Gets the scheme part from the current URI.
      *
      * @return string $m_scheme
-     *      The scheme value
+     *                The scheme value
      */
     public function getScheme()
     {
@@ -492,7 +495,7 @@ abstract class CampURI
      * Gets the host part from the current URI.
      *
      * @return string $m_host
-     *      The host value
+     *                The host value
      */
     public function getHost()
     {
@@ -505,7 +508,7 @@ abstract class CampURI
      * Gets the port part from the current URI.
      *
      * @return int $m_port
-     *      The port value
+     *             The port value
      */
     public function getPort()
     {
@@ -518,7 +521,7 @@ abstract class CampURI
      * Returns the user part from the current URI.
      *
      * @return string
-     *      The username value
+     *                The username value
      */
     public function getUser()
     {
@@ -531,7 +534,7 @@ abstract class CampURI
      * Gets the password part from the current URI.
      *
      * @return string $m_password
-     *      The password value
+     *                The password value
      */
     public function getPassword()
     {
@@ -544,7 +547,7 @@ abstract class CampURI
      * Gets the path part from the current URI.
      *
      * @return string $m_path
-     *      The path value
+     *                The path value
      */
     public function getPath()
     {
@@ -557,7 +560,7 @@ abstract class CampURI
      * Gets the fragment part from the current URI.
      *
      * @return string $m_fragment
-     *      The fragment value
+     *                The fragment value
      */
     public function getFragment()
     {
@@ -569,13 +572,13 @@ abstract class CampURI
     /**
      * Returns the URI string based on given URL parameter.
      *
-     * @param string $p_param
-     *      The URL parameter
+     * @param string  $p_param
+     *                           The URL parameter
      * @param boolean $p_preview
-     *      If true, will keep the preview parameters in the URL
+     *                           If true, will keep the preview parameters in the URL
      *
      * @return string
-     *      The URI string requested
+     *                The URI string requested
      */
     public function getURI($p_param = null, $p_preview = false)
     {
@@ -597,13 +600,13 @@ abstract class CampURI
     /**
      * Returns the URI path based on given URL parameter.
      *
-     * @param string $p_param
-     *      The URL parameter
+     * @param string  $p_param
+     *                           The URL parameter
      * @param boolean $p_preview
-     *      If true, will keep the preview parameters in the URL
+     *                           If true, will keep the preview parameters in the URL
      *
      * @return string
-     *      The URI path string requested
+     *                The URI path string requested
      */
     public function getURIPath($p_param = null, $p_preview = false)
     {
@@ -613,6 +616,7 @@ abstract class CampURI
 
         $params = preg_split("/[\s]+/", $p_param);
         $this->buildURI($params, $p_preview);
+
         return $this->m_buildPath;
     }
 
@@ -621,12 +625,12 @@ abstract class CampURI
     /**
      * Returns the URI query parameters based on given URL parameter.
      *
-     * @param string $p_param
+     * @param string  $p_param
      * @param boolean $p_preview
-     *      If true, will keep the preview parameters in the URL
+     *                           If true, will keep the preview parameters in the URL
      *
      * @return string
-     *      The URI query string requested
+     *                The URI query string requested
      */
     public function getURLParameters($p_param = null, $p_preview = false)
     {
@@ -636,6 +640,7 @@ abstract class CampURI
 
         $params = preg_split("/[\s]+/", $p_param);
         $this->buildURI($params, $p_preview);
+
         return $this->m_buildQuery;
     }
 
@@ -657,11 +662,11 @@ abstract class CampURI
 
     public function getThemePath()
     {
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         if (is_null($this->_themePath)) {
-            $this->_themePath = CampSystem::GetThemePath($this->language->number,
-                            $this->publication->identifier,
-                            $this->issue->number);
+            $this->_themePath = $themesService->getThemePath();
         }
+
         return $this->_themePath;
     }
 
@@ -723,10 +728,10 @@ abstract class CampURI
      * Returns whether the template name given is a valid template resource.
      *
      * @param string $p_templateName
-     *      The name of the template from the URI path
+     *                               The name of the template from the URI path
      *
      * @return boolean
-     *      true on success, false on failure
+     *                 true on success, false on failure
      */
     protected function isValidTemplate($p_templateName)
     {
@@ -736,6 +741,7 @@ abstract class CampURI
 
         $resourceId = new ResourceId(__CLASS__);
         $syncResService = $resourceId->getService(ISyncResourceService::NAME);
+
         return !is_null($syncResService->findByPath($this->getThemePath().$p_templateName));
     }// fn isValidTemplate
 
@@ -743,7 +749,7 @@ abstract class CampURI
      * Sets the URL type.
      *
      * @param integer $p_type
-     *      The URL type number
+     *                        The URL type number
      *
      * @return void
      */
@@ -772,7 +778,7 @@ abstract class CampURI
      * Gets the query part from the current URI.
      *
      * @return string $m_query
-     *      The query value
+     *                The query value
      *
      * @return void
      */
@@ -788,9 +794,9 @@ abstract class CampURI
      * Sets the given URI query variable.
      *
      * @param string $p_varName
-     *      The name of the URI query variable
+     *                          The name of the URI query variable
      * @param string $p_value
-     *      The value for the variable
+     *                          The value for the variable
      *
      * @return void
      */
@@ -810,7 +816,7 @@ abstract class CampURI
      * Sets the URI scheme.
      *
      * @param string $p_scheme
-     *      The scheme value
+     *                         The scheme value
      *
      * @return void
      */
@@ -825,7 +831,7 @@ abstract class CampURI
      * Sets the URI host.
      *
      * @param string $p_host
-     *      The host name
+     *                       The host name
      *
      * @return void
      */
@@ -840,7 +846,7 @@ abstract class CampURI
      * Sets the URI port.
      *
      * @param int $p_port
-     *      The port number
+     *                    The port number
      *
      * @return void
      */
@@ -855,7 +861,7 @@ abstract class CampURI
      * Sets the URI user part.
      *
      * @param string $p_user
-     *      The user name
+     *                       The user name
      *
      * @return void
      */
@@ -885,7 +891,7 @@ abstract class CampURI
      * Sets the URI path.
      *
      * @param string $p_path
-     *      The path
+     *                       The path
      *
      * @return void
      */
@@ -900,7 +906,7 @@ abstract class CampURI
      * Sets the URI fragment.
      *
      * @param string $p_fragment
-     *      The fragment part
+     *                           The fragment part
      *
      * @return void
      */
@@ -914,7 +920,7 @@ abstract class CampURI
     /**
      * Sets an object property
      *
-     * @param string $p_property
+     * @param  string $p_property
      * @return bool
      */
     public function __get($p_property)
@@ -937,6 +943,7 @@ abstract class CampURI
             $className = 'Meta' . self::$m_objects[$p_property];
             $this->$p_property = new $className;
         }
+
         return $this->$memberName;
     }
 
@@ -945,8 +952,8 @@ abstract class CampURI
     /**
      * Sets an object property
      *
-     * @param string $p_property
-     * @param mixed $p_value
+     * @param  string $p_property
+     * @param  mixed  $p_value
      * @return bool
      */
     public function __set($p_property, $p_value)
@@ -967,6 +974,7 @@ abstract class CampURI
             $this->m_host = $this->m_publication->site;
         }
         $this->validateCache(false);
+
         return true;
     }
 
@@ -1002,7 +1010,7 @@ abstract class CampURI
      * Returns whether the site is running over SSL or not.
      *
      * @return boolean
-     *    true on success, false on failure
+     *                 true on success, false on failure
      */
     public function isSSL()
     {
@@ -1014,10 +1022,10 @@ abstract class CampURI
     /**
      * Sets the URI path and query values based on given parameters.
      *
-     * @param array $p_params
-     *      An array of valid URL parameters
+     * @param array   $p_params
+     *                           An array of valid URL parameters
      * @param boolean $p_preview
-     *      If true, will keep the preview parameters in the URL
+     *                           If true, will keep the preview parameters in the URL
      *
      * @return void
      */
@@ -1033,16 +1041,16 @@ abstract class CampURI
         $parameter = strtolower(array_shift($p_params));
 
         switch ($parameter) {
-        	case 'static_file':
-        		$staticFile = isset($p_params[0]) ? array_shift($p_params) : null;
-        		$p_params = array();
-        		$this->m_buildQueryArray = array();
-        		if (empty($staticFile)) {
-        			$this->m_buildPath = '';
-        			break;
-        		}
-        		$this->m_buildPath = '/themes/' . $this->getThemePath() . $staticFile;
-        		break;
+            case 'static_file':
+                $staticFile = isset($p_params[0]) ? array_shift($p_params) : null;
+                $p_params = array();
+                $this->m_buildQueryArray = array();
+                if (empty($staticFile)) {
+                    $this->m_buildPath = '';
+                    break;
+                }
+                $this->m_buildPath = '/themes/' . $this->getThemePath() . $staticFile;
+                break;
             case 'root_level':
                 $this->m_buildPath = '/';
                 if ($p_preview) {
@@ -1158,7 +1166,7 @@ abstract class CampURI
      * where <attribute> may be one of: number, ratio, width, height
      * and <value> an integer
      * @param integer $p_imageNo
-     * @param array $p_params
+     * @param array   $p_params
      */
     private function processImageOptions(&$p_imageNo, array $p_params)
     {
@@ -1189,7 +1197,7 @@ abstract class CampURI
      * or:
      * [<image_number> [width <image_width> | height <image_height>]
      * @param integer $p_imageNo
-     * @param array $p_params
+     * @param array   $p_params
      */
     private function processOldImageOptions(&$p_imageNo, array $p_params)
     {
@@ -1252,7 +1260,7 @@ abstract class CampURI
                     $this->m_preview = $container->getService('blog')->isUsersArticle($article, $user);
                 }
             }
-        } else if (!empty($_SERVER['REMOTE_ADDR'])) { // empty in cli
+        } elseif (!empty($_SERVER['REMOTE_ADDR'])) { // empty in cli
             $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
             if (!empty($ipUsers)) {
                 $user = $userService->find($ipUsers[0]->getUserId());
@@ -1270,10 +1278,10 @@ abstract class CampURI
      * Builds a URI query string from the given query array.
      *
      * @param array $p_queryArray
-     *      An array of query variables
+     *                            An array of query variables
      *
      * @return string $queryString
-     *      The generated query string
+     *                The generated query string
      */
     protected static function QueryArrayToString(array $p_queryArray,
             $p_HTMLEscape = true)
@@ -1303,4 +1311,3 @@ abstract class CampURI
 }
 
 // class CampURI
-?>

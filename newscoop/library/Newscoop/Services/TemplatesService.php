@@ -18,10 +18,18 @@ class TemplatesService
      */
     protected $smarty;
 
-    public function __construct()
+    /**
+     * Themes Service
+     *
+     * @var ThemesServiceInterface
+     */
+    protected $themesService;
+
+    public function __construct(ThemesServiceInterface $themesService)
     {
         $this->smarty = \CampTemplate::singleton();
         $this->smarty->assign('gimme', $this->smarty->context());
+        $this->themesService = $themesService;
         $this->preconfigureSmarty();
     }
 
@@ -53,9 +61,8 @@ class TemplatesService
 
     private function preconfigureSmarty()
     {
-        $uri = \CampSite::GetURIInstance();
-        $this->smarty->addTemplateDir(realpath(APPLICATION_PATH . '/../themes/' . $uri->getThemePath()));
-        $this->smarty->config_dir = (realpath(APPLICATION_PATH . '/../themes/' . $uri->getThemePath() . '_conf'));
+        $this->smarty->addTemplateDir(realpath(APPLICATION_PATH . '/../themes/' . $this->themesService->getThemePath()));
+        $this->smarty->config_dir = (realpath(APPLICATION_PATH . '/../themes/' . $this->themesService->getThemePath() . '_conf'));
 
         // reverse templates dir order
         $this->smarty->setTemplateDir(array_reverse($this->smarty->getTemplateDir()));

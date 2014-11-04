@@ -8,8 +8,8 @@
 'Click to edit': null
 'Add root topic': null
 'Topic was deleted.': null
-'The topic name is already in use by another topic.': null
-'You must enter a name for the topic.': null
+'The topic name is already in use by another topic.': 该话题名已被其他话题使用
+'You must enter a name for the topic.': 您必须为话题输入一个名字。
 'You must choose a language for the topic.': null
 'This topic has subtopics, therefore it cannot be deleted.': null
 'Add translation:': null

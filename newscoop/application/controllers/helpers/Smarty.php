@@ -18,6 +18,7 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
      */
     public function preDispatch()
     {
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $controller = $this->getActionController();
         $GLOBALS['controller'] = $controller;
 
@@ -32,9 +33,7 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
             return;
         }
 
-        $uri = CampSite::GetURIInstance();
-        $themePath = $uri->getThemePath();
-
+        $themePath = $themesService->getThemePath();
         $controller->view = new Newscoop\SmartyView();
         $controller->view
             ->addScriptPath(APPLICATION_PATH . '/views/scripts/')

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "35271d98383ef3a4ec533f727e2f7077",
+    "hash": "431c1136ba85fdb88dd1af997e19f482",
     "packages": [
         {
             "name": "bombayworks/zendframework1",
@@ -858,17 +858,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/oauth2-php.git",
-                "reference": "17d199455fb164e77bf0ac34f66cfbe130debce6"
+                "reference": "23e76537c4a02e666ab4ba5abe67a69a886a0310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/oauth2-php/zipball/17d199455fb164e77bf0ac34f66cfbe130debce6",
-                "reference": "17d199455fb164e77bf0ac34f66cfbe130debce6",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/oauth2-php/zipball/23e76537c4a02e666ab4ba5abe67a69a886a0310",
+                "reference": "23e76537c4a02e666ab4ba5abe67a69a886a0310",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "symfony/http-foundation": "~2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -877,8 +880,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "OAuth2": "lib/"
+                "psr-4": {
+                    "OAuth2\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -901,7 +904,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2014-10-17 10:16:39"
+            "time": "2014-11-03 10:21:20"
         },
         {
             "name": "friendsofsymfony/rest",
@@ -1802,12 +1805,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "f8a41b17522dadccbaeb422d4c6617b46c4c52f5"
+                "reference": "eb82167d176eb40078469ef9408ff56fd32a5d66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/f8a41b17522dadccbaeb422d4c6617b46c4c52f5",
-                "reference": "f8a41b17522dadccbaeb422d4c6617b46c4c52f5",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/eb82167d176eb40078469ef9408ff56fd32a5d66",
+                "reference": "eb82167d176eb40078469ef9408ff56fd32a5d66",
                 "shasum": ""
             },
             "require": {
@@ -1868,7 +1871,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-10-21 16:08:58"
+            "time": "2014-10-30 11:33:12"
         },
         {
             "name": "kriswallsmith/buzz",
@@ -1970,53 +1973,17 @@
             "time": "2014-08-10 19:25:52"
         },
         {
-            "name": "mike182uk/paypal-ipn-listener",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mike182uk/paypal-ipn-listener.git",
-                "reference": "5dd5693b03d44437845788f4848bd9b6fbe99fcc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mike182uk/paypal-ipn-listener/zipball/5dd5693b03d44437845788f4848bd9b6fbe99fcc",
-                "reference": "5dd5693b03d44437845788f4848bd9b6fbe99fcc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PayPal": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael David Barrett",
-                    "email": "mike182uk@gmail.com"
-                }
-            ],
-            "description": "PayPal IPN listener for PHP >=5.3.0",
-            "time": "2014-10-22 14:06:13"
-        },
-        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d0a9acbad0643726453e901d9d49c14e13de9f86"
+                "reference": "53c6cf358bf50a3d31a003639245dac1d4de694b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d0a9acbad0643726453e901d9d49c14e13de9f86",
-                "reference": "d0a9acbad0643726453e901d9d49c14e13de9f86",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/53c6cf358bf50a3d31a003639245dac1d4de694b",
+                "reference": "53c6cf358bf50a3d31a003639245dac1d4de694b",
                 "shasum": ""
             },
             "require": {
@@ -2075,7 +2042,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-10-21 20:10:18"
+            "time": "2014-10-29 06:32:01"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2192,52 +2159,6 @@
                 "rest"
             ],
             "time": "2014-10-26 23:51:54"
-        },
-        {
-            "name": "newscoop/newscoop-paywall-bundle",
-            "version": "dev-master",
-            "target-dir": "Newscoop/PaywallBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/newscoop/plugin-NewscoopPaywallBundle.git",
-                "reference": "150668341da8dbda345fe5043949883f5a7875fe"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/newscoop/plugin-NewscoopPaywallBundle/zipball/150668341da8dbda345fe5043949883f5a7875fe",
-                "reference": "150668341da8dbda345fe5043949883f5a7875fe",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "mike182uk/paypal-ipn-listener": "*",
-                "newscoop/plugins-installer": ">=v0.2",
-                "php": ">=5.3.3"
-            },
-            "type": "newscoop-plugin",
-            "autoload": {
-                "psr-0": {
-                    "Newscoop\\PaywallBundle\\NewscoopPaywallBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Rafał Muszyński",
-                    "email": "rafal.muszynski@sourcefabric.org"
-                }
-            ],
-            "description": "Paywall/Payment providers support in Newscoop",
-            "keywords": [
-                "cms",
-                "integration",
-                "newscoop",
-                "pawyall"
-            ],
-            "time": "2014-10-28 15:10:47"
         },
         {
             "name": "newscoop/plugins-installer",
@@ -2754,12 +2675,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "3d7b900225882063cf179ce1d41bb8b1450a5a17"
+                "reference": "bc5e96bb4faf6bee7121085951d11b89488952f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/3d7b900225882063cf179ce1d41bb8b1450a5a17",
-                "reference": "3d7b900225882063cf179ce1d41bb8b1450a5a17",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/bc5e96bb4faf6bee7121085951d11b89488952f5",
+                "reference": "bc5e96bb4faf6bee7121085951d11b89488952f5",
                 "shasum": ""
             },
             "require": {
@@ -2798,7 +2719,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-10-01 06:52:36"
+            "time": "2014-11-03 21:16:34"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3032,16 +2953,27 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.19",
+            "version": "v3.1.21",
             "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.19/@4880"
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
+                "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "libs/Smarty.class.php",
@@ -3072,7 +3004,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-02 17:56:59"
+            "time": "2014-10-31 04:22:20"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3080,12 +3012,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "613354e08fbddce0943646932b007be9873c658f"
+                "reference": "d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/613354e08fbddce0943646932b007be9873c658f",
-                "reference": "613354e08fbddce0943646932b007be9873c658f",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc",
+                "reference": "d0f361d88e5de851bbb8c542d3b6aa46d61a9ffc",
                 "shasum": ""
             },
             "require": {
@@ -3124,7 +3056,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-10-05 19:53:07"
+            "time": "2014-10-30 13:41:35"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -3313,12 +3245,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "b56c2b4a8f60d71fd31900b3a0ce769f76c5a62c"
+                "reference": "1bba7995df136c1f225f26385bed804154131345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/b56c2b4a8f60d71fd31900b3a0ce769f76c5a62c",
-                "reference": "b56c2b4a8f60d71fd31900b3a0ce769f76c5a62c",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/1bba7995df136c1f225f26385bed804154131345",
+                "reference": "1bba7995df136c1f225f26385bed804154131345",
                 "shasum": ""
             },
             "require": {
@@ -3418,30 +3350,24 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-10-26 07:55:05"
+            "time": "2014-11-03 19:48:45"
         },
         {
             "name": "twig/extensions",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "b06ba18ad98c012a0015cd63cc5b8b00480fc198"
+                "url": "https://github.com/fabpot/Twig-extensions.git",
+                "reference": "c0ab818595338dd5569369bfce2552d02cec5d50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/b06ba18ad98c012a0015cd63cc5b8b00480fc198",
-                "reference": "b06ba18ad98c012a0015cd63cc5b8b00480fc198",
+                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/c0ab818595338dd5569369bfce2552d02cec5d50",
+                "reference": "c0ab818595338dd5569369bfce2552d02cec5d50",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "~1.12"
-            },
-            "require-dev": {
-                "symfony/translation": "~2.3"
-            },
-            "suggest": {
-                "symfony/translation": "Allow the time_diff output to be translated"
             },
             "type": "library",
             "extra": {
@@ -3461,16 +3387,18 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
-            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
+            "homepage": "https://github.com/fabpot/Twig-extensions",
             "keywords": [
                 "i18n",
                 "text"
             ],
-            "time": "2014-10-22 06:01:14"
+            "time": "2014-07-05 10:01:35"
         },
         {
             "name": "twig/twig",

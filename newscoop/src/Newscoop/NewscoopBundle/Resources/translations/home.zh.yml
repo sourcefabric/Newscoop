@@ -9,7 +9,7 @@ Campsite: null
 'Security token expired. Please resubmit the form.': null
 Templates: null
 'Create slideshow': null
-Create: null
+Create: 创建
 Attach/Detach: null
 'Are you sure you want to delete slideshow?': null
 Support: null
@@ -17,8 +17,8 @@ Support: null
 'Manage Users': null
 'Manage User Types': null
 'Manage User Points System': null
-Last: null
-First: null
+Last: 最后
+First: '最初 '
 Feedback: null
 'Edit your password': null
 'Edit user': null
@@ -88,7 +88,7 @@ Widgets: null
 'Please login to continue.': null
 'Add to dashboard': null
 'Add more widgets': null
-login: null
+login: 登陆
 'This link is not valid.': null
 'Recover password': null
 'Please enter your email.': null
@@ -108,7 +108,7 @@ Restore: null
 Mb: null
 'Free disk space': null
 'Download file': null
-Download: null
+Download: 下载
 'Delete file': null
 'Backup list is empty.': null
 'Are you sure you want to restore the file $1?': null

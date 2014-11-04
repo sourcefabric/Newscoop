@@ -35,7 +35,7 @@ MiB: MiB
 at: at
 'You must at least upload one file.': 'You must at least upload one file.'
 'Warning: the existing data and themes will be deleted!': 'Warning: the existing data and themes will be deleted!'
-'Value is required and cant be empty': 'Value is required and cant be empty'
+'Value is required and cant be empty': 'Value is required and can not be empty'
 Upload: Upload
 'Update comment': 'Update comment'
 'Time created': 'Time created'

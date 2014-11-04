@@ -11,6 +11,8 @@
  */
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class CampTemplate
@@ -94,13 +96,56 @@ final class CampTemplate extends SmartyBC
         $this->assign('view', \Zend_Registry::get('container')->get('view'));
         $this->assign('userindex', false);
         $this->assign('user', new MetaUser());
-        $siteinfo = array(
+        $this->assign('siteinfo', array(
             'title' => $preferencesService->SiteTitle,
             'keywords' => $preferencesService->SiteMetaKeywords,
             'description' => $preferencesService->SiteMetaDescription,
-        );
+        ));
 
-        $this->assign('siteinfo', $siteinfo);
+        $this->getTemplateTranslationsFiles();
+    }
+
+    /**
+     * Get translations files for theme
+     *
+     * @return void
+     */
+    private function getTemplateTranslationsFiles()
+    {
+        $request = \Zend_Registry::get('container')->getService('request');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+        $locale = $request->getLocale();
+
+        $cacheKey = $cacheService->getCacheKey(array('templates_translations', $themesService->getThemePath(), $locale), 'templates_translations');
+        $templateTranslations = array();
+        if ($cacheService->contains($cacheKey)) {
+            $templateTranslations = $cacheService->fetch($cacheKey);
+            foreach ($templateTranslations as $translation) {
+                $translator->addResource('yaml', $translation[0], $translation[1], $translation[2]);
+            }
+
+            return;
+        }
+
+        $filesystem = new Filesystem();
+        $dir = __DIR__.'/../../themes/' . $themesService->getThemePath() . 'translations';
+        if ($filesystem->exists($dir)) {
+            $finder = new Finder();
+            $translator->addLoader('yaml', new YamlFileLoader());
+            $extension = $locale.'.yml';
+            $finder->files()->in($dir);
+            $finder->files()->name('*.'.$locale.'.yml');
+
+            foreach ($finder as $file) {
+                $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
+                $translator->addResource('yaml', $file->getRealpath(), $locale, $domain);
+                $templateTranslations[] = array($file->getRealpath(), $locale, $domain);
+            }
+        }
+
+        $cacheService->save($cacheKey, $templateTranslations);
     }
 
     /**
