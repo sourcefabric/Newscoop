@@ -22,6 +22,14 @@ class ArticleTypeRepository extends EntityRepository
             ->from('\Newscoop\Entity\ArticleType', 'at' )
             ->where("at.fieldName IS NULL OR at.fieldName = 'NULL'" );
 
-        return $qb->getQuery();
+        $countQueryBuilder = clone $qb;
+        $countQueryBuilder->select('COUNT(at)');
+
+        $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $qb->getQuery();
+        $query->setHint('knp_paginator.count', $count);
+
+        return $query;
     }
 }
