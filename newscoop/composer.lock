@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "213bbb0a7519653ef00b4c75e845f93a",
+    "hash": "0bb103626915c3ea354e3abe4d2bb347",
     "packages": [
         {
             "name": "behat/behat",
@@ -1905,27 +1905,20 @@
         },
         {
             "name": "knplabs/knp-components",
-            "version": "1.3.1",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/knp-components.git",
-                "reference": "6d091c2f16eec2769db38f38e08c7bd5847ce072"
+                "reference": "ae454fb43473127a7bdc0a777f962f64f94e2795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/6d091c2f16eec2769db38f38e08c7bd5847ce072",
-                "reference": "6d091c2f16eec2769db38f38e08c7bd5847ce072",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/ae454fb43473127a7bdc0a777f962f64f94e2795",
+                "reference": "ae454fb43473127a7bdc0a777f962f64f94e2795",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "doctrine/mongodb-odm": "~1.0@beta",
-                "doctrine/orm": "~2.4",
-                "phpunit/phpunit": "~4.2",
-                "ruflin/elastica": "~1.0",
-                "symfony/event-dispatcher": "~2.5"
             },
             "suggest": {
                 "doctrine/common": "to allow usage pagination with Doctrine ArrayCollection",
@@ -1943,7 +1936,7 @@
             },
             "autoload": {
                 "psr-0": {
-                    "Knp\\Component": "src"
+                    "Knp\\Component": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1969,7 +1962,7 @@
                 "pager",
                 "paginator"
             ],
-            "time": "2014-10-06 10:38:10"
+            "time": "2013-12-23 13:48:48"
         },
         {
             "name": "knplabs/knp-menu",
@@ -2091,21 +2084,21 @@
         },
         {
             "name": "knplabs/knp-paginator-bundle",
-            "version": "v2.3.2",
+            "version": "2.4.0",
             "target-dir": "Knp/Bundle/PaginatorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "84b368777e3ca9cbe9db56f4a7b3c3b558cdf9ae"
+                "reference": "4202329b4d639c1a03d0007e31a52049d31c591e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/84b368777e3ca9cbe9db56f4a7b3c3b558cdf9ae",
-                "reference": "84b368777e3ca9cbe9db56f4a7b3c3b558cdf9ae",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/4202329b4d639c1a03d0007e31a52049d31c591e",
+                "reference": "4202329b4d639c1a03d0007e31a52049d31c591e",
                 "shasum": ""
             },
             "require": {
-                "knplabs/knp-components": "~1.1",
+                "knplabs/knp-components": "~1.2",
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.0",
                 "twig/twig": "~1.5"
@@ -2146,7 +2139,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2013-02-18 17:29:20"
+            "time": "2014-01-21 07:26:00"
         },
         {
             "name": "knplabs/packagist-api",
@@ -4211,16 +4204,27 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.19",
+            "version": "dev-master",
             "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.19/@4880"
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "337ab5bd1ea35d8283a45b76a0ed41411057f13b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/337ab5bd1ea35d8283a45b76a0ed41411057f13b",
+                "reference": "337ab5bd1ea35d8283a45b76a0ed41411057f13b",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "libs/Smarty.class.php",
@@ -4251,7 +4255,57 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-10-02 17:56:59"
+            "time": "2014-11-01 10:14:25"
+        },
+        {
+            "name": "smarty/smarty-dev",
+            "version": "v3.1.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty-old.git",
+                "reference": "9daf34d8dceafe009109446684a85db16f5af69b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty-old/zipball/9daf34d8dceafe009109446684a85db16f5af69b",
+                "reference": "9daf34d8dceafe009109446684a85db16f5af69b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "distribution/libs/Smarty.class.php",
+                    "distribution/libs/SmartyBC.class.php",
+                    "distribution/libs/sysplugins/smarty_security.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Monte Ohrt",
+                    "email": "monte@ohrt.com"
+                },
+                {
+                    "name": "Uwe Tews",
+                    "email": "uwe.tews@googlemail.com"
+                },
+                {
+                    "name": "Rodney Rehm",
+                    "email": "rodney.rehm@medialize.de"
+                }
+            ],
+            "description": "Smarty - the compiling PHP template engine",
+            "homepage": "http://www.smarty.net",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2014-07-01 17:13:58"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4493,12 +4547,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "a08fda5e5c7654e7f90545d136fe9efa9c531bd3"
+                "reference": "08bebaba2c039a6ad4dbfb34059db8e704d79186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/a08fda5e5c7654e7f90545d136fe9efa9c531bd3",
-                "reference": "a08fda5e5c7654e7f90545d136fe9efa9c531bd3",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/08bebaba2c039a6ad4dbfb34059db8e704d79186",
+                "reference": "08bebaba2c039a6ad4dbfb34059db8e704d79186",
                 "shasum": ""
             },
             "require": {
@@ -4592,7 +4646,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-02 23:30:21"
+            "time": "2014-11-03 17:52:52"
         },
         {
             "name": "twig/extensions",
