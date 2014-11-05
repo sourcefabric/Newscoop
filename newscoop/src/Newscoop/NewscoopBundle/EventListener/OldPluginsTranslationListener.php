@@ -41,17 +41,15 @@ class OldPluginsTranslationListener
         if ($this->cacheService->contains($cacheKey)) {
             $files = $this->cacheService->fetch($cacheKey);
         } else {
-            $dir = __DIR__.'/../../../../plugins/*/admin-files/translations';
-            if (!file_exists($dir)) {
-                return;
-            }
-
             $finder = new Finder();
             $extension = $locale.'.yml';
             $files = array();
-
-            $finder->files()->in($dir);
-            $finder->files()->name('*.'.$locale.'.yml');
+            try {
+                $finder->files()->in( __DIR__.'/../../../../plugins/*/admin-files/translations');
+                $finder->files()->name('*.'.$locale.'.yml');
+            } catch (\InvalidArgumentException $e) {
+                return;
+            }
 
             foreach ($finder as $file) {
                 $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
