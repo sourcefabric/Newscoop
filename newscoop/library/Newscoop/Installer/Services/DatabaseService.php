@@ -488,8 +488,13 @@ class DatabaseService
         $version = str_replace(array('"', '\''), array('_', '_'), $version);
         $roll = str_replace(array('"', '\''), array('_', '_'), $roll);
 
-        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_version", "' . $version . '") ON DUPLICATE KEY UPDATE ver_value = "' . $version . '"');
-        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_roll", "' . $roll . '") ON DUPLICATE KEY UPDATE ver_value = "' . $roll . '"');
+        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_version", :version) ON DUPLICATE KEY UPDATE ver_value = :version', array(
+            'version' => $version
+        ));
+
+        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_roll", :roll) ON DUPLICATE KEY UPDATE ver_value = :roll', array(
+            'roll' => $roll
+        ));
 
         return true;
     }

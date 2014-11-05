@@ -18,7 +18,7 @@ class IssueListener
 {
     /**
      * Issue service
-     * @var ThemesService
+     * @var IssueService
      */
     protected $issueService;
 
