@@ -64,3 +64,10 @@ Newscoop\Entity\ArticleTypeField:
             groups: ["details"]
             serialized_name: showInEditor
             since_version: 1.1
+        phrase:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: phrase
+            since_version: 1.1

@@ -102,14 +102,14 @@ class ArticleService
 
             if (!empty($article)) {
                 // fill the article meta data
-                $this->articleMetadata['id']            = $article[0][0]['number'];
-                $this->articleMetadata['name']          = $article[0][0]['name'];
-                $this->articleMetadata['issue']         = $article[0][0]['issue']['name'];
-                $this->articleMetadata['issue_id']      = $article[0][0]['issueId'];
-                $this->articleMetadata['section']       = $article[0]['name'];
-                $this->articleMetadata['section_id']    = $article[0][0]['sectionId'];
-                $this->articleMetadata['language_code'] = $article[0]['code'];
-                $this->articleMetadata['language_id']   = $article[0][0]['IdLanguage'];
+                $this->articleMetadata['id']            = $article[0]['number'];
+                $this->articleMetadata['name']          = $article[0]['name'];
+                $this->articleMetadata['issue']         = $article[0]['issue']['name'];
+                $this->articleMetadata['issue_id']      = $article[0]['issueId'];
+                $this->articleMetadata['section']       = $article[0]['section']['name'];
+                $this->articleMetadata['section_id']    = $article[0]['sectionId'];
+                $this->articleMetadata['language_code'] = $article[0]['language']['code'];
+                $this->articleMetadata['language_id']   = $article[0]['IdLanguage'];
 
                 // add the meta data to the request
                 $request->attributes->set('_newscoop_article_metadata', $this->articleMetadata);
