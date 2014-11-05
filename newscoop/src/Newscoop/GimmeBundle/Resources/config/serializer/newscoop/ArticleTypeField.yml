@@ -69,5 +69,5 @@ Newscoop\Entity\ArticleTypeField:
             read_only: true
             type: string
             groups: ["details"]
-            serialized_name: humanName
+            serialized_name: phrase
             since_version: 1.1
