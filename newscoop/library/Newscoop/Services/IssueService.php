@@ -140,6 +140,10 @@ class IssueService implements IssueServiceInterface
      */
     public function getLatestPublishedIssue()
     {
+        if (!$this->publicationService->getPublication()) {
+            return;
+        }
+
         $issues = $this->publicationService->getPublication()->getIssues()->toArray();
         usort($issues, function ($x, $y) {
             return $y->getId() - $x->getId();

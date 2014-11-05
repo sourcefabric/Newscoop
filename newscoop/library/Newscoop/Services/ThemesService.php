@@ -69,6 +69,10 @@ class ThemesService implements ThemesServiceInterface
     public function getThemePath()
     {
         $issue = $this->issueService->getIssue();
+        if (!$issue) {
+            return;
+        }
+
         $languageId = $issue->getLanguageId();
         $publication = $this->publicationService->getPublication();
         $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $languageId, $publication->getId(), $issue->getNumber()), 'issue');
