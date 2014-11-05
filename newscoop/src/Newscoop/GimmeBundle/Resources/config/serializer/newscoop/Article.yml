@@ -65,6 +65,13 @@ Newscoop\Entity\Article:
             type: DateTime
             groups: ["list", "details"]
             serialized_name: published
+        uploaded:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["list", "details"]
+            serialized_name: created
+            since_version: 1.2
         articleAuthors:
             expose: true
             read_only: true
