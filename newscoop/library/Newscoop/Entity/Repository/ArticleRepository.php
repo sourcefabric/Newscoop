@@ -23,9 +23,9 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get All Articles from choosen publication (optional: article type and language)
      *
-     * @param int      $publication Publication id
-     * @param string   $type        Article type name
-     * @param int      $language    Language id
+     * @param int    $publication Publication id
+     * @param string $type        Article type name
+     * @param int    $language    Language id
      *
      * @return \Doctrine\ORM\Query
      */
@@ -87,7 +87,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      * Get Single Article
      *
      * @param int               $number   Article number
-     * @param mixed[int|string] $language Language id
+     * @param mixed[int|string] $language Language id or code
      *
      * @return \Doctrine\ORM\Query
      */
@@ -112,7 +112,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                     ->setParameter('code', $language);
             } else {
                 $queryBuilder->andWhere('l.id = :id')
-                    ->setParameter('id', $id);
+                    ->setParameter('id', $language);
             }
         }
 
@@ -124,10 +124,10 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get Articles for choosen topic
      *
-     * @param int       $publication
-     * @param int       $topicId
-     * @param int       $language
-     * @param boolean   $getResultAndCount
+     * @param int     $publication
+     * @param int     $topicId
+     * @param int     $language
+     * @param boolean $getResultAndCount
      *
      * @return \Doctrine\ORM\Query
      */
@@ -172,8 +172,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get Articles for author
      *
-     * @param  \Newscoop\Entity\Author          $author
-     * @param  \Newscoop\Criteria               $criteria
+     * @param \Newscoop\Entity\Author $author
+     * @param \Newscoop\Criteria      $criteria
      *
      * @return \Doctrine\ORM\Query
      */
@@ -218,8 +218,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get Articles for author per day for choosen period back from now
      *
-     * @param \Newscoop\Entity\Author   $author
-     * @param  string                   $range
+     * @param \Newscoop\Entity\Author $author
+     * @param string                  $range
      *
      * @return \Doctrine\ORM\Query
      */
