@@ -25,7 +25,7 @@ class TemplatesService
      */
     protected $themesService;
 
-    public function __construct(ThemesServiceInterface $themesService)
+    public function __construct(ThemesService $themesService)
     {
         $this->smarty = \CampTemplate::singleton();
         $this->smarty->assign('gimme', $this->smarty->context());

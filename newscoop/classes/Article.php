@@ -277,7 +277,7 @@ class Article extends DatabaseObject
      * @param  int    $p_sectionNumber
      * @return void
      */
-    public function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
+    public function create($p_articleType = null, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
     {
         global $g_ado_db;
 
