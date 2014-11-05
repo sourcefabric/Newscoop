@@ -45,7 +45,7 @@ class OldPluginsTranslationListener
             $extension = $locale.'.yml';
             $files = array();
 
-            $finder->files()->in(__DIR__.'/../../../../plugins');
+            $finder->files()->in(__DIR__.'/../../../../plugins/*/admin-files/translations');
             $finder->files()->name('*.'.$locale.'.yml');
 
             foreach ($finder as $file) {
