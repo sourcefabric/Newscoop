@@ -13,8 +13,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Publication entity
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
- * @ORM\Table(name="Publications")
+ * @ORM\Table(name="Publications", indexes={
+ *     @ORM\Index(name="Name", columns={"Name"}),
+ *     @ORM\Index(name="Alias", columns={"IdDefaultAlias"}),
+ * })
  */
 class Publication
 {
@@ -26,7 +30,7 @@ class Publication
     /* --------------------------------------------------------------- */
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="Id", type="integer")
      * @var int
@@ -34,14 +38,14 @@ class Publication
     protected $id;
 
     /**
-     * @ORM\Column(name="Name", nullable=True)
+     * @ORM\Column(name="Name", nullable=false)
      * @var string
      */
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Language")
-     * @ORM\JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id", columnDefinition="int(10)")
      * @var Newscoop\Entity\Language
      */
     protected $language;
@@ -141,6 +145,24 @@ class Publication
      * @var int
      */
     protected $seo;
+
+    /**
+     * @ORM\Column(name="meta_title", nullable=true)
+     * @var string
+     */
+    protected $metaTitle;
+
+    /**
+     * @ORM\Column(name="meta_keywords", nullable=true)
+     * @var string
+     */
+    protected $metaKeywords;
+
+    /**
+     * @ORM\Column(name="meta_description", nullable=true)
+     * @var string
+     */
+    protected $metaDescription;
 
     /**
      */
@@ -440,6 +462,78 @@ class Publication
     public function setUrlTypeId($urlTypeId)
     {
         $this->urlTypeId = $urlTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of metaTitle.
+     *
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * Sets the value of metaTitle.
+     *
+     * @param string $metaTitle the meta title
+     *
+     * @return self
+     */
+    protected function setMetaTitle($metaTitle)
+    {
+        $this->metaTitle = $metaTitle;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of metaKeywords.
+     *
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * Sets the value of metaKeywords.
+     *
+     * @param string $metaKeywords the meta keywords
+     *
+     * @return self
+     */
+    protected function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of metaDescription.
+     *
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * Sets the value of metaDescription.
+     *
+     * @param string $metaDescription the meta description
+     *
+     * @return self
+     */
+    protected function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
 
         return $this;
     }
