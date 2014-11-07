@@ -1,0 +1,83 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "pub" %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+    <span class="article-title">{{ 'publications.title.edit'|trans }}</span>
+    <div class="pull-right">
+        <div class="actions">
+            <ul class="navigation" style="height: auto;">
+                <li>
+                    <a class="add" href="#">{{ 'publications.buttons.addNew'|trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_title %}{{ 'publications.title.edit'|trans }} - {{ parent() }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/jquery.dynatable.css') }}">
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
+<style type="text/css" media="screen">
+</style>
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/bundles/newscoopnewscoop/js/jquery.dynatable.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row publications ns_container col-md-8 system_pref">
+    {% if form_errors(form) %}
+    <div class="alerts alert-danger">
+        {{ form_errors(form) }}
+    </div>
+    {% endif %}
+
+    <div class="tabbable tabs-left">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#general_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.general'|trans }}</a></li>
+            <li><a href="#cache_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.general'|trans }}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="general_settings">
+                {{ form_start(form) }}
+                <dl>
+                    <dt>
+                        {{ form_label(form.name) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.name) }}
+                    </dd>
+                    <dt>
+                        {{ form_label(form.alias) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.alias, {'attr' : {'class' : 'input_select'}}) }}
+                    </dd>
+                    <dt>
+                        {{ form_label(form.language) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.language, {'attr' : {'class' : 'input_select'}}) }}
+                    </dd>
+                    <dt>
+                        {{ form_label(form.url_type) }}
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.url_type, {'attr' : {'class' : 'input_select'}}) }}
+                    </dd>
+                </dl>
+                <input type="submit" />
+                {{ form_end(form) }}
+            </div>
+            <div class="tab-pane" id="cache_settings">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

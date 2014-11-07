@@ -171,13 +171,8 @@ final class CampTemplate extends SmartyBC
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
         }
 
-        // src/Newscoop
-        $finder = new Finder();
-        $finder->directories()->name('smartyPlugins')->in(__DIR__ . '/../../src/Newscoop/*/Resources');
-
-        foreach ($finder as $file) {
-            $dirs[] = $file->getRealpath();
-        }
+        //comunity ticker
+        $dirs[] = __DIR__ . '/../../src/Newscoop/CommunityTickerBundle/Resources/smartyPlugins';
 
         return $dirs;
     }

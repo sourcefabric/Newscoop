@@ -84,7 +84,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
-        arguments:  ['@em']
 
     newscoop_newscoop.listener.route_listener:
         class: Newscoop\NewscoopBundle\EventListener\RouteListener

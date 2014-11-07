@@ -96,8 +96,8 @@ class ArticleService
             $articleInfo['lang'] = $uriExplode[1];
             $articleInfo['section'] = $uriExplode[3];
 
-            $article = $this->em->getRepository('Newscoop\Entity\Article')
-                ->getArticle($articleInfo['id'], $articleInfo['lang'])
+            $query = $this->em->createQuery('SELECT a, p, i, s, l FROM Newscoop\Entity\Article a LEFT JOIN a.packages p LEFT JOIN a.issue i LEFT JOIN a.section s LEFT JOIN a.language l WHERE a.number = :number AND l.code = :code');
+            $article = $query->setParameters(array('number'=> $articleInfo['id'], 'code' => $articleInfo['lang']))
                 ->getArrayResult();
 
             if (!empty($article)) {
@@ -114,8 +114,7 @@ class ArticleService
                 // add the meta data to the request
                 $request->attributes->set('_newscoop_article_metadata', $this->articleMetadata);
 
-                // return the article
-                return $article;
+                return true;
             } else {
                 return null;
             }

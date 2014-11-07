@@ -1,0 +1,31 @@
+<a href="#" style="font-size: 12px;" class="show_tooltip"><span class="glyphicon glyphicon-question-sign" ></span> Tell me more about this.</a>
+<div class="ns-tip" style="
+background: #428BCA;
+border: 1px solid #CCC;
+color: #FFF;
+padding: 5px 5px 5px 5px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+max-width: 600px;
+min-height: 50px;
+display:none;
+margin-top: 7px;
+">
+            <span class="glyphicon glyphicon-question-sign pull-left" style="
+        font-size: 30px;
+        margin: 0px 10px;
+    "></span>
+        <p style="
+    padding: 4px;
+    margin-bottom: 0px;
+">{{ tipMessage }}</p>
+        <div class="clearfix"></div>
+    </div>
+
+<script type="text/javascript">
+    $('.show_tooltip').click(function(e){
+        e.preventDefault();
+        $('.ns-tip').toggle();
+    })
+</script>

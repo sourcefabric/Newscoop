@@ -40,6 +40,8 @@ ul.navigation li {
 	display:block;
     color: #3B3B3B;
 }
+
+.actions ul.navigation li:hover a,
 .actions ul.navigation li a:hover {
     color: #fff;
 }
@@ -71,7 +73,9 @@ ul.navigation li {
 
 .actions ul.navigation li a.add {
 	background-position: 5px -85px;
-}	
+}
+
+.actions ul.navigation li:hover a.add,
 .actions ul.navigation li a.add:hover {
 	background-position: -395px -85px;
 }

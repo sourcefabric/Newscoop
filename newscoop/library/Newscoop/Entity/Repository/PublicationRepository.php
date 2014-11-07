@@ -7,8 +7,7 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\User\Subscriber;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Publication repository
@@ -19,7 +18,10 @@ class PublicationRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $qb = $em->getRepository('Newscoop\Entity\Publication')
-            ->createQueryBuilder('p');
+            ->createQueryBuilder('p')
+            ->select('p', 'a', 'l')
+            ->leftJoin('p.defaultAlias', 'a')
+            ->leftJoin('p.language', 'l');
 
         return $qb->getQuery();
     }

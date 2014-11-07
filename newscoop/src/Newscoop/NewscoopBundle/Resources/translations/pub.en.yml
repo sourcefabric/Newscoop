@@ -75,3 +75,26 @@ Currency: Currency
 'Article title': 'Article title'
 'Article keywords': 'Article keywords'
 'Article topics': 'Article topics'
+
+publications:
+    title:
+        list: List of publications
+        edit: Edit Publication
+    no_publications: No publications.
+    buttons:
+        addNew: Add new publication
+    table:
+        number: Number
+        name: Name
+        default_alias: Default Alias
+        default_language: Default Language
+        comments_status: Comments status
+        url_type: Url type
+        configure: Configure
+        remove: Remove
+    form_type:
+        label:
+            name: Name
+            template_path: Template path
+            short_names: Short name
+    tip1: "Newscoop content is organized in a hierarchical structure, which conforms to the tradition of newspapers and magazines: Publications, Issues, Sections and Articles. Each publication is made up of issues, each issue is in turn made up of sections, which are comprised of articles."

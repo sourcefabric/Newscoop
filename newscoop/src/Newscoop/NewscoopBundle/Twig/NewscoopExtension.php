@@ -63,6 +63,7 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
             new \Twig_SimpleFunction('generateZendUrl', array($this, 'generateZendUrl')),
             new \Twig_SimpleFunction('hasPermission', array($this, 'hasPermission')),
+            new \Twig_SimpleFunction('renderTip', array($this, 'renderTip'), array('is_safe' => array( 'html' ))),
         );
     }
 
@@ -119,6 +120,13 @@ class NewscoopExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    public function renderTip($tipMessage)
+    {
+        return $this->container->get('templating')->render('NewscoopNewscoopBundle::tooltip.html.twig', array(
+            'tipMessage' => $tipMessage
+        ));
     }
 
     public function getName()
