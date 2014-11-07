@@ -1,0 +1,68 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "topics" %}
+{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'newscoop.preferences.label.title'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/angular-ui-tree.min.css') }}">
+<style>
+.font-fix {
+    font-size: 12px;
+}
+</style>
+{% endblock %}
+{% block admin_scripts %}
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree.js') }}"></script>
+<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
+{% endblock %}
+{% block admin_content %}
+<div class="system_pref" ng-app="treeApp">
+{% if tree %}
+<h3>The tree looks like:</h3>
+
+<div id="tree">
+    {{ tree|raw }}
+</div>
+{% else %}
+<div class="alert-message info"><p>There are no nodes in tree to display</p></div>
+{% endif %}
+<div class="bs-callout bs-callout-info">
+    <h4>Topics...</h4>
+    <p>Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit</p>
+  </div>
+<div class="row" ng-controller="treeCtrl">
+      <div class="col-lg-6">
+        <h3>Tree view
+          <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
+          <a href="" class="btn btn-xs btn-default pull-right" ng-click="expandAll()">Expand all</a>
+          <a href="" class="btn btn-xs btn-default btn-warning pull-right" ng-click="moveLastToTheBeggining()">Move Last To The Beginning</a>
+
+        </h3>
+
+        <!-- Nested node template -->
+        <script type="text/ng-template" id="nodes_renderer.html">
+          <div ui-tree-handle class="tree-node tree-node-content">
+          <div class="drag-bar"></div>
+            <a data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+            {[{ node.title }]}
+            <div class="pull-right action-buttons">
+                <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
+                <a href="http://www.jquery2dotnet.com" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+            </div>
+          </div>
+          <ol ui-tree-nodes="" ng-model="node.__children" ng-class="{hidden: collapsed}">
+            <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'">
+            </li>
+          </ol>
+        </script>
+        <div ui-tree id="tree-root">
+          <ol ui-tree-nodes="" ng-model="data">
+            <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
