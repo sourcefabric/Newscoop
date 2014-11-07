@@ -18,15 +18,6 @@
 {% endblock %}
 {% block admin_content %}
 <div class="system_pref" ng-app="treeApp">
-{% if tree %}
-<h3>The tree looks like:</h3>
-
-<div id="tree">
-    {{ tree|raw }}
-</div>
-{% else %}
-<div class="alert-message info"><p>There are no nodes in tree to display</p></div>
-{% endif %}
 <div class="bs-callout bs-callout-info">
     <h4>Topics...</h4>
     <p>Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit</p>
@@ -44,12 +35,21 @@
         <script type="text/ng-template" id="nodes_renderer.html">
           <div ui-tree-handle class="tree-node tree-node-content">
           <div class="drag-bar"></div>
-            <a data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+            <a data-nodrag ng-click="toggle(this)" class="pointer"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
             {[{ node.title }]}
             <div class="pull-right action-buttons">
-                <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span></a>
-                <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
-                <a href="http://www.jquery2dotnet.com" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
+                <a data-nodrag ng-click="startEditing(this)" class="pointer"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a data-nodrag ng-click="remove(this)" class="pointer"><span title="Remove topic" class="glyphicon glyphicon-trash"></span></a>
+                <a data-nodrag ng-click="" class="pointer"><span title="Add new topic" class="glyphicon glyphicon-plus"></span></a>
+            </div>
+            <div class="node-edit-div" data-nodrag ng-show="editing">
+              <form class="form-inline" role="form">
+                <div class="form-group">
+                  <input type="text" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
+                </div>
+                <button type="submit" class="btn btn-sm btn-default" ng-click="saveGroup(group)">Save</button>
+                <button type="submit" class="btn btn-sm btn-default" ng-click="cancelEditing(this)">Cancel</button>
+              </form>
             </div>
           </div>
           <ol ui-tree-nodes="" ng-model="node.__children" ng-class="{hidden: collapsed}">

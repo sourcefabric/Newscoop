@@ -54,15 +54,26 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
       scope.expandAll();
     };
 
+    $scope.startEditing = function(scope) {
+      if (scope.editing) {
+        scope.editing = false;
+      } else {
+        scope.editing = true;
+      }
+    };
+
+    $scope.cancelEditing = function(scope) {
+      if (scope.editing) {
+        scope.editing = false;
+      } else {
+        scope.editing = true;
+      }
+
+      //todo restore topic label
+    };
+
     TopicsFactory().success(function (data) {
-       console.log(data.tree);
-       $scope.data =  data.tree;
-
-
-
-    //$rootScope.page_ready = true;
-
-
+       $scope.data = data.tree;
     }).error(function(data, status){
         if(status==401){
             $scope.article_url = global_notallowed_url;
@@ -72,64 +83,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
         $rootScope.page_ready = true;
     });
   });
-
-   /* $scope.data = [{
-      "id": 1,
-      "title": "node1",
-      "nodes": [
-        {
-          "id": 11,
-          "title": "node1.1",
-          "nodes": [
-            {
-              "id": 111,
-              "title": "node1.1.1",
-              "nodes": []
-            }
-          ]
-        },
-        {
-          "id": 12,
-          "title": "node1.2",
-          "nodes": []
-        }
-      ],
-    }, {
-      "id": 2,
-      "title": "node2",
-      "nodes": [
-        {
-          "id": 21,
-          "title": "node2.1",
-          "nodes": []
-        },
-        {
-          "id": 22,
-          "title": "node2.2",
-          "nodes": []
-        }
-      ],
-    }, {
-      "id": 3,
-      "title": "node3",
-      "nodes": [
-        {
-          "id": 31,
-          "title": "node3.1",
-          "nodes": []
-        }
-      ],
-    }, {
-      "id": 4,
-      "title": "node4",
-      "nodes": [
-        {
-          "id": 41,
-          "title": "node4.1",
-          "nodes": []
-        }
-      ],
-    }];*/
 
 })();
 

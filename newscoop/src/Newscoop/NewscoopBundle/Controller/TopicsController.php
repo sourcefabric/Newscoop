@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Gedmo\Translatable\TranslatableListener;
 use Doctrine\ORM\Query;
 use Newscoop\NewscoopBundle\Entity\Topic;
+use Newscoop\NewscoopBundle\Form\Type\TopicType;
 
 /**
  * Topic controller.
@@ -50,24 +51,7 @@ class TopicsController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->get('em');
-        $repo = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-        $self = &$this;
-        $options = array(
-            'decorate' => true,
-        );
-        $query = $em
-            ->createQueryBuilder()
-            ->select('node')
-            ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
-            ->orderBy('node.root, node.lft', 'ASC')
-            ->getQuery();
-
-        $this->setTranslatableHints($query);
-        $nodes = $query->getArrayResult();
-        $tree = $repo->buildTree($nodes, $options);
-
-        return array('tree' => $tree);
+        return array();
     }
 
     /**
@@ -79,9 +63,116 @@ class TopicsController extends Controller
         $em = $this->get('em');
         $tree = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->childrenHierarchy();
 
-        return new JsonResponse(compact('tree'));
+        return new JsonResponse(array('tree' => $tree));
     }
 
+    /**
+     * @Route("/admin/topics/add/", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function addAction(Request $request)
+    {
+        $node = new Topic();
+        $translator = $this->get('translator');
+        $form = $this->createForm(new TopicType());
+        $form->handleRequest($request);
+        $response = array(
+            'status' => false,
+            'message' => 'Error'
+        );
+
+        if ($form->isValid()) {
+            $em = $this->get('em');
+            $data = $form->getData();
+            $parent = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+                'id' => $data['parent']
+            ));
+            $node->setTitle($data['title']);
+            if ($parent) {
+                $node->setParent($parent);
+            }
+
+            $em->persist($node);
+            $em->flush();
+
+            $response = array(
+                'status' => true,
+                'message' => 'Topic was added'
+            );
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/admin/topics/delete/{id}", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $translator = $this->get('translator');
+        $em = $this->get('em');
+        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
+
+        if (!$node) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => 'Failed to find Topic by id: ' . $id
+            ), 404);
+        }
+
+        $em->remove($node);
+        $em->flush();
+
+        return new JsonResponse(array(
+            'status' => true,
+            'message' => 'Category '.$node->getTitle().' was removed'
+        ));
+    }
+
+    /**
+     * @Route("/admin/topics/edit/{id}", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function editAction(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
+
+        if (!$node) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => 'Failed to find Topic by id: ' . $id
+            ), 404);
+        }
+
+        $form = $this->createForm(new TopicType(), $node);
+        $form->handleRequest($request, $node);
+        if ($form->isValid()) {
+            $em->persist($node);
+            $em->flush();
+
+            return new JsonResponse(array(
+                'status' => true,
+                'message' => 'Category was updated'
+            ));
+        }
+
+        return new JsonResponse(array(
+            'status' => false,
+            'message' => 'Fix the following errors'
+        ));
+    }
+
+    /**
+     * Set translatable hints
+     *
+     * @param Query $query Query object
+     */
     public function setTranslatableHints(Query $query)
     {
         $query->setHint(
@@ -101,5 +192,4 @@ class TopicsController extends Controller
             $this->get('session')->get('gedmo.trans.fallback', false)
         );
     }
-
 }

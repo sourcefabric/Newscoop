@@ -61,8 +61,7 @@ class TopicRepository extends NestedTreeRepository
             ->getQueryBuilder()
             ->select('node')
             ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
-            ->orderBy('node.root, node.lft', ':direction')
-            ->setParameter('direction', $direction)
+            ->orderBy('node.root, node.lft', $direction)
             ->getQuery();
     }
 }
