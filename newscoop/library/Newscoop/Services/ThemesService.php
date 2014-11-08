@@ -91,14 +91,7 @@ class ThemesService implements ThemesServiceInterface
                 $this->cacheService->save($cacheKeyWebOutput, $webOutput);
             }
 
-            $cacheKeyOutSetIssues = $this->cacheService->getCacheKey(array('outSetIssues', $issue->getId(), 'webOutput'));
-            if ($this->cacheService->contains($cacheKeyOutSetIssues)) {
-                $outSetIssues = $this->cacheService->fetch($cacheKeyOutSetIssues);
-            } else {
-                $outSetIssues = $this->findByIssueAndOutput($issue->getId(), $webOutput);
-                $this->cacheService->save($cacheKeyOutSetIssues, $outSetIssues);
-            }
-
+            $outSetIssues = $this->findByIssueAndOutput($issue->getId(), $webOutput);
             if (!is_null($outSetIssues)) {
                 $themePath = $outSetIssues->getThemePath()->getPath();
             }
