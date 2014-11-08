@@ -31,9 +31,9 @@ final class CampTemplate extends SmartyBC
     /** @var bool */
     private $m_preview = false;
 
-    private $useprotocol;
+    public $useprotocol;
 
-    private $templateCacheHandler;
+    public $templateCacheHandler;
 
     /** @var array */
     public $campsiteVector = array();
