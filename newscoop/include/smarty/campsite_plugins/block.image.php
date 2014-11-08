@@ -24,7 +24,17 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         throw new \InvalidArgumentException("Rendition not set");
     }
 
-    $renditions = Zend_Registry::get('container')->getService('image.rendition')->getRenditions();
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $renditionService = \Zend_Registry::get('container')->getService('image.rendition');
+
+    $cacheKey = $cacheService->getCacheKey(array('theme_renditions'), 'theme');
+    if ($cacheService->contains($cacheKey)) {
+        $renditions = $cacheService->fetch($cacheKey);
+    } else {
+        $renditions = $renditionService->getRenditions();
+        $cacheService->save($cacheKey, $renditions);
+    }
+
     if (!array_key_exists($params['rendition'], $renditions)) {
         throw new \InvalidArgumentException("Unknown rendition");
     }
@@ -34,7 +44,8 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         throw new \RuntimeException("Not in article context.");
     }
 
-    $imageService = Zend_Registry::get('container')->getService('image');
+    $imageService = \Zend_Registry::get('container')->getService('image');
+
     $articleRenditions = $article->getRenditions();
     $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
     if ($articleRendition === null) {
@@ -43,7 +54,6 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         return;
     }
 
-    $renditionService = \Zend_Registry::get('container')->getService('image.rendition');
     $image = null;
     if (array_key_exists('width', $params) && array_key_exists('height', $params)) {
         $image = $renditionService->getArticleRenditionImage($article->number, $params['rendition'], $params['width'], $params['height']);
