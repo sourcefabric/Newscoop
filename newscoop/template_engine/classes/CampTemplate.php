@@ -11,6 +11,8 @@
  */
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class CampTemplate
@@ -28,6 +30,10 @@ final class CampTemplate extends SmartyBC
 
     /** @var bool */
     private $m_preview = false;
+
+    private $useprotocol;
+
+    private $templateCacheHandler;
 
     /** @var array */
     public $campsiteVector = array();
@@ -47,9 +53,11 @@ final class CampTemplate extends SmartyBC
 
         // cache settings
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $cacheHandler = $preferencesService->TemplateCacheHandler;
-        $auth = Zend_Auth::getInstance();
-        if ($cacheHandler) {
+
+        $this->useprotocol = ($preferencesService->get('SmartyUseProtocol') === 'Y') ? 'true' : 'false';
+
+        $this->templateCacheHandler = $preferencesService->TemplateCacheHandler;
+        if ($this->templateCacheHandler) {
             $this->caching = 1;
             $this->caching_type = 'newscoop';
             CampTemplateCache::factory();
@@ -57,7 +65,7 @@ final class CampTemplate extends SmartyBC
             $this->caching = 0;
         }
 
-        if (self::isDevelopment()) {
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
             $this->force_compile = true;
         }
 
@@ -95,13 +103,56 @@ final class CampTemplate extends SmartyBC
         $this->assign('view', \Zend_Registry::get('container')->get('view'));
         $this->assign('userindex', false);
         $this->assign('user', new MetaUser());
-        $siteinfo = array(
+        $this->assign('siteinfo', array(
             'title' => $preferencesService->SiteTitle,
             'keywords' => $preferencesService->SiteMetaKeywords,
             'description' => $preferencesService->SiteMetaDescription,
-        );
+        ));
 
-        $this->assign('siteinfo', $siteinfo);
+        $this->getTemplateTranslationsFiles();
+    }
+
+    /**
+     * Get translations files for theme
+     *
+     * @return void
+     */
+    private function getTemplateTranslationsFiles()
+    {
+        $request = \Zend_Registry::get('container')->getService('request');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+        $locale = $request->getLocale();
+
+        $cacheKey = $cacheService->getCacheKey(array('templates_translations', $themesService->getThemePath(), $locale), 'templates_translations');
+        $templateTranslations = array();
+        if ($cacheService->contains($cacheKey)) {
+            $templateTranslations = $cacheService->fetch($cacheKey);
+            foreach ($templateTranslations as $translation) {
+                $translator->addResource('yaml', $translation[0], $translation[1], $translation[2]);
+            }
+
+            return;
+        }
+
+        $filesystem = new Filesystem();
+        $dir = __DIR__.'/../../themes/' . $themesService->getThemePath() . 'translations';
+        if ($filesystem->exists($dir)) {
+            $finder = new Finder();
+            $translator->addLoader('yaml', new YamlFileLoader());
+            $extension = $locale.'.yml';
+            $finder->files()->in($dir);
+            $finder->files()->name('*.'.$locale.'.yml');
+
+            foreach ($finder as $file) {
+                $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
+                $translator->addResource('yaml', $file->getRealpath(), $locale, $domain);
+                $templateTranslations[] = array($file->getRealpath(), $locale, $domain);
+            }
+        }
+
+        $cacheService->save($cacheKey, $templateTranslations);
     }
 
     /**
@@ -127,13 +178,8 @@ final class CampTemplate extends SmartyBC
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
         }
 
-        // src/Newscoop
-        $finder = new Finder();
-        $finder->directories()->name('smartyPlugins')->in(__DIR__ . '/../../src/Newscoop/*/Resources');
-
-        foreach ($finder as $file) {
-            $dirs[] = $file->getRealpath();
-        }
+        //comunity ticker
+        $dirs[] = __DIR__ . '/../../src/Newscoop/CommunityTickerBundle/Resources/smartyPlugins';
 
         return $dirs;
     }
@@ -183,17 +229,6 @@ final class CampTemplate extends SmartyBC
     }
 
     /**
-     * Clear cache
-     *
-     * @return void
-     */
-    public function clearCache($template_name = null, $cache_id = NULL, $compile_id = NULL, $exp_time = NULL, $type = NULL)
-    {
-        $this->clearCompiledTemplate();
-        $this->clearAllCache();
-    }
-
-    /**
      * Inserts an error message into the errors list.
      *
      * @param string $p_message
@@ -212,34 +247,5 @@ final class CampTemplate extends SmartyBC
         } else {
             trigger_error("Newscoop error: $p_message");
         }
-    }
-
-    /**
-     * get a concrete filename for automagically created content
-     *
-     * @param string $auto_base
-     * @param string $auto_source
-     * @param string $auto_id
-     *
-     * @return string
-     */
-    public function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
-    {
-        $show_spec = '';
-        if (isset($this->m_context)) {
-            $show_spec .= hash('sha1', ($this->m_context->template ? $this->m_context->template->theme_dir : ''));
-        }
-
-        return parent::_get_auto_filename($auto_base, $auto_source, $auto_id) . '%%' . $show_spec;
-    }
-
-    /**
-     * Test if is development environment
-     *
-     * @return bool
-     */
-    private static function isDevelopment()
-    {
-        return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
     }
 }

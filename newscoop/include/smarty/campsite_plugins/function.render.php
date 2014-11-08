@@ -29,9 +29,8 @@ function smarty_function_render($p_params, &$p_smarty)
     $cache_lifetimeBak = $smarty->cache_lifetime;
     $campsiteVectorBak = $smarty->campsiteVector;
     $cache_statusBak = $smarty->caching;
-    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
-    if ($preferencesService->TemplateCacheHandler) {
+    if ($smarty->templateCacheHandler) {
         $campsiteVector = $smarty->campsiteVector;
         foreach ($campsiteVector as $key => $value) {
             if (isset($p_params[$key])) {
@@ -59,18 +58,19 @@ function smarty_function_render($p_params, &$p_smarty)
 
         if (empty($p_params['cache'])) {
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('template', CampSite::GetURIInstance()->getThemePath(), $p_params['file']), 'template');
+            $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+            $cacheKey = $cacheService->getCacheKey(array('template', $themesService->getThemePath(), $p_params['file']), 'template');
             if ($cacheService->contains($cacheKey)) {
                 $smarty->cache_lifetime = $cacheService->fetch($cacheKey);
             } else {
-                $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
-                $smarty->cache_lifetime = (int)$template->getCacheLifetime();
+                $template = new Template($themesService->getThemePath() . $p_params['file']);
+                $smarty->cache_lifetime = (int) $template->getCacheLifetime();
                 $cacheService->save($cacheKey, $smarty->cache_lifetime);
             }
         } elseif ($p_params['cache'] == 'off') {
            $smarty->caching = 0;
         } else {
-            $smarty->cache_lifetime = (int)$p_params['cache'];
+            $smarty->cache_lifetime = (int) $p_params['cache'];
         }
     }
 
@@ -93,5 +93,3 @@ function smarty_function_render($p_params, &$p_smarty)
     $smarty->campsiteVector = $campsiteVectorBak;
     $smarty->caching = $cache_statusBak;
 }
-
-?>

@@ -11,15 +11,9 @@ namespace Newscoop\NewscoopBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Translation\Translator;
 
 class AccessDeniedExceptionListener
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-
     /**
      * @var Symfony\Component\Templating
      */
@@ -27,27 +21,24 @@ class AccessDeniedExceptionListener
 
     /**
      * Construct
-     * @param Translator $translator
      * @param Templating $templatingService
      */
-    public function __construct(Translator $translator, $templatingService)
+    public function __construct($templatingService)
     {
-        $this->translator = $translator;
         $this->templatingService = $templatingService;
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
-        $message = $this->translator->trans('nopermissions');
 
         if ($exception instanceof AccessDeniedHttpException) {
             $request = $event->getRequest();
-            $response = new JsonResponse(array('message' => $message));
+            $response = new JsonResponse(array('message' => $exception->getMessage()));
 
             if ($request->getRequestFormat() === 'html') {
                 $response = $this->templatingService->renderResponse('NewscoopNewscoopBundle:Exception:exception.html.twig', array(
-                    'message' => $message
+                    'message' => $exception->getMessage()
                 ));
             }
 

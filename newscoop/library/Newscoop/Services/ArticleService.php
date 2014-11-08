@@ -10,9 +10,7 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Article;
-use Newscoop\Entity\Language;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Manage requested article
@@ -98,26 +96,25 @@ class ArticleService
             $articleInfo['lang'] = $uriExplode[1];
             $articleInfo['section'] = $uriExplode[3];
 
-            $article = $this->em->getRepository('Newscoop\Entity\Article')
-                ->getArticle($articleInfo['id'], $articleInfo['lang'])
-                ->getOneOrNullResult();
+            $query = $this->em->createQuery('SELECT a, p, i, s FROM Newscoop\Entity\Article a LEFT JOIN a.packages p LEFT JOIN a.issue i LEFT JOIN a.section s LEFT JOIN a.language l WHERE a.number = :number AND l.code = :code');
+            $article = $query->setParameters(array('number'=> $articleInfo['id'], 'code' => $articleInfo['lang']))
+                ->getArrayResult();
 
-            if (!is_null($article)) {
+            if (!empty($article)) {
                 // fill the article meta data
-                $this->articleMetadata['id']            = $article->getId();
-                $this->articleMetadata['name']          = $article->getName();
-                $this->articleMetadata['issue']         = $article->getIssue()->getName();
-                $this->articleMetadata['issue_id']      = $article->getIssueId();
-                $this->articleMetadata['section']       = $article->getSection()->getName();
-                $this->articleMetadata['section_id']    = $article->getSectionId();
-                $this->articleMetadata['language_code'] = $article->getLanguageCode();
-                $this->articleMetadata['language_id']   = $article->getLanguageId();
+                $this->articleMetadata['id']            = $article[0]['number'];
+                $this->articleMetadata['name']          = $article[0]['name'];
+                $this->articleMetadata['issue']         = $article[0]['issue']['name'];
+                $this->articleMetadata['issue_id']      = $article[0]['issueId'];
+                $this->articleMetadata['section']       = $article[0]['section']['name'];
+                $this->articleMetadata['section_id']    = $article[0]['sectionId'];
+                $this->articleMetadata['language_code'] = $articleInfo['lang'];
+                $this->articleMetadata['language_id']   = $article[0]['IdLanguage'];
 
                 // add the meta data to the request
                 $request->attributes->set('_newscoop_article_metadata', $this->articleMetadata);
 
-                // return the article
-                return $article;
+                return true;
             } else {
                 return null;
             }

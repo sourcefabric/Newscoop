@@ -17,14 +17,14 @@ class Action_Helper_Form extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        $uri = CampSite::GetURIInstance();
-        $this->basePath = $uri->getThemePath();
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+        $this->basePath = $themesService->getThemePath();
     }
 
     /**
      * Get form by given name
      *
-     * @param string $name
+     * @param  string    $name
      * @return Zend_Form
      */
     public function direct($name)

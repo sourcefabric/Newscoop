@@ -84,7 +84,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
-        arguments:  ['@em']
 
     newscoop_newscoop.listener.route_listener:
         class: Newscoop\NewscoopBundle\EventListener\RouteListener
@@ -104,18 +103,11 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
     system_preferences_service:
-        class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
-        arguments:  ['@em']
-
-    newscoop_newscoop.translation_template_listener:
-        class: Newscoop\NewscoopBundle\EventListener\TemplateTranslationListener
-        arguments:  ['@translator', '@newscoop.cache']
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+        alias: preferences
 
     newscoop_newscoop.session.storage:
         class:     %newscoop_newscoop.session.storage.class%
-        arguments: [%session.storage.options%]
+        arguments: [%session.storage.options%, "@system_preferences_service"]
 
     newscoop_newscoop.criteria.users:
         class: Newscoop\User\UserCriteria
@@ -133,7 +125,18 @@ services:
 
     newscoop_newscoop.publication_service:
         class: Newscoop\Services\PublicationService
-        arguments:  ["@em"]
+        arguments:  ["@em", "@newscoop.cache"]
+
+    newscoop.publication_service:
+        alias: newscoop_newscoop.publication_service
+
+    newscoop_newscoop.issue_service:
+        class: Newscoop\Services\IssueService
+        arguments:  ["@em", "@newscoop_newscoop.publication_service", "@newscoop.cache"]
+
+    newscoop_newscoop.themes_service:
+        class: Newscoop\Services\ThemesService
+        arguments:  ["@newscoop_newscoop.issue_service", "@newscoop.cache", "@newscoop_newscoop.publication_service", "@em"]
 
     newscoop_newscoop.listener.publication:
         class: Newscoop\NewscoopBundle\EventListener\PublicationListener
@@ -159,9 +162,15 @@ services:
 
     newscoop_newscoop.listener.access_denied:
         class: Newscoop\NewscoopBundle\EventListener\AccessDeniedExceptionListener
-        arguments:  ["@translator", "@templating"]
+        arguments:  ["@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    newscoop_newscoop.listener.issue:
+        class: Newscoop\NewscoopBundle\EventListener\IssueListener
+        arguments:  ["@newscoop_newscoop.issue_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"

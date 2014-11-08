@@ -33,7 +33,6 @@ class PublicationListener
 
     public function onRequest(GetResponseEvent $event)
     {
-        $request = $event->getRequest();
         $this->publicationService->publicationResolver($event->getRequest());
     }
 }

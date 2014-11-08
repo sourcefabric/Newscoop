@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Publication;
 use Newscoop\Entity\Aliases;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Manage requested publication
@@ -44,12 +43,20 @@ class PublicationService
     protected $publicationMetadata = array();
 
     /**
-     * Construct Publication Service
-     * @param EntityManager $em Entity Manager
+     * Cache Service
+     * @var CacheService
      */
-    public function __construct(EntityManager $em)
+    protected $cacheService;
+
+    /**
+     * Construct Publication Service
+     * @param EntityManager $em           Entity Manager
+     * @param CacheService  $cacheService Cache Service
+     */
+    public function __construct(EntityManager $em, CacheService $cacheService)
     {
         $this->em = $em;
+        $this->cacheService = $cacheService;
     }
 
     /**
@@ -124,35 +131,52 @@ class PublicationService
             $this->publicationMetadata['source'] = 'optional_parameter';
         }
 
-        $alias = $this->em->getRepository('Newscoop\Entity\Aliases')
-            ->findOneByName($publication);
+        $cacheKey = $this->cacheService->getCacheKey(array(
+            'resolver',
+            $publication,
+            $this->publicationMetadata['source']
+        ), 'publication');
 
-        if (!$alias) {
-            return null;
+        $alias = array();
+        if ($this->cacheService->contains($cacheKey)) {
+            $alias = $this->cacheService->fetch($cacheKey);
+        } else {
+            $qb = $this->em->getRepository('Newscoop\Entity\Aliases')
+                ->createQueryBuilder('a');
+
+            $qb->select('a.id as aliasId', 'p.id as publicationId', 'p.name as publicationName', 'l.id as languageId')
+                ->leftJoin('a.publication', 'p')
+                ->leftJoin('p.language', 'l')
+                ->where('a.name = :name')
+                ->setParameter('name', $publication);
+
+            $alias = $qb->getQuery()->getArrayResult();
+            $this->cacheService->save($cacheKey, $alias);
         }
 
-        if (!$alias->getPublication()) {
+        if (empty($alias)) {
             return null;
         }
 
         $this->publicationMetadata['alias'] = array(
-            'name' => $alias->getName(),
-            'publication_id' => $alias->getPublication()->getId()
+            'name' => $alias[0]['publicationName'],
+            'publication_id' => $alias[0]['publicationId']
         );
 
         $this->publicationMetadata['publication'] = array(
-            'name' => $alias->getPublication()->getName(),
-            'id_default_language' => $alias->getPublication()->getLanguage()->getId()
+            'name' => $alias[0]['publicationName'],
+            'id_default_language' => $alias[0]['languageId']
         );
 
         /**
          * Save publication metadata to into Request attributes.
          */
         $request->attributes->set('_newscoop_publication_metadata', $this->publicationMetadata);
+        $aliasObject = $this->em->getReference('Newscoop\Entity\Aliases', $alias[0]['aliasId']);
+        $publicationObject = $this->em->getReference('Newscoop\Entity\Publication', $alias[0]['publicationId']);
+        $this->setPublicationAlias($aliasObject);
+        $this->setPublication($publicationObject);
 
-        $this->setPublicationAlias($alias);
-        $this->setPublication($alias->getPublication());
-
-        return $publication;
+        return $publicationObject;
     }
 }

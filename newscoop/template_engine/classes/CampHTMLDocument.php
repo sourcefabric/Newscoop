@@ -97,7 +97,6 @@ final class CampHTMLDocument
         $this->setMetaTag('robots', 'index, follow');
     } // fn __construct
 
-
     /**
      * Builds an instance object of this class only if there is no one.
      *
@@ -114,7 +113,6 @@ final class CampHTMLDocument
         return self::$m_instance;
     } // fn singleton
 
-
     /**
      * Returns the type of document.
      *
@@ -124,7 +122,6 @@ final class CampHTMLDocument
     {
         return $this->m_type;
     } // fn getType
-
 
     /**
      * Returns the title of the document.
@@ -136,7 +133,6 @@ final class CampHTMLDocument
         return $this->m_title;
     } // fn getTitle
 
-
     /**
      * Returns the page generator.
      *
@@ -146,7 +142,6 @@ final class CampHTMLDocument
     {
         return $this->m_generator;
     } // fn getGenerator
-
 
     /**
      * Sets the document title.
@@ -159,13 +154,12 @@ final class CampHTMLDocument
     {
         $config = CampSite::GetConfigInstance();
 
-        if($config->getSetting('site.online') == 'N') {
+        if ($config->getSetting('site.online') == 'N') {
             $p_title .= ' [ Offline ]';
         }
 
         $this->m_title = $p_title;
     } // fn setTitle
-
 
     /**
      * Returns the MIME type.
@@ -176,7 +170,6 @@ final class CampHTMLDocument
     {
         return $this->m_mime;
     } // fn getMimeType
-
 
     /**
      * Sets the MIME type for the document.
@@ -190,7 +183,6 @@ final class CampHTMLDocument
         $this->m_mime = $p_mime;
     } // fn setMimeType
 
-
     /**
      * Returns the charset.
      *
@@ -200,7 +192,6 @@ final class CampHTMLDocument
     {
         return $this->m_charset;
     } // fn getCharset
-
 
     /**
      * Sets the charset.
@@ -214,18 +205,17 @@ final class CampHTMLDocument
         $this->m_charset = $p_charset;
     } // fn setCharset
 
-
     /**
      * Returns the requested META tag.
      *
-     * @param string $p_name
-     *      The name of the META tag to be retrieved
+     * @param string  $p_name
+     *                             The name of the META tag to be retrieved
      * @param boolean $p_httpEquiv
-     *      Whether it is a http-equiv META tag or not
+     *                             Whether it is a http-equiv META tag or not
      *
      * @return string $tag
      */
-    function getMetaTag($p_name, $p_httpEquiv = false)
+    public function getMetaTag($p_name, $p_httpEquiv = false)
     {
         $tag = '';
         if ($p_httpEquiv == true) {
@@ -239,16 +229,15 @@ final class CampHTMLDocument
         return $tag;
     } // fn getMetaTag
 
-
     /**
      * Sets the given META tag.
      *
-     * @param string $p_name
-     *      The name of the META tag to be retrieved
-     * @param mixed $p_value
-     *      The value for the META tag
+     * @param string  $p_name
+     *                             The name of the META tag to be retrieved
+     * @param mixed   $p_value
+     *                             The value for the META tag
      * @param boolean $p_httpEquiv
-     *      Whether it is a http-equiv META tag or not
+     *                             Whether it is a http-equiv META tag or not
      *
      * @return void
      */
@@ -260,7 +249,6 @@ final class CampHTMLDocument
             $this->m_metaTags['name'][$p_name] = $p_value;
         }
     } // fn setMetaTag
-
 
     /**
      * Renders the document.
@@ -301,10 +289,10 @@ final class CampHTMLDocument
 
         $tpl->assign('gimme', $context);
         $tpl->assign('siteinfo', $siteinfo);
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         // on template caching add additional info
-        if ($preferencesService->TemplateCacheHandler) {
+        if ($tpl->templateCacheHandler) {
+            $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
             $uri = CampSite::GetURIInstance();
             $smarty = CampTemplate::singleton();
             $tpl->campsiteVector = array_merge(
@@ -313,12 +301,12 @@ final class CampHTMLDocument
             );
 
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('template', CampSite::GetURIInstance()->getThemePath(), ltrim($template, '/')), 'template');
+            $cacheKey = $cacheService->getCacheKey(array('template', $themesService->getThemePath(), ltrim($template, '/')), 'template');
             if ($cacheService->contains($cacheKey)) {
                 $tpl->cache_lifetime = $cacheService->fetch($cacheKey);
             } else {
-                $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
-                $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
+                $templateObj = new Template($themesService->getThemePath() . ltrim($template, '/'));
+                $tpl->cache_lifetime = (int) $templateObj->getCacheLifetime();
                 $cacheService->save($cacheKey, $tpl->cache_lifetime);
             }
         }
@@ -337,8 +325,8 @@ final class CampHTMLDocument
     /**
      * Test if template exists
      *
-     * @param string $template
-     * @param Smarty $smarty
+     * @param  string $template
+     * @param  Smarty $smarty
      * @return bool
      */
     private function templateExists($template, $smarty)
@@ -354,5 +342,3 @@ final class CampHTMLDocument
     }
 
 } // class CampHTMLDocument
-
-?>

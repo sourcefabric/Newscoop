@@ -159,8 +159,6 @@ services:
     topic:
         class: Newscoop\Topic\TopicService
         arguments: ["@em"]
-    http.client.factory:
-        class: Newscoop\Http\ClientFactory
     index_client.default:
         class: Newscoop\Search\DefaultIndexClient
         arguments: ["@service_container"]
@@ -193,6 +191,7 @@ services:
         arguments: ["@dispatcher", "@em"]
     newscoop.templates.service:
         class: Newscoop\Services\TemplatesService
+        arguments: ["@newscoop_newscoop.themes_service"]
     newscoop.placeholders.service:
         class: Newscoop\Services\PlaceholdersService
     newscoop.listpaginator.service:
@@ -216,4 +215,3 @@ services:
     #     arguments:  ["@em", "@search.index"]
     #     tags:
     #         -  { name: kernel.event_listener, event: article.delete, method: update }
-
