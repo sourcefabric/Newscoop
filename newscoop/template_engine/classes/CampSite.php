@@ -247,10 +247,10 @@ final class CampSite extends CampSystem
         // instanciates the corresponding URI object
         switch ($urlType) {
             case 1:
-                $uriInstance = new CampURITemplatePath();
+                $uriInstance = new \CampURITemplatePath();
                 break;
             case 2:
-                $uriInstance = new CampURIShortNames();
+                $uriInstance = new \CampURIShortNames();
                 break;
         }
 
