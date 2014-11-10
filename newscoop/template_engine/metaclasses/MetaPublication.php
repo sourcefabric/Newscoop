@@ -3,9 +3,6 @@
  * @package Campsite
  */
 
-use Newscoop\Service\Resource\ResourceId;
-use Newscoop\Service\IThemeManagementService;
-
 /**
  * Includes
  */
@@ -16,8 +13,8 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObjec
 /**
  * @package Campsite
  */
-final class MetaPublication extends MetaDbObject {
-
+final class MetaPublication extends MetaDbObject
+{
     public function __construct($p_publicationId = null)
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
@@ -53,45 +50,39 @@ final class MetaPublication extends MetaDbObject {
         $this->m_customProperties['theme_path'] = 'getThemePath';
     } // fn __construct
 
-
     protected function getThemePath()
     {
-        $resourceId = new ResourceId(__CLASS__);
-        $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
-        $outSets = $themeService->getThemes($this->m_dbObject->getPublicationId());
-        if (count($outSets) == 0) {
-            return null;
-        }
-        return $outSets[0]->getPath();
-    }
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
 
+        return $themesService->getThemePath();
+    }
 
     /**
      * Returns a list of MetaLanguage objects - list of languages in which
      * the issue was translated.
      *
-     * @param boolean $p_excludeCurrent
-     * @param array $p_order
-     * @param boolean $p_allIssues
-     * @return array of MetaLanguage
+     * @param  boolean $p_excludeCurrent
+     * @param  array   $p_order
+     * @param  boolean $p_allIssues
+     * @return array   of MetaLanguage
      */
     public function languages_list($p_excludeCurrent = true,
     array $p_order = array()) {
-    	if ($p_excludeCurrent) {
-    		$context = CampTemplate::singleton()->context();
-    		$languageId = $context->language->number;
-    	} else {
-    		$languageId = null;
-    	}
+        if ($p_excludeCurrent) {
+            $context = CampTemplate::singleton()->context();
+            $languageId = $context->language->number;
+        } else {
+            $languageId = null;
+        }
         $languages = $this->m_dbObject->getLanguages($languageId, $p_order,
         !CampTemplate::singleton()->context()->preview);
         $metaLanguagesList = array();
         foreach ($languages as $language) {
             $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
         }
+
         return $metaLanguagesList;
     }
-
 
     protected function getDefaultSiteName()
     {
@@ -110,19 +101,18 @@ final class MetaPublication extends MetaDbObject {
         return $defaultAlias->getName();
     }
 
-
     protected function getDefaultLanguage()
     {
         return new MetaLanguage($this->m_dbObject->getDefaultLanguageId());
     }
 
-
-    protected function getPublicComments() {
+    protected function getPublicComments()
+    {
         return $this->m_dbObject->publicComments();
     }
 
-
-    protected function getModeratedComments() {
+    protected function getModeratedComments()
+    {
         if (CampTemplate::singleton()->context()->user->logged_in) {
             return $this->m_dbObject->commentsSubscribersModerated();
         } else {
@@ -130,30 +120,29 @@ final class MetaPublication extends MetaDbObject {
         }
     }
 
-
-    protected function getCAPTCHAEnabled() {
+    protected function getCAPTCHAEnabled()
+    {
         return $this->m_dbObject->isCaptchaEnabled();
     }
 
-
-    protected function getSubscriptionTimeUnit() {
+    protected function getSubscriptionTimeUnit()
+    {
         return $this->m_dbObject->getTimeUnitName(CampTemplate::singleton()->context()->language->number);
     }
 
-
-    protected function getSubscriptionTime() {
+    protected function getSubscriptionTime()
+    {
         if (strtolower(CampRequest::GetVar('SubsType')) == 'trial') {
             return $this->subscription_trial_time;
         } elseif (strtolower(CampRequest::GetVar('SubsType')) == 'paid') {
             return $this->subscription_paid_time;
         }
+
         return null;
     }
 
-
-    protected function getSeo() {
+    protected function getSeo()
+    {
         return $this->m_dbObject->getSeo();
     }
 } // class MetaPublication
-
-?>

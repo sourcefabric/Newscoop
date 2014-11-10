@@ -30,6 +30,9 @@ class PublicResourcesListener
     {
         $request = $event->getRequest();
         $route = $request->attributes->get('_route');
+        if (strpos($route, 'newscoop_gimme_') === false) {
+            return;
+        }
 
         $unprotected = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
         $rootsArray = array(

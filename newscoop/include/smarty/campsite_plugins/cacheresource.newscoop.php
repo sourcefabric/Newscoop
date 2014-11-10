@@ -19,28 +19,28 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
     /**
      * fetch cached content and its modification time from data source
      *
-     * @param  string  $id         unique cache content identifier
-     * @param  string  $tpl_name       template name
-     * @param  string  $cache_id   cache id
-     * @param  string  $compile_id compile id
-     * @param  string  $content    cached content
-     * @param  integer $mtime      cache modification timestamp (epoch)
+     * @param  string  $id            unique cache content identifier
+     * @param  string  $tpl_name      template name
+     * @param  string  $cache_id      cache id
+     * @param  string  $compile_id    compile id
+     * @param  string  $content       cached content
+     * @param  integer $mtime         cache modification timestamp (epoch)
      * @param  integer $cacheLifetime cache lifetime in seconds
      * @return void
      */
     protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime, $cacheLifetime = 0)
     {
-        $uri = CampSite::GetURIInstance();
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $handler = $this->cacheClass;
         $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
         if ($cacheLifetime == 0) {
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('template', $uri->getThemePath(), $tpl_name), 'template');
+            $cacheKey = $cacheService->getCacheKey(array('template', $themesService->getThemePath(), $tpl_name), 'template');
             if ($cacheService->contains($cacheKey)) {
                 $cacheLifetime = $cacheService->fetch($cacheKey);
             } else {
-                $template = new Template($uri->getThemePath() . $tpl_name);
-                $cacheLifetime = (int)$template->getCacheLifetime();
+                $template = new Template($themesService->getThemePath() . $tpl_name);
+                $cacheLifetime = (int) $template->getCacheLifetime();
                 $cacheService->save($cacheKey, $cacheLifetime);
             }
         }
@@ -54,25 +54,26 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
     /**
      * Save content to cache
      *
-     * @param  string       $id         unique cache content identifier
+     * @param  string       $id             unique cache content identifier
      * @param  string       $tpl_name       template name
-     * @param  string       $cache_id   cache id
-     * @param  string       $compile_id compile id
-     * @param  integer|null $exp_time   seconds till expiration or null
-     * @param  string       $content    content to cache
+     * @param  string       $cache_id       cache id
+     * @param  string       $compile_id     compile id
+     * @param  integer|null $exp_time       seconds till expiration or null
+     * @param  string       $content        content to cache
      * @param  array        $campsiteVector Newscoop's CampsiteVector for defining which page is being cached
      * @return boolean      success
      */
     protected function save($id, $tpl_name, $cache_id, $compile_id, $exp_time, $content, $campsiteVector = array())
     {
         $handler = $this->cacheClass;
+
         return $handler::handler('write', $content, $tpl_name, null, null, $exp_time);
     }
 
     /**
      * Delete content from cache
      *
-     * @param  string       $tpl_name       template name
+     * @param  string       $tpl_name   template name
      * @param  string       $cache_id   cache id
      * @param  string       $compile_id compile id
      * @param  integer|null $exp_time   seconds till expiration time in seconds or null
@@ -81,6 +82,7 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
     protected function delete($tpl_name, $cache_id, $compile_id, $exp_time)
     {
         $handler = $this->cacheClass;
+
         return $handler::handler('clean', null, $tpl_name, null, null, null);
     }
 
