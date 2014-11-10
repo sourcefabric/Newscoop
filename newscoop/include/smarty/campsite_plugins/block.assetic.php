@@ -30,10 +30,18 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
     static $count;
     static $assetsUrls;
 
-    // Read config file
-    if (isset($params['config_path']))
-         $base_path = __DIR__.'/../../../'. $params['config_path'];
+    $realpath = realpath( __DIR__.'/../../../'.$params['config_path']);
+    $root = realpath($realpath.'/../').'/';
 
+    $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+    $themePath = $themesService->getThemePath();
+    $viewBildPath = '/themes/'.$themePath.$params['build_path'];
+    $params['build_path'] = $root.$params['build_path'];
+
+    // Read config file
+    if (isset($params['config_path'])){
+        $base_path = __DIR__.'/../../../'. $params['config_path'];
+    }
     $config = json_decode(file_get_contents($base_path . '/config.json'));
 
     // Opening tag (first call only)
@@ -50,16 +58,22 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
 
         $fm = new FilterManager();
 
-        $cssEmbedFilter = new Filter\CssEmbedFilter($root . $config->cssembed_path, $config->java_path);
-        $cssEmbedFilter->setRoot($root);
+        if (property_exists($config, 'cssembed_path')) {
+            $cssEmbedFilter = new Filter\CssEmbedFilter($config->cssembed_path, $config->java_path);
+            $cssEmbedFilter->setRoot($root);
+            $fm->set('cssembed', $cssEmbedFilter);
+        }
 
-        $fm->set('yui_js', new Filter\Yui\JsCompressorFilter($root . $config->yuicompressor_path, $config->java_path));
-        $fm->set('yui_css', new Filter\Yui\CssCompressorFilter($root . $config->yuicompressor_path, $config->java_path));
+        if (property_exists($config, 'yuicompressor_path') && property_exists($config, 'java_path')) {
+            $fm->set('yui_js', new Filter\Yui\JsCompressorFilter($config->yuicompressor_path, $config->java_path));
+            $fm->set('yui_css', new Filter\Yui\CssCompressorFilter($config->yuicompressor_path, $config->java_path));
+        }
         $fm->set('less', new Filter\LessphpFilter());
         $fm->set('sass', new Filter\Sass\SassFilter());
-        $fm->set('cssembed', $cssEmbedFilter);
         $fm->set('closure_api', new Filter\GoogleClosure\CompilerApiFilter());
-        $fm->set('closure_jar', new Filter\GoogleClosure\CompilerJarFilter($root . $config->closurejar_path, $config->java_path));
+        if (property_exists($config, 'closurejar_path') && property_exists($config, 'java_path')) {
+            $fm->set('closure_jar', new Filter\GoogleClosure\CompilerJarFilter($config->closurejar_path, $config->java_path));
+        }
 
         // Factory setup
         $factory = new AssetFactory($root);
@@ -67,7 +81,6 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
         $factory->setFilterManager($fm);
         $factory->setDefaultOutput('assetic/*.'.$params['output']);
         $factory->setDebug($params['debug']);
-        $factory->addWorker(new CacheBustingWorker());
 
         if (isset($params['filters'])) {
             $filters = explode(',', $params['filters']);
@@ -119,11 +132,12 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
             foreach (explode(',', $params['assets']) as $a) {
                 // Add the asset to the list if not already present, as a reference or as a simple asset
                 $ref = null;
-                if (isset($dependencies->$params['output']))
-                foreach ($dependencies->$params['output']->references as $name => $file) {
-                    if ($file == $a) {
-                        $ref = $name;
-                        break;
+                if (isset($dependencies->$params['output'])) {
+                    foreach ($dependencies->$params['output']->references as $name => $file) {
+                        if ($file == $a) {
+                            $ref = $name;
+                            break;
+                        }
                     }
                 }
 
@@ -167,15 +181,16 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
             if (isset($config->site_url))
                 $template->assign($params['asset_url'], $config->site_url.'/'.$params['build_path'].'/'.$assetsUrls[$count-1]);
             else
-                $template->assign($params['asset_url'], '/'.$params['build_path'].'/'.$assetsUrls[$count-1]);
+                $template->assign($params['asset_url'], $viewBildPath.'/'.$assetsUrls[$count-1]);
 
 
         // Production mode, include an all-in-one asset
         } else {
-            if (isset($config->site_url))
+            if (isset($config->site_url)) {
                 $template->assign($params['asset_url'], $config->site_url.'/'.$params['build_path'].'/'.$asset->getTargetPath());
-            else
-                $template->assign($params['asset_url'], '/'.$params['build_path'].'/'.$asset->getTargetPath());
+            } else {
+                $template->assign($params['asset_url'], $viewBildPath.'/'.$asset->getTargetPath());
+            }
 
         }
 
