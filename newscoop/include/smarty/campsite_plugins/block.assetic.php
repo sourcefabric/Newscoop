@@ -71,6 +71,7 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
         $fm->set('less', new Filter\LessphpFilter());
         $fm->set('sass', new Filter\Sass\SassFilter());
         $fm->set('closure_api', new Filter\GoogleClosure\CompilerApiFilter());
+        $fm->set('rewrite', new Filter\CssRewriteFilter());
         if (property_exists($config, 'closurejar_path') && property_exists($config, 'java_path')) {
             $fm->set('closure_jar', new Filter\GoogleClosure\CompilerJarFilter($config->closurejar_path, $config->java_path));
         }
@@ -79,7 +80,7 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
         $factory = new AssetFactory($root);
         $factory->setAssetManager($am);
         $factory->setFilterManager($fm);
-        $factory->setDefaultOutput('assetic/*.'.$params['output']);
+        $factory->setDefaultOutput('*.'.$params['output']);
         $factory->setDebug($params['debug']);
 
         if (isset($params['filters'])) {
