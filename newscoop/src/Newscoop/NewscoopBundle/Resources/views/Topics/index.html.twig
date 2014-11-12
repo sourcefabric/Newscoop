@@ -24,14 +24,15 @@
   </div>
 <div class="row" ng-controller="treeCtrl">
         <div class="col-lg-6">
-            <h3>Add root topic
-            </h3>
-            <form class="form-inline" role="form">
+            <h3>Add root topic</h3>
+            <div class="alert alert-danger" ng-show="addTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
+            <div class="alert alert-danger" ng-show="addTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
+            <form class="form-inline" name="addTopicForm" ng-submit="addNewTopic()" role="form">
               <div class="form-group">
                 <label for="addNewTopic" class="sr-only">Topic name</label>
-                <input type="text" class="form-control input-sm" id="addNewTopic" placeholder="Topic name">
+                <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" id="addNewTopic" placeholder="Topic name">
               </div>
-              <button type="submit" class="btn btn-sm btn-primary">Add</button>
+              <button ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-success">Add</button>
             </form>
             <h3>Tree view
               <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
@@ -52,14 +53,31 @@
                     <a data-nodrag ng-click="" class="pointer"><span title="Add new topic" class="glyphicon glyphicon-plus"></span></a>
                 </div>
                 <div class="node-edit-div" data-nodrag ng-show="editing">
-                <div class="attached-title">Change topic name</div>
-                  <form class="form-inline" role="form">
+                  <div class="form-group">
+                  <div class="attached-title">Change topic name</div>
+                  <form name="editTopicForm" class="form-inline" role="form" novalidate>
+                    <div class="alert alert-danger" ng-show="editTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
+                    <div class="alert alert-danger" ng-show="editTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                     <div class="form-group">
-                      <input type="text" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
+                      <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
                     </div>
-                    <button type="submit" class="btn btn-sm btn-default" ng-click="saveGroup(group)">Save</button>
-                    <button type="submit" class="btn btn-sm btn-default" ng-click="cancelEditing(this)">Cancel</button>
+                    <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="updateTopic(node)">Save</button>
+                    <button class="btn btn-sm btn-default" ng-click="cancelEditing(this)">Cancel</button>
                   </form>
+                  </div>
+                    <div class="form-group">
+                      <div class="attached-title">Add subtopic</div>
+                          <form name="addSubTopicForm" class="form-inline" role="form" novalidate>
+                            <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
+                            <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
+                            <div class="form-group">
+                              <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="Subtopic name">
+                            </div>
+                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(node.id)">Add</button>
+                            <button class="btn btn-sm btn-default" ng-click="cancelEditing(this)">Cancel</button>
+                          </form>
+                      </div>
+                    </div>
                 </div>
               </div>
               <ol ui-tree-nodes="" ng-model="node.__children" ng-class="{hidden: collapsed}">
@@ -75,4 +93,7 @@
         </div>
     </div>
 </div>
+<script>
+    var token = "{{ default_csrf_token() }}";
+</script>
 {% endblock %}

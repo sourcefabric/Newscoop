@@ -188,7 +188,7 @@ class Topic
      *
      * @return mixed
      */
-    public function getLft()
+    public function getLeft()
     {
         return $this->lft;
     }
@@ -200,7 +200,7 @@ class Topic
      *
      * @return self
      */
-    public function setLft($lft)
+    public function setLeft($lft)
     {
         $this->lft = $lft;
 
@@ -212,7 +212,7 @@ class Topic
      *
      * @return mixed
      */
-    public function getRgt()
+    public function getRight()
     {
         return $this->rgt;
     }
@@ -224,7 +224,7 @@ class Topic
      *
      * @return self
      */
-    public function setRgt($rgt)
+    public function setRight($rgt)
     {
         $this->rgt = $rgt;
 

@@ -63,6 +63,7 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
             new \Twig_SimpleFunction('generateZendUrl', array($this, 'generateZendUrl')),
             new \Twig_SimpleFunction('hasPermission', array($this, 'hasPermission')),
+            new \Twig_SimpleFunction('default_csrf_token', array($this, 'getCsrfToken')),
         );
     }
 
@@ -119,6 +120,18 @@ class NewscoopExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    /**
+     * Generates default CRSF token for forms using AJAX
+     *
+     * @return string CSRF token
+     */
+    public function getCsrfToken()
+    {
+        $csrfProvider = $this->container->get('form.csrf_provider');
+
+        return $csrfProvider->generateCsrfToken('default');
     }
 
     public function getName()

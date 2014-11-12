@@ -11,14 +11,25 @@ namespace Newscoop\NewscoopBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class TopicType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array('required' => false));
+        $builder->add('title', 'text', array(
+            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Length(array(
+                    'max' => 25,
+                ))
+            ),
+            'error_bubbling' => true
+        ));
         $builder->add('description', 'textarea', array('required' => false));
         $builder->add('parent', null, array('required' => false));
+        $builder->setMethod('POST');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

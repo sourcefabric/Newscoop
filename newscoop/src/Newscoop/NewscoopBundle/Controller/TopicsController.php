@@ -78,8 +78,15 @@ class TopicsController extends Controller
         $form->handleRequest($request);
         $response = array(
             'status' => false,
-            'message' => 'Error'
+            'message' => $translator->trans('topics.error', array(), 'topics'),
         );
+
+        if (!$this->get('form.csrf_provider')->isCsrfTokenValid('default', $request->get('_csrf_token'))) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.csrfinvalid', array(), 'topics'),
+            ));
+        }
 
         if ($form->isValid()) {
             $em = $this->get('em');
@@ -97,7 +104,14 @@ class TopicsController extends Controller
 
             $response = array(
                 'status' => true,
-                'message' => $translator->trans('topics.added', array(), 'topics')
+                'message' => $translator->trans('topics.added', array(), 'topics'),
+                'topicId' => $node->getId(),
+                'topicTitle' => $node->getTitle()
+            );
+        } else {
+            $response = array(
+                'status' => false,
+                'message' => $form->getErrors()->getChildren()->getMessage(),
             );
         }
 
@@ -144,6 +158,13 @@ class TopicsController extends Controller
             'id' => $id,
         ));
 
+        if (!$this->get('form.csrf_provider')->isCsrfTokenValid('default', $request->get('_csrf_token'))) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.csrfinvalid', array(), 'topics'),
+            ));
+        }
+
         if (!$node) {
             return new JsonResponse(array(
                 'status' => false,
@@ -152,9 +173,9 @@ class TopicsController extends Controller
         }
 
         $form = $this->createForm(new TopicType(), $node);
-        $form->handleRequest($request, $node);
+
+        $form->handleRequest($request);
         if ($form->isValid()) {
-            $em->persist($node);
             $em->flush();
 
             return new JsonResponse(array(

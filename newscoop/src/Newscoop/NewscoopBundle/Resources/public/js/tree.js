@@ -15,6 +15,26 @@ app.factory('TopicsFactory',  function($http) {
         deleteTopic: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_delete", {id: id}));
         },
+        addTopic: function(formData) {
+          return $http({
+            method: "POST",
+            url: Routing.generate("newscoop_newscoop_topics_add"),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: $.param(formData)
+          });
+        },
+        updateTopic: function(formData, id) {
+          return $http({
+            method: "POST",
+            url: Routing.generate("newscoop_newscoop_topics_edit", {id: id}),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: $.param(formData)
+          });
+        },
     };
 });
 
@@ -97,6 +117,55 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
       }
 
       //todo restore topic label
+    };
+
+    $scope.formData = {};
+    $scope.subtopicForm = {};
+    $scope.addNewTopic = function(topicId, event) {
+      var addFormData = {
+            topic: {
+                title: $scope.formData.title,
+            },
+            _csrf_token: token
+        }
+
+      if (topicId !== undefined) {
+          addFormData.topic["title"] = $scope.subtopicForm.title;
+          addFormData.topic["parent"] = topicId;
+      }
+
+      TopicsFactory.addTopic(addFormData).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+          //$scope.data.push({ id: response.topicId, title: response.topicTitle });
+          $scope.formData = null;
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });
+    };
+
+    $scope.editFormData = {};
+    $scope.updateTopic = function(node, event) {
+       var postData = {
+          topic: {
+              title: node.title,
+          },
+          _csrf_token: token
+      };
+
+      TopicsFactory.updateTopic(postData, node.id).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+          $scope.editFormData = null;
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });
     };
 
     TopicsFactory.getTopics().success(function (data) {

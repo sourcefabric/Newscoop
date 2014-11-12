@@ -25,9 +25,13 @@ Top: Top
 'Change topic name': 'Change topic name'
 'There are $1 articles using the topic.': 'There are $1 articles using the topic.'
 'Search for topics': 'Search for topics'
-
 topics:
-	added: "Topic was added"
-	failedfind: "Failed to find Topic by id: %id%"
-	removed: "Topic %title% was removed"
-	updated: "Topic was updated"
+  added: "Topic was added"
+  failedfind: "Failed to find Topic by id: %id%"
+  removed: "Topic %title% was removed"
+  updated: "Topic was updated"
+  error: "Error occured, please try again later."
+  title: "Topics"
+  csrfinvalid: "The CSRF token is invalid. Please try to resubmit the form."
+  tooshort: "Topic name is too short!"
+  toolong: "Topic name is too long!"
