@@ -8,18 +8,45 @@ var app = angular.module('treeApp', ['ui.tree'])
   });
 
 app.factory('TopicsFactory',  function($http) {
-    return function(){
-       return $http({
-        method: 'GET',
-        url: '/admin/topics/tree/'
-    });
-   };
+  return {
+        getTopics: function() {
+            return $http.get(Routing.generate("newscoop_newscoop_topics_tree"));
+        },
+        deleteTopic: function(id) {
+            return $http.post(Routing.generate("newscoop_newscoop_topics_delete", {id: id}));
+        },
+    };
 });
 
 app.controller('treeCtrl', function($scope, TopicsFactory) {
+    var updateList = function (children, id) {
+        if (children) {
+            for (var i = 0; i < children.length; i++) {
+                if (children[i].id == id) {
+                  children.splice(children.indexOf(children[i]), 1);
 
-    $scope.remove = function(scope) {
-      scope.remove();
+                  return true;
+                }
+
+                var found = updateList(children[i].__children, id);
+                if (found) {
+                  return true;
+                }
+            }
+        }
+    };
+
+    $scope.removeTopic = function(topicId) {
+      TopicsFactory.deleteTopic(topicId).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+          updateList($scope.data, topicId);
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });
     };
 
     $scope.toggle = function(scope) {
@@ -72,7 +99,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
       //todo restore topic label
     };
 
-    TopicsFactory().success(function (data) {
+    TopicsFactory.getTopics().success(function (data) {
        $scope.data = data.tree;
     }).error(function(data, status){
         if(status==401){

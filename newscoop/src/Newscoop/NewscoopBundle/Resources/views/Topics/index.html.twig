@@ -23,46 +23,56 @@
     <p>Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit</p>
   </div>
 <div class="row" ng-controller="treeCtrl">
-      <div class="col-lg-6">
-        <h3>Tree view
-          <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
-          <a href="" class="btn btn-xs btn-default pull-right" ng-click="expandAll()">Expand all</a>
-          <a href="" class="btn btn-xs btn-default btn-warning pull-right" ng-click="moveLastToTheBeggining()">Move Last To The Beginning</a>
+        <div class="col-lg-6">
+            <h3>Add root topic
+            </h3>
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                <label for="addNewTopic" class="sr-only">Topic name</label>
+                <input type="text" class="form-control input-sm" id="addNewTopic" placeholder="Topic name">
+              </div>
+              <button type="submit" class="btn btn-sm btn-primary">Add</button>
+            </form>
+            <h3>Tree view
+              <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
+              <a href="" class="btn btn-xs btn-default pull-right" ng-click="expandAll()">Expand all</a>
+              <a href="" class="btn btn-xs btn-default btn-warning pull-right" ng-click="moveLastToTheBeggining()">Move Last To The Beginning</a>
 
-        </h3>
+            </h3>
 
-        <!-- Nested node template -->
-        <script type="text/ng-template" id="nodes_renderer.html">
-          <div ui-tree-handle class="tree-node tree-node-content">
-          <div class="drag-bar"></div>
-            <a data-nodrag ng-click="toggle(this)" class="pointer"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-            {[{ node.title }]}
-            <div class="pull-right action-buttons">
-                <a data-nodrag ng-click="startEditing(this)" class="pointer"><span class="glyphicon glyphicon-pencil"></span></a>
-                <a data-nodrag ng-click="remove(this)" class="pointer"><span title="Remove topic" class="glyphicon glyphicon-trash"></span></a>
-                <a data-nodrag ng-click="" class="pointer"><span title="Add new topic" class="glyphicon glyphicon-plus"></span></a>
-            </div>
-            <div class="node-edit-div" data-nodrag ng-show="editing">
-              <form class="form-inline" role="form">
-                <div class="form-group">
-                  <input type="text" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
+            <!-- Nested node template -->
+            <script type="text/ng-template" id="nodes_renderer.html">
+              <div ui-tree-handle class="tree-node tree-node-content">
+              <div class="drag-bar"></div>
+                <a data-nodrag ng-click="toggle(this)" class="pointer"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                {[{ node.title }]}
+                <div class="pull-right action-buttons">
+                    <a data-nodrag ng-click="startEditing(this)" class="pointer"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a data-nodrag ng-click="removeTopic(node.id)" class="pointer"><span title="Remove topic" class="glyphicon glyphicon-trash"></span></a>
+                    <a data-nodrag ng-click="" class="pointer"><span title="Add new topic" class="glyphicon glyphicon-plus"></span></a>
                 </div>
-                <button type="submit" class="btn btn-sm btn-default" ng-click="saveGroup(group)">Save</button>
-                <button type="submit" class="btn btn-sm btn-default" ng-click="cancelEditing(this)">Cancel</button>
-              </form>
+                <div class="node-edit-div" data-nodrag ng-show="editing">
+                <div class="attached-title">Change topic name</div>
+                  <form class="form-inline" role="form">
+                    <div class="form-group">
+                      <input type="text" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-default" ng-click="saveGroup(group)">Save</button>
+                    <button type="submit" class="btn btn-sm btn-default" ng-click="cancelEditing(this)">Cancel</button>
+                  </form>
+                </div>
+              </div>
+              <ol ui-tree-nodes="" ng-model="node.__children" ng-class="{hidden: collapsed}">
+                <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'">
+                </li>
+              </ol>
+            </script>
+            <div ui-tree id="tree-root">
+              <ol ui-tree-nodes="" ng-model="data">
+                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+              </ol>
             </div>
-          </div>
-          <ol ui-tree-nodes="" ng-model="node.__children" ng-class="{hidden: collapsed}">
-            <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'">
-            </li>
-          </ol>
-        </script>
-        <div ui-tree id="tree-root">
-          <ol ui-tree-nodes="" ng-model="data">
-            <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
-          </ol>
         </div>
-      </div>
     </div>
 </div>
 {% endblock %}

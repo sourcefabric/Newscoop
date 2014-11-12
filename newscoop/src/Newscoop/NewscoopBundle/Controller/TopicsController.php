@@ -97,7 +97,7 @@ class TopicsController extends Controller
 
             $response = array(
                 'status' => true,
-                'message' => 'Topic was added'
+                'message' => $translator->trans('topics.added', array(), 'topics')
             );
         }
 
@@ -119,7 +119,7 @@ class TopicsController extends Controller
         if (!$node) {
             return new JsonResponse(array(
                 'status' => false,
-                'message' => 'Failed to find Topic by id: ' . $id
+                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics')
             ), 404);
         }
 
@@ -128,7 +128,7 @@ class TopicsController extends Controller
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => 'Category '.$node->getTitle().' was removed'
+            'message' => $translator->trans('topics.removed', array('%title%' => $node->getTitle()), 'topics')
         ));
     }
 
@@ -139,6 +139,7 @@ class TopicsController extends Controller
     public function editAction(Request $request, $id)
     {
         $em = $this->get('em');
+        $translator = $this->get('translator');
         $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
             'id' => $id,
         ));
@@ -146,7 +147,7 @@ class TopicsController extends Controller
         if (!$node) {
             return new JsonResponse(array(
                 'status' => false,
-                'message' => 'Failed to find Topic by id: ' . $id
+                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics')
             ), 404);
         }
 
@@ -158,13 +159,13 @@ class TopicsController extends Controller
 
             return new JsonResponse(array(
                 'status' => true,
-                'message' => 'Category was updated'
+                'message' => $translator->trans('topics.updated', array(), 'topics')
             ));
         }
 
         return new JsonResponse(array(
             'status' => false,
-            'message' => 'Fix the following errors'
+            'message' => $translator->trans('topics.error', array(), 'topics')
         ));
     }
 
