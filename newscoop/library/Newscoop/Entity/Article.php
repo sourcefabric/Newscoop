@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
-use Newscoop\Entity\Attachment;
 use Newscoop\Search\DocumentInterface;
 
 /**
@@ -209,7 +208,7 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\User
      */
     protected $lockUser;
@@ -354,7 +353,7 @@ class Article implements DocumentInterface
     protected $data;
 
     /**
-     * @param int $number
+     * @param int                      $number
      * @param Newscoop\Entity\Language $language
      */
     public function __construct($number, Language $language)
@@ -372,7 +371,7 @@ class Article implements DocumentInterface
     /**
      * Set article id
      *
-     * @param int $p_id
+     * @param  int     $p_id
      * @return Article
      */
     public function setId($p_id)
@@ -506,7 +505,7 @@ class Article implements DocumentInterface
     /**
      * Set workflowStatus
      *
-     * @param string $status
+     * @param  string $status
      * @return void
      */
     public function setWorkflowStatus($workflowStatus)
@@ -580,7 +579,6 @@ class Article implements DocumentInterface
         return ($this->language) ? $this->language->getCode() : null;
     }
 
-
     /**
      * Get number
      *
@@ -609,6 +607,7 @@ class Article implements DocumentInterface
     public function setTitle($title)
     {
         $this->name = $title;
+
         return $this;
     }
 
@@ -625,7 +624,7 @@ class Article implements DocumentInterface
     /**
      * Set date
      *
-     * @param DateTime $updated
+     * @param  DateTime $updated
      * @return void
      */
     public function setDate(DateTime $date)
@@ -636,7 +635,7 @@ class Article implements DocumentInterface
     /**
      * Set data
      *
-     * @param array $data
+     * @param  array $data
      * @return void
      */
     public function setData(array $data)
@@ -647,7 +646,7 @@ class Article implements DocumentInterface
     /**
      * Get article type field data
      *
-     * @param string $field
+     * @param  string $field
      * @return mixed
      */
     public function getData($field)
@@ -666,8 +665,8 @@ class Article implements DocumentInterface
     /**
      * Set article type field data
      *
-     * @param string $field
-     * @param string $value
+     * @param  string $field
+     * @param  string $value
      * @return mixed
      */
     public function setFieldData($field, $value)
@@ -767,7 +766,8 @@ class Article implements DocumentInterface
      * Set comments_link
      * @param string $link uri for comments resource in Newscoop API
      */
-    public function setCommentsLink($link) {
+    public function setCommentsLink($link)
+    {
         $this->comments_link = $link;
     }
 
@@ -804,7 +804,6 @@ class Article implements DocumentInterface
 
         return $this;
     }
-
 
     /**
      * Get publishDate
@@ -853,7 +852,7 @@ class Article implements DocumentInterface
     /**
      * Set creator
      *
-     * @param  User $p_user
+     * @param  User    $p_user
      * @return Article
      */
     public function setCreator(User $p_user)
@@ -895,6 +894,7 @@ class Article implements DocumentInterface
         if (!$this->webcode) {
             return null;
         }
+
         return $this->webcode->getWebcode();
     }
 
@@ -930,6 +930,7 @@ class Article implements DocumentInterface
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
+
         return $this;
     }
 
@@ -1146,8 +1147,8 @@ class Article implements DocumentInterface
     /**
      * Author article
      *
-     * @param string $title
-     * @param array $fields
+     * @param  string $title
+     * @param  array  $fields
      * @return void
      */
     public function author($title, array $fields)
@@ -1169,6 +1170,7 @@ class Article implements DocumentInterface
         if (count($this->attachments) == 0) {
             return null;
         }
+
         return $this->attachments;
     }
 
@@ -1182,6 +1184,7 @@ class Article implements DocumentInterface
     public function setAttachments($attachments)
     {
         $this->attachments = $attachments;
+
         return $this;
     }
 
@@ -1267,14 +1270,15 @@ class Article implements DocumentInterface
             ->toArray();
 
         $this->addFields($view);
+
         return $view;
     }
 
     /**
      * Set article type field value
      *
-     * @param string $field
-     * @param string $value
+     * @param  string $field
+     * @param  string $value
      * @return void
      */
     private function setFieldValue($field, $value)
@@ -1330,7 +1334,7 @@ class Article implements DocumentInterface
 
     /**
      * Add a Snippet to the Article
-     * 
+     *
      * @param Snippet $snippet the Snippet to attach
      *
      * @return Newscoop\Entity\Article
@@ -1347,7 +1351,7 @@ class Article implements DocumentInterface
 
     /**
      * Remove a Snippet from the Article
-     * 
+     *
      * @param Snippet $snippet the Snippet to remove
      *
      * @return Newscoop\Entity\Article
@@ -1360,5 +1364,71 @@ class Article implements DocumentInterface
         }
 
         return $this;
-	}
+    }
+
+    /**
+     * Checks if article is locked or not
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        if ((null === $this->getLockUser()) && ($this->getLockTime() === 0)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets the value of lockUser.
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function getLockUser()
+    {
+        return $this->lockUser;
+    }
+
+    /**
+     * Sets the value of lockUser.
+     *
+     * @param Newscoop\Entity\User $lockUser the lock user
+     *
+     * @return self
+     */
+    public function setLockUser(User $lockUser)
+    {
+        $this->lockUser = $lockUser;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of lockTime.
+     *
+     * @return string
+     */
+    public function getLockTime()
+    {
+        if (null === $this->lockTime) {
+            return 0;
+        }
+
+        return $this->lockTime->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Sets the value of lockTime.
+     *
+     * @param DateTime $lockTime the lock time
+     *
+     * @return self
+     */
+    public function setLockTime($lockTime)
+    {
+        $this->lockTime = $lockTime;
+
+        return $this;
+    }
 }
