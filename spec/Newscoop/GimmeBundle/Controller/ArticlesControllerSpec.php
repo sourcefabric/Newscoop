@@ -13,8 +13,6 @@ use Newscoop\Entity\Article;
 use Doctrine\ORM\AbstractQuery;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use FOS\RestBundle\Controller\FOSRestController;
 
 class ArticlesControllerSpec extends ObjectBehavior
 {
@@ -88,5 +86,12 @@ class ArticlesControllerSpec extends ObjectBehavior
         $response = $this->patchArticleLockStatus($request, $number, $language, $status);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(403);
+    }
+
+    public function its_patchArticleLockStatus_should_throw_InvalidParametersException_when_wrong_parameters($request, $article, $query, $number, $language)
+    {
+        $this
+            ->shouldThrow('Newscoop\Exception\InvalidParametersException')
+            ->during('patchArticleLockStatus', array($request, $number, $language, 32));
     }
 }
