@@ -110,6 +110,7 @@ class ArticlesController extends FOSRestController
             );
 
             \ArticleIndex::RunIndexer(3, 10, true);
+
             return $response;
         } else {
             throw new \Exception("Could not create article.");
@@ -139,7 +140,6 @@ class ArticlesController extends FOSRestController
         $translator = \Zend_Registry::get('container')->getService('translator');
         // Fetch article
         $articleObj = $this->getArticle($number, $language);
-
 
         $content = $this->get("request")->getContent();
         if (!empty($content)) {
@@ -488,14 +488,14 @@ class ArticlesController extends FOSRestController
                 continue;
             }
 
-			if ($object instanceof \Newscoop\Entity\Snippet) {
-				$snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
-				$snippetRepo->addSnippetToArticle($object, $article);
+            if ($object instanceof \Newscoop\Entity\Snippet) {
+                $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
+                $snippetRepo->addSnippetToArticle($object, $article);
 
-				$matched = true;
+                $matched = true;
 
-				continue;
-			}
+                continue;
+            }
         }
 
 
@@ -604,14 +604,14 @@ class ArticlesController extends FOSRestController
                 continue;
             }
 
-			if ($object instanceof \Newscoop\Entity\Snippet) {
-				$snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
-				$snippetRepo->removeSnippetFromArticle($object, $article);
+            if ($object instanceof \Newscoop\Entity\Snippet) {
+                $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
+                $snippetRepo->removeSnippetFromArticle($object, $article);
 
-				$matched = true;
+                $matched = true;
 
-				continue;
-			}
+                continue;
+            }
         }
 
         if ($matched === false) {
@@ -652,6 +652,59 @@ class ArticlesController extends FOSRestController
             $response->setStatusCode(500);
             throw new \Exception('Setting status code failed');
         }
+
+        return $response;
+    }
+
+    /**
+     * Lock or unlock article
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when Article lock status changed successfully"
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
+     *         {"name"="status", "dataType"="string", "required"=true, "description"="Article lock status: true or false"}
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}/{language}/lock/{status}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlelockstatus")
+     * @Method("PATCH")
+     */
+    public function patchArticleLockStatus(Request $request, $number, $language, $status)
+    {
+        $statuses = array("false", "true");
+        if (!in_array($status, $statuses)) {
+            throw new InvalidParametersException('The provided status is not valid, available: true or false');
+        }
+
+        $em = $this->container->get('em');
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $language)
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NewscoopException('Article does not exist');
+        }
+
+        try {
+            $response = new Response();
+            if ($status === 'true') {
+                $article->setLockUser($this->getUser());
+                $article->setLockTime(new \DateTime());
+            } else {
+                $article->setLockUser();
+                $article->setLockTime();
+            }
+
+            $em->flush();
+            $response->setStatusCode(201);
+        } catch (\Exception $e) {
+            throw new NewscoopException('Setting lock status failed!');
+        }
+
         return $response;
     }
 
@@ -688,7 +741,8 @@ class ArticlesController extends FOSRestController
         return $form;
     }
 
-    private function getArticle($number, $language) {
+    private function getArticle($number, $language)
+    {
         $em = $this->container->get('em');
         $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
 
