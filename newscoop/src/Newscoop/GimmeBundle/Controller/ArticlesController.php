@@ -661,7 +661,8 @@ class ArticlesController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         201="Returned when Article lock status changed successfully"
+     *         200="Returned when Article lock status changed successfully",
+     *         403="Returned when trying to set the same status"
      *     },
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
@@ -691,16 +692,22 @@ class ArticlesController extends FOSRestController
 
         try {
             $response = new Response();
+            $response->setStatusCode(403);
             if ($status === 'true') {
-                $article->setLockUser($this->getUser());
-                $article->setLockTime(new \DateTime());
+                if (!$article->isLocked()) {
+                    $article->setLockUser($this->getUser());
+                    $article->setLockTime(new \DateTime());
+                    $response->setStatusCode(200);
+                }
             } else {
-                $article->setLockUser();
-                $article->setLockTime();
+                if ($article->isLocked()) {
+                    $article->setLockUser();
+                    $article->setLockTime();
+                    $response->setStatusCode(200);
+                }
             }
 
             $em->flush();
-            $response->setStatusCode(201);
         } catch (\Exception $e) {
             throw new NewscoopException('Setting lock status failed!');
         }
