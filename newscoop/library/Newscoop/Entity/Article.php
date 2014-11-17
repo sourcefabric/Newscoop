@@ -242,7 +242,7 @@ class Article implements DocumentInterface
     protected $playlists;
 
     /**
-     * @ORM\Column(type="datetime", name="LockTime", nullable=True)
+     * @ORM\Column(type="datetime", name="LockTime", nullable=true)
      * @var DateTime
      */
     protected $lockTime;
@@ -1373,7 +1373,7 @@ class Article implements DocumentInterface
      */
     public function isLocked()
     {
-        if ((null === $this->getLockUser()) && ($this->getLockTime() === 0)) {
+        if ((null === $this->getLockUser()) && ($this->getLockTime() === null)) {
             return false;
         }
 
@@ -1397,7 +1397,7 @@ class Article implements DocumentInterface
      *
      * @return self
      */
-    public function setLockUser(User $lockUser)
+    public function setLockUser(User $lockUser = null)
     {
         $this->lockUser = $lockUser;
 
@@ -1412,7 +1412,7 @@ class Article implements DocumentInterface
     public function getLockTime()
     {
         if (null === $this->lockTime) {
-            return 0;
+            return null;
         }
 
         return $this->lockTime->format('Y-m-d H:i:s');
@@ -1425,10 +1425,34 @@ class Article implements DocumentInterface
      *
      * @return self
      */
-    public function setLockTime($lockTime)
+    public function setLockTime(DateTime $lockTime = null)
     {
         $this->lockTime = $lockTime;
 
         return $this;
+    }
+
+    /**
+     * Gets the time difference between current and article lock time
+     *
+     * @return array
+     */
+    public function getLockTimeDiffrence()
+    {
+        $time1 = strtotime($this->getLockTime());
+        $diffSeconds = abs($time1 - time());
+        $days = floor($diffSeconds / 86400);
+        $diffSeconds -= ($days * 86400);
+        $hours = floor($diffSeconds / 3600);
+        $diffSeconds -= $hours * 3600;
+        $minutes = floor($diffSeconds / 60);
+        $diffSeconds -= $minutes * 60;
+
+        return array(
+            'days' => $days,
+            'hours' => $hours,
+            'minutes' => $minutes,
+            'seconds' => $diffSeconds
+        );
     }
 }
