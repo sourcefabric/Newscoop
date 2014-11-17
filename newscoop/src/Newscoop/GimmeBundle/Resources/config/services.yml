@@ -110,6 +110,11 @@ services:
         arguments:  ["@article.link"]
         tags:
             - { name: jms_serializer.handler, type: article_url, direction: serialization, format:json, method:getArticleUrl }
+    newscoop.gimme.serializer.user_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\UserHandler
+        arguments:  ["@image", "@newscoop_newscoop.publication_service", %image%]
+        tags:
+            - { name: jms_serializer.handler, type: user, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.oauth_event_listener:
         class:  Newscoop\GimmeBundle\EventListener\OAuthEventListener
         arguments:  ["@em"]
