@@ -267,7 +267,7 @@ class ArticleList extends BaseList
         if ($pluginService->isEnabled('terwey/plugin-newscoop-articleeditscreen')) {
             $router = \Zend_Registry::get('container')->getService('router');
             $language = new Language($article->getLanguageId());
-            $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $article->getArticleNumber())).'#/'.$language->getCode().'/'.$article->getArticleNumber();
+            $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $article->getArticleNumber()));
         } else {
             $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
         }
