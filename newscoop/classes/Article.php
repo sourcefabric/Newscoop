@@ -453,8 +453,6 @@ class Article extends DatabaseObject
             // Change some attributes
             $values['Published'] = 'N';
             $values['IsIndexed'] = 'N';
-            $values['LockUser'] = 0;
-            $values['LockTime'] = 0;
 
             if (!is_null($p_userId)) {
                 $values['IdUser'] = $p_userId;
@@ -465,6 +463,8 @@ class Article extends DatabaseObject
 
             $articleCopy->__create($values);
             $articleCopy->setProperty('UploadDate', 'NOW()', true, true);
+            $articleCopy->setProperty('LockUser', 'NULL', true, true);
+            $articleCopy->setProperty('LockTime', 'NULL', true, true);
             if (is_null($articleOrder)) {
                 $g_ado_db->Execute('LOCK TABLES Articles WRITE');
                 $articleOrder = $g_ado_db->GetOne('SELECT MAX(ArticleOrder) + 1 FROM Articles');
@@ -638,8 +638,6 @@ class Article extends DatabaseObject
         $values['Name'] = $p_name;
         $values['Published'] = 'N';
         $values['IsIndexed'] = 'N';
-        $values['LockUser'] = 0;
-        $values['LockTime'] = 0;
         $values['IdUser'] = $p_userId;
 
         // Create the record
@@ -649,6 +647,8 @@ class Article extends DatabaseObject
         }
 
         $articleCopy->setProperty('UploadDate', 'NOW()', true, true);
+        $articleCopy->setProperty('LockUser', 'NULL', true, true);
+        $articleCopy->setProperty('LockTime', 'NULL', true, true);
 
         // Insert an entry into the article type table.
         $articleCopyData = new ArticleData($articleCopy->m_data['Type'],
@@ -772,7 +772,7 @@ class Article extends DatabaseObject
      */
     public function isLocked()
     {
-        if ( ($this->m_data['LockUser'] == 0) && ($this->m_data['LockTime'] == 0) ) {
+        if ( ($this->m_data['LockUser'] == null) && ($this->m_data['LockTime'] == null) ) {
             return false;
         } else {
             return true;
@@ -802,11 +802,11 @@ class Article extends DatabaseObject
             $this->setProperty('LockUser', $p_userId);
             $this->setProperty('LockTime', 'NOW()', true, true);
         } else {
-            $this->setProperty('LockUser', '0', false);
-            $this->setProperty('LockTime', '0000-00-00 00:00:00', false);
+            $this->setProperty('LockUser', 'NULL', true, true);
+            $this->setProperty('LockTime', 'NULL', true, true);
         }
-        $this->setProperty('time_updated', $lastModified);
-        $this->commit();
+
+        $this->setProperty('time_updated', $lastModified, true);
     } // fn setIsLocked
 
 
@@ -2483,7 +2483,7 @@ class Article extends DatabaseObject
     public static function UnlockByUser($p_userId)
     {
         global $g_ado_db;
-        $queryStr = 'UPDATE Articles SET LockUser=0, LockTime=0, time_updated=time_updated'
+        $queryStr = 'UPDATE Articles SET LockUser= NULL, LockTime= NULL, time_updated=time_updated'
                     ." WHERE LockUser=$p_userId";
         $g_ado_db->Execute($queryStr);
     } // fn UnlockByUser
