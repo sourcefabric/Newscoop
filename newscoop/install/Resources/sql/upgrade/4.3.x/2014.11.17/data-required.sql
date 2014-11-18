@@ -1,0 +1,1 @@
+UPDATE `Articles` SET `LockUser` = NULL, `LockTime`= NULL;
