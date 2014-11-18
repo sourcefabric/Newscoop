@@ -24,22 +24,30 @@ class IssueRepository extends EntityRepository
      *
      * @return \Newscoop\Entity\Issue|null
      */
-    public function getLatestBy(Array $parameters = array(), $maxResults = 1)
+    public function getLatestByPublication($publicationId, $maxResults = 1)
     {
-        if ($maxResults == 1) {
-            $issue = $this->getEntityManager()
-            ->getRepository('\Newscoop\Entity\Issue')
-            ->findOneBy($parameters, array(
-                'id' => 'DESC'
-            ));
-        } else {
-            $issue = $this->getEntityManager()
-            ->getRepository('\Newscoop\Entity\Issue')
-            ->findBy($parameters, array(
-                'id' => 'DESC'
-            ), $maxResults);
+        $issuesIds = $this->createQueryBuilder('i')
+            ->select('i.id')
+            ->andWhere('i.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->setMaxResults($maxResults)
+            ->orderBy('i.id', 'DESC')
+            ->getQuery()
+            ->getArrayResult();
+
+        $ids = array();
+        foreach ($issuesIds as $key => $issue) {
+            $ids[] = $issue['id'];
         }
 
-        return $issue;
+        $query = $this->createQueryBuilder('i')
+            ->select('i', 'l', 's')
+            ->andWhere('i.id IN (:ids)')
+            ->leftJoin('i.language', 'l')
+            ->leftJoin('i.sections', 's')
+            ->setParameter('ids', $ids)
+            ->getQuery();
+
+        return $query;
     }
 }
