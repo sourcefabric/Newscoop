@@ -208,7 +208,7 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\User
      */
     protected $lockUser;
@@ -242,7 +242,7 @@ class Article implements DocumentInterface
     protected $playlists;
 
     /**
-     * @ORM\Column(type="datetime", name="LockTime", nullable=True)
+     * @ORM\Column(type="datetime", name="LockTime", nullable=true)
      * @var DateTime
      */
     protected $lockTime;
@@ -1374,5 +1374,89 @@ class Article implements DocumentInterface
     public function getLanguageObject()
     {
         return $this->getLanguage();
+    }
+
+    /**
+     * Checks if article is locked or not
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        if ((null === $this->getLockUser()) && ($this->getLockTime() === null)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets the value of lockUser.
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function getLockUser()
+    {
+        return $this->lockUser;
+    }
+
+    /**
+     * Sets the value of lockUser.
+     *
+     * @param Newscoop\Entity\User $lockUser the lock user
+     *
+     * @return self
+     */
+    public function setLockUser(User $lockUser = null)
+    {
+        $this->lockUser = $lockUser;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of lockTime.
+     *
+     * @return DateTime
+     */
+    public function getLockTime()
+    {
+        if (null === $this->lockTime) {
+            return null;
+        }
+
+        return $this->lockTime;
+    }
+
+    /**
+     * Sets the value of lockTime.
+     *
+     * @param DateTime $lockTime the lock time
+     *
+     * @return self
+     */
+    public function setLockTime(DateTime $lockTime = null)
+    {
+        $this->lockTime = $lockTime;
+
+        return $this;
+    }
+
+    /**
+     * Gets the time difference between current and article lock time
+     *
+     * @return array
+     */
+    public function getLockTimeDiffrence()
+    {
+        $time1 = $this->getLockTime();
+        $sinceStart = $time1->diff(new DateTime());
+
+        return array(
+            'days' => $sinceStart->d,
+            'hours' => $sinceStart->h,
+            'minutes' => $sinceStart->i,
+            'seconds' => $sinceStart->s
+        );
     }
 }
