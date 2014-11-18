@@ -657,11 +657,11 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Lock article
+     * Lock or unlock article
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when article has been locked successfully",
+     *         200="Returned when article lock status has been changed successfully",
      *         403="Returned when trying to set the same status"
      *     },
      *     parameters={
@@ -671,9 +671,9 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}/{language}/lock.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlelockstatus")
-     * @Method("POST")
+     * @Method("POST|DELETE")
      */
-    public function postLockArticle(Request $request, $number, $language)
+    public function lockUnlockArticle(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
         $article = $em->getRepository('Newscoop\Entity\Article')
@@ -686,51 +686,20 @@ class ArticlesController extends FOSRestController
 
         $response = new Response();
         $response->setStatusCode(403);
-        if (!$article->isLocked()) {
-            $article->setLockUser($this->getUser());
-            $article->setLockTime(new \DateTime());
-            $response->setStatusCode(200);
+        if ($request->getMethod() === "POST") {
+            if (!$article->isLocked()) {
+                $article->setLockUser($this->getUser());
+                $article->setLockTime(new \DateTime());
+                $response->setStatusCode(200);
+            }
         }
 
-        $em->flush();
-
-        return $response;
-    }
-
-    /**
-     * Unlock article
-     *
-     * @ApiDoc(
-     *     statusCodes={
-     *         200="Returned when article has been unlocked successfully",
-     *         403="Returned when trying to set the same status"
-     *     },
-     *     parameters={
-     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
-     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
-     *     }
-     * )
-     *
-     * @Route("/articles/{number}/{language}/lock.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticleunlockstatus")
-     * @Method("DELETE")
-     */
-    public function deleteUnlockArticle(Request $request, $number, $language)
-    {
-        $em = $this->container->get('em');
-        $article = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticle($number, $language)
-            ->getOneOrNullResult();
-
-        if (!$article) {
-            throw new NewscoopException('Article does not exist');
-        }
-
-        $response = new Response();
-        $response->setStatusCode(403);
-        if ($article->isLocked()) {
-            $article->setLockUser();
-            $article->setLockTime();
-            $response->setStatusCode(200);
+        if ($request->getMethod() === "DELETE") {
+            if ($article->isLocked()) {
+                $article->setLockUser();
+                $article->setLockTime();
+                $response->setStatusCode(200);
+            }
         }
 
         $em->flush();

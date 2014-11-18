@@ -50,9 +50,10 @@ class ArticlesControllerSpec extends ObjectBehavior
         $this->shouldImplement('FOS\RestBundle\Controller\FOSRestController');
     }
 
-    public function its_postLockArticle_should_lock_article($request, $article, $query, $number, $language, $user, $token, $security)
+    public function its_lockUnlockArticle_should_lock_article($request, $article, $query, $number, $language, $user, $token, $security)
     {
         $query->getOneOrNullResult()->willReturn($article);
+        $request->getMethod()->willReturn('POST');
         $article->isLocked()->willReturn(false);
         $user = new User('jhon.doe@example.com');
         $user->setUsername('doe');
@@ -60,36 +61,39 @@ class ArticlesControllerSpec extends ObjectBehavior
         $token->getUser()->willReturn($user);
         $article->setLockUser($user)->willReturn(null);
         $article->setLockTime(new \DateTime())->willReturn(null);
-        $response = $this->postLockArticle($request, $number, $language);
+        $response = $this->lockUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(200);
     }
 
-    public function its_deleteUnlockArticle_should_unlock_article($request, $article, $query, $number, $language)
+    public function its_lockUnlockArticle_should_unlock_article($request, $article, $query, $number, $language)
     {
         $article->isLocked()->willReturn(true);
+        $request->getMethod()->willReturn('DELETE');
         $article->setLockUser()->willReturn(null);
         $article->setLockTime()->willReturn(null);
         $query->getOneOrNullResult()->willReturn($article);
-        $response = $this->deleteUnlockArticle($request, $number, $language);
+        $response = $this->lockUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(200);
     }
 
-    public function its_postLockArticle_should_return_status_code_403_when_setting_the_same_status($request, $article, $query, $number, $language)
+    public function its_lockUnlockArticle_should_return_status_code_403_when_setting_the_same_status_while_locking($request, $article, $query, $number, $language)
     {
         $article->isLocked()->willReturn(true);
+        $request->getMethod()->willReturn('POST');
         $query->getOneOrNullResult()->willReturn($article);
-        $response = $this->postLockArticle($request, $number, $language);
+        $response = $this->lockUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(403);
     }
 
-    public function its_deleteUnlockArticle_should_return_status_code_403_when_setting_the_same_status($request, $article, $query, $number, $language)
+    public function its_deleteUnlockArticle_should_return_status_code_403_when_setting_the_same_status_while_unlocking($request, $article, $query, $number, $language)
     {
         $article->isLocked()->willReturn(false);
+        $request->getMethod()->willReturn('DELETE');
         $query->getOneOrNullResult()->willReturn($article);
-        $response = $this->deleteUnlockArticle($request, $number, $language);
+        $response = $this->lockUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(403);
     }
