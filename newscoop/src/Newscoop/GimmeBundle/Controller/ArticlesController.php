@@ -657,30 +657,24 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Lock or unlock article
+     * Lock article
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when Article lock status changed successfully",
+     *         200="Returned when article has been locked successfully",
      *         403="Returned when trying to set the same status"
      *     },
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
-     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
-     *         {"name"="status", "dataType"="string", "required"=true, "description"="Article lock status: true or false"}
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/lock/{status}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlelockstatus")
-     * @Method("PATCH")
+     * @Route("/articles/{number}/{language}/lock.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlelockstatus")
+     * @Method("POST")
      */
-    public function patchArticleLockStatus(Request $request, $number, $language, $status)
+    public function postLockArticle(Request $request, $number, $language)
     {
-        $statuses = array("false", "true");
-        if (!in_array($status, $statuses)) {
-            throw new InvalidParametersException('The provided status is not valid, available: true or false');
-        }
-
         $em = $this->container->get('em');
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $language)
@@ -690,27 +684,56 @@ class ArticlesController extends FOSRestController
             throw new NewscoopException('Article does not exist');
         }
 
-        try {
-            $response = new Response();
-            $response->setStatusCode(403);
-            if ($status === 'true') {
-                if (!$article->isLocked()) {
-                    $article->setLockUser($this->getUser());
-                    $article->setLockTime(new \DateTime());
-                    $response->setStatusCode(200);
-                }
-            } else {
-                if ($article->isLocked()) {
-                    $article->setLockUser();
-                    $article->setLockTime();
-                    $response->setStatusCode(200);
-                }
-            }
-
-            $em->flush();
-        } catch (\Exception $e) {
-            throw new NewscoopException('Setting lock status failed!');
+        $response = new Response();
+        $response->setStatusCode(403);
+        if (!$article->isLocked()) {
+            $article->setLockUser($this->getUser());
+            $article->setLockTime(new \DateTime());
+            $response->setStatusCode(200);
         }
+
+        $em->flush();
+
+        return $response;
+    }
+
+    /**
+     * Unlock article
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when article has been unlocked successfully",
+     *         403="Returned when trying to set the same status"
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}/{language}/lock.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticleunlockstatus")
+     * @Method("DELETE")
+     */
+    public function deleteUnlockArticle(Request $request, $number, $language)
+    {
+        $em = $this->container->get('em');
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $language)
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NewscoopException('Article does not exist');
+        }
+
+        $response = new Response();
+        $response->setStatusCode(403);
+        if ($article->isLocked()) {
+            $article->setLockUser();
+            $article->setLockTime();
+            $response->setStatusCode(200);
+        }
+
+        $em->flush();
 
         return $response;
     }

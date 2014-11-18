@@ -178,7 +178,6 @@ Newscoop\Entity\Article:
         lockUser:
             expose: true
             read_only: true
-            type: user
             groups: ["list", "details"]
             serialized_name: lockUser
             since_version: 1.1

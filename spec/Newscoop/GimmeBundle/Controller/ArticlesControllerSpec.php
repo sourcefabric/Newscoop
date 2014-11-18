@@ -50,9 +50,8 @@ class ArticlesControllerSpec extends ObjectBehavior
         $this->shouldImplement('FOS\RestBundle\Controller\FOSRestController');
     }
 
-    public function its_patchArticleLockStatus_should_lock_article($request, $article, $query, $number, $language, $user, $token, $security)
+    public function its_postLockArticle_should_lock_article($request, $article, $query, $number, $language, $user, $token, $security)
     {
-        $status = "true";
         $query->getOneOrNullResult()->willReturn($article);
         $article->isLocked()->willReturn(false);
         $user = new User('jhon.doe@example.com');
@@ -61,37 +60,37 @@ class ArticlesControllerSpec extends ObjectBehavior
         $token->getUser()->willReturn($user);
         $article->setLockUser($user)->willReturn(null);
         $article->setLockTime(new \DateTime())->willReturn(null);
-        $response = $this->patchArticleLockStatus($request, $number, $language, $status);
+        $response = $this->postLockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(200);
     }
 
-    public function its_patchArticleLockStatus_should_unlock_article($request, $article, $query, $number, $language)
+    public function its_deleteUnlockArticle_should_unlock_article($request, $article, $query, $number, $language)
     {
-        $status = "false";
         $article->isLocked()->willReturn(true);
         $article->setLockUser()->willReturn(null);
         $article->setLockTime()->willReturn(null);
         $query->getOneOrNullResult()->willReturn($article);
-        $response = $this->patchArticleLockStatus($request, $number, $language, $status);
+        $response = $this->deleteUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(200);
     }
 
-    public function its_patchArticleLockStatus_should_return_status_code_403_when_setting_the_same_status($request, $article, $query, $number, $language)
+    public function its_postLockArticle_should_return_status_code_403_when_setting_the_same_status($request, $article, $query, $number, $language)
     {
-        $status = "true";
         $article->isLocked()->willReturn(true);
         $query->getOneOrNullResult()->willReturn($article);
-        $response = $this->patchArticleLockStatus($request, $number, $language, $status);
+        $response = $this->postLockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(403);
     }
 
-    public function its_patchArticleLockStatus_should_throw_InvalidParametersException_when_wrong_parameters($request, $article, $query, $number, $language)
+    public function its_deleteUnlockArticle_should_return_status_code_403_when_setting_the_same_status($request, $article, $query, $number, $language)
     {
-        $this
-            ->shouldThrow('Newscoop\Exception\InvalidParametersException')
-            ->during('patchArticleLockStatus', array($request, $number, $language, 32));
+        $article->isLocked()->willReturn(false);
+        $query->getOneOrNullResult()->willReturn($article);
+        $response = $this->deleteUnlockArticle($request, $number, $language);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
+        $response->getStatusCode()->shouldReturn(403);
     }
 }

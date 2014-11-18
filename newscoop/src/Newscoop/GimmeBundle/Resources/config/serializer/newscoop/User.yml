@@ -31,12 +31,6 @@ Newscoop\Entity\User:
             type: string
             groups: ["list", "details"]
             serialized_name: lastName
-        image:
-            expose: true
-            read_only: true
-            type: string
-            groups: ["list", "details"]
-            serialized_name: image
         attributes:
             expose: true
             read_only: true
@@ -44,3 +38,8 @@ Newscoop\Entity\User:
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: attributes
+    virtual_properties:
+        getObject:
+            type: image_uri
+            serialized_name: image
+            groups: ["details", "list"]

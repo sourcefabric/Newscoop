@@ -1407,7 +1407,7 @@ class Article implements DocumentInterface
     /**
      * Gets the value of lockTime.
      *
-     * @return string
+     * @return DateTime
      */
     public function getLockTime()
     {
@@ -1415,7 +1415,7 @@ class Article implements DocumentInterface
             return null;
         }
 
-        return $this->lockTime->format('Y-m-d H:i:s');
+        return $this->lockTime;
     }
 
     /**
@@ -1439,20 +1439,14 @@ class Article implements DocumentInterface
      */
     public function getLockTimeDiffrence()
     {
-        $time1 = strtotime($this->getLockTime());
-        $diffSeconds = abs($time1 - time());
-        $days = floor($diffSeconds / 86400);
-        $diffSeconds -= ($days * 86400);
-        $hours = floor($diffSeconds / 3600);
-        $diffSeconds -= $hours * 3600;
-        $minutes = floor($diffSeconds / 60);
-        $diffSeconds -= $minutes * 60;
+        $time1 = $this->getLockTime();
+        $sinceStart = $time1->diff(new DateTime());
 
         return array(
-            'days' => $days,
-            'hours' => $hours,
-            'minutes' => $minutes,
-            'seconds' => $diffSeconds
+            'days' => $sinceStart->d,
+            'hours' => $sinceStart->h,
+            'minutes' => $sinceStart->i,
+            'seconds' => $sinceStart->s
         );
     }
 }
