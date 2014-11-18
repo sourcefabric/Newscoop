@@ -1367,6 +1367,16 @@ class Article implements DocumentInterface
     }
 
     /**
+     * Get language object
+     *
+     * @return Newscoop\Entity\Language
+     */
+    public function getLanguageObject()
+    {
+        return $this->getLanguage();
+    }
+
+    /**
      * Checks if article is locked or not
      *
      * @return boolean
