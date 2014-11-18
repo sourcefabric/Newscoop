@@ -47,7 +47,7 @@ Newscoop\Entity\Article:
                 getter: getLanguageCode
                 setter: setLanguageCode
             serialized_name: language
-            until_version: 1.0
+            until_version: 1.1
         section:
             expose: true
             read_only: true
@@ -177,7 +177,7 @@ Newscoop\Entity\Article:
             serialized_name: publication
             accessor:
                 getter: getPublication
-            since_version: 1.1
+            since_version: 1.2
     virtual_properties:
         getObject:
             expose: true
@@ -188,8 +188,8 @@ Newscoop\Entity\Article:
         getLanguageObject:
             expose: true
             groups: ["list", "details"]
-            serialized_name: languageInfo
-            since_version: 1.1
+            serialized_name: languageData
+            since_version: 1.2
         getWorkflowStatus:
             expose: true
             read_only: true
