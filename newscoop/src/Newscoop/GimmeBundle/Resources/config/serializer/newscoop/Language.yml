@@ -1,0 +1,27 @@
+Newscoop\Entity\Language:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: id
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: name
+        code:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: code
+        RFC3066bis:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: RFC3066bis
