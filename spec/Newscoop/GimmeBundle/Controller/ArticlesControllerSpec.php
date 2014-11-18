@@ -75,7 +75,7 @@ class ArticlesControllerSpec extends ObjectBehavior
         $query->getOneOrNullResult()->willReturn($article);
         $response = $this->lockUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
-        $response->getStatusCode()->shouldReturn(200);
+        $response->getStatusCode()->shouldReturn(204);
     }
 
     public function its_lockUnlockArticle_should_return_status_code_403_when_setting_the_same_status_while_locking($request, $article, $query, $number, $language)

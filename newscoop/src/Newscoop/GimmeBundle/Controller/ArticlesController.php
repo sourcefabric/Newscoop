@@ -698,7 +698,7 @@ class ArticlesController extends FOSRestController
             if ($article->isLocked()) {
                 $article->setLockUser();
                 $article->setLockTime();
-                $response->setStatusCode(200);
+                $response->setStatusCode(204);
             }
         }
 
