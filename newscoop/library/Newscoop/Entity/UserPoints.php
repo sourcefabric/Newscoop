@@ -7,9 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Utils\Validation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserPointsRepository")
@@ -53,7 +51,7 @@ class UserPoints
      * Set action
      *
      * @param int $action
-     * @return Newscoop\Entity\UserPoints
+     * @return UserPoints
      */
     public function setAction($action) {
         $this->action = (string) $action;
@@ -82,7 +80,7 @@ class UserPoints
      * Set point value
      *
      * @param int $points
-     * @return Newscoop\Entity\UserPoints
+     * @return UserPoints
      */
     public function setPoints($points) {
         $this->points = $points;

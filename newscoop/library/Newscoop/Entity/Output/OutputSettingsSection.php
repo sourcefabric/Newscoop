@@ -8,12 +8,11 @@
 
 namespace Newscoop\Entity\Output;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Section;
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
-use Newscoop\Entity\Theme;
 
 /**
  * Provides the settings for an output for a section.
@@ -51,10 +50,10 @@ class OutputSettingsSection extends OutputSettings
     /**
      * Set the section that is the owner of this settings.
      *
-     * @param Newscoop\Entity\Section $section
+     * @param Section $section
      * 		The section that is the owner of this settings, must not be null or empty.
      *
-     * @return Newscoop\Entity\OutputSettingsSection
+     * @return OutputSettingsSection
      * 		This object for chaining purposes.
      */
     public function setSection(Section $section)

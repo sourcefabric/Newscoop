@@ -233,6 +233,7 @@ class PEAR_Downloader extends PEAR_Common
     /**
      * For simpler unit-testing
      * @param PEAR_Downloader
+     * @param PEAR_Downloader $t
      * @return PEAR_Downloader_Package
      */
     function &newDownloaderPackage(&$t)
@@ -250,6 +251,7 @@ class PEAR_Downloader extends PEAR_Common
      * @param array
      * @param array
      * @param int
+     * @param integer $s
      */
     function &getDependency2Object(&$c, $i, $p, $s)
     {
@@ -750,6 +752,9 @@ class PEAR_Downloader extends PEAR_Common
         return $this->_downloadDir = $downloaddir;
     }
 
+    /**
+     * @param string $dir
+     */
     function setDownloadDir($dir)
     {
         if (!@is_writable($dir)) {
@@ -762,6 +767,9 @@ class PEAR_Downloader extends PEAR_Common
         $this->_downloadDir = $dir;
     }
 
+    /**
+     * @param string $key
+     */
     function configSet($key, $value, $layer = 'user', $channel = false)
     {
         $this->config->set($key, $value, $layer, $channel);
@@ -1150,6 +1158,7 @@ class PEAR_Downloader extends PEAR_Common
     /**
      * @param string
      * @param integer
+     * @param null|string $errmsg
      */
     function pushError($errmsg, $code = -1)
     {
@@ -1440,6 +1449,10 @@ class PEAR_Downloader extends PEAR_Common
         return $this->_checkDepTree(strtolower($a->getChannel()), strtolower($a->getPackage()), $b);
     }
 
+    /**
+     * @param string $channel
+     * @param string $package
+     */
     function _checkDepTree($channel, $package, $b, $checked = array())
     {
         $checked[$channel][$package] = true;
@@ -1515,13 +1528,12 @@ class PEAR_Downloader extends PEAR_Common
      *
      * @param string  $url       the URL to download
      * @param object  $ui        PEAR_Frontend_* instance
-     * @param object  $config    PEAR_Config instance
      * @param string  $save_dir  directory to save file in
      * @param mixed   $callback  function/method to call for status
      *                           updates
      * @param false|string|array $lastmodified header values to check against for caching
      *                           use false to return the header values from this download
-     * @param false|array $accept Accept headers to send
+     * @param boolean $accept Accept headers to send
      * @param false|string $channel Channel to use for retrieving authentication
      * @return string|array  Returns the full path of the downloaded file or a PEAR
      *                       error on failure.  If the error is caused by

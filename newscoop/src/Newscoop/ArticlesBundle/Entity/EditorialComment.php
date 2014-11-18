@@ -157,7 +157,7 @@ class EditorialComment
     /**
      * Sets the }).
      *
-     * @param mixed $article the article
+     * @param \Newscoop\Entity\Article $article the article
      *
      * @return self
      */
@@ -229,7 +229,7 @@ class EditorialComment
     /**
      * Sets the value of comment.
      *
-     * @param text $comment the comment
+     * @param string $comment the comment
      *
      * @return self
      */
@@ -277,7 +277,7 @@ class EditorialComment
     /**
      * Sets the value of parent.
      *
-     * @param Newscoop\ArticlesBundle\Entity\EditorialComment $parent the parent
+     * @param EditorialComment $parent the parent
      *
      * @return self
      */
@@ -325,7 +325,7 @@ class EditorialComment
     /**
      * Sets the value of created.
      *
-     * @param datetime $created the created
+     * @param \DateTime $created the created
      *
      * @return self
      */

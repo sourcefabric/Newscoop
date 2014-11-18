@@ -54,7 +54,7 @@ class ServerRequest
     /**
      * Allow certain callback
      * @param string $callable_name
-     * @param string $permissions_required
+     * @param string $permission_required
      * @return ServerRequest
      */
     public function allow($callable_name, $permission_required = '')

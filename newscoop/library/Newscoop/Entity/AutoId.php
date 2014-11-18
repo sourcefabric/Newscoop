@@ -77,7 +77,7 @@ class AutoId
      *
      * @param \DateTime $logTimestamp
      *
-     * @return datetime
+     * @return AutoId
      */
     public function setLogTimestamp(\DateTime $logTimestamp)
     {

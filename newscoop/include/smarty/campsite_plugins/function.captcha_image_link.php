@@ -17,7 +17,7 @@
  *     $p_smarty The Smarty object
  *
  * @return
- *     string the html string for the breadcrumb
+ string     string the html string for the breadcrumb
  */
 function smarty_function_captcha_image_link($p_params)
 {

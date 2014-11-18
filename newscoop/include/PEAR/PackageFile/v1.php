@@ -729,6 +729,9 @@ class PEAR_PackageFile_v1
         unset($this->_packageInfo['release_deps']);
     }
 
+    /**
+     * @param string $rel
+     */
     function addPhpDep($version, $rel)
     {
         $this->_isValid = false;
@@ -738,6 +741,9 @@ class PEAR_PackageFile_v1
                   'version' => $version);
     }
 
+    /**
+     * @param string $rel
+     */
     function addPackageDep($name, $version, $rel, $optional = 'no')
     {
         $this->_isValid = false;
@@ -752,6 +758,9 @@ class PEAR_PackageFile_v1
         $this->_packageInfo['release_deps'][] = $dep;
     }
 
+    /**
+     * @param string $rel
+     */
     function addExtensionDep($name, $version, $rel, $optional = 'no')
     {
         $this->_isValid = false;
@@ -860,6 +869,9 @@ class PEAR_PackageFile_v1
         return false;
     }
 
+    /**
+     * @param string $dir
+     */
     function addFile($dir, $file, $attrs)
     {
         $dir = preg_replace(array('!\\\\+!', '!/+!'), array('/', '/'), $dir);
@@ -886,6 +898,10 @@ class PEAR_PackageFile_v1
         return false;
     }
 
+    /**
+     * @param string $attr
+     * @param string $value
+     */
     function setFileAttribute($file, $attr, $value)
     {
         $this->_packageInfo['filelist'][$file][$attr] = $value;
@@ -930,7 +946,7 @@ class PEAR_PackageFile_v1
     /**
      * Wrapper to {@link PEAR_ErrorStack::getErrors()}
      * @param boolean determines whether to purge the error stack after retrieving
-     * @return array
+     * @return string|null
      */
     function getValidationWarnings($purge = true)
     {
@@ -942,6 +958,7 @@ class PEAR_PackageFile_v1
      * Validation error.  Also marks the object contents as invalid
      * @param error code
      * @param array error information
+     * @param integer $code
      * @access private
      */
     function _validateError($code, $params = array())
@@ -954,6 +971,7 @@ class PEAR_PackageFile_v1
      * Validation warning.  Does not mark the object contents invalid.
      * @param error code
      * @param array error information
+     * @param integer $code
      * @access private
      */
     function _validateWarning($code, $params = array())
@@ -1350,6 +1368,7 @@ class PEAR_PackageFile_v1
      * Analyze the source code of the given PHP file
      *
      * @param  string Filename of the PHP file
+     * @param string $file
      * @return mixed
      * @access private
      */
@@ -1556,7 +1575,7 @@ class PEAR_PackageFile_v1
      * @param array $srcinfo array with information about a source file
      * as returned by the analyzeSourceCode() method.
      *
-     * @return void
+     * @return false|null
      *
      * @access private
      *

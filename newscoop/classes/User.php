@@ -194,7 +194,7 @@ class User extends DatabaseObject {
      * @param bool
      *    $adminOnly Whether we want to be sure to get only an admin user
      *
-     * @return mixed
+     * @return User|null
      *    null No one user found
      *    object User object
      */
@@ -229,7 +229,7 @@ class User extends DatabaseObject {
      * @param bool
      *    $adminOnly Whether we want to be sure to get only an admin user
      *
-     * @return mixed
+     * @return User|null
      *    null No one user found
      *    object User object
      */
@@ -268,7 +268,7 @@ class User extends DatabaseObject {
     /**
      * Set the user to the given user type.
      *
-     * @param string $p_userType
+     * @param string $p_userTypeId
      *
      * @return void
      */
@@ -429,7 +429,7 @@ class User extends DatabaseObject {
      * If the variable does not exist, it will be created.
      *
      * @param string $p_varName
-     * @param mixed $p_value
+     * @param boolean $p_value
      *
      * @return void
      *
@@ -561,7 +561,7 @@ class User extends DatabaseObject {
      * @param array
      *    $p_permissions The list of permissions
      *
-     * @return bool
+     * @return false|null
      */
     public function updatePermissions($p_permissions)
     {

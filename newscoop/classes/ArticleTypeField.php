@@ -210,6 +210,7 @@ class ArticleTypeField extends DatabaseObject {
     /**
      * Sets whether articles of this type should be filtered out by default at listings.
      *
+     * @param boolean $p_filter
      * @return bool
      **/
     public function setFilter($p_filter)
@@ -334,6 +335,9 @@ class ArticleTypeField extends DatabaseObject {
 	}
 
 
+	/**
+	 * @param string $p_type
+	 */
 	public static function TypesConvertibleFrom($p_type)
 	{
 		$allTypes = self::DatabaseTypes();
@@ -564,6 +568,8 @@ class ArticleTypeField extends DatabaseObject {
 
 	/**
 	 * Get a human-readable representation of the column type.
+	 * @param string $p_typeName
+	 * @param string $p_rootTopicId
 	 * @return string
 	 */
 	public static function VerboseTypeName($p_typeName, $p_languageId = 1, $p_rootTopicId = null)
@@ -770,7 +776,7 @@ class ArticleTypeField extends DatabaseObject {
 	/**
 	 * Sets the int for where to show the field
 	 * @param $p_showInEditor
-	 * @return int
+	 * @return boolean
 	 */
 	public function setShowInEditor($p_showInEditor)
 	{
@@ -950,7 +956,7 @@ class ArticleTypeField extends DatabaseObject {
 	 *         if specified returns fields with the given name
 	 * @param $p_articleType
 	 *         if specified returns fields of the given article type
-	 * @param $p_dataType
+	 * @param string $p_dataType
 	 *         if specified returns the fields having the given data type
 	 *
 	 * @return array

@@ -196,6 +196,9 @@ class Builder
         return $menu;
     }
 
+    /**
+     * @param boolean $modern
+     */
     private function prepareContentMenu($menu, $modern) {
         $translator = $this->container->get('translator');
 

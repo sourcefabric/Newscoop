@@ -99,7 +99,7 @@ class Translation
     /**
      * Return translation text when echo this object
      *
-     * @return string
+     * @return integer
      */
     public function __toString()
     {

@@ -18,7 +18,7 @@
  *     $p_format the date format wanted
  *
  * @return
- *     string the formatted date
+ null|string     string the formatted date
  *     null in case a non-valid format was passed
  */
 function smarty_function_camp_select($p_params, &$p_smarty)

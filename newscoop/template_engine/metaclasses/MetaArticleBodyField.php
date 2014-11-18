@@ -56,6 +56,8 @@ final class MetaArticleBodyField {
      * Constructor
      *
      * @param string $p_content
+     * @param string $p_headerFormatStart
+     * @param string $p_headerFormatEnd
      */
     public function __construct($p_content, MetaArticle $p_parent, $p_fieldName,
                                 $p_articleName, $p_subtitleNumber = null,
@@ -118,6 +120,9 @@ final class MetaArticleBodyField {
     }
 
 
+    /**
+     * @param string $p_content
+     */
     private function getParagraphs($p_content, array $p_paragraphs = array()) {
         $printAll = count($p_paragraphs) == 0;
         $content = '';

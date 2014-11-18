@@ -17,7 +17,7 @@
  *     $p_format the date format wanted
  *
  * @return
- *     string the formatted date
+ string     string the formatted date
  *     null in case a non-valid format was passed
  */
 function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_onlyEnglish = false)

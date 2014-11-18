@@ -7,8 +7,6 @@
 
 use Newscoop\Entity\User;
 use Newscoop\Topic\SaveUserTopicsCommand;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  */

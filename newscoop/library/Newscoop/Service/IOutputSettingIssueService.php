@@ -54,6 +54,7 @@ interface IOutputSettingIssueService extends IEntityBaseService
      * Checks if the provided theme is used by any issue at this point.
      * @param Theme|str $theme
      * 		The theme or path to be checked if used.
+     * @return boolean
      */
     function isThemeUsed($theme);
 
@@ -61,6 +62,7 @@ interface IOutputSettingIssueService extends IEntityBaseService
      * Update an ouput setting issue
      *
      * @param OutputSettingsIssue $outputSettingsIssue
+     * @return void
      */
     function update(OutputSettingsIssue $outputSettingsIssue);
 
@@ -68,6 +70,7 @@ interface IOutputSettingIssueService extends IEntityBaseService
      * Inserts an ouput setting issue
      *
      * @param OutputSettingsIssue $outputSettingsIssue
+     * @return void
      */
     function insert(OutputSettingsIssue $outputSettingsIssue);
 
@@ -75,6 +78,7 @@ interface IOutputSettingIssueService extends IEntityBaseService
      * Delete an ouput setting issue
      *
      * @param OutputSettingsIssue $outputSettingsIssue
+     * @return void
      */
     function delete(OutputSettingsIssue $outputSettingsIssue);
 }

@@ -62,6 +62,12 @@ class SyntaxError {
 	}
 
 
+	/**
+	 * @param string $p_errorCode
+	 * @param string|null $p_templateName
+	 * @param string $p_line
+	 * @param string[] $p_what
+	 */
 	public static function ConstructParameters($p_errorCode, $p_templateName, $p_line = null,
 											   $p_what = null)
 	{

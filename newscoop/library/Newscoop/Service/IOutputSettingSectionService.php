@@ -52,6 +52,7 @@ interface IOutputSettingSectionService extends IEntityBaseService
      * Update an ouput setting section
      *
      * @param OutputSettingsSection $outputSettingsSection
+     * @return void
      */
     function update(OutputSettingsSection $outputSettingsSection);
 
@@ -59,6 +60,7 @@ interface IOutputSettingSectionService extends IEntityBaseService
      * Inserts an ouput setting section
      *
      * @param OutputSettingsSection $outputSettingsSection
+     * @return void
      */
     function insert(OutputSettingsSection $outputSettingsSection);
 
@@ -66,6 +68,7 @@ interface IOutputSettingSectionService extends IEntityBaseService
      * Delete an ouput setting section
      *
      * @param OutputSettingsSection $outputSettingsSection
+     * @return void
      */
     function delete(OutputSettingsSection $outputSettingsSection);
 }

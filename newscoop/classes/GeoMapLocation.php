@@ -241,6 +241,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
      *
      * @return array of IGeoMapLocation
      */
@@ -344,7 +345,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     /**
      * Returns map locations list based on the given parameters.
      *
-     * @param array $p_parameters
+     * @param ComparisonOperation[] $p_parameters
      *    An array of ComparionOperation objects
      * @param array $p_order
      *    An array of columns and directions to order by

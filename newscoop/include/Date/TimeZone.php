@@ -169,7 +169,7 @@ class Date_TimeZone
      * which is initialized during the loading of TimeZone.php.
      *
      * @access public
-     * @return object Date_TimeZone the default time zone
+     * @return Date_TimeZone Date_TimeZone the default time zone
      */
     function getDefault()
     {

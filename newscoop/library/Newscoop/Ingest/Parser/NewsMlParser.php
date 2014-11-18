@@ -59,7 +59,7 @@ class NewsMlParser implements Parser
     /**
      * Get created
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -69,7 +69,7 @@ class NewsMlParser implements Parser
     /**
      * Get updated
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -182,7 +182,7 @@ class NewsMlParser implements Parser
     /**
      * Get list of authors
      *
-     * @return array
+     * @return string
      */
     public function getAuthors()
     {
@@ -351,7 +351,7 @@ class NewsMlParser implements Parser
     /**
      * Get lift embargo
      *
-     * @return DateTime|null
+     * @return \DateTime|null
      */
     public function getLiftEmbargo()
     {

@@ -925,10 +925,10 @@ class Mail_mimePart
     /**
      * Explode quoted string
      *
-     * @param string $delimiter Delimiter expression string for preg_match()
+     * @param string string Delimiter expression string for preg_match()
      * @param string $string    Input string
      *
-     * @return array            String tokens array
+     * @return string[]            String tokens array
      * @access private
      */
     function _explodeQuotedString($delimiter, $string)

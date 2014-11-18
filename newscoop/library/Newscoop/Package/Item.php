@@ -74,7 +74,7 @@ class Item
     protected $link;
 
     /**
-     * @param Newscoop\Package\Package $package
+     * @param Package $package
      * @param mixed $item
      */
     public function __construct(Package $package, $item)
@@ -125,8 +125,7 @@ class Item
     /**
      * Get offset
      *
-     * @param int $offset
-     * @return void
+     * @return integer
      */
     public function getOffset()
     {

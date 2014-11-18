@@ -684,8 +684,6 @@ class Image extends DatabaseObject
 	 * 		Image resource handler
 	 * @param string $p_fileName
 	 * 		The full path of the file
-	 * @param int $p_type
-	 * 		The image type
 	 * @param bool $p_addExtension
 	 * 		If true it will add the proper extension to the file name.
 	 * @return mixed
@@ -999,6 +997,7 @@ class Image extends DatabaseObject
      *    The record number to start the list
      * @param integer $p_limit
      *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
      *
      * @return array $issueList
      *    An array of Issue objects

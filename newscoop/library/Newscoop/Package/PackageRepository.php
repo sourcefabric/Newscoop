@@ -53,7 +53,7 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Get list for given criteria
      *
-     * @param Newscoop\Criteria\SlideshowCriteria $criteria
+     * @param SlideshowCriteria $criteria
      *
      * @return Newscoop\ListResult
      */
@@ -124,7 +124,7 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Find available for article
      *
-     * @param Newscoop\Package\Article $article
+     * @param Article $article
      * @return array
      */
     public function findAvailableForArticle(Article $article)

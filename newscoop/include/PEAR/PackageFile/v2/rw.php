@@ -855,6 +855,10 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
      * @param bool if true, tells the installer to ignore the default optional dependency group
      *             when installing this package
      * @param bool if true, tells the installer to negate this dependency (conflicts)
+     * @param boolean $min
+     * @param boolean $max
+     * @param boolean $recommended
+     * @param boolean $exclude
      * @return array
      * @access private
      */
@@ -1311,7 +1315,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
     /**
      * Add a file to the current release that should be ignored
      * @param string <contents> path to file
-     * @return bool success of operation
+     * @return false|null success of operation
      */
     function addIgnore($path)
     {

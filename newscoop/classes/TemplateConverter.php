@@ -215,6 +215,7 @@ class TemplateConverter
     /**
      * Gets all the tags from the source template.
      *
+     * @param string $p_pattern
      * @return array $matches
      */
     private function getAllTagsFromTemplate($p_pattern)

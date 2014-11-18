@@ -12,10 +12,7 @@
  */
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\ITemplateSearchService;
-use Newscoop\Service\IThemeService;
 use Newscoop\Service\IOutputService;
-use Newscoop\Service\ISectionService;
-use Newscoop\Service\IIssueService;
 use Newscoop\Service\IOutputSettingIssueService;
 
 /**

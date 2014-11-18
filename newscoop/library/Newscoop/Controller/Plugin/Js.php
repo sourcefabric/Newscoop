@@ -9,9 +9,9 @@
  */
 namespace Newscoop\Controller\Plugin;
 
-use Zend_Controller_Plugin_Abstract,
-    Zend_Controller_Front,
-    Zend_Controller_Request_Abstract;
+use Zend_Controller_Plugin_Abstract;
+use Zend_Controller_Front;
+use Zend_Controller_Request_Abstract;
 
 class Js extends Zend_Controller_Plugin_Abstract
 {

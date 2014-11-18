@@ -7,7 +7,7 @@
 
 namespace Newscoop\Subscription;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Subscription Section relation entity
@@ -69,7 +69,7 @@ class Section
     protected $noticeSent;
 
     /**
-     * @param Newscoop\Subscription\Subscription $subscription
+     * @param Subscription $subscription
      * @param int $sectionNumber
      */
     public function __construct(Subscription $subscription, $sectionNumber)
@@ -95,7 +95,7 @@ class Section
     /**
      * Get section number
      *
-     * @return string
+     * @return integer
      */
     public function getSectionNumber()
     {
@@ -105,7 +105,7 @@ class Section
     /**
      * Set language
      *
-     * @param Newscoop\Entity\Language $language
+     * @param \Newscoop\Entity\Language $language
      * @return void
      */
     public function setLanguage(\Newscoop\Entity\Language $language)
@@ -164,7 +164,7 @@ class Section
     /**
      * Set start date
      *
-     * @param DateTime $date
+     * @param \DateTime $date
      * @return Newscoop\Entity\SubscriptionSection
      */
     public function setStartDate(\DateTime $date)
@@ -186,7 +186,7 @@ class Section
      * Set days
      *
      * @param int $days
-     * @return Newscoop\Entity\SubscriptionSection
+     * @return Section
      */
     public function setDays($days)
     {
@@ -263,7 +263,7 @@ class Section
 
     /**
      * Get expiration date
-     * @return DateTime
+     * @return \DateTime
      */
     public function getExpirationDate() {
         $startDate = new \DateTime(isset($this->startDate) ? $this->startDate : 'now');

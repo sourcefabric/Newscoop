@@ -11,6 +11,7 @@
  *     $p_areaSpec The area(s) constraint
  * @param array
  *     $p_areaCons The array with parsed area constraints
+ * @param string $p_areaSpec
  */
 function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
 {

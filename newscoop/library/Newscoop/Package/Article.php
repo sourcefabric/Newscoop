@@ -7,7 +7,7 @@
 
 namespace Newscoop\Package;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity

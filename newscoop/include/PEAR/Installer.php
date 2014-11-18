@@ -211,6 +211,7 @@ class PEAR_Installer extends PEAR_Downloader
      * @param array attributes from <file> tag in package.xml
      * @param string path to install the file in
      * @param array options from command-line
+     * @param boolean|string $tmp_path
      * @access private
      */
     function _installFile($file, $atts, $tmp_path, $options)
@@ -495,6 +496,7 @@ class PEAR_Installer extends PEAR_Downloader
      * @param array attributes from <file> tag in package.xml
      * @param string path to install the file in
      * @param array options from command-line
+     * @param boolean|string $tmp_path
      * @access private
      */
     function _installFile2(&$pkg, $file, &$real_atts, $tmp_path, $options)
@@ -991,6 +993,9 @@ class PEAR_Installer extends PEAR_Downloader
     // }}}
     // {{{ mkDirHier($dir)
 
+    /**
+     * @param string $dir
+     */
     function mkDirHier($dir)
     {
         $this->addFileOperation('mkdir', array($dir));
@@ -1036,6 +1041,9 @@ class PEAR_Installer extends PEAR_Downloader
     // }}}
     // {{{ _parsePackageXml()
 
+    /**
+     * @param string $descfile
+     */
     function _parsePackageXml(&$descfile)
     {
         // Parse xml file -----------------------------------------------

@@ -9,7 +9,6 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Acl\Rule;
-use Newscoop\Entity\Acl\Role;
 
 /**
  * Notification Service

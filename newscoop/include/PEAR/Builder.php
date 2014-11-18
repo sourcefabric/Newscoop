@@ -181,6 +181,8 @@ class PEAR_Builder extends PEAR_Common
      * @param string
      * @param string
      * @param array
+     * @param string $dest_prefix
+     * @param string $dirname
      * @access private
      */
     function _harvestInstDir($dest_prefix, $dirname, &$built_files)
@@ -468,6 +470,9 @@ class PEAR_Builder extends PEAR_Common
         return ($exitcode == 0);
     }
 
+    /**
+     * @param integer $level
+     */
     function log($level, $msg)
     {
         if ($this->current_callback) {

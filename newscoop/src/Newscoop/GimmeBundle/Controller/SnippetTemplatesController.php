@@ -14,15 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Doctrine\ORM\EntityNotFoundException;
 use Newscoop\GimmeBundle\Form\Type\SnippetTemplateType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Newscoop\Entity\Snippet;
 use Newscoop\Entity\Snippet\SnippetTemplate;
-use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 
 class SnippetTemplatesController extends FOSRestController
 {

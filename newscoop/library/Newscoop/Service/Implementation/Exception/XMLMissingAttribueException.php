@@ -19,6 +19,9 @@ class XMLMissingAttribueException extends \Exception
 	/** @var string */
 	protected $attributeName;
 
+	/**
+	 * @param string $attributeName
+	 */
 	public function __construct($attributeName)
 	{
 		Validation::notEmpty($attributeName, 'attributeName');

@@ -7,8 +7,8 @@
 
 namespace Newscoop\Subscription;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\User;
 
 /**
  * Subscription repository
@@ -18,7 +18,7 @@ class SubscriptionRepository extends EntityRepository
     /**
      * Save subscription
      *
-     * @param Newscoop\Entity\Subscription $subscription
+     * @param Subscription $subscription
      * @param Newscoop\Entity\User\Subscriber $subscriber
      * @param array $values
      * @return void
@@ -115,7 +115,7 @@ class SubscriptionRepository extends EntityRepository
     /**
      * Delete subscription
      *
-     * @param Newscoop\Entity\Subscription $subscription
+     * @param Subscription $subscription
      * @return void
      */
     public function delete(Subscription $subscription)

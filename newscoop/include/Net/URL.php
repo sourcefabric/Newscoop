@@ -469,7 +469,7 @@ class Net_URL
      * and return it's value.
      *
      * @access public
-     * @param  string $opionName  The name of the option to retrieve
+     * @param  string $optionName  The name of the option to retrieve
      * @see    $this->options
      */
     function getOption($optionName)

@@ -25,7 +25,7 @@ class Item
 
     /**
      * @param string $key
-     * @param Newscoop\Storage $storage
+     * @param  $storage
      * @throws InvalidArgumentException
      */
     public function __construct($key, \Newscoop\Storage $storage)

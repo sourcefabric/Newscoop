@@ -143,7 +143,7 @@ class Date_Span
      *
      * Creates the time span object calling the set() method.
      *
-     * @param  mixed $time   Time span expression.
+     * @param  integer $time   Time span expression.
      * @param  mixed $format Format string to set it from a string or the
      *                       second date set it from a date diff.
      *
@@ -164,7 +164,7 @@ class Date_Span
      * Sets the time span depending on the argument types, calling
      * to the appropriate setFromXxx() method.
      *
-     * @param  mixed $time   Time span expression.
+     * @param  integer $time   Time span expression.
      * @param  mixed $format Format string to set it from a string or the
      *                       second date set it from a date diff.
      *
@@ -526,6 +526,7 @@ class Date_Span
      *
      * @param  object Date $date1 First Date.
      * @param  object Date $date2 Second Date.
+     * @param integer $date1
      *
      * @return bool  True on success.
      *
@@ -772,7 +773,7 @@ class Date_Span
     /**
      * Convert time span to minutes.
      *
-     * @return float Time span as a decimal number of minutes.
+     * @return integer Time span as a decimal number of minutes.
      *
      * @access public
      */
@@ -788,7 +789,7 @@ class Date_Span
     /**
      * Convert time span to hours.
      *
-     * @return float Time span as a decimal number of hours.
+     * @return integer Time span as a decimal number of hours.
      *
      * @access public
      */
@@ -804,7 +805,7 @@ class Date_Span
     /**
      * Convert time span to days.
      *
-     * @return float Time span as a decimal number of days.
+     * @return integer Time span as a decimal number of days.
      *
      * @access public
      */
@@ -821,6 +822,7 @@ class Date_Span
      * Adds a time span.
      *
      * @param  object Date_Span $time Time span to add.
+     * @param Date_Span $time
      *
      * @access public
      */

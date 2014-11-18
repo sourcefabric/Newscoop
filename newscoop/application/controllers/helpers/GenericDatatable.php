@@ -150,7 +150,7 @@ class Action_Helper_GenericDatatable extends ADatatable
     /**
      * Set sorting columns
      *
-     * @param array $nonsorting
+     * @param array $p_sorting
      * @return Action_Helper_GenericDatatable
      */
     public function setSorting( array $p_sorting = array() )

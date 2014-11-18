@@ -88,6 +88,7 @@ class PEAR_Task_Common
     /**
      * @param PEAR_Config
      * @param PEAR_Common
+     * @param integer $phase
      */
     function PEAR_Task_Common(&$config, &$logger, $phase)
     {

@@ -8,7 +8,6 @@
 
 namespace Newscoop\Service\Resource;
 
-use Newscoop\Utils\Tools;
 use Newscoop\Utils\Validation;
 use Newscoop\Service\Resource\ResourceId;
 
@@ -67,7 +66,7 @@ class ResourceRepository {
 	 * Provides the resource for the provided resource id.
 	 * The resource is located by using ResourceLocator (future).
 	 *
-	 * @param Newscoop\Service\Resource\ResourceId $resourceId
+	 * @param ResourceId $resourceId
 	 *		The resource id used for obtaining the assigned resource, must not be null or empty.
 	 *
 	 * @return mixed
@@ -181,6 +180,7 @@ class ResourceRepository {
 	 *
 	 * @param string
 	 *		The path where the property file is located, not null not, empty.
+	 * @param string $path
 	 *
 	 * @return array
 	 *		The array containing the loaded properties.

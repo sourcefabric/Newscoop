@@ -232,7 +232,7 @@ class CampPlugin extends DatabaseObject
     /**
      * Fetch plugin infos from the %plugin.info files.
      *
-     * @return boolen plugins were found
+     * @return boolean plugins were found
      */
     private static function FetchFilePluginsInfo()
     {
@@ -335,6 +335,9 @@ class CampPlugin extends DatabaseObject
         return $info;
     }
 
+    /**
+     * @param string[] $p_no_menu_scripts
+     */
     static public function ExtendNoMenuScripts(&$p_no_menu_scripts)
     {
         foreach (self::GetPluginsInfo() as $info) {

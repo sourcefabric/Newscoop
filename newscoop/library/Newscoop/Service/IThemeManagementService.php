@@ -31,7 +31,7 @@ interface IThemeManagementService extends IThemeService
 	/**
 	 * Provides the themes that are unassigned to any publication.
 	 *
-	 * @param Newscoop\Service\Model\Search\SearchTheme $search
+	 * @param SearchTheme $search
 	 *		The search criteria, not null.
 	 *
 	 * @param int|0 $offset
@@ -52,7 +52,7 @@ interface IThemeManagementService extends IThemeService
 	 * @param Publication|int $publication
 	 * 		The publication to retrieve the themes for or the publication id, not null.
 	 * 
-	 * @param Newscoop\Service\Model\Search\SearchTheme $search
+	 * @param SearchTheme $search
 	 *		The search criteria, not null.
 	 *
 	 * @param int|0 $offset
@@ -87,7 +87,7 @@ interface IThemeManagementService extends IThemeService
 	 * @param Output $output
 	 * 		The output, not null.
 	 *
-	 * @return array of Newscoop\Entity\OutputSettings
+	 * @return OutputSettings|null of Newscoop\Entity\OutputSettings
 	 * 		The output setting, null if none found for the theme and output.
 	 */
 	function findOutputSetting(Theme $theme, Output $output);
@@ -133,6 +133,7 @@ interface IThemeManagementService extends IThemeService
 	 * @throws DuplicateNameException
 	 * 		Thrown when the theme has the same name as another theme in the same scope (for instance 2 themes
 	 * 		belong to the same publication and you try to rename 1 theme to have the same name as the other).
+	 * @return void
 	 */
 	function updateTheme(Theme $theme);
 
@@ -169,16 +170,16 @@ interface IThemeManagementService extends IThemeService
 	 * 		The output settings to be assigned to the theme.
 	 * @param Theme $theme
 	 * 		The theme to be assigned to, not null.
+	 * @return void
 	 */
 	function assignOutputSetting(OutputSettings $outputSettings, Theme $theme);
 
 	/**
 	 * Assign the article types to the theme.
 	 *
-	 * @param object|array $outputSettings
-	 * 		The article types to be assigned to the theme.
 	 * @param Theme $theme
 	 * 		The theme to be assigned to, not null.
+	 * @return boolean
 	 */
 	function assignArticleTypes($articleTypes, Theme $theme);
 

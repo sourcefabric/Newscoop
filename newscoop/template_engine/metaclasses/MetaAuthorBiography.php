@@ -31,6 +31,7 @@ final class MetaAuthorBiography extends MetaDbObject
     /**
      * @param int
      * @param int
+     * @param integer $p_language
      */
     public function __construct($p_id = NULL, $p_language = NULL)
     {

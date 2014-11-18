@@ -2,8 +2,6 @@
 
 namespace Newscoop\Controller\Action\Helper\Datatable\Adapter;
 
-use string;
-
 abstract class AAdapter
 {
     /**

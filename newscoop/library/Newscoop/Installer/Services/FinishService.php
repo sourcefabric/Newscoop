@@ -102,8 +102,8 @@ class FinishService
     /**
      * Save newscoop cronjobs in user cronjob file
      *
-     * @param  SchedulerService $scheduler Cron job scheduler service
-     * @return bolean
+     * @param  SchedulerServiceInterface $scheduler Cron job scheduler service
+     * @return boolean
      */
     public function saveCronjobs(SchedulerServiceInterface $scheduler)
     {

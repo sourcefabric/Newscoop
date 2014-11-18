@@ -7,9 +7,8 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\Log,
-    Newscoop\Entity\AuditEvent;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\AuditEvent;
 
 /**
  * Audit events maintenance service
@@ -23,7 +22,6 @@ class AuditMaintenanceService
     protected $em;
 
     /**
-     * @param array                      $config
      * @param Doctrine\ORM\EntityManager $em
      */
     public function __construct(EntityManager $em)

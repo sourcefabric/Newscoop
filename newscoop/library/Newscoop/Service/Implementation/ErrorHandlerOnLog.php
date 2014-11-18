@@ -36,6 +36,11 @@ class ErrorHandlerOnLog implements IErrorHandler
 
 	/* --------------------------------------------------------------- */
 	
+	/**
+	 * @param string $key
+	 *
+	 * @return string
+	 */
 	protected function compile($key, array $params)
 	{
 		$matches = array();

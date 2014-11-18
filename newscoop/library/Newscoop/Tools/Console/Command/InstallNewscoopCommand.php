@@ -14,7 +14,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Connection;
 use Newscoop\Installer\Services;
 use Symfony\Component\Console\Input\ArrayInput;
 

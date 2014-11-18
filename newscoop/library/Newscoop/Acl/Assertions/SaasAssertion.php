@@ -2,7 +2,9 @@
 
 namespace Newscoop\Acl\Assertions;
 
-use Zend_Acl_Assert_Interface, Zend_Acl, Zend_Acl_Role_Interface;
+use Zend_Acl_Assert_Interface;
+use Zend_Acl;
+use Zend_Acl_Role_Interface;
 
 class SaasAssertion implements Zend_Acl_Assert_Interface
 {

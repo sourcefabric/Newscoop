@@ -66,8 +66,8 @@ class PackageService
      * Save package
      *
      * @param array $values
-     * @param Newscoop\Package\Package $package
-     * @return Newscoop\Package\Package
+     * @param Package $package
+     * @return Package
      */
     public function save(array $values, Package $package = null)
     {
@@ -103,10 +103,9 @@ class PackageService
     /**
      * Add package item
      *
-     * @param Newscoop\Package\Package $package
+     * @param Package $package
      * @param mixed $item
-     * @param int $offset
-     * @return Newscoop\Package\Item
+     * @return Item
      */
     public function addItem(Package $package, $item)
     {
@@ -128,7 +127,7 @@ class PackageService
     /**
      * Set order of items for given package
      *
-     * @param Newscoop\Package\Package $package
+     * @param Package $package
      * @param array $order
      * @return void
      */
@@ -147,7 +146,7 @@ class PackageService
     /**
      * Remove item from package
      *
-     * @param Newscoop\Package\Package $package
+     * @param Package $package
      * @param int $itemId
      * @return void
      */
@@ -183,7 +182,7 @@ class PackageService
      * Save item
      *
      * @param array $values
-     * @param Newscoop\Package\Item $item
+     * @param Item $item
      * @return void
      */
     public function saveItem(array $values, Item $item)
@@ -262,7 +261,7 @@ class PackageService
     /**
      * Remove package from article
      *
-     * @param Newscoop\Package\Package $package
+     * @param Package $package
      * @param int $articleNumber
      * @return void
      */

@@ -341,7 +341,7 @@ class CronJob
     /**
      * Sets the value of createdAt.
      *
-     * @param datetime $createdAt the created at
+     * @param \DateTime $createdAt the created at
      *
      * @return self
      */

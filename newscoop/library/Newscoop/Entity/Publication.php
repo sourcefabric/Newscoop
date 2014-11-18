@@ -8,7 +8,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -172,7 +172,7 @@ class Publication
     /**
      * Add issue
      *
-     * @param Newscoop\Entity\Issue $issue
+     * @param Issue $issue
      * @return void
      */
     public function addIssue(Issue $issue)
@@ -210,7 +210,7 @@ class Publication
     /**
      * Set default language
      *
-     * @param Newscoop\Entity\Language $language
+     * @param Language $language
      * @return void
      */
     public function setDefaultLanguage(Language $language)
@@ -286,7 +286,7 @@ class Publication
      * Set moderator to email address
      *
      * @param string $p_moderator_to
-     * @return Publication
+     * @return string
      */
     public function setModeratorTo($p_moderator_to)
     {
@@ -307,7 +307,7 @@ class Publication
      * Set moderator from email address
      *
      * @param string $p_moderator_from
-     * @return Publication
+     * @return string
      */
     public function setModeratorFrom($p_moderator_from)
     {
@@ -375,7 +375,7 @@ class Publication
 	/**
      * Getter for defaultAliasId
      *
-     * @return mixed
+     * @return integer
      */
     public function getDefaultAliasId()
     {

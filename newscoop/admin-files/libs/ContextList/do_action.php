@@ -43,6 +43,9 @@ function returnJson($status = 'true', $message = 'Articles updated.', $hiperlink
 }
 */
 
+/**
+ * @param string $status
+ */
 function buildMessage($status, $no, $message) {
 	$messageArray = array();
 	$messageArray['status'] = $status;

@@ -10,7 +10,6 @@ class Admin_View_Helper_ModerateBodyComment extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
      * @return void
      */
     public function moderateBodyComment(Comment $comment)

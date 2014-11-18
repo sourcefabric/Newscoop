@@ -19,6 +19,10 @@ class Request extends DatabaseObject {
                                'object_id',
 	                           'last_stats_update');
 
+	/**
+	 * @param integer $p_sessionId
+	 * @param integer $p_objectId
+	 */
 	public function __construct($p_sessionId = null, $p_objectId = null)
 	{
         if (!is_null($p_sessionId) && !is_null($p_objectId)) {
@@ -56,6 +60,9 @@ class Request extends DatabaseObject {
     }
 
 
+    /**
+     * @return string
+     */
     public function getLastStatsUpdate()
     {
     	return $this->m_data['last_stats_update'];

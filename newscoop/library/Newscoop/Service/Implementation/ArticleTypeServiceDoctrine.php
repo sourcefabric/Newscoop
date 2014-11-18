@@ -8,11 +8,11 @@
 
 namespace Newscoop\Service\Implementation;
 
-use Newscoop\Service\IArticleTypeService,
-    Newscoop\Entity\ArticleType,
-    Newscoop\Utils\Validation,
-    Newscoop\Service\Resource\ResourceId,
-    Newscoop\Entity\ArticleTypeField;
+use Newscoop\Service\IArticleTypeService;
+use Newscoop\Entity\ArticleType;
+use Newscoop\Utils\Validation;
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Entity\ArticleTypeField;
 
 class ArticleTypeServiceDoctrine implements IArticleTypeService
 {
@@ -130,7 +130,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     /**
      * Creates an article type
      * @param string $name the name of the new article type, not null
-     * @return Newscoop\Entity\ArticleType
+     * @return ArticleType
      * @throws PDOException probably if duplicate values
      */
     public function create( $name )

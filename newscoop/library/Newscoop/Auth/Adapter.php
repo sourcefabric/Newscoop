@@ -7,9 +7,9 @@
 
 namespace Newscoop\Auth;
 
-use Doctrine\ORM\EntityRepository,
-    Zend_Auth_Adapter_Interface,
-    Zend_Auth_Result;
+use Doctrine\ORM\EntityRepository;
+use Zend_Auth_Adapter_Interface;
+use Zend_Auth_Result;
 
 /**
  * Auth adapter

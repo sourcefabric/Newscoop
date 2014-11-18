@@ -24,7 +24,7 @@ class DatatableRepository
     protected $entityName;
 
     /**
-     * @param Doctrine\ORM\EntityRepository $repository
+     * @param string $entityName
      */
     public function __construct(EntityManager $em, $entityName)
     {
@@ -116,7 +116,6 @@ class DatatableRepository
      * Build where condition
      *
      * @param array $cols
-     * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
     private function buildWhere(array $cols, $params)

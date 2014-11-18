@@ -18,7 +18,7 @@
  *     $p_smarty Smarty template object
  *
  * @return
- *     string The html content
+ null|string     string The html content
  */
 function smarty_function_calendar($p_params, &$p_smarty)
 {

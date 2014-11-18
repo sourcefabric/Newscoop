@@ -43,9 +43,8 @@ class Indexer
     protected $indexClients;
 
     /**
-     * @param Newscoop\Search\IndexClientInterface $index
-     * @param Newscoop\Search\ServiceInterface $service
-     * @param Newscoop\Search\RepositoryInterface $repository
+     * @param ServiceInterface $service
+     * @param RepositoryInterface $repository
      */
     public function __construct(
         Container $container,
@@ -62,7 +61,7 @@ class Indexer
     /**
      * Update index
      *
-     * @param mixed $count Number of items to index
+     * @param integer $count Number of items to index
      * @param array $filter Filter for the batch results
      *
      * @return void

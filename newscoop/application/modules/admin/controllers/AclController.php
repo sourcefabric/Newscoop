@@ -6,7 +6,6 @@
  */
 
 use Newscoop\Annotations\Acl;
-use Newscoop\Entity\Acl\Role;
 use Newscoop\Entity\Acl\Rule;
 use Newscoop\Entity\User;
 

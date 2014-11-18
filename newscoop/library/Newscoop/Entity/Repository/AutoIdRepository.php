@@ -9,7 +9,6 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * Author repository

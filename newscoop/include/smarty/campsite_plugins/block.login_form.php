@@ -19,7 +19,7 @@
  *     $p_content
  *
  * @return
- *
+ string|false
  */
 function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {

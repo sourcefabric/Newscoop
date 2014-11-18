@@ -117,11 +117,11 @@ if (!defined('__CLASS_HTML2PDF__')) {
          *
          * @access public
          * @param  string   $orientation page orientation, same as TCPDF
-         * @param  mixed    $format      The format used for pages, same as TCPDF
+         * @param  string    $format      The format used for pages, same as TCPDF
          * @param  $tring   $langue      Langue : fr, en, it...
          * @param  boolean  $unicode     TRUE means that the input text is unicode (default = true)
          * @param  String   $encoding    charset encoding; default is UTF-8
-         * @param  array    $marges      Default marges (left, top, right, bottom)
+         * @param  integer[]    $marges      Default marges (left, top, right, bottom)
          * @return HTML2PDF $this
          */
         public function __construct($orientation = 'P', $format = 'A4', $langue='fr', $unicode=true, $encoding='UTF-8', $marges = array(5, 5, 5, 8))
@@ -282,7 +282,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * @access public
          * @param string $family Font family. The name can be chosen arbitrarily. If it is a standard family name, it will override the corresponding font.
          * @param string $style Font style. Possible values are (case insensitive):<ul><li>empty string: regular (default)</li><li>B: bold</li><li>I: italic</li><li>BI or IB: bold italic</li></ul>
-         * @param string $fontfile The font definition file. By default, the name is built from the family and style, in lower case with no spaces.
          * @return HTML2PDF $this
          * @see TCPDF::addFont
          */
@@ -413,6 +412,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          *
          * @access public
          * @param  string HTML of a real page
+         * @param string $html
          * @return string HTML adapted to HTML2PDF
          */
         public function getHtmlFromPage($html)
@@ -474,7 +474,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * display the content in HTML moden for debug
          *
          * @access protected
-         * @param  string $contenu
+         * @param  string $content
          */
         protected function _vueHTML($content)
         {
@@ -1856,7 +1856,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * draw a curve (for border radius)
          *
          * @access protected
-         * @param  array $pt
+         * @param  double[] $pt
          * @param  array $color
          */
         protected function _drawCurve($pt, $color)
@@ -3237,7 +3237,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * this is not a real TAG, it is just to write texts
          *
          * @param  array $param
-         * @return boolean
+         * @return null|boolean
          */
         protected function _tag_open_WRITE($param)
         {
@@ -4201,7 +4201,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @param  string $other
          * @return boolean
          */
         protected function _tag_open_CODE($param)
@@ -5079,7 +5078,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_COL($param)
         {
@@ -5696,7 +5695,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * tag : SELECT
          * mode : CLOSE
          *
-         * @param  array $param
          * @return boolean
          */
         protected function _tag_close_SELECT()
@@ -5800,7 +5798,6 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * tag : TEXTAREA
          * mode : CLOSE
          *
-         * @param  array $param
          * @return boolean
          */
         protected function _tag_close_TEXTAREA()
@@ -6110,7 +6107,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_LINE($param)
         {
@@ -6137,7 +6134,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_RECT($param)
         {
@@ -6164,7 +6161,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_CIRCLE($param)
         {
@@ -6189,7 +6186,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_ELLIPSE($param)
         {
@@ -6216,7 +6213,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_POLYLINE($param)
         {
@@ -6262,7 +6259,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_POLYGON($param)
         {
@@ -6309,7 +6306,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_PATH($param)
         {
@@ -6438,7 +6435,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : OPEN
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_open_G($param)
         {
@@ -6455,7 +6452,7 @@ if (!defined('__CLASS_HTML2PDF__')) {
          * mode : CLOSE
          *
          * @param  array $param
-         * @return boolean
+         * @return boolean|null
          */
         protected function _tag_close_G($param)
         {

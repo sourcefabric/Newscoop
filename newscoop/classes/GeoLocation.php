@@ -64,7 +64,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     /**
      * Fetch a single record from the database for the given key.
      *
-     * @param array $p_arg
+     * @param array $arg
      *      If the record has already been fetched and we just need to
      *      assign the data to the object's internal member variable.
      *

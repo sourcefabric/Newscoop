@@ -96,7 +96,7 @@ final class MetaURL
      *
      * @param string $p_parameterName
      * @param string $p_parameterValue
-     * @return bool
+     * @return false|null
      */
     final public function set_parameter($p_parameterName, $p_parameterValue)
     {
@@ -113,7 +113,7 @@ final class MetaURL
      * parameter can be set (is not a restricted parameter name), false otherwise.
      *
      * @param string $p_parameterName
-     * @return bool
+     * @return false|null
      */
     final public function reset_parameter($p_parameterName)
     {
@@ -125,8 +125,7 @@ final class MetaURL
     * Resets all query parameters. Returns true if the
     * parameter can be set (is not a restricted parameter name), false otherwise.
     *
-    * @param string $p_parameterName
-    * @return bool
+    * @return string|null
     */
     final public function reset_parameters()
     {

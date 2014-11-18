@@ -39,6 +39,10 @@ class PEAR_PackageFile_Generator_v1
      * @var PEAR_PackageFile_v1
      */
     var $_packagefile;
+
+    /**
+     * @param PEAR_PackageFile_v1 $packagefile
+     */
     function PEAR_PackageFile_Generator_v1(&$packagefile)
     {
         $this->_packagefile = &$packagefile;
@@ -131,6 +135,7 @@ class PEAR_PackageFile_Generator_v1
      * @param int one of the PEAR_VALIDATE_* constants
      * @param string name of the generated file
      * @param bool if true, then no analysis will be performed on role="php" files
+     * @param integer $state
      * @return string|PEAR_Error path to the created file on success
      */
     function toPackageFile($where = null, $state = PEAR_VALIDATE_NORMAL, $name = 'package.xml',
@@ -422,6 +427,7 @@ class PEAR_PackageFile_Generator_v1
      * @param string
      * @param array
      * @param string
+     * @param string $indent
      * @access private
      */
     function _formatFile($file, $attributes, $indent)

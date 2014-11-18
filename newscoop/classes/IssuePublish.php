@@ -247,7 +247,7 @@ class IssuePublish extends DatabaseObject {
 	 *
 	 * @param int $p_publicationId
 	 * @param int $p_issueNumber
-	 * @param int $p_language
+	 * @param int $p_languageId
 	 * @param boolean $p_includeCompleted
 	 * @return array
 	 */
@@ -285,7 +285,7 @@ class IssuePublish extends DatabaseObject {
 
 	/**
 	 * Execute all pending actions.
-	 * @return void
+	 * @return integer
 	 */
 	public static function DoPendingActions()
 	{

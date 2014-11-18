@@ -63,7 +63,6 @@ final class MetaPublication extends MetaDbObject
      *
      * @param  boolean $p_excludeCurrent
      * @param  array   $p_order
-     * @param  boolean $p_allIssues
      * @return array   of MetaLanguage
      */
     public function languages_list($p_excludeCurrent = true,

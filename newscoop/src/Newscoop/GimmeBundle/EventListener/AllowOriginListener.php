@@ -11,7 +11,6 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Newscoop\Gimme\Json;
 
 /**
  * Add Access-Control-Allow-Origin header to response.

@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity\Comment\Preference;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 /**
  * Publication entity
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\PublicationRepository")
@@ -80,8 +80,8 @@ class Publication
     /**
      * Setting the the id
      *
-     * @param Newscoop\Entity\Publication $p_id
-     * @return unknown_type
+     * @param \Newscoop\Entity\Publication $p_id
+     * @return Publication
      */
     public function setId(\Newscoop\Entity\Publication $p_id)
     {
@@ -93,7 +93,6 @@ class Publication
     /**
      * Getting the the id
      *
-     * @param Newscoop\Entity\Publication $p_id
      * @return unknown_type
      */
     public function getId()
@@ -104,7 +103,7 @@ class Publication
     /**
      * Set enabled id
      *
-     * @param bool $p_enab;ed
+     * @param bool $p_enabled
      * @return Publication
      */
     public function setEnabled($p_enabled)
@@ -150,7 +149,6 @@ class Publication
     /**
      * Set subscribers moderated
      *
-     * @param bool $p_enabled
      * @return Publication
      */
     public function setSubscribersModerated($p_subscribers_moderated)
@@ -196,7 +194,6 @@ class Publication
     /**
      * Set public moderated
      *
-     * @param bool $p_public_moderated
      * @return Publication
      */
     public function setCaptchaEnabled($p_captcha_enabled)
@@ -243,7 +240,7 @@ class Publication
      * Set moderator to email address
      *
      * @param string $p_moderator_to
-     * @return Publication
+     * @return string
      */
     public function setModeratorTo($p_moderator_to)
     {
@@ -264,7 +261,7 @@ class Publication
      * Set moderator from email address
      *
      * @param string $p_moderator_from
-     * @return Publication
+     * @return string
      */
     public function setModeratorFrom($p_moderator_from)
     {

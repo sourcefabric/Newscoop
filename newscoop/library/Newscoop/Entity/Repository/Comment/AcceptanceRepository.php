@@ -7,15 +7,10 @@
 
 namespace Newscoop\Entity\Repository\Comment;
 
-use
-    InvalidArgumentException,
-    DateTime,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Datatable\Source as DatatableSource,
-    Newscoop\Entity\Comment\Acceptance,
-    Newscoop\Entity\Comment\Commenter,
-    Newscoop\Entity\Publication;
+use Newscoop\Datatable\Source as DatatableSource;
+use Newscoop\Entity\Comment\Acceptance;
+use Newscoop\Entity\Comment\Commenter;
+use Newscoop\Entity\Publication;
 
 /**
  * Comment Acceptance repository
@@ -25,7 +20,7 @@ class AcceptanceRepository extends DatatableSource
     /**
      * Save a acceptance criteria
      *
-     * @param Newscoop\Entity\Comment\Acceptance $p_acceptance
+     * @param Acceptance $p_acceptance
      * @param array $p_values
      * @return void
      */
@@ -252,7 +247,6 @@ class AcceptanceRepository extends DatatableSource
     /**
      * Delete user
      *
-     * @param Newscoop\Entity\Comment\Acceptance $user
      * @return void
      */
     public function delete(Acceptance $p_acceptance)

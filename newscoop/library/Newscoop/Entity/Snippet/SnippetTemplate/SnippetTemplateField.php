@@ -8,7 +8,7 @@
 
 namespace Newscoop\Entity\Snippet\SnippetTemplate;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Snippet\SnippetTemplate;
 
 /**
@@ -81,7 +81,7 @@ class SnippetTemplateField
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
+     * @return SnippetTemplateField
      */
     public function setId($id)
     {
@@ -110,7 +110,7 @@ class SnippetTemplateField
      *
      * @param string $templateFieldName
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
+     * @return SnippetTemplateField
      */
     public function setName($templateFieldName)
     {
@@ -134,7 +134,7 @@ class SnippetTemplateField
      *
      * @param string $type Value to set
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
+     * @return SnippetTemplateField
      */
     public function setType($type)
     {
@@ -161,7 +161,7 @@ class SnippetTemplateField
      *
      * @param string $scope Value to set
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
+     * @return SnippetTemplateField
      */
     public function setScope($scope)
     {
@@ -186,7 +186,7 @@ class SnippetTemplateField
     /**
      * Setter for template
      *
-     * @param mixed $template Value to set
+     * @param  $template Value to set
      *
      * @return self
      */

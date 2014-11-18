@@ -6,7 +6,6 @@
 /**
  * Includes
  */
-use Newscoop\Webcode\Manager;
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
@@ -153,6 +152,9 @@ class ArticleIndex extends DatabaseObject {
 	} // fn OnArticleDelete
 
 
+	/**
+	 * @param integer $p_articlesLimit
+	 */
 	public static function RunIndexer($p_timeLimit = null, $p_articlesLimit = null,
 	$p_lastModifiedFirst = true)
 	{

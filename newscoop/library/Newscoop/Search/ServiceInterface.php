@@ -28,7 +28,7 @@ interface ServiceInterface
     /**
      * Test if item is indexed
      *
-     * @param mixed $item
+     * @param DocumentInterface $item
      * @return bool
      */
     public function isIndexed(DocumentInterface $item);
@@ -36,7 +36,7 @@ interface ServiceInterface
     /**
      * Test if item can be indexed
      *
-     * @param mixed $item
+     * @param DocumentInterface $item
      * @return bool
      */
     public function isIndexable(DocumentInterface $item);
@@ -44,7 +44,7 @@ interface ServiceInterface
     /**
      * Get document for item
      *
-     * @param mixed $item
+     * @param DocumentInterface $item
      * @return array
      */
     public function getDocument(DocumentInterface $item);
@@ -52,7 +52,7 @@ interface ServiceInterface
     /**
      * Get document id
      *
-     * @param mixed $item
+     * @param DocumentInterface $item
      * @return string
      */
     public function getDocumentId(DocumentInterface $item);

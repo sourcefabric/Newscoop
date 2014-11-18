@@ -45,12 +45,18 @@ class PEAR_PackageFile_Parser_v1
         $ret->fromArray($info['old']);
     }
 
+    /**
+     * @param PEAR_Config $c
+     */
     function setConfig(&$c)
     {
         $this->_config = &$c;
         $this->_registry = &$c->getRegistry();
     }
 
+    /**
+     * @param boolean $l
+     */
     function setLogger(&$l)
     {
         $this->_logger = &$l;
@@ -58,6 +64,8 @@ class PEAR_PackageFile_Parser_v1
 
     /**
      * @param string contents of package.xml file, version 1.0
+     * @param string $data
+     * @param string $file
      * @return bool success of parsing
      */
     function &parse($data, $file, $archive = false)
@@ -441,7 +449,6 @@ class PEAR_PackageFile_Parser_v1
      * packages.
      *
      * @param resource  $xp    XML parser resource
-     * @param string    $name  character data
      *
      * @return void
      *

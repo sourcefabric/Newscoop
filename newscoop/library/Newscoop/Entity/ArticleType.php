@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\Validation;
 
@@ -62,7 +62,7 @@ class ArticleType
      * @param string $name
      *      The name of the article type, must not be null or empty.
      *
-     * @return Newscoop\Entity\ArticleType
+     * @return ArticleType
      *      This object for chaining purposes.
      */
     public function setName($name)

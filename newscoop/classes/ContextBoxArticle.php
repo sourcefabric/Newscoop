@@ -52,8 +52,6 @@ class ContextBoxArticle extends DatabaseObject
     /**
      * Gets an issues list based on the given parameters.
      *
-     * @param integer $p_context_id
-     *    The Context Box Identifier
      * @param string $p_order
      *    An array of columns and directions to order by
      * @param integer $p_start
@@ -115,6 +113,9 @@ class ContextBoxArticle extends DatabaseObject
         return $returnArray;
     }
 
+    /**
+     * @param integer $destArticle
+     */
     public static function OnArticleCopy($origArticle, $destArticle)
     {
 

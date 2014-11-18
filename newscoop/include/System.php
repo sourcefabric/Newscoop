@@ -184,7 +184,7 @@ class System
      * Supports multiple files and dirs and also recursive deletes
      *
      * @param    string  $args   the arguments for rm
-     * @return   mixed   PEAR_Error or true for success
+     * @return   boolean   PEAR_Error or true for success
      * @static
      * @access   public
      */
@@ -374,7 +374,7 @@ class System
      *           c:\windows\temp or /tmp will be used.
      *
      * @param   string  $args  The arguments
-     * @return  mixed   the full path of the created (file|dir) or false
+     * @return  boolean|string   the full path of the created (file|dir) or false
      * @see System::tmpdir()
      * @static
      * @access  public

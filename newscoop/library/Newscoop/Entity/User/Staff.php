@@ -7,7 +7,6 @@
 
 namespace Newscoop\Entity\User;
 
-use DateTime;
 use Zend_Registry;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -56,7 +55,7 @@ class Staff extends User implements \Zend_Acl_Role_Interface
     /**
      * Set role
      *
-     * @param Newscoop\Entity\Acl\Role $role
+     * @param Role $role
      * 
      * @return Newscoop\Entity\User
      */

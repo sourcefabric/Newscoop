@@ -46,8 +46,8 @@ class SectionFacade
      * Save section
      *
      * @param array $values
-     * @param Newscoop\Subscription\Section|null $section
-     * @return Newscoop\Subscription\Section
+     * @param null|Section $section
+     * @return Section
      */
     public function save(array $values, Section $section = null)
     {
@@ -80,7 +80,7 @@ class SectionFacade
      * Get subscription
      *
      * @param array $values
-     * @return Newscoop\Subscription\Subscription
+     * @return Subscription
      */
     private function getSubscription(array $values)
     {
@@ -102,7 +102,7 @@ class SectionFacade
      * Get language
      *
      * @param array $values
-     * @return Newscoop\Entity\Language
+     * @return \Newscoop\Entity\Language
      */
     private function getLanguage(array $values)
     {

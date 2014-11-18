@@ -5,12 +5,11 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-use Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\Common\Annotations\AnnotationRegistry,
-    Doctrine\Common\Annotations\Parser,
-    Doctrine\Common\Cache\ArrayCache,
-    Resource\Acl\StorageInterface,
-    Resource\Acl\RuleInterface;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Cache\ArrayCache;
+use Resource\Acl\StorageInterface;
+use Resource\Acl\RuleInterface;
 
 /**
  * Acl Zend application resource

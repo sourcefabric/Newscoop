@@ -33,9 +33,8 @@ class RenditionService
     protected $renditions;
 
     /**
-     * @param array $config
      * @param Doctrine\ORM\EntityManager $orm
-     * @param Newscoop\Image\ImageService $imageService
+     * @param ImageService $imageService
      */
     public function __construct(\Doctrine\ORM\EntityManager $orm, ImageService $imageService)
     {
@@ -47,10 +46,10 @@ class RenditionService
      * Set article rendition
      *
      * @param int $articleNumber
-     * @param Newscoop\Image\Rendition $rendition
-     * @param Newscoop\Image\ImageInterface $image
+     * @param Rendition $rendition
+     * @param ImageInterface $image
      * @param string $imageSpecs
-     * @return Newscoop\Image\ArticleRendition
+     * @return ArticleRendition
      */
     public function setArticleRendition($articleNumber, Rendition $rendition, ImageInterface $image, $imageSpecs = null)
     {
@@ -182,7 +181,7 @@ class RenditionService
      * Get article renditions
      *
      * @param int $articleNumber
-     * @return array
+     * @return ArticleRenditionCollection
      */
     public function getArticleRenditions($articleNumber)
     {
@@ -408,7 +407,7 @@ class RenditionService
     /**
      * Create schema for article rendition
      *
-     * @param Exception $e
+     * @param \Exception $e
      * @return void
      */
     private function createSchemaIfMissing(\Exception $e)

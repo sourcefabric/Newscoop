@@ -96,7 +96,7 @@ class AuthorService
      *
      * @param Article       $article
      * @param Author        $author
-     * @param ArticleAuthor $authorType
+     * @param AuthorType $authorType
      *
      * @return ArticleAuthor
      */
@@ -132,7 +132,7 @@ class AuthorService
      *
      * @param Article       $article
      * @param Author        $author
-     * @param ArticleAuthor $authorType
+     * @param AuthorType $authorType
      *
      * @return ArticleAuthor
      */

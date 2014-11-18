@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Aliases entity
@@ -40,7 +40,7 @@ class Aliases
     /**
      * Get id
      *
-     * @return integer
+     * @return string
      */
     public function getId()
     {
@@ -50,7 +50,7 @@ class Aliases
     /**
      * Set name
      *
-     * @return string
+     * @return Aliases
      */
     public function setName($name)
     {

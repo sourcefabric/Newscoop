@@ -44,6 +44,7 @@ class AuthorAlias extends DatabaseObject
      * Wrapper around DatabaseObject::setProperty
      *
      * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     * @param string $p_dbColumnName
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {

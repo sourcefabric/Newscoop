@@ -27,7 +27,7 @@ class UpdateStorageService
 
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Storage\StorageService $storage
+     * @param StorageService $storage
      */
     public function __construct(EntityManager $em, StorageService $storage)
     {
@@ -56,7 +56,7 @@ class UpdateStorageService
     /**
      * Update single image storage
      *
-     * @param Newscoop\Image\LocalImage $image
+     * @param LocalImage $image
      * @return void
      */
     private function updateImage(LocalImage $image)

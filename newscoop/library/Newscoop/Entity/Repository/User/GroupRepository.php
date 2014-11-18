@@ -7,9 +7,9 @@
 
 namespace Newscoop\Entity\Repository\User;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\User\Group,
-    Newscoop\Entity\Acl\Role;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\User\Group;
+use Newscoop\Entity\Acl\Role;
 
 /**
  * User Group repository

@@ -703,7 +703,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set role
      *
-     * @param  Newscoop\Entity\Acl\Role $role
+     * @param  Role $role
      * @return Newscoop\Entity\User
      */
     public function setRole(Role $role)
@@ -745,7 +745,6 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * Get attribute
      *
      * @param  string $name
-     * @param  string $value
      * @return mixed
      */
     public function getAttribute($name)
@@ -959,7 +958,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * Set password reset token
      *
      * @param  integer $resetToken
-     * @return string
+     * @return User
      */
     public function setResetToken($resetToken)
     {
@@ -981,7 +980,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set author
      *
-     * @param  Newscoop\Entity\Author $author
+     * @param  Author $author
      * @return Newscoop\Entity\User
      */
     public function setAuthor(Author $author = null)
@@ -1254,7 +1253,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * Set lastLogin
      *
      * @param  DateTime $lastLogin
-     * @return void
+     * @return User
      */
     public function setLastLogin(\DateTime $lastLogin = null)
     {
@@ -1266,8 +1265,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Get lastLogin
      *
-     * @param  DateTime $lastLogin
-     * @return void
+     * @return DateTime
      */
     public function getLastLogin()
     {
@@ -1279,7 +1277,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param integer $publication Publication id
      *
-     * @return int
+     * @return User
      */
     public function setPublication($publication)
     {
@@ -1303,7 +1301,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param string $street
      *
-     * @return string
+     * @return User
      */
     public function setStreet($street)
     {
@@ -1341,7 +1339,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param string $postal
      *
-     * @return string
+     * @return User
      */
     public function setPostal($postal)
     {
@@ -1365,7 +1363,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param string $city
      *
-     * @return string
+     * @return User
      */
     public function setCity($city)
     {
@@ -1389,7 +1387,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param string $phone
      *
-     * @return string
+     * @return User
      */
     public function setPhone($phone)
     {
@@ -1413,7 +1411,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param string $state
      *
-     * @return string
+     * @return User
      */
     public function setState($state)
     {
@@ -1437,7 +1435,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * @param string $countryCode
      *
-     * @return string
+     * @return User
      */
     public function setCountryCode($countryCode)
     {

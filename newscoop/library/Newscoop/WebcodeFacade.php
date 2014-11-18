@@ -7,8 +7,8 @@
 
 namespace Newscoop;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity;
 
 /**
  * Webcode facade
@@ -27,7 +27,7 @@ class WebcodeFacade
 
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Random $random
+     * @param Random $random
      */
     public function __construct(EntityManager $em, Random $random)
     {
@@ -38,7 +38,7 @@ class WebcodeFacade
     /**
      * Set article webcode
      *
-     * @param Newscoop\Entity\Article $article
+     * @param Entity\Article $article
      * @param string $webcode
      * @return void
      */
@@ -59,7 +59,7 @@ class WebcodeFacade
     /**
      * Get article webcode
      *
-     * @param Newscoop\Entity\Article $article
+     * @param Entity\Article $article
      * @return string
      */
     public function getArticleWebcode(Entity\Article $article)

@@ -52,7 +52,7 @@ class LocalLoader implements Loader
      * Get theme
      *
      * @param string $offset
-     * @return Newscoop\Entity\Theme
+     * @return Theme
      */
     public function find($offset)
     {

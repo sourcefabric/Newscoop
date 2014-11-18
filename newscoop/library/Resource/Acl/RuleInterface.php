@@ -22,14 +22,14 @@ interface RuleInterface
     /**
      * Get resource
      *
-     * @return mixed
+     * @return string
      */
     public function getResource();
 
     /**
      * Get action
      *
-     * @return mixed
+     * @return string
      */
     public function getAction();
 }

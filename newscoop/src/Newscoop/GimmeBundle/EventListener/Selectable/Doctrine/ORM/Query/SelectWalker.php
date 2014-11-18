@@ -82,7 +82,7 @@ class SelectWalker extends TreeWalkerAdapter
     /**
      * Find alias for choosen field
      * @param  string $field Field name
-     * @return array        array with alias or field name and class namespace
+     * @return string        array with alias or field name and class namespace
      */
     private function findAliasForField($field)
     {

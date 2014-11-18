@@ -91,6 +91,9 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         return self::$m_description;
     }
 
+    /**
+     * @param string $action
+     */
     static function handler($action, &$cache_content, $tpl_file = null, $cache_id = null,
         $compile_id = null, $exp_time = 0)
     {

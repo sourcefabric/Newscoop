@@ -85,7 +85,7 @@ class Topic
      *
      * @param Language $language
      *
-     * @return int
+     * @return Language
      */
     public function setLanguage($language)
     {
@@ -150,7 +150,7 @@ class Topic
     /**
      * Get view
      *
-     * @return Newscoop\View\TopicView
+     * @return TopicView
      */
     public function getView()
     {

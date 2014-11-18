@@ -8,8 +8,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use JMS\Serializer\Annotation\Type;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Entity\Snippet\SnippetTemplate;
 use Newscoop\Entity\Snippet\SnippetField;
@@ -111,7 +110,7 @@ class Snippet
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function setId($id)
     {
@@ -133,9 +132,9 @@ class Snippet
     /**
      * Setter for Template
      *
-     * @param Newscoop\Entity\Snippet\SnippetTemplate $template
+     * @param SnippetTemplate $template
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function setTemplate(SnippetTemplate $template)
     {
@@ -187,7 +186,7 @@ class Snippet
      *
      * @param string $name
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function setName($name)
     {
@@ -235,9 +234,9 @@ class Snippet
     /**
      * Add Snippet fields
      *
-     * @param Newscoop\Entity\Snippet\SnippetField $field SnippetField to add
+     * @param SnippetField $field SnippetField to add
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     private function addField(SnippetField $field)
     {
@@ -252,7 +251,7 @@ class Snippet
      * @param string $fieldName the name of the SnippetField
      * @param string $fieldData the data of the SnippetField
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function setData($fieldName, $fieldData = null)
     {
@@ -282,7 +281,7 @@ class Snippet
      * 
      * @param Article $article the Article to attach
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function addArticle(Article $article)
     {
@@ -299,7 +298,7 @@ class Snippet
      * 
      * @param Article $article the Article to remove
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function removeArticle(Article $article)
     {
@@ -314,7 +313,7 @@ class Snippet
     /**
      * Getter for enabled
      *
-     * @return mixed
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -339,7 +338,7 @@ class Snippet
     /**
      * Getter for created
      *
-     * @return DateTime
+     * @return string
      */
     public function getCreated()
     {
@@ -351,7 +350,7 @@ class Snippet
      *
      * @param DateTime $created Value to set
      *
-     * @return Newscoop\Entity\Snippet
+     * @return Snippet
      */
     public function setCreated($created = null)
     {
@@ -368,7 +367,7 @@ class Snippet
     /**
      * Getter for modified
      *
-     * @return mixed
+     * @return string
      */
     public function getModified()
     {

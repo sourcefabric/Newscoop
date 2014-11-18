@@ -221,7 +221,7 @@ class PEAR
     * classes.
     *
     * @access public
-    * @param  mixed $func  The function name (or array of class/method) to call
+    * @param  string[] $func  The function name (or array of class/method) to call
     * @param  mixed $args  The arguments to pass to the function
     * @return void
     */
@@ -447,7 +447,7 @@ class PEAR
      *                  PEAR_ERROR_TRIGGER, PEAR_ERROR_DIE,
      *                  PEAR_ERROR_CALLBACK, PEAR_ERROR_EXCEPTION.
      *
-     * @param mixed $options If $mode is PEAR_ERROR_TRIGGER, this parameter
+     * @param integer|null $options If $mode is PEAR_ERROR_TRIGGER, this parameter
      *                  specifies the PHP-internal error level (one of
      *                  E_USER_NOTICE, E_USER_WARNING or E_USER_ERROR).
      *                  If $mode is PEAR_ERROR_CALLBACK, this
@@ -563,6 +563,9 @@ class PEAR
         return $a;
     }
 
+    /**
+     * @param integer $mode
+     */
     function staticPushErrorHandling($mode, $options = null)
     {
         $stack       = &$GLOBALS['_PEAR_error_handler_stack'];
@@ -639,7 +642,7 @@ class PEAR
      * you can easily override the actual error handler for some code and restore
      * it later with popErrorHandling.
      *
-     * @param mixed $mode (same as setErrorHandling)
+     * @param integer $mode (same as setErrorHandling)
      * @param mixed $options (same as setErrorHandling)
      *
      * @return bool Always true

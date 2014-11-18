@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity\Acl;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Resource\Acl\RuleInterface;
 
 /**
@@ -68,7 +68,7 @@ class Rule implements RuleInterface
      * Set type
      *
      * @param string $type
-     * @return Newscoop\Entity\Acl\Rule
+     * @return Rule
      * @throws InvalidArgumentException
      */
     public function setType($type)
@@ -95,8 +95,8 @@ class Rule implements RuleInterface
     /**
      * Set role
      *
-     * @param Newscoop\Entity\Acl\Role $role
-     * @return Newscoop\Entity\Acl\Rule
+     * @param Role $role
+     * @return Rule
      */
     public function setRole(Role $role)
     {
@@ -118,7 +118,7 @@ class Rule implements RuleInterface
      * Set resource
      *
      * @param string $resource
-     * @return Newscoop\Entity\Acl\Rule
+     * @return Rule
      */
     public function setResource($resource)
     {
@@ -129,7 +129,7 @@ class Rule implements RuleInterface
     /**
      * Get resource
      *
-     * @return string|NULL
+     * @return string
      */
     public function getResource()
     {
@@ -140,7 +140,7 @@ class Rule implements RuleInterface
      * Set action
      *
      * @param string $action
-     * @return Newscoop\Entity\Acl\Rule
+     * @return Rule
      */
     public function setAction($action)
     {

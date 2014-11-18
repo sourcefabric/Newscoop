@@ -164,6 +164,7 @@ class PEAR_Frontend extends PEAR
      * By default, all files are deleted at the end of a session.  The web installer
      * needs to be able to sustain a list over many sessions in order to support
      * user interaction with install scripts
+     * @param string $file
      */
     function addTempFile($file)
     {
@@ -175,7 +176,7 @@ class PEAR_Frontend extends PEAR
      *
      * @param string $msg the message to log
      * @param boolean $append_crlf
-     * @return boolean true
+     * @return boolean|null true
      * @abstract
      */
     function log($msg, $append_crlf = true)

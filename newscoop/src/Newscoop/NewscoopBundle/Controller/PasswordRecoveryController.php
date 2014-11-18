@@ -163,6 +163,7 @@ class PasswordRecoveryController extends Controller
      *
      * @param  string User email
      * @param  string Token
+     * @param string $token
      *
      * @return void
      */

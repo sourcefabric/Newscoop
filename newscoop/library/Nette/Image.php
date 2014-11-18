@@ -63,6 +63,9 @@ class Image extends Object
 	 * @param  int  green 0..255
 	 * @param  int  blue 0..255
 	 * @param  int  transparency 0..127
+	 * @param integer $red
+	 * @param integer $green
+	 * @param integer $blue
 	 * @return array
 	 */
 	public static function rgb($red, $green, $blue, $transparency = 0)
@@ -81,6 +84,7 @@ class Image extends Object
 	 * Opens image from file.
 	 * @param  string
 	 * @param  mixed  detected image format
+	 * @param string $file
 	 * @return Image
 	 */
 	public static function fromFile($file, & $format = NULL)
@@ -176,6 +180,7 @@ class Image extends Object
 	/**
 	 * Wraps GD image.
 	 * @param  resource
+	 * @param resource $image
 	 */
 	public function __construct($image)
 	{
@@ -239,6 +244,8 @@ class Image extends Object
 	 * @param  mixed  width in pixels or percent
 	 * @param  mixed  height in pixels or percent
 	 * @param  int    flags
+	 * @param integer $width
+	 * @param integer $height
 	 * @return Image  provides a fluent interface
 	 */
 	public function resize($width, $height, $flags = self::FIT)
@@ -276,7 +283,9 @@ class Image extends Object
 	 * @param  mixed  width in pixels or percent
 	 * @param  mixed  height in pixels or percent
 	 * @param  int    flags
-	 * @return array
+	 * @param integer $srcWidth
+	 * @param integer $srcHeight
+	 * @return integer[]
 	 */
 	public static function calculateSize($srcWidth, $srcHeight, $newWidth, $newHeight, $flags = self::FIT)
 	{
@@ -364,6 +373,8 @@ class Image extends Object
 	 * @param  mixed  y-offset in pixels or percent
 	 * @param  mixed  width in pixels or percent
 	 * @param  mixed  height in pixels or percent
+	 * @param integer $srcWidth
+	 * @param integer $srcHeight
 	 * @return array
 	 */
 	public static function calculateCutout($srcWidth, $srcHeight, $left, $top, $newWidth, $newHeight)
@@ -452,6 +463,7 @@ class Image extends Object
 	 * @param  string  filename
 	 * @param  int  quality 0..100 (for JPEG and PNG)
 	 * @param  int  optional image type
+	 * @param string $file
 	 * @return bool TRUE on success or FALSE on failure.
 	 */
 	public function save($file = NULL, $quality = NULL, $type = NULL)

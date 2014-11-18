@@ -66,7 +66,7 @@ class PEAR_XMLParser
     var $encoding = 'ISO-8859-1';
 
     /**
-     * @return array
+     * @return string
      */
     function getData()
     {
@@ -164,7 +164,7 @@ class PEAR_XMLParser
      * @access private
      * @param  object XML parser object
      * @param  string
-     * @return void
+     * @return boolean|null
      */
     function endHandler($parser, $element)
     {

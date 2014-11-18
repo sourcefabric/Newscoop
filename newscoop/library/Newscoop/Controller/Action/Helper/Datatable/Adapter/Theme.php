@@ -2,13 +2,11 @@
 
 namespace Newscoop\Controller\Action\Helper\Datatable\Adapter;
 
-use Newscoop\Service\IThemeManagementService,
-    Newscoop\Service\Model\SearchTheme,
-    Newscoop\Service\Model\Search as Search,
-    Newscoop\Service\Implementation\ThemeManagementServiceLocal,
-    Newscoop\Controller\Action\Helper\Datatable\Row,
-    Newscoop\Service,
-    Newscoop\Entity\Publication;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\Model\SearchTheme;
+use Newscoop\Service\Model\Search as Search;
+use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
+use Newscoop\Entity\Publication;
 
 class Theme extends AAdapter
 {

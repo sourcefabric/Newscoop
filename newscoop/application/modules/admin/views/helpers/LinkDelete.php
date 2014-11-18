@@ -16,7 +16,6 @@ class Admin_View_Helper_LinkDelete extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
      * @return void
      */
     public function linkDelete( $p_url, $p_params = null)

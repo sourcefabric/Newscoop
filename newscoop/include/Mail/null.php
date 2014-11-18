@@ -71,7 +71,7 @@ class Mail_null extends Mail {
      * @param string $body The full text of the message body, including any
      *               Mime parts, etc.
      *
-     * @return mixed Returns true on success, or a PEAR_Error
+     * @return boolean Returns true on success, or a PEAR_Error
      *               containing a descriptive error message on
      *               failure.
      * @access public

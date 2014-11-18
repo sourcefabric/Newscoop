@@ -120,6 +120,7 @@ final class CampCache
      *    $p_data The expected data to be cached
      * @param int optional
      *    $p_ttl The ttl for the object in cache
+     * @param string $p_key
      *
      * @return boolean
      *                 TRUE on success, FALSE on failure
@@ -134,6 +135,7 @@ final class CampCache
      *
      * @param string
      *    The cache key of the object
+     * @param string|false $p_key
      *
      * @return mixed
      *               The unserialized data.
@@ -189,8 +191,9 @@ final class CampCache
      *
      * @param string
      *    $p_key The cache key for the object.
+     * @param string|false $p_key
      *
-     * @return boolean
+     * @return false|null
      *                 TRUE on success, FALSE on failure
      */
     public function delete($p_key)
@@ -208,8 +211,9 @@ final class CampCache
      * @param string
      *    $p_type If given is 'user', the user cache will be cleard,
      *            otherwise the system cache (cached files) will be.
+     * @param string $p_type
      *
-     * @return boolean
+     * @return false|null
      *                 TRUE on success, FALSE on failure
      */
     public function clear($p_type = null)

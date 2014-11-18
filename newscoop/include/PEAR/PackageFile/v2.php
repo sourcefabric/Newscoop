@@ -155,6 +155,8 @@ class PEAR_PackageFile_v2
      * @param array options
      * @param array package name as returned from {@link PEAR_Registry::parsePackageName()}
      * @param int PEAR_VALIDATE_* constant
+     * @param PEAR_Config $c
+     * @param integer $s
      * @return PEAR_Dependency2
      * @access protected
      */
@@ -737,6 +739,9 @@ class PEAR_PackageFile_v2
         $this->_registry = &$config->getRegistry();
     }
 
+    /**
+     * @param PEAR_Packager $logger
+     */
     function setLogger(&$logger)
     {
         if (!is_object($logger) || !method_exists($logger, 'log')) {
@@ -761,6 +766,9 @@ class PEAR_PackageFile_v2
         $this->_packageInfo['compatible'] = $compat;
     }
 
+    /**
+     * @param string $file
+     */
     function setPackagefile($file, $archive = false)
     {
         $this->_packageFile = $file;
@@ -770,7 +778,7 @@ class PEAR_PackageFile_v2
     /**
      * Wrapper to {@link PEAR_ErrorStack::getErrors()}
      * @param boolean determines whether to purge the error stack after retrieving
-     * @return array
+     * @return string|null
      */
     function getValidationWarnings($purge = true)
     {
@@ -1027,6 +1035,9 @@ class PEAR_PackageFile_v2
         return false;
     }
 
+    /**
+     * @param string $date
+     */
     function setDate($date)
     {
         if (!isset($this->_packageInfo['date'])) {
@@ -1042,6 +1053,9 @@ class PEAR_PackageFile_v2
         $this->_isValid = 0;
     }
 
+    /**
+     * @param string $time
+     */
     function setTime($time)
     {
         $this->_isValid = 0;
@@ -1368,6 +1382,8 @@ class PEAR_PackageFile_v2
      * @param string attribute value
      * @param int risky but fast - use this to choose a file based on its position in the list
      *            of files.  Index is zero-based like PHP arrays.
+     * @param string $attr
+     * @param string $value
      * @return bool success of operation
      */
     function setFileAttribute($filename, $attr, $value, $index = false)
@@ -1738,7 +1754,7 @@ class PEAR_PackageFile_v2
     }
 
     /**
-     * @return php|extsrc|extbin|zendextsrc|zendextbin|bundle|false
+     * @return string|false
      */
     function getPackageType()
     {

@@ -314,6 +314,9 @@ used for automated conversion or learning the format.
         return $a;
     }
 
+    /**
+     * @param PEAR_Config $config
+     */
     function &getPackageFile($config, $debug = false)
     {
         if (!class_exists('PEAR_Common')) {
@@ -590,6 +593,9 @@ used for automated conversion or learning the format.
         return $path;
     }
 
+    /**
+     * @param string $packageFile
+     */
     function _svnRemoveTag($version, $package, $tag, $packageFile, $options)
     {
         $command = 'svn';
@@ -1034,6 +1040,7 @@ used for automated conversion or learning the format.
 
     /**
      * For unit testing purposes
+     * @param PEAR_Config $config
      */
     function &getCommandPackaging(&$ui, &$config)
     {

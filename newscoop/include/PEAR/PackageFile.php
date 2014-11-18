@@ -83,6 +83,9 @@ class PEAR_PackageFile
         $this->_rawReturn = true;
     }
 
+    /**
+     * @param PEAR_Common $l
+     */
     function setLogger(&$l)
     {
         $this->_logger = &$l;
@@ -141,7 +144,7 @@ class PEAR_PackageFile
      * WARNING: no validation is performed, the array is assumed to be valid,
      * always parse from xml if you want validation.
      * @param   array $arr
-     * @return PEAR_PackageFileManager_v1|PEAR_PackageFileManager_v2
+     * @return PEAR_PackageFile_v1
      * @uses    factory() to construct the returned object.
      */
     function &fromArray($arr)
@@ -294,6 +297,7 @@ class PEAR_PackageFile
      * @access  public
      * @param string contents of package.xml file
      * @param int package state (one of PEAR_VALIDATE_* constants)
+     * @param integer $state
      * @return  PEAR_PackageFile_v1|PEAR_PackageFile_v2
      * @using   Archive_Tar to extract the files
      * @using   fromPackageFile() to load the package after the package.xml

@@ -7,8 +7,6 @@
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 use Newscoop\Services\FilesystemService;
 

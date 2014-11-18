@@ -7,10 +7,9 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
-use Newscoop\Entity\Theme;
 
 /**
  * Provides the output based on the client agent.
@@ -53,7 +52,7 @@ class Output extends AbstractEntity
 	 * @param string $name
 	 *		The name of the theme resource, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme\Resource
+	 * @return Output
 	 *		This object for chaining purposes.
 	 */
 	public function setName($name)

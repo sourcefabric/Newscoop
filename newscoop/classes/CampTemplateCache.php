@@ -4,7 +4,7 @@ class CampTemplateCache
 {
     /**
      * Loads the handler specified by the given name.
-     * @param $p_handlerName
+     * @param string $p_handlerName
      * @return object
      */
     public static function factory($p_handlerName = null, $p_path = null)

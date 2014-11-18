@@ -30,10 +30,10 @@ class Search
 	 * (DO NOT CALL THIS DIRECTLY)
 	 * Register the column to this search.
 	 *
-	 * @param Newscoop\Service\Model\Search\Column $column
+	 * @param Column $column
 	 *		The column to register, must not be null or empty.
 	 *
-	 * @return Newscoop\Service\Model\Search\Column
+	 * @return Column
 	 *		The same column provided, used for chaining purposes.
 	 */
 	public function register(Column $column)
@@ -64,7 +64,7 @@ class Search
 	 * (DO NOT CALL THIS DIRECTLY)
 	 * Add an order by column for this search.
 	 *
-	 * @param Newscoop\Service\Model\Search\Column $column
+	 * @param Column $column
 	 *		The column to order by, must not be null or empty.
 	 */
 	public function addOrderBy(Column $column)

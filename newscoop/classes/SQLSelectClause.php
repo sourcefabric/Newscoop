@@ -214,7 +214,7 @@ class SQLSelectClause {
     /**
      * Add group field
      *
-     * @param $p_field
+     * @param string $p_field
      */
     public function addGroupField($p_field)
     {
@@ -225,7 +225,7 @@ class SQLSelectClause {
     /**
      * Add HAVING condition
      *
-     * @param $p_condition
+     * @param string $p_condition
      */
     public function addHaving($p_condition)
     {

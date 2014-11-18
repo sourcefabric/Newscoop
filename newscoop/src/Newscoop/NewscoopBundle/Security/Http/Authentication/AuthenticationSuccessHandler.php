@@ -22,7 +22,6 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
     /**
     * Constructor
     *
-    * @param Zend_Auth   $zendAuth
     */
     public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $em, $userService)
     {

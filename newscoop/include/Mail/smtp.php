@@ -391,6 +391,7 @@ class Mail_smtp extends Mail {
      *
      * @param string Extension keyword.
      * @param string Any value the keyword needs.
+     * @param string $keyword
      *
      * @since 1.2.0
      * @access public

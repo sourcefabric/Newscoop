@@ -20,7 +20,7 @@ class Extension_Index
 
     /**
      * Add directory (or directories) to be indexed
-     * @param string|array $dirs
+     * @param string $dirs
      * @return Extension_Index
      */
     public function addDirectory($dirs)

@@ -8,7 +8,7 @@
 
 namespace Newscoop\NewscoopBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * City Names entity
@@ -51,7 +51,7 @@ class CityNames
     /**
      * Get name_type
      *
-     * @return string
+     * @return integer
      */
     public function getNameType()
     {

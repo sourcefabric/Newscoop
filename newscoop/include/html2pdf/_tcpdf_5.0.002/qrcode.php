@@ -268,7 +268,7 @@ if (!class_exists('QRcode', false)) {
     	 * Convert a string to an array (needed for PHP4 compatibility)
     	 * @param string $string The input string.
     	 * @param int $split_length Maximum length of the chunk.
-    	 * @return  If the optional split_length  parameter is specified, the returned array will be broken down into chunks with each being split_length  in length, otherwise each chunk will be one character in length. FALSE is returned if split_length is less than 1. If the split_length length exceeds the length of string , the entire string is returned as the first (and only) array element.
+    	 * @return  string[] the optional split_length  parameter is specified, the returned array will be broken down into chunks with each being split_length  in length, otherwise each chunk will be one character in length. FALSE is returned if split_length is less than 1. If the split_length length exceeds the length of string , the entire string is returned as the first (and only) array element.
     	 */
 		function str_split($string, $split_length=1) {
 			if ((strlen($string) > $split_length) OR (!$split_length)) {
@@ -803,7 +803,7 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Get frame value at specified position
 		 * @param array $at x,y position
-		 * @return value at specified position
+		 * @return integer at specified position
 		 */
 		protected function getFrameAt($at) {
 			return ord($this->frame[$at['y']][$at['x']]);
@@ -946,8 +946,8 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Write Format Information on frame and returns the number of black bits
 		 * @param int $width frame width
-		 * @param array $frame frame
-		 * @param array $mask masking mode
+		 * @param integer $frame frame
+		 * @param integer $mask masking mode
 		 * @param int $level error correction level
 		 * @return int blacks
 		 */
@@ -1071,7 +1071,7 @@ if (!class_exists('QRcode', false)) {
 		 * Return bitmask
 		 * @param int $maskNo mask number
 		 * @param int $width width
-		 * @param array $frame frame
+		 * @param integer $frame frame
 		 * @return array bitmask
 		 */
 		protected function generateMaskNo($maskNo, $width, $frame) {
@@ -1703,7 +1703,8 @@ if (!class_exists('QRcode', false)) {
 		 * @param array items input items
 		 * @param int $mode encoding mode.
 		 * @param int $size size of data (byte).
-		 * @param array $data array of input data.
+		 * @param string[] $data array of input data.
+		 * @param Input $items
 		 * @return items
 		 *
 		 */
@@ -1792,7 +1793,7 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Look up the alphabet-numeric convesion table (see JIS X0510:2004, pp.19).
 		 * @param int $c character value
-		 * @return value
+		 * @return integer
 		 */
 		protected function lookAnTable($c) {
 			return (($c > 127)?-1:$this->anTable[$c]);
@@ -2094,7 +2095,7 @@ if (!class_exists('QRcode', false)) {
 
 		/**
 		 * mergeBitStream
-		 * @param array $bstream
+		 * @param integer $items
 		 * @return array bitstream
 		 */
 		 protected function mergeBitStream($items) {
@@ -2231,7 +2232,7 @@ if (!class_exists('QRcode', false)) {
 
 		/**
 		 * Convert bitstream to bytes
-		 * @param array $bitstream original bitstream
+		 * @param array $bstream original bitstream
 		 * @return array of bytes
 		 */
 		 protected function bitstreamToByte($bstream) {
@@ -2384,7 +2385,7 @@ if (!class_exists('QRcode', false)) {
 		 * Return an array of ECC specification.
 		 * @param int $version version
 		 * @param int $level error correction level
-		 * @param array $spec an array of ECC specification contains as following: {# of type1 blocks, # of data code, # of ecc code, # of type2 blocks, # of data code}
+		 * @param integer[] $spec an array of ECC specification contains as following: {# of type1 blocks, # of data code, # of ecc code, # of type2 blocks, # of data code}
 		 * @return array spec
 		 */
 		protected function getEccSpec($version, $level, $spec) {
@@ -2414,7 +2415,6 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Put an alignment marker.
 		 * @param array $frame frame
-		 * @param int $width width
 		 * @param int $ox X center coordinate of the pattern
 		 * @param int $oy Y center coordinate of the pattern
 		 * @return array frame
@@ -2438,7 +2438,7 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Put an alignment pattern.
 		 * @param int $version version
-		 * @param array $fram frame
+		 * @param array $frame frame
 		 * @param int $width width
 		 * @return array frame
 		 */
@@ -2508,7 +2508,6 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Put a finder pattern.
 		 * @param array $frame frame
-		 * @param int $width width
 		 * @param int $ox X center coordinate of the pattern
 		 * @param int $oy Y center coordinate of the pattern
 		 * @return array frame
@@ -2678,7 +2677,7 @@ if (!class_exists('QRcode', false)) {
 		/**
 		 * Return data length
 		 * @param array $spec
-		 * @return int value
+		 * @return double value
 		 */
 		 protected function rsDataLength($spec) {
 			return ($spec[0] * $spec[1]) + ($spec[3] * $spec[4]);

@@ -7,9 +7,7 @@ class Admin_View_Helper_StringLimit extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $p_inputs
-     * @param array $p_methods default empty array
-     * @return arrat $
+     * @return string $
      */
     public function stringLimit($p_string, $p_limit = 140, $p_trailing = '...' )
     {

@@ -9,7 +9,6 @@
 namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Override request metod based on "method" parameter - for development and testing purposes.

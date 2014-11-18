@@ -606,6 +606,9 @@ class PEAR_Downloader_Package
         }
     }
 
+    /**
+     * @param string $group
+     */
     function _detect2Dep($dep, $pname, $group, $params)
     {
         if (isset($dep['conflicts'])) {
@@ -929,6 +932,9 @@ class PEAR_Downloader_Package
         return true;
     }
 
+    /**
+     * @return string
+     */
     function getPackage()
     {
         if (isset($this->_packagefile)) {
@@ -1007,6 +1013,9 @@ class PEAR_Downloader_Package
         return false;
     }
 
+    /**
+     * @return string
+     */
     function getVersion()
     {
         if (isset($this->_packagefile)) {
@@ -1241,7 +1250,7 @@ class PEAR_Downloader_Package
      *
      * @param array $params array of PEAR_Downloader_Package objects
      * @param array $errorparams empty array
-     * @return array array of stupid duplicated packages in PEAR_Downloader_Package obejcts
+     * @return integer array of stupid duplicated packages in PEAR_Downloader_Package obejcts
      */
     function detectStupidDuplicates($params, &$errorparams)
     {
@@ -1498,6 +1507,7 @@ class PEAR_Downloader_Package
      * @param PEAR_Config
      * @param int
      * @param string
+     * @param PEAR_Config $c
      */
     function &getPackagefileObject(&$c, $d)
     {

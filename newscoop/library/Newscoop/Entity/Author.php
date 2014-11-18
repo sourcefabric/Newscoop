@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\View\AuthorView;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -224,7 +224,7 @@ class Author
     /**
      * Setter for type
      *
-     * @param Newscoop\Entity\AuthorType $type Value to set
+     * @param AuthorType $type Value to set
      *
      * @return self
      */
@@ -286,7 +286,7 @@ class Author
     /**
      * Getter for aim
      *
-     * @return aim
+     * @return string
      */
     public function getAim()
     {
@@ -385,7 +385,7 @@ class Author
     /**
      * Get view
      *
-     * @return Newscoop\View\AuthorView
+     * @return AuthorView
      */
     public function getView()
     {

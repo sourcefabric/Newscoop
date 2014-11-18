@@ -200,7 +200,7 @@ class Archive_Tar extends PEAR
     * @param array  $p_filelist An array of filenames and directory names, or a
 	*                           single string with names separated by a single
 	*                           blank space.
-    * @return                   true on success, false on error.
+    * @return                   boolean on success, false on error.
     * @see createModify()
     * @access public
     */
@@ -222,7 +222,7 @@ class Archive_Tar extends PEAR
     * @param array  $p_filelist An array of filenames and directory names, or a
 	*                           single string with names separated by a single
 	*                           blank space.
-    * @return                   true on success, false on error.
+    * @return                   boolean on success, false on error.
     * @see createModify()
     * @access public
     */
@@ -361,7 +361,7 @@ class Archive_Tar extends PEAR
 	*                                   removed from the memorized path of
 	*                                   each element in the list, when
     *                                   relevant.
-    * @return                           true on success, false on error.
+    * @return                           boolean on success, false on error.
     * @access public
     */
     function addModify($p_filelist, $p_add_dir, $p_remove_dir='')
@@ -399,7 +399,7 @@ class Archive_Tar extends PEAR
 	*                                   with the string.
     * @param string     $p_string       The content of the file added in
 	*                                   the archive.
-    * @return                           true on success, false on error.
+    * @return                           boolean on success, false on error.
     * @access public
     */
     function addString($p_filename, $p_string)
@@ -481,7 +481,7 @@ class Archive_Tar extends PEAR
     * This method extract from the archive one file identified by $p_filename.
     * The return value is a string with the file content, or NULL on error.
     * @param string $p_filename     The path of the file to extract in a string.
-    * @return                       a string with the file content or NULL.
+    * @return                       null|string string with the file content or NULL.
     * @access public
     */
     function extractInString($p_filename)
@@ -512,7 +512,7 @@ class Archive_Tar extends PEAR
     * @param string $p_remove_path  Part of the memorized path that can be
 	*                               removed if present at the beginning of
 	*                               the file/dir path.
-    * @return                       true on success, false on error.
+    * @return                       boolean on success, false on error.
     * @access public
     * @see extractModify()
     */
@@ -545,8 +545,7 @@ class Archive_Tar extends PEAR
     * This method set specific attributes of the archive. It uses a variable
     * list of parameters, in the format attribute code + attribute values :
     * $arch->setAttribute(ARCHIVE_TAR_ATT_SEPARATOR, ',');
-    * @param mixed $argv            variable list of attributes and values
-    * @return                       true on success, false on error.
+    * @return                       boolean on success, false on error.
     * @access public
     */
     function setAttribute()
@@ -801,6 +800,11 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _writeBlock()
+
+    /**
+     * @param string $p_binary_data
+     * @param integer $p_len
+     */
     function _writeBlock($p_binary_data, $p_len=null)
     {
       if (is_resource($this->_file)) {
@@ -851,6 +855,10 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _jumpBlock()
+
+    /**
+     * @param double $p_len
+     */
     function _jumpBlock($p_len=null)
     {
       if (is_resource($this->_file)) {
@@ -888,6 +896,11 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _addList()
+
+    /**
+     * @param string $p_add_dir
+     * @param string $p_remove_dir
+     */
     function _addList($p_list, $p_add_dir, $p_remove_dir)
     {
       $v_result=true;
@@ -1024,6 +1037,11 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _addString()
+
+    /**
+     * @param string $p_filename
+     * @param string $p_string
+     */
     function _addString($p_filename, $p_string)
     {
       if (!$this->_file) {
@@ -1054,6 +1072,10 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _writeHeader()
+
+    /**
+     * @param string $p_stored_filename
+     */
     function _writeHeader($p_filename, $p_stored_filename)
     {
         if ($p_stored_filename == '')
@@ -1147,6 +1169,10 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _writeHeaderBlock()
+
+    /**
+     * @param integer $p_size
+     */
     function _writeHeaderBlock($p_filename, $p_size, $p_mtime=0, $p_perms=0,
 	                           $p_type='', $p_uid=0, $p_gid=0)
     {
@@ -1231,6 +1257,10 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _writeLongHeader()
+
+    /**
+     * @param string $p_filename
+     */
     function _writeLongHeader($p_filename)
     {
         $v_size = sprintf("%11s ", DecOct(strlen($p_filename)));
@@ -1430,7 +1460,7 @@ class Archive_Tar extends PEAR
     * This method extract from the archive one file identified by $p_filename.
     * The return value is a string with the file content, or NULL on error.
     * @param string $p_filename     The path of the file to extract in a string.
-    * @return                       a string with the file content or NULL.
+    * @return                       null|string string with the file content or NULL.
     * @access private
     */
     function _extractInString($p_filename)
@@ -1478,6 +1508,12 @@ class Archive_Tar extends PEAR
     // }}}
 
     // {{{ _extractList()
+
+    /**
+     * @param string $p_path
+     * @param string $p_mode
+     * @param string $p_remove_path
+     */
     function _extractList($p_path, &$p_list_detail, $p_mode,
 	                      $p_file_list, $p_remove_path)
     {

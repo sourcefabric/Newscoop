@@ -9,8 +9,6 @@ namespace Newscoop\Service;
 
 use Newscoop\Entity\ArticleType;
 
-use Newscoop\Service\IEntityService;
-
 /**
  * Provides the services for the Publications.
  */

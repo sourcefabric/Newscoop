@@ -129,6 +129,9 @@ class CacheService
         return $this->cacheDriver->delete($this->getCacheKey($id));
     }
 
+    /**
+     * @param string $namespace
+     */
     public function getCacheKey($id, $namespace = null)
     {
         if (is_array($id)) {

@@ -8,7 +8,6 @@
 
 namespace Newscoop\CommunityTickerBundle\Meta;
 
-use Doctrine\ORM\EntityManager;
 use Newscoop\CommunityTickerBundle\Entity\CommunityTickerEvent;
 
 /**
@@ -79,7 +78,7 @@ class MetaCommunityTicker
      *
      * @param CommunityTickerEvent $feed
      *
-     * @return string
+     * @return \MetaUser|null
      */
     protected function getUser($feed)
     {   
@@ -103,7 +102,7 @@ class MetaCommunityTicker
     /**
      * Get comment
      *
-     * @return MetaComment|null
+     * @return \MetaComment|null
      */
     protected function getComment()
     {
@@ -113,7 +112,7 @@ class MetaCommunityTicker
     /**
      * Get article
      *
-     * @return MetaArticle|null
+     * @return \MetaArticle|null
      */
     protected function getArticle()
     {
@@ -123,7 +122,7 @@ class MetaCommunityTicker
     /**
      * Get topic
      *
-     * @return MetaTopic|null
+     * @return \MetaTopic|null
      */
     protected function getTopic()
     {  

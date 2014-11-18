@@ -128,7 +128,7 @@ class BugReporter
 
 
     /**
-     * @return The pinging status
+     * @return boolean pinging status
      */
     public function getPingStatus()
     {
@@ -213,7 +213,7 @@ class BugReporter
     /**
      * Get the version of the software the error occurred in.
      *
-     * @return string The version of the software the error occurred in
+     * @return integer The version of the software the error occurred in
      */
     public function getVersion()
     {
@@ -235,7 +235,7 @@ class BugReporter
     /**
      * Get the error message
      *
-     * @return The error-string
+     * @return string error-string
      */
     public function getStr()
     {
@@ -279,7 +279,7 @@ class BugReporter
     /**
      * Get the error reporter's email address
      *
-     * @return int Get the email address of the user.
+     * @return string Get the email address of the user.
      */
     public function getEmail()
     {
@@ -293,7 +293,7 @@ class BugReporter
     /**
      * Get the error reporter's description of the error.
      *
-     * @return int Get the user's description of the error
+     * @return string Get the user's description of the error
      */
     public function getDescription()
     {

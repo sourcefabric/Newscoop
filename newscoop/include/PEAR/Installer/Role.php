@@ -36,6 +36,7 @@ class PEAR_Installer_Role
      *
      * Never call this directly, it is called by the PEAR_Config constructor
      * @param PEAR_Config
+     * @param PEAR_Config $config
      * @access private
      * @static
      */

@@ -6,7 +6,6 @@
  */
 
 use Newscoop\Annotations\Acl;
-use Newscoop\Image\Rendition;
 use Newscoop\Package\PackageService;
 
 /**

@@ -126,23 +126,38 @@
          if ($this->iHeight > 200) $this->iHeight = 200; // to prevent performance impact
       }
 
+      /**
+       * @param integer $iNumChars
+       */
       function SetNumChars($iNumChars) {
          $this->iNumChars = $iNumChars;
          $this->CalculateSpacing();
       }
 
+      /**
+       * @param integer $iNumLines
+       */
       function SetNumLines($iNumLines) {
          $this->iNumLines = $iNumLines;
       }
 
+      /**
+       * @param boolean $bCharShadow
+       */
       function DisplayShadow($bCharShadow) {
          $this->bCharShadow = $bCharShadow;
       }
 
+      /**
+       * @param string $sOwnerText
+       */
       function SetOwnerText($sOwnerText) {
          $this->sOwnerText = $sOwnerText;
       }
 
+      /**
+       * @param string $vCharSet
+       */
       function SetCharSet($vCharSet) {
          // check for input type
          if (is_array($vCharSet)) {
@@ -178,22 +193,37 @@
          }
       }
 
+      /**
+       * @param boolean $bCaseInsensitive
+       */
       function CaseInsensitive($bCaseInsensitive) {
          $this->bCaseInsensitive = $bCaseInsensitive;
       }
 
+      /**
+       * @param string $vBackgroundImages
+       */
       function SetBackgroundImages($vBackgroundImages) {
          $this->vBackgroundImages = $vBackgroundImages;
       }
 
+      /**
+       * @param integer $iMinFontSize
+       */
       function SetMinFontSize($iMinFontSize) {
          $this->iMinFontSize = $iMinFontSize;
       }
 
+      /**
+       * @param integer $iMaxFontSize
+       */
       function SetMaxFontSize($iMaxFontSize) {
          $this->iMaxFontSize = $iMaxFontSize;
       }
 
+      /**
+       * @param boolean $bUseColour
+       */
       function UseColour($bUseColour) {
          $this->bUseColour = $bUseColour;
       }
@@ -207,6 +237,9 @@
       	}
       }
 
+      /**
+       * @param string $sFileType
+       */
       function SetFileType($sFileType) {
          // check for valid file type
          if (in_array($sFileType, array('gif', 'png', 'jpeg'))) {
@@ -327,6 +360,9 @@
          }
       }
 
+      /**
+       * @param string $sFilename
+       */
       function WriteFile($sFilename) {
          if ($sFilename == '') {
             // tell browser that data is jpeg

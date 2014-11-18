@@ -38,6 +38,7 @@ class HTML2PDF_parsingHtml
      * change the encoding
      *
      * @param   string encoding
+     * @param string $encoding
      * @access  public
      */
     public function setEncoding($encoding)
@@ -439,6 +440,7 @@ class HTML2PDF_parsingHtml
      * get a full level of HTML, between an opening and closing corresponding
      *
      * @param   integer key
+     * @param integer $k
      * @return  array   actions
      */
     public function getLevel($k)

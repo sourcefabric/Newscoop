@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Session;
 
 /**
@@ -58,7 +58,7 @@ class Request
 
     /**
      * Get $last_stats_update
-     * @return \DateTime
+     * @return string
      */
     public function getLastStatsUpdate() {
         return $this->last_stats_update;
@@ -76,7 +76,7 @@ class Request
 
     /**
      * Get $object_id
-     * @return integer
+     * @return string
      */
     public function getObjectId() {
         return $this->object_id;

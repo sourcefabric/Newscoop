@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity\User;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Ip entity
@@ -51,7 +51,7 @@ class Ip
      * Set user
      *
      * @param Newscoop\Entity\User $user
-     * @return Newscoop\Entity\User\Ip
+     * @return Ip
      */
     public function setUser(\Newscoop\Entity\User $user)
     {
@@ -63,7 +63,7 @@ class Ip
      * Set ip
      *
      * @param string $ip
-     * @return Newscoop\Entity\User\Ip
+     * @return Ip
      */
     public function setIp($ip)
     {
@@ -85,7 +85,7 @@ class Ip
      * Set number
      *
      * @param int $number
-     * @return Newscoop\Entity\User\Ip
+     * @return Ip
      */
     public function setNumber($number)
     {

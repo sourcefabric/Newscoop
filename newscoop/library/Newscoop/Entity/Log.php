@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Log entity
@@ -89,7 +89,7 @@ class Log
     /**
      * Get message
      *
-     * @return string
+     * @return integer
      */
     public function getMessage()
     {

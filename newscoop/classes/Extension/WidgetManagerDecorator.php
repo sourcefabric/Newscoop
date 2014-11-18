@@ -47,7 +47,6 @@ class WidgetManagerDecorator extends DatabaseObject
     private $settings = NULL;
 
     /**
-     * @param IWidget $widget
      * @param string|array $args
      */
     public function __construct($args = NULL)
@@ -70,7 +69,7 @@ class WidgetManagerDecorator extends DatabaseObject
     /**
      * Get instance for extension
      * @param Extension_Extension $extension
-     * @return IWidget
+     * @return integer
      */
     public static function GetByExtension(Extension_Extension $extension)
     {

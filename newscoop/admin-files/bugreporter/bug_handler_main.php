@@ -162,7 +162,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
  * http_response_code function is supported from PHP >= 5.4
  * This function provide same functionality for PHP < 5.4
  *
- * @param int|string $newCode Status code.
+ * @param int|string $newcode Status code.
  *
  * @return int
  */

@@ -131,7 +131,7 @@ class RefreshToken extends BaseRefreshToken
     /**
      * Sets the value of publication.
      *
-     * @param Newscoop\Entity\Publication $publication the publication
+     * @param \Newscoop\Entity\Publication $publication the publication
      *
      * @return self
      */

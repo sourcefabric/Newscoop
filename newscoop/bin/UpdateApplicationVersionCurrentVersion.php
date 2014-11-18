@@ -8,7 +8,6 @@
  * file that was distributed with this source code.
  */
 
-use Liip\RMT\Information\InformationRequest;
 use Liip\RMT\Context;
 
 /**

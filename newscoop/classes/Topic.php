@@ -24,7 +24,6 @@ class Topic extends DatabaseObject
     /**
      * A topic is like a category for a piece of data.
      *
-     * @param int $p_id
      */
     public function Topic($p_idOrName = null)
     {
@@ -50,7 +49,7 @@ class Topic extends DatabaseObject
      * - node_right
      * - names - array of topic translations of the form: language_id => name
      *
-     * @return void
+     * @return boolean
      */
     public function fetch($p_columns = null, $p_forceExists = false)
     {
@@ -98,7 +97,7 @@ class Topic extends DatabaseObject
      * - names - array of topic translations of the form: language_id => name
      *
      * @param  array $p_values
-     * @return json  object
+     * @return string  object
      */
 
     public static function add($p_values = null)
@@ -496,7 +495,7 @@ class Topic extends DatabaseObject
 
     /**
      * Returns true if it was a root topic
-     * @return boolean
+     * @return null|boolean
      */
     public function isRoot()
     {
@@ -757,7 +756,7 @@ class Topic extends DatabaseObject
      * Returns an SQLSelectClause object that builds a query for retrieving the
      * subtopics of the given parent.
      *
-     * @param  integer         $p_parentId - parent topic identifier
+     * @param  integer         $p_parentIds - parent topic identifier
      * @return SQLSelectClause
      */
     public static function BuildSubtopicsQueryWithoutDepth($p_parentIds = 0)
@@ -862,7 +861,7 @@ class Topic extends DatabaseObject
     /**
      * Update order for all items in tree.
      *
-     * @param  array $order
+     * @param  array $p_order
      *                      $parent =>  array(
      *                      $order => $topicId
      *                      );
@@ -906,9 +905,7 @@ class Topic extends DatabaseObject
 
     /**
      *
-     * @param integer $p_topicId
-     * @param integer $p_oldTopicOrder
-     * @param integer $p_newTopicOrder
+     * @param integer $p_leftTopicId
      */
     private static function SwitchTopics($p_leftTopicId, $p_rightTopicId, Topic $p_parentTopic)
     {

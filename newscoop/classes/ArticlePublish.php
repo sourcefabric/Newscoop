@@ -320,7 +320,7 @@ class ArticlePublish extends DatabaseObject {
 
 	/**
 	 * Execute all pending actions.
-	 * @return void
+	 * @return integer
 	 */
 	public static function DoPendingActions()
 	{

@@ -9,7 +9,6 @@
 namespace Newscoop\Article;
 
 use Doctrine\ORM\EntityManager;
-use Newscoop\Router\RouterFactory;
 use Newscoop\Entity\Article;
 use Symfony\Component\Routing\Router;
 
@@ -96,7 +95,7 @@ class LinkService
     /**
      * Get link
      *
-     * @param Newscoop\Entity\Article $article
+     * @param Article $article
      *
      * @return string
      */
@@ -125,7 +124,7 @@ class LinkService
     /**
      * Get canonical link
      *
-     * @param Newscoop\Entity\Article $article
+     * @param Article $article
      * @return string
      */
     public function getLinkCanonical(Article $article)
@@ -165,7 +164,7 @@ class LinkService
     /**
      * Get issue short name
      *
-     * @param Newscoop\Entity\Article $article
+     * @param Article $article
      * @return string
      */
     public function getIssueShortName(Article $article)
@@ -182,7 +181,7 @@ class LinkService
     /**
      * Get section short name
      *
-     * @param Newscoop\Entity\Article $article
+     * @param Article $article
      * @return string
      */
     public function getSectionShortName(Article $article)
@@ -207,7 +206,7 @@ class LinkService
     /**
      * Get seo string
      *
-     * @param object $article
+     * @param Article $article
      * @param array $fields
      * @return string
      */

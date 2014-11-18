@@ -40,7 +40,7 @@ class UserTopicService
      * Follow topic by user
      *
      * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param Topic $topic
      * @return void
      */
     public function followTopic(User $user, Topic $topic)
@@ -57,7 +57,7 @@ class UserTopicService
      * Unfollow topic
      *
      * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param Topic $topic
      * @return void
      */
     public function unfollowTopic(User $user, Topic $topic)
@@ -105,7 +105,7 @@ class UserTopicService
      * Find topic
      *
      * @param int $id
-     * @return Newscoop\Entity\Topic
+     * @return Topic
      */
     public function findTopic($id)
     {
@@ -132,7 +132,7 @@ class UserTopicService
     /**
      * Save user topics command
      *
-     * @param Newscoop\Topic\SaveUserTopicsCommand $command
+     * @param SaveUserTopicsCommand $command
      * @return void
      */
     public function saveUserTopics(SaveUserTopicsCommand $command)
@@ -204,7 +204,7 @@ class UserTopicService
      * Dispatch event
      *
      * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param Topic $topic
      */
     private function notify(User $user, Topic $topic)
     {

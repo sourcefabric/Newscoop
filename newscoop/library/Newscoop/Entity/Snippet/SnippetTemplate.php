@@ -8,7 +8,7 @@
 
 namespace Newscoop\Entity\Snippet;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Entity\Snippet;
 use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
@@ -119,7 +119,7 @@ class SnippetTemplate
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setId($id)
     {
@@ -158,7 +158,7 @@ class SnippetTemplate
      *
      * @param string $name
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setName($name)
     {
@@ -183,7 +183,7 @@ class SnippetTemplate
      *
      * @param string $controller Value to set
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setController($controller)
     {
@@ -206,7 +206,7 @@ class SnippetTemplate
     /**
      * Check if the Template has Fields
      *
-     * @return mixed
+     * @return boolean
      */
     public function hasFields()
     {
@@ -230,9 +230,9 @@ class SnippetTemplate
     /**
      * Add Snippet Template Field
      *
-     * @param Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField $field Field to add
+     * @param SnippetTemplateField $field Field to add
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function addField(SnippetTemplateField $field)
     {
@@ -247,11 +247,8 @@ class SnippetTemplate
      * Create and add Snippet Template Field
      *
      * @param array  $parameters          Array with Parameters
-     * @param string $parameters['name']  SnippetTemplateField name
-     * @param string $parameters['type']  SnippetTemplateField type  (string | int | bool)
-     * @param string $parameters['scope'] SnippetTemplateField scope (frontend | backend)
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function createField(array $parameters)
     {
@@ -293,7 +290,7 @@ class SnippetTemplate
      *
      * @param string $templateCode Template Code to Set (Twig format)
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setTemplateCode($templateCode)
     {
@@ -323,7 +320,7 @@ class SnippetTemplate
      *
      * @param boolean $favourite
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setFavourite($favourite)
     {
@@ -336,7 +333,7 @@ class SnippetTemplate
     /**
      * Getter for enabled
      *
-     * @return mixed
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -373,7 +370,7 @@ class SnippetTemplate
      *
      * @param string $iconInactive base64 encoded image
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setIconInactive($iconInactive)
     {
@@ -398,7 +395,7 @@ class SnippetTemplate
      *
      * @param string $iconActive base64 encoded image $iconInactive
      *
-     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     * @return SnippetTemplate
      */
     public function setIconActive($iconActive)
     {
@@ -411,7 +408,7 @@ class SnippetTemplate
     /**
      * Getter for created
      *
-     * @return DateTime
+     * @return string
      */
     public function getCreated()
     {
@@ -423,7 +420,7 @@ class SnippetTemplate
      *
      * @param DateTime $created Value to set
      *
-     * @return Newscoop\Entity\Snippet
+     * @return SnippetTemplate
      */
     public function setCreated($created = null)
     {
@@ -440,7 +437,7 @@ class SnippetTemplate
     /**
      * Getter for modified
      *
-     * @return mixed
+     * @return string
      */
     public function getModified()
     {

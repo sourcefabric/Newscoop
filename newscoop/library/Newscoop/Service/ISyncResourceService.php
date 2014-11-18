@@ -9,7 +9,6 @@
 namespace Newscoop\Service;
 
 use Newscoop\Entity\Resource;
-use Newscoop\Entity\Output;
 use Newscoop\Service\IEntityService;
 
 /**
@@ -52,7 +51,7 @@ interface ISyncResourceService extends IEntityService
      * Provides the synchronized Resource based on the provided resource.
      * The synchronization of a resource means the association of that resource with the database.
      *
-     * @param string|int $pathOrID
+     * @param string|int $pathOrId
      * 		The Resource Path or Id to be synchronized, not null, not empty.
      *
      * @return Resource
@@ -93,6 +92,7 @@ interface ISyncResourceService extends IEntityService
      * Clears all resources that are prefixed by the provided path.
      * @param str $path
      * 		The path for which all resources should be cleared has to end with a '/'.
+     * @return void
      */
     function clearAllFor($path);
 }

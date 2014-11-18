@@ -212,7 +212,7 @@ final class CampSite extends CampSystem
     /**
      * Returns a CampSession instance.
      *
-     * @return object
+     * @return CampSession
      *                A CampSession instance
      */
     public static function GetSessionInstance()
@@ -223,8 +223,6 @@ final class CampSite extends CampSystem
     /**
      * Returns the appropiate URI instance.
      *
-     * @param  string  $p_uri
-     *                        The URI to work with
      * @return CampURI
      */
     public static function GetURIInstance()

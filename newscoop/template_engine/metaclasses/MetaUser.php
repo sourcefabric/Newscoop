@@ -120,7 +120,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     /**
      * Get subscription
      *
-     * @return MetaSubscription
+     * @return MetaSubscriptions
      */
     protected function getSubscriptions()
     {
@@ -192,7 +192,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     /**
      * Test if user is blocked from commenting
      *
-     * @return bool
+     * @return integer
      */
     protected function isBlockedFromComments()
     {
@@ -335,7 +335,6 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     /**
      * Test if user is a given type
      *
-     * @param string $type
      *
      * @return bool
      */

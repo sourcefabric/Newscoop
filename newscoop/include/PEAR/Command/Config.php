@@ -360,6 +360,9 @@ and uninstall).
             $command);
     }
 
+    /**
+     * @param PEAR_Config $config
+     */
     function _showConfig(&$config)
     {
         $params = array('user');
@@ -397,7 +400,7 @@ and uninstall).
      * Checks if a layer is defined or not
      *
      * @param string $layer The layer to search for
-     * @return mixed False on no error or the error message
+     * @return string|false False on no error or the error message
      */
     function _checkLayer($layer = null)
     {

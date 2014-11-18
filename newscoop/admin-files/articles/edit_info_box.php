@@ -1,4 +1,4 @@
-<?php use Newscoop\Webcode\Manager; 
+<?php  
   $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 

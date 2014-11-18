@@ -7,10 +7,9 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
-use Newscoop\Entity\Theme;
 
 /**
  * Provides the settings for an output in relation with the theme resources.
@@ -65,7 +64,7 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Provides the output that is the owner of this settings.
 	 *
-	 * @return Newscoop\Entity\Output
+	 * @return Output
 	 *		The output that is the owner of this settings.
 	 */
 	function getOutput()
@@ -76,10 +75,10 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Set the output that is the owner of this settings.
 	 *
-	 * @param Newscoop\Entity\Output $output
+	 * @param Output $output
 	 *		The output that is the owner of this settings, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\OutputSetting
+	 * @return OutputSettings
 	 *		This object for chaining purposes.
 	 */
 	function setOutput(Output $output)
@@ -94,7 +93,7 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Provides the front page template resource.
 	 *
-	 * @return Newscoop\Entity\Resource
+	 * @return Resource
 	 *		The front page template resource.
 	 */
 	function getFrontPage()
@@ -105,10 +104,10 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Set the front page template resource.
 	 *
-	 * @param Newscoop\Entity\Resource $frontPage
+	 * @param Resource $frontPage
 	 *		The front page template resource, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\OutputSetting
+	 * @return OutputSettings
 	 *		This object for chaining purposes.
 	 */
 	function setFrontPage(Resource $frontPage = null)
@@ -122,7 +121,7 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Provides the section page template resource.
 	 *
-	 * @return Newscoop\Entity\Resource
+	 * @return Resource
 	 *		The section page template resource.
 	 */
 	function getSectionPage()
@@ -133,10 +132,10 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Set the section page template resource.
 	 *
-	 * @param Newscoop\Entity\Resource $sectionPage
+	 * @param Resource $sectionPage
 	 *		The section page template resource, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\OutputSetting
+	 * @return OutputSettings
 	 *		This object for chaining purposes.
 	 */
 	function setSectionPage(Resource $sectionPage = null)
@@ -150,7 +149,7 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Provides the article page template resource.
 	 *
-	 * @return Newscoop\Entity\Resource
+	 * @return Resource
 	 *		The article page template resource.
 	 */
 	function getArticlePage()
@@ -161,10 +160,10 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Set the article page template resource.
 	 *
-	 * @param Newscoop\Entity\Resource $articlePage
+	 * @param Resource $articlePage
 	 *		The article page template resource, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\OutputSetting
+	 * @return OutputSettings
 	 *		This object for chaining purposes.
 	 */
 	function setArticlePage(Resource $articlePage = null)
@@ -178,7 +177,7 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Provides the article page template resource.
 	 *
-	 * @return Newscoop\Entity\Resource
+	 * @return Resource
 	 *		The article page template resource.
 	 */
 	function getErrorPage()
@@ -189,10 +188,10 @@ class OutputSettings extends AbstractEntity
 	/**
 	 * Set the error page template resource.
 	 *
-	 * @param Newscoop\Entity\Resource $errorPage
+	 * @param Resource $errorPage
 	 *		The error page template resource, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\OutputSetting
+	 * @return OutputSettings
 	 *		This object for chaining purposes.
 	 */
 	function setErrorPage(Resource $errorPage = null)

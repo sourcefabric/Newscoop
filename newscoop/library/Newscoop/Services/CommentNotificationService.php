@@ -27,9 +27,9 @@ class CommentNotificationService
     protected $em;
 
     /**
-     * @param Newscoop\Services\EmailService   $emailService
-     * @param Newscoop\Services\CommentService $commentService
-     * @param Newscoop\Services\User           $userService
+     * @param EmailService   $emailService
+     * @param CommentService $commentService
+     * @param UserService           $userService
      * @param Doctrine\ORM\EntityManager       $em
      */
     public function __construct(EmailService $emailService, CommentService $commentService, UserService $userService, EntityManager $em)

@@ -6,7 +6,7 @@
  */
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Playlist entity
@@ -45,7 +45,7 @@ class PlaylistArticle extends AbstractEntity
 
     /**
      * set playlist
-     * @return Newscoop\Entity\PlaylistArticle
+     * @return PlaylistArticle
      */
     public function setPlaylist(Playlist $playlist)
     {
@@ -64,7 +64,7 @@ class PlaylistArticle extends AbstractEntity
 
     /**
      * set article
-     * @return Newscoop\Entity\PlaylistArticle
+     * @return PlaylistArticle
      */
     public function setArticle(Article $article)
     {

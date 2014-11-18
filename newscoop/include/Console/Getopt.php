@@ -80,6 +80,7 @@ class Console_Getopt {
 
     /**
      * The actual implementation of the argument parsing code.
+     * @param integer $version
      */
     function doGetopt($version, $args, $short_options, $long_options = null)
     {
@@ -144,6 +145,7 @@ class Console_Getopt {
     /**
      * @access private
      *
+     * @param string $arg
      */
     function _parseShortOption($arg, $short_options, &$opts, &$args)
     {
@@ -208,6 +210,7 @@ class Console_Getopt {
     /**
      * @access private
      *
+     * @param string $arg
      */
     function _parseLongOption($arg, $long_options, &$opts, &$args)
     {

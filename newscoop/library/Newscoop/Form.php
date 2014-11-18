@@ -9,11 +9,9 @@
 
 namespace Newscoop;
 
-use Newscoop\Form\Decorator,
-    Newscoop\Form\Element\OldHash,
-    SecurityToken,
-    Zend_Form,
-    Zend_Form_Decorator_Form;
+use Newscoop\Form\Decorator;
+use Newscoop\Form\Element\OldHash;
+use Zend_Form;
 
 class Form extends Zend_Form
 {

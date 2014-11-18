@@ -110,7 +110,8 @@ class SystemPreferencesService
     /**
      * Get value for given property
      *
-     * @param $property Given property
+     * @param string $property Given property
+     * @param string $default
      *
      * @return string
      */

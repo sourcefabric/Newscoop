@@ -50,7 +50,7 @@ class CacheEngine_APC extends CacheEngine
      * Returns true if a value identified by the given key was
      * stored in the cache.
      * @param $key
-     * @return mixed
+     * @return boolean
      */
     public function hasValueKey($p_key)
     {
@@ -118,7 +118,7 @@ class CacheEngine_APC extends CacheEngine
 
     /**
      * Deletes the pages stored in the cache.
-     * @return void
+     * @return boolean
      */
     public function clearPages()
     {

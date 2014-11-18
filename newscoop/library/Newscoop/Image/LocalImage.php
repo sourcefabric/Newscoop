@@ -586,7 +586,7 @@ class LocalImage implements ImageInterface
     /**
      * Sets the value of created.
      *
-     * @param DateTime $created the created
+     * @param \DateTime $created the created
      *
      * @return self
      */
@@ -610,7 +610,7 @@ class LocalImage implements ImageInterface
     /**
      * Sets the value of updated.
      *
-     * @param DateTime $updated the updated
+     * @param \DateTime $updated the updated
      *
      * @return self
      */

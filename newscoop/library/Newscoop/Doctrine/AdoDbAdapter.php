@@ -9,7 +9,6 @@ namespace Newscoop\Doctrine;
 
 use InvalidArgumentException;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
 
 /**
  * AdoDb Adapter
@@ -58,7 +57,7 @@ class AdoDbAdapter
      * Execute sql statement
      *
      * @param string $sql
-     * @return null
+     * @return AdoDbStatement
      */
     public function execute($sql, $params = array())
     {
@@ -270,7 +269,7 @@ class AdoDbAdapter
      * @param string $sql
      * @param int $limit
      * @param int $offset
-     * @return mixed
+     * @return AdoDbStatement
      */
     public function selectLimit($sql, $limit = -1, $offset = -1)
     {

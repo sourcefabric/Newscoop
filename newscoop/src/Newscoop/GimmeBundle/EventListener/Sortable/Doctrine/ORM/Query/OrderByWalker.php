@@ -2,11 +2,11 @@
 
 namespace Newscoop\GimmeBundle\EventListener\Sortable\Doctrine\ORM\Query;
 
-use Doctrine\ORM\Query\TreeWalkerAdapter,
-    Doctrine\ORM\Query\AST\SelectStatement,
-    Doctrine\ORM\Query\AST\PathExpression,
-    Doctrine\ORM\Query\AST\OrderByItem,
-    Doctrine\ORM\Query\AST\OrderByClause;
+use Doctrine\ORM\Query\TreeWalkerAdapter;
+use Doctrine\ORM\Query\AST\SelectStatement;
+use Doctrine\ORM\Query\AST\PathExpression;
+use Doctrine\ORM\Query\AST\OrderByItem;
+use Doctrine\ORM\Query\AST\OrderByClause;
 
 /**
  * OrderBy Query TreeWalker for Sortable functionality
@@ -71,7 +71,7 @@ class OrderByWalker extends TreeWalkerAdapter
     /**
      * Find alias for choosen field
      * @param  string $field Field name
-     * @return array         array with alias or field name and class namespace
+     * @return string         array with alias or field name and class namespace
      */
     private function findAliasForField($field)
     {

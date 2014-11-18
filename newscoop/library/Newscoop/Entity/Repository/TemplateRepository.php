@@ -7,8 +7,8 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Template;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Template;
 
 /**
  * Template repository
@@ -34,7 +34,6 @@ class TemplateRepository extends EntityRepository
      * Get template for given key
      *
      * @param string $key
-     * @param bool $flush
      * @return Newscoop\Entity\Template
      */
     public function getTemplate($key)
@@ -58,7 +57,7 @@ class TemplateRepository extends EntityRepository
     /**
      * Save template
      *
-     * @param Newscoop\Entity\Template $template
+     * @param Template $template
      * @param array $values
      * @return void
      */
@@ -75,7 +74,6 @@ class TemplateRepository extends EntityRepository
      * Delete template
      *
      * @param string $key
-     * @param string $root
      * @return void
      */
     public function delete($key)

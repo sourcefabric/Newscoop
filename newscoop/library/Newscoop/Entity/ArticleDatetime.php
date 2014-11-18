@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Article;
 
 /**
@@ -142,7 +142,7 @@ class ArticleDatetime extends AbstractEntity
     }
 
     /**
-     * @param array $articleData
+     * @param array $article
      * @param ArticleDatetime $dateData
      */
     public function setValues($dateData, $article, $fieldName, $articleType=null, $otherInfo=null)

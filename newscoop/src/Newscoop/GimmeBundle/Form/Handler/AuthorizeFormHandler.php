@@ -14,7 +14,6 @@ use Newscoop\GimmeBundle\Form\Model\Authorize;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use OAuth2\OAuth2;
 use OAuth2\OAuth2ServerException;
-use OAuth2\OAuth2RedirectException;
 use FOS\OAuthServerBundle\Form\Handler\AuthorizeFormHandler as BaseAuthorizeFormHandler;
 
 class AuthorizeFormHandler extends BaseAuthorizeFormHandler

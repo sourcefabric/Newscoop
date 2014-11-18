@@ -23,7 +23,7 @@ class Column
 	/**
 	 * Creates a new column.
 	 *
-	 * @param Newscoop\Service\Model\Search\Search $search
+	 * @param Search $search
 	 *		The search instance that is the owner of this Column.
 	 */
 	function __construct(Search $search)

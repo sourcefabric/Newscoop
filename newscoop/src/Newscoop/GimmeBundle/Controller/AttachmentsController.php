@@ -11,7 +11,6 @@ namespace Newscoop\GimmeBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 use Newscoop\Entity\Attachment;
-use Newscoop\Entity\User;
 use Newscoop\GimmeBundle\Form\Type\AttachmentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

@@ -18,14 +18,14 @@ interface DocumentInterface
     /**
      * Get indexing date
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getIndexed();
 
     /**
      * Set indexing date
      *
-     * @param DateTime $indexed
+     * @param \DateTime $indexed
      *
      * @return self
      */

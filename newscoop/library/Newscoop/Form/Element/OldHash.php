@@ -12,8 +12,8 @@ namespace Newscoop\Form\Element;
 /**
  * Hash implementation from the old cod
  */
-use Zend_Form_Element_Xhtml,
-    SecurityToken;
+use Zend_Form_Element_Xhtml;
+use SecurityToken;
 
 class OldHash extends Zend_Form_Element_Xhtml
 {
@@ -36,7 +36,7 @@ class OldHash extends Zend_Form_Element_Xhtml
      * Creates session namespace for CSRF token, and adds validator for CSRF
      * token.
      *
-     * @param  string|array|Zend_Config $spec
+     * @param  string $spec
      * @param  array|Zend_Config $options
      * @return void
      */

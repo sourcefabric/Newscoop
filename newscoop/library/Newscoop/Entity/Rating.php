@@ -8,7 +8,6 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Newscoop\Entity\Article;
 
 /**
  * Rating entity
@@ -98,8 +97,8 @@ class Rating extends AbstractEntity
     /**
      * Set timecreated
      *
-     * @param DateTime $p_datetime
-     * @return Newscoop\Entity\Rating
+     * @param \DateTime $p_datetime
+     * @return Rating
      */
     public function setTimeCreated(\DateTime $p_datetime)
     {
@@ -110,8 +109,8 @@ class Rating extends AbstractEntity
     /**
      * Set timeupdated
      *
-     * @param DateTime $p_datetime
-     * @return Newscoop\Entity\Rating
+     * @param \DateTime $p_datetime
+     * @return Rating
      */
     public function setTimeUpdated(\DateTime $p_datetime)
     {
@@ -123,7 +122,7 @@ class Rating extends AbstractEntity
      * Set articleId
      *
      * @param int $articleId
-     * @return Newscoop\Entity\Rating
+     * @return Rating
      */
     public function setArticleId($articleId)
     {
@@ -135,7 +134,7 @@ class Rating extends AbstractEntity
      * Set userId
      *
      * @param int $userId
-     * @return Newscoop\Entity\Rating
+     * @return Rating
      */
     public function setUserId($userId)
     {
@@ -147,7 +146,7 @@ class Rating extends AbstractEntity
      * Set ratingScore
      *
      * @param int $ratingScore
-     * @return Newscoop\Entity\Rating
+     * @return Rating
      */
     public function setRatingScore($ratingScore)
     {

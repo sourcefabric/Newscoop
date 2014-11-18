@@ -8,8 +8,9 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use DateTime, Newscoop\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
+use DateTime;
+use Newscoop\Entity\User;
 
 /**
  * Feedback entity
@@ -140,7 +141,7 @@ class Feedback
      * Set time created
      *
      * @param DateTime $p_datetime
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setTimeCreated(DateTime $p_datetime)
     {
@@ -163,7 +164,7 @@ class Feedback
      * Set time updated
      *
      * @param DateTime $p_datetime
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setTimeUpdated(DateTime $p_datetime)
     {
@@ -186,7 +187,7 @@ class Feedback
      * Set url.
      *
      * @param string $p_url
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setUrl($p_url)
     {
@@ -209,7 +210,7 @@ class Feedback
      * Set subject.
      *
      * @param string $p_subject
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setSubject($p_subject)
     {
@@ -232,7 +233,7 @@ class Feedback
      * Set message.
      *
      * @param string $p_message
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setMessage($p_message)
     {
@@ -255,7 +256,7 @@ class Feedback
      * Set user
      *
      * @param Newscoop\Entity\User $p_user
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setUser(User $p_user)
     {
@@ -277,8 +278,8 @@ class Feedback
     /**
      * Set section
      *
-     * @param Newscoop\Entity\Section $p_section
-     * @return Newscoop\Entity\Feedback
+     * @param Section $p_section
+     * @return Feedback
      */
     public function setSection(Section $p_section)
     {
@@ -300,8 +301,8 @@ class Feedback
     /**
      * Set publication
      *
-     * @param Newscoop\Entity\Publication $p_publication
-     * @return Newscoop\Entity\Feedback
+     * @param Publication $p_publication
+     * @return Feedback
      */
     public function setPublication(Publication $p_publication)
     {
@@ -323,8 +324,8 @@ class Feedback
     /**
      * Set article
      *
-     * @param Newscoop\Entity\Article $p_article
-     * @return Newscoop\Entity\Feedback
+     * @param Article $p_article
+     * @return Feedback
      */
     public function setArticle(Article $p_article)
     {
@@ -346,7 +347,7 @@ class Feedback
     /**
      * Set status
      *
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setStatus($status)
     {
@@ -368,7 +369,7 @@ class Feedback
     /**
      * Set attachment type
      *
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setAttachmentType($attachment_type)
     {
@@ -391,7 +392,7 @@ class Feedback
      * Set attachment_id
      *
      * @param integer p_attachment_id
-     * @return Newscoop\Entity\Feedback
+     * @return Feedback
      */
     public function setAttachmentId($attachment_id)
     {

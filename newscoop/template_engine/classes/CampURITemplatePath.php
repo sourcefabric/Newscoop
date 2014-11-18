@@ -295,7 +295,7 @@ class CampURITemplatePath extends CampURI
     /**
      * Sets the URL values.
      *
-     * @return void
+     * @return PEAR_Error|null
      */
     private function setURL()
     {

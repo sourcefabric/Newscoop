@@ -48,7 +48,7 @@ class Language extends DatabaseObject {
 	 * translation files.
 	 *
 	 * @param array $p_values
-	 * @return mixed
+	 * @return boolean
 	 * 		Return TRUE on success and PEAR_Error on failure.
 	 */
 	public function create($p_values = null)

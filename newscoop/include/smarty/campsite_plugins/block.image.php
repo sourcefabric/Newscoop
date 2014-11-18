@@ -10,7 +10,7 @@
  * @param string $content
  * @param Smarty_Internal_Template $smarty
  * @param bool $repeat
- * @return void
+ * @return string|null
  */
 function smarty_block_image(array $params, $content, Smarty_Internal_Template $smarty, &$repeat)
 {

@@ -195,7 +195,7 @@ function drupal_strlen($text) {
  * @param $dots
  *   Flag to add trailing dots. Defaults to FALSE.
  * @return
- *   The truncated string.
+ string   The truncated string.
  */
 function truncate_utf8($string, $len, $wordsafe = FALSE, $dots = FALSE) {
 
@@ -235,6 +235,7 @@ function truncate_utf8($string, $len, $wordsafe = FALSE, $dots = FALSE) {
  * Note that for cutting off a string at a known character/substring
  * location, the usage of PHP's normal strpos/substr is safe and
  * much faster.
+ * @param integer $start
  */
 function drupal_substr($text, $start, $length = NULL) {
     global $multibyte;

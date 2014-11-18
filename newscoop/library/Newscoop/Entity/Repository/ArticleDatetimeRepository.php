@@ -7,15 +7,12 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\DBAL\SQLParserUtils,
-    Nette\InvalidArgumentException,
-    Newscoop\Utils\Exception,
-    Doctrine\ORM\Query,
-    Doctrine\ORM\Configuration,
-    Newscoop\Entity\ArticleDatetime,
-    Doctrine\ORM\EntityRepository,
-    Newscoop\ArticleDatetime as ArticleDatetimeHelper,
-    Newscoop\Entity\Article;
+use Nette\InvalidArgumentException;
+use Newscoop\Utils\Exception;
+use Newscoop\Entity\ArticleDatetime;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\ArticleDatetime as ArticleDatetimeHelper;
+use Newscoop\Entity\Article;
 
 class ArticleDatetimeRepository extends EntityRepository
 {
@@ -30,6 +27,7 @@ class ArticleDatetimeRepository extends EntityRepository
     protected $lastQParams;
 
     /**
+     * @param string|null $recurring
      * @return array
      */
     private function buildInsertValues($timeSet, $recurring)

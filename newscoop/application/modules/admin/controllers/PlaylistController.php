@@ -7,11 +7,8 @@
  */
 
 use Newscoop\Annotations\Acl;
-use Newscoop\Entity\Language;
 use Newscoop\Entity\Playlist;
 use Newscoop\EventDispatcher\Events\GenericEvent;
-use Newscoop\Service\Implementation\ArticleTypeServiceDoctrine;
-use Newscoop\Service\Implementation\var_hook;
 use Newscoop\Utils\Exception;
 
 /**

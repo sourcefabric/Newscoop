@@ -340,6 +340,9 @@
 			return $val;
 		}
 		
+		/**
+		 * @param string $code
+		 */
 		function compress_javascript(&$code)
 		{
 			if($this->param['compress'])
@@ -356,6 +359,9 @@
 			}
 		}
 		
+		/**
+		 * @param string $end_uri
+		 */
 		function get_css_content($end_uri){
 			$code=$this->get_content($end_uri);
 			// remove comments
@@ -369,6 +375,9 @@
 			return $code;
 		}
 		
+		/**
+		 * @param string $end_uri
+		 */
 		function get_html_content($end_uri){
 			$code=$this->get_content($end_uri);
 			//$code= preg_replace('/(\"(?:\\\"|[^\"])*(?:\"|$))|' . "(\'(?:\\\'|[^\'])*(?:\'|$))|(?:\/\/(?:.|\r|\t)*?(\n|$))|(?:\/\*(?:.|\n|\r|\t)*?(?:\*\/|$))/s", "$1$2$3", $code);
@@ -396,6 +405,10 @@
 		}
 
 		/* for php version that have not thoses functions */
+
+		/**
+		 * @param string $file
+		 */
 		function file_get_contents($file)
 		{
 			$fd = fopen($file, 'rb');

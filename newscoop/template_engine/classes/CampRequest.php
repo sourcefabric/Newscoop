@@ -75,7 +75,7 @@ final class CampRequest
      *
      * @param string $p_varName
      *      The name of the variable to be fetched.
-     * @param mixed $p_defaultValue
+     * @param null|string $p_defaultValue
      *      The default value to be fetched for the given variable
      * @param string $p_reqMethod
      *      The requested input method, default is REQUEST
@@ -207,6 +207,7 @@ final class CampRequest
      * Returns a valid input method name
      *
      * @param string &$p_reqMethod
+     * @param string $p_reqMethod
      * @return string
      */
     private static function TranslateMethod(&$p_reqMethod) {

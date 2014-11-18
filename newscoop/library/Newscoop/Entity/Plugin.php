@@ -6,7 +6,7 @@
  */
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Plugin entity
@@ -287,7 +287,7 @@ class Plugin
     /**
      * Get install date
      *
-     * @return DateTime
+     * @return string
      */
     public function getInstalledAt()
     {
@@ -297,7 +297,7 @@ class Plugin
     /**
      * Set install date
      *
-     * @param DateTime $installedAt
+     * @param \DateTime $installedAt
      */
     public function setInstalledAt(\DateTime $installedAt)
     {
@@ -309,7 +309,7 @@ class Plugin
     /**
      * Get update date
      *
-     * @return DateTime
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -319,7 +319,7 @@ class Plugin
     /**
      * Set update date
      *
-     * @param DateTime $updatedAt
+     * @param \DateTime $updatedAt
      */
     public function setUpdatedAt(\DateTime $updatedAt)
     {

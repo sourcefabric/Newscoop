@@ -11,7 +11,6 @@ namespace Newscoop\GimmeBundle\EventListener;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Request;
 use Newscoop\Gimme\Pagination;
 use Newscoop\Gimme\PartialResponse;
 use Newscoop\Gimme\PaginatorService;

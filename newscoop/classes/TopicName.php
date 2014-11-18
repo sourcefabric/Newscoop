@@ -22,7 +22,6 @@ class TopicName extends DatabaseObject {
 
 	/**
 	 * Constructor.
-	 * @param int $p_id
 	 */
 	public function __construct($p_idOrName = null, $p_languageId = null)
 	{

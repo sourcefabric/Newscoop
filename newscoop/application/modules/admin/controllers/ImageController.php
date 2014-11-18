@@ -6,7 +6,6 @@
  */
 
 use Newscoop\Annotations\Acl;
-use Newscoop\Image\Rendition;
 
 require_once($GLOBALS['g_campsiteDir']. '/classes/Plupload.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');

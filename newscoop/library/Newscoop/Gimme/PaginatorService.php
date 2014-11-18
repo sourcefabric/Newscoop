@@ -12,9 +12,6 @@ use Knp\Component\Pager\Paginator;
 use Newscoop\Gimme\Pagination;
 use Newscoop\Gimme\PartialResponse;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Newscoop\Exception\ResourceIsEmptyException;
 
 /**
  * Gimme Pagination service.

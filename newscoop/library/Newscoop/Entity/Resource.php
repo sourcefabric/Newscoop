@@ -8,10 +8,9 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
-use Newscoop\Entity\Theme;
 
 /**
  * Provides the contections of database entries with file system or external resources.
@@ -59,7 +58,7 @@ class Resource extends AbstractEntity
      * @param string $name
      * 		The name of the theme resource, must not be null or empty.
      *
-     * @return Newscoop\Entity\Resource
+     * @return Resource
      * 		This object for chaining purposes.
      */
     function setName($name)
@@ -88,7 +87,7 @@ class Resource extends AbstractEntity
      * @param string $path
      * 		The path of the resource.
      *
-     * @return Newscoop\Entity\Resource
+     * @return Resource
      * 		This object for chaining purposes.
      */
     function setPath($path)

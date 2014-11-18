@@ -111,8 +111,8 @@ final class MetaMap extends MetaDbObject
     }
 
     /**
-     * @param int $p_article
-     * @param int $p_language
+     * @param integer $p_articleNumber
+     * @param integer $p_languageId
      * @return string
      */
     public static function GetMapTagList($p_articleNumber, $p_languageId)

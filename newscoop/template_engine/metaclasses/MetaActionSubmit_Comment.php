@@ -51,7 +51,7 @@ class MetaActionSubmit_Comment extends MetaAction
     }
 
     /**
-     * @return void
+     * @return boolean
      */
     private function _processCaptcha()
     {
@@ -84,7 +84,7 @@ class MetaActionSubmit_Comment extends MetaAction
      * Performs the action; returns true on success, false on error.
      *
      * @param $p_context - the current context object
-     * @return bool
+     * @return false|null
      */
     public function takeAction(CampContext &$p_context)
     {

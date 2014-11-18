@@ -124,10 +124,10 @@ class WidgetManager
     /**
      * Add widget to user dashboard
      * @param int $widgetId
-     * @param string|IWidgetContext $contextName
+     * @param WidgetContext $context
      * @param int $uid
      * @param int $order
-     * @return bool
+     * @return string
      */
     public static function AddWidget($widgetId, $context, $uid = NULL, $order = NULL)
     {

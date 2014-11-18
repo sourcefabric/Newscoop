@@ -306,7 +306,7 @@ abstract class ListObject
 	/**
 	 * Returns the default iterator of this list.
 	 *
-	 * @return object of type ArrayIterator
+	 * @return integer|null of type ArrayIterator
 	 */
 	public function defaultIterator()
 	{
@@ -490,7 +490,7 @@ abstract class ListObject
 	/**
 	 * Returns the total number of elements in the list without the limits.
 	 *
-	 * @return unknown
+	 * @return integer
 	 */
 	public function getTotalCount()
 	{
@@ -562,7 +562,6 @@ abstract class ListObject
     /**
      * Overloaded method call to give access to the list properties.
      *
-     * @param string $p_element - the property name
      * @return mix - the property value
      */
 	public function __get($p_property)

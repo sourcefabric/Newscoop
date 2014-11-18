@@ -23,6 +23,9 @@ use Nette;
 interface IAnnotation
 {
 
+	/**
+	 * @return void
+	 */
 	function __construct(array $values);
 
 }

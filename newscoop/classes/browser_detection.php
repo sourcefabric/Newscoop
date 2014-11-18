@@ -172,6 +172,9 @@ by resetting that data with the true UA value.
 // main script, uses two other functions, get_os_data() and get_item_version() as needed
 // Optional $test_excludes is either null or one of the above values
 
+/**
+ * @param string $which_test
+ */
 function browser_detection( $which_test, $test_excludes='', $external_ua_string='' ) 
 {
 	/*
@@ -783,6 +786,10 @@ function browser_detection( $which_test, $test_excludes='', $external_ua_string=
 }
 
 // gets which os from the browser string
+/**
+ * @param string $pv_browser_string
+ * @param string $pv_browser_name
+ */
 function get_os_data ( $pv_browser_string, $pv_browser_name, $pv_version_number  )
 {
 	// initialize variables
@@ -971,6 +978,9 @@ function get_item_version( $browser_user_agent, $search_string, $substring_lengt
 $pv_extra_search='' allows us to set an additional search/exit loop parameter, but we
 only want this running when needed 
 */
+/**
+ * @param string $pv_search_string
+ */
 function get_item_version( $pv_browser_user_agent, $pv_search_string, $pv_b_break_last='', $pv_extra_search='' )
 {
 	// 12 is the longest that will be required, handles release dates: 20020323; 0.8.0+
@@ -1032,6 +1042,9 @@ function get_item_version( $pv_browser_user_agent, $pv_search_string, $pv_b_brea
 	return $string_working_number;
 }
 
+/**
+ * @param string $pv_type
+ */
 function get_set_count( $pv_type, $pv_value='' )
 {
 	static $slice_increment;
@@ -1058,6 +1071,9 @@ function get_set_count( $pv_type, $pv_value='' )
 Special ID notes:
 Novarra-Vision is a Content Transformation Server (CTS)
 */
+/**
+ * @param string $pv_browser_user_agent
+ */
 function check_is_mobile( $pv_browser_user_agent )
 {
 	$mobile_working_test = '';
@@ -1099,6 +1115,9 @@ function check_is_mobile( $pv_browser_user_agent )
 thanks to this page: http://www.zytrax.com/tech/web/mobile_ids.html
 for data used here
 */
+/**
+ * @param string $pv_browser_user_agent
+ */
 function get_mobile_data( $pv_browser_user_agent )
 {
 	$mobile_browser = '';

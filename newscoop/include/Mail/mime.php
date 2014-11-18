@@ -165,7 +165,7 @@ class Mail_mime
     /**
      * Constructor function
      *
-     * @param mixed $params Build parameters that change the way the email
+     * @param string $params Build parameters that change the way the email
      *                      is built. Should be an associative array.
      *                      See $_build_params.
      *
@@ -544,7 +544,7 @@ class Mail_mime
      * the initial content-type and returns it during the
      * build process.
      *
-     * @return object The multipart/mixed mimePart object
+     * @return Mail_mimePart The multipart/mixed mimePart object
      * @access private
      */
     function &_addMixedPart()
@@ -565,6 +565,7 @@ class Mail_mime
      *
      * @param mixed &$obj The object to add the part to, or
      *                    null if a new object is to be created.
+     * @param null|Mail_mimePart $obj
      *
      * @return object     The multipart/mixed mimePart object
      * @access private

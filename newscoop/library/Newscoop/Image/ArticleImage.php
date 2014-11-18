@@ -60,7 +60,7 @@ class ArticleImage implements ImageInterface
 
     /**
      * @param int $articleNumber
-     * @param Newscoop\Image\LocalImage $image
+     * @param LocalImage $image
      * @param bool $isDefault
      */
     public function __construct($articleNumber, LocalImage $image, $isDefault = false, $number = 1)
@@ -181,7 +181,7 @@ class ArticleImage implements ImageInterface
     * Set caption
     *
     * @param string $caption
-    * @param Newscoop\Entity\Language $language
+    * @param Language $language
     * @return void
     */
     public function setCaption($caption, Language $language)

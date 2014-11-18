@@ -23,7 +23,7 @@ class SearchService implements ServiceInterface
     protected $articleLinkService;
 
     /**
-     * @param Newscoop\Article\LinkService $articleLinkService
+     * @param LinkService $articleLinkService
      */
     public function __construct(LinkService $articleLinkService)
     {
@@ -43,7 +43,7 @@ class SearchService implements ServiceInterface
     /**
      * Test if comment is indexed
      *
-     * @param Newscoop\Entity\Comment $comment
+     * @param DocumentInterface $comment
      * @return bool
      */
     public function isIndexed(DocumentInterface $comment)
@@ -54,7 +54,7 @@ class SearchService implements ServiceInterface
     /**
      * Test if comment can be indexed
      *
-     * @param Newscoop\Entity\Comment $comment
+     * @param DocumentInterface $comment
      * @return bool
      */
     public function isIndexable(DocumentInterface $comment)
@@ -65,7 +65,7 @@ class SearchService implements ServiceInterface
     /**
      * Get document for comment
      *
-     * @param Newscoop\Entity\Comment $comment
+     * @param DocumentInterface $comment
      * @return array
      */
     public function getDocument(DocumentInterface $comment)
@@ -83,7 +83,7 @@ class SearchService implements ServiceInterface
     /**
      * Get document id
      *
-     * @param Newscoop\Entity\Comment $comment
+     * @param DocumentInterface $comment
      * @return string
      */
     public function getDocumentId(DocumentInterface $comment)

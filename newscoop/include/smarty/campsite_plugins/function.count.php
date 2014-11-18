@@ -19,7 +19,7 @@ require_once($GLOBALS['g_campsiteDir'] . '/admin-files/lib_campsite.php');
  *     $p_smarty Smarty template object
  *
  * @return
- *     string The html content
+ string     string The html content
  */
 function smarty_function_count($p_params, &$p_smarty)
 {

@@ -7,7 +7,6 @@ class Admin_View_Helper_ToggleCheckbox extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
      * @return void
      */
     public function toggleCheckbox()

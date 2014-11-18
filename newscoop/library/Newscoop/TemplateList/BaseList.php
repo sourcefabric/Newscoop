@@ -123,6 +123,9 @@ abstract class BaseList
      */
     protected $defaultTTL = 600;
 
+    /**
+     * @param Criteria $criteria
+     */
     public function __construct($criteria)
     {
         $this->setCriteria($criteria);
@@ -265,7 +268,7 @@ abstract class BaseList
     /**
      * Returns the default iterator of this list.
      *
-     * @return object of type ArrayIterator
+     * @return integer|null of type ArrayIterator
      */
     public function defaultIterator()
     {
@@ -453,7 +456,7 @@ abstract class BaseList
     /**
      * Returns the total number of elements in the list without the limits.
      *
-     * @return unknown
+     * @return integer
      */
     public function getTotalCount()
     {
@@ -491,7 +494,7 @@ abstract class BaseList
     /**
      * Returns the row number for the given iterator
      *
-     * @param int $p_iterator
+     * @param int $iterator
      */
     public function getRow($iterator = null)
     {

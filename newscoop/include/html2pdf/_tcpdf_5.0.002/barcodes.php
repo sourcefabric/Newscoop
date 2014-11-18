@@ -325,7 +325,7 @@ class TCPDFBarcode {
 	/**
 	 * Encode a string to be used for CODE 39 Extended mode.
 	 * @param string $code code to represent.
-	 * @return encoded string.
+	 * @return false|string string.
 	 * @access protected
 	 */
 	protected function encode_code39_ext($code) {
@@ -376,7 +376,7 @@ class TCPDFBarcode {
 	/**
 	 * Calculate CODE 39 checksum (modulo 43).
 	 * @param string $code code to represent.
-	 * @return char checksum.
+	 * @return string checksum.
 	 * @access protected
 	 */
 	protected function checksum_code39($code) {
@@ -399,7 +399,6 @@ class TCPDFBarcode {
 	 * CODE 93 - USS-93
 	 * Compact code similar to Code 39
 	 * @param string $code code to represent.
-	 * @param boolean $checksum if true add a checksum to the code
 	 * @return array barcode representation.
 	 * @access protected
 	 */
@@ -988,7 +987,7 @@ class TCPDFBarcode {
 	 * UPC-A: Universal product code seen on almost all retail products in the USA and Canada
 	 * UPC-E: Short version of UPC symbol
 	 * @param string $code code to represent.
-	 * @param string $len barcode type: 6 = UPC-E, 8 = EAN8, 13 = EAN13, 12 = UPC-A
+	 * @param integer $len barcode type: 6 = UPC-E, 8 = EAN8, 13 = EAN13, 12 = UPC-A
 	 * @return array barcode representation.
 	 * @access protected
 	 */
@@ -1181,7 +1180,7 @@ class TCPDFBarcode {
 	 * 2-Digit Ext.: Used to indicate magazines and newspaper issue numbers
 	 * 5-Digit Ext.: Used to mark suggested retail price of books
 	 * @param string $code code to represent.
-	 * @param string $len barcode type: 2 = 2-Digit, 5 = 5-Digit
+	 * @param integer $len barcode type: 2 = 2-Digit, 5 = 5-Digit
 	 * @return array barcode representation.
 	 * @access protected
 	 */

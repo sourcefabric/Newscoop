@@ -11,7 +11,6 @@ namespace Newscoop\Service\Exception;
 /**
  * This exception is thrown when there is a problem with data structures that bare the same name and is not allowed.
  */
-use Newscoop\Utils\Validation;
 
 class DuplicateNameException extends \Exception
 {

@@ -326,7 +326,7 @@ class Attachment
     /**
      * Get User id
      *
-     * @return string
+     * @return integer|null
      */
     public function getUserId()
     {
@@ -364,7 +364,7 @@ class Attachment
     /**
      * Sets the value of updated.
      *
-     * @param DateTime $updated the updated
+     * @param \DateTime $updated the updated
      *
      * @return self
      */
@@ -388,7 +388,7 @@ class Attachment
     /**
      * Sets the value of created.
      *
-     * @param DateTime $created the created
+     * @param \DateTime $created the created
      *
      * @return self
      */
@@ -458,7 +458,7 @@ class Attachment
     /**
      * Sets the value of description.
      *
-     * @param \Newscoop\Entity\Translations $description the description
+     * @param Translation $description the description
      *
      * @return self
      */

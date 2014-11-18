@@ -14,7 +14,6 @@ namespace Newscoop\NewscoopBundle\EventListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * UsernamePasswordFormAuthenticationListener is the default implementation of

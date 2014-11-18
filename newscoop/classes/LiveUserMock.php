@@ -27,7 +27,7 @@ class LiveUserMock
     private $db;
 
     /**
-     * @param ADOConnection $db
+     * @param AdoDbAdapter $db
      */
     public function __construct(AdoDbAdapter $db)
     {

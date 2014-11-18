@@ -454,7 +454,6 @@ class Publication extends DatabaseObject {
     /**
      * Set a flag that controls whether an unknown user may post comments.
      *
-     * @param boolean $isOn
      * @return boolean
      */
     public function setPublicComments($p_value) {

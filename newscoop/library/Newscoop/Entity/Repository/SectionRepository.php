@@ -7,9 +7,9 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Publication,
-    Newscoop\Entity\Subscription;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Publication;
+use Newscoop\Entity\Subscription;
 
 /**
  * Section repository
@@ -41,7 +41,7 @@ class SectionRepository extends EntityRepository
     /**
      * Get list of publication sections
      *
-     * @param Newscoop\Entity\Publication $publication
+     * @param Publication $publication
      * @param Newscoop\Entity\Subscription $subscription;
      * @param bool $groupByLanguage
      * @return array

@@ -53,7 +53,7 @@ class FileTextSearch {
 
     /**
      * Sets extensions to search for.
-     * @param array $p_extensions
+     * @param string[] $p_extensions
      */
     public function setExtensions($p_extensions = array())
     {
