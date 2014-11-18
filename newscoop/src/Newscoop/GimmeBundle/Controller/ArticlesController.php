@@ -661,7 +661,8 @@ class ArticlesController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when article lock status has been changed successfully",
+     *         200="Returned when article has been locked",
+     *         204="Returned when article has been unlocked",
      *         403="Returned when trying to set the same status"
      *     },
      *     parameters={
