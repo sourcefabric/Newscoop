@@ -264,7 +264,7 @@ class ArticleList extends BaseList
 
         $pluginService = \Zend_Registry::get('container')->getService('newscoop.plugins.service');
 
-        if ($pluginService->isEnabled('terwey/plugin-newscoop-articleeditscreen')) {
+        if ($pluginService->isEnabled('newscoop/article-edit-screen')) {
             $router = \Zend_Registry::get('container')->getService('router');
             $language = new Language($article->getLanguageId());
             $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $article->getArticleNumber()));
