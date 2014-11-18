@@ -147,7 +147,7 @@ if ($articleObj->exists()) {
     if ($pluginService->isEnabled('newscoop/article-edit-screen')) {
         $router = \Zend_Registry::get('container')->getService('router');
         $language = new Language($articleObj->getLanguageId());
-        $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $article->getArticleNumber()));
+        $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $articleObj->getArticleNumber()));
     } else {
         $articleLink = camp_html_article_url($articleObj, $f_language_id, "edit.php");
     }
