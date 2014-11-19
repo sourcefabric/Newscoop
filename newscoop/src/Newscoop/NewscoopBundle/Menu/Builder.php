@@ -188,7 +188,8 @@ class Builder
         return $menu;
     }
 
-    private function prepareContentMenu($menu, $modern) {
+    private function prepareContentMenu($menu, $modern)
+    {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(
