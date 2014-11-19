@@ -1257,6 +1257,7 @@ class Article implements DocumentInterface
                 'publication_number' => $this->publication ? $this->publication->getId() : null,
                 'issue_number' => $this->issue ? $this->issue->getNumber() : null,
                 'section_number' => $this->section ? $this->section->getNumber() : null,
+                'keywords' => array_filter(explode(',', $this->keywords)),
                 'onFrontPage' => $this->onFrontPage,
                 'onSection' => $this->onSection,
             ));
