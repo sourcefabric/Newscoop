@@ -1481,4 +1481,9 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
         return false;
     }
+
+    public function getObject()
+    {
+        return clone $this;
+    }
 }
