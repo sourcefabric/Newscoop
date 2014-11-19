@@ -38,6 +38,11 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
     $viewBildPath = '/themes/'.$themePath.$params['build_path'];
     $params['build_path'] = $root.$params['build_path'];
 
+    // Set defaults
+    if (!array_key_exists('debug', $params)) {
+        $params['debug'] = false;
+    }
+
     // Read config file
     if (isset($params['config_path'])){
         $base_path = __DIR__.'/../../../'. $params['config_path'];
