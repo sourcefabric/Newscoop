@@ -1,10 +1,11 @@
 (function() {
   'use strict';
 
-var app = angular.module('treeApp', ['ui.tree'])
-  .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, $locationProvider) {
+var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'])
+  .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, $locationProvider, uiTreeFilterSettingsProvider) {
       $locationProvider.html5Mode(true);
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+      uiTreeFilterSettingsProvider.descendantCollection = "__children";
   });
 
 app.factory('TopicsFactory',  function($http) {
@@ -38,7 +39,23 @@ app.factory('TopicsFactory',  function($http) {
     };
 });
 
-app.controller('treeCtrl', function($scope, TopicsFactory) {
+app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
+    $scope.treeFilter = $filter('uiTreeFilter');
+    $scope.availableFields = ['title'];
+    $scope.supportedFields = ['title'];
+
+    TopicsFactory.getTopics().success(function (data) {
+       $scope.data = data.tree;
+       console.log($scope.data);
+    }).error(function(data, status){
+        if(status==401){
+            $scope.article_url = global_notallowed_url;
+        }else{
+            $scope.article_url = global_error_url;
+        }
+        $rootScope.page_ready = true;
+    });
+
     var updateList = function (children, id) {
         if (children) {
             for (var i = 0; i < children.length; i++) {
@@ -109,16 +126,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
       }
     };
 
-    $scope.cancelEditing = function(scope) {
-      if (scope.editing) {
-        scope.editing = false;
-      } else {
-        scope.editing = true;
-      }
-
-      //todo restore topic label
-    };
-
     $scope.formData = {};
     $scope.subtopicForm = {};
     $scope.addNewTopic = function(topicId, event) {
@@ -137,7 +144,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
       TopicsFactory.addTopic(addFormData).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
-          //$scope.data.push({ id: response.topicId, title: response.topicTitle });
+          if (topicId == undefined) {
+              $scope.data.push({ id: response.topicId, title: response.topicTitle });
+          }
           $scope.formData = null;
         } else {
           flashMessage(response.message, 'error');
@@ -167,19 +176,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory) {
           flashMessage(response.message, 'error');
       });
     };
-
-    TopicsFactory.getTopics().success(function (data) {
-       $scope.data = data.tree;
-    }).error(function(data, status){
-        if(status==401){
-            $scope.article_url = global_notallowed_url;
-        }else{
-            $scope.article_url = global_error_url;
-        }
-        $rootScope.page_ready = true;
-    });
-  });
-
+  })
+    /**
+     * Ad-hoc $sce trusting to be used with ng-bind-html
+     */
+        .filter('trust', function ($sce) {
+            return function (val) {
+                return $sce.trustAsHtml(val);
+            };
+        });
 })();
-
-

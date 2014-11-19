@@ -172,3 +172,18 @@
 	background: #dcdcdc;
 	height: 1px;
 }
+
+.filtered-out .angular-ui-tree-handle {
+    background-color: rgba(248, 250, 255, 0.3);
+    border: 1px solid rgba(218, 226, 234, 0.3);
+    color: rgba(124, 158, 178, 0.3);
+}
+.angular-ui-tree-node:not(.filtered-out) .ui-match {
+    background: #ffdc0f;
+    border-radius: 2px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.input-group {
+    margin: 0 15px;
+}
