@@ -16,9 +16,12 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Newscoop\NewscoopBundle\Entity\Topic;
+use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfTokenManagerAdapter;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
+    private $token;
+
     public function it_is_initializable()
     {
         $this->shouldHaveType('Newscoop\NewscoopBundle\Controller\TopicsController');
@@ -41,7 +44,8 @@ class TopicsControllerSpec extends ObjectBehavior
         FormBuilder $formBuilder,
         Form $form,
         FormView $formView,
-        Topic $topic
+        Topic $topic,
+        CsrfTokenManagerAdapter $csrfTokenManagerAdapter
     )
     {
         $container->get('em')->willReturn($entityManager);
@@ -49,6 +53,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $container->get('request')->willReturn($request);
         $container->get('translator')->willReturn($translator);
         $container->get('form.factory')->willReturn($formFactory);
+        $container->get('form.csrf_provider')->willReturn($csrfTokenManagerAdapter);
 
         $formBuilder->getForm(Argument::cetera())->willReturn($form);
         $formFactory->create(Argument::cetera())->willReturn($form);
@@ -62,6 +67,9 @@ class TopicsControllerSpec extends ObjectBehavior
 
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($repository);
         $this->setContainer($container);
+
+        $this->token = 'uTxRiEkont4XxRpTcSADPCowge7TgNONE7Y5HWd4pmY';
+        $request->get('_csrf_token')->willReturn($this->token);
     }
 
     public function its_treeAction_should_render_the_tree_of_topics($topicRepository, $request, $entityManager)
@@ -73,15 +81,24 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_addAction_should_add_a_new_topic($request, $form, $repository, $topic)
+    public function its_addAction_should_add_a_new_topic($request, $form, $repository, $topic, $csrfTokenManagerAdapter)
     {
         $repository->findOneBy(array(
             'id' => 1,
         ))->willReturn($topic);
 
+        $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
         $form->getData()->willReturn(array('title' => 'test topic', 'parent' => 1));
         $response = $this->addAction($request);
         $response->getStatusCode()->shouldReturn(200);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_addAction_should_return_403_when_invalid_csrf_token($request, $form, $repository, $topic, $csrfTokenManagerAdapter)
+    {
+        $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(false);
+        $response = $this->addAction($request);
+        $response->getStatusCode()->shouldReturn(403);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
@@ -105,23 +122,35 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_editAction_should_edit_topic($request, $repository, $topic)
+    public function its_editAction_should_edit_topic($request, $repository, $topic, $csrfTokenManagerAdapter)
     {
         $repository->findOneBy(array(
             'id' => 1,
         ))->willReturn($topic);
+
+        $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
         $response = $this->editAction($request, 1);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_editAction_should_return_404_when_topic_not_found($request, $repository)
+    public function its_editAction_should_return_404_when_topic_not_found($request, $repository, $csrfTokenManagerAdapter)
     {
         $repository->findOneBy(array(
             'id' => 1,
         ))->willReturn(null);
+
+        $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
         $response = $this->editAction($request, 1);
         $response->getStatusCode()->shouldReturn(404);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_editAction_should_return_403_when_invalid_csrf_token($request, $repository, $csrfTokenManagerAdapter)
+    {
+        $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(false);
+        $response = $this->editAction($request, 1);
+        $response->getStatusCode()->shouldReturn(403);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 }

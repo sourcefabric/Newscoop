@@ -85,7 +85,7 @@ class TopicsController extends Controller
             return new JsonResponse(array(
                 'status' => false,
                 'message' => $translator->trans('topics.csrfinvalid', array(), 'topics'),
-            ));
+            ), 403);
         }
 
         if ($form->isValid()) {
@@ -154,16 +154,17 @@ class TopicsController extends Controller
     {
         $em = $this->get('em');
         $translator = $this->get('translator');
-        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
-            'id' => $id,
-        ));
 
         if (!$this->get('form.csrf_provider')->isCsrfTokenValid('default', $request->get('_csrf_token'))) {
             return new JsonResponse(array(
                 'status' => false,
                 'message' => $translator->trans('topics.csrfinvalid', array(), 'topics'),
-            ));
+            ), 403);
         }
+
+        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
 
         if (!$node) {
             return new JsonResponse(array(
