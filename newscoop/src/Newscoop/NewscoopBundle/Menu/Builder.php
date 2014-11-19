@@ -19,7 +19,7 @@ class Builder
     protected $showPublishingEnvironmentMenu;
     protected $showConfigureMenu;
     protected $showUserMenu;
-    private $menu = null;
+    protected $menu = null;
 
     private function preparePrivileges()
     {
