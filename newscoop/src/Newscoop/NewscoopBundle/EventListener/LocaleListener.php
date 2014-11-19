@@ -41,5 +41,13 @@ class LocaleListener
         if ($cookies->has('TOL_Language')) {
             $request->setLocale($cookies->get("TOL_Language"));
         }
+
+        if ($pos === false) {
+            $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
+            $languageCode = $publicationMetadata['publication']['code_default_language'];
+            if ($languageCode) {
+                $request->setLocale($languageCode);
+            }
+        }
     }
 }
