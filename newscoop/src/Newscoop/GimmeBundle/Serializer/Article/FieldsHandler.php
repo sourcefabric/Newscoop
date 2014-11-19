@@ -18,8 +18,6 @@ class FieldsHandler
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {
-        $GLOBALS['g_campsiteDir'] = realpath(__DIR__ . '/../../../../../');
-
         $articleData = new \ArticleData($data->type, $data->number, $data->languageId);
         if (count($articleData->getUserDefinedColumns()) == 0) {
             return null;
@@ -29,6 +27,9 @@ class FieldsHandler
         foreach ($articleData->getUserDefinedColumns() as $column) {
             $fields[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
         }
+
+        $fields['show_on_front_page'] = $data->onFrontPage;
+        $fields['show_on_section_page'] = $data->onSection;
 
         return $fields;
     }
