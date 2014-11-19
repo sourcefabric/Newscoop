@@ -96,4 +96,14 @@ class ArticleView extends View
      * @var DateTime
      */
     public $indexed;
+
+    /**
+     * @var string
+     */
+    public $onFrontPage;
+
+    /**
+     * @var string
+     */
+    public $onSection;
 }

@@ -16,59 +16,59 @@ require_once WWW_DIR . '/classes/GeoMap.php';
  */
 class ArticleList extends BaseList
 {
-	/** @var int */
-	protected $publication = null;
+    /** @var int */
+    protected $publication = null;
 
-	/** @var int */
-	protected $issue = null;
+    /** @var int */
+    protected $issue = null;
 
-	/** @var int */
-	protected $section = null;
+    /** @var int */
+    protected $section = null;
 
-	/** @var int */
-	protected $language = null;
+    /** @var int */
+    protected $language = null;
 
-	/** @var int */
-	protected $workflow_status = null;
+    /** @var int */
+    protected $workflow_status = null;
 
-	/** @var string */
+    /** @var string */
     protected $type = null;
 
-	/** @var array */
-	protected $filters = array();
+    /** @var array */
+    protected $filters = array();
 
-	/** @var array */
-	protected $orderBy = array();
+    /** @var array */
+    protected $orderBy = array();
 
-	/** @var bool */
-	protected static $renderFilters = FALSE;
+    /** @var bool */
+    protected static $renderFilters = FALSE;
 
-	/** @var bool */
-	protected static $renderActions = FALSE;
+    /** @var bool */
+    protected static $renderActions = FALSE;
 
-	/** @var string */
-	protected static $lastId = NULL;
+    /** @var string */
+    protected static $lastId = NULL;
 
-	/**
-	 * @param bool $randomId
-	 */
-	public function __construct($randomId = FALSE)
-	{
-		parent::__construct();
+    /**
+     * @param bool $randomId
+     */
+    public function __construct($randomId = FALSE)
+    {
+        parent::__construct();
 
-		$translator = \Zend_Registry::get('container')->getService('translator');
-		// generate id - unique per page instance
-		if (empty(self::$lastId)) {
-			self::$lastId = __FILE__;
-			if ($randomId) {
-				self::$lastId = uniqid();
-			}
-		}
-		$this->id = substr(sha1(self::$lastId), -6);
-		self::$lastId = $this->id;
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        // generate id - unique per page instance
+        if (empty(self::$lastId)) {
+            self::$lastId = __FILE__;
+            if ($randomId) {
+                self::$lastId = uniqid();
+            }
+        }
+        $this->id = substr(sha1(self::$lastId), -6);
+        self::$lastId = $this->id;
 
-		// column titles
-		$this->cols = array(
+        // column titles
+        $this->cols = array(
             'Number' => NULL,
             'Language' => $translator->trans('Language'),
             'Order' => $translator->trans('Order'),
@@ -90,415 +90,426 @@ class ArticleList extends BaseList
             'CreateDate' => $translator->trans('Create Date', array(), 'library'),
             'PublishDate' => $translator->trans('Publish Date', array(), 'library'),
             'LastModified' => $translator->trans('Last Modified', array(), 'articles'),
-		    'Preview' => $translator->trans('Preview'),
-		    'Translate' => $translator->trans('Translate')
-		);
-	}
+            'Preview' => $translator->trans('Preview'),
+            'Translate' => $translator->trans('Translate')
+        );
+    }
 
-	/**
-	 * Set publication.
-	 * @param int $publication
-	 * @return ArticleList
-	 */
-	public function setPublication($publication)
-	{
-		$this->publication = is_null($publication) ? NULL : (int) $publication;
-		return $this;
-	}
+    /**
+     * Set publication.
+     * @param  int         $publication
+     * @return ArticleList
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = is_null($publication) ? NULL : (int) $publication;
 
-	/**
-	 * Set issue.
-	 * @param int $issue
-	 * @return ArticleList
-	 */
-	public function setIssue($issue)
-	{
-		$this->issue = is_null($issue) ? NULL : (int) $issue;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set section.
-	 * @param int $section
-	 * @return ArticleList
-	 */
-	public function setSection($section)
-	{
-		$this->section = is_null($section) ? NULL : (int) $section;
-		return $this;
-	}
+    /**
+     * Set issue.
+     * @param  int         $issue
+     * @return ArticleList
+     */
+    public function setIssue($issue)
+    {
+        $this->issue = is_null($issue) ? NULL : (int) $issue;
 
-	/**
-	 * Set language.
-	 * @param int $language
-	 * @return ArticleList
-	 */
-	public function setLanguage($language)
-	{
-		$this->language = empty($language) ? 1 : (int) $language;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set status.
-	 * @param string $status
-	 * @return ArticleList
-	 */
-	public function setWorkflowStatus($status)
-	{
-	    if (array_search($status, array('pending', 'new', 'submitted', 'withissue', 'published')) !== false) {
-	        $this->workflow_status = $status;
-	    }
-	    return $this;
-	}
+    /**
+     * Set section.
+     * @param  int         $section
+     * @return ArticleList
+     */
+    public function setSection($section)
+    {
+        $this->section = is_null($section) ? NULL : (int) $section;
+
+        return $this;
+    }
+
+    /**
+     * Set language.
+     * @param  int         $language
+     * @return ArticleList
+     */
+    public function setLanguage($language)
+    {
+        $this->language = empty($language) ? 1 : (int) $language;
+
+        return $this;
+    }
+
+    /**
+     * Set status.
+     * @param  string      $status
+     * @return ArticleList
+     */
+    public function setWorkflowStatus($status)
+    {
+        if (array_search($status, array('pending', 'new', 'submitted', 'withissue', 'published')) !== false) {
+            $this->workflow_status = $status;
+        }
+
+        return $this;
+    }
 
     /**
      * Set type
      *
-     * @param string $type
+     * @param  string      $type
      * @return ArticleList
      */
     public function setType($type)
     {
         $this->type = (string) $type;
+
         return $this;
     }
 
-	/**
-	 * Set filter.
-	 * @param string $name
-	 * @param mixed $value
-	 * @return ArticleList
-	 */
-	public function setFilter($name, $value)
-	{
-		$this->filters[$name] = $value;
-		return $this;
-	}
+    /**
+     * Set filter.
+     * @param  string      $name
+     * @param  mixed       $value
+     * @return ArticleList
+     */
+    public function setFilter($name, $value)
+    {
+        $this->filters[$name] = $value;
 
-	/**
-	 * Set column to order by.
-	 *
-	 * @param string $column
-	 * @param string $direction
-	 * @return ArticleList
-	 */
-	public function setOrderBy($column, $direction = 'asc')
-	{
-		if (!isset($this->cols[$column])) {
-			return $this;
-		}
+        return $this;
+    }
 
-		$columnNo = array_search($column, array_keys($this->cols));
-		$this->orderBy[$columnNo] = strtolower($direction) == 'desc' ? 'desc' : 'asc';
+    /**
+     * Set column to order by.
+     *
+     * @param  string      $column
+     * @param  string      $direction
+     * @return ArticleList
+     */
+    public function setOrderBy($column, $direction = 'asc')
+    {
+        if (!isset($this->cols[$column])) {
+            return $this;
+        }
 
-		return $this;
-	}
+        $columnNo = array_search($column, array_keys($this->cols));
+        $this->orderBy[$columnNo] = strtolower($direction) == 'desc' ? 'desc' : 'asc';
 
-	/**
-	 * Render filters.
-	 * @return ArticleList
-	 */
-	public function renderFilters()
-	{
-		$this->beforeRender();
+        return $this;
+    }
 
-		include dirname(__FILE__) . '/filters.php';
-		self::$renderFilters = TRUE;
-		return $this;
-	}
+    /**
+     * Render filters.
+     * @return ArticleList
+     */
+    public function renderFilters()
+    {
+        $this->beforeRender();
 
-	/**
-	 * Render actions.
-	 * @return ArticleList
-	 */
-	public function renderActions()
-	{
-		$this->beforeRender();
+        include dirname(__FILE__) . '/filters.php';
+        self::$renderFilters = TRUE;
 
-		include dirname(__FILE__) . '/actions.php';
-		self::$renderActions = TRUE;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Render table.
-	 * @return ArticleList
-	 */
-	public function render()
-	{
-		$this->beforeRender();
+    /**
+     * Render actions.
+     * @return ArticleList
+     */
+    public function renderActions()
+    {
+        $this->beforeRender();
 
-		include dirname(__FILE__) . '/table.php';
-		self::$renderTable = TRUE;
-		echo '</div><!-- /#list-' . $this->id . ' -->';
-		return $this;
-	}
+        include dirname(__FILE__) . '/actions.php';
+        self::$renderActions = TRUE;
 
-	/**
-	 * Process item
-	 * @param Article $article
-	 * @return array
-	 */
-	public function processItem($article)
-	{
-		global $g_user, $Campsite;
-		$translator = \Zend_Registry::get('container')->getService('translator');
+        return $this;
+    }
 
-		$articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
-		. '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
-		. '&amp;f_article_number=' . $article->getArticleNumber() . '&amp;f_language_id=' . $article->getLanguageId()
-		. '&amp;f_language_selected=' . $article->getLanguageId();
+    /**
+     * Render table.
+     * @return ArticleList
+     */
+    public function render()
+    {
+        $this->beforeRender();
+
+        include dirname(__FILE__) . '/table.php';
+        self::$renderTable = TRUE;
+        echo '</div><!-- /#list-' . $this->id . ' -->';
+
+        return $this;
+    }
+
+    /**
+     * Process item
+     * @param  Article $article
+     * @return array
+     */
+    public function processItem($article)
+    {
+        global $g_user, $Campsite;
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
+        $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
+        . '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
+        . '&amp;f_article_number=' . $article->getArticleNumber() . '&amp;f_language_id=' . $article->getLanguageId()
+        . '&amp;f_language_selected=' . $article->getLanguageId();
         $articleLinkParamsTranslate = $articleLinkParams.'&amp;f_action=translate&amp;f_action_workflow=' . $article->getWorkflowStatus()
         . '&amp;f_article_code=' . $article->getArticleNumber() . '_' . $article->getLanguageId();
 
-		$pluginService = \Zend_Registry::get('container')->getService('newscoop.plugins.service');
+        $pluginService = \Zend_Registry::get('container')->getService('newscoop.plugins.service');
 
-		if ($pluginService->isEnabled('terwey/plugin-newscoop-articleeditscreen')) {
-			$router = \Zend_Registry::get('container')->getService('router');
-			$language = new Language($article->getLanguageId());
-			$articleLink = $router->generate('newscoop_admin_aes').'#/'.$language->getCode().'/'.$article->getArticleNumber();
-		} else {
-			$articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
-		}
-		$previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
-		$htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.$translator->trans('Preview').'">'.$translator->trans('Preview').'</a>';
+        if ($pluginService->isEnabled('newscoop/article-edit-screen')) {
+            $router = \Zend_Registry::get('container')->getService('router');
+            $language = new Language($article->getLanguageId());
+            $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $article->getArticleNumber()));
+        } else {
+            $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
+        }
+        $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
+        $htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.$translator->trans('Preview').'">'.$translator->trans('Preview').'</a>';
         $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php' . $articleLinkParamsTranslate;
         $htmlTranslateLink = '<a href="'.$translateLink.'" target="_blank" title="'.$translator->trans('Translate').'">'.$translator->trans('Translate').'</a>';
 
-		$lockInfo = '';
-		$lockHighlight = false;
-		$timeDiff = camp_time_diff_str($article->getLockTime());
-		if ($article->isLocked() && ($timeDiff['days'] <= 0)) {
-			$lockUser = new User($article->getLockedByUser());
-			if ($timeDiff['hours'] > 0) {
-				$lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.', array(
-				'$1' => htmlspecialchars($lockUser->getRealName()),
-				'$2' => htmlspecialchars($lockUser->getUserName()),
-				'$3' => $timeDiff['hours'], 
-				'$4' => $timeDiff['minutes']), 'articles');
-			} else {
-				$lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 minute(s) ago.', array(
-				'$1' => htmlspecialchars($lockUser->getRealName()),
-				'$2' => htmlspecialchars($lockUser->getUserName()),
-				'$3' => $timeDiff['minutes']), 'articles');
-			}
-			if ($article->getLockedByUser() != $g_user->getUserId()) {
-				$lockHighlight = true;
-			}
-		}
+        $lockInfo = '';
+        $lockHighlight = false;
+        $timeDiff = camp_time_diff_str($article->getLockTime());
+        if ($article->isLocked() && ($timeDiff['days'] <= 0)) {
+            $lockUser = new User($article->getLockedByUser());
+            if ($timeDiff['hours'] > 0) {
+                $lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.', array(
+                '$1' => htmlspecialchars($lockUser->getRealName()),
+                '$2' => htmlspecialchars($lockUser->getUserName()),
+                '$3' => $timeDiff['hours'],
+                '$4' => $timeDiff['minutes']), 'articles');
+            } else {
+                $lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 minute(s) ago.', array(
+                '$1' => htmlspecialchars($lockUser->getRealName()),
+                '$2' => htmlspecialchars($lockUser->getUserName()),
+                '$3' => $timeDiff['minutes']), 'articles');
+            }
+            if ($article->getLockedByUser() != $g_user->getUserId()) {
+                $lockHighlight = true;
+            }
+        }
 
-		$tmpUser = new User($article->getCreatorId());
-		$tmpArticleType = new ArticleType($article->getType());
+        $tmpUser = new User($article->getCreatorId());
+        $tmpArticleType = new ArticleType($article->getType());
 
-		$tmpAuthor = new Author();
-		$articleAuthors = ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
-		foreach((array) $articleAuthors as $author) {
-			if (strtolower($author->getAuthorType()->getName()) == 'author') {
-				$tmpAuthor = $author;
-				break;
-			}
-		}
-		if (!$tmpAuthor->exists() && isset($articleAuthors[0])) {
-			$tmpAuthor = $articleAuthors[0];
-		}
+        $tmpAuthor = new Author();
+        $articleAuthors = ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
+        foreach ((array) $articleAuthors as $author) {
+            if (strtolower($author->getAuthorType()->getName()) == 'author') {
+                $tmpAuthor = $author;
+                break;
+            }
+        }
+        if (!$tmpAuthor->exists() && isset($articleAuthors[0])) {
+            $tmpAuthor = $articleAuthors[0];
+        }
 
-		$onFrontPage = $article->onFrontPage() ? $translator->trans('Yes') : $translator->trans('No');
-		$onSectionPage = $article->onSectionPage() ? $translator->trans('Yes') : $translator->trans('No');
+        $onFrontPage = $article->onFrontPage() ? $translator->trans('Yes') : $translator->trans('No');
+        $onSectionPage = $article->onSectionPage() ? $translator->trans('Yes') : $translator->trans('No');
 
-		$imagesNo = (int) ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
-		$topicsNo = (int) ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
-		$commentsNo = '';
-		if ($article->commentsEnabled()) {
+        $imagesNo = (int) ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
+        $topicsNo = (int) ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
+        $commentsNo = '';
+        if ($article->commentsEnabled()) {
             global $controller;
             $repositoryComments = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-			$filter = array( 'thread' => $article->getArticleNumber(), 'language' => $article->getLanguageId());
-			$params = array( 'sFilter' => $filter);
+            $filter = array( 'thread' => $article->getArticleNumber(), 'language' => $article->getLanguageId());
+            $params = array( 'sFilter' => $filter);
             $commentsNo = $repositoryComments->getCount($params);
-		} else {
-			$commentsNo = 'No';
-		}
+        } else {
+            $commentsNo = 'No';
+        }
 
-		// get language code
-		$language = new Language($article->getLanguageId());
+        // get language code
+        $language = new Language($article->getLanguageId());
 
-		return array(
-		    $article->getArticleNumber(),
-		    $article->getLanguageId(),
-		    $article->getOrder(),
-		    sprintf('%s <a href="%s" title="%s %s">%s</a>',
-		    $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
-		    $articleLink,
-		    $translator->trans('Edit'), htmlspecialchars($article->getName() . " ({$article->getLanguageName()})"),
-		    htmlspecialchars($article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : ''))), // /sprintf
-		    htmlspecialchars($article->getSection()->getName()),
+        return array(
+            $article->getArticleNumber(),
+            $article->getLanguageId(),
+            $article->getOrder(),
+            sprintf('%s <a href="%s" title="%s %s">%s</a>',
+            $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
+            $articleLink,
+            $translator->trans('Edit'), htmlspecialchars($article->getName() . " ({$article->getLanguageName()})"),
+            htmlspecialchars($article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : ''))), // /sprintf
+            htmlspecialchars($article->getSection()->getName()),
             $article->getWebcode(),
-		    htmlspecialchars($tmpArticleType->getDisplayName()),
-		    htmlspecialchars($tmpUser->getRealName()),
-		    htmlspecialchars($tmpAuthor->getName()),
-		    $article->getWorkflowStatus(),
-		    $onFrontPage,
-		    $onSectionPage,
-		    $imagesNo,
-		    $topicsNo,
-		    $commentsNo,
-		    (int) $article->getReads(),
-		    Geo_Map::GetArticleMapId($article) != NULL ? $translator->trans('Yes') : $translator->trans('No'),
-		    (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
-		    $article->getCreationDate(),
-		    $article->getPublishDate(),
-		    $article->getLastModified(),
-		    $htmlPreviewLink,
+            htmlspecialchars($tmpArticleType->getDisplayName()),
+            htmlspecialchars($tmpUser->getRealName()),
+            htmlspecialchars($tmpAuthor->getName()),
+            $article->getWorkflowStatus(),
+            $onFrontPage,
+            $onSectionPage,
+            $imagesNo,
+            $topicsNo,
+            $commentsNo,
+            (int) $article->getReads(),
+            Geo_Map::GetArticleMapId($article) != NULL ? $translator->trans('Yes') : $translator->trans('No'),
+            (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
+            $article->getCreationDate(),
+            $article->getPublishDate(),
+            $article->getLastModified(),
+            $htmlPreviewLink,
             $htmlTranslateLink
-		);
-	}
+        );
+    }
 
-	/**
-	 * Handle data
-	 */
-	public function doData()
-	{
-		global $ADMIN_DIR, $g_user;
-		foreach ($_REQUEST['args'] as $arg) {
-			$_REQUEST[$arg['name']] = $arg['value'];
-		}
-		return require_once dirname(__FILE__) . '/do_data.php';
-	}
+    /**
+     * Handle data
+     */
+    public function doData()
+    {
+        global $ADMIN_DIR, $g_user;
+        foreach ($_REQUEST['args'] as $arg) {
+            $_REQUEST[$arg['name']] = $arg['value'];
+        }
 
-	public function getFilterIssues()
-	{
+        return require_once dirname(__FILE__) . '/do_data.php';
+    }
 
-		global $ADMIN_DIR, $g_user;
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
-		$translator = \Zend_Registry::get('container')->getService('translator');
+    public function getFilterIssues()
+    {
 
-		foreach ($_REQUEST['args'] as $arg) {
-			$_REQUEST[$arg['name']] = $arg['value'];
-		}
+        global $ADMIN_DIR, $g_user;
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
-		if($_REQUEST['publication'] > 0) {
-			$publication = $_REQUEST['publication'];
-		} else {
-			$publication = NULL;
-		}
+        foreach ($_REQUEST['args'] as $arg) {
+            $_REQUEST[$arg['name']] = $arg['value'];
+        }
 
-		if($_REQUEST['language'] > 0) {
-			$language = $_REQUEST['language'];
-		} else {
-			$language = NULL;
-		}
+        if ($_REQUEST['publication'] > 0) {
+            $publication = $_REQUEST['publication'];
+        } else {
+            $publication = NULL;
+        }
 
-		$newIssues = array();
-		$issues = Issue::GetIssues($publication, $language);
-		$issuesNo = is_array($issues) ? sizeof($issues) : 0;
-		$menuIssueTitle = $issuesNo > 0 ? $translator->trans('All Issues', array(), 'library') : $translator->trans('No issues found', array(), 'library');
-		foreach($issues as $issue) {
-			$newIssues[] = array('val' => $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId() , 'name' => $issue->getName());
-		}
-		$returns = array();
-		$returns['items'] = $newIssues;
-		$returns['itemsNo'] = $issuesNo;
-		$returns['menuItemTitle'] = $menuIssueTitle;
+        if ($_REQUEST['language'] > 0) {
+            $language = $_REQUEST['language'];
+        } else {
+            $language = NULL;
+        }
 
-		return json_encode($returns);
+        $newIssues = array();
+        $issues = Issue::GetIssues($publication, $language);
+        $issuesNo = is_array($issues) ? sizeof($issues) : 0;
+        $menuIssueTitle = $issuesNo > 0 ? $translator->trans('All Issues', array(), 'library') : $translator->trans('No issues found', array(), 'library');
+        foreach ($issues as $issue) {
+            $newIssues[] = array('val' => $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId() , 'name' => $issue->getName());
+        }
+        $returns = array();
+        $returns['items'] = $newIssues;
+        $returns['itemsNo'] = $issuesNo;
+        $returns['menuItemTitle'] = $menuIssueTitle;
 
-	}
+        return json_encode($returns);
 
-	public function getFilterSections()
-	{
-		$translator = \Zend_Registry::get('container')->getService('translator');
-		global $ADMIN_DIR, $g_user;
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
-		require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
+    }
 
-		foreach ($_REQUEST['args'] as $arg) {
-			$_REQUEST[$arg['name']] = $arg['value'];
-		}
+    public function getFilterSections()
+    {
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        global $ADMIN_DIR, $g_user;
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
+        require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
-		if($_REQUEST['publication'] > 0) {
-			$publication = $_REQUEST['publication'];
-		} else {
-			$publication = NULL;
-		}
+        foreach ($_REQUEST['args'] as $arg) {
+            $_REQUEST[$arg['name']] = $arg['value'];
+        }
 
-		$language = NULL;		
-		if($_REQUEST['issue'] > 0) {
-			$issueArray = explode("_",$_REQUEST['issue']);
-			$issue = $issueArray[1];
-			if (isset($issueArray[2])) {
-				$language = $issueArray[2];
-			}
-		} else {
-			$issue = NULL;
-		}
-		
-	    if($_REQUEST['language'] > 0) {
+        if ($_REQUEST['publication'] > 0) {
+            $publication = $_REQUEST['publication'];
+        } else {
+            $publication = NULL;
+        }
+
+        $language = NULL;
+        if ($_REQUEST['issue'] > 0) {
+            $issueArray = explode("_",$_REQUEST['issue']);
+            $issue = $issueArray[1];
+            if (isset($issueArray[2])) {
+                $language = $issueArray[2];
+            }
+        } else {
+            $issue = NULL;
+        }
+
+        if ($_REQUEST['language'] > 0) {
             $language = $_REQUEST['language'];
         }
 
-		// get sections
-		$sections = array();
+        // get sections
+        $sections = array();
 
+        $section_objects = Section::GetSections($publication, $issue, $language);
 
-		$section_objects = Section::GetSections($publication, $issue, $language);
+        foreach ($section_objects as $section) {
+            if (!isset($sections[$section->getSectionNumber()])) {
+                $sections[$section->getSectionNumber()] = $section;
+            }
+        }
+        $newSections = array();
+        foreach ($sections as $section) {
+            $newSections[] = array('val' => $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(), 'name' => $section->getName());
+        }
+        $sectionsNo = is_array($newSections) ? sizeof($newSections) : 0;
+        $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
 
+        $returns = array();
+        $returns['items'] = $newSections;
+        $returns['itemsNo'] = $sectionsNo;
+        $returns['menuItemTitle'] = $menuSectionTitle;
 
-		foreach ($section_objects as $section) {
-			if (!isset($sections[$section->getSectionNumber()])) {
-				$sections[$section->getSectionNumber()] = $section;
-			}
-		}
-		$newSections = array();
-		foreach($sections as $section) {
-			$newSections[] = array('val' => $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(), 'name' => $section->getName());
-		}
-		$sectionsNo = is_array($newSections) ? sizeof($newSections) : 0;
-		$menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
+        return json_encode($returns);
+    }
 
-		$returns = array();
-		$returns['items'] = $newSections;
-		$returns['itemsNo'] = $sectionsNo;
-		$returns['menuItemTitle'] = $menuSectionTitle;
-
-		return json_encode($returns);
-	}
-
-	/**
-	 * Handle action
-	 * @param string $f_action
-	 * @param array $f_items
-	 * @param array $f_params
-	 * @return void
-	 */
-	public static function doAction($f_action, $f_items, $f_params = array())
-	{
-		global $ADMIN_DIR, $g_user, $Campsite, $ADMIN;
+    /**
+     * Handle action
+     * @param  string $f_action
+     * @param  array  $f_items
+     * @param  array  $f_params
+     * @return void
+     */
+    public static function doAction($f_action, $f_items, $f_params = array())
+    {
+        global $ADMIN_DIR, $g_user, $Campsite, $ADMIN;
 
         // this is used for some actions, but some do not have it defined at all
         if (empty($f_target)) {
             $f_target = '';
         }
-		return require_once dirname(__FILE__) . '/do_action.php';
-	}
 
-	/**
-	 * Handle order
-	 * @param array $f_order
-	 * @param int $f_language
-	 * @return void
-	 */
-	public static function doOrder($f_order, $f_language)
-	{
-		global $ADMIN_DIR;
-		return require_once dirname(__FILE__) . '/do_order.php';
-	}
+        return require_once dirname(__FILE__) . '/do_action.php';
+    }
+
+    /**
+     * Handle order
+     * @param  array $f_order
+     * @param  int   $f_language
+     * @return void
+     */
+    public static function doOrder($f_order, $f_language)
+    {
+        global $ADMIN_DIR;
+
+        return require_once dirname(__FILE__) . '/do_order.php';
+    }
 
     /**
      * Get column keys

@@ -1,4 +1,4 @@
-Newscoop\Entity\Publication:
+Newscoop\Entity\Language:
     exclusion_policy: ALL
     properties:
         id:
@@ -14,4 +14,18 @@ Newscoop\Entity\Publication:
             type: string
             groups: ["list", "details"]
             serialized_name: name
+            since_version: 1.2
+        code:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: code
+            since_version: 1.2
+        RFC3066bis:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: RFC3066bis
             since_version: 1.2

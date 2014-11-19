@@ -187,10 +187,10 @@ Characters: İşarələr
 articles:
     images:
         edit:
-            edit_image_metadata: null
+            edit_image_metadata: 'Şəkilin metaməlumatıdı dəyiş'
             save: null
             form:
-                use: null
+                use: İstifadə
                 number: null
                 caption: null
                 status_approved: null
@@ -201,6 +201,6 @@ articles:
                 photographer_url: null
                 place: null
                 date: null
-                article_specific: null
+                article_specific: 'Seçilən yazı'
                 global: null
-                other_captions: null
+                other_captions: Şəkilaltılar

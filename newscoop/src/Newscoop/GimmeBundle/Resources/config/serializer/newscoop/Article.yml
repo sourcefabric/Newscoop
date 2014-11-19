@@ -169,6 +169,26 @@ Newscoop\Entity\Article:
             groups: ["list", "details"]
             serialized_name: comments_locked
             since_version: 1.1
+        publication:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: publication
+            accessor:
+                getter: getPublication
+            since_version: 1.2
+        lockTime:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: lockTime
+            since_version: 1.1
+        lockUser:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: lockUser
+            since_version: 1.1
     virtual_properties:
         getObject:
             expose: true
@@ -176,6 +196,11 @@ Newscoop\Entity\Article:
             type: article_url
             serialized_name: url
             since_version: 1.1
+        getLanguageObject:
+            expose: true
+            groups: ["list", "details"]
+            serialized_name: languageData
+            since_version: 1.2
         getWorkflowStatus:
             expose: true
             read_only: true
@@ -183,3 +208,11 @@ Newscoop\Entity\Article:
             serialized_name: status
             accessor:
                 getter: getWorkflowStatus
+        isLocked:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: isLocked
+            accessor:
+                getter: isLocked
+            since_version: 1.1
