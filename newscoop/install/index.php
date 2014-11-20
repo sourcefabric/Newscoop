@@ -210,8 +210,7 @@ $app->get('/prepare', function (Request $request) use ($app) {
             'error_bubbling' => true,
         ))
         ->add('user_password', 'password', array(
-            'constraints' => array(new Assert\NotBlank(array('message' => 'User password value should not be blank.'))),
-            'required' => true,
+            'required' => false,
             'label' => "Password:",
             'error_bubbling' => true,
         ))
@@ -240,7 +239,7 @@ $app->get('/prepare', function (Request $request) use ($app) {
                     $app['database_service']->createNewscoopDatabase($app['db']);
                 }
 
-                if ($e->getCode() == '1045') {
+                if ($e->getCode() == '1045' || $e->getCode() == '1044') {
                     $app['session']->getFlashBag()->set('danger', 'Invalid database parameters. Could not connect to database server.');
 
                     return $app['twig']->render('prepare.twig', array(
