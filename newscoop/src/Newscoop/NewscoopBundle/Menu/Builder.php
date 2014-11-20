@@ -19,6 +19,7 @@ class Builder
     protected $showPublishingEnvironmentMenu;
     protected $showConfigureMenu;
     protected $showUserMenu;
+    protected $menu = null;
 
     private function preparePrivileges()
     {
@@ -57,6 +58,10 @@ class Builder
 
     public function mainMenu($modern = false)
     {
+        if ($this->menu !== null) {
+            return $this->menu;
+        }
+
         $translator = $this->container->get('translator');
         $this->user = $this->container->getService('user')->getCurrentUser();
         $this->preparePrivileges();
@@ -142,6 +147,8 @@ class Builder
             $menu = $this->decorateMenu($menu);
         }
 
+        $this->menu = $menu;
+
         return $menu;
     }
 
@@ -181,7 +188,8 @@ class Builder
         return $menu;
     }
 
-    private function prepareContentMenu($menu, $modern) {
+    private function prepareContentMenu($menu, $modern)
+    {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(

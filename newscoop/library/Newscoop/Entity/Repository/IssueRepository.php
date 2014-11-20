@@ -46,6 +46,7 @@ class IssueRepository extends EntityRepository
             ->leftJoin('i.language', 'l')
             ->leftJoin('i.sections', 's')
             ->setParameter('ids', $ids)
+            ->orderBy('i.id', 'DESC')
             ->getQuery();
 
         return $query;
