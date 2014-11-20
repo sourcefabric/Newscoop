@@ -1,6 +1,6 @@
 'Rename user': 'Felhasználó átnevezése'
 Campsite: Campsite
-'Image Rendering': 'Kép leképezése'
+'Image Rendering': 'Kép megjelenítése'
 'Featured Article Lists': 'Kiemelt cikkek listái'
 'You have tried to upload an invalid backup file.': 'Érvénytelen biztonságimásolat-fájlt próbáltál feltölteni.'
 'You do not have the right to manage backups.': 'Nincs jogod a biztonsági másolatok kezeléséhez.'
@@ -52,11 +52,11 @@ Loading..: Betöltés...
 Filename: Fájlnév
 'Edit user type': 'Felhasználótípus szerkesztése'
 'Edit language': 'Nyelv szerkesztése'
-'Drag files here.': 'Húzd ide a fájlokat.'
+'Drag files here.': 'Húzz ide fájlokat.'
 'Connection interrupted': 'A kapcsolat megszakadt'
 Ban: Kitiltás
 'Are you sure you want to': 'Biztosan akarod'
-'Add files to the upload queue and click the start button.': 'Adj hozzá fájlokat a feltöltési várólistára, és kattints az Indítás gombra.'
+'Add files to the upload queue and click the start button.': 'Adj hozzá fájlokat a feltöltési várólistához, majd kattints a Feltöltés indítása gombra.'
 'Add files': 'Fájlok hozzáadása'
 '%value% is more than %max% characters long': 'A/z %value% több %max% karakternél'
 '%value% is less than %min% characters long': 'A/z %value% kevesebb %max% karakternél'
