@@ -28,8 +28,8 @@ class FieldsHandler
             $fields[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
         }
 
-        $fields['show_on_front_page'] = $data->onFrontPage;
-        $fields['show_on_section_page'] = $data->onSection;
+        $fields['show_on_front_page'] = $data->onFrontPage == "Y" ? 1 : 0;
+        $fields['show_on_section_page'] = $data->onSection == "Y" ? 1 : 0;
 
         return $fields;
     }
