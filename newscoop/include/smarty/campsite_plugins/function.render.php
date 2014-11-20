@@ -29,9 +29,8 @@ function smarty_function_render($p_params, &$p_smarty)
     $cache_lifetimeBak = $smarty->cache_lifetime;
     $campsiteVectorBak = $smarty->campsiteVector;
     $cache_statusBak = $smarty->caching;
-    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
-    if ($preferencesService->TemplateCacheHandler) {
+    if ($smarty->templateCacheHandler) {
         $campsiteVector = $smarty->campsiteVector;
         foreach ($campsiteVector as $key => $value) {
             if (isset($p_params[$key])) {

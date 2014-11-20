@@ -181,6 +181,13 @@ class Publication
         return $this->name;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     /**
      * Get language
      *
@@ -189,6 +196,13 @@ class Publication
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
     }
 
     /**
@@ -333,7 +347,7 @@ class Publication
      */
     public function setModeratorFrom($p_moderator_from)
     {
-        return $this->moderator_to = $p_moderator_from;
+        return $this->moderator_from = $p_moderator_from;
     }
 
     /**
@@ -356,6 +370,13 @@ class Publication
         return $this->defaultAlias;
     }
 
+    public function setDefaultAlias($alias)
+    {
+        $this->defaultAlias = $alias;
+
+        return $this;
+    }
+
     public function getCaptchaEnabled()
     {
         return $this->commentsCaptchaEnabled;
@@ -366,10 +387,25 @@ class Publication
         return $this->commentsSubscribersModerated;
     }
 
+    public function setCommentsSubscribersModerated($commentsSubscribersModerated)
+    {
+        $this->commentsSubscribersModerated = $commentsSubscribersModerated;
+
+        return $this;
+    }
+
     public function getCommentsPublicModerated()
     {
         return $this->commentsPublicModerated;
     }
+
+    public function setCommentsPublicModerated($commentsPublicModerated)
+    {
+        $this->commentsPublicModerated = $commentsPublicModerated;
+
+        return $this;
+    }
+
     /**
      * Gets the value of public_enabled.
      *
@@ -377,7 +413,7 @@ class Publication
      */
     public function getPublicCommentsEnabled()
     {
-        return $this->public_enabled;
+        return (boolean) $this->public_enabled;
     }
 
     /**
@@ -442,6 +478,28 @@ class Publication
         return (array) unserialize($this->seo);
     }
 
+    public function getSeoChoices()
+    {
+        $choices = array();
+        foreach ($this->getSeo() as $key => $value) {
+            if ($value == 'on') {
+                $choices[] = $key;
+            }
+        }
+
+        return $choices;
+    }
+
+    public function setSeoChoices($data)
+    {
+        $seo = array();
+        foreach($data as $value) {
+            $seo[$value] = 'on';
+        }
+
+        $this->setSeo($seo);
+    }
+
     /**
      * Gets the value of urlTypeId.
      *
@@ -483,7 +541,7 @@ class Publication
      *
      * @return self
      */
-    protected function setMetaTitle($metaTitle)
+    public function setMetaTitle($metaTitle)
     {
         $this->metaTitle = $metaTitle;
 
@@ -507,7 +565,7 @@ class Publication
      *
      * @return self
      */
-    protected function setMetaKeywords($metaKeywords)
+    public function setMetaKeywords($metaKeywords)
     {
         $this->metaKeywords = $metaKeywords;
 
@@ -531,9 +589,129 @@ class Publication
      *
      * @return self
      */
-    protected function setMetaDescription($metaDescription)
+    public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsArticleDefaultEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsArticleDefaultEnabled()
+    {
+        return $this->commentsArticleDefaultEnabled;
+    }
+
+    /**
+     * Sets the value of commentsArticleDefaultEnabled.
+     *
+     * @param bool $commentsArticleDefaultEnabled the comments article default enabled
+     *
+     * @return self
+     */
+    public function setCommentsArticleDefaultEnabled($commentsArticleDefaultEnabled)
+    {
+        $this->commentsArticleDefaultEnabled = $commentsArticleDefaultEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsCaptchaEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsCaptchaEnabled()
+    {
+        return $this->commentsCaptchaEnabled;
+    }
+
+    /**
+     * Sets the value of commentsCaptchaEnabled.
+     *
+     * @param bool $commentsCaptchaEnabled the comments captcha enabled
+     *
+     * @return self
+     */
+    public function setCommentsCaptchaEnabled($commentsCaptchaEnabled)
+    {
+        $this->commentsCaptchaEnabled = $commentsCaptchaEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsSpamBlockingEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsSpamBlockingEnabled()
+    {
+        return $this->commentsSpamBlockingEnabled;
+    }
+
+    /**
+     * Sets the value of commentsSpamBlockingEnabled.
+     *
+     * @param bool $commentsSpamBlockingEnabled the comments spam blocking enabled
+     *
+     * @return self
+     */
+    public function setCommentsSpamBlockingEnabled($commentsSpamBlockingEnabled)
+    {
+        $this->commentsSpamBlockingEnabled = $commentsSpamBlockingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsEnabled()
+    {
+        return $this->commentsEnabled;
+    }
+
+    /**
+     * Sets the value of commentsEnabled.
+     *
+     * @param bool $commentsEnabled the comments enabled
+     *
+     * @return self
+     */
+    public function setCommentsEnabled($commentsEnabled)
+    {
+        $this->commentsEnabled = $commentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of public_enabled.
+     *
+     * @return bool
+     */
+    public function getPublicEnabled()
+    {
+        return (boolean) $this->public_enabled;
+    }
+
+    /**
+     * Sets the value of public_enabled.
+     *
+     * @param bool $public_enabled the public enabled
+     *
+     * @return self
+     */
+    public function setPublicEnabled($public_enabled)
+    {
+        $this->public_enabled = $public_enabled;
 
         return $this;
     }

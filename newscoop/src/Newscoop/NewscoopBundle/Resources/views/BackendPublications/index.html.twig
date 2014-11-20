@@ -8,7 +8,7 @@
         <div class="actions">
             <ul class="navigation" style="height: auto;">
                 <li>
-                    <a class="add" href="#">{{ 'publications.buttons.addNew'|trans }}</a>
+                    <a class="add" href="{{ url('newscoop_newscoop_publications_add') }}">{{ 'publications.buttons.addNew'|trans }}</a>
                 </li>
             </ul>
         </div>
@@ -34,6 +34,17 @@
 {% endblock %}
 
 {% block admin_content %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alerts alert-danger">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alerts alert-success">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+
 <div class="row publications ns_container col-md-8">
     {% if publications|length > 0 %}
     <table id="publications-table" class="table table-bordered table-hover table-striped" style="word-wrap: break-word;table-layout: fixed;">
@@ -54,13 +65,13 @@
         {% for publication in publications %}
             <tr>
                 <td>{{ publication.id }}</td>
-                <td><a href="#" style="font-weight: bold;">{{ publication.name }}</a></td>
+                <td><a href="/admin/issues/?Pub={{ publication.id }}" style="font-weight: bold;">{{ publication.name }}</a></td>
                 <td>{{ publication.defaultAlias.name}}</td>
                 <td>{{ publication.language.name}}</td>
                 <td><span class="glyphicon glyphicon-{% if publication.commentsEnabled %}ok{% else %}minus{% endif %}"></span></td>
                 <td>{% if publication.urlTypeId == 1%}{{ 'template path'|trans({}, 'api')}}{% else %}{{ 'short names'|trans({}, 'api')}}{% endif %}</td>
-                <td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="#"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
+                <td><a href="{{ url('newscoop_newscoop_publications_edit', {'id': publication.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href="{{ url('newscoop_newscoop_publications_remove', {'id': publication.id}) }}"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
             </tr>
         {% endfor %}
         </tbody>

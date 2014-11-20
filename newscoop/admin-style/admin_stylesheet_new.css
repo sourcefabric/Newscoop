@@ -820,3 +820,38 @@ td.name .ui-icon {
     box-shadow: none;
     margin-left: 4px;
 }
+
+.action-button {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 120%;
+    list-style: none;
+    margin: 0 6px 0 0;
+    position: relative;
+    text-decoration: none;
+    border: 1px solid #9D9D9D;
+    background-color: #f6f6f6;
+    display: block;
+    background: -moz-linear-gradient(top, #fafafa 0, #f6f6f6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafafa), color-stop(100%, #f6f6f6));
+    overflow: hidden;
+    padding: 3px 10px 4px 10px;
+    color: #3B3B3B;
+}
+
+.action-button:hover {
+    text-decoration: none;
+    border: 1px solid #007fb3;
+    color: #fff;
+    background-color: #007fb3;
+    background: -moz-linear-gradient(top, #409fc6 0, #007fb3 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #409fc6), color-stop(100%, #007fb3));
+}
+
+.action-button .glyphicon {
+    color: #007fb3;
+}
+
+.action-button .glyphicon:hover, .action-button:hover .glyphicon  {
+    color: white;
+}

@@ -37,6 +37,9 @@ final class MetaPublication extends MetaDbObject
         $this->m_properties['subscription_paid_time'] = 'PaidTime';
         $this->m_properties['subscription_unit_cost'] = 'UnitCost';
         $this->m_properties['subscription_unit_cost_all_lang'] = 'UnitCostAllLang';
+        $this->m_properties['meta_title'] = 'meta_title';
+        $this->m_properties['meta_keywords'] = 'meta_keywords';
+        $this->m_properties['meta_description'] = 'meta_description';
 
         $this->m_customProperties['site'] = 'getDefaultSiteName';
         $this->m_customProperties['defined'] = 'defined';

@@ -156,6 +156,7 @@ class SystemPreferencesService
             return $this->preferences;
         }
 
+        // TODO: replace it with dql and measure performance
         return $this->preferences = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')->findAll();
     }
 
@@ -169,12 +170,8 @@ class SystemPreferencesService
      */
     public function findOneBy($property)
     {
-        $eb = new ExpressionBuilder();
-        $expr = $eb->eq('option', $property);
-        $criteria = new Criteria($expr);
-
-        $preferences = new ArrayCollection($this->getAllPreferences());
-
-        return $preferences->matching($criteria);
+        return new ArrayCollection(array_filter($this->getAllPreferences(), function($pref) use ($property) {
+            return $pref->option === $property;
+        }));
     }
 }

@@ -46,7 +46,7 @@ fos_rest:
         formats:
             json: true
         mime_types:
-            json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
+            json: ['application/json', 'application/x-json', 'application/vnd.sourcefabric-org.newscoop+json']
     body_listener:
         decoders:
             json: fos_rest.decoder.json

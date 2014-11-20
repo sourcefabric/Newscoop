@@ -28,8 +28,7 @@ function smarty_function_url($p_params, &$p_smarty)
     if (isset($p_params['useprotocol']) && in_array($p_params['useprotocol'], $validValues)) {
         $useprotocol = $p_params['useprotocol'];
     } else {
-        $systemPref = \Zend_Registry::get('container')->get('system_preferences_service');
-        $useprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? 'true' : 'false';
+        $useprotocol = $p_smarty->useprotocol;
     }
 
     switch ($useprotocol) {

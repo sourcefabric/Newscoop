@@ -31,6 +31,10 @@ final class CampTemplate extends SmartyBC
     /** @var bool */
     private $m_preview = false;
 
+    public $useprotocol;
+
+    public $templateCacheHandler;
+
     /** @var array */
     public $campsiteVector = array();
 
@@ -49,8 +53,11 @@ final class CampTemplate extends SmartyBC
 
         // cache settings
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $cacheHandler = $preferencesService->TemplateCacheHandler;
-        if ($cacheHandler) {
+
+        $this->useprotocol = ($preferencesService->get('SmartyUseProtocol') === 'Y') ? 'true' : 'false';
+
+        $this->templateCacheHandler = $preferencesService->TemplateCacheHandler;
+        if ($this->templateCacheHandler) {
             $this->caching = 1;
             $this->caching_type = 'newscoop';
             CampTemplateCache::factory();

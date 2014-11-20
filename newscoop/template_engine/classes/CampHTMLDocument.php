@@ -289,10 +289,9 @@ final class CampHTMLDocument
 
         $tpl->assign('gimme', $context);
         $tpl->assign('siteinfo', $siteinfo);
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         // on template caching add additional info
-        if ($preferencesService->TemplateCacheHandler) {
+        if ($tpl->templateCacheHandler) {
             $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
             $uri = CampSite::GetURIInstance();
             $smarty = CampTemplate::singleton();

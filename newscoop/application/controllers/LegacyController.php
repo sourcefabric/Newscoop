@@ -38,11 +38,6 @@ class LegacyController extends Zend_Controller_Action
 
         require_once(CS_PATH_INCLUDES.DIR_SEP.'campsite_init.php');
 
-        if (file_exists(CS_PATH_SITE . DIR_SEP . 'reset_cache')) {
-            CampCache::singleton()->clear('user');
-            @unlink(CS_PATH_SITE . DIR_SEP . 'reset_cache');
-        }
-
         // initializes the campsite object
         $campsite = new CampSite();
 
@@ -51,11 +46,6 @@ class LegacyController extends Zend_Controller_Action
 
         // starts the session
         $campsite->initSession();
-
-        if (file_exists(CS_PATH_SITE.DIR_SEP.'conf'.DIR_SEP.'upgrading.php')) {
-            $this->upgrade();
-            exit(0);
-        }
 
         // initiates the context
         $campsite->init();
