@@ -4,7 +4,7 @@ at: null
 'With image attachment': Képmelléklettel
 'With document attachment': Dokumentummelléklettel
 'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
-Starred: Csillagozott
+Starred: Csillagozva
 Star: Csillagozás
 'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
 'Reply to message': 'Válasz az üzenetre'
@@ -23,7 +23,7 @@ Last: Utolsó
 'Full article': 'Teljes cikk'
 First: Első
 'Feedback Messages': 'Visszajelzés üzenetek'
-'Display _MENU_ records': '_MENU_ rekordok megjelenítése'
+'Display _MENU_ records': '_MENU_ rekord megjelenítése'
 Deleted: Törölve
 'Change selected messages status': 'A kijelölt üzenetek állapotának módosítása'
 Attachment: Csatolmány

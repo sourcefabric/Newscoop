@@ -25,7 +25,7 @@ newscoop:
             info: '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
             noentries: 'Nincs megjelenítendő bejegyzés'
             filtering: '- szűrés a _MAX_ rekordokból'
-            menu: 'A _MENU_ rekordok megjelenítése'
+            menu: 'A _MENU_ rekord megjelenítése'
         label:
             search: Keresés
             filter: Szűrő

@@ -29,7 +29,7 @@ comments:
         unrecommended: null
         editcomment: 'Hozzászólás gyors szerkesztése'
         actions: Műveletek
-        selectstatus: 'Állapot kiválasztása'
+        selectstatus: 'Válassz állapotot'
         deleted: Törölve
         alert: Figyelmeztetás
         searchholder: 'Keresés... ( pl. név, e-mail cím, tárgy, hozzászólás, cikk címe)'
