@@ -8,14 +8,12 @@
 
 namespace Newscoop\Entity\Output;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Resource;
 use Newscoop\Entity\Publication;
-use Newscoop\Entity\PublicationTheme;
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
-use Newscoop\Entity\Theme;
 
 /**
  * Provides the settings for an output for a theme.
@@ -64,10 +62,10 @@ class OutputSettingsTheme extends OutputSettings
 	/**
 	 * Set the publication that owns the theme.
 	 *
-	 * @param Newscoop\Entity\Publication $publication
+	 * @param Publication $publication
 	 *		The publication that owns the theme.
 	 *
-	 * @return Newscoop\Entity\PublicationTheme
+	 * @return OutputSettingsTheme
 	 *		This object for chaining purposes.
 	 */
 	public function setPublication(Publication $publication)
@@ -93,10 +91,10 @@ class OutputSettingsTheme extends OutputSettings
 	/**
 	 * Set the path of the theme associated.
 	 *
-	 * @param Newscoop\Entity\Resource $themePath
+	 * @param Resource $themePath
 	 *		The path of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\PublicationTheme
+	 * @return OutputSettingsTheme
 	 *		This object for chaining purposes.
 	 */
 	public function setThemePath(Resource $themePath)

@@ -35,7 +35,7 @@ class ListUserService
     /**
      * Find by criteria
      *
-     * @param Newscoop\User\UserCriteria $criteria
+     * @param UserCriteria $criteria
      * @return Newscoop\ListResult;
      */
     public function findByCriteria(UserCriteria $criteria)

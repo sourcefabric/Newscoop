@@ -8,6 +8,9 @@ final class InvalidPropertyException extends Exception {
 
 	private $m_property = null;
 
+    /**
+     * @param string $p_className
+     */
     public function __construct($p_className, $p_property)
     {
         parent::__construct("$p_property property is not available for the $p_className class", 0);

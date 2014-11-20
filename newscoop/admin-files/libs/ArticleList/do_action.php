@@ -59,6 +59,9 @@ function prepareContextBoxItems($f_params)
     return $return;
 }
 
+/**
+ * @param string $status
+ */
 function buildMessage($status, $no, $message)
 {
     $messageArray = array();

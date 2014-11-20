@@ -764,7 +764,7 @@ class XML_Unserializer extends PEAR
      * @param object $parser  XML parser object
      * @param string $element element
      *
-     * @return void
+     * @return boolean|null
      * @access private
      */
     function endHandler($parser, $element)

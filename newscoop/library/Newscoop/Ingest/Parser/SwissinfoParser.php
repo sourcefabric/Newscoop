@@ -22,7 +22,6 @@ class SwissinfoParser implements Parser
     protected $date;
 
     /**
-     * @param string $content
      */
     public function __construct($story)
     {

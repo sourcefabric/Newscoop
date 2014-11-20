@@ -630,6 +630,7 @@ installed package.'
 
     /**
      * @access private
+     * @param boolean $installed
      */
     function _doInfo2($command, $options, $params, &$obj, $installed)
     {

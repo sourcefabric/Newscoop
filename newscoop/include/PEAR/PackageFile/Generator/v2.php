@@ -99,6 +99,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
     var $_packagefile;
     /**
      * @param PEAR_PackageFile_v2
+     * @param PEAR_PackageFile_v2 $packagefile
      */
     function PEAR_PackageFile_Generator_v2(&$packagefile)
     {
@@ -300,6 +301,9 @@ http://pear.php.net/dtd/package-2.0.xsd',
         }
     }
 
+    /**
+     * @param integer $state
+     */
     function toPackageFile($where = null, $state = PEAR_VALIDATE_NORMAL, $name = 'package.xml')
     {
         if (!$this->_packagefile->validate($state)) {

@@ -8,7 +8,6 @@
 
 namespace Newscoop\Service\Implementation;
 
-use Newscoop\Utils\Validation;
 use Newscoop\Service\IOutputSettingSectionService;
 use Newscoop\Service\IOutputService;
 use Newscoop\Service\Implementation\AEntityBaseServiceDoctrine;

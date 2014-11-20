@@ -164,7 +164,7 @@ class Package
     /**
      * Set rendition
      *
-     * @param Newscoop\Image\Rendition $rendition
+     * @param Rendition $rendition
      * @return void
      */
     public function setRendition(Rendition $rendition)
@@ -185,7 +185,7 @@ class Package
     /**
      * Get previous item
      *
-     * @param Newscoop\Package\Item $currentItem
+     * @param Item $currentItem
      * @return Newscoop\Package\Item
      */
     public function getPrev(Item $currentItem)
@@ -203,7 +203,7 @@ class Package
     /**
      * Get next item
      *
-     * @param Newscoop\Package\Item $currentItem
+     * @param Item $currentItem
      * @return Newscoop\Package\Item
      */
     public function getNext(Item $currentItem)
@@ -262,7 +262,7 @@ class Package
     /**
      * Get view
      *
-     * @return Newscoop\View\AuthorView
+     * @return PackageView
      */
     public function getView()
     {

@@ -21,7 +21,7 @@ class ColumnOrder extends Column
 	
 	/**
 	 * Provides the ordering status of the column.
-	 * @return NULL|bool
+	 * @return boolean
 	 * 		Returns NULL if this column is not ordered, true if the order is ascending, flase for descending.
 	 */
 	public function isOrderAscending(){
@@ -36,7 +36,7 @@ class ColumnOrder extends Column
 	 * @param bool $ascending
 	 *		If true than the column will be ordered asscending, if false descending.
 	 *
-	 * @return Newscoop\Service\Model\Search\Column
+	 * @return ColumnOrder
 	 *		This instance, used for chaining purposes.
 	 */
 	public function order($ascending){
@@ -51,7 +51,7 @@ class ColumnOrder extends Column
 	/**
 	 * Set this column to be ordered asscending.
 	 *
-	 * @return Newscoop\Service\Model\Search\Column
+	 * @return ColumnOrder
 	 *		This instance, used for chaining purposes.
 	 */
 	public function orderAscending(){
@@ -62,7 +62,7 @@ class ColumnOrder extends Column
 	/**
 	 * Set this column to be ordered descending.
 	 *
-	 * @return Newscoop\Service\Model\Search\Column
+	 * @return ColumnOrder
 	 *		This instance, used for chaining purposes.
 	 */
 	public function orderDescending(){

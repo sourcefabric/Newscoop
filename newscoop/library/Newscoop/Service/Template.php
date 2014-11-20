@@ -7,10 +7,10 @@
 
 namespace Newscoop\Service;
 
-use Newscoop\Storage,
-    Newscoop\Entity\Repository\TemplateRepository,
-    Newscoop\Service\Resource\ResourceId,
-    Newscoop\Entity\Theme;
+use Newscoop\Storage;
+use Newscoop\Entity\Repository\TemplateRepository;
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Entity\Theme;
 
 /**
  * Template service
@@ -51,7 +51,7 @@ class Template
     protected $theme;
 
     /**
-     * @param Newscoop\Storage $storage
+     * @param Storage $storage
      * @param Newscoop\Entity\Repository\TemplateRepository $repository
      */
     public function __construct(Storage $storage, TemplateRepository $repository)
@@ -100,6 +100,7 @@ class Template
 
     /**
      *
+     * @param string $path
      */
     public function cacheTemplates($path)
     {
@@ -136,7 +137,7 @@ class Template
      * Fetch item metadata
      *
      * @param string $key
-     * @return object
+     * @return string
      */
     public function fetchMetadata($key)
     {

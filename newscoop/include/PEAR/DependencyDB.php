@@ -467,6 +467,7 @@ class PEAR_DependencyDB
     /**
      * Register usage of the dependency DB to prevent race conditions
      * @param int one of the LOCK_* constants
+     * @param integer $mode
      * @return true|PEAR_Error
      * @access private
      */
@@ -708,6 +709,7 @@ class PEAR_DependencyDB
      * @param array the specific dependency
      * @param required|optional whether this is a required or an optional dep
      * @param string|false dependency group this dependency is from, or false for ordinary dep
+     * @param string $type
      */
     function _registerDep(&$data, &$pkg, $dep, $type, $group = false)
     {

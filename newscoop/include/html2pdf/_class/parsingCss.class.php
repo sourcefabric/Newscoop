@@ -30,6 +30,7 @@ class HTML2PDF_parsingCss
      * Constructor
      *
      * @param  &HTML2PDF_myPdf reference to the PDF $object
+     * @param HTML2PDF_myPdf $pdf
      * @access public
      */
     public function __construct(&$pdf)
@@ -75,6 +76,7 @@ class HTML2PDF_parsingCss
     * define the Default Font to use, if the font does not exist, or if no font asked
     *
     * @param  string  default font-family. If null : Arial for no font asked, and error fot ont does not exist
+    * @param string $default
     * @return string  old default font-family
     * @access public
     */
@@ -473,6 +475,7 @@ class HTML2PDF_parsingCss
      * @access public
      * @param  string   tag name
      * @param  array    styles
+     * @param string $tagName
      */
     public function getSvgStyle($tagName, &$param)
     {
@@ -1661,7 +1664,7 @@ class HTML2PDF_parsingCss
      * read a css content
      *
      * @access protected
-     * @param  &string $code
+     * @param  string $code
      */
     protected function _analyseStyle(&$code)
     {
@@ -1725,6 +1728,7 @@ class HTML2PDF_parsingCss
      *
      * @access public
      * @param  string   &$html
+     * @param string $html
      */
     public function readStyle(&$html)
     {

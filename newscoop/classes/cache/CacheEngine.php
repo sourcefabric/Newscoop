@@ -33,8 +33,8 @@ abstract class CacheEngine
     /**
      * Stores the value identified by the given key in the cache.
      * Returns true on success, false on failure.
-     * @param $p_key
-     * @param $p_value
+     * @param string $p_key
+     * @param string $p_value
      * @return boolean
      */
     abstract public function storeValue($p_key, $p_value, $p_ttl = 0);
@@ -50,6 +50,7 @@ abstract class CacheEngine
     /**
      * Fetches the value identified by the given key from the cache.
      * @param $key
+     * @param string $p_key
      * @return mixed
      */
     abstract public function fetchValue($p_key);
@@ -57,6 +58,7 @@ abstract class CacheEngine
     /**
      * Delete the value identified by the given key from the cache.
      * @param $key
+     * @param string $p_key
      * @return void
      */
     abstract public function deleteValue($p_key);

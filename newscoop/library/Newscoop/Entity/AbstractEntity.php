@@ -8,7 +8,6 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Newscoop\Utils\Validation;
 
 /**
  * Provides the basic container for an entity that has a primary key.
@@ -40,10 +39,8 @@ abstract class AbstractEntity {
 	/**
 	 * Set the id of the output, this will uniquielly identify this output.
 	 *
-	 * @param string $p_id
-	 *		The id of the output, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Entity
+	 * @return AbstractEntity
 	 *		This object for chaining purposes.
 	 */
 	public function setId($id)

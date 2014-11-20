@@ -8,9 +8,8 @@
 namespace Newscoop\Entity\Repository;
 
 use Newscoop\Entity;
-
-use Newscoop\Entity\Notification,
-    Newscoop\Entity\Comment;
+use Newscoop\Entity\Notification;
+use Newscoop\Entity\Comment;
 
 class NotificationRepository
 {

@@ -18,7 +18,7 @@
  *     $p_smarty the date format wanted
  *
  * @return
- *     string the html form element
+ string     string the html form element
  *     string empty if something is wrong
  */
 function smarty_function_camp_edit($p_params, &$p_smarty)

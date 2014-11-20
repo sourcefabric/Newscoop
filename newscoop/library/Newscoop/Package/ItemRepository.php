@@ -34,7 +34,7 @@ class ItemRepository extends EntityRepository
     /**
      * Get list for given criteria
      *
-     * @param Newscoop\Criteria\SlideshowItemCriteria $criteria
+     * @param SlideshowItemCriteria $criteria
      *
      * @return Newscoop\ListResult
      */

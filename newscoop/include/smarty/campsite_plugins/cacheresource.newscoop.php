@@ -109,7 +109,6 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
     /**
      * populate Cached Object with timestamp and exists from Resource
      *
-     * @param  Smarty_Template_Cached $source cached object
      * @return void
      */
     public function populateTimestamp(Smarty_Template_Cached $cached)

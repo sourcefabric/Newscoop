@@ -8,7 +8,6 @@
 
 namespace Newscoop\GimmeBundle\Entity;
 
-use FOS\OAuthServerBundle\Entity\AccessToken as BaseAccessToken;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,7 +66,7 @@ class PublicApiResource
     /**
      * Sets the value of resources.
      *
-     * @param mixed $resources the resources
+     * @param mixed $resource the resources
      *
      * @return self
      */

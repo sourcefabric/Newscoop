@@ -115,8 +115,8 @@ class BlogService
      * Create blog article
      *
      * @param  string  $title
-     * @param  Section $section
-     * @return Article
+     * @param  \Section $section
+     * @return \Article
      */
     public function createBlog($title, \Section $section)
     {
@@ -173,8 +173,8 @@ class BlogService
     /**
      * Test if author is blog author
      *
-     * @param  Author  $author
-     * @param  Article $blogInfo
+     * @param  \Author  $author
+     * @param  \Article $blogInfo
      * @return bool
      */
     public function isBlogAuthor(\Author $author, \Article $blogInfo)
@@ -188,7 +188,7 @@ class BlogService
      * Test if requested article is editable by user
      *
      * @param  Zend_Controller_Request_Abstract $request
-     * @param  Newscoop\Entity\User             $user
+     * @param  null|User             $user
      * @return bool
      */
     private function isRequestedArticleEditable(\Zend_Controller_Request_Abstract $request, User $user)
@@ -201,7 +201,7 @@ class BlogService
     /**
      * Test if given article is from users blog
      *
-     * @param  Article              $article
+     * @param  \Article              $article
      * @param  Newscoop\Entity\User $user
      * @return bool
      */

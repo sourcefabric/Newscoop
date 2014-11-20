@@ -125,7 +125,6 @@ class EventDispatcherProxy implements EventSubscriber
     /**
      * Get entity properties.
      *
-     * @param object $entitygetManager
      * @param Doctrine\ORM\EntityManager $em
      * @return array
      */

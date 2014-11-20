@@ -117,7 +117,7 @@ class AuthorType extends DatabaseObject
      * Get the name of the author type.
      *
      * @param string $p_value
-     * @return string
+     * @return boolean|null
      */
     public function setName($p_value)
     {

@@ -35,7 +35,7 @@ class ListResult implements Countable, IteratorAggregate
     }
 
     /**
-     * @return Iterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {

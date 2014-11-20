@@ -282,7 +282,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * 		The array of elements to be sorted.
 	 * @param string $property
 	 * 		The method name that provides the sorting key.
-	 * @param bool $asscending
+	 * @param bool $ascending
 	 * 		True if the sort is ascending, false for descending.
 	 * @return array
 	 * 		The sorted array.
@@ -422,7 +422,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * @param string $themeConfig
 	 * 		The path of the Theme XML file in order to extract the theme path, *(not null not empty).
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return null|Theme
 	 * 		The loaded theme object, NULL if there was an issue.
 	 */
 	protected function loadTheme(\SimpleXMLElement $nodeTheme, $id, $themeConfig)

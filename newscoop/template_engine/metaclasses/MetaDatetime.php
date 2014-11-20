@@ -28,6 +28,9 @@ final class MetaDatetime
     	}
     } // fn __construct
 
+    /**
+     * @param string $p_value
+     */
     public function setValue($p_value)
     {
         if (!self::IsValid($p_value)) {

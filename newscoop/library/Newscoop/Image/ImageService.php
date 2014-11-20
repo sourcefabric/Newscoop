@@ -12,7 +12,6 @@ use Imagine\Gd\Imagine;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Newscoop\Image\ImageInterface as NewscoopImageInterface;
 use Newscoop\Image\LocalImage;
 use Newscoop\Entity\User;
 use Newscoop\Exception\ResourcesConflictException;
@@ -219,7 +218,7 @@ class ImageService
      *
      * @param string $src
      *
-     * @return void
+     * @return null|\Nette\Image
      */
     public function generateFromSrc($src)
     {
@@ -329,7 +328,7 @@ class ImageService
     /**
      * Save article image
      *
-     * @param Newscoop\Image\ArticleImage $articleImage
+     * @param ArticleImage $articleImage
      * @param array $values
      * @return void
      */
@@ -345,10 +344,10 @@ class ImageService
      * Add article image
      *
      * @param int                       $articleNumber
-     * @param Newscoop\Image\LocalImage $image
+     * @param LocalImage $image
      * @param bool                      $defaultImage
      *
-     * @return Newscoop\Image\ArticleImage
+     * @return ArticleImage
      */
     public function addArticleImage($articleNumber, LocalImage $image, $defaultImage = false)
     {
@@ -491,7 +490,7 @@ class ImageService
      * @param int    $height
      * @param string $specs
      *
-     * @return mixed
+     * @return Thumbnail
      */
     public function thumbnail($image, $width, $height, $specs)
     {
@@ -505,10 +504,10 @@ class ImageService
     /**
      * Get thumbnail for given image and rendition
      *
-     * @param Newscoop\Image\Rendition      $rendition
-     * @param Newscoop\Image\ImageInterface $image
+     * @param Rendition      $rendition
+     * @param ImageInterface $image
      *
-     * @return Newscoop\Image\Thumbnail
+     * @return Thumbnail
      */
     public function getThumbnail(Rendition $rendition, ImageInterface $image)
     {
@@ -698,7 +697,7 @@ class ImageService
     /**
     * Get image caption
     *
-    * @param int $image
+    * @param LocalImage $image
     * @param int $articleNumber
     * @param int $languageId
     *

@@ -20,7 +20,7 @@ interface IEntityService extends IEntityBaseService
 	/**
 	 * Provides the count of the entities that can be associated with the provided search.
 	 *
-	 * @param Newscoop\Service\Model\Search\Search $search
+	 * @param Search $search
 	 *		The search criteria, not null.
 	 *
 	 * @return int
@@ -31,7 +31,7 @@ interface IEntityService extends IEntityBaseService
 	/**
 	 * Provides the all the entities that can be associated with the provided search
 	 *
-	 * @param Newscoop\Service\Model\Search\Search $search
+	 * @param Search $search
 	 *		The search criteria, not null.
 	 *
 	 * @param int|0 $offset

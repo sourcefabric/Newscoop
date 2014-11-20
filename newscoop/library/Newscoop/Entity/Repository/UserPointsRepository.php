@@ -7,8 +7,7 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\UserPoints;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * User repository

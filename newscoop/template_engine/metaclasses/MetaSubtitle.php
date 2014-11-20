@@ -103,7 +103,7 @@ final class MetaSubtitle
     /**
      * Returns true if the current object is the same type as the given
      * object then has the same value.
-     * @param  mix     $p_otherObject
+     * @param  MetaSubtitle     $p_otherObject
      * @return boolean
      */
     public function same_as($p_otherObject)
@@ -152,7 +152,7 @@ final class MetaSubtitle
      *
      * @param  string $p_content
      * @param  string $p_firstSubtitle
-     * @return array  of MetaSubtitle
+     * @return MetaSubtitle[]  of MetaSubtitle
      */
     public static function ReadSubtitles($p_content, $p_fieldName, $p_firstSubtitle = '',
     $p_headerFormatStart = null, $p_headerFormatEnd = null) {

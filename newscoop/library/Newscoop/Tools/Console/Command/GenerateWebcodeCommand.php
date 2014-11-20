@@ -133,7 +133,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
      *
      * @param int $articleNumber Article number
      *
-     * @return array
+     * @return false|string
      */
     private function encode($articleNumber)
     {

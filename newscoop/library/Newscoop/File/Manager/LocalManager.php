@@ -7,8 +7,8 @@
 
 namespace Newscoop\File\Manager;
 
-use Newscoop\Entity\Repository\TemplateRepository,
-    Newscoop\Entity\Template;
+use Newscoop\Entity\Repository\TemplateRepository;
+use Newscoop\Entity\Template;
 
 /**
  * Local file manager

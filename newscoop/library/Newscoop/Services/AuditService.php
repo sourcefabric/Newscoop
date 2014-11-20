@@ -24,7 +24,7 @@ class AuditService
 
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Service\User $userService
+     * @param UserService $userService
      */
     public function __construct(EntityManager $em, UserService $userService)
     {
@@ -85,6 +85,9 @@ class AuditService
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
     
+    /**
+     * @return integer
+     */
     public function countBy(array $criteria)
     {
         return $this->em->getRepository('Newscoop\Entity\AuditEvent')

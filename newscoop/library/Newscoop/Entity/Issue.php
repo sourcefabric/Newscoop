@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -106,7 +106,7 @@ class Issue
 
     /**
      * @param int $number
-     * @param Newscoop\Entity\Publication $publication
+     * @param Publication $publication
      */
     public function __construct($number, \Newscoop\Entity\Publication $publication = null, \Newscoop\Entity\Language $language = null)
     {
@@ -173,7 +173,7 @@ class Issue
     /**
      * Add section
      *
-     * @param Newscoop\Entity\Section $section
+     * @param Section $section
      * @return void
      */
     public function addSection(Section $section)
@@ -196,8 +196,8 @@ class Issue
     /**
      * Set template
      *
-     * @param Newscoop\Entity\Template $template
-     * @return Newscoop\Entity\Issue
+     * @param Template $template
+     * @return Issue
      */
     public function setTemplate(Template $template)
     {
@@ -208,8 +208,8 @@ class Issue
     /**
      * Set section template
      *
-     * @param Newscoop\Entity\Template $template
-     * @return Newscoop\Entity\Issue
+     * @param Template $template
+     * @return Issue
      */
     public function setSectionTemplate(Template $template)
     {
@@ -220,8 +220,8 @@ class Issue
     /**
      * Set article template
      *
-     * @param Newscoop\Entity\Template $template
-     * @return Newscoop\Entity\Issue
+     * @param Template $template
+     * @return Issue
      */
     public function setArticleTemplate(Template $template)
     {

@@ -250,7 +250,7 @@ class XML_Parser extends PEAR
      *
      * @param string $mode mode, either 'func' or 'event'
      *
-     * @return boolean|object true on success, PEAR_Error otherwise
+     * @return boolean true on success, PEAR_Error otherwise
      * @access public
      */
     public function setMode($mode)
@@ -276,6 +276,7 @@ class XML_Parser extends PEAR
      * extend this class and handle the events in $this.
      *
      * @param object &$obj object to handle the events
+     * @param XML_Unserializer $obj
      *
      * @return boolean will always return true
      * @access public
@@ -550,7 +551,7 @@ class XML_Parser extends PEAR
      * @param string $data data
      * @param bool   $eof  end-of-file flag
      *
-     * @return bool
+     * @return integer
      * @access private
      * @see parseString()
      **/
@@ -621,8 +622,8 @@ class XML_Parser extends PEAR
      *
      * Throws a XML_Parser_Error
      *
-     * @param string  $msg   the error message
      * @param integer $ecode the error message code
+     * @param string $message
      *
      * @return XML_Parser_Error reference to the error object
      **/

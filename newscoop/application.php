@@ -5,7 +5,6 @@ require_once __DIR__ . '/application/bootstrap.php.cache';
 require_once __DIR__ . '/application/AppKernel.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * THIS FILE IS STIL THERE FOR LEGACY (NOT BASED ON INDEX.PHP) FILES

@@ -332,6 +332,7 @@ class File_Find
      * use, implemented by File_Find::glob() and File_Find::search()
      *
      * @param string $type given RegExp type
+     * @param string $pattern
      * @return string kind of function ( "eregi", "ereg" or "preg_match") ;
      *
      */
@@ -357,7 +358,7 @@ class File_Find
 * and can be easily copied into other packages
 *
 * @author techtonik <techtonik@php.net>
-* @return mixed bool on success and PEAR_Error on failure
+* @return boolean bool on success and PEAR_Error on failure
 */ 
 function File_Find_match_shell($pattern, $filename)
 {

@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AuditRepository")
@@ -82,7 +82,7 @@ class AuditEvent
     /**
      * Get id.
      *
-     * @return int|null
+     * @return integer
      */
     public function getId()
     {
@@ -93,7 +93,7 @@ class AuditEvent
      * Set resource type.
      *
      * @param  string                     $resourceType
-     * @return Newscoop\Entity\AuditEvent
+     * @return AuditEvent
      */
     public function setResourceType($resourceType)
     {
@@ -116,7 +116,7 @@ class AuditEvent
      * Set action.
      *
      * @param  string                     $action
-     * @return Newscoop\Entity\AuditEvent
+     * @return AuditEvent
      */
     public function setAction($action)
     {
@@ -139,7 +139,7 @@ class AuditEvent
      * Set resource id.
      *
      * @param  mixed                      $resourceId
-     * @return Newscoop\Entity\AuditEvent
+     * @return AuditEvent
      */
     public function setResourceId($resourceId)
     {
@@ -162,7 +162,7 @@ class AuditEvent
      * Set resource title.
      *
      * @param  string                     $resourceTitle
-     * @return Newscoop\Entity\AuditEvent
+     * @return AuditEvent
      */
     public function setResourceTitle($resourceTitle)
     {
@@ -185,7 +185,7 @@ class AuditEvent
      * Set user
      *
      * @param  Newscoop\Entity\User       $user
-     * @return Newscoop\Entity\AuditEvent
+     * @return AuditEvent
      */
     public function setUser(User $user)
     {
@@ -208,7 +208,7 @@ class AuditEvent
      * Set resource diff.
      *
      * @param  array                      $diff
-     * @return Newscoop\Entity\AuditEvent
+     * @return AuditEvent
      */
     public function setResourceDiff($diff)
     {

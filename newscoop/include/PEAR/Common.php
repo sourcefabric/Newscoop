@@ -810,7 +810,6 @@ class PEAR_Common extends PEAR
      *
      * @param string  $url       the URL to download
      * @param object  $ui        PEAR_Frontend_* instance
-     * @param object  $config    PEAR_Config instance
      * @param string  $save_dir  (optional) directory to save file in
      * @param mixed   $callback  (optional) function/method to call for status
      *                           updates

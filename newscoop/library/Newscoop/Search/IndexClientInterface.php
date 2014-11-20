@@ -20,7 +20,7 @@ interface IndexClientInterface
     /**
      * Initialize class
      *
-     * @param Symfony\Component\DependencyInjection\Container $service
+     * @return void
      */
     public function __construct(Container $container);
 
@@ -68,7 +68,7 @@ interface IndexClientInterface
     /**
      * Find article numbers for given query
      *
-     * @param Newscoop\Search\QueryInterface $query
+     * @param QueryInterface $query
      * @return object
      */
     public function find(QueryInterface $query);
@@ -77,6 +77,7 @@ interface IndexClientInterface
      * Set service for
      *
      * @param ServiceInterface $service
+     * @return void
      */
     public function setService(ServiceInterface $service);
 
@@ -85,6 +86,7 @@ interface IndexClientInterface
      * to access extra data in regards to the default indexable content;
      *
      * @param DocumentInterface $item
+     * @return void
      */
     public function setItem(DocumentInterface $item);
 }

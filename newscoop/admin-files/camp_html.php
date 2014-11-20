@@ -81,7 +81,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
  * @param Article $p_articleObj
  *		The article we want to display.
  *
- * @param int $p_sectionLanguageId
+ * @param int $p_interfaceLanguageId
  *		The section language ID.
  *
  * @param string $p_targetFileName
@@ -414,8 +414,6 @@ $g_camp_msg_added = false;
  * @param mixed $p_errorMsg
  * 		This can be a string or an array of strings.
  * @param string $p_type
- * @param int $p_delay
- * 		The number of screen refreshes before this is displayed.
  */
 function camp_html_add_msg($p_errorMsg, $p_type = "error")
 {
@@ -496,7 +494,7 @@ function camp_html_clear_msgs($p_calledByAdmin = false)
 /**
  * Display any user messages stored in the session.
  *
- * @param string $p_spacing
+ * @param string $p_spacingTop
  * 		How much spacing to put above and below the error message
  * 		(e.g. 10px, 1em, etc...).
  *

@@ -36,6 +36,7 @@ class ComparisonOperation
 	 * @param mix $p_leftOperand
 	 * @param object of type Operator $p_operator
 	 * @param mix $p_rightOperand
+	 * @param Operator|null $p_operator
 	 */
 	public function __construct($p_leftOperand, $p_operator, $p_rightOperand)
 	{

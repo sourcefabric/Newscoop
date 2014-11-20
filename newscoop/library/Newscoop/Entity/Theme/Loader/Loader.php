@@ -23,7 +23,7 @@ interface Loader
      * Get theme
      *
      * @param string $id
-     * @return Newscoop\Entity\Theme
+     * @return \Newscoop\Entity\Theme
      */
     public function find($id);
 }

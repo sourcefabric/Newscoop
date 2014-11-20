@@ -153,7 +153,7 @@ class XML_Parser_Simple extends XML_Parser
     /**
      * inits the handlers
      *
-     * @return mixed
+     * @return XML_Parser_Error|null
      * @access private
      */
     function _initHandlers()

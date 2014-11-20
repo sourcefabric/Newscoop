@@ -193,7 +193,7 @@ class Date
      *
      * @access public
      * @see setDate()
-     * @param mixed $date optional - date/time to initialize
+     * @param integer $date optional - date/time to initialize
      * @return object Date the new Date object
      */
     function Date($date = null)
@@ -379,6 +379,7 @@ class Date
      *
      * @access public
      * @param string format the format string for returned date/time
+     * @param string $format
      * @return string date/time in given format
      */
     function format($format)
@@ -631,6 +632,7 @@ class Date
      *
      * @access public
      * @param object Date_TimeZone $tz the Date::TimeZone object for the conversion time zone
+     * @param Date_TimeZone $tz
      */
     function convertTZ($tz)
     {
@@ -676,6 +678,9 @@ class Date
     // }}}
     // {{{ toUTCbyOffset()
 
+    /**
+     * @param string $offset
+     */
     function toUTCbyOffset($offset)
     {
         if ($offset == "Z" || $offset == "+00:00" || $offset == "+0000") {
@@ -740,6 +745,7 @@ class Date
      *
      * @access public
      * @param object Date_Span $span the time span to add
+     * @param Date_Span $span
      */
     function addSpan($span)
     {
@@ -815,6 +821,7 @@ class Date
      *
      * @access public
      * @param object Date_Span $span the time span to subtract
+     * @param Date_Span $span
      */
     function subtractSpan($span)
     {
@@ -871,6 +878,7 @@ class Date
      * @access public
      * @param object Date $d1 the first date
      * @param object Date $d2 the second date
+     * @param Date $d1
      * @return int 0 if the dates are equal, -1 if d1 is before d2, 1 if d1 is after d2
      */
     function compare($d1, $d2)
@@ -900,6 +908,7 @@ class Date
      *
      * @access public
      * @param object Date $when the date to test against
+     * @param Date $when
      * @return boolean true if this date is before $when
      */
     function before($when)
@@ -921,6 +930,7 @@ class Date
      *
      * @access public
      * @param object Date $when the date to test against
+     * @param Date $when
      * @return boolean true if this date is after $when
      */
     function after($when)
@@ -1036,7 +1046,7 @@ class Date
      * Gets the day of the week for this date (0=Sunday)
      *
      * @access public
-     * @return int the day of the week (0=Sunday)
+     * @return double the day of the week (0=Sunday)
      */
     function getDayOfWeek()
     {
@@ -1100,7 +1110,7 @@ class Date
      * Gets the number of weeks in the month for this date
      *
      * @access public
-     * @return int number of weeks in this month
+     * @return double number of weeks in this month
      */
     function getWeeksInMonth()
     {
@@ -1159,7 +1169,7 @@ class Date
      * The time of the returned Date object is the same as this time.
      *
      * @access public
-     * @return object Date Date representing the next day
+     * @return Date Date Date representing the next day
      */
     function getNextDay()
     {
@@ -1180,7 +1190,7 @@ class Date
      * The time of the returned Date object is the same as this time.
      *
      * @access public
-     * @return object Date Date representing the previous day
+     * @return Date Date Date representing the previous day
      */
     function getPrevDay()
     {
@@ -1201,7 +1211,7 @@ class Date
      * The time of the returned Date object is the same as this time.
      *
      * @access public
-     * @return object Date Date representing the next weekday
+     * @return Date Date Date representing the next weekday
      */
     function getNextWeekday()
     {
@@ -1222,7 +1232,7 @@ class Date
      * The time of the returned Date object is the same as this time.
      *
      * @access public
-     * @return object Date Date representing the previous weekday
+     * @return Date Date Date representing the previous weekday
      */
     function getPrevWeekday()
     {

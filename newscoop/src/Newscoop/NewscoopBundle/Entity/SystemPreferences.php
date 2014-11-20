@@ -8,7 +8,7 @@
 
 namespace Newscoop\NewscoopBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * System Preferences entity
@@ -72,7 +72,7 @@ class SystemPreferences
      * Set value
      *
      * @param  string $value
-     * @return string
+     * @return SystemPreferences
      */
     public function setValue($value)
     {
@@ -85,7 +85,7 @@ class SystemPreferences
      * Set option
      *
      * @param  string $option
-     * @return string
+     * @return SystemPreferences
      */
     public function setOption($option)
     {
@@ -97,8 +97,8 @@ class SystemPreferences
     /**
      * Set create date
      *
-     * @param datetime $created_at
-     * @return datetime
+     * @param \DateTime $created_at
+     * @return SystemPreferences
      */
     public function setCreatedAt(\DateTime $created_at)
     {

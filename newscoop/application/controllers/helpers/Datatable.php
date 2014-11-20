@@ -1,6 +1,6 @@
 <?php
-use Newscoop\Entity\Repository\IDatatableSource,
-    Newscoop\Entity\Repository\DatatableRepository;
+use Newscoop\Entity\Repository\IDatatableSource;
+use Newscoop\Entity\Repository\DatatableRepository;
 
 /**
  * Datatable helper
@@ -93,7 +93,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set entity
      *
-     * @param string $entity
+     * @param string $p_entity
      * @return Action_Helper_Datatable
      */
     public function setEntity($p_entity)
@@ -134,7 +134,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set initial sorting columns (aaSorting)
      *
-     * @param array $initialSort
+     * @param array $initial_sort
      * @return Action_Helper_Datatable
      */
     public function setInitialSorting(array $initial_sort = array())
@@ -171,7 +171,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set sorting columns
      *
-     * @param array $nonsorting
+     * @param array $p_sorting
      * @return Action_Helper_Datatable
      */
     public function setSorting(array $p_sorting = array())
@@ -248,7 +248,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set visibility
      *
-     * @param array|bool $p_value
+     * @param array|bool $p_values
      * @return Action_Helper_Datatable
      */
     public function setVisible(array $p_values = array())
@@ -261,7 +261,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set custom widths
      *
-     * @param array|bool $p_value
+     * @param array|bool $p_values
      * @return Action_Helper_Datatable
      */
     public function setDataProp(array $p_values = array())

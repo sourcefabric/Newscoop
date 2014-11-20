@@ -28,7 +28,7 @@ interface ITemplateSearchService
      * Get the page for front page
      *      to be used as a template.
      *
-     * @param Issue|Int $issue
+     * @param integer $issue
      *      The issue object or the id of the issue for whom the template is needed.
      * @param Output|int|string $output
      *      The object Output, the id or the Name of the Output for whom the template is needed.

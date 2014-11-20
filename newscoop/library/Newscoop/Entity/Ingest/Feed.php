@@ -7,8 +7,7 @@
 
 namespace Newscoop\Entity\Ingest;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
@@ -74,7 +73,7 @@ class Feed
      * Set mode (manual|automatic)
      *
      * @param string $mode
-     * @return Newscoop\Entity\Ingest\Feed
+     * @return Feed
      */
     public function setMode($mode)
     {
@@ -100,8 +99,8 @@ class Feed
     /**
      * Set updated
      *
-     * @param DateTime $updated
-     * @return Newscoop\Entity\Ingest\Feed
+     * @param \DateTime $updated
+     * @return Feed
      */
     public function setUpdated(\DateTime $updated)
     {

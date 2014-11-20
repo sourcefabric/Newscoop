@@ -6,7 +6,6 @@
  */
 
 use Newscoop\Annotations\Acl;
-use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\Template;
 use Newscoop\Storage;
 use Newscoop\Service\Resource\ResourceId;
@@ -422,7 +421,6 @@ class Admin_TemplateController extends Zend_Controller_Action
     /**
      * Build pages tree for navigation
      *
-     * @param string $path
      * @return array
      */
     private function buildBreadcrumbs(array $pieces, $level = 0)

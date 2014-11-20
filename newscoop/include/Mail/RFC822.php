@@ -420,6 +420,7 @@ class Mail_RFC822 {
      * @param string $string The string to check.
      * @param integer &$num    The number of occurences.
      * @param string $char   The character to count.
+     * @param integer $num
      * @return integer The number of occurences of $char in $string, adjusted for backslashes.
      */
     function _hasUnclosedBracketsSub($string, &$num, $char)
@@ -764,7 +765,7 @@ class Mail_RFC822 {
      *
      * @access private
      * @param string $route The string to check.
-     * @return mixed False on failure, or the validated $route on success.
+     * @return false|string False on failure, or the validated $route on success.
      */
     function _validateRoute($route)
     {
@@ -787,7 +788,7 @@ class Mail_RFC822 {
      *
      * @access private
      * @param string $domain The string to check.
-     * @return mixed False on failure, or the validated domain on success.
+     * @return false|string False on failure, or the validated domain on success.
      */
     function _validateDomain($domain)
     {
@@ -880,7 +881,7 @@ class Mail_RFC822 {
      *
      * @access private
      * @param string $local_part
-     * @return mixed False on failure, or the validated local part on success.
+     * @return false|string False on failure, or the validated local part on success.
      */
     function _validateLocalPart($local_part)
     {

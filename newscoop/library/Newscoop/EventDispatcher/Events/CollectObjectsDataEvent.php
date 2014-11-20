@@ -31,7 +31,7 @@ class CollectObjectsDataEvent extends SymfonyGenericEvent
 
     /**
      * Add list objects registration data
-     * @param array $name
+     * @param string $name
      * @param array $listObject
      */
     public function registerListObject($name, array $listObject)
@@ -50,7 +50,7 @@ class CollectObjectsDataEvent extends SymfonyGenericEvent
 
     /**
      * Add object type registration data
-     * @param array $name
+     * @param string $name
      * @param array $objectType
      */
     public function registerObjectTypes($name, array $objectType)

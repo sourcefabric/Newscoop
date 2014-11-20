@@ -651,9 +651,9 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Set user points
      *
-     * @param  Newscoop\Entity\User|null $user
+     * @param  null|User $user
      * @param  string|int                $authorId
-     * @return void
+     * @return false|null
      */
     public function setUserPoints(User $user = null, $authorId = null)
     {
@@ -690,7 +690,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Get list for given criteria
      *
-     * @param  Newscoop\User\UserCriteria $criteria
+     * @param  UserCriteria $criteria
      * @return Newscoop\ListResult
      */
     public function getListByCriteria(UserCriteria $criteria, $results = true)

@@ -174,7 +174,7 @@ function camp_copy_files($p_src, $p_dest, $p_msg = "")
  *
  * @param string $p_filePath
  * @param string $p_output
- * @return boolean
+ * @return integer
  */
 function camp_backup_file($p_filePath, &$p_output)
 {
@@ -339,7 +339,6 @@ function camp_connect_to_database($p_dbName = "")
 /**
  * Return TRUE if the database contains no data.
  *
- * @param string $db_name
  * @return boolean
  */
 function camp_is_empty_database($p_dbName)
@@ -626,6 +625,10 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
     return true;
 }
 
+/**
+ * @param string $roll_base_dir
+ * @param string $last_db_roll
+ */
 function camp_search_db_rolls($roll_base_dir, $last_db_roll)
 {
     $rolls = array(); // roll_name => roll_path
@@ -671,7 +674,7 @@ function camp_search_db_rolls($roll_base_dir, $last_db_roll)
  * Compares versions of Newscoop for upgrades
  * 3.1.0 before 3.1.x, 3.5.2 before 3.5.11
  * @param $p_version1
- * @param $p_version2
+ * @param string $p_version2
  * @return int
  */
 function camp_version_compare($p_version1, $p_version2)
@@ -790,6 +793,8 @@ function camp_split_sql($p_sqlFileName)
 
 /**
  *
+ * @param string $db_server
+ * @param string $p_sqlFile
  */
 function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database, $p_sqlFile, &$errorQueries)
 {
@@ -855,8 +860,8 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
 
 /**
  * Puts together two paths, usually an absolute one (directory), plus a relative one (filename)
- * @param $p_dirFirst
- * @param $p_dirSecond
+ * @param string $p_dirFirst
+ * @param string $p_dirSecond
  * @return string
  */
 function camp_combine_paths($p_dirFirst, $p_dirSecond)

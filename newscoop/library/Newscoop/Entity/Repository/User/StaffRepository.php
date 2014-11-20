@@ -7,9 +7,9 @@
 
 namespace Newscoop\Entity\Repository\User;
 
-use Newscoop\Entity\User\Staff,
-    Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\Repository\UserRepository;
+use Newscoop\Entity\User\Staff;
+use Newscoop\Entity\Acl\Role;
+use Newscoop\Entity\Repository\UserRepository;
 
 /**
  * Staff repository

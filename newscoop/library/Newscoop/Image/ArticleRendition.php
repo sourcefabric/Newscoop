@@ -7,7 +7,7 @@
 
 namespace Newscoop\Image;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article Rendition
@@ -45,8 +45,8 @@ class ArticleRendition
 
     /**
      * @param int $articleNumber
-     * @param Newscoop\Image\Rendition $rendition
-     * @param Newscoop\Image\ImageInterface $image
+     * @param Rendition $rendition
+     * @param ImageInterface $image
      * @param string $imageSpecs
      */
     public function __construct($articleNumber, Rendition $rendition, ImageInterface $image, $imageSpecs = null)
@@ -70,7 +70,7 @@ class ArticleRendition
     /**
      * Get image id
      *
-     * @return Newscoop\Image\ArticleImage
+     * @return ImageInterface
      */
     public function getImage()
     {

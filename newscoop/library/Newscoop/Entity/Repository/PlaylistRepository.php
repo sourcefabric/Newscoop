@@ -7,13 +7,11 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Newscoop\Entity\PlaylistArticle,
-    Newscoop\Entity\Language,
-    Newscoop\Entity\Playlist,
-    Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Theme,
-    Newscoop\Entity\Theme\Loader,
-    Newscoop\Entity\Article;
+use Newscoop\Entity\PlaylistArticle;
+use Newscoop\Entity\Language;
+use Newscoop\Entity\Playlist;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Article;
 
 class PlaylistRepository extends EntityRepository
 {
@@ -31,7 +29,7 @@ class PlaylistRepository extends EntityRepository
 
     /**
      * Returns articles for a given playlist
-     * @param Newscoop\Entity\Playlist $playlist
+     * @param Playlist $playlist
      * @param Language $lang
      * @param bool $fullArticle
      * @param int $limit
@@ -74,7 +72,7 @@ class PlaylistRepository extends EntityRepository
 
     /**
      * Returns the total count of articles for a given playlist
-     * @param Newscoop\Entity\Playlist $playlist
+     * @param Playlist $playlist
      * @param Language $lang
      * @param bool $publishedOnly
      */
@@ -120,7 +118,7 @@ class PlaylistRepository extends EntityRepository
 
     /**
      * Save playlist with articles
-     * @param Newscoop\Entity\Playlist $playlist $playlist
+     * @param Playlist $playlist $playlist
      * @param array $articles
      */
     public function save(Playlist $playlist = null, $articles = null)
@@ -167,7 +165,7 @@ class PlaylistRepository extends EntityRepository
 
     /**
      * Delete playlist
-     * @param Newscoop\Entity\Playlist $playlist
+     * @param Playlist $playlist
      */
     public function delete(Playlist $playlist)
     {

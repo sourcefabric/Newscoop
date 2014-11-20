@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Section entity
@@ -205,7 +205,7 @@ class Section
      *
      * @param string $shortName
      *
-     * @return void
+     * @return Section
      */
     public function setShortName($shortName)
     {
@@ -227,9 +227,9 @@ class Section
     /**
      * Set template
      *
-     * @param Newscoop\Entity\Template $template
+     * @param Template $template
      *
-     * @return Newscoop\Entity\Section
+     * @return Section
      */
     public function setTemplate(Template $template)
     {
@@ -241,9 +241,9 @@ class Section
     /**
      * Set article template
      *
-     * @param Newscoop\Entity\Template $template
+     * @param Template $template
      *
-     * @return Newscoop\Entity\Section
+     * @return Section
      */
     public function setArticleTemplate(Template $template)
     {

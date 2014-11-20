@@ -186,6 +186,7 @@ class ImageManager
 	/**
 	 * Count the number of files and directories in a given folder
 	 * minus the thumbnail folders and thumbnails.
+	 * @param string $path
 	 */
 	function countFiles($path)
 	{
@@ -225,7 +226,7 @@ class ImageManager
 	/**
 	 * Check if the file contains the thumbnail prefix.
 	 * @param string $file filename to be checked
-	 * @return true if the file contains the thumbnail prefix, false otherwise.
+	 * @return boolean if the file contains the thumbnail prefix, false otherwise.
 	 */
 	function isThumb($file)
 	{
@@ -239,7 +240,7 @@ class ImageManager
 	/**
 	 * Check if the given directory is a thumbnail directory.
 	 * @param string $entry directory name
-	 * @return true if it is a thumbnail directory, false otherwise
+	 * @return boolean if it is a thumbnail directory, false otherwise
 	 */
 	function isThumbDir($entry)
 	{
@@ -540,7 +541,7 @@ class ImageManager
 
 	/**
 	 * Delete and specified files.
-	 * @return boolean true if delete, false otherwise
+	 * @return boolean|null true if delete, false otherwise
 	 */
 	function deleteFiles()
 	{
@@ -601,7 +602,7 @@ class ImageManager
 	/**
 	 * Create new directories.
 	 * If in safe_mode, nothing happens.
-	 * @return boolean true if created, false otherwise.
+	 * @return boolean|null true if created, false otherwise.
 	 */
 	function processNewDir()
 	{

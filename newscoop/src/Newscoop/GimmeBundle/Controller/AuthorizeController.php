@@ -9,15 +9,11 @@
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\OAuthServerBundle\Event\OAuthEvent;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\OAuthServerBundle\Controller\AuthorizeController as BaseAuthorizeController;
-use Newscoop\GimmeBundle\Form\Model\Authorize;
-use Newscoop\GimmeBundle\Form\Handler\AuthorizeFormHandler;
 use Newscoop\GimmeBundle\Entity\Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthorizeController extends BaseAuthorizeController
 {

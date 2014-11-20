@@ -26,7 +26,7 @@ final class MetaSlideshowItemList implements Iterator
     }
 
     /**
-     * @return MetaSlideshow
+     * @return MetaSlideshowItem
      */
     public function current()
     {

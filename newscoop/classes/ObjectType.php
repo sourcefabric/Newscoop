@@ -19,6 +19,9 @@ class ObjectType extends DatabaseObject {
 	var $m_columnNames = array('id',
 							   'name');
 
+	/**
+	 * @param string $p_idOrName
+	 */
 	public function __construct($p_idOrName = null)
 	{
         if (!is_null($p_idOrName)) {

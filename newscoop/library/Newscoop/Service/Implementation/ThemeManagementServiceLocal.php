@@ -123,7 +123,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     /**
      * Provides the count of the entities that can be associated with the provided search.
      *
-     * @param Newscoop\Service\Model\Search\Search $search
+     * @param Search $search
      *                                                     The search criteria, not null.
      *
      * @return int
@@ -168,6 +168,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         return $this->trim($this->getThemesData($publication,$search), $offset, $limit);
     }
 
+    /**
+     * @param Publication $publication
+     */
     public function getCountThemes($publication, SearchTheme $search = NULL)
     {
         return count($this->getThemesData($publication, $search));
@@ -241,7 +244,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     /**
      * @author mihaibalaceanu
      * @param  \Newscoop\Entity\Theme $theme
-     * @return object
+     * @return \stdClass
      */
     public function getArticleTypes(Theme $theme)
     {
@@ -589,7 +592,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * 		, [...] ]
      * 	parentType => existingSysType will be used for getting it's other props from db
      *
-     * @return string the generated xml
+     * @return boolean the generated xml
      */
     public function assignArticleTypes($articleTypes, Theme $theme)
     {
@@ -763,8 +766,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     /**
      * Load all the output settings from the specified path.
      *
-     * @param \SimpleXMLElement $node
-     *                                The node from which to load, *(not null not empty).
      *
      * @param  string $themePath
      *                           The theme path from where to load the output settings, *(not null not empty).
@@ -838,8 +839,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      *                                              The tag name containing the resource, *(not null not empty).
      * @param  string                    $themePath
      *                                              The theme path to construct the resource path based on, *(not null not empty).
-     * @param  string                    $name
-     *                                              The name of the created resource based on the found tag, *(not null not empty).
      * @throws FailedException
      *                                             Thrown if the resource has failed to be obtained, this exception will not contain any message, the resons of failure
      *                                             will be looged in the error handler.
@@ -935,9 +934,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
     /**
      * Copies from the from output settings to the to output settings all the pages (front, article ...).
-     * @param Newscoop\Entity\OutputSettings $to
+     * @param OutputSettings $to
      *                                             The output setting to copy to, *(not null not empty).
-     * @param Newscoop\Entity\OutputSettings $from
+     * @param OutputSettings $from
      *                                             The output setting to copy from, *(not null not empty).
      */
     protected function syncOutputSettings(OutputSettings $to, OutputSettings $from)

@@ -7,13 +7,9 @@
 
 namespace Newscoop\Entity\Repository\Comment;
 
-use
-    InvalidArgumentException,
-    DateTime,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Entity\Comment\Commenter,
-    Newscoop\Datatable\Source as DatatableSource;
+use InvalidArgumentException;
+use Newscoop\Entity\Comment\Commenter;
+use Newscoop\Datatable\Source as DatatableSource;
 
 /**
  * Comments author repository
@@ -75,7 +71,7 @@ class CommenterRepository extends DatatableSource
     /**
      * Delete a commenter
      *
-     * @param Newscoop\Entity\Comment\Commenter $p_commenter
+     * @param Commenter $p_commenter
      * @param array $p_values
      * @return void
      */

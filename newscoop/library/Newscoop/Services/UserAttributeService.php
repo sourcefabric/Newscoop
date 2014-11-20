@@ -9,7 +9,6 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\User;
-use Newscoop\Entity\UserAttribute;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**

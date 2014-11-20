@@ -2,8 +2,8 @@
 
 namespace Newscoop\Controller\Action\Helper\Datatable\Adapter;
 
-use Newscoop\Service\IThemeService,
-    Newscoop\Service\Implementation\ThemeServiceLocalFileSystem;
+use Newscoop\Service\IThemeService;
+use Newscoop\Service\Implementation\ThemeServiceLocalFileSystem;
 
 /**
  * Datatable adapter for one theme's files

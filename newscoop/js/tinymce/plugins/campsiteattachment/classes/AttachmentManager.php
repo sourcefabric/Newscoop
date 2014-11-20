@@ -29,7 +29,7 @@ class AttachmentManager
 
     /**
      * Constructor. Create a new Attachment Manager instance.
-     * @param array $config configuration array, see config.inc.php
+     * @param array $p_config configuration array, see config.inc.php
      */
     function __construct($p_config)
     {

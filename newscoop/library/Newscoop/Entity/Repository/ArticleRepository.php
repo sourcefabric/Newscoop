@@ -7,7 +7,6 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Search\RepositoryInterface;

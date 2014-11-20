@@ -75,6 +75,9 @@ class MetaDbObject {
     }
 
 
+    /**
+     * @param string $p_text
+     */
     static public function htmlFilter($p_text)
     {
     	return str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $p_text);
@@ -182,6 +185,9 @@ class MetaDbObject {
     }
 
 
+    /**
+     * @param string $p_property
+     */
     final public function trigger_invalid_value_error($p_property, $p_value, $p_smarty = null)
     {
     	$errorMessage = INVALID_VALUE_STRING . " $p_value "

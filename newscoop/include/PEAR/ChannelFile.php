@@ -202,7 +202,7 @@ class PEAR_ChannelFile
     }
 
     /**
-     * @return array
+     * @return string[]
      * @access protected
      */
     function _getErrorMessage()
@@ -264,6 +264,7 @@ class PEAR_ChannelFile
 
     /**
      * @param string contents of package.xml file
+     * @param string $data
      * @return bool success of parsing
      */
     function fromXmlString($data)
@@ -306,6 +307,7 @@ class PEAR_ChannelFile
 
     /**
      * @param array
+     * @param string $data
      * @static
      * @return PEAR_ChannelFile|false false if invalid
      */
@@ -494,6 +496,7 @@ class PEAR_ChannelFile
     /**
      * Generate the <rest> tag
      * @access private
+     * @param string $indent
      */
     function _makeRestXml($info, $indent)
     {
@@ -579,6 +582,7 @@ class PEAR_ChannelFile
      * Validation warning.  Does not mark the object contents invalid.
      * @param error code
      * @param array error information
+     * @param integer $code
      * @access private
      */
     function _validateWarning($code, $params = array())
@@ -684,6 +688,7 @@ class PEAR_ChannelFile
      * @param string  rest - protocol name this function applies to
      * @param array the functions
      * @param string the name of the parent element (mirror name, for instance)
+     * @param string $protocol
      */
     function _validateFunctions($protocol, $functions, $parent = '')
     {
@@ -715,7 +720,6 @@ class PEAR_ChannelFile
 
     /**
      * Test whether a string contains a valid channel server.
-     * @param string $ver the package version to test
      * @return bool
      */
     function validChannelServer($server)
@@ -983,6 +987,7 @@ class PEAR_ChannelFile
      * Empty all protocol definitions
      * @param string protocol type
      * @param string|false mirror name, if any
+     * @param string $type
      */
     function resetFunctions($type, $mirror = false)
     {
@@ -1059,6 +1064,7 @@ class PEAR_ChannelFile
 
     /**
      * Get the unserialized XML representing a mirror
+     * @param boolean $server
      * @return array|false
      */
     function getMirror($server)
@@ -1074,7 +1080,8 @@ class PEAR_ChannelFile
 
     /**
      * @param string
-     * @return string|false
+     * @param string $name
+     * @return boolean
      * @error PEAR_CHANNELFILE_ERROR_NO_NAME
      * @error PEAR_CHANNELFILE_ERROR_INVALID_NAME
      */
@@ -1177,7 +1184,7 @@ class PEAR_ChannelFile
 
     /**
      * @param string
-     * @return string|false
+     * @return boolean
      * @error PEAR_CHANNELFILE_ERROR_NO_SERVER
      * @error PEAR_CHANNELFILE_ERROR_INVALID_SERVER
      */
@@ -1217,6 +1224,7 @@ class PEAR_ChannelFile
 
     /**
      * @param string
+     * @param string $summary
      * @return boolean success
      * @error PEAR_CHANNELFILE_ERROR_NO_SUMMARY
      * @warning PEAR_CHANNELFILE_ERROR_MULTILINE_SUMMARY
@@ -1238,6 +1246,7 @@ class PEAR_ChannelFile
     /**
      * @param string
      * @param boolean determines whether the alias is in channel.xml or local
+     * @param string $alias
      * @return boolean success
      */
     function setAlias($alias, $local = false)
@@ -1279,7 +1288,9 @@ class PEAR_ChannelFile
      * The class must be includeable via changing _ in the classname to path separator,
      * but no checking of this is made.
      * @param string|false pass in false to reset to the default packagename regex
-     * @return boolean success
+     * @param string $validateclass
+     * @param string $version
+     * @return boolean|null success
      */
     function setValidationPackage($validateclass, $version)
     {
@@ -1330,6 +1341,7 @@ class PEAR_ChannelFile
      * @param string protocol type
      * @param string protocol version
      * @param string protocol name, if any
+     * @param boolean $mirror
      */
     function addMirrorFunction($mirror, $type, $version, $name = '')
     {
@@ -1377,6 +1389,8 @@ class PEAR_ChannelFile
      * @param string Resource Type this url links to
      * @param string URL
      * @param string|false mirror name, if this is not a primary server REST base URL
+     * @param string $resourceType
+     * @param string $url
      */
     function setBaseURL($resourceType, $url, $mirror = false)
     {
@@ -1530,6 +1544,9 @@ class PEAR_ChannelFile
         return $val;
     }
 
+    /**
+     * @param string $path
+     */
     function isIncludeable($path)
     {
         $possibilities = explode(PATH_SEPARATOR, ini_get('include_path'));

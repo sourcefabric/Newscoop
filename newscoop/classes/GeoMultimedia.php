@@ -265,7 +265,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
      * @param string $poi
      * @param string $mm_type
      *
-     * @return void
+     * @return null|false
      */
     public static function UpdateMedia($poi, $mm_type)
     {

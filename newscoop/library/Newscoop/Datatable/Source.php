@@ -6,8 +6,7 @@
  */
 namespace Newscoop\Datatable;
 
-use Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Class implementation of the IDatatableSource class
@@ -53,8 +52,8 @@ class Source extends EntityRepository implements ISource
     /**
      * Get entity count
      *
-     * @param array $p_params|null
-     * @param array $p_cols|null
+     * @param array $p_params
+     * @param array $p_cols
      *
      * @return int
      */
@@ -79,8 +78,8 @@ class Source extends EntityRepository implements ISource
     /**
      * Build where condition
      *
-     * @param array $cols
-     * @param string $search
+     * @param array $p_cols
+     * @param string $p_search
      * @return Doctrine\ORM\Query\Expr
      */
     private function buildWhere(array $p_cols, $p_search, $qb = null, $andx = null)

@@ -7,8 +7,8 @@
 
 namespace Newscoop\Controller\Action\Helper\Datatable\Adapter;
 
-use Doctrine\ORM\QueryBuilder,
-    Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Doctrine adapter for datatable
@@ -37,7 +37,6 @@ class Doctrine extends AAdapter
     protected $_queryObject;
     
     /**
-     * @param Doctrine\ORM\EntityRepository $repository
      */
     public function __construct(  )
     {

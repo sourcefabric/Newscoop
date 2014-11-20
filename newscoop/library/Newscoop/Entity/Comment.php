@@ -204,7 +204,7 @@ class Comment implements DocumentInterface
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setId($id)
     {
@@ -236,8 +236,8 @@ class Comment implements DocumentInterface
     /**
      * Set article
      *
-     * @param Newscoop\Entity\Article $article
-     * @return void
+     * @param Article $article
+     * @return Comment
      */
     public function setArticle(Article $article)
     {
@@ -261,7 +261,7 @@ class Comment implements DocumentInterface
      *
      * @param DateTime $datetime
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setTimeCreated(\DateTime $datetime)
     {
@@ -285,7 +285,7 @@ class Comment implements DocumentInterface
      *
      * @param DateTime $datetime
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setTimeUpdated(\DateTime $datetime)
     {
@@ -309,7 +309,7 @@ class Comment implements DocumentInterface
      *
      * @param string $subject
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setSubject($subject)
     {
@@ -333,7 +333,7 @@ class Comment implements DocumentInterface
      *
      * @param string $message
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setMessage($message)
     {
@@ -357,7 +357,7 @@ class Comment implements DocumentInterface
      *
      * @param string $ip
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setIp($ip)
     {
@@ -391,7 +391,7 @@ class Comment implements DocumentInterface
      *
      * @param string $recommended
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setRecommended($recommended)
     {
@@ -407,7 +407,7 @@ class Comment implements DocumentInterface
     /**
      * Get comment recommended
      *
-     * @return string
+     * @return boolean
      */
     public function getRecommended()
     {
@@ -417,9 +417,9 @@ class Comment implements DocumentInterface
     /**
      * Set commenter
      *
-     * @param Newscoop\Entity\Comment\Commenter $commenter
+     * @param Commenter $commenter
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setCommenter(Commenter $commenter)
     {
@@ -481,7 +481,7 @@ class Comment implements DocumentInterface
     /**
      * Set status string
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setStatus($status)
     {
@@ -504,7 +504,7 @@ class Comment implements DocumentInterface
     /**
      * Set forum
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setForum(Publication $forum)
     {
@@ -526,7 +526,7 @@ class Comment implements DocumentInterface
     /**
      * Set thread
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setThread(Article $thread)
     {
@@ -548,7 +548,8 @@ class Comment implements DocumentInterface
     /**
      * Set thread level
      *
-     * @return Newscoop\Entity\Comment
+     * @param integer $level
+     * @return Comment
      */
     public function setThreadLevel($level)
     {
@@ -570,7 +571,8 @@ class Comment implements DocumentInterface
     /**
      * Set thread order
      *
-     * @return Newscoop\Entity\Comment
+     * @param integer $order
+     * @return Comment
      */
     public function setThreadOrder($order)
     {
@@ -592,7 +594,7 @@ class Comment implements DocumentInterface
     /**
      * Set Language
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setLanguage(Language $language)
     {
@@ -614,7 +616,7 @@ class Comment implements DocumentInterface
     /**
      * Set Parent
      *
-     * @return Newscoop\Entity\Comment
+     * @return Comment
      */
     public function setParent(Comment $parent = null)
     {
@@ -873,7 +875,7 @@ class Comment implements DocumentInterface
      *
      * @param  string $source
      *
-     * @return string
+     * @return Comment
      */
     public function setSource($source)
     {

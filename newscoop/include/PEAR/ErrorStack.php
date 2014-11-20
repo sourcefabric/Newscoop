@@ -623,7 +623,6 @@ class PEAR_ErrorStack {
     /**
      * Log an error using PEAR::Log
      * @param array $err Error array
-     * @param array $levels Error level => Log constant map
      * @access protected
      */
     function _log($err)
@@ -960,6 +959,7 @@ class PEAR_ErrorStack {
      * for the error message.  If the template is 'message %foo% was %bar%', and the
      * parameters are array('foo' => 'one', 'bar' => 'six'), the error message returned will
      * be 'message one was six'
+     * @param string[] $template
      * @return string
      */
     function setErrorMessageTemplate($template)

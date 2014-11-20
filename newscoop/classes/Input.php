@@ -74,7 +74,7 @@ class Input {
 	 *      Input::IsValid() will still return true even if there
 	 *      are errors for this varaible).
 	 *
-	 * @return mixed
+	 * @return integer|null
 	 */
 	public static function Get($p_varName, $p_type = 'string',
 	                           $p_defaultValue = null, $p_errorsOk = false)

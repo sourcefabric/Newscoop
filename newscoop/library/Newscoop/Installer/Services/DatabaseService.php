@@ -135,7 +135,7 @@ class DatabaseService
      *
      * @param Connection $connection
      *
-     * @return boolean
+     * @return boolean|null
      */
     public function loadGeoData($connection)
     {
@@ -290,7 +290,7 @@ class DatabaseService
 
     /**
      * Check if current mysql instance is ok for Newscoop
-     * @param string $mysql_client_command
+     * @param string $mysqlClientCommand
      *
      * @return boolean
      */
@@ -340,7 +340,7 @@ class DatabaseService
      * @param string $target
      * @param array  $parameters
      *
-     * @return boolean
+     * @return integer
      */
     public function renderFile($template, $target, $parameters)
     {

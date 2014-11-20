@@ -155,6 +155,7 @@ final class CampSession
 
     /**
      *
+     * @param string $p_name
      */
     function getData($p_name, $p_namespace = 'default')
     {
@@ -164,6 +165,7 @@ final class CampSession
 
     /**
      *
+     * @return string
      */
     function getToken()
     {
@@ -201,6 +203,7 @@ final class CampSession
 
     /**
      *
+     * @param integer $p_status
      */
     function setStatus($p_status)
     {
@@ -210,6 +213,7 @@ final class CampSession
 
     /**
      *
+     * @param string $p_name
      */
     function setData($p_name, $p_value, $p_namespace = 'default', $p_force = false)
     {

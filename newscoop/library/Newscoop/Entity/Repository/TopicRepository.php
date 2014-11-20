@@ -7,7 +7,6 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime;
 use Newscoop\Datatable\Source as DatatableSource;
 
 /**

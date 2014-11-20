@@ -7,8 +7,8 @@
 
 namespace Newscoop\Entity\Repository\Acl;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Acl\Rule;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Acl\Rule;
 
 /**
  * Acl Rule repository

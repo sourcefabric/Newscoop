@@ -225,6 +225,8 @@ class Mail_mimeDecode extends PEAR
      *
      * @param string Header section
      * @param string Body section
+     * @param string $headers
+     * @param string $body
      * @return object Results of decoding process
      * @access private
      */
@@ -527,6 +529,7 @@ class Mail_mimeDecode extends PEAR
      * examples (in RFC2047).
      *
      * @param string Input header value to decode
+     * @param string $input
      * @return string Decoded header value
      * @access private
      */
@@ -811,6 +814,7 @@ class Mail_mimeDecode extends PEAR
      * @param  string  Name of header
      * @param  string  Value of header
      * @param  integer Number of tabs to indent
+     * @param integer $indent
      * @return string  XML version of input
      * @access private
      */

@@ -8,7 +8,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Doctrine\DBAL\Types\BooleanType;
 class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Container_Standalone
 {
 

@@ -36,7 +36,6 @@ class Extension_Extension extends DatabaseObject
     /**
      * @param string $interface
      * @param string $class
-     * @param Extension_File $file
      */
     public function __construct($class, $path, $interface = '')
     {

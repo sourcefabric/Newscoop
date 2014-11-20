@@ -27,7 +27,7 @@ interface IThemeService extends IEntityService
 	/**
 	 * Provides the array of ThemeResources that contain the images that provide the theme presentation.
 	 *
-	 * @param Newscoop\Entity\Theme $theme
+	 * @param Theme $theme
 	 *		The theme to find the presentation resources for, not null.
 	 *
 	 * @return array

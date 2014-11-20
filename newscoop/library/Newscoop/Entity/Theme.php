@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 
@@ -55,7 +55,7 @@ class Theme extends AbstractEntity
 	 * @param string $path
 	 *		The path of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return Theme
 	 *		This object for chaining purposes.
 	 */
 	public function setPath($path)
@@ -84,7 +84,7 @@ class Theme extends AbstractEntity
 	 * @param string $name
 	 *		The name of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return Theme
 	 *		This object for chaining purposes.
 	 */
 	public function setName($name)
@@ -113,7 +113,7 @@ class Theme extends AbstractEntity
 	 * @param string $designer
 	 *		The designer name of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return Theme
 	 *		This object for chaining purposes.
 	 */
 	public function setDesigner($designer)
@@ -142,7 +142,7 @@ class Theme extends AbstractEntity
 	 * @param string $version
 	 *		TThe version of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return Theme
 	 *		This object for chaining purposes.
 	 */
 	public function setVersion($version)
@@ -171,7 +171,7 @@ class Theme extends AbstractEntity
 	 * @param string $minorNewscoopVersion
 	 *		The minimum newscoop version of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return Theme
 	 *		This object for chaining purposes.
 	 */
 	public function setMinorNewscoopVersion($minorNewscoopVersion)
@@ -200,7 +200,7 @@ class Theme extends AbstractEntity
 	 * @param string $description
 	 *		The description of the theme, must not be null or empty.
 	 *
-	 * @return Newscoop\Entity\Theme
+	 * @return Theme
 	 *		This object for chaining purposes.
 	 */
 	public function setDescription($description)

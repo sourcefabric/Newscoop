@@ -47,7 +47,7 @@ class CommunityTickerEventRepository extends EntityRepository
      * Get list for given criteria
      *
      * @param  ListCriteria        $criteria
-     * @return Newscoop\ListResult
+     * @return ListResult
      */
     public function getListByCriteria(ListCriteria $criteria)
     {

@@ -246,7 +246,7 @@ class UserType extends DatabaseObject
      * @param string
      *    $p_name The name of the user type
      *
-     * @return mixed
+     * @return null|UserType
      *    null If the user type does not exists or any error
      *    UserType object
      */

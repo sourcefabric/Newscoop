@@ -41,12 +41,6 @@ class InputManipulator
      * getVar searches and returns the variable from an array or string in the requested type.
      *
      * @param array                $parameters
-     * @param array|string         $parameters['inputObject']   haystack
-     * @param string               $parameters['variableName']  needle
-     * @param string               $parameters['variableType']  type the variable should have (string, int, array, boolean)
-     * @param string|int|bool|null $parameters['defaultValue']  default value for the variable if it doesn't exist
-     * @param bool                 $parameters['checkIfExists'] check if the variable exists (for if statements, only returns BOOL)
-     * @param bool                 $parameters['ignoreErrors']  ignore errors, return empty
      *
      * @return string|int|bool the variable found or a bool with checkIfExists
      */

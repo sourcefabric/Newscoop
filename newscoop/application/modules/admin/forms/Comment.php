@@ -109,7 +109,7 @@ class Admin_Form_Comment extends Zend_Form
     /**
      * Set default values by entity
      *
-     * @param Newscoop\Entity\Commenter $commenter
+     * @param Newscoop\Entity\Commenter $comment
      * @return void
      */
     public function setFromEntity(Comments $comment)

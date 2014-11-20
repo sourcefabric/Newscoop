@@ -122,8 +122,8 @@ class EmailService
     /**
      * Send comment notification
      *
-     * @param Newscoop\Entity\Comment $comment
-     * @param Newscoop\Entity\Article $article
+     * @param Comment $comment
+     * @param Article $article
      * @param array                   $authors
      * @param Newscoop\Entity\User    $user
      *

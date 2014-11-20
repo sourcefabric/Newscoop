@@ -636,6 +636,9 @@ class PEAR_Registry extends PEAR
             str_replace('/', '_', $ch));
     }
 
+    /**
+     * @param string $mode
+     */
     function _openPackageFile($package, $mode, $channel = false)
     {
         if (!$this->_assertStateDir($channel)) {
@@ -664,6 +667,9 @@ class PEAR_Registry extends PEAR
         fclose($fp);
     }
 
+    /**
+     * @param string $mode
+     */
     function _openChannelFile($channel, $mode)
     {
         if (!$this->_assertChannelDir()) {
@@ -802,6 +808,7 @@ class PEAR_Registry extends PEAR
      *
      * @param integer lock mode, one of LOCK_EX, LOCK_SH or LOCK_UN.
      *                See flock manual for more information.
+     * @param integer $mode
      *
      * @return bool TRUE on success, FALSE if locking failed, or a
      *              PEAR error if some other error occurs (such as the
@@ -1255,6 +1262,9 @@ class PEAR_Registry extends PEAR
         return $pkglist;
     }
 
+    /**
+     * @param string|boolean $channel
+     */
     function _listChannelPackages($channel)
     {
         $pkglist = array();
@@ -1435,7 +1445,7 @@ class PEAR_Registry extends PEAR
     /**
      * @param string Package name
      * @param string Channel name
-     * @return PEAR_PackageFile_v1|PEAR_PackageFile_v2|null
+     * @return null|PEAR_PackageFile_v1
      * @access private
      */
     function &_getPackage($package, $channel = 'pear.php.net')
@@ -1638,6 +1648,7 @@ class PEAR_Registry extends PEAR
      * @param string|null
      * @param string|null
      * @param string
+     * @param string $key
      * @return array|null
      */
     function packageInfo($package = null, $key = null, $channel = 'pear.php.net')

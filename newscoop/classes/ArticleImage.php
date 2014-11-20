@@ -53,6 +53,8 @@ class ArticleImage extends DatabaseObject {
      * Wrapper around DatabaseObject::setProperty
      *
      * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     * @param string $p_dbColumnName
+     * @param integer $p_value
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
@@ -271,7 +273,6 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * Remove the image tags in the article text.
 	 *
-	 * @param int $p_imageId
 	 * @param int $p_articleNumber
 	 * @param int $p_templateId
 	 * @return void

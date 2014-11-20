@@ -7,9 +7,9 @@
 
 namespace Newscoop\Services\Auth;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User,
-    Newscoop\Entity\UserIdentity;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\User;
+use Newscoop\Entity\UserIdentity;
 
 /**
  */

@@ -14,6 +14,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 
 class ShortURL
 {
+    /**
+     * @param integer $issueNo
+     * @param integer $sectionNo
+     */
     public static function GetURL($publicationId, $languageId = null, $issueNo = null, $sectionNo = null, $articleNo = null)
     {
         $publicationService = \Zend_Registry::get('container')->getService('newscoop.publication_service');

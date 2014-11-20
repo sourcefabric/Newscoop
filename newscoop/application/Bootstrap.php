@@ -5,14 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Doctrine\Common\ClassLoader;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\MongoDB\Connection;
-use Doctrine\ODM\MongoDB\Configuration;
-use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Newscoop\Doctrine\EventDispatcherProxy;
-
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initAutoloader()

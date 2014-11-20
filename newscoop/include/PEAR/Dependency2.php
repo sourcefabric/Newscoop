@@ -1091,6 +1091,10 @@ class PEAR_Dependency2
         return true;
     }
 
+    /**
+     * @param boolean $required
+     * @param PEAR_Installer $dl
+     */
     function _validatePackageUninstall($dep, $required, $dl)
     {
         $depname = $this->_registry->parsedPackageNameToString($dep, true);
@@ -1340,6 +1344,9 @@ class PEAR_Dependency2
         }
     }
 
+    /**
+     * @param string $msg
+     */
     function raiseError($msg)
     {
         if (isset($this->_options['ignore-errors'])) {

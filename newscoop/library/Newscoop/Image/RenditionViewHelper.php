@@ -18,7 +18,7 @@ class RenditionViewHelper extends \Zend_View_Helper_Abstract
     protected $imageService;
 
     /**
-     * @param Newscoop\Image\ImageService $imageService
+     * @param ImageService $imageService
      */
     public function __construct(ImageService $imageService)
     {
@@ -28,10 +28,10 @@ class RenditionViewHelper extends \Zend_View_Helper_Abstract
     /**
      * Get rendition preview
      *
-     * @param Newscoop\Image\Rendition $rendition
+     * @param Rendition $rendition
      * @param int $width
      * @param int $height
-     * @param Newscoop\Image\ArticleRendition $articleImageRendition
+     * @param Newscoop\Image\ArticleRendition $articleRendition
      * @return string
      */
     public function rendition(Rendition $rendition, $width, $height, ArticleRendition $articleRendition = null)

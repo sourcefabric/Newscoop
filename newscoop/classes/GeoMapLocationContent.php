@@ -35,7 +35,6 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
 
     /**
      * @param IGeoMapLocation $mapLocation
-     * @param int $languageId
      */
     public function __construct(IGeoMapLocation $mapLocation = NULL, IGeoMapLocationLanguage $locationLanguage = NULL, array $p_contentSource = NULL, $p_forceExists = false)
     {
@@ -180,7 +179,7 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
      *
      * @param array $poi
      *
-     * @return void
+     * @return false|null
      */
     public static function UpdateText($poi)
     {

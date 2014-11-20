@@ -74,7 +74,7 @@ function camp_time_format($p_time)
  * return the given default value.
  *
  * @param array $p_array
- * @param mixed $p_index
+ * @param string $p_index
  * @param mixed $p_defaultValue
  *
  * @return mixed
@@ -294,7 +294,7 @@ function camp_array_peek($p_array, $p_getKeyValuePair = false, $p_offset = 0)
  *
  * @param string $p_name
  * @param mixed $p_defaultValue
- * @return mixed
+ * @return integer|null
  */
 function camp_session_get($p_name, $p_defaultValue)
 {
@@ -313,7 +313,7 @@ function camp_session_get($p_name, $p_defaultValue)
  * A wrapper around setting a session variable.
  *
  * @param string $p_name
- * @param mixed $p_value
+ * @param integer $p_value
  * @return void
  */
 function camp_session_set($p_name, $p_value)
@@ -326,7 +326,6 @@ function camp_session_set($p_name, $p_value)
  * A wrapper around unsetting a session variable.
  *
  * @param string $p_name
- * @param mixed $p_value
  * @return void
  */
 function camp_session_unset($p_name)
@@ -428,7 +427,7 @@ function get($p_input)
 /**
  * Decode an structured array
  *
- * @param array $input
+ * @param array $p_input
  * @return array
  */
 function camp_html_entity_decode_array($p_input, $p_decode_keys=false)
@@ -568,6 +567,9 @@ function camp_get_calendar_include($p_languageCode = null)
 }
 
 
+/**
+ * @param string $p_fieldName
+ */
 function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
                                  $p_showTime = false, $p_htmlCode = null)
 {

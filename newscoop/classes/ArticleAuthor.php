@@ -56,6 +56,7 @@ class ArticleAuthor extends DatabaseObject
      * @param int $p_languageId
      * @param int $p_authorId
      * @param int $p_typeId
+     * @param integer $p_order
      */
     public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null, $p_order = null)
     {
@@ -226,7 +227,6 @@ class ArticleAuthor extends DatabaseObject
     }
 
     /**
-     * @param int $p_id
      * @return void
      */
     public static function OnArticleLanguageDelete($p_articleNumber, $p_languageId)
@@ -241,7 +241,7 @@ class ArticleAuthor extends DatabaseObject
 
     /**
      * Remove article pointers for the given author.
-     * @param int $p_id
+     * @param integer $p_authorId
      * @return void
      */
     public static function OnAuthorDelete($p_authorId)

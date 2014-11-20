@@ -8,7 +8,6 @@
 
 namespace Newscoop\Service\Implementation;
 
-use Doctrine\ORM\Query;
 use Newscoop\Service\ITemplateSearchService;
 use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Service\IOutputSettingSectionService;

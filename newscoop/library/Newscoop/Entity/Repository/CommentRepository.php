@@ -8,7 +8,6 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Comment;
 use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
@@ -228,7 +227,6 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Method for update a comment
      *
-     * @param Comment $entity
      * @param array   $values
      *
      * @return Comment $enitity
@@ -373,7 +371,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      * Get data for table
      *
      * @param  array     $p_params
-     * @param  array     $cols
+     * @param  array     $p_cols
      * @return Comment[]
      */
     public function getData(array $p_params, array $p_cols)
@@ -430,8 +428,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get entity count
      *
-     * @param array $p_params|null
-     * @param array $p_cols|null
+     * @param array $p_params
+     * @param array $p_cols
      *
      * @return int
      */
@@ -462,8 +460,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Build where condition
      *
-     * @param  array                   $cols
-     * @param  string                  $search
+     * @param  array                   $p_cols
+     * @param  string                  $p_search
      * @return Doctrine\ORM\Query\Expr
      */
     protected function buildWhere(array $p_cols, $p_search, $qb = null, $andx = null)
@@ -639,7 +637,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Find comments for indexing
      *
-     * @param mixed $count Number of comments to index. When null default will be used
+     * @param integer $count Number of comments to index. When null default will be used
      *
      * @return array
      */

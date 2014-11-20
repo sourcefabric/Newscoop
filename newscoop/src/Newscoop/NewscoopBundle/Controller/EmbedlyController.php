@@ -8,7 +8,6 @@
 
 namespace Newscoop\NewscoopBundle\Controller;
 use Newscoop\Entity\Snippet;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 
 // Use this SnippetTemplate creation code to use the Embed.ly Controller.

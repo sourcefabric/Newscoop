@@ -7,12 +7,11 @@
 
 namespace Newscoop\Log;
 
-use DateTime,
-    Zend_Registry,
-    Zend_Log_Writer_Abstract,
-    Doctrine\ORM\EntityManager,
-    Newscoop\Entity\Log,
-    Newscoop\Entity\User;
+use DateTime;
+use Zend_Log_Writer_Abstract;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\Log;
+use Newscoop\Entity\User;
 
 /**
  * Log Writer for Zend_Log

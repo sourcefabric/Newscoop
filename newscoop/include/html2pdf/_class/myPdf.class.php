@@ -131,6 +131,7 @@ class HTML2PDF_myPdf extends TCPDF
      * because it take a lot a time and a lot of memory => we use reference
      *
      * @param &HTML2PDF_myPdf object
+     * @param HTML2PDF_myPdf $pdf
      * @access public
      */
     public function cloneFontFrom(&$pdf)
@@ -523,8 +524,6 @@ class HTML2PDF_myPdf extends TCPDF
     /**
      * add a Translate transformation
      *
-     * @param float $Tx
-     * @param float $Ty
      * @access public
      */
     public function setTranslate($xT, $yT)
@@ -545,8 +544,6 @@ class HTML2PDF_myPdf extends TCPDF
      * add a Rotate transformation
      *
      * @param float $angle
-     * @param float $Cx
-     * @param float $Cy
      * @access public
      */
     public function setRotation($angle, $xC=null, $yC=null)
@@ -627,10 +624,18 @@ class HTML2PDF_myPdf extends TCPDF
     {
         return $this->k;
     }
+
+    /**
+     * @return double
+     */
     public function getW()
     {
         return $this->w;
     }
+
+    /**
+     * @return double
+     */
     public function getH()
     {
         return $this->h;
@@ -639,10 +644,18 @@ class HTML2PDF_myPdf extends TCPDF
     {
         return $this->lMargin;
     }
+
+    /**
+     * @return double
+     */
     public function getrMargin()
     {
         return $this->rMargin;
     }
+
+    /**
+     * @return double
+     */
     public function gettMargin()
     {
         return $this->tMargin;
@@ -969,7 +982,7 @@ class HTML2PDF_myPdf extends TCPDF
      * @param float $rx
      * @param float $ry
      * @param float $angleBegin in radians
-     * @param float $angleEng in radians
+     * @param float $angleEnd in radians
      * @param boolean $direction
      * @param boolean $drawFirst, true => add the first point
      * @param boolean $trans apply transformation
@@ -1041,8 +1054,8 @@ class HTML2PDF_myPdf extends TCPDF
      * @param float $rx
      * @param float $ry
      * @param float $angle deviation angle of the axis X
-     * @param boolean $l large-arc-flag
-     * @param boolean $s sweep-flag
+     * @param integer $l large-arc-flag
+     * @param integer $s sweep-flag
      * @param boolean $trans apply transformation
      * @access protected
      */
@@ -1142,6 +1155,8 @@ class HTML2PDF_myPdf extends TCPDF
      * @param float &$x
      * @param float &$y
      * @param boolean $trans true => convert into PDF unit
+     * @param double $x
+     * @param double $y
      * @return boolean
      * @access public
      */
@@ -1385,6 +1400,7 @@ class HTML2PDF_myPdf extends TCPDF
      *
      * @access public
      * @param integer $myLastPageGroup;
+     * @param integer $myLastPageGroup
      */
     public function setMyLastPageGroup($myLastPageGroup)
     {
@@ -1407,6 +1423,7 @@ class HTML2PDF_myPdf extends TCPDF
      *
      * @access public
      * @param integer $myLastPageGroupNb;
+     * @param integer $myLastPageGroupNb
      */
     public function setMyLastPageGroupNb($myLastPageGroupNb)
     {

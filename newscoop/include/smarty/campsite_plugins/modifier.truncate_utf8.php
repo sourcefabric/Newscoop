@@ -22,6 +22,8 @@
  * @param string
  * @param boolean
  * @param boolean
+ * @param integer $from
+ * @param integer $len
  * @return string
  */
 

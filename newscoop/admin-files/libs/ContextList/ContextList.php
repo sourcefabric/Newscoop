@@ -73,7 +73,7 @@ class ContextList extends BaseList
     /**
      * Set publication.
      * @param int $publication
-     * @return ArticleList
+     * @return ContextList
      */
     public function setPublication($publication)
     {
@@ -84,7 +84,7 @@ class ContextList extends BaseList
     /**
      * Set issue.
      * @param int $issue
-     * @return ArticleList
+     * @return ContextList
      */
     public function setIssue($issue)
     {
@@ -95,7 +95,7 @@ class ContextList extends BaseList
     /**
      * Set section.
      * @param int $section
-     * @return ArticleList
+     * @return ContextList
      */
     public function setSection($section)
     {
@@ -106,7 +106,7 @@ class ContextList extends BaseList
     /**
      * Set language.
      * @param int $language
-     * @return ArticleList
+     * @return ContextList
      */
     public function setLanguage($language)
     {
@@ -118,7 +118,7 @@ class ContextList extends BaseList
      * Set filter.
      * @param string $name
      * @param mixed $value
-     * @return ArticleList
+     * @return ContextList
      */
     public function setFilter($name, $value)
     {
@@ -131,7 +131,7 @@ class ContextList extends BaseList
      *
      * @param string $column
      * @param string $direction
-     * @return ArticleList
+     * @return ContextList
      */
     public function setOrderBy($column, $direction = 'asc')
     {
@@ -147,7 +147,7 @@ class ContextList extends BaseList
 
     /**
      * Render filters.
-     * @return ArticleList
+     * @return ContextList
      */
     public function renderFilters()
     {
@@ -160,7 +160,7 @@ class ContextList extends BaseList
 
     /**
      * Render actions.
-     * @return ArticleList
+     * @return ContextList
      */
     public function renderActions()
     {
@@ -173,7 +173,7 @@ class ContextList extends BaseList
 
     /**
      * Render table.
-     * @return ArticleList
+     * @return ContextList
      */
     public function render()
     {

@@ -322,6 +322,7 @@ Run post-installation scripts in package <package>, if any exist.
 
     /**
      * For unit testing purposes
+     * @param PEAR_Config $config
      */
     function &getDownloader(&$ui, $options, &$config)
     {

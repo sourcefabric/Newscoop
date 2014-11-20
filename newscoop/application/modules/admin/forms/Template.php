@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\Template;
-
 /**
  */
 class Admin_Form_Template extends Zend_Form

@@ -138,7 +138,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     }
 
     /**
-     * @return User|NULL
+     * @return User|null
      */
     public function getUser()
     {
@@ -194,6 +194,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      * Gives map id of the article
      *
      * @param Article
+     * @param Article $p_articleObj
      * @return int
      */
     public static function GetArticleMapId($p_articleObj)
@@ -271,6 +272,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      * Gives array of artilce's map's points: just point names (of the article object language) and usage flags.
      *
      * @param object Article
+     * @param Article $p_articleObj
      * @return array
      */
     public static function GetLocationsByArticle($p_articleObj)
@@ -315,7 +317,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      *
      * @param object Article
      * @param int
-     * @return array
+     * @return null|boolean
      */
     public static function UnlinkArticle($p_articleObj = null, $p_articleNumber = 0)
     {
@@ -359,7 +361,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      *
      * @param int $p_articleNumber
      *
-     * @return void
+     * @return null|boolean
      */
     public static function OnArticleDelete($p_articleNumber)
     {
@@ -376,7 +378,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
-     * @return void
+     * @return boolean
      */
     public static function OnLanguageDelete($p_articleNumber, $p_languageId)
     {
@@ -455,7 +457,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      * Deletes the map with all its points, translations, and other associated data.
      * This does real removals, unlike the OnArticleDelete/UnlinkArticle methods.
      *
-     * @return void
+     * @return boolean
      */
     public function delete()
     {
@@ -655,7 +657,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      * @param int $p_articleNumber
      * @param int $p_srcLanguageId
      * @param int $p_destLanguageId
-     * @return void
+     * @return boolean
      */
     public static function OnCreateTranslation($p_articleNumber, $p_srcLanguageId, $p_destLanguageId)
     {
@@ -2191,6 +2193,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
+     * @param string $p_specifier
      *
      * @return string
      */
@@ -2337,7 +2340,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      * Gives the header part for the multi-map front end presentation
      *
      * @param int $p_languageId
-     * @param array $p_constarints
+     * @param array $p_constraints
      * @param array $p_options
      * @param int $p_offset
      * @param int $p_limit
@@ -2834,6 +2837,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      * @param int $p_languageId
      * @param int $p_rank
      *    The rank of the current multi-map, used to make unique ids
+     * @param string $p_specifier
      *
      * @return string
      */
@@ -2859,7 +2863,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
     /**
      * Gives the body map-centering (js call) part for the map front end presentation
      *
-     * @param int $p_articleNumber
      * @param int $p_languageId
      *
      * @return string

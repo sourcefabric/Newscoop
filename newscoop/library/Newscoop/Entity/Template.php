@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\TemplateRepository")
@@ -37,7 +37,6 @@ class Template
 
     /**
      * @param string $key
-     * @param array $metadata
      */
     public function __construct($key)
     {
@@ -58,7 +57,7 @@ class Template
      * Set key
      *
      * @param string $key
-     * @return Newscoop\Entity\Template
+     * @return Template
      */
     public function setKey($key)
     {
@@ -80,7 +79,7 @@ class Template
      * Set cache lifetime
      *
      * @param int $lifetime
-     * @return Newscoop\Entity\Template
+     * @return Template
      */
     public function setCacheLifetime($lifetime)
     {

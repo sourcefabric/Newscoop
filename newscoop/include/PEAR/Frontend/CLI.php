@@ -281,6 +281,9 @@ class PEAR_Frontend_CLI extends PEAR_Frontend
         return $answers;
     }
 
+    /**
+     * @param string $command
+     */
     function userDialog($command, $prompts, $types = array(), $defaults = array(), $screensize = 20)
     {
         if (!is_array($prompts)) {
@@ -381,6 +384,9 @@ class PEAR_Frontend_CLI extends PEAR_Frontend
         return false;
     }
 
+    /**
+     * @param string $data
+     */
     function outputData($data, $command = '_default')
     {
         switch ($command) {

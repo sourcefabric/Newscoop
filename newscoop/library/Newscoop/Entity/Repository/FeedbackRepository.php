@@ -8,8 +8,6 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Feedback;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Article;

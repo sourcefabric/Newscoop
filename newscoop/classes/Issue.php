@@ -612,8 +612,6 @@ class Issue extends DatabaseObject {
 	 * @param int $p_languageId
 	 *		(Optional) Only return issues with this language.
 	 *
-	 * @param int $p_issueId
-	 *		(Optional) Only return issues with this Issue ID.
 	 *
 	 * @param string $p_urlName
 	 * 		(Optional) Only return issues that match this URL Name.

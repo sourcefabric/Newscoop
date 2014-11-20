@@ -129,7 +129,7 @@ class UserService
      * @param int   $limit
      * @param int   $offset
      *
-     * @return Newscoop\PaginatedCollection
+     * @return PaginatedCollection
      */
     public function getCollection(array $criteria, array $orderBy, $limit = null, $offset = null)
     {
@@ -340,7 +340,7 @@ class UserService
      * @param array                $data
      * @param Newscoop\Entity\User $user
      *
-     * @return void
+     * @return UserService
      */
     public function savePending($data, User $user)
     {
@@ -493,7 +493,7 @@ class UserService
      *
      * @param string $userIp User IP
      *
-     * @return string
+     * @return UserService
      */
     public function setUserIp($userIp = null)
     {

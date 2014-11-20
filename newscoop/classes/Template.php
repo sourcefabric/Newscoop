@@ -18,6 +18,7 @@ class Template extends DatabaseObject {
      * @param mixed p_templateIdOrName
      * 		Give the template ID or the template name relative
      * 		to the template base directory.
+     * @param string $p_templateIdOrName
      *
      */
     public function Template($p_templateIdOrName = null)
@@ -38,6 +39,8 @@ class Template extends DatabaseObject {
     /**
      * Wrapper around DatabaseObject::setProperty
      * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     * @param string $p_dbColumnName
+     * @param integer $p_value
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
@@ -175,6 +178,7 @@ class Template extends DatabaseObject {
 
     /**
      * Returns TRUE if the template is being used in an Issue or Section.
+     * @param string $p_templateName
      * @return boolean
      */
     public static function InUse($p_templateName)
@@ -300,7 +304,7 @@ class Template extends DatabaseObject {
      *		The original template Name
      * @param string $p_tplNew
      *		The new template Name
-     * @return mixed
+     * @return false|null
      */
     public static function UpdateOnChange($p_tplOrig, $p_tplNew)
     {
@@ -402,7 +406,7 @@ class Template extends DatabaseObject {
      * Call this to upload a template file.  Note: Template::UpdateStatus()
      * will be called automatically for you if this is successful.
      *
-     * @param string $p_fileVarName
+     * @param string $f_fileVarName
      * 		Name of the variable in the $_FILES global variable.
      * @param string $p_charset
      * 		Desired character set of the file.
@@ -613,7 +617,7 @@ class Template extends DatabaseObject {
      * It does not take care on database info upgrade because
      * it trusts of the cool Template::UpdateStatus() function.
      *
-     * @return mixed
+     * @return boolean
      */
     public function delete() {
         global $g_user;

@@ -77,7 +77,6 @@ interface AdoDbInterface
     /**
      * Get col
      *
-     * @param string $sql
      * @return array
      */
     public function getCol();

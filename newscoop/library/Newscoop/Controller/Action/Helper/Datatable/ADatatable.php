@@ -2,8 +2,8 @@
 
 namespace Newscoop\Controller\Action\Helper\Datatable;
 
-use Newscoop\Controller\Action\Helper\Datatable\Adapter\AAdapter,
-    Zend_Controller_Action_Helper_Abstract, Adapter;
+use Newscoop\Controller\Action\Helper\Datatable\Adapter\AAdapter;
+use Zend_Controller_Action_Helper_Abstract;
 
 abstract class ADatatable extends Zend_Controller_Action_Helper_Abstract
 {
@@ -63,7 +63,7 @@ abstract class ADatatable extends Zend_Controller_Action_Helper_Abstract
 
     /**
      * Set the data adapter
-     * @param Adapter $p_adapter
+     * @param AAdapter $p_adapter
      * @return Newscoop\Controller\Action\Helper\Datatable\ADatatable
      */
     public function setAdapter( AAdapter $p_adapter )
@@ -74,7 +74,7 @@ abstract class ADatatable extends Zend_Controller_Action_Helper_Abstract
 
     /**
      * Get the data adapter
-     * @return Adapter $p_adapter
+     * @return AAdapter $p_adapter
      */
     public function getAdapter( )
     {
@@ -138,7 +138,7 @@ abstract class ADatatable extends Zend_Controller_Action_Helper_Abstract
  	/**
      * Set option
      * @param string $p_key
-     * @param mixed $p_val
+     * @param mixed $p_value
      * @return Newscoop\Controller\Action\Helper\Datatable\ADatatable
      */
     public function setOption( $p_key, $p_value )

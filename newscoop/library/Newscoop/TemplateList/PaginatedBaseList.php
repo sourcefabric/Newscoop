@@ -102,7 +102,7 @@ abstract class PaginatedBaseList extends BaseList
     /**
      * Gets the value of pageParameterName.
      *
-     * @return mixed
+     * @return string
      */
     public function getPageParameterName()
     {
@@ -127,7 +127,7 @@ abstract class PaginatedBaseList extends BaseList
     /**
      * Gets the value of pageNumber.
      *
-     * @return mixed
+     * @return integer
      */
     public function getPageNumber()
     {
@@ -137,7 +137,7 @@ abstract class PaginatedBaseList extends BaseList
     /**
      * Sets the value of pageNumber.
      *
-     * @param mixed $pageNumber the page number
+     * @param integer $pageNumber the page number
      *
      * @return self
      */

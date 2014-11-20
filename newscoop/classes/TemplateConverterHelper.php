@@ -259,7 +259,8 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
+     * @param string $p_tplPath
      */
     public static function GetNewTagContent($p_optArray, $p_tplPath = null)
     {
@@ -382,7 +383,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -427,7 +428,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -462,7 +463,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -507,7 +508,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -533,7 +534,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -549,7 +550,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -567,7 +568,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -579,7 +580,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -602,7 +603,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -621,7 +622,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */
@@ -638,7 +639,7 @@ class TemplateConverterHelper
 
 
     /**
-     * @param array $p_optArray
+     * @param string[] $p_optArray
      *
      * @return string $newTag
      */

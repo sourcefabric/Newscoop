@@ -3,6 +3,7 @@
  * @param array p_dbColumns
  * @param object p_user The User object
  * @param int p_editorLanguage The current or selected language
+ * @param string $p_dbColumns
  *
  * @return void
  */

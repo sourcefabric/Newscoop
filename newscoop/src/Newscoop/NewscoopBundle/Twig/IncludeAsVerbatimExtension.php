@@ -16,7 +16,7 @@ class IncludeAsVerbatimExtension extends \Twig_Extension
     /**
      * Returns a list of global functions to add to the existing list.
      *
-     * @return array An array of global functions
+     * @return \Twig_SimpleFunction[] An array of global functions
      */
     public function getFunctions() {
         return array(

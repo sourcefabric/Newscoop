@@ -8,7 +8,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Language entity
@@ -291,7 +291,7 @@ class Language
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
@@ -312,7 +312,7 @@ class Language
      * Set name
      *
      * @param string $name
-     * @return Newscoop\Entity\Language
+     * @return Language
      */
     public function setName($name)
     {
@@ -333,8 +333,7 @@ class Language
     /**
      * Set original/native name
      *
-     * @param string $name
-     * @return Newscoop\Entity\Language
+     * @return Language
      */
     public function setNativeName($native_name)
     {
@@ -350,8 +349,7 @@ class Language
     /**
      * Set code page
      *
-     * @param string $name
-     * @return Newscoop\Entity\Language
+     * @return Language
      */
     public function setCodePage($code_page)
     {
@@ -367,8 +365,7 @@ class Language
     /**
      * Set code
      *
-     * @param string $name
-     * @return Newscoop\Entity\Language
+     * @return Language
      */
     public function setCode($code)
     {

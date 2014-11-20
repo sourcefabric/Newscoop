@@ -65,8 +65,8 @@ class ArticleImageCaption
     protected $caption;
 
     /**
-     * @param Newscoop\Image\ArticleImage $articleImage
-     * @param Newscoop\Entity\Language    $language
+     * @param ArticleImage $articleImage
+     * @param Language    $language
      */
     public function __construct(ArticleImage $articleImage, Language $language)
     {

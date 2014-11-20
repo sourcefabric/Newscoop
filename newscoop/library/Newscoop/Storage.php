@@ -68,7 +68,7 @@ class Storage
      * Fetch item
      *
      * @param string $key
-     * @return mixed
+     * @return null|string
      */
     public function fetchItem($key)
     {
@@ -373,7 +373,7 @@ class Storage
      * Get storage item
      *
      * @param string $key
-     * @return Newscoop\StorageItem
+     * @return Item
      */
     public function getItem($key)
     {
@@ -408,7 +408,7 @@ class Storage
      * Get path
      *
      * @param string $key
-     * @param bool $isReal
+     * @param bool $isRealpath
      * @return mixed
      */
     private function getPath($key, $isRealpath = FALSE)

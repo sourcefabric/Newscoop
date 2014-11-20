@@ -464,6 +464,9 @@ class ArticlesList extends ListObject
 	}
 
 
+	/**
+	 * @param string $p_fieldName
+	 */
 	private static function GetDynamicFields($p_articleTypeName = null, $p_fieldName)
 	{
 		$result = array();

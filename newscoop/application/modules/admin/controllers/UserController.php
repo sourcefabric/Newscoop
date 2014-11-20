@@ -448,7 +448,7 @@ class Admin_UserController extends Zend_Controller_Action
     /**
      * Add user attributes subform to form
      *
-     * @param Zend_Form $form
+     * @param Admin_Form_Profile $form
      * @param Newscoop\Entity\User $user
      * @return void
      */

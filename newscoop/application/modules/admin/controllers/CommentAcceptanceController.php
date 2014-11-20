@@ -149,7 +149,7 @@ class Admin_CommentAcceptanceController extends Zend_Controller_Action
      * Method for saving a Acceptance Criteria
      *
      * @param ZendForm $p_form
-     * @param IComment $p_acceptance
+     * @param Acceptance $p_acceptance
      */
     private function handleForm(Zend_Form $p_form, Acceptance $p_acceptance)
     {   

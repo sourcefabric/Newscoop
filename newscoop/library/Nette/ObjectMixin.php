@@ -79,6 +79,7 @@ final class ObjectMixin
 	 * @param  string
 	 * @param  string  method name
 	 * @param  array   arguments
+	 * @param string $class
 	 * @return mixed
 	 * @throws MemberAccessException
 	 */

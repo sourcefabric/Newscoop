@@ -725,6 +725,7 @@ class PEAR_Config extends PEAR
      * @param string file to read from, if NULL or not specified, the
      *               last-used file for the same layer (second param) is used
      * @param string config layer to insert data into ('user' or 'system')
+     * @param string $file
      * @return bool TRUE on success or a PEAR error on failure
      */
     function readConfigFile($file = null, $layer = 'user', $strict = true)
@@ -876,6 +877,7 @@ class PEAR_Config extends PEAR
      * @param bool whether to overwrite existing data (default TRUE)
      * @param string config layer to insert data into ('user' or 'system')
      * @param string if true, errors are returned if file opening fails
+     * @param string $file
      * @return bool TRUE on success or a PEAR error on failure
      */
     function mergeConfigFile($file, $override = true, $layer = 'user', $strict = true)
@@ -1079,6 +1081,7 @@ class PEAR_Config extends PEAR
     * Gets the file used for storing the config for a layer
     *
     * @param string $layer 'user' or 'system'
+    * @return string
     */
     function getConfFile($layer)
     {
@@ -1405,6 +1408,7 @@ class PEAR_Config extends PEAR
      * layers property.
      *
      * @param string config key
+     * @param string $channel
      * @return mixed the config value, or NULL if not found
      * @access private
      */
@@ -1832,6 +1836,7 @@ class PEAR_Config extends PEAR
      * @param string config key
      * @param string (optional) config layer
      * @param string (optional) channel (defaults to default channel)
+     * @param string $key
      * @return bool TRUE on success, FALSE on failure
      *
      * @access public
@@ -1949,6 +1954,7 @@ class PEAR_Config extends PEAR
      * Tells whether a given config layer exists.
      *
      * @param string config layer
+     * @param string $layer
      * @return bool whether <config layer> exists in this object
      *
      * @access public
@@ -2000,6 +2006,7 @@ class PEAR_Config extends PEAR
     /**
      * This is to allow customization like the use of installroot
      * @param PEAR_Registry
+     * @param PEAR_Registry $reg
      * @return bool
      */
     function setRegistry(&$reg, $layer = 'user')
@@ -2026,6 +2033,7 @@ class PEAR_Config extends PEAR
     }
 
     /**
+     * @param string $version
      * @return PEAR_REST
      */
     function &getREST($version, $options = array())
@@ -2054,6 +2062,9 @@ class PEAR_Config extends PEAR
         return $a;
     }
 
+    /**
+     * @param string $prepend
+     */
     function _prependPath($path, $prepend)
     {
         if (strlen($prepend) > 0) {

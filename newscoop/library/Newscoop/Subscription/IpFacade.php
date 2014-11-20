@@ -48,7 +48,7 @@ class IpFacade
      * Save ip
      *
      * @param array $values
-     * @return Newscoop\Entity\User\Ip
+     * @return Ip
      */
     public function save(array $values)
     {

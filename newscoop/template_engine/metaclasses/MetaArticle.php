@@ -3,8 +3,6 @@
  * @package Newscoop
  */
 
-use Newscoop\Webcode\Manager;
-
 require_once __DIR__ . '/../../classes/Article.php';
 require_once __DIR__ . '/../../classes/ArticleAttachment.php';
 require_once __DIR__ . '/../../classes/GeoMap.php';
@@ -507,7 +505,7 @@ final class MetaArticle extends MetaDbObject {
     /**
      * Get Map for this article
      *
-     * @return Geo_Map
+     * @return MetaMap
      */
     protected function getMap() {
         $map = Geo_Map::GetMapByArticle($this->m_dbObject->getProperty('Number'));
@@ -826,7 +824,7 @@ final class MetaArticle extends MetaDbObject {
      * Returns true if the article keywords field had the given keyword.
      *
      * @param string $p_keyword
-     * @return bool
+     * @return integer
      */
     public function has_keyword($p_keyword) {
         $keywords = $this->m_dbObject->getKeywords();

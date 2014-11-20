@@ -13,8 +13,8 @@ interface ISource
     /**
      * Get the data needed by data table listing
      *
-     * @param array $params
-     * @param array $cols
+     * @param array $p_params
+     * @param array $p_cols
      * @return
      */
     public function getData(array $p_params, array $p_cols);

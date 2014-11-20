@@ -21,6 +21,9 @@ class RequestStats extends DatabaseObject {
 	                           'hour',
 	                           'request_count');
 
+	/**
+	 * @param integer $p_objectId
+	 */
 	public function __construct($p_objectId = null, $p_date = 'now',
 	                            $p_hour = null)
 	{
@@ -76,6 +79,11 @@ class RequestStats extends DatabaseObject {
     } // fn getRequestCount
 
 
+    /**
+     * @param integer $p_objectId
+     *
+     * @return string
+     */
     public static function GetObjectRequestCount($p_objectId)
     {
     	global $g_ado_db;

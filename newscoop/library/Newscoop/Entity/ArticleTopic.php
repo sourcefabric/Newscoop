@@ -7,9 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Utils\Validation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article topic entity
@@ -35,7 +33,7 @@ class ArticleTopic
     /**
      * Get article
      *
-     * @return Newscoop\Entity\Article
+     * @return integer
      */
     public function getArticle()
     {
@@ -57,7 +55,7 @@ class ArticleTopic
     /**
      * Get Topic
      *
-     * @return Newscoop\Entity\TopicNames
+     * @return integer
      */
     public function getTopic()
     {

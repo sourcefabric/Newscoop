@@ -9,7 +9,7 @@ namespace Newscoop\Entity\User;
 
 use Newscoop\Entity\Acl\Role;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * User Group entity
@@ -84,7 +84,7 @@ class Group implements \Zend_Acl_Role_Interface
     /**
      * Set role
      *
-     * @param Newscoop\Entity\Acl\Role $role
+     * @param Role $role
      * @return Newscoop\Entity\User\Group
      */
     public function setRole(Role $role)

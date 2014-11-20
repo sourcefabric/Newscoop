@@ -795,6 +795,7 @@ class DatabaseObject
 	 *		Array of arrays of two strings: column name and search value.
 	 * @param array $p_sqlOptions
 	 *		See ProcessOptions().
+	 * @param string $p_className
 	 *
 	 * @return array
 	 */
@@ -960,7 +961,7 @@ class DatabaseObject
 	 * Copies the given object
 	 *
 	 * @param object $p_source
-	 * @return object
+	 * @return DatabaseObject
 	 */
 	public function duplicateObject($p_source)
 	{
@@ -988,7 +989,7 @@ class DatabaseObject
 	 *
 	 * @param bool $p_useCache
 	 *
-	 * @return void
+	 * @return boolean
 	 */
 	public function SetUseCache($p_useCache)
 	{

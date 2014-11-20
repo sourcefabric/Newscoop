@@ -9,7 +9,7 @@ namespace Newscoop\Subscription;
 
 use Newscoop\Entity\Publication;
 use Newscoop\Entity\User;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Subscription\Article;
 use Newscoop\Subscription\Issue;
 
@@ -112,7 +112,7 @@ class Subscription
      * Set user
      *
      * @param Newscoop\Entity\User $user
-     * @return void
+     * @return Subscription
      */
     public function setUser(User $user)
     {
@@ -133,8 +133,8 @@ class Subscription
     /**
      * Set publication
      *
-     * @param Newscoop\Entity\Publication $publication
-     * @return Newscoop\Entity\Subscription
+     * @param Publication $publication
+     * @return Subscription
      */
     public function setPublication(Publication $publication)
     {
@@ -176,7 +176,7 @@ class Subscription
      * Set to pay
      *
      * @param float $toPay
-     * @return Newscoop\Entity\Subscription
+     * @return Subscription
      */
     public function setToPay($toPay)
     {
@@ -198,7 +198,7 @@ class Subscription
      * Set type
      *
      * @param string $type
-     * @return Newscoop\Entity\Subscription
+     * @return Subscription
      */
     public function setType($type)
     {
@@ -230,7 +230,7 @@ class Subscription
      * Set active
      *
      * @param bool $active
-     * @return Newscoop\Entity\Subscription
+     * @return Subscription
      */
     public function setActive($active)
     {
@@ -252,7 +252,7 @@ class Subscription
      * Add sections
      *
      * @param array $values
-     * @param Newscoop\Entity\Publication $publication
+     * @param Publication $publication
      * @return void
      */
     public function addSections(array $values, \Newscoop\Entity\Publication $publication)
@@ -312,7 +312,7 @@ class Subscription
     /**
      * Add section
      *
-     * @param Newscoop\Subscription\Section $section
+     * @param Section $section
      * @return void
      */
     public function addSection(Section $section)
@@ -344,7 +344,7 @@ class Subscription
     /**
      * Add article
      * 
-     * @param Newscoop\Subscription\Article $article
+     * @param Article $article
      * @return void
      */
     public function addArticle(Article $article)
@@ -376,7 +376,7 @@ class Subscription
     /**
      * Add issue
      * 
-     * @param Newscoop\Subscription\Issue $issue
+     * @param Issue $issue
      * @return void
      */
     public function addIssue(Issue $issue)
@@ -389,7 +389,7 @@ class Subscription
     /**
      * Test if has given section
      *
-     * @param Newscoop\Subscription\Section $section
+     * @param \Newscoop\Entity\Section $section
      * @param array $languages
      * @return bool
      */
@@ -451,7 +451,7 @@ class Subscription
 
     /**
      * Set currency
-     * @return string
+     * @return Subscription
      */
     public function setCurrency($currency) {
         $this->currency = $currency;

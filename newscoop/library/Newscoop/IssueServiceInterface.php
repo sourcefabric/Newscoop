@@ -35,7 +35,7 @@ interface IssueServiceInterface
     /**
      * Get Issue object
      *
-     * @return Newscoop\Entity\Issue Issue entity object
+     * @return Issue Issue entity object
      */
     public function getIssue();
 
@@ -43,6 +43,7 @@ interface IssueServiceInterface
      * Set Issue object
      *
      * @param Issue $issue Issue entity object
+     * @return Services\IssueService
      */
     public function setIssue(Issue $issue);
 

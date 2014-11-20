@@ -7,9 +7,9 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Theme,
-    Newscoop\Entity\Theme\Loader;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Theme;
+use Newscoop\Entity\Theme\Loader;
 
 /**
  */
@@ -32,7 +32,6 @@ class ThemeRepository extends EntityRepository
     /**
      * Find all themes from given source
      *
-     * @param string $from
      * @return array
      */
     public function findAll()
@@ -60,7 +59,6 @@ class ThemeRepository extends EntityRepository
     /**
      * Install theme
      *
-     * @param string $id
      * @return void
      */
     public function install($offset)

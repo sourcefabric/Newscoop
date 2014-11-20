@@ -220,7 +220,7 @@ class RequirementCollection implements IteratorAggregate
      * Adds a mandatory requirement in form of a php.ini configuration.
      *
      * @param string           $cfgName    The configuration name used for ini_get()
-     * @param Boolean|callback $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
+     * @param boolean|string $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
                                                     or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param Boolean $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
                                                     This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
@@ -238,7 +238,7 @@ class RequirementCollection implements IteratorAggregate
      * Adds an optional recommendation in form of a php.ini configuration.
      *
      * @param string           $cfgName    The configuration name used for ini_get()
-     * @param Boolean|callback $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
+     * @param false|string $evaluation Either a Boolean indicating whether the configuration should evaluate to true or false,
                                                     or a callback function receiving the configuration value as parameter to determine the fulfillment of the requirement
      * @param Boolean $approveCfgAbsence If true the Requirement will be fulfilled even if the configuration option does not exist, i.e. ini_get() returns false.
                                                     This is helpful for abandoned configs in later PHP versions or configs of an optional extension, like Suhosin.
@@ -359,7 +359,7 @@ class RequirementCollection implements IteratorAggregate
     /**
      * Returns the PHP configuration file (php.ini) path.
      *
-     * @return string|false php.ini file path
+     * @return string php.ini file path
      */
     public function getPhpIniConfigPath()
     {

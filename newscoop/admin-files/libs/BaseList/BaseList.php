@@ -202,7 +202,7 @@ class BaseList
 
     /**
      * Set column to be hidden.
-     * @param int|string $key
+     * @param string $key
      * @return ArticleList
      */
     public function setHidden($key)

@@ -50,7 +50,7 @@ class SectionService
      * Get name
      *
      * @param int $number
-     * @param Newscoop\Entity\Publication $publication
+     * @param \Newscoop\Entity\Publication $publication
      * @param Newscoop\Entity\Language $language
      * @return string
      */

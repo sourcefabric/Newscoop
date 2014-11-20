@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity\Ingest\Feed;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Ingest\Feed;
 use Newscoop\Ingest\Parser;
 
@@ -159,8 +159,8 @@ class Entry
     /**
      * Set published
      *
-     * @param DateTime $published
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @param \DateTime $published
+     * @return Entry
      */
     public function setPublished(\DateTime $published)
     {
@@ -231,8 +231,8 @@ class Entry
     /**
      * Set feed
      *
-     * @param Newscoop\Entity\Ingest\Feed $feed
-     * @return Newscoop\Entity\Ingest\Feed
+     * @param  $feed
+     * @return Entry
      */
     public function setFeed(Feed $feed)
     {
@@ -444,7 +444,7 @@ class Entry
      * Set article number
      *
      * @param int $articleNumber
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @return Entry
      */
     public function setArticleNumber($articleNumber)
     {
@@ -465,8 +465,8 @@ class Entry
     /**
      * Update entry
      *
-     * @param Newscoop\Ingest\Parser $parser
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @param Parser $parser
+     * @return Entry
      */
     public function update(Parser $parser)
     {
@@ -485,8 +485,8 @@ class Entry
     /**
      * Entry factory
      *
-     * @param Newscoop\Ingest\Parser $parser
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @param Parser $parser
+     * @return Entry
      */
     public static function create(Parser $parser)
     {
@@ -507,8 +507,8 @@ class Entry
     /**
      * Set entry attributes
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @param Newscoop\Ingest\Parser $parser
+     * @param Entry $entry
+     * @param Parser $parser
      */
     private static function setAttributes(self $entry, Parser $parser)
     {
@@ -531,8 +531,8 @@ class Entry
     /**
      * Set entry images
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @param Newscoop\Ingest\Parser $parser
+     * @param Entry $entry
+     * @param Parser $parser
      */
     private static function setImages(self $entry, Parser $parser)
     {
@@ -552,7 +552,7 @@ class Entry
      * Set attribute
      *
      * @param string $name
-     * @param mixed $value
+     * @param integer $value
      * @return void
      */
     private function setAttribute($name, $value)

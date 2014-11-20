@@ -8,7 +8,7 @@
 
 namespace Newscoop\NewscoopBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\NewscoopBundle\ORM\Point;
 
 /**
@@ -94,7 +94,7 @@ class CityLocations
     /**
      * Set position
      *
-     * @return Point $position
+     * @return CityLocations $position
      */
     public function setPosition(Point $position) 
     {
@@ -116,7 +116,7 @@ class CityLocations
     /**
      * Set population
      *
-     * @return integer $population
+     * @return CityLocations $population
      */
     public function setPopulation($population) 
     {
@@ -138,7 +138,7 @@ class CityLocations
     /**
      * Set elevation
      *
-     * @return integer $elevation
+     * @return CityLocations $elevation
      */
     public function setElevation($elevation) 
     {
@@ -150,7 +150,7 @@ class CityLocations
     /**
      * Get elevation
      *
-     * @return integer
+     * @return string
      */
     public function getElevation() 
     {
@@ -160,7 +160,7 @@ class CityLocations
     /**
      * Set time zone
      *
-     * @return string $time_zone
+     * @return CityLocations $time_zone
      */
     public function setTimeZone($time_zone) 
     {

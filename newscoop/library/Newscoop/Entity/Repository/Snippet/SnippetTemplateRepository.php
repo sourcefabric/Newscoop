@@ -8,9 +8,7 @@
 
 namespace Newscoop\Entity\Repository\Snippet;
 
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Snippet\SnippetTemplate;
 
 /**
@@ -29,6 +27,9 @@ class SnippetTemplateRepository extends EntityRepository
         return new SnippetTemplate;
     }
 
+    /**
+     * @param string $show
+     */
     public function getSnippetTemplateQueryBuilder($show)
     {
         if (!in_array($show, array('enabled', 'disabled', 'all'))) {
@@ -103,8 +104,8 @@ class SnippetTemplateRepository extends EntityRepository
      *
      * Returns all the SnippetsTemplates associated to the Snippets for an Article.
      *
-     * @param int    $article  Article number
-     * @param string $language Language code in format "en" for example.
+     * @param int    $articleNr  Article number
+     * @param string $languageCode Language code in format "en" for example.
      * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
      *
      * @return Doctrine\ORM\Query Query

@@ -10,7 +10,6 @@ class Admin_View_Helper_CommentCommenter extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
      * @return void
      */
     public function commentCommenter(Commenter $commenter)

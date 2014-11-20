@@ -119,7 +119,7 @@ class Client extends BaseClient
     /**
      * Sets the value of publication.
      *
-     * @param Newscoop\Entity\Publication $publication the publication
+     * @param \Newscoop\Entity\Publication $publication the publication
      *
      * @return self
      */

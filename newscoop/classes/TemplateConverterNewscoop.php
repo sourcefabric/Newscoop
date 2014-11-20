@@ -20,7 +20,7 @@ class TemplateConverterNewscoop extends TemplateConverter
     /**
      * Parses the original template file and replaces old syntax with new one.
      *
-     * @return bool
+     * @return boolean|null
      */
     public function parse()
     {

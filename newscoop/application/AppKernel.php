@@ -86,6 +86,7 @@ class AppKernel extends Kernel
     /**
      * This function is to replace PHP's extremely buggy realpath().
      * @param string The original path, can be relative etc.
+     * @param string $path
      * @return string The resolved path, it might not exist.
      */
     public function truepath($path){

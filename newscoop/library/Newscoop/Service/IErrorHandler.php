@@ -26,6 +26,7 @@ interface IErrorHandler
 	 *
 	 * @param string $key
 	 * 		The key of the waning, which uniquelly identifies it, not null.
+	 * @return void
 	 */
 	function warning($key);
 
@@ -35,6 +36,7 @@ interface IErrorHandler
 	 *
 	 * @param string $key
 	 * 		The key of the error, which uniquelly identifies it, not null.
+	 * @return void
 	 */
 	function error($key);
 

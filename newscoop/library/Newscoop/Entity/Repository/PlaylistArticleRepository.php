@@ -7,13 +7,10 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Newscoop\Entity\PlaylistArticle,
-    Newscoop\Entity\Language,
-    Newscoop\Entity\Playlist,
-    Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Theme,
-    Newscoop\Entity\Theme\Loader,
-    Newscoop\Entity\Article;
+use Newscoop\Entity\PlaylistArticle;
+use Newscoop\Entity\Playlist;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Article;
 
 class PlaylistArticleRepository extends EntityRepository
 {

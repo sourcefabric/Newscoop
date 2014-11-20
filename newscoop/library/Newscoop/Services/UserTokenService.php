@@ -7,9 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User,
-    Newscoop\Entity\UserToken;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\User;
+use Newscoop\Entity\UserToken;
 
 /**
  * User service

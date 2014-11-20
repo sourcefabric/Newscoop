@@ -48,8 +48,8 @@ class SubscriptionFacade
      * Save subscription
      *
      * @param array $values
-     * @param Newscoop\Entity\Subscription|null $subscription
-     * @return Newscoop\Entity\Subscription
+     * @param null|Subscription $subscription
+     * @return Subscription
      */
     public function save(array $values, Subscription $subscription = null)
     {
@@ -98,7 +98,6 @@ class SubscriptionFacade
     /**
      * Delete subscription
      *
-     * @param int $subscriptionId
      * @return void
      */
     public function delete($id)

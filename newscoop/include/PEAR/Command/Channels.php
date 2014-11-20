@@ -406,6 +406,10 @@ configuration.',
         }
     }
 
+    /**
+     * @param string $command
+     * @param string[] $params
+     */
     function doAdd($command, $options, $params)
     {
         if (count($params) !== 1) {
@@ -504,6 +508,9 @@ configuration.',
         $this->ui->outputData('Adding Channel "' . $channel->getName() . '" succeeded', $command);
     }
 
+    /**
+     * @param string $command
+     */
     function doUpdate($command, $options, $params)
     {
         if (count($params) !== 1) {

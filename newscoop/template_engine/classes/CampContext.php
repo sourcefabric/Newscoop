@@ -636,7 +636,6 @@ final class CampContext
     /**
      * Saves the current context objects.
      *
-     * @param array $p_objectsList
      *
      * @return void
      */
@@ -697,7 +696,7 @@ final class CampContext
     /**
      * Sets the current list.
      *
-     * @param  object $p_list
+     * @param  PlaylistList $p_list
      * @return void
      */
     public function setCurrentList(&$p_list, array $p_savePropertiesList = array())
@@ -819,6 +818,9 @@ final class CampContext
     }
 
 
+    /**
+     * @param string $p_className
+     */
     public function list_id_prefix($p_className)
     {
         $objectName = $this->GetListObjectName($p_className);
@@ -950,7 +952,7 @@ final class CampContext
     /**
      * Register an list object
      *
-     * @param array $p_listObject
+     * @param array $listObject
      *                            structure: array(list object name => array('class' => class name, 'list' => list class name))
      */
     final private function registerListObject(array $listObject)
@@ -971,6 +973,9 @@ final class CampContext
     }
 
 
+    /**
+     * @param string $p_message
+     */
     final protected function trigger_invalid_register_error($p_message)
     {
         CampTemplate::singleton()->trigger_error($p_message);

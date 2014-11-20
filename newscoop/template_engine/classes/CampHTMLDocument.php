@@ -234,7 +234,7 @@ final class CampHTMLDocument
      *
      * @param string  $p_name
      *                             The name of the META tag to be retrieved
-     * @param mixed   $p_value
+     * @param string   $p_value
      *                             The value for the META tag
      * @param boolean $p_httpEquiv
      *                             Whether it is a http-equiv META tag or not
@@ -327,7 +327,7 @@ final class CampHTMLDocument
      * Test if template exists
      *
      * @param  string $template
-     * @param  Smarty $smarty
+     * @param  CampTemplate $smarty
      * @return bool
      */
     private function templateExists($template, $smarty)

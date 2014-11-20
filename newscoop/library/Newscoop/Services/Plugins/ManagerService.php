@@ -7,7 +7,6 @@
 
 namespace Newscoop\Services\Plugins;
 
-use Composer\Package\PackageInterface\PackageInterface;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Plugin;
 use Newscoop\EventDispatcher\EventDispatcher;

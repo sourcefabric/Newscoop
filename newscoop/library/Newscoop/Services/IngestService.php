@@ -14,7 +14,6 @@ use Newscoop\Ingest\Parser;
 use Newscoop\Ingest\Parser\NewsMlParser;
 use Newscoop\Ingest\Parser\SwissinfoParser;
 use Newscoop\Ingest\Parser\SwisstxtParser;
-use Newscoop\Ingest\Publisher;
 use Newscoop\Services\Ingest\PublisherService;
 
 /**
@@ -43,7 +42,7 @@ class IngestService
     /**
      * @param array $config
      * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Services\Ingest\PublisherService $publisher
+     * @param PublisherService $publisher
      */
     public function __construct($config, EntityManager $em, PublisherService $publisher)
     {
@@ -55,7 +54,7 @@ class IngestService
     /**
      * Add feed
      *
-     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @param Feed $feed
      * @return void
      */
     public function addFeed(Feed $feed)
@@ -165,7 +164,7 @@ class IngestService
     /**
      * Update feed
      *
-     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @param Feed $feed
      * @return void
      */
     private function updateSDAFeed(Feed $feed)
@@ -224,7 +223,7 @@ class IngestService
      /**
      * Update feed
      *
-     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @param Feed $feed
      * @return void
      */
     private function updateSTXFeed(Feed $feed)
@@ -282,9 +281,9 @@ class IngestService
     /**
      * Get previous version of entry
      *
-     * @param Newscoop\Ingest\Parser $parser
-     * @param Newscoop\Entity\Ingest\Feed $feed
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @param Parser $parser
+     * @param Feed $feed
+     * @return Entry
      */
     public function getPrevious(Parser $parser, Feed $feed)
     {
@@ -352,7 +351,7 @@ class IngestService
     /**
      * Publish entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Entry $entry
      * @param string $workflow
      * @return Article
      */
@@ -384,7 +383,7 @@ class IngestService
     /**
      * Updated published entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Entry $entry
      * @return void
      */
     private function updatePublished(Entry $entry)
@@ -397,7 +396,7 @@ class IngestService
     /**
      * Delete published entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Entry $entry
      * @return void
      */
     private function deletePublished(Entry $entry)

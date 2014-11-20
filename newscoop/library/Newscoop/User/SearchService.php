@@ -24,7 +24,7 @@ class SearchService implements ServiceInterface
     protected $imageService;
 
     /**
-     * @param Newscoop\Image\ImageService $imageService
+     * @param ImageService $imageService
      */
     public function __construct(ImageService $imageService)
     {
@@ -44,7 +44,7 @@ class SearchService implements ServiceInterface
     /**
      * Test if user is indexed
      *
-     * @param Newscoop\Entity\User $user
+     * @param DocumentInterface $user
      * @return bool
      */
     public function isIndexed(DocumentInterface $user)
@@ -55,7 +55,7 @@ class SearchService implements ServiceInterface
     /**
      * Test if user can be indexed
      *
-     * @param Newscoop\Entity\User $user
+     * @param DocumentInterface $user
      * @return bool
      */
     public function isIndexable(DocumentInterface $user)
@@ -66,7 +66,7 @@ class SearchService implements ServiceInterface
     /**
      * Get document representation for user
      *
-     * @param Newscoop\Entity\User $user
+     * @param DocumentInterface $user
      * @return array
      */
     public function getDocument(DocumentInterface $user)
@@ -85,7 +85,7 @@ class SearchService implements ServiceInterface
     /**
      * Get document id
      *
-     * @param Newscoop\Entity\User $user
+     * @param DocumentInterface $user
      * @return string
      */
     public function getDocumentId(DocumentInterface $user)

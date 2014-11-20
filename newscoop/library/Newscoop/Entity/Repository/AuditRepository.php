@@ -7,8 +7,8 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\AuditEvent;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\AuditEvent;
 
 /**
  * Audit repository.
@@ -65,7 +65,7 @@ class AuditRepository extends EntityRepository
     /**
      * Get events to archive
      *
-     * @param DateTime $date
+     * @param \DateTime $date
      * @return array
      */
     public function getFlushableEvents(\DateTime $date)

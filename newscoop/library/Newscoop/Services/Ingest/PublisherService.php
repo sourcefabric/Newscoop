@@ -32,9 +32,9 @@ class PublisherService
     /**
      * Publish entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Entry $entry
      * @param string $status
-     * @return Article
+     * @return \Article
      */
     public function publish(Entry $entry, $status = 'Y')
     {
@@ -55,8 +55,8 @@ class PublisherService
     /**
      * Update published entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @return Article
+     * @param Entry $entry
+     * @return null|\Article
      */
     public function update(Entry $entry)
     {
@@ -78,7 +78,7 @@ class PublisherService
     /**
      * Delete published entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Entry $entry
      * @return void
      */
     public function delete(Entry $entry)
@@ -137,7 +137,7 @@ class PublisherService
     /**
      * Get section
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Entry $entry
      * @return int
      */
     public function getSection(Entry $entry)
@@ -152,8 +152,8 @@ class PublisherService
     /**
      * Set article data
      *
-     * @param Article $article
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param \Article $article
+     * @param Entry $entry
      * @return void
      */
     private function setArticleData(\Article $article, Entry $entry)
@@ -171,8 +171,8 @@ class PublisherService
     /**
      * Set article dates
      *
-     * @param Article $article
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param \Article $article
+     * @param Entry $entry
      * @return void
      */
     private function setArticleDates(\Article $article, Entry $entry)
@@ -186,8 +186,8 @@ class PublisherService
     /**
      * Set article authors
      *
-     * @param Article $article
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param \Article $article
+     * @param Entry $entry
      * @return void
      */
     private function setArticleAuthors(\Article $article, Entry $entry)
@@ -204,7 +204,7 @@ class PublisherService
     /**
      * Set article images
      *
-     * @param Article $article
+     * @param \Article $article
      * @param array $images
      * @return void
      */
@@ -254,8 +254,8 @@ class PublisherService
     /**
      * Get article for entry
      *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @return Article
+     * @param Entry $entry
+     * @return \Article
      */
     private function getArticle(Entry $entry)
     {

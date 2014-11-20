@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity\Acl;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

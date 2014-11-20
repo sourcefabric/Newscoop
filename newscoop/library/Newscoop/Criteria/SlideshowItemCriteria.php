@@ -9,7 +9,6 @@
 namespace Newscoop\Criteria;
 
 use Newscoop\Criteria;
-use Newscoop\ListResult;
 
 /**
  * Available criteria for slideshows listing.

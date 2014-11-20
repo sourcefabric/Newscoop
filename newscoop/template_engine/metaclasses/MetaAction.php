@@ -50,7 +50,6 @@ class MetaAction
     /**
      * Base initializations
      *
-     * @param array $p_input
      */
     public function __construct($p_name = 'default')
     {
@@ -77,7 +76,7 @@ class MetaAction
      * Returns the error code of the action. Returns 0 on success,
      * PEAR_Error object on error.
      *
-     * @return mixed
+     * @return PEAR_Error
      */
     protected function getError()
     {

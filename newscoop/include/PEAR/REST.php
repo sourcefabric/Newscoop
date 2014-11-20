@@ -52,6 +52,7 @@ class PEAR_REST
      * @param array|false contents of the accept-encoding header
      * @param boolean     if true, xml will be returned as a string, otherwise, xml will be
      *                    parsed using PEAR_XMLParser
+     * @param string $url
      * @return string|array
      */
     function retrieveCacheFirst($url, $accept = false, $forcestring = false, $channel = false)
@@ -262,6 +263,10 @@ class PEAR_REST
         return true;
     }
 
+    /**
+     * @param string $file
+     * @param string $contents
+     */
     function saveCacheFile($file, $contents)
     {
         $len = strlen($contents);
@@ -309,10 +314,9 @@ class PEAR_REST
      * setting), the proxy will be used.
      *
      * @param string  $url       the URL to download
-     * @param string  $save_dir  directory to save file in
      * @param false|string|array $lastmodified header values to check against for caching
      *                           use false to return the header values from this download
-     * @param false|array $accept Accept headers to send
+     * @param boolean $accept Accept headers to send
      * @return string|array  Returns the contents of the downloaded file or a PEAR
      *                       error on failure.  If the error is caused by
      *                       socket-related errors, the error object will

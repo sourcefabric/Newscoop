@@ -32,7 +32,7 @@ class DbReplication {
 	 * @param string (optional)
      *      Host/Server alias [online | local]
      *
-	 * @return boolean|PEAR_Error
+	 * @return boolean
      *
 	 */
 	public function connect($host = null)

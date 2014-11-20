@@ -9,8 +9,7 @@
 
 namespace Newscoop\Form\Decorator;
 
-use Zend_From,
-    Zend_Form_Decorator_Form;
+use Zend_Form_Decorator_Form;
 
 class Form extends Zend_Form_Decorator_Form
 {

@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Notification entity
@@ -93,7 +93,7 @@ class Notification
      * Set the content of the notification
      *
      * @param string $p_content
-     * @return Newscoop\Entity\Notification
+     * @return Notification
      */
     public function setContent($p_content)
     {
@@ -116,7 +116,7 @@ class Notification
      * Set status
      *
      * @param int $p_status
-     * @return Newscoop\Entity\Notification
+     * @return Notification
      */
     public function setStatus($p_status)
     {
@@ -128,7 +128,7 @@ class Notification
     /**
      * Get status
      *
-     * @return int
+     * @return string
      */
     public function getStatus()
     {
@@ -140,7 +140,7 @@ class Notification
      * for now only comment type
      *
      * @param int $p_type
-     * @return Newscoop\Entity\Notification
+     * @return Notification
      */
     public function setType($p_type)
     {

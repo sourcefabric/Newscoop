@@ -8,7 +8,6 @@
 
 namespace Newscoop\GimmeBundle\Controller;
 
-use Newscoop\GimmeBundle\Util\ExceptionWrapper;
 use FOS\RestBundle\Controller\ExceptionController as FOSExceptionController;
 use FOS\RestBundle\View\ViewHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,7 @@ class ExceptionController extends FOSExceptionController
      * TODO: change exceptions handling in listener - this controller should deal only with REST API exceptions.
      *
      * @param Request              $request   Request
-     * @param Exception            $exception A Exception instance
+     * @param \Exception            $exception A Exception instance
      * @param DebugLoggerInterface $logger    A DebugLoggerInterface instance
      * @param string               $format    The format to use for rendering (html, xml, ...)
      *

@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity\Comment\Preference;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Language;
 
 /**
@@ -82,7 +82,7 @@ class Article
     /**
      * Get the flag if the comments are enabled or not
      *
-     * @return bool
+     * @return integer
      */
     public function getEnabled()
     {
@@ -92,7 +92,6 @@ class Article
     /**
      * Set the flag if the comments are enabled or not
      *
-     * @param bool $p_enabled
      * @return Article
      */
     public function setLocked($p_locked)
@@ -105,7 +104,7 @@ class Article
     /**
      * Get the flag if the comments are enabled or not
      *
-     * @return bool
+     * @return integer
      */
     public function getLocked()
     {
@@ -115,8 +114,8 @@ class Article
     /**
      * Set language
      *
-     * @param  Newscoop\Entity\Language $p_language
-     * @return Newscoop\Entity\Article
+     * @param  Language $p_language
+     * @return Article
      */
     public function setLanguage(Language $p_language)
     {

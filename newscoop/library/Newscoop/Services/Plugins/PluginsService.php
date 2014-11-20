@@ -70,6 +70,9 @@ class PluginsService
         return $availablePlugins->matching($criteria);
     }
 
+    /**
+     * @param string $criteria
+     */
     public function getPluginByCriteria($criteria, $needle)
     {
         $eb = new ExpressionBuilder();

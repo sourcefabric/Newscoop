@@ -7,7 +7,7 @@
 
 namespace Newscoop\CommunityTickerBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\User;
 
 /**
@@ -76,7 +76,7 @@ class CommunityTickerEvent
      *
      * @param string $event
      *
-     * @return Newscoop\CommunityTickerBundle\Entity\CommunityTickerEvent
+     * @return CommunityTickerEvent
      */
     public function setEvent($event)
     {
@@ -100,7 +100,7 @@ class CommunityTickerEvent
      *
      * @param array $params
      *
-     * @return Newscoop\CommunityTickerBundle\Entity\CommunityTickerEvent
+     * @return CommunityTickerEvent
      */
     public function setParams(array $params)
     {
@@ -134,7 +134,7 @@ class CommunityTickerEvent
      *
      * @param DateTime $created
      *
-     * @return DateTime
+     * @return CommunityTickerEvent
      */
     public function setCreated($created)
     {
@@ -158,7 +158,7 @@ class CommunityTickerEvent
      *
      * @param boolean $is_active
      *
-     * @return boolean
+     * @return CommunityTickerEvent
      */
     public function setIsActive($is_active)
     {
@@ -172,7 +172,7 @@ class CommunityTickerEvent
      *
      * @param Newscoop\Entity\User $user
      *
-     * @return Newscoop\CommunityTickerBundle\Entity\CommunityTickerEvent
+     * @return CommunityTickerEvent
      */
     public function setUser(User $user)
     {
@@ -184,7 +184,7 @@ class CommunityTickerEvent
     /**
      * Get user
      *
-     * @return Newscoop\Entity\User|null
+     * @return null|User
      */
     public function getUser()
     {

@@ -15,8 +15,7 @@ class Admin_View_Helper_LinkArticleObj extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
-     * @return void
+     * @return string
      */
     public function linkArticleObj($p_article)
     {

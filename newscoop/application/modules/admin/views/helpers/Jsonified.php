@@ -7,7 +7,7 @@ class Admin_View_Helper_Jsonified extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $p_inputs
+     * @param array $p_input
      * @param array $p_methods default empty array
      * @return string
      */

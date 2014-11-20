@@ -294,7 +294,6 @@ class Attachment extends DatabaseObject {
     /**
      * Get the full path to the storage location of the file on disk.
      *
-     * @param string $p_fileExtension
      * @return string
      */
     public function getStorageLocation()

@@ -7,8 +7,7 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\UserSubscription;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Stat service
@@ -112,6 +111,9 @@ class StatService
         return(\Section::GetTotalSections());
     }
 
+    /**
+     * @param boolean $published
+     */
     public function getArticles($published = null)
     {
         $articleRepository = $this->em->getRepository('Newscoop\Entity\Article');

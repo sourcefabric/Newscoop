@@ -35,7 +35,7 @@ class UserTopicRepository extends EntityRepository
      * Find results for user and topic
      *
      * @param  Newscoop\Entity\User $user
-     * @param  Newscoop\Entity\Topic $topic
+     * @param  Topic $topic
      *
      * @return Newscoop\Entity\UserTopic
      */

@@ -11,8 +11,8 @@
 
 namespace Nette\Reflection;
 
-use Nette,
-	Nette\ObjectMixin;
+use Nette;
+use Nette\ObjectMixin;
 
 
 
@@ -27,6 +27,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * @param  string|object
 	 * @param  string
+	 * @param string $class
 	 * @return Method
 	 */
 	public static function from($class, $method)
@@ -142,6 +143,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * Returns an annotation value.
 	 * @param  string
+	 * @param string $name
 	 * @return IAnnotation
 	 */
 	public function getAnnotation($name)
@@ -165,7 +167,7 @@ class Method extends \ReflectionMethod
 
 	/**
 	 * Returns value of annotation 'description'.
-	 * @return string
+	 * @return IAnnotation
 	 */
 	public function getDescription()
 	{

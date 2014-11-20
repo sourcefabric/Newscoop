@@ -56,7 +56,6 @@ class Extension_File
 
     /**
      * Get extensions provided by file
-     * @param string $interface
      * @return array of Extension_Extension
      */
     public function getExtensions()

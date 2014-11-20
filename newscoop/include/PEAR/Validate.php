@@ -106,7 +106,7 @@ class PEAR_Validate
 
     /**
      * Get a list of valid stability levels
-     * @return array
+     * @return string[]
      * @static
      * @final
      */
@@ -138,6 +138,8 @@ class PEAR_Validate
 
     /**
      * @access private
+     * @param string $field
+     * @param string $reason
      */
     function _addFailure($field, $reason)
     {
@@ -146,6 +148,7 @@ class PEAR_Validate
 
     /**
      * @access private
+     * @param string $field
      */
     function _addWarning($field, $reason)
     {

@@ -38,8 +38,6 @@ class ResourceId
 	 *
 	 * @param string $id
 	 *		The id of the theme, must not be null or empty.
-	 * @param string $type|ResourceId::TYPE_ROOT
-	 *		The type of the id.
 	 */
 	public function __construct($id, $type = ResourceId::TYPE_ROOT)
 	{

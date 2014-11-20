@@ -25,8 +25,8 @@ class Log extends DatabaseObject {
 	 * Write a message to the log table.
 	 *
 	 * @param string $p_text
-	 * @param string $p_userName
 	 * @param int $p_eventId
+	 * @param integer $p_userId
 	 *
 	 * @return void
 	 */

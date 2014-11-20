@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Webcode entity
@@ -57,7 +57,7 @@ class Webcode
     /**
      * Get webcode
      *
-     * @return string|null
+     * @return string
      */
     public function getWebcode()
     {

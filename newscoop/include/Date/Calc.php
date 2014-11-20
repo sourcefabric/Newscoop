@@ -245,7 +245,7 @@ class Date_Calc
      *                         abbreviated version.  E.g. use 2005, not 05.
      *                         Do not add leading 0's for years prior to 1000.
      *
-     * @return integer  the number of days since the Date_Calc epoch
+     * @return double  the number of days since the Date_Calc epoch
      *
      * @access public
      * @static
@@ -403,7 +403,7 @@ class Date_Calc
      * @param string $season  the season to get the date for: VERNALEQUINOX,
      *                         SUMMERSOLSTICE, AUTUMNALEQUINOX,
      *                         or WINTERSOLSTICE
-     * @param string $year    the year in four digit format.  Must be between
+     * @param integer $year    the year in four digit format.  Must be between
      *                         -1000BC and 3000AD.
      *
      * @return float  the julian date the season starts on
@@ -757,7 +757,7 @@ class Date_Calc
      * @param int    $month   the month, default is current local month
      * @param int    $year    the year in four digit format, default is current local year
      *
-     * @return int  the number of the day in the week
+     * @return double  the number of the day in the week
      *
      * @access public
      * @static
@@ -904,7 +904,7 @@ class Date_Calc
      * @param int    $month   the month, default is current local month
      * @param int    $year    the year in four digit format, default is current local year
      *
-     * @return int  the number of weeks the month has
+     * @return double  the number of weeks the month has
      *
      * @access public
      * @static
@@ -1217,6 +1217,7 @@ class Date_Calc
      * @param int    $year    the year in four digit format, default is current local year
      * @param bool   $onOrBefore  if true and days are same, returns current day
      * @param string $format  the string indicating how to format the output
+     * @param integer $dow
      *
      * @return string  the date in the desired format
      *
@@ -1712,8 +1713,8 @@ class Date_Calc
      *                         Positive numbers go into the future.
      *                         Negative numbers go into the past.
      *                         0 is the month presented in $month.
-     * @param string $month   the month, default is current local month
-     * @param string $year    the year in four digit format, default is the
+     * @param integer $month   the month, default is current local month
+     * @param integer $year    the year in four digit format, default is the
      *                         current local year
      * @param string $format  the string indicating how to format the output
      *
@@ -1772,8 +1773,8 @@ class Date_Calc
      *                         Positive numbers go into the future.
      *                         Negative numbers go into the past.
      *                         0 is the month presented in $month.
-     * @param string $month   the month, default is current local month
-     * @param string $year    the year in four digit format, default is the
+     * @param integer $month   the month, default is current local month
+     * @param integer $year    the year in four digit format, default is the
      *                         current local year
      * @param string $format  the string indicating how to format the output
      *
@@ -1831,7 +1832,7 @@ class Date_Calc
      * @param int    $month   the month, default is current local month
      * @param int    $year    the year in four digit format, default is current local year
      *
-     * @return int number of weekday for the first day, 0=Sunday
+     * @return double number of weekday for the first day, 0=Sunday
      *
      * @access public
      * @static

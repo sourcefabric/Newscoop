@@ -55,9 +55,9 @@ class SearchService implements ServiceInterface
     protected $em;
 
     /**
-     * @param Newscoop\Webcode\Mapper $webcoder
-     * @param Newscoop\Image\RenditionService $renditionService
-     * @param Newscoop\Article\LinkService $linkService
+     * @param WebcodeFacade $webcoder
+     * @param RenditionService $renditionService
+     * @param LinkService $linkService
      * @param array $config
      */
     public function __construct(
@@ -90,7 +90,7 @@ class SearchService implements ServiceInterface
     /**
      * Test if article is indexed
      *
-     * @param Newscoop\Entity\Article $article
+     * @param DocumentInterface $article
      * @return bool
      */
     public function isIndexed(DocumentInterface $article)
@@ -101,7 +101,7 @@ class SearchService implements ServiceInterface
     /**
      * Test if article can be indexed
      *
-     * @param Newscoop\Entity\Article $article
+     * @param DocumentInterface $article
      * @return bool
      */
     public function isIndexable(DocumentInterface $article)
@@ -115,7 +115,7 @@ class SearchService implements ServiceInterface
     /**
      * Get document representation for article
      *
-     * @param Newscoop\Entity\Article $article
+     * @param DocumentInterface $article
      * @return array
      */
     public function getDocument(DocumentInterface $article)
@@ -153,7 +153,7 @@ class SearchService implements ServiceInterface
     /**
      * Get document id
      *
-     * @param Newscoop\Entity\Article $article
+     * @param DocumentInterface $article
      * @return string
      */
     public function getDocumentId(DocumentInterface $article)
@@ -178,7 +178,7 @@ class SearchService implements ServiceInterface
     /**
      * Get article switches
      *
-     * @param Newscoop\Entity\Article $article
+     * @param DocumentInterface $article
      * @return array
      */
     public function getArticleSwitches($article)

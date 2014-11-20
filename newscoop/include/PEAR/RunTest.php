@@ -83,6 +83,7 @@ class PEAR_RunTest
     /**
      * An object that supports the PEAR_Common->log() signature, or null
      * @param PEAR_Common|null
+     * @param PEAR_Common $logger
      */
     function PEAR_RunTest($logger = null, $options = array())
     {
@@ -184,6 +185,7 @@ class PEAR_RunTest
      * Works both with quotes and without
      *
      * @param string an PHP INI string, -d "include_path=/foo/bar"
+     * @param string $ini_string
      * @return array
      */
     function iniString2array($ini_string)
@@ -228,6 +230,9 @@ class PEAR_RunTest
         return $settings;
     }
 
+    /**
+     * @param string $ini_settings
+     */
     function _preparePhpBin($php, $file, $ini_settings)
     {
         $file = escapeshellarg($file);
@@ -670,6 +675,10 @@ $return_value
         return $warn ? 'WARNED' : 'FAILED';
     }
 
+    /**
+     * @param string $wanted
+     * @param string|null $wanted_re
+     */
     function generate_diff($wanted, $output, $rvalue, $wanted_re)
     {
         $w  = explode("\n", $wanted);
@@ -711,6 +720,9 @@ $text
 ";
     }
 
+    /**
+     * @param string $file
+     */
     function _cleanupOldFiles($file)
     {
         $temp_dir = realpath(dirname($file));
@@ -737,6 +749,11 @@ $text
         @unlink($temp_clean);
     }
 
+    /**
+     * @param string $temp_skipif
+     * @param string $tested
+     * @param string $ini_settings
+     */
     function _runSkipIf($section_text, $temp_skipif, $tested, $ini_settings)
     {
         $info = '';
@@ -776,6 +793,9 @@ $text
         return array('warn' => $warn, 'info' => $info);
     }
 
+    /**
+     * @param string $output
+     */
     function _stripHeadersCGI($output)
     {
         $this->headers = array();
@@ -807,6 +827,9 @@ $text
         return $headers;
     }
 
+    /**
+     * @param string $file
+     */
     function _readFile($file)
     {
         // Load the sections of the test file.
@@ -847,6 +870,9 @@ $text
         return $section_text;
     }
 
+    /**
+     * @param string $logname
+     */
     function _writeLog($logname, $data)
     {
         if (!$log = fopen($logname, 'w')) {
@@ -856,6 +882,9 @@ $text
         fclose($log);
     }
 
+    /**
+     * @param string $temp_file
+     */
     function _resetEnv($section_text, $temp_file)
     {
         $env = $_ENV;
@@ -894,6 +923,9 @@ $text
         return $env;
     }
 
+    /**
+     * @param string $file
+     */
     function _processUpload($section_text, $file)
     {
         if (array_key_exists('UPLOAD', $section_text) && !empty($section_text['UPLOAD'])) {
@@ -945,6 +977,9 @@ $text
         return $section_text;
     }
 
+    /**
+     * @param string $temp_clean
+     */
     function _testCleanup($section_text, $temp_clean)
     {
         if ($section_text['CLEAN']) {

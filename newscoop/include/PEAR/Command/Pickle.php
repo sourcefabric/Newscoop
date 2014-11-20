@@ -101,7 +101,6 @@ generate both package.xml.
      *
      * @param PEAR_Config $config
      * @param bool $debug
-     * @param string|null $tmpdir
      * @return PEAR_PackageFile
      */
     function &getPackageFile($config, $debug = false)

@@ -16,7 +16,6 @@ class Admin_View_Helper_LinkEdit extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
      * @return void
      */
     public function linkEdit( $p_url, $p_params = null)

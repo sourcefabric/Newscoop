@@ -27,7 +27,7 @@ class ArticleRenditionCollection implements \ArrayAccess
     /**
      * @param int $articleNumber
      * @param array $articleRenditions
-     * @param Newscoop\Image\ImageInterface $defaultImage
+     * @param ImageInterface $defaultImage
      */
     public function __construct($articleNumber, array $articleRenditions = array(), ImageInterface $defaultImage = null)
     {

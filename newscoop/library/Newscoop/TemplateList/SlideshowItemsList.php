@@ -8,7 +8,6 @@
 
 namespace Newscoop\TemplateList;
 
-use Newscoop\ListResult;
 use Newscoop\TemplateList\PaginatedBaseList;
 
 /**

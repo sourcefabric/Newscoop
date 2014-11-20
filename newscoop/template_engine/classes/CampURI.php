@@ -278,7 +278,7 @@ abstract class CampURI
     /**
      * Builds a URI string from the given parts.
      *
-     * @param array $p_parts
+     * @param string[] $p_parts
      *                       The array of URI parts
      *
      * @return string $uriString
@@ -520,7 +520,7 @@ abstract class CampURI
     /**
      * Returns the user part from the current URI.
      *
-     * @return string
+     * @return MetaUser
      *                The username value
      */
     public function getUser()

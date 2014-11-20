@@ -15,7 +15,6 @@ if (!file_exists(__DIR__ . '/../vendor')) {
 require_once __DIR__ . '/../constants.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Debug\Debug;
 
 error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);

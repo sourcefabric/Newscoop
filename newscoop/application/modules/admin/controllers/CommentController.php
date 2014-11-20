@@ -8,7 +8,6 @@
 
 use Newscoop\Annotations\Acl;
 use Newscoop\Entity\Comment;
-use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * @Acl(resource="comment", action="enable")

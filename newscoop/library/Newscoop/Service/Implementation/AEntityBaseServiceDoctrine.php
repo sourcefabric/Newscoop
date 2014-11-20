@@ -8,15 +8,9 @@
 
 namespace Newscoop\Service\Implementation;
 
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManager;
-use Newscoop\Service\IEntityService;
-use Newscoop\Service\Model\Search\ColumnOrder;
-use Newscoop\Service\Model\Search\ColumnOrderLike;
 use Newscoop\Utils\Validation;
 use Newscoop\Service\Resource\ResourceId;
-use Newscoop\Service\Model\Search\Column;
-use Newscoop\Service\Model\Search\Search;
 
 /**
  * Provides the base services implementation for the themes.

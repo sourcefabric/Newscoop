@@ -3,10 +3,6 @@
 namespace Newscoop\NewscoopBundle\EventListener;
 
 use Newscoop\Entity\Publication;
-
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 // define('ACTION_SUBMIT_COMMENT_ERR_INTERNAL', 'action_comment_submit_err_internal');

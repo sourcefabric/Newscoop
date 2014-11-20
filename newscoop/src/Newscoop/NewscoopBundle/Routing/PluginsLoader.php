@@ -10,11 +10,8 @@ namespace Newscoop\NewscoopBundle\Routing;
  
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Newscoop\Services\Plugins\ManagerService;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
  
 class PluginsLoader implements LoaderInterface
 {

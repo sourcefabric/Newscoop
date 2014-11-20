@@ -349,6 +349,7 @@ class Article extends DatabaseObject
     /**
      * Create a unique identifier for an article.
      * @access private
+     * @return integer
      */
     public function __generateArticleNumber()
     {
@@ -1271,7 +1272,7 @@ class Article extends DatabaseObject
      *
      * @param string $p_title
      *
-     * @return void
+     * @return boolean
      */
     public function setTitle($p_title)
     {
@@ -1325,9 +1326,8 @@ class Article extends DatabaseObject
     /**
      * Set the ID of the author who wrote this article.
      *
-     * @param  int     $p_value
      * @param  int     $order
-     * @return boolean
+     * @return boolean|null
      */
     public function setAuthor(Author $p_author, $order = 0)
     {
@@ -1690,6 +1690,7 @@ class Article extends DatabaseObject
 
     /**
      * @param boolean value
+     * @param boolean $p_value
      */
     public function setIsIndexed($p_value)
     {
@@ -1845,7 +1846,7 @@ class Article extends DatabaseObject
 
 
     /**
-     * @return GeoMap
+     * @return Geo_Map
      */
     public function getMap()
     {
@@ -2180,6 +2181,7 @@ class Article extends DatabaseObject
      * @param array $p_sqlOptions
      *
      * @param boolean $p_countOnly
+     * @param string[] $p_whereOptions
      *
      * @return array
      *               Return an array of Article objects with indexes in sequential order
@@ -2391,6 +2393,7 @@ class Article extends DatabaseObject
      * Return an array of article objects of a certain type.
      *
      * @param string p_type
+     * @param string $p_type
      *
      * @return array
      */
@@ -2987,7 +2990,6 @@ class Article extends DatabaseObject
      * keywords. Returns the list of articles matching the given criteria.
      *
      * @param  string $p_searchPhrase
-     * @param  string $p_fieldName    - may be 'title' or 'author'
      * @param  bool   $p_matchAll     - true if all keyword have to match
      * @param  array  $p_constraints
      * @param  array  $p_order

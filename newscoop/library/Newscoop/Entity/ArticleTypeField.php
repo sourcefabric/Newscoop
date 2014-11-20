@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Issue entity
@@ -348,7 +348,7 @@ class ArticleTypeField
     /**
      * Sets the value of phrase.
      *
-     * @param Newscoop\Entity\Translation $phrase the phrase
+     * @param Translation $phrase the phrase
      *
      * @return self
      */

@@ -358,7 +358,7 @@ class XML_Util
      * </code>
      *
      * @param array      $attributes attribute array
-     * @param bool|array $sort       sort attribute list alphabetically, 
+     * @param boolean $sort       sort attribute list alphabetically, 
      *                               may also be an assoc array containing 
      *                               the keys 'sort', 'multiline', 'indent', 
      *                               'linebreak' and 'entities'

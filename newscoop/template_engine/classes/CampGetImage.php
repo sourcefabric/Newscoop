@@ -151,7 +151,6 @@ class CampGetImage
     /**
      * Sets path to the local image file.
      *
-     * @param string $p_path
      */
     public function setSourcePath()
     {
@@ -244,6 +243,7 @@ class CampGetImage
      * Creates image string
      *
      * @param string $p_ending
+     * @return resource
      */
     private function ReadImage($p_ending)
     {
@@ -331,6 +331,7 @@ class CampGetImage
      * crops image
      *
      *
+     * @return resource
      */
     private function CropImage()
     {
@@ -380,6 +381,7 @@ class CampGetImage
      * crops resized image to fit size
      *
      * @param resource $p_im
+     * @return resource
      */
     private function CropResizedImage($p_im)
     {
@@ -444,6 +446,7 @@ class CampGetImage
      * resizes image
      *
      * @param resource $p_im
+     * @return resource
      */
     private function ResizeImage($p_im)
     {
@@ -610,6 +613,9 @@ class CampGetImage
         }
     }
 
+    /**
+     * @param string $p_target
+     */
     private function createImage($p_target=null)
     {
         $func_ending = $this->GetEnding();

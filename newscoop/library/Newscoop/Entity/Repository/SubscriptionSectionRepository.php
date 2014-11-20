@@ -7,8 +7,8 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\SubscriptionSection;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\SubscriptionSection;
 
 /**
  * Publication repository

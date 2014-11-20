@@ -8,7 +8,7 @@
 namespace Newscoop\Image;
 
 use Nette\Image as NetteImage;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 require_once __DIR__ . '/../../Nette/exceptions.php';
 
@@ -101,7 +101,7 @@ class Rendition
     /**
      * Get width
      *
-     * @return void
+     * @return integer
      */
     public function getWidth()
     {
@@ -176,7 +176,7 @@ class Rendition
      *
      * @param int $width
      * @param int $height
-     * @return Newscoop\Image\Rendition
+     * @return Rendition
      */
     public function getPreview($width, $height)
     {
@@ -187,9 +187,9 @@ class Rendition
     /**
      * Get thumbnail
      *
-     * @param Newscoop\Image\ImageInterface $image
-     * @param Newscoop\Image\ImageService $imageService
-     * @return Newscoop\Image\Thumbnail
+     * @param ImageInterface $image
+     * @param ImageService $imageService
+     * @return Thumbnail
      */
     public function getThumbnail(ImageInterface $image, ImageService $imageService)
     {
@@ -210,7 +210,7 @@ class Rendition
      * Generate image
      *
      * @param string $imagePath
-     * @return Nette\Image
+     * @return NetteImage
      */
     public function generateImage($imagePath)
     {
@@ -239,8 +239,8 @@ class Rendition
     /**
      * Generate image
      *
-     * @param Newscoop\Image\ImageInterface $image
-     * @return Nette\Image
+     * @param ImageInterface $image
+     * @return NetteImage
      */
     public function generate(ImageInterface $image)
     {
@@ -260,7 +260,7 @@ class Rendition
     /**
      * Get select area
      *
-     * @param Newscoop\Image\ImageInterface $image
+     * @param ImageInterface $image
      * @return array
      */
     public function getSelectArea(ImageInterface $image)
@@ -284,8 +284,8 @@ class Rendition
     /**
      * Get min size
      *
-     * @param Newscoop\Image\ImageInterface $image
-     * @return array
+     * @param ImageInterface $image
+     * @return integer[]
      */
     public function getMinSize(ImageInterface $image)
     {

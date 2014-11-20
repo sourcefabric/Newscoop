@@ -486,6 +486,8 @@ class TemplateConverterIfBlock
 
     /**
      *
+     * @param string[] $p_optArray
+     * @return string
      */
     public function GetNewTagContent($p_optArray)
     {

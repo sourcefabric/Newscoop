@@ -9,7 +9,7 @@ namespace Newscoop\Entity\Comment;
 
 use DateTime;
 use Newscoop\Entity\User;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Commenter entity
@@ -89,7 +89,7 @@ class Commenter
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setId($id)
     {
@@ -101,7 +101,7 @@ class Commenter
     /**
      * Get user id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
@@ -113,7 +113,7 @@ class Commenter
      *
      * @param string $name
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setName($name)
     {
@@ -137,7 +137,7 @@ class Commenter
      *
      * @param string $email
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setEmail($email)
     {
@@ -161,7 +161,7 @@ class Commenter
      *
      * @param Newscoop\Entity\User $user
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setUser(User $user)
     {
@@ -184,7 +184,7 @@ class Commenter
      *
      * @param string $url
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setUrl($url)
     {
@@ -208,7 +208,7 @@ class Commenter
      *
      * @param string $ip
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setIp($ip)
     {
@@ -241,7 +241,7 @@ class Commenter
      *
      * @param DateTime $datetime
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setTimeCreated(DateTime $datetime)
     {
@@ -265,7 +265,7 @@ class Commenter
      *
      * @param DateTime $datetime
      *
-     * @return Newscoop\Entity\Comment\Commenter
+     * @return Commenter
      */
     public function setTimeUpdated(DateTime $datetime)
     {

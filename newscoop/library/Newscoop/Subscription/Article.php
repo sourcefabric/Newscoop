@@ -7,7 +7,7 @@
 
 namespace Newscoop\Subscription;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Article as ArticleEntity;
 
 /**
@@ -79,8 +79,8 @@ class Article
     protected $noticeSent;
 
     /**
-     * @param Newscoop\Subscription\Subscription $subscription
-     * @param int $article
+     * @param Subscription $subscription
+     * @param ArticleEntity $article
      */
     public function __construct(Subscription $subscription, ArticleEntity $article)
     {
@@ -106,7 +106,7 @@ class Article
     /**
      * Get article
      *
-     * @return string
+     * @return ArticleEntity
      */
     public function getArticle()
     {
@@ -126,7 +126,7 @@ class Article
     /**
      * Set language
      *
-     * @param Newscoop\Entity\Language $language
+     * @param \Newscoop\Entity\Language $language
      * @return void
      */
     public function setLanguage(\Newscoop\Entity\Language $language)
@@ -185,7 +185,7 @@ class Article
     /**
      * Set start date
      *
-     * @param DateTime $date
+     * @param \DateTime $date
      * @return Newscoop\Entity\SubscriptionSection
      */
     public function setStartDate(\DateTime $date)
@@ -207,7 +207,7 @@ class Article
      * Set days
      *
      * @param int $days
-     * @return Newscoop\Entity\SubscriptionSection
+     * @return Article
      */
     public function setDays($days)
     {

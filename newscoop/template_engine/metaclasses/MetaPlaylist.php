@@ -12,12 +12,6 @@ final class MetaPlaylist {
     /**
      * Constructor
      *
-     * @param string $p_number
-     * @param string $p_count
-     * @param string $p_name
-     * @param string $p_content
-     * @param string $p_formattingStart
-     * @param string $p_formattingEnd
      */
     public function __construct($p_playlistId = null)
     {

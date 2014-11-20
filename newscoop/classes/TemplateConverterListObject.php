@@ -174,6 +174,8 @@ class TemplateConverterListObject
 
     /**
      *
+     * @param string[] $p_optArray
+     * @return string
      */
     public static function GetNewTagContent($p_optArray)
     {

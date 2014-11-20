@@ -147,7 +147,7 @@ class Net_SMTP
      * @param string  $host       The server to connect to.
      * @param integer $port       The port to connect to.
      * @param string  $localhost  The value to give when sending EHLO or HELO.
-     * @param boolean $pipeling   Use SMTP command pipelining
+     * @param boolean $pipelining   Use SMTP command pipelining
      *
      * @access  public
      * @since   1.0
@@ -504,6 +504,8 @@ class Net_SMTP
      * @param string The requested authentication method.  If none is
      *               specified, the best supported method will be used.
      * @param bool   Flag indicating whether or not TLS should be attempted.
+     * @param string $uid
+     * @param string $pwd
      *
      * @return mixed Returns a PEAR_Error with an error message on any
      *               kind of failure, or true on success.

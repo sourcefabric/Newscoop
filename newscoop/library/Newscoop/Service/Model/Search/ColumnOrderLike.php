@@ -29,7 +29,7 @@ class ColumnOrderLike extends ColumnOrder
 	 *		The text to be used for the like comparison, if null or empty will
 	 *		reset the like search option.
 	 *
-	 * @return Newscoop\Service\Model\Search\ColumnOrderLike
+	 * @return ColumnOrderLike
 	 *		This instance, used for chaining purposes.
 	 */
 	public function setLike($like)

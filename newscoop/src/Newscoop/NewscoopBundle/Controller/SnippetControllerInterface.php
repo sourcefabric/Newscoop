@@ -11,7 +11,14 @@ use Newscoop\Entity\Snippet;
 
 interface SnippetControllerInterface
 {
+    /**
+     * @return void
+     */
     public function __construct(Snippet $snippet, $update = false);
+
+    /**
+     * @return Snippet
+     */
     public function getSnippet();
     public function update($parameters);
     public function preProcess($parameters);

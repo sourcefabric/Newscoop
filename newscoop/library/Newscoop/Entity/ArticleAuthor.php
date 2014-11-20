@@ -80,7 +80,7 @@ class ArticleAuthor
 
     /**
      * Get Article object
-     * @return Newscoop\Entity\Article
+     * @return Article
      */
     public function getArticle() {
         return $this->article;
@@ -143,7 +143,7 @@ class ArticleAuthor
     /**
      * Set author
      *
-     * @param Newscoop\Entity\Author $author
+     * @param Author $author
      */
     public function setAuthor(Author $author = null)
     {

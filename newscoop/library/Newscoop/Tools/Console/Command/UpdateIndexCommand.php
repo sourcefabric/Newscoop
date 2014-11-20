@@ -8,7 +8,6 @@
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 use Newscoop\Tools\Console\Command\AbstractIndexCommand;
 

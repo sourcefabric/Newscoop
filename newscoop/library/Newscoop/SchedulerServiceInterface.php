@@ -63,7 +63,7 @@ interface SchedulerServiceInterface
      * Get a next run date relative to the current date or a specific date
      *
      * @param string          $schedule         Cron job schedule expression
-     * @param string|DateTime $currentTime      (optional) Relative calculation date
+     * @param string $currentTime      (optional) Relative calculation date
      * @param int             $nth              (optional) Number of matches to skip before returning a
      *                                          matching next run date.  0, the default, will return the current
      *                                          date and time if the next run date falls on the current date and
@@ -82,7 +82,7 @@ interface SchedulerServiceInterface
      * Get a previous run date relative to the current date or a specific date
      *
      * @param string          $schedule         Cron job schedule expression
-     * @param string|DateTime $currentTime      (optional) Relative calculation date
+     * @param string $currentTime      (optional) Relative calculation date
      * @param int             $nth              (optional) Number of matches to skip before returning
      * @param bool            $allowCurrentDate (optional) Set to TRUE to return the
      *                                          current date if it matches the cron expression

@@ -231,7 +231,7 @@ class ArticleType {
 	/**
 	 * Returns the phrase id of the AT.
 	 *
-	 * @return -1 or integer
+	 * @return integer or integer
 	 */
 	public function getPhraseId()
 	{
@@ -559,7 +559,7 @@ class ArticleType {
      * Returns an ArticleData object of the first found article of this type.
      * If no article was found create an empty one.
      *
-     * @return object
+     * @return ArticleData
      */
     public function getPreviewArticleData()
     {
@@ -595,7 +595,7 @@ class ArticleType {
 	 * @param string p_dest
 	 * @param array p_rules
 	 *
-	 * @return boolean
+	 * @return integer
 	 **/
 	public function merge($p_src, $p_dest, $p_rules)
 	{

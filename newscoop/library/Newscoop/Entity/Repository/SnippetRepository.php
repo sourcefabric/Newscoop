@@ -72,7 +72,7 @@ class SnippetRepository extends EntityRepository
      * is disabled, the Snippets depending on it won't be returned.
      * By Default all Snippets that are Disabled themselves are not returned.
      *
-     * @param int    $article  Article number
+     * @param int    $articleNr  Article number
      * @param string $language Language code in format "en" for example.
      * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
      *
@@ -144,8 +144,8 @@ class SnippetRepository extends EntityRepository
      * is disabled, the Snippets depending on it won't be returned.
      * By Default all Snippets that are Disabled themselves are not returned.
      *
-     * @param int    $article  Article number
-     * @param string $language Language code in format "en" for example.
+     * @param int    $articleNr  Article number
+     * @param string $languageCode Language code in format "en" for example.
      * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
      *
      * @return Doctrine\ORM\Query Query
@@ -234,8 +234,8 @@ class SnippetRepository extends EntityRepository
     /**
      * Get Snippet by Name
      *
-     * @param int     $article  Article number
-     * @param string  $language Language code in format "en" for example.
+     * @param int     $articleNr  Article number
+     * @param string  $languageCode Language code in format "en" for example.
      * @param string  $name     Snippet Name
      * @param string  $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
      * @param boolean $fuzzy    Find fuzzy or not

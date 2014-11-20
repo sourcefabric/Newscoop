@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
@@ -46,7 +46,7 @@ class Event
     /**
      * Get name
      *
-     * @return string
+     * @return integer
      */
     public function getName()
     {

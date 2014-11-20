@@ -51,6 +51,9 @@ class DocBookParser extends XML_Parser_Simple {
 		return $this->m_author;
 	} // fn getAuthor
 	
+	/**
+	 * @return string
+	 */
 	function getTitle() {
 		return $this->m_title;
 	} // fn getTitle

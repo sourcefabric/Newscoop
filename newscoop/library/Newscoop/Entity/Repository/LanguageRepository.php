@@ -8,9 +8,8 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Entity\Language;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Language;
 
 /**
  * Language repository
@@ -20,7 +19,7 @@ class LanguageRepository extends EntityRepository
     /**
      * Save language
      *
-     * @param Newscoop\Entity\Language $language
+     * @param Language $language
      * @param array $values
      * @return void
      */
@@ -157,9 +156,6 @@ class LanguageRepository extends EntityRepository
      * RFC3066bis standard.
      *
      * @param  string $languageString Language string
-     * @param  string $languageHints  Array contianing hint to language objects
-     *                                if the language is not found on the
-     *                                specified locale string
      *
      * @return \Newscoop\Entity\Language|null Returns found entity or null
      */

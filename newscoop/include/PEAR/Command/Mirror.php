@@ -67,6 +67,7 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
 
     /**
      * For unit-testing
+     * @param string $a
      */
     function &factory($a)
     {
