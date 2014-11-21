@@ -58,7 +58,7 @@ Caption: Képaláírás
 'Image $1 updated.': 'A/z $1 kép frissítése már megtörtént.'
 'Image $1 added.': 'A/z $1 kép hozzáadása megtörtént.'
 'Edit article': 'Cikk szerkesztése'
-'You do not have the right to attach images to articles.': 'Nincs jogod képeket csatolni a cikkekhez.'
+'You do not have the right to attach images to articles.': 'Nincs jogod a képek cikkekhez való csatolásához.'
 'You do not have the right to add images.': 'Nincs jogod a képek hozzáadásához.'
 'Image information': Képinformációk
 'Attach New Image': 'Új kép csatolása'
@@ -68,5 +68,5 @@ Caption: Képaláírás
 Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Dátum<BR><SMALL>(éééé-hh-nn)</SMALL>
 'You must select an image file to upload.': 'Ki kell választanod egy feltöltendő képfájlt.'
 'Change image information': 'Képinformációk módosítása'
-'You do not have the right to add images': 'Nincs jogod képeket hozzáadni'
+'You do not have the right to add images': 'Nincs jogod a képek hozzáadásához'
 'Filter by uploader...': 'Szűrés feltöltő szerint...'

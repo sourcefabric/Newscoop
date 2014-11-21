@@ -7,7 +7,7 @@
 'Enable spam blocking?': 'A szemét letiltásának engedélyezése?'
 'The subscription settings for $1 could not be added.': 'Nem lehet hozzáadni az előfizetési beállításokat a/z $1 számára.'
 'The publication name you specified conflicts with publication $1.': 'Az általad megadott kiadványnév ütközik a/z $1 kiadvánnyal.'
-'The publication alias you specified conflicts with publication $1.': 'A kiadvány Ön által megadott aliasa ütközik a/z $1 kiadvánnyal.'
+'The publication alias you specified conflicts with publication $1.': 'A kiadvány általad megadott aliasa ütközik a/z $1 kiadvánnyal.'
 'Subscription defaults': 'Előfizetés alapértelmezései'
 'Subscription Settings by Country': 'Előfizetés ország szerinti beállításai'
 'Set subscription settings for a country': 'Egy ország előfizetési beállításainak megadása'

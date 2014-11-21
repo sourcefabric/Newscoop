@@ -166,7 +166,7 @@ Comments: Hozzászólások
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Létre kell hozni egy rovatot a választott nyelvhez. Add meg a rovat nevét és URL-nevét.'
 'Article Type': Cikktípus
 'Show article on front page': 'A cikk megjelenítése a címlapon'
-'Show article on section page': 'A cikk megjelenítése a rovat oldalán'
+'Show article on section page': 'A cikk megjelenítése a rovatlapon'
 'Translate article': 'Cikk fordítása'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek a cikknek a módosításához. Csak a saját cikkeidet szerkesztheted, beküldés után csak a jogosult felhasználók módosíthatják.'
 'Duplicate article': 'Cikk megkettőzése'
@@ -197,8 +197,8 @@ articles:
                 status_unapproved: 'Nem jóváhagyott'
                 status: Állapot
                 description: Leírás
-                photographer: Fényképész
-                photographer_url: 'Fényképész URL-címe'
+                photographer: Fotós
+                photographer_url: 'Fotós URL-címe'
                 place: Hely
                 date: Dátum
                 article_specific: Cikkspecifikus
