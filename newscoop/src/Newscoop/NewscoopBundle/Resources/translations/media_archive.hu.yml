@@ -40,9 +40,9 @@ Charset: Karakterkészlet
 'Attachment updated.': 'A csatolmány frissítése megtörtént.'
 'Are you sure you want to delete selected items?': 'Biztosan törölni akarod a kijelölt elemeket?'
 'Add new file': 'Új fájl hozzáadása'
-'You do not have the right to add images.': 'Nincs jogod képeket hozzáadni.'
+'You do not have the right to add images.': 'Nincs jogod a képek hozzáadásához.'
 'Use for all': null
-'Specify image url if you want to load it.': 'Adja meg a kép URL-címét, ha be szeretné tölteni.'
+'Specify image url if you want to load it.': 'Add meg a kép URL-címét, ha be szeretnéd tölteni.'
 Size: Méret
 'No images for multi editing.': null
 'Images updated.': 'A képek frissítése megtörtént'

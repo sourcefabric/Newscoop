@@ -40,7 +40,7 @@ Unapproved: 'Nem jóváhagyott'
 On: null
 Off: null
 'You do not have the right to moderate comments.': 'Nincs jogod a hozzászólások moderálásához.'
-'You can not schedule opposing events at the same time': 'Nem ütemezhetsz be egy időben ütköző eseményeket'
+'You can not schedule opposing events at the same time': 'Nem ütemezhetsz be egyidejűleg ütköző eseményeket'
 'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
 Title: Cím
 'There already is an article with the same name. Please change the name and try again.': 'Már van ugyanilyen nevű cikk. Változtasd meg a nevét, és próbálkozz újra.'
@@ -50,7 +50,7 @@ Newscoop: Newscoop
 'Overwrite articles with matching names': 'Az egyező nevű cikkek felülírása'
 'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Már létezik <i>$1</i> nevű cikk, és nem került felülírásra.<br />'
 Files: Fájlok
-'Select section:': 'Válassz számot:'
+'Select section:': 'Válassz rovatot:'
 'Add another author': null
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
@@ -75,7 +75,7 @@ Created: Létrehozva
 'Are you sure you want to remove the map from the article?': 'Biztosan el akarod távolítani a térképet a cikkből?'
 'Scheduled action added': 'A beütemezett művelet hozzáadása megtörtént'
 'Content edited': 'A tartalom szerkesztése megtörtént'
-'You must select an article language.': 'Ki kell választanod a cikk -nyelvét.'
+'You must select an article language.': 'Ki kell választanod a cikk nyelvét.'
 'You must select a publication.': 'Ki kell választanod egy kiadványt.'
 'You must select a file to upload.': 'Ki kell választanod egy feltöltendő fájlt.'
 'You must select a XML input file.': 'Ki kell választanod egy bemeneti XML-fájlt.'
@@ -152,7 +152,7 @@ Comments: Hozzászólások
 'New issue name': 'Új szám neve'
 'New issue URL name': 'Az új szám URL-neve'
 'New article name': 'Új cikk neve'
-'Issue URL Name': 'Szám URL neve'
+'Issue URL Name': 'Szám URL-neve'
 'Issue Name': 'Szám neve'
 'Duplicate?': 'Megkettőzés?'
 'Duplicate articles': 'Cikkek duplikálása'

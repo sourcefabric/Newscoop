@@ -6,7 +6,7 @@
 'Renditions reloaded': 'A megjelenítések újratöltése megtörtént'
 'Reload renditions': 'Megjelenítések újratöltése'
 'Edit images': 'Képek szerkesztése'
-'Specify image url if you want to load it.': 'Adja meg a kép URL-címét, ha be szeretné tölteni.'
+'Specify image url if you want to load it.': 'Add meg a kép URL-címét, ha be szeretnéd tölteni.'
 'Items: ': 'Elemek:'
 'Attach slideshows': 'Diavetítések csatolása'
 'original size:': 'eredeti méret:'
@@ -59,7 +59,7 @@ Caption: Képaláírás
 'Image $1 added.': 'A/z $1 kép hozzáadása megtörtént.'
 'Edit article': 'Cikk szerkesztése'
 'You do not have the right to attach images to articles.': 'Nincs jogod képeket csatolni a cikkekhez.'
-'You do not have the right to add images.': 'Nincs jogod képeket hozzáadni.'
+'You do not have the right to add images.': 'Nincs jogod a képek hozzáadásához.'
 'Image information': Képinformációk
 'Attach New Image': 'Új kép csatolása'
 'Attach Image To Article': 'Kép csatolása a cikkhez'
