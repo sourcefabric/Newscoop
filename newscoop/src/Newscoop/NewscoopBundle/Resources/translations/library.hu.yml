@@ -30,7 +30,7 @@ Title: Cím
 'Status: Set New': 'Állapot: Új beállítása'
 'Status: Publish': 'Állapot: Közzététel'
 Size: Méret
-'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ - _END_. bejegyzés / _TOTAL_ megjelenítése'
 'Show / hide columns': 'Oszlopok megjelenítése/elrejtése'
 'Select some article first.': 'Előbb válassz ki néhány cikket.'
 'Select action': 'Művelet kiválasztása'

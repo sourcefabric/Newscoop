@@ -13,7 +13,7 @@ Playlist: 'Lejátszási lista'
 'List ID': Listaazonosító
 'Item already exists in the list': 'Az elem már szerepel a listán'
 'Featured Articles': 'Kiemelt cikkek'
-'Featured Article Lists': 'Kiemelt cikkek listái'
+'Featured Article Lists': 'Kiemelt cikklisták'
 'Featured Article List': 'Kiemelt cikkek listája'
 'Duplicate list': 'Lista megkettőzése'
 'Duplicate article entry found': 'Ismétlődő cikkbejegyzésl található'
@@ -164,7 +164,7 @@ Comments: Hozzászólások
 'Are you sure you want to delete this article?': 'Biztosan törölni akarod ezt a cikket?'
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Létre kell hozni egy számot a választott nyelvhez. Add meg a szám nevét és URL-nevét.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Létre kell hozni egy rovatot a választott nyelvhez. Add meg a rovat nevét és URL-nevét.'
-'Article Type': 'Cikk típusa'
+'Article Type': Cikktípus
 'Show article on front page': 'A cikk megjelenítése a címlapon'
 'Show article on section page': 'A cikk megjelenítése a rovat oldalán'
 'Translate article': 'Cikk fordítása'

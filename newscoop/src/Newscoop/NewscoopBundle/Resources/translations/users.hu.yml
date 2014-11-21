@@ -15,14 +15,14 @@ Facebook: Facebook
 'Allow sending emails': 'E-mailek küldésének engedélyezése'
 'About me': Rólam
 'User with email %s is registered already.': 'A/z %s e-mail címmel rendelkező felhasználó regisztrált már.'
-'Username is used. Please use another one.': 'A felhasználónév használatban van. Válasszon másikat.'
+'Username is used. Please use another one.': 'A felhasználónév használatban van. Válassz másikat.'
 Continue: Folytatás
 'Accepting terms of use': 'A használati feltételek elfogadása'
 'send confirmation email': 'megerősítő e-mail küldése'
 'edit user': 'felhasználó szerkesztése'
 'delete user': 'felhasználó törlése'
 'Verified profile': 'Ellenőrzött profil'
-'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ - _END_. bejegyzés / _TOTAL_ megjelenítése'
 'Send email to user:': 'E-mail küldése a felhasználónak:'
 'No users found.': 'Nem találhatók felhasználók.'
 'No records found.': 'Nem találhatók rekordok.'
@@ -47,7 +47,7 @@ Picture: Kép
 None: null
 'New confirmation email was sent to user.': 'Az új megerősítő e-mail elküldésre került a felhasználónak.'
 'Email is used already': 'Az e-mail cím már használatban van'
-'Edit your password': 'Jelszavad szerkesztése'
+'Edit your password': 'Jelszavad módosítáa'
 'Edit user $1': 'A/z $1 nevű felhasználó szerkesztése'
 'Edit subscriptions': 'Előfizetések szerkesztése'
 'Edit profile': 'Profil szerkesztése'

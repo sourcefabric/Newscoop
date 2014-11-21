@@ -1,7 +1,7 @@
 'Rename user': 'Felhasználó átnevezése'
 Campsite: Campsite
 'Image Rendering': 'Kép megjelenítése'
-'Featured Article Lists': 'Kiemelt cikkek listái'
+'Featured Article Lists': 'Kiemelt cikklisták'
 'You have tried to upload an invalid backup file.': 'Érvénytelen biztonságimásolat-fájlt próbáltál feltölteni.'
 'You do not have the right to manage backups.': 'Nincs jogod a biztonsági másolatok kezeléséhez.'
 'Make a new backup': 'Új biztonsági másolat készítése'
@@ -19,8 +19,8 @@ Support: Támogatás
 'Manage User Points System': 'Felhasználói pontrendszer kezelése'
 Last: Utolsó
 First: Első
-Feedback: Visszajelzés
-'Edit your password': 'Jelszavad szerkesztése'
+Feedback: Visszajelzések
+'Edit your password': 'Jelszavad módosítáa'
 'Edit user': 'Felhasználó szerkesztése'
 'Edit permissions': 'Engedélyek szerkesztése'
 Detail: Adat

@@ -211,8 +211,8 @@ Add: Hozzáadás
 'Select None': 'Kijelölés megszüntetése'
 'Add Event': 'Esemény hozzáadása'
 N/A: N.a.
-'On Front Page': 'A címlapon'
-'On Section Page': 'A rovatlapon'
+'On Front Page': Címlapon
+'On Section Page': Rovatlapon
 'Created by': Létrehozta
 'Creation date': 'Létrehozás dátuma'
 'Publication List': Kiadványlista
@@ -253,7 +253,7 @@ Send: Küldés
 'Please take a minute to send us an email.': 'Kérjük, szánj egy percet arra, hogy e-mailt küldesz nekünk.'
 (optional): (elhagyható)
 'The URL you entered is invalid: $1': 'Az Ön által megadott URL-cím érvénytelen: $1'
-Reads: Elolvasások
+Reads: Olvasások
 'Publish with issue': 'Közzététel folyóiratszámmal'
 'Universal List': 'Univerzális lista'
 'Invalid security token!': 'Érvénytelen biztonsági jogkivonat!'

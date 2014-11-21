@@ -22,10 +22,10 @@ newscoop.plugins_manager.form.submit: Feltöltés
 newscoop:
     datatable:
         table:
-            info: '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
+            info: '_START_ - _END_. bejegyzés / _TOTAL_ megjelenítése'
             noentries: 'Nincs megjelenítendő bejegyzés'
             filtering: '- szűrés a _MAX_ rekordokból'
-            menu: 'A _MENU_ rekord megjelenítése'
+            menu: '_MENU_ rekord megjelenítése'
         label:
             search: Keresés
             filter: Szűrő

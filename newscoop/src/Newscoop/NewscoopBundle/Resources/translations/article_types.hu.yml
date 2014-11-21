@@ -22,7 +22,7 @@ filter: szűrő
 NOTHING: SEMMI
 'Merge failed.': 'Az egyesítés nem sikerült.'
 'Merge configuration for merging $1 into $2.': 'Konfigurációegyesítés a/z $1 egyesítéséhez a következővel: $2.'
-'Merge Article Types: Step $1 of $2': 'Cikktípusok egyesítése: $1. / $2 lépés'
+'Merge Article Types: Step $1 of $2': 'Cikktípusok egyesítése: $1. lépés / $2'
 'Merge $1 into $2': 'A/z $1 egyesítése a következővel: $2'
 'Destination Article Type': 'Cél cikktípus'
 'Delete the source article type ($1) when finished.': 'A forrás cikktípus ($1) törlése befejezéskor.'
