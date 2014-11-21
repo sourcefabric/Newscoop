@@ -10,7 +10,7 @@ newscoop:
             noaccess: 'Nincs jogod a rendszerbeállítások módosításához.'
             latitude: 'A földrajzi szélesség mező értéke nem érvényes.'
             longitude: 'A földrajzi hosszúság mező értéke nem érvényes.'
-            cacheNotCleared: 'Hiba volt a gyorsítótár kitisztításával'
+            cacheNotCleared: 'Hiba volt a gyorsítótár törlésével'
             joberror: 'Nem lehet módosítani a kijelölt feladat állapotát.'
             jobnotifyerror: 'Nem lehet engedélyezni/letiltani az értesítéseket.'
         success:

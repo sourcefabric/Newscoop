@@ -45,8 +45,8 @@ default: alapértelmezett
 'Select destination section:': 'Célrovat kiválasztása:'
 OR: VAGY
 'URL Name': URL-név
-'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'A megadott rovatszám már létezik, adj meg másik értéket vagy keress egy meglévő rovatot a legördülőben.'
-Warning: Figyelmeztetás
+'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'A megadott rovatszám már létezik, adj meg másik értéket, vagy keress egy meglévő rovatot a legördülőben.'
+Warning: Figyelmeztetés
 'You must select a section.': 'Ki kell választanod egy rovatot.'
 'You must specify a name for the section.': 'Meg kell adnod a rovat nevét.'
 'The section could not be added.': 'Nem lehet hozzáadni a rovatot.'

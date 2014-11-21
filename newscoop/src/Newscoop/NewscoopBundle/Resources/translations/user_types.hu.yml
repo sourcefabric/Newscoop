@@ -47,7 +47,7 @@ attach: csatol
 'any resource': 'bármely erőforrás'
 admin: adminisztrátor
 add: hozzáad
-'You cant deny yourself to manage $1': 'Nem tagadhatod meg magadnak a/z $1 kezelését'
+'You cant deny yourself to manage $1': 'Nem tagadhatod meg magadtól a/z $1 kezelését'
 'You are not allowed to $1 $2.': 'A/z $1 $2 nem engedélyezett a számodra.'
 'User type saved.': 'A felhasználótípus mentése megtörtént.'
 'User type deleted.': 'A felhasználótípus törlése megtörtént.'
@@ -57,7 +57,7 @@ Themes: Témák
 'That type name already exists, please choose a different name.': 'Ez a típusnév már létezik, válassz másik nevet.'
 System: Rendszer
 Structure: Szerkezet
-'Search Indexer': 'Keresési indexelés'
+'Search Indexer': 'Keresési indexelő szolgáltatás'
 'Rich-Text Editor Preferences': 'Rich Text szerkesztő beállításai'
 ReCaptcha: reCAPTCHA
 Polls: Szavazások
