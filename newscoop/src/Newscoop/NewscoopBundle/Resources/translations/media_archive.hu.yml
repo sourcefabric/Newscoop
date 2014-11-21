@@ -16,7 +16,7 @@ Feedback: Visszajelzések
 'Should this file only be available for this translation of the article, or for all translations?': 'Ez a fájl a cikk csak ezen fordításához vagy az összes fordításhoz legyen elérhető?'
 'Please enter a description for the file: $1.': 'Add meg a/z $1 fájl leírását.'
 'Only this translation': 'Csak ez a fordítás'
-'No files for multi editing.': null
+'No files for multi editing.': 'Nincsenek fájlok a többszörös szerkesztésre.'
 'Edit files': 'Fájlok szerkesztése'
 'Change file information': 'Fájlinformáció módosítása'
 'All translations': 'Minden fordítás'
@@ -44,7 +44,7 @@ Charset: Karakterkészlet
 'Use for all': null
 'Specify image url if you want to load it.': 'Add meg a kép URL-címét, ha be szeretnéd tölteni.'
 Size: Méret
-'No images for multi editing.': null
+'No images for multi editing.': 'Nincsenek képek a többszörös szerkesztéshez.'
 'Images updated.': 'A képek frissítése megtörtént'
 'Edit images': 'Képek szerkesztése'
 '$1 files uploaded.': 'A/z $1 fájl feltöltése megtörtént.'

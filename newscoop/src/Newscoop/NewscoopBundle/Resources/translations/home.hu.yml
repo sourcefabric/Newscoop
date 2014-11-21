@@ -20,7 +20,7 @@ Support: Támogatás
 Last: Utolsó
 First: Első
 Feedback: Visszajelzések
-'Edit your password': 'Jelszavad módosítáa'
+'Edit your password': 'Jelszavad módosítása'
 'Edit user': 'Felhasználó szerkesztése'
 'Edit permissions': 'Engedélyek szerkesztése'
 Detail: Adat
@@ -46,7 +46,7 @@ Themes: Témák
 Settings: Beállítások
 'Select files': 'Fájlok kiválasztása'
 Reply: Válasz
-'New comment added': 'Az új hozzászólás hozzáadása megtörtnt'
+'New comment added': 'Az új hozzászólás hozzáadása megtörtént'
 'Manage Authors': 'Szerzők kezelése'
 Loading..: Betöltés...
 Filename: Fájlnév
@@ -90,7 +90,7 @@ Widgets: Widgetek
 'Add more widgets': 'További widgetek hozzáadása'
 login: bejelentkezés
 'This link is not valid.': 'Ez a hivatkozás érvénytelen.'
-'Recover password': 'Jelszó helyreállítáaa'
+'Recover password': 'Jelszó helyreállítása'
 'Please enter your email.': 'Kérjük, add meg az e-mail címedet.'
 'Password recovery is disabled.': 'A jelszó-helyreállítás letiltott.'
 'Password recovery': Jelszó-helyreállítás
@@ -132,7 +132,7 @@ Download: Letöltés
 'The system was unable to read the file $1.': 'A rendszer nem tudta olvasni a/z $1 fájlt.'
 'The system was unable to delete the directory $1.': 'A rendszer nem tudta törölni a/z $1 könyvtárt.'
 'Please check if the user $1 has permission to read this file.': 'Ellenőrizd, hogy a/z $1 nevű felhasználó számára engedélyezett-e ennek a fájlnak az olvasása.'
-'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy üres-e a könyvtár, és a/z $1 nevű felhasználónak van--e írási engedélye a/z $2 könyvtárrhoz'
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy üres-e a könyvtár, és a/z $1 nevű felhasználónak van--e írási engedélye a/z $2 könyvtárhoz'
 'The system was unable to write to the file $1.': 'A rendszer nem tudott írni a/z $1 fájlba.'
 'The system was unable to delete the file $1.': 'A rendszer nem tudta törölni a/z $1 fájlt.'
 'The system was unable to create the file $1.': 'A rendszer nem tudta létrehozni a/z $1 fájlt.'
