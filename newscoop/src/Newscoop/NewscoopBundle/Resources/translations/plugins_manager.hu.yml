@@ -8,8 +8,8 @@ newscoop.plugins_manager.installed_table.description: Leírás
 newscoop.plugins_manager.installed_table.enabled: Engedélyezve
 newscoop.plugins_manager.installed_table.version: Verzió
 newscoop.plugins_manager.installed_table.license: Licenc
-newscoop.plugins_manager.installed_table.installed_at: 'Telepítés időpontja'
-newscoop.plugins_manager.installed_table.updated_at: 'Frissítés időpontja:'
+newscoop.plugins_manager.installed_table.installed_at: Telepítve
+newscoop.plugins_manager.installed_table.updated_at: Frissítve
 newscoop.plugins_manager.installed_table.actions: Műveletek
 newscoop.plugins_manager.installed_table.update_plugin: Frissítés
 newscoop.plugins_manager.installed_table.remove_plugin: Eltávolítás

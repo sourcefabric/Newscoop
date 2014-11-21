@@ -197,7 +197,7 @@ Unlink: 'Hivatkozás megszüntetése'
 'Are you sure you want to delete the image $1?': 'Biztosan törölni akarod a/z $1 képet?'
 'No such issue.': 'Nincs ilyen szám.'
 'Are you sure you want to delete the subscription to the publication $1?': 'Biztosan törölni akarod az előfizetést a/z $1 kiadványra?'
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nem lehet menteni a/z $1 szám változtatásait. Győződj meg róla, hogy a szám $2 URL-nevét nem használták-e korábban a/z $3 kiadványban.'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nem lehet menteni a/z $1 szám módosításait. Győződj meg róla, hogy a szám $2 URL-nevét nem használták-e korábban a/z $3 kiadványban.'
 GB: GB
 MB: MB
 KB: KB
@@ -252,7 +252,7 @@ Send: Küldés
 'Thank you.': Köszönjük.
 'Please take a minute to send us an email.': 'Kérjük, szánj egy percet arra, hogy e-mailt küldesz nekünk.'
 (optional): (elhagyható)
-'The URL you entered is invalid: $1': 'Az Ön által megadott URL-cím érvénytelen: $1'
+'The URL you entered is invalid: $1': 'Az általad megadott URL-cím érvénytelen: $1'
 Reads: Olvasások
 'Publish with issue': 'Közzététel folyóiratszámmal'
 'Universal List': 'Univerzális lista'
@@ -282,4 +282,4 @@ Confirm: Megerősítés
 at: null
 published: közzétéve
 unpublished: visszavonva
-nopermissions: 'A hozzáférés ehhez az erőforrásoz az Ön számára nem engedélyezett.'
+nopermissions: 'A hozzáférés ehhez az erőforrásoz a számodra nem engedélyezett.'

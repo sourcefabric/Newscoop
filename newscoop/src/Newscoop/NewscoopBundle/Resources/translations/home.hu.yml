@@ -95,7 +95,7 @@ login: bejelentkezés
 'Password recovery is disabled.': 'A jelszó-helyreállítás letiltott.'
 'Password recovery': Jelszó-helyreállítás
 'Password Recovery': Jelszó-helyreállítás
-'No user is registered with this email.': 'Nem regisztrált felhasználó ezzel az e-mail címmel.'
+'No user is registered with this email.': 'Nincs ezzel az e-mail címmel regisztrált felhasználó.'
 'Forgot your password?': 'Elfelejtetted a jelszavadat?'
 'Email: incorrect format.': 'E-mail: helytelen formátum.'
 Email: E-mail
@@ -147,7 +147,7 @@ Download: Letöltés
 'Signed in: $1': 'Bejelentkezve: $1'
 Help: Súgó
 'Please enter your user name and password': 'Add meg a felhasználónevedet és a jelszavadat'
-'You do not have the right to access this page.': 'Nincs jogod az oldal eléréséhez.'
+'You do not have the right to access this page.': 'Nincs jogod ennek az oldalnak az eléréséhez.'
 'Login failed': 'A bejelentkezés sikertelen'
 'Please make sure that you typed the correct user name and password.': 'Ellenőrizd, hogy helyesen adtad-e meg a felhasználónevedet és a jelszavadat.'
 'If your problem persists please contact the site administrator $1': 'Ha a probléma továbbra is fennáll, kérjük, fordulj a webhely $1 rendszergazdájához'
