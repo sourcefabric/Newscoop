@@ -50,4 +50,15 @@ class IssueRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getIssuesCountForPublication($publicationId)
+    {
+        $issuesCount = $this->createQueryBuilder('i')
+            ->select('COUNT(i.id)')
+            ->andWhere('i.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery();
+
+        return $issuesCount;
+    }
 }

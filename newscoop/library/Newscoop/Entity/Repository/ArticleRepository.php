@@ -278,6 +278,17 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    public function getArticlesCountForPublication($publicationId)
+    {
+        $articlesCount = $this->createQueryBuilder('a')
+            ->select('COUNT(a.number)')
+            ->andWhere('a.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery();
+
+        return $articlesCount;
+    }
+
     /**
      * Get Articles for Playlist
      *

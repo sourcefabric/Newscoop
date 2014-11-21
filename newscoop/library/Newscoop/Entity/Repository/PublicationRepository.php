@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class PublicationRepository extends EntityRepository
 {
-    public function getPubications()
+    public function getPublications()
     {
         $em = $this->getEntityManager();
         $qb = $em->getRepository('Newscoop\Entity\Publication')

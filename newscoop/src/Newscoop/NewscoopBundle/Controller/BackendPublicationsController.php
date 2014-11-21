@@ -37,7 +37,7 @@ class BackendPublicationsController extends Controller
         }
 
         $publications = $em->getRepository('Newscoop\Entity\Publication')
-            ->getPubications()
+            ->getPublications()
             ->getArrayResult();
 
         return $this->render(
@@ -105,23 +105,22 @@ class BackendPublicationsController extends Controller
      */
     public function removeAction(Request $request, Publication $publication)
     {
+        $em = $this->container->get('em');
         $user = $this->container->get('user')->getCurrentUser();
         $translator = $this->container->get('translator');
         if (!$user->hasPermission('ManagePub')) {
             throw new AccessDeniedException($translator->trans("You do not have the right to delete publications.", array(), 'pub'));
         }
 
-        $issuesRemaining = \Issue::GetNumIssues($publication->getId());
-        $sectionsRemaining = \Section::GetTotalSections($publication->getId());
-        $articlesRemaining = \Article::GetNumUniqueArticles($publication->getId());
+        $issuesRemaining = $em->getRepository('Newscoop\Entity\Issue')->getIssuesCountForPublication($publication->getId())->getSingleScalarResult();
+        $sectionsRemaining = $em->getRepository('Newscoop\Entity\Section')->getSectionsCountForPublication($publication->getId())->getSingleScalarResult();
+        $articlesRemaining = $em->getRepository('Newscoop\Entity\Article')->getArticlesCountForPublication($publication->getId())->getSingleScalarResult();
 
         $form = $this->createForm(new RemovePublicationType(), $publication);
 
         if ($request->getMethod() === 'POST' && $issuesRemaining == 0 && $sectionsRemaining == 0 && $articlesRemaining == 0) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em = $this->container->get('em');
-
                 $em->remove($publication);
                 $em->flush();
 
