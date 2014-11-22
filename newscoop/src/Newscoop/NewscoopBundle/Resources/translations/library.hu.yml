@@ -10,9 +10,9 @@ Title: Cím
 'No video playback capabilities, please download the video below': 'Nincsenek videolejátszási képességek, töltsd le az alábbi videót'
 'Article status set to $1 for $2 articles': 'A cikk állapotának beállítása $1 állapotra megtörtént a/z $2 cikkhez'
 'Article status not set to $1 for $2 articles': 'Nem történt meg a cikk állapotának beállítása $1 állapotra a/z $2 cikkhez'
-'$1 toggled for $2 articles.': null
-'$1 not toggled for $2 articles.': null
-'$1 not toggled for $2  articles.': null
+'$1 toggled for $2 articles.': 'A/z $1 nincs átváltva $2 cikkhez.'
+'$1 not toggled for $2 articles.': 'A/z $1 nincs átváltva $2 cikkhez.'
+'$1 not toggled for $2  articles.': 'A/z $1 nincs átváltva $2 cikkhez.'
 '$1 articles have not been removed': 'A/z $1 cikk eltávolítása nem történt meg'
 '$1 Article(s) unlocked': 'A/z $1 cikk zárolásának feloldása megtörtént'
 '$1 Article(s) not unlocked': 'A(z) $1 cikk zárolása nincs feloldva'
@@ -21,9 +21,9 @@ Title: Cím
 'You do not have the right to delete articles.': 'Nincs jogod a cikkek törléséhez.'
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek ennek a cikknek az állapotát módosítani. Cikk beküldése után csak a jogosult felhasználók módosíthatják.'
 'Use Map': 'Térkép használata'
-'Toggle: On Section Page': null
-'Toggle: On Front Page': null
-'Toggle: Comments': null
+'Toggle: On Section Page': 'Váltás: A rovatlapon'
+'Toggle: On Front Page': 'Váltás: A címlapon'
+'Toggle: Comments': 'Váltás: Hozzászólások'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
 'Status: Submit': 'Állapot: Küldés'
@@ -71,7 +71,7 @@ Added: Hozzáadva
 '$1 toggled.': 'A/z $1 átváltása megtörtént.'
 '$1 articles have been removed': 'A/z $1 cikk eltávolítása megtörtént'
 ' - filtering from _MAX_ records': '- szűrés a _MAX_ rekordokból'
-'Search for creators': null
+'Search for creators': 'Létrehozók keresése'
 'No matches.': 'Nincs találat.'
 Searching...: Keresés...
 'Minimum input of characters: $1': 'Minimális karakterszám: $1'

@@ -51,7 +51,7 @@ Newscoop: Newscoop
 'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Már létezik <i>$1</i> nevű cikk, és nem került felülírásra.<br />'
 Files: Fájlok
 'Select section:': 'Válassz rovatot:'
-'Add another author': null
+'Add another author': 'További szerző hozzáadása'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
 'Switches saved.': 'A kapcsolók mentése megtörtént.'

@@ -1,7 +1,7 @@
 newscoop.plugins_manager.manager: Bővítménykezelő
 newscoop.plugins_manager.legacy_manager: Örököltbővítmény-kezelő
 newscoop.plugins_manager.public_plugins: 'Nyilvános bővítmények'
-newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.private_plugins: 'Saját bővítmények'
 newscoop.plugins_manager.install.public: 'Új bővítmények telepítése'
 newscoop.plugins_manager.installed_table.name: Név
 newscoop.plugins_manager.installed_table.description: Leírás
@@ -15,7 +15,7 @@ newscoop.plugins_manager.installed_table.update_plugin: Frissítés
 newscoop.plugins_manager.installed_table.remove_plugin: Eltávolítás
 newscoop.plugins_manager.installed_table.install_plugin: Telepítés
 newscoop.plugins_manager.installed_table.plugin_installed: Telepítve
-newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.upload.private: 'Saját bővítmény feltöltése'
 newscoop.plugins_manager.search_for_plugins: 'Bővítmények keresése'
 newscoop.plugins_manager.form.package: 'A csomagnak zip-fájlnak kell lennie.'
 newscoop.plugins_manager.form.submit: Feltöltés

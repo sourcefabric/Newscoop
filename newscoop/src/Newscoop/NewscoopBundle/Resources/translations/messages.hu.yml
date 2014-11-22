@@ -3,7 +3,7 @@ Plugins: Bővítmények
 Account: Fiók
 'Items per page': 'Elemek oldalanként'
 'Add new': 'Új hozzáadása'
-Home: null
+Home: Kezdőlap
 Logout: Kijelentkezés
 More...: null
 Content: Tartalom
@@ -28,7 +28,7 @@ Path: 'Elérési út'
 URL: URL-cím
 Order: Rendezés
 Hide: Elrejtés
-Duplicate: null
+Duplicate: Megkettőzés
 Subscription: Előfizetés
 expires: lejár
 starts: kezdődik
@@ -265,7 +265,7 @@ Title: Cím
 'Feed saved': 'A hírcsatorna mentése megtörtént.'
 'Item published': 'Az elem közzététele megtörtént'
 'Settings saved': 'A beállítások mentése megtörtént.'
-'Self-delete is not permitted.': null
+'Self-delete is not permitted.': 'Saját magad törlése nem engedélyezett.'
 'Edit staff member $1': 'A/z $1 nevű szerkesztőségi tag szerkesztése'
 'Delete staff member $1': 'A/z $1 nevű szerkesztőségi tag törlése'
 'Could not save user $1. Please make sure it does not already exist': 'A/z $1 nevű felhasználó nem menthető. Győződj meg róla, hogy nem létezik-e már.'

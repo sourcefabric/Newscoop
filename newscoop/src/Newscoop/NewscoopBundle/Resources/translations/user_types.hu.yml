@@ -3,7 +3,7 @@ Soundcloud: SoundCloud
 Templates: Sablonok
 'Feedback Messages': 'Visszajelző üzenetek'
 'Article Playlists': 'Cikk lejátszási listák'
-'Check all': null
+'Check all': 'Az összes bejelölése'
 view: megtekintés
 undo/redo: visszavonás/ismét
 underline: aláhúzás
@@ -29,7 +29,7 @@ italic: dőlt
 indent: behúzás
 image: kép
 'horizontal rule': 'vízszintes vonal'
-handle: null
+handle: kezel
 guest: vendég
 'font size': betűméret
 'font face': betűtípus

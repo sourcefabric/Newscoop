@@ -64,7 +64,7 @@ Recommended: Ajánlott
 Recommend: Ajánlás
 'Quick edit': Gyorsszerkesztés
 Parent: Szülő
-ID: null
+ID: Azonosító
 'Go to edit article': 'Ugrás a cikk szerkesztésére'
 Forum: Fórum
 'For Column': null
@@ -93,7 +93,7 @@ Column: Oszlop
 Ban: Kitiltás
 'Are you sure you want to do it?': 'Biztosan ezt akarod tenni?'
 'Add rating': 'Értékelés hozzáadása'
-'Add new comment commenter': null
+'Add new comment commenter': 'Hozzászólás új hozzászólójának hozzáadása'
 'Add new comment': 'Új hozzászólás hozzáadása'
 'Add new acceptance criteria': 'Új átvételi feltételek hozzáadása'
 'Acceptance $1 saved.': 'A/z $1 átvételi feltétel mentése megtörtént.'

@@ -1,10 +1,10 @@
-'Duplicate assignment': null
+'Duplicate assignment': 'Kettős hozzárendelés'
 Templates: Sablonok
 'Import theme': 'Téma importálása'
 'Import succeded!': 'Sikerült az importálás!'
 'Import failed!': 'Nem sikerült az importálás!'
 'Edit template: $1': 'Sablon szerkesztése: $1'
-'Set new name to': null
+'Set new name to': 'Új név beállítása'
 'Rename file': 'Fájl átnevezése'
 'Caching templates in:': 'Sablonok gyorsítótárazásának helye:'
 'Caching templates finished': 'A sablonok gyorsítótárazása befejeződött'
@@ -47,7 +47,7 @@ Replace: Csere
 'New name': 'Új név'
 'Name cant be empty': 'A név nem lehet üres'
 'Last modified': 'Utolsó módosítás'
-'Issue page': null
+'Issue page': Számlap
 'Go to parent': 'Ugrás a szülőre'
 'Go to $1': 'Ugrás a következőre: $1 '
 'Geo Filtering': 'Földrajzi szűrés'
