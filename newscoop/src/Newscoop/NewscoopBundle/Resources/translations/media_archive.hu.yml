@@ -41,7 +41,7 @@ Charset: Karakterkészlet
 'Are you sure you want to delete selected items?': 'Biztosan törölni akarod a kijelölt elemeket?'
 'Add new file': 'Új fájl hozzáadása'
 'You do not have the right to add images.': 'Nincs jogod a képek hozzáadásához.'
-'Use for all': null
+'Use for all': 'Használat mindre'
 'Specify image url if you want to load it.': 'Add meg a kép URL-címét, ha be szeretnéd tölteni.'
 Size: Méret
 'No images for multi editing.': 'Nincsenek képek a többszörös szerkesztéshez.'
