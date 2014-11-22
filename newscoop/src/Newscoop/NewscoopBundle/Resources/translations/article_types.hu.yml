@@ -43,7 +43,7 @@ activate: aktiválás
 'You must choose a language for the article type.': 'Ki kell választanod a cikktípus nyelvét.'
 'You do not have the right to rename article types.': 'Nincs jogod a cikktípusok átnevezéséhez..'
 'You do not have the right to merge article types.': 'Nincs jogod a cikktípusok egyesítéséhez.'
-'The translation could not be added.': 'Nem lehet hozzáadni a fordítást.'
+'The translation could not be added.': 'Nem lehetett hozzáadni a fordítást.'
 'The article type $1 does not exist.': 'A/z $1 cikktípus nem létezik.'
 'Template Type Name': 'Sablontípus neve'
 Show/Hide: Megjelenítés/Elrejtés

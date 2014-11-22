@@ -30,7 +30,7 @@ hide: elrejtés
 'You do not have the right to rename article type fields.': 'Nincs jogod a cikktípusmezők átnevezéséhez.'
 'You do not have the right to reassign a field type.': 'Nincs jogod egy mezőtípus ismételt hozzárendeléséhez.'
 'Translating field': null
-'The translation could not be added.': 'Nem lehet hozzáadni a fordítást.'
+'The translation could not be added.': 'Nem lehetett hozzáadni a fordítást.'
 'The field $1 does not exist.': 'A/z $1 mező nem létezik.'
 'The $1 field may only contain letters and underscore (_) character.': 'A/z $1 mező csak betűket és aláhúzásjelet (_) tartalmazhat.'
 'Template Field Name': 'Sablonmező neve'
