@@ -29,7 +29,7 @@ Unassign: 'Hozzárendelés megszüntetése'
 'Theme settings updated.': 'A téma beállításainak frissítése megtörtént.'
 'Theme settings saved.': 'A téma beállításainak mentése megtörtént.'
 'Theme name / version': 'Téma neve / verziója'
-'Theme management': 'Téma kezelése'
+'Theme management': Témakezelés
 'Theme $1': '$1 téma'
 'The file $1 is empty.': 'A/z $1 fájl üres.'
 'Template object $1 was renamed to $2.': 'A/z $1 sablonobjektum átnevezése $2 névre megtörtént.'
@@ -75,7 +75,7 @@ Compatibility: Kompatibilitás
 'Choose destination': 'Válassz célt'
 'Cant override directory $1.': 'A/z $1 könyvtár nem írható felül.'
 'Cache Lifetime': 'Gyorsítótár élettartama'
-'Browse for the theme': 'A téma keresése'
+'Browse for the theme': 'Keresd meg a témát'
 'Assigned successfully': 'A hozzárendelés sikerült.'
 'Article page template': Cikklapsablon
 'Article page': Cikklap
