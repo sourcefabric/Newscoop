@@ -39,7 +39,7 @@ Continue: Folytatás
 'User was deleted.': 'A felhasználó törlése megtörtént.'
 'User saved': 'A felhasználó mentése megtörtént.'
 'User id not specified': 'A felhasználóazonosító nincs meghatározva'
-'User $1 created': 'A/z $1 nevű felhasználó elkészült'
+'User $1 created': 'A/z $1 nevű felhasználó létrehozása megtörtént'
 'Send confirm email': 'Megerősítő e-mail küldése'
 'Profile saved.': 'A profil mentése megtörtént.'
 Picture: Kép
@@ -57,7 +57,7 @@ None: Nincs
 'Ban for user $1 saved.': 'A/z $1 nevű felhasználó kitiltásának mentése megtörtént.'
 'User account is active': 'A felhasználói fiók aktív'
 'Allow users profile to be publicly displayed': 'A felhasználói profil nyilvános megjelenésének engedélyezése'
-'Allow user access to login to site backend': 'A hely kiszolgálói oldalára való bejelentkezés hozzáférésének engedélyezése a felhasználó számára'
+'Allow user access to login to site backend': 'A hely kiszolgáló oldalára való bejelentkezés hozzáférésének engedélyezése a felhasználó számára'
 Templates: Sablonok
 Username: Felhasználónév
 'Last Name': Vezetéknév
@@ -214,7 +214,7 @@ users:
             recordCountPageUnboundedTemplate: '{recordsShown} /'
             recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
             recordCountFilteredTemplate: '(szűrve a  {recordsTotal} összes rekordbóé)'
-            recordCountText: Megjelenítendő
+            recordCountText: 'Megjelenítve '
             recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
             recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
             processingText: Feldolgozás...

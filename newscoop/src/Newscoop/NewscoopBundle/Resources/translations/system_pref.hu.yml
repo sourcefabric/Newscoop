@@ -28,7 +28,7 @@ newscoop:
             media: Videobeállítások
             cache: 'Gyorsítótárazási beállítások'
             other: 'Egyéb beállítások'
-            recaptcha: 'reCAPTCHA beállítások'
+            recaptcha: 'reCAPTCHA beállításai'
             cronjob: 'Háttérfeladatok beállításai'
         btn:
             cleardatabasecache: 'A jelenlegi illesztőprogram gyorsítótár kiürítése'

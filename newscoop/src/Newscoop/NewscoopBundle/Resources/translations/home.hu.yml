@@ -72,7 +72,7 @@ Newscoop: Newscoop
 'Session expired.': 'A munkamenet lejárt.'
 Processing...: Feldolgozás...
 Please: Kérjük
-'Go to dashboard': 'Ugrás az irányítópulthoz'
+'Go to dashboard': 'Ugrás az irányítópultra'
 'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'A böngésződ nem támogatja a JavaScriptet, vagy (valószínűbb) letiltottad a beállításokban. Javítsd ezt a Newscoop további használata céljából.'
 'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'A Newscoop frissítette biztonsági intézkedéseit. Fiókod frissítése, a fokozott biztonság használata érdekében ismét meg kell adnod a jelszavadat.'
 'Newscoop cache was cleaned up': 'A Newscoop gyorsítótárának karbantartása megtörtént'
