@@ -9,7 +9,7 @@ filter: szűrő
 'Rename article type $1': 'A/z $1 cikktípus átnevezése'
 'Invalid article type $1.': 'Érvénytelen $1 cikktípus.'
 'You cannot merge the same type into itself.': 'Az azonos típusok nem egyesíthetők.'
-'View the source ($1) version of $2': null
+'View the source ($1) version of $2': 'Forrásverzió ($1) megtekintése, $2'
 'View of original ($1) $2': 'Az eredeti ($1) $2 megtekintése'
 'To return to the preview click here': 'Kattints ide az előnézethez való visszatéréshez'
 'This is the first translation of $1': 'Ez a/z $1 első fordítása'
