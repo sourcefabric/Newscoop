@@ -127,7 +127,7 @@ newscoop:
             prevRun: 'Előző futás dátuma'
             nextRun: 'Következő futás dátuma'
             norecords: 'Nem találhatók rekordok.'
-            cronJobEmail: 'E-mail címek az értesítésekhez'
+            cronJobEmail: 'Értesítési e-mail címek'
             cronJobSenderEmail: 'A feladó e-mail címe'
             cronJobSenderName: 'A feladó neve (pl.: Newscoop feladatütemező)'
             cronJobNotify: 'Értesítés?'
@@ -135,7 +135,7 @@ newscoop:
             cronsadvanced: 'Speciális beállítások'
             moredetails: 'További részletek.'
         popover:
-            cronJobEmail: 'Azok a vesszővel elválasztott e-mail címek, melyek hibaértesítéseket fognak kapni.'
+            cronJobEmail: 'Vesszővel elválasztott e-mail címek, melyekre hibaértesítések fognak érkezni.'
             cronJobSenderEmail: 'Az e-mail cím, melyről az értesítések küldésre fognak kerülni.'
             cacheengine: 'Engedélyezi vagy letiltja a rendszergyorsítótárat, mellyel növelhető a Newscoop teljesítménye.'
             cacheenginehost: 'Add meg a gyorsítótár-állomást (a Memcache, a Memcached vagy a Redis számára)'
