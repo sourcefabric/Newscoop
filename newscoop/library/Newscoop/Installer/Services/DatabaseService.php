@@ -127,7 +127,7 @@ class DatabaseService
         $errors = $this->importDB($sqlFile, $connection);
 
         $connection->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($host));
-        $connection->executeQuery("INSERT IGNORE INTO Publications VALUES (1,?,1,'D',0.00,0.00,'',0,0,2,2,NULL,1,1,0,0,1,0,0,'','',NULL,'a:1:{s:4:\"name\";s:2:\"on\";}')", array($publicationName));
+        $connection->executeQuery('INSERT IGNORE INTO Publications (`Id`, `Name`, `IdDefaultLanguage`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_public_enabled`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`, `comments_moderator_to`, `comments_moderator_from`, `url_error_tpl_id`, `seo`, `meta_title`, `meta_keywords`, `meta_description`) VALUES ("1", ?, "1", "2", "2", NULL, "1", "1", NULL, "0", NULL, NULL, "1", NULL, NULL, NULL, "a:1:{s:4:\"name\";s:2:\"on\";}", NULL, NULL, NULL)', array($publicationName));
     }
 
     /**
