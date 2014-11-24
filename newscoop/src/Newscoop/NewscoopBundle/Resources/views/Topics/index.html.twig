@@ -24,8 +24,16 @@
     <h4>Topics...</h4>
     <p>Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit</p>
   </div>
-<div class="row" ng-controller="treeCtrl" ng-init="dim=true; highlight=true;">
+<div class="row" ng-controller="treeCtrl" ng-init="dim=false; highlight=true;">
         <div class="col-lg-6">
+          <h3>Filter topics by language</h3>
+          <form class="form-inline" name="filterForm" role="form">
+            <div class="input-group input-group-sm">
+            <select ng-model="langSelected" ng-options='language.code as (language.name + " [" + language.code + "]") for language in languageList' ng-change="onFilterLanguageChange(langSelected)" class="form-control input-sm" style="width: 550px">
+            <option value="">All</option>
+            </select>
+          </div>
+          </form>
             <h3>Search</h3>
             <form class="form-inline" name="searchForm" role="form">
               <div class="input-group input-group-sm">
@@ -46,21 +54,18 @@
             <h3>Tree view
               <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
               <a href="" class="btn btn-xs btn-default pull-right" ng-click="expandAll()">Expand all</a>
-              <a href="" class="btn btn-xs btn-default btn-warning pull-right" ng-click="moveLastToTheBeggining()">Move Last To The Beginning</a>
-
             </h3>
-
             <!-- Nested node template -->
             <script type="text/ng-template" id="nodes_renderer.html">
               <div ui-tree-handle class="tree-node tree-node-content">
               <div class="drag-bar"></div>
                 <a data-nodrag ng-click="toggle(this)" class="pointer"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-                <span ng-bind-html="node.title | highlight:pattern | trust"></span>
                 <div class="pull-right action-buttons">
-                    <a data-nodrag ng-click="startEditing(this)" class="pointer"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a data-nodrag ng-click="removeTopic(node.id)" class="pointer"><span title="Remove topic" class="glyphicon glyphicon-trash"></span></a>
-                    <a data-nodrag ng-click="" class="pointer"><span title="Add new topic" class="glyphicon glyphicon-plus"></span></a>
+                    <a data-nodrag ng-click="startEditing(this)" class="pointer"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
+                    <a data-nodrag ng-click="removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="pointer"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
                 </div>
+                <span ng-if="node.translations.length == 1" ng-bind-html="node.translations[0].content | highlight:pattern | trust" class="ng-binding"></span>
+                <span ng-if="node.translations.length > 1" ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding"></span>
                 <div class="node-edit-div" data-nodrag ng-show="editing">
                   <div class="form-group">
                   <div class="attached-title">Change topic name</div>
@@ -71,7 +76,6 @@
                       <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
                     </div>
                     <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="updateTopic(node)">Save</button>
-                    <button class="btn btn-sm btn-default" ng-click="startEditing(this)">Cancel</button>
                   </form>
                   </div>
                     <div class="form-group">
@@ -83,24 +87,66 @@
                               <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="Subtopic name">
                             </div>
                             <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(node.id)">Add</button>
-                            <button class="btn btn-sm btn-default" ng-click="startEditing(this)">Cancel</button>
                           </form>
                       </div>
-                    </div>
+                      <div class="form-group" style="margin-bottom: 0">
+                      <div class="attached-title">Add translation</div>
+                          <form name="addTranslationForm" class="form-inline" role="form" novalidate>
+                            <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
+                            <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
+                            <div class="form-group">
+                              <select ng-model="languageSelected" ng-options="language.name for language in languageList" ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
+                                <option value="">Choose...</option>
+                              </select>
+                              <input style="width: 227px" type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="translationForm.title" placeholder="Translation string">
+                            </div>
+                            <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node.id)">Add</button>
+                            <button title="{{ 'topics.btn.hide'|trans }}" style="float: right;" class="btn btn-sm btn-default" ng-click="startEditing(this)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                          </form>
+                      </div>
+                      </div>
+                        <ul class="list-group" ng-if="!languageCode" ng-model="node.translations">
+                          <li class="list-group-item" ng-repeat="node in node.translations" ng-if="node.locale != '{{ app.request.locale }}'" ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}">
+                            <span class="badge" style="float: left;">{[{ node.locale }]}</span>
+                            <span ng-bind-html="node.content | highlight:pattern | trust" class="ng-binding"></span>
+                            <div class="pull-right action-buttons">
+                            <a data-nodrag class="pointer" ng-click="removeTranslation(node.id)"><span title="{{ 'topics.btn.removetrans'|trans }}" class="glyphicon glyphicon-remove"></span></a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                 </div>
               </div>
+
               <ol ui-tree-nodes="" ng-model="node.__children" ng-class="{hidden: collapsed}">
-                <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'"
-                        ng-hide="!treeFilter(node, pattern, supportedFields) && !dim"
-                        ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}">
+                <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'">
                 </li>
               </ol>
             </script>
             <div ui-tree id="tree-root">
               <ol ui-tree-nodes="" ng-model="data">
-                <li ng-repeat="node in data" ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
               </ol>
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="removeAlert" tabindex="-1" role="dialog" aria-labelledby="removeAlertLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'topics.alerts.beforedelete'|trans }}</h4>
+                  </div>
+                  <div class="modal-body" style="font-size: 14px;">
+                    {{ 'topics.alerts.beforedeleteinfo'|trans }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'topics.btn.close'|trans }}</button>
+                    <button type="button" ng-click="removeTopic()" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </div>
     </div>
 </div>

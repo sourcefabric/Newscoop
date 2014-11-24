@@ -94,6 +94,13 @@ class Topic
      */
     protected $updated;
 
+     /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    protected $locale;
+
     /**
      * @ORM\OneToMany(
      *   targetEntity="TopicTranslation",
@@ -422,5 +429,57 @@ class Topic
             $this->translations[] = $translation;
             $translation->setObject($this);
         }
+    }
+
+    /**
+     * Checks if there is translation
+     *
+     * @param mixed $locale the locale
+     *
+     * @return self
+     */
+    public function hasTranslation($locale)
+    {
+        return isset($this->translations[$locale]);
+    }
+
+    /**
+     * Gets the translation
+     *
+     * @param mixed $locale the locale
+     *
+     * @return mixed
+     */
+    public function getTranslation($locale)
+    {
+        if ($this->hasTranslation($locale)) {
+            return $this->translations[$locale];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the Used locale to override Translation listener`s locale
+     *
+     * @return mixed
+     */
+    public function getTranslatableLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Sets the Used locale to override Translation listener`s locale
+     *
+     * @param mixed $locale the locale
+     *
+     * @return self
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 }

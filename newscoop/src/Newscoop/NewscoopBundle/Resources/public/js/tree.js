@@ -10,11 +10,21 @@ var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'
 
 app.factory('TopicsFactory',  function($http) {
   return {
-        getTopics: function() {
-            return $http.get(Routing.generate("newscoop_newscoop_topics_tree"));
+        getTopics: function(languageCode) {
+            return $http({
+              method: "GET",
+              url: Routing.generate("newscoop_newscoop_topics_tree"),
+              params: {_code: languageCode}
+            });
+        },
+        getLanguages: function() {
+            return $http.get(Routing.generate("newscoop_newscoop_topics_getlanguages"));
         },
         deleteTopic: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_delete", {id: id}));
+        },
+        deleteTopicTranslation: function(id) {
+            return $http.post(Routing.generate("newscoop_newscoop_topics_deletetranslation", {id: id}));
         },
         addTopic: function(formData) {
           return $http({
@@ -26,10 +36,21 @@ app.factory('TopicsFactory',  function($http) {
             data: $.param(formData)
           });
         },
-        updateTopic: function(formData, id) {
+        updateTopic: function(formData, id, languageCode) {
           return $http({
             method: "POST",
             url: Routing.generate("newscoop_newscoop_topics_edit", {id: id}),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: $.param(formData),
+            params: {_code: languageCode}
+          });
+        },
+        addTranslation: function(formData, id) {
+          return $http({
+            method: "POST",
+            url: Routing.generate("newscoop_newscoop_topics_addtranslation", {id: id}),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -41,19 +62,20 @@ app.factory('TopicsFactory',  function($http) {
 
 app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.treeFilter = $filter('uiTreeFilter');
-    $scope.availableFields = ['title'];
-    $scope.supportedFields = ['title'];
+    $scope.availableFields = ['content', 'title'];
+    $scope.supportedFields = ['content', 'title'];
+    var languageCode = null;
 
     TopicsFactory.getTopics().success(function (data) {
        $scope.data = data.tree;
-       console.log($scope.data);
     }).error(function(data, status){
-        if(status==401){
-            $scope.article_url = global_notallowed_url;
-        }else{
-            $scope.article_url = global_error_url;
-        }
-        $rootScope.page_ready = true;
+        flashMessage(response.message, 'error');
+    });
+
+    TopicsFactory.getLanguages().success(function (data) {
+       $scope.languageList = data.languages;
+    }).error(function(data, status){
+        flashMessage(response.message, 'error');
     });
 
     var updateList = function (children, id) {
@@ -73,8 +95,48 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
     };
 
-    $scope.removeTopic = function(topicId) {
-      TopicsFactory.deleteTopic(topicId).success(function (response) {
+    var updateTranslations = function (children, id) {
+        if (children) {
+            for (var i = 0; i < children.length; i++) {
+                angular.forEach(children[i].translations, function(value, key) {
+                  if (value.id == id) {
+                    children[i].translations.splice(children[i].translations.indexOf(value), 1);
+
+                    return true;
+                  }
+                });
+
+                var found = updateTranslations(children[i].__children, id);
+                if (found) {
+                  return true;
+                }
+            }
+        }
+    };
+
+    var updateAfterAddTranslation = function (children, id, response) {
+        if (children) {
+            for (var i = 0; i < children.length; i++) {
+                if (children[i].id == id) {
+                  children[i].translations.push({id: response.topicTranslationId, locale: response.topicTranslationLocale, field: "title", content: response.topicTranslationTitle });
+                  return children[i];
+                }
+
+                var found = updateAfterAddTranslation(children[i].__children, id, response);
+                if (found) {
+                  return found;
+                }
+            }
+        }
+    };
+
+    var removeTopicId = null;
+    $scope.removeTopicAlert = function(topicId) {
+      removeTopicId = topicId;
+    }
+
+    $scope.removeTopic = function() {
+      TopicsFactory.deleteTopic(removeTopicId).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
           updateList($scope.data, topicId);
@@ -86,22 +148,22 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     };
 
+    $scope.removeTranslation = function(translationId)
+    {
+      TopicsFactory.deleteTopicTranslation(translationId).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+          updateTranslations($scope.data, translationId);
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });
+    }
+
     $scope.toggle = function(scope) {
       scope.toggle();
-    };
-
-    $scope.moveLastToTheBegginig = function () {
-      var a = $scope.data.pop();
-      $scope.data.splice(0,0, a);
-    };
-
-    $scope.newSubItem = function(scope) {
-      var nodeData = scope.$modelValue;
-      nodeData.nodes.push({
-        id: nodeData.id * 10 + nodeData.nodes.length,
-        title: nodeData.title + '.' + (nodeData.nodes.length + 1),
-        nodes: []
-      });
     };
 
     var getRootNodesScope = function() {
@@ -165,10 +227,46 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
           _csrf_token: token
       };
 
-      TopicsFactory.updateTopic(postData, node.id).success(function (response) {
+      TopicsFactory.updateTopic(postData, node.id, languageCode).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
           $scope.editFormData = null;
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });
+    };
+
+    $scope.onLanguageChange = function(language) {
+        languageCode = language.code;
+    }
+
+    $scope.onFilterLanguageChange = function(langCode) {
+        languageCode = langCode;
+        $scope.languageCode = langCode;
+        TopicsFactory.getTopics(langCode).success(function (data) {
+           $scope.data = data.tree;
+        }).error(function(data, status){
+            flashMessage(response.message, 'error');
+        });
+    }
+
+    $scope.translationForm = {};
+    $scope.addTranslation = function(topicId) {
+      var postData = {
+          topicTranslation: {
+              title: $scope.translationForm.title,
+              locale: languageCode
+          },
+          _csrf_token: token
+      };
+
+      TopicsFactory.addTranslation(postData, topicId).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+          updateAfterAddTranslation($scope.data, topicId, response);
         } else {
           flashMessage(response.message, 'error');
         }

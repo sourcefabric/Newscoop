@@ -14,10 +14,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Gedmo\Translatable\TranslatableListener;
-use Doctrine\ORM\Query;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Newscoop\NewscoopBundle\Form\Type\TopicType;
+use Newscoop\NewscoopBundle\Form\Type\TopicTranslationType;
+use Newscoop\NewscoopBundle\Entity\TopicTranslation;
+use Doctrine\ORM\Query;
 
 /**
  * Topic controller.
@@ -55,13 +56,32 @@ class TopicsController extends Controller
     }
 
     /**
+     * @Route("/admin/topics/get-languages", options={"expose"=true})
+     */
+    public function getLanguages(Request $request)
+    {
+        $languages = $this->get('em')
+            ->getRepository('Newscoop\Entity\Language')
+            ->getAllLanguagesQuery()
+            ->getArrayResult();
+
+        return new JsonResponse(array(
+            'languages' => $languages
+        ));
+    }
+
+    /**
      * @Route("/admin/topics/tree/", options={"expose"=true})
      * @Method("GET")
      */
-    public function treeAction()
+    public function treeAction(Request $request)
     {
         $em = $this->get('em');
-        $tree = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->childrenHierarchy();
+        $locale = $request->get('_code');
+        $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+        $topicsQuery = $repository->getTranslatableTopicsQuery($request->getLocale(), $request->get('_code', $request->getLocale()), $locale);
+        $nodes = $topicsQuery->getArrayResult();
+        $tree = $repository->buildTreeArray($nodes);
 
         return new JsonResponse(array('tree' => $tree));
     }
@@ -95,6 +115,7 @@ class TopicsController extends Controller
                 'id' => $data['parent']
             ));
             $node->setTitle($data['title']);
+            $node->setTranslatableLocale($request->getLocale());
             if ($parent) {
                 $node->setParent($parent);
             }
@@ -112,6 +133,77 @@ class TopicsController extends Controller
             $response = array(
                 'status' => false,
                 'message' => $form->getErrors()->getChildren()->getMessage(),
+            );
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/admin/new-topics/add/translation/{id}", requirements={"id" = "\d+"}, options={"expose"=true})
+     * @Method("POST")
+     */
+    public function addTranslation(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $translator = $this->get('translator');
+        $form = $this->createForm(new TopicTranslationType());
+        $form->handleRequest($request);
+        $response = array(
+            'status' => false,
+            'message' => $translator->trans('topics.error', array(), 'topics'),
+        );
+
+        if (!$this->get('form.csrf_provider')->isCsrfTokenValid('default', $request->get('_csrf_token'))) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.csrfinvalid', array(), 'topics'),
+            ), 403);
+        }
+
+        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
+
+        if (!$node) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics'),
+            ), 404);
+        }
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+            $locale = $data['locale'];
+            $language = $em
+                ->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($locale);
+
+            if (!$language) {
+                return new JsonResponse(array(
+                    'status' => false,
+                    'message' => $translator->trans('topics.alerts.languagenotfound', array('%locale%' => $locale), 'topics'),
+                ), 404);
+            }
+
+            try {
+                $topicTranslation = new TopicTranslation($language->getCode(), 'title', $data['title']);
+                $node->addTranslation($topicTranslation);
+                $em->persist($node);
+                $em->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array(
+                    'status' => false,
+                    'message' => $translator->trans('topics.alerts.translationexists', array('%locale%' => $locale), 'topics'),
+                ), 404);
+            }
+
+            $response = array(
+                'status' => true,
+                'message' => $translator->trans('topics.alerts.translationadded', array(), 'topics'),
+                'topicTranslationId' => $topicTranslation->getId(),
+                'topicTranslationTitle' => $topicTranslation->getContent(),
+                'topicTranslationLocale' => $topicTranslation->getLocale()
             );
         }
 
@@ -147,6 +239,34 @@ class TopicsController extends Controller
     }
 
     /**
+     * @Route("/admin/topics/translations/delete/{id}", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function deleteTranslationAction(Request $request, $id)
+    {
+        $translator = $this->get('translator');
+        $em = $this->get('em');
+        $topicTranslation = $em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')->findOneBy(array(
+            'id' => $id,
+        ));
+
+        if (!$topicTranslation) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.failedfindTranslation', array('%id%' => $id), 'topics')
+            ), 404);
+        }
+
+        $em->remove($topicTranslation);
+        $em->flush();
+
+        return new JsonResponse(array(
+            'status' => true,
+            'message' => $translator->trans('topics.removedTranslation', array(), 'topics')
+        ));
+    }
+
+    /**
      * @Route("/admin/topics/edit/{id}", options={"expose"=true})
      * @Method("POST")
      */
@@ -173,10 +293,17 @@ class TopicsController extends Controller
             ), 404);
         }
 
-        $form = $this->createForm(new TopicType(), $node);
-
+        $locale = $request->get('_code', $request->getLocale());
+        $form = $this->createForm(new TopicType());
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $data = $form->getData();
+            foreach ($node->getTranslations() as $translation) {
+                if ($translation->getLocale() == $locale && $translation->getField() == 'title') {
+                    $translation->setContent($data['title']);
+                }
+            }
+
             $em->flush();
 
             return new JsonResponse(array(
@@ -189,30 +316,5 @@ class TopicsController extends Controller
             'status' => false,
             'message' => $translator->trans('topics.error', array(), 'topics')
         ));
-    }
-
-    /**
-     * Set translatable hints
-     *
-     * @param Query $query Query object
-     */
-    public function setTranslatableHints(Query $query)
-    {
-        $query->setHint(
-            Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );
-        $query->setHint(
-            TranslatableListener::HINT_INNER_JOIN,
-            $this->get('session')->get('gedmo.trans.inner_join', false)
-        );
-        $query->setHint(
-            TranslatableListener::HINT_TRANSLATABLE_LOCALE,
-            $this->get('request')->get('_locale', 'en')
-        );
-        $query->setHint(
-            TranslatableListener::HINT_FALLBACK,
-            $this->get('session')->get('gedmo.trans.fallback', false)
-        );
     }
 }

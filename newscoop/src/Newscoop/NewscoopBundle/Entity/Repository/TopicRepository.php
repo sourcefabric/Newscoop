@@ -12,6 +12,7 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Doctrine\ORM\Query;
 use Gedmo\DemoBundle\Entity\Category;
 use Closure;
+use Gedmo\Translatable\TranslatableListener;
 
 class TopicRepository extends NestedTreeRepository
 {
@@ -63,5 +64,49 @@ class TopicRepository extends NestedTreeRepository
             ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
             ->orderBy('node.root, node.lft', $direction)
             ->getQuery();
+    }
+
+    /**
+     * Get topics query and set translatable hints
+     *
+     * @param Query $query Query object
+     */
+    public function getTranslatableTopicsQuery($fallbackLocale, $translatableHint, $locale = null)
+    {
+        $query = $this
+            ->getQueryBuilder()
+            ->select('node', 't')
+            ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
+            ->leftJoin('node.translations', 't')
+            ->where("t.field = 'title'");
+
+        if ($locale) {
+            $query
+                ->andWhere('t.locale IN (:locale)')
+                ->setParameter('locale', array($fallbackLocale, $locale));
+        }
+
+        $query = $query
+            ->orderBy('node.root, node.lft', 'ASC')
+            ->getQuery();
+
+        $query->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+        $query->setHint(
+            TranslatableListener::HINT_INNER_JOIN,
+            false
+        );
+        $query->setHint(
+            TranslatableListener::HINT_TRANSLATABLE_LOCALE,
+            $translatableHint
+        );
+        $query->setHint(
+            TranslatableListener::HINT_FALLBACK,
+            true
+        );
+
+        return $query;
     }
 }

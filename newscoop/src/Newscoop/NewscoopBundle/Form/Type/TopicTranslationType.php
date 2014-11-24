@@ -13,11 +13,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class TopicType extends AbstractType
+class TopicTranslationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array(
+        $builder->add('title', null, array(
             'required' => true,
             'constraints' => array(
                 new Assert\NotBlank(),
@@ -27,8 +27,17 @@ class TopicType extends AbstractType
             ),
             'error_bubbling' => true
         ));
-        $builder->add('description', 'textarea', array('required' => false));
-        $builder->add('parent', null, array('required' => false));
+
+        $builder->add('locale', null, array(
+            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Length(array(
+                    'max' => 5,
+                ))
+            ),
+            'error_bubbling' => true
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -40,6 +49,6 @@ class TopicType extends AbstractType
 
     public function getName()
     {
-        return 'topic';
+        return 'topicTranslation';
     }
 }
