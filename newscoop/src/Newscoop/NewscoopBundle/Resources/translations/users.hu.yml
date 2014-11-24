@@ -112,7 +112,7 @@ Filters: Szűrők
 'User account $1 was created successfully.': 'A/z $1 felhasználói fiók létrehozása sikerült.'
 'You do not have the right to change user account permissions.': 'Nincs jogod a felhasználói fiók engedélyeinek módosításához.'
 'You do not have the right to change user account information.': 'Nincs jogod a felhasználói fiók adatainak módosításához.'
-'The password you typed is incorrect.': 'Az általad megadott jelszó helytelen.'
+'The password you typed is incorrect.': 'Az általad megadott jelszó téves.'
 'You do not have the right to delete user accounts.': 'Nincs jogod a felhasználói fiókok törléséhez.'
 'User account $1 was deleted successfully.': 'A/z $1 felhasználói fiók törlése sikerült.'
 'The IP Group $1 has been created.': 'A/z $1 IP-csoport létrehozása megtörtént.'
