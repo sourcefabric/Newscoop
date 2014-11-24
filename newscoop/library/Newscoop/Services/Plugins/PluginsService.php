@@ -61,13 +61,9 @@ class PluginsService
 
     public function getEnabledPlugins()
     {
-        $eb = new ExpressionBuilder();
-        $expr = $eb->eq('enabled', true);
-        $criteria = new Criteria($expr);
-
-        $availablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
-
-        return $availablePlugins->matching($criteria);
+        return new ArrayCollection(array_filter($this->getAllAvailablePlugins(), function($plugin) {
+            return $plugin->getEnabled() === true;
+        }));
     }
 
     public function getPluginByCriteria($criteria, $needle)

@@ -38,6 +38,17 @@ class SectionRepository extends EntityRepository
         return $query;
     }
 
+    public function getSectionsCountForPublication($publicationId)
+    {
+        $sectionsCount = $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->andWhere('s.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery();
+
+        return $sectionsCount;
+    }
+
     /**
      * Get list of publication sections
      *

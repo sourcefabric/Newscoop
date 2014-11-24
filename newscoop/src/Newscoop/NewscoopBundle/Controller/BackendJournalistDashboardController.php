@@ -51,7 +51,7 @@ class BackendJournalistDashboardController extends Controller
         $period = new \DatePeriod($begin, $interval, $end);
 
         $lineWidgetData = array();
-        foreach ( $period as $dt ) {
+        foreach ($period as $dt) {
           $element = array('date' => $dt->format("Y-m-d"));
           if (array_key_exists($dt->format("Y-m-d"), $commentsPerDay)) {
             $element['comments'] = $commentsPerDay[$dt->format("Y-m-d")]['number'];

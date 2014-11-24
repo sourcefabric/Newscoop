@@ -20,7 +20,6 @@ class UsersController extends Controller
 {
     /**
      * @Route("admin/users/")
-     * @Template()
      */
     public function indexAction(Request $request)
     {
@@ -39,15 +38,18 @@ class UsersController extends Controller
         $active = $em->getRepository('Newscoop\Entity\User')->getLatelyLoggedInUsers(14, true)->getSingleScalarResult();
         $userGroups = $em->getRepository('Newscoop\Entity\User\Group')->findAll();
 
-        return array(
-            'registered' => $registered,
-            'pending' => $pending,
-            'deleted' => $deleted,
-            'active' => $active,
-            'userGroups' => $userGroups,
-            'active_logins' => array(
-                'newscoop' => $em->getRepository('Newscoop\Entity\User')->getNewscoopLoginCount(),
-                'external' => $em->getRepository('Newscoop\Entity\User')->getExternalLoginCount(),
+        return $this->render(
+            'NewscoopNewscoopBundle:Users:index.html.twig',
+            array(
+                'registered' => $registered,
+                'pending' => $pending,
+                'deleted' => $deleted,
+                'active' => $active,
+                'userGroups' => $userGroups,
+                'active_logins' => array(
+                    'newscoop' => $em->getRepository('Newscoop\Entity\User')->getNewscoopLoginCount(),
+                    'external' => $em->getRepository('Newscoop\Entity\User')->getExternalLoginCount(),
+                )
             )
         );
     }

@@ -19,6 +19,7 @@ class Builder
     protected $showPublishingEnvironmentMenu;
     protected $showConfigureMenu;
     protected $showUserMenu;
+    private $menu = null;
 
     private function preparePrivileges()
     {
@@ -57,6 +58,10 @@ class Builder
 
     public function mainMenu($modern = false)
     {
+        if ($this->menu !== null) {
+            return $this->menu;
+        }
+
         $translator = $this->container->get('translator');
         $this->user = $this->container->getService('user')->getCurrentUser();
         $this->preparePrivileges();
@@ -157,6 +162,8 @@ class Builder
             $menu = $this->decorateMenu($menu);
         }
 
+        $this->menu = $menu;
+
         return $menu;
     }
 
@@ -196,17 +203,29 @@ class Builder
         return $menu;
     }
 
-    private function prepareContentMenu($menu, $modern) {
+    private function prepareContentMenu($menu, $modern)
+    {
         $translator = $this->container->get('translator');
 
-        $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'pub',
-                'action' => 'index.php',
-            ),
+        $this->addChild($menu, $translator->trans('Publications'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_publications_index'),
             'resource' => 'publication',
             'privilege' => 'manage',
         ));
+
+        $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.edit', array(), 'pub'), array(
+            'route' => 'newscoop_newscoop_publications_edit',
+            'routeParameters' => array('id' => $this->container->get('request')->get('id', 1)),
+            'resource' => 'publication',
+            'privilege' => 'manage',
+        ))->setDisplay(false);
+
+        $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.remove', array(), 'pub'), array(
+            'route' => 'newscoop_newscoop_publications_remove',
+            'routeParameters' => array('id' => $this->container->get('request')->get('id', 1)),
+            'resource' => 'publication',
+            'privilege' => 'manage',
+        ))->setDisplay(false);
 
         $this->addChild(
             $menu,
@@ -255,46 +274,54 @@ class Builder
 
         // add content/publications
         $publicationService = $this->container->get('content.publication');
-        foreach ($publicationService->getPublicationsForMenu()->getResult() as $publication) {
-            $pubId = $publication->getId();
-            $this->addChild($menu, $publication->getName(), array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"))
+        foreach ($publicationService->getPublicationsForMenu()->getArrayResult() as $publication) {
+            $pubId = $publication['id'];
+            $this->addChild($menu, $publication['name'], array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"))
                 ->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
-            $issues = $this->container->get('em')->getRepository('Newscoop\Entity\Issue')->getLatestBy(array('publication' => $pubId), 10);
+            $issues = $this->container->get('em')
+                ->getRepository('Newscoop\Entity\Issue')
+                ->getLatestByPublication($pubId, 11)
+                ->getArrayResult();
+
+            $moreIssues = count($issues) > 10 ? true : false;
+            if ($moreIssues) {
+                unset($issues[10]);
+            }
 
             // add content/publication/issue
             $latestPublished = false;
             foreach ($issues as $issue) {
-                $issueId = $issue->getNumber();
-                $languageId = $issue->getLanguage()->getId();
-                $issueName = sprintf('%d. %s (%s)', $issue->getNumber(), $issue->getName(), $issue->getLanguage()->getName());
+                $issueId = $issue['number'];
+                $languageId = $issue['language']['id'];
+                $issueName = sprintf('%d. %s (%s)', $issue['number'], $issue['name'], $issue['language']['name']);
                 $issueChild = $this->addChild(
-                    $menu[$publication->getName()],
+                    $menu[$publication['name']],
                     $issueName,
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                 ))->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
-                if (($issue->getWorkflowStatus() === 'Y' ? true : false) && !$latestPublished) {
+                if (($issue['workflowStatus'] === 'Y' ? true : false) && !$latestPublished) {
                     $issueChild->setLinkAttribute('class', 'latest-published');
                     $latestPublished = true;
                 }
 
                 // add content/publication/issue/section
                     $firstSections = array();
-                    foreach ($issue->getSections() as $section) {
-                        $firstSections[$section->getNumber()] = $section;
+                    foreach ($issue['sections'] as $section) {
+                        $firstSections[$section['number']] = $section;
                     }
 
                     ksort($firstSections);
                     $sectionsCounter = 0;
                     foreach ($firstSections as $section) {
                         if ($sectionsCounter < 10) {
-                            $sectionId = $section->getNumber();
-                            $sectionName = sprintf('%d. %s', $section->getNumber(), $section->getName());
+                            $sectionId = $section['number'];
+                            $sectionName = sprintf('%d. %s', $section['number'], $section['name']);
                             $this->addChild(
-                                $menu[$publication->getName()][$issueName],
+                                $menu[$publication['name']][$issueName],
                                 $sectionName,
                                 array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"
                             ));
@@ -302,17 +329,17 @@ class Builder
                         }
                     }
 
-                    if (count($issue->getSections()) > 0) {
+                    if (count($issue['sections']) > 0) {
                         if (!$modern) {
-                            $this->addChild($menu[$publication->getName()][$issueName], null, array())->setAttribute('class', 'divider');
+                            $this->addChild($menu[$publication['name']][$issueName], null, array())->setAttribute('class', 'divider');
                             $this->addChild(
-                                $menu[$publication->getName()][$issueName],
+                                $menu[$publication['name']][$issueName],
                                 $translator->trans('More...'),
                                 array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                             ));
                         } else {
                             $this->addChild(
-                                $menu[$publication->getName()][$issueName],
+                                $menu[$publication['name']][$issueName],
                                 $translator->trans('More...'),
                                 array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                             ))->setAttribute('divider_prepend', true);
@@ -320,17 +347,17 @@ class Builder
                     }
             }
 
-            if (count($publication->getIssues()) > 10) {
+            if ($moreIssues) {
                 if (!$modern) {
-                    $this->addChild($menu[$publication->getName()], null, array())->setAttribute('class', 'divider');
+                    $this->addChild($menu[$publication['name']], null, array())->setAttribute('class', 'divider');
                     $this->addChild(
-                        $menu[$publication->getName()],
+                        $menu[$publication['name']],
                         $translator->trans('More...'),
                         array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
                     ));
                 } else {
                     $this->addChild(
-                        $menu[$publication->getName()],
+                        $menu[$publication['name']],
                         $translator->trans('More...'),
                         array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
                     ))->setAttribute('divider_prepend', true);
@@ -352,11 +379,8 @@ class Builder
             'privilege' => 'add',
         ));
 
-        $this->addChild($menu, $translator->trans('Add new publication'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'pub',
-                'action' => 'add.php',
-            ),
+        $this->addChild($menu, $translator->trans('publications.title.add', array(), 'pub'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_publications_add'),
             'resource' => 'publication',
             'privilege' => 'manage',
         ));

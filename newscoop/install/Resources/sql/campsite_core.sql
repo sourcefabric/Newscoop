@@ -1305,37 +1305,31 @@ CREATE TABLE Plugins (
 --
 
 DROP TABLE IF EXISTS `Publications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Publications` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `IdDefaultLanguage` int(10) unsigned NOT NULL DEFAULT '0',
-  `TimeUnit` enum('D','W','M','Y') NOT NULL DEFAULT 'D',
-  `UnitCost` float(10,2) unsigned NOT NULL DEFAULT '0.00',
-  `UnitCostAllLang` float(10,2) unsigned NOT NULL DEFAULT '0.00',
-  `Currency` varchar(140) NOT NULL DEFAULT '',
-  `TrialTime` int(10) unsigned NOT NULL DEFAULT '0',
-  `PaidTime` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdDefaultAlias` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdURLType` int(10) unsigned NOT NULL DEFAULT '1',
-  `fk_forum_id` int(11) DEFAULT NULL,
-  `comments_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_subscribers_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_public_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_public_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_captcha_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_spam_blocking_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_moderator_to` varchar(255) NOT NULL DEFAULT '',
-  `comments_moderator_from` varchar(255) NOT NULL DEFAULT '',
-  `url_error_tpl_id` int(10) unsigned DEFAULT NULL,
-  `seo` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Alias` (`IdDefaultAlias`),
-  UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE Publications (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  comments_public_enabled VARCHAR(255) DEFAULT NULL,
+  comments_moderator_to VARCHAR(255) DEFAULT NULL,
+  comments_moderator_from VARCHAR(255) DEFAULT NULL,
+  IdDefaultAlias INT DEFAULT NULL,
+  IdURLType INT DEFAULT NULL,
+  fk_forum_id INT DEFAULT NULL,
+  comments_enabled TINYINT(1) DEFAULT NULL,
+  comments_article_default_enabled TINYINT(1) DEFAULT NULL,
+  comments_subscribers_moderated TINYINT(1) DEFAULT NULL,
+  comments_public_moderated TINYINT(1) DEFAULT NULL,
+  comments_captcha_enabled TINYINT(1) DEFAULT NULL,
+  comments_spam_blocking_enabled TINYINT(1) DEFAULT NULL,
+  url_error_tpl_id INT DEFAULT NULL,
+  seo VARCHAR(255) DEFAULT NULL,
+  meta_title VARCHAR(255) DEFAULT NULL,
+  meta_keywords VARCHAR(255) DEFAULT NULL,
+  meta_description VARCHAR(255) DEFAULT NULL,
+  IdDefaultLanguage int(10),
+  INDEX IDX_2A49E10CEC194F36 (IdDefaultLanguage),
+  INDEX IDX_2A49E10CAB83D3A4 (IdDefaultAlias),
+  INDEX Name (Name), PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Dumping data for table `Publications`

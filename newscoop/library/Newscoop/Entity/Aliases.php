@@ -15,12 +15,13 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity()
  * @ORM\Table(name="Aliases")
  */
-class Aliases 
+class Aliases
 {
     /**
-     * @ORM\Id
+     * @ORM\Id()
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="Id")
-     * @var string
+     * @var integer
      */
     protected $id;
 
@@ -55,7 +56,7 @@ class Aliases
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -77,6 +78,20 @@ class Aliases
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Sets the value of publication.
+     *
+     * @param Newscoop\Entity\Publication $publication the publication
+     *
+     * @return self
+     */
+    public function setPublication(\Newscoop\Entity\Publication $publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
     }
 }
 

@@ -1,0 +1,177 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% form_theme form 'NewscoopNewscoopBundle::form_fields.html.twig' %}
+{% trans_default_domain "pub" %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+    <span class="article-title">{{ pageTitle }}</span>
+    <div class="pull-right">
+        <div class="actions">
+            <ul class="navigation" style="height: auto;">
+                <a class="list-publications pull-left action-button" href="{{ url('newscoop_newscoop_publications_index')}}">
+                    <span class="glyphicon glyphicon-arrow-left"></span> {{ 'publications.buttons.listPublications'|trans }}
+                </a>
+                <li>
+                    <a class="add" href="{{ url('newscoop_newscoop_publications_add')}}">{{ 'publications.buttons.addNew'|trans }}</a>
+                </li>
+                {% if form.vars.data.id %}
+                    <a class="list-issues pull-left action-button" href="/admin/issues/?Pub={{ form.vars.data.id }}">
+                        {{ 'publications.buttons.listIssues'|trans }} <span class="glyphicon glyphicon-arrow-right"></span>
+                    </a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_title %}{{ pageTitle }} - {{ parent() }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
+<style type="text/css" media="screen">
+    .help-block{font-size: 13px;margin-bottom: 0px;}
+    .checkbox-group .checkbox {padding-top: 3px;}
+    .checkbox-group .checkbox label input {margin-right: 5px;}
+    .ns_container input {background-color: #fff}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row publications ns_container col-md-8">
+    {% if form_errors(form) %}
+    <div class="alerts alert-danger">
+        {{ form_errors(form) }}
+    </div>
+    {% endif %}
+
+    <div>
+        {{ form_start(form, {'attr': {'class': 'form-horizontal', 'role': 'form'}}) }}
+        <div id="general_settings" class="col-sm-6" style="border-right: 1px solid #ccc;">
+            <h3>{{ 'publications.general_settings'|trans({},'pub') }}</h3>
+            <div class="form-group">
+                {{ form_label(form.name, label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                <div class="col-sm-8">
+                  {{ form_widget(form.name, {'attr': {'class': 'form-control input-sm'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.defaultAlias, label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                <div class="col-sm-6">
+                  {{ form_widget(form.defaultAlias, {'attr': {'class': 'form-control input-sm'}}) }}
+                  {% if form.vars.data.id %}
+                  <span class="help-block">
+                    <a href="/admin/pub/aliases.php?Pub={{form.vars.data.id}}" target="_blank">({{ 'publications.form_type.label.edit_aliases'|trans }})</a>
+                  </span>
+                  {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.language, label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                <div class="col-sm-6">
+                  {{ form_widget(form.language, {'attr': {'class': 'form-control input-sm'}}) }}
+                  <span class="help-block">
+                    <a href="/admin/languages/" target="_blank">({{ 'publications.form_type.label.edit_languages'|trans }})</a>
+                  </span>
+                </div>
+            </div>
+            <h3>{{ 'publications.comments_settings'|trans({},'pub') }}</h3>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <div class="checkbox checkbox-group">
+                        <div class="checkbox">{{ form_widget(form.commentsEnabled, {'attr': {'class': 'public-comments'}}) }}</div>
+                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.public_enabled) }}</div>
+                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsArticleDefaultEnabled) }}</div>
+                        <div class="checkbox child " style="padding-left: 40px;">{{ form_widget(form.commentsSubscribersModerated, {'attr': {'class': 'moderated-comments'}}) }}</div>
+                        <div class="checkbox child moderated" style="padding-left: 60px;">{{ form_widget(form.commentsPublicModerated) }}</div>
+                        <div class="checkbox child moderated" style="padding-left: 50px;">
+                            <div class="form-group">
+                                {{ form_label(form.moderator_to, label|default(null), {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                                <div class="col-sm-6">
+                                  {{ form_widget(form.moderator_to, {'attr': {'class': 'form-control input-sm'}}) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.moderator_from, label|default(null), {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                                <div class="col-sm-6">
+                                  {{ form_widget(form.moderator_from, {'attr': {'class': 'form-control input-sm'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsCaptchaEnabled) }}</div>
+                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsSpamBlockingEnabled) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="seo_settings" class="col-sm-6">
+            <h3>{{ 'publications.seo_settings'|trans({},'pub') }}</h3>
+            <div class="form-group">
+                {{ form_label(form.urlTypeId, label|default(null), {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                <div class="col-sm-6">
+                  {{ form_widget(form.urlTypeId, {'attr': {'class': 'form-control input-sm'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.seoChoices, label|default(null), {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                <div class="col-sm-6">
+                    <div class="checkbox">
+                      <label>
+                        {{ form_widget(form.seoChoices) }}
+                      </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.metaTitle, label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                <div class="col-sm-8">
+                  {{ form_widget(form.metaTitle, {'attr': {'class': 'form-control input-sm'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.metaKeywords, label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                <div class="col-sm-8">
+                  {{ form_widget(form.metaKeywords, {'attr': {'class': 'form-control input-sm'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.metaDescription, label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                <div class="col-sm-8">
+                  {{ form_widget(form.metaDescription, {'attr': {'class': 'form-control input-sm'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <button type="submit" class="save-button pull-right">{{ 'Save'|trans({}, 'messages') }}</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+<script type="text/javascript">
+    $('.public-comments').click(function(){
+        if($(this).is(':checked')) {
+            $('.checkbox-group .checkbox.child input').attr('disabled', false);
+            if (!$('.moderated-comments').is(':checked')) {
+                $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
+            }
+        } else {
+            $('.checkbox-group .checkbox.child input').attr('disabled', true);
+        }
+    });
+
+    if (!$('.public-comments').is(':checked')) {
+        $('.checkbox-group .checkbox.child input').attr('disabled', true);
+    }
+
+    $('.moderated-comments').click(function(){
+        if($(this).is(':checked')) {
+            $('.checkbox-group .checkbox.child.moderated input').attr('disabled', false);
+        } else {
+            $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
+        }
+    });
+
+    if (!$('.moderated-comments').is(':checked')) {
+        $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
+    }
+</script>
+{% endblock %}

@@ -191,19 +191,12 @@ abstract class ListObject
 		 */
 		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
 
-        $list = $this->fetchFromCache();
-        if (!is_null($list)) {
-        	$this->duplicateObject($list);
-        	return;
-        }
-
 		$objects = $this->CreateList($this->m_start, $this->m_limit, $parameters, $this->m_totalCount);
 		if (!is_array($objects)) {
 		    $objects = array();
 		}
   		$this->m_objects = new MyArrayObject($objects);
   		$this->m_hasNextElements = $this->m_totalCount > ($this->m_start + $this->getLength());
-  		$this->storeInCache();
 	}
 
 
@@ -246,27 +239,6 @@ abstract class ListObject
 	 * @return array
 	 */
 	abstract protected function ProcessParameters(array $p_parameters);
-
-
-	private function fetchFromCache()
-	{
-        if (CampCache::IsEnabled()) {
-            $object = CampCache::singleton()->fetch($this->getCacheKey());
-            if ($object !== false && is_object($object)) {
-                return $object;
-            }
-        }
-        return null;
-	}
-
-
-	private function storeInCache()
-	{
-        if (CampCache::IsEnabled()) {
-            CampCache::singleton()->store($this->getCacheKey(), $this, $this->m_defaultTTL);
-        }
-	}
-
 
 	protected function getCacheKey()
 	{
