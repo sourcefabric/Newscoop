@@ -75,3 +75,64 @@ Currency: Valuta
 'Article title': null
 'Article keywords': null
 'Article topics': null
+publications:
+    title:
+        list: 'List of publications'
+        edit: 'Edit publication'
+        add: 'Add new publication'
+        remove: 'Remove publication'
+    no_publications: 'No publications.'
+    general_settings: 'General Settings'
+    comments_settings: 'Comments Settings'
+    seo_settings: 'SEO Settings'
+    publication_removed: 'Publication was removed.'
+    publication_saved: 'Publication changes were saved successfully.'
+    remove:
+        cant_be_removed: 'This publication isn''t empty - and can''t be removed.'
+        can_be_removed: 'This publication is empty and can be removed.'
+        left_issues: 'Left issues'
+        left_sections: 'Left sections'
+        left_articles: 'Left articles'
+        show_issues: 'show issues'
+        before_removing: 'Before removing publication you need to remove/move all remaining elements.'
+        you_sure: 'Are you sure that you want to remove publication'
+        remove: 'Remove publication'
+    buttons:
+        addNew: 'Add new publication'
+        listPublications: 'List publications'
+        listIssues: 'List publication issues'
+    table:
+        number: Number
+        name: Name
+        default_alias: 'Default Alias'
+        default_language: 'Default Language'
+        comments_status: 'Comments status'
+        url_type: 'Url type'
+        configure: Configure
+        remove: Remove
+    form_type:
+        label:
+            name: 'Publication Name'
+            template_path: 'Template path'
+            short_names: 'Short name'
+            alias: 'Default alias'
+            url_type: 'Url type'
+            seo: 'Article url parts'
+            seo_article_title: 'Article title'
+            seo_article_keywords: 'Article keywords'
+            seo_article_topics: 'Article topics'
+            edit_aliases: 'Edit aliases'
+            edit_languages: 'Edit languages'
+            moderator_to: 'Moderator address'
+            moderator_from: 'Moderation emails from addres'
+            comments_enabled: 'Comments are enabled?'
+            public_comments_enabled: 'Public (anonymous) comments are enabled?'
+            comments_article_default_enabled: 'Comments for article are enabled by default?'
+            comments_subscribers_moderated: 'Comments are moderated?'
+            comments_public_moderated: 'Public (anonymous) comments are moderated?'
+            comments_captcha_enabled: 'Captcha is enabled?'
+            comments_spam_blocking_enabled: 'Comments spam (internal system) blocking is enabled?'
+            meta_title: 'Publication title'
+            meta_keywords: 'Publication keywords'
+            meta_description: 'Publication description'
+    tip1: 'Newscoop content is organized in a hierarchical structure, which conforms to the tradition of newspapers and magazines: Publications, Issues, Sections and Articles. Each publication is made up of issues, each issue is in turn made up of sections, which are comprised of articles.'
