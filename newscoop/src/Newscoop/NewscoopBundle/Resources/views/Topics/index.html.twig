@@ -64,7 +64,7 @@
                     <a data-nodrag ng-click="startEditing(this)" class="pointer"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
                     <a data-nodrag ng-click="removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="pointer"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
                 </div>
-                <span ng-if="node.translations.length == 1" ng-bind-html="node.translations[0].content | highlight:pattern | trust" class="ng-binding"></span>
+                <span ng-if="node.translations.length == 1" ng-bind-html="node.translations[0].content | highlight:pattern | trust" class="ng-binding"></span></span>
                 <span ng-if="node.translations.length > 1" ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding"></span>
                 <div class="node-edit-div" data-nodrag ng-show="editing">
                   <div class="form-group">
@@ -106,7 +106,7 @@
                       </div>
                       </div>
                         <ul class="list-group" ng-if="!languageCode" ng-model="node.translations">
-                          <li class="list-group-item" ng-repeat="node in node.translations" ng-if="node.locale != '{{ app.request.locale }}'" ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}">
+                          <li class="list-group-item" ng-repeat="node in node.translations" ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}">
                             <span class="badge" style="float: left;">{[{ node.locale }]}</span>
                             <span ng-bind-html="node.content | highlight:pattern | trust" class="ng-binding"></span>
                             <div class="pull-right action-buttons">
@@ -133,7 +133,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{{ 'topics.btn.close'|trans }}</span></button>
                     <h4 class="modal-title" id="myModalLabel">{{ 'topics.alerts.beforedelete'|trans }}</h4>
                   </div>
                   <div class="modal-body" style="font-size: 14px;">

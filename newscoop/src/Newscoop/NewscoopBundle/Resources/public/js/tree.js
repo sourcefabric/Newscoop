@@ -130,6 +130,35 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
     };
 
+    var updateAfterAddSubtopic = function (children, id, response) {
+        if (children) {
+            for (var i = 0; i < children.length; i++) {
+                if (children[i].id == id) {
+                  if (children[i].__children == undefined) {
+                    console.log(children[i]);
+                    children[i]['__children'] = [{id: response.topicId, locale: response.locale, title: response.topicTitle }];
+                    children[i]['__children'][0]['translations'] = [{locale: response.locale, field: "title", content: response.topicTitle }];
+                  } else {
+                    console.log(children[i].__children);
+                    children[i].__children.push({
+                      id: response.topicId,
+                      locale: response.locale,
+                      title: response.topicTitle,
+                      translations: [{locale: response.locale, field: "title", content: response.topicTitle }]
+                    });
+                    //children[i].__children.translations.push([{locale: response.locale, field: "title", content: response.topicTitle }]);
+                  }
+                  return children[i];
+                }
+
+                var found = updateAfterAddSubtopic(children[i].__children, id, response);
+                if (found) {
+                  return found;
+                }
+            }
+        }
+    };
+
     var removeTopicId = null;
     $scope.removeTopicAlert = function(topicId) {
       removeTopicId = topicId;
@@ -138,8 +167,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.removeTopic = function() {
       TopicsFactory.deleteTopic(removeTopicId).success(function (response) {
         if (response.status) {
+          $('#removeAlert').modal('hide');
           flashMessage(response.message);
-          updateList($scope.data, topicId);
+          updateList($scope.data, removeTopicId);
         } else {
           flashMessage(response.message, 'error');
         }
@@ -192,22 +222,30 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.subtopicForm = {};
     $scope.addNewTopic = function(topicId, event) {
       var addFormData = {
-            topic: {
-                title: $scope.formData.title,
-            },
+            topic: {},
             _csrf_token: token
         }
 
       if (topicId !== undefined) {
           addFormData.topic["title"] = $scope.subtopicForm.title;
           addFormData.topic["parent"] = topicId;
+      } else {
+        addFormData.topic["title"] = $scope.formData.title;
       }
 
       TopicsFactory.addTopic(addFormData).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
           if (topicId == undefined) {
-              $scope.data.push({ id: response.topicId, title: response.topicTitle });
+              $scope.data.push({
+                id: response.topicId,
+                title: response.topicTitle,
+                root: response.topicId,
+                translations: [{ content: response.topicTitle, locale: response.locale}]
+              });
+
+          } else {
+            updateAfterAddSubtopic($scope.data, topicId, response)
           }
           $scope.formData = null;
         } else {

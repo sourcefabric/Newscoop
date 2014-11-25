@@ -27,6 +27,24 @@ class TopicType extends AbstractType
             ),
             'error_bubbling' => true
         ));
+        $builder->add('locale', null, array(
+            'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 5,
+                ))
+            ),
+            'error_bubbling' => true
+        ));
+        $builder->add('lastLocale', null, array(
+            'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 5,
+                ))
+            ),
+            'error_bubbling' => true
+        ));
         $builder->add('description', 'textarea', array('required' => false));
         $builder->add('parent', null, array('required' => false));
     }

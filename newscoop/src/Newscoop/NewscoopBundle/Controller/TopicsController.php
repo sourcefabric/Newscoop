@@ -127,7 +127,8 @@ class TopicsController extends Controller
                 'status' => true,
                 'message' => $translator->trans('topics.added', array(), 'topics'),
                 'topicId' => $node->getId(),
-                'topicTitle' => $node->getTitle()
+                'topicTitle' => $node->getTitle(),
+                'locale' => $request->getLocale()
             );
         } else {
             $response = array(
