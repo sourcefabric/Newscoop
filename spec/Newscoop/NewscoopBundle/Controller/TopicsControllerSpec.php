@@ -17,6 +17,9 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfTokenManagerAdapter;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\NewscoopBundle\Entity\TopicTranslation;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -45,7 +48,8 @@ class TopicsControllerSpec extends ObjectBehavior
         Form $form,
         FormView $formView,
         Topic $topic,
-        CsrfTokenManagerAdapter $csrfTokenManagerAdapter
+        CsrfTokenManagerAdapter $csrfTokenManagerAdapter,
+        AbstractQuery $query
     )
     {
         $container->get('em')->willReturn($entityManager);
@@ -70,12 +74,26 @@ class TopicsControllerSpec extends ObjectBehavior
 
         $this->token = 'uTxRiEkont4XxRpTcSADPCowge7TgNONE7Y5HWd4pmY';
         $request->get('_csrf_token')->willReturn($this->token);
+        $request->get('_code')->willReturn('en');
+        $request->getLocale()->willReturn('en');
+        $request->get('_code', 'en')->willReturn('en');
     }
 
-    public function its_treeAction_should_render_the_tree_of_topics($topicRepository, $request, $entityManager)
+    public function its_treeAction_should_render_the_tree_of_topics($topicRepository, $request, $entityManager, $query)
     {
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
-        $topicRepository->childrenHierarchy()->willReturn(Argument::type('array'));
+        $topicRepository->getTranslatableTopicsQuery('en')->willReturn($query);
+        $topics = array(
+            'id' => 1,
+            'level' => 0,
+            'lft' => 1,
+            'rgt' => 6,
+            'root' => null,
+            'slug' => "new-root",
+            'title' => "new root polish",
+        );
+        $query->getArrayResult()->willReturn($topics);
+        $topicRepository->buildTreeArray($topics)->willReturn(Argument::type('array'));
         $response = $this->treeAction($request);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
@@ -122,13 +140,17 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_editAction_should_edit_topic($request, $repository, $topic, $csrfTokenManagerAdapter)
+    public function its_editAction_should_edit_topic($request, $repository, $topic, $csrfTokenManagerAdapter, $form)
     {
         $repository->findOneBy(array(
             'id' => 1,
         ))->willReturn($topic);
+        $data = array('id' => 1, 'title' => 'test');
+        $form->getData()->willReturn($data);
 
         $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
+        $topicTranslation = new TopicTranslation('en', 'title', $data['title']);
+        $topic->getTranslations()->willReturn(new ArrayCollection(array($topicTranslation)));
         $response = $this->editAction($request, 1);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');

@@ -1,6 +1,6 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "topics" %}
-{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'newscoop.preferences.label.title'|trans }}{% endblock %}
+{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'topics.title'|trans }}{% endblock %}
 {% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/angular-ui-tree.min.css') }}">
@@ -26,34 +26,34 @@
   </div>
 <div class="row" ng-controller="treeCtrl" ng-init="dim=false; highlight=true;">
         <div class="col-lg-6">
-          <h3>Filter topics by language</h3>
+          <h3>{{ 'topics.label.filterbylang'|trans }}</h3>
           <form class="form-inline" name="filterForm" role="form">
             <div class="input-group input-group-sm">
             <select ng-model="langSelected" ng-options='language.code as (language.name + " [" + language.code + "]") for language in languageList' ng-change="onFilterLanguageChange(langSelected)" class="form-control input-sm" style="width: 550px">
-            <option value="">All</option>
+            <option value="">{{ 'topics.label.all'|trans }}</option>
             </select>
           </div>
           </form>
-            <h3>Search</h3>
+            <h3>{{ 'topics.label.search'|trans }}</h3>
             <form class="form-inline" name="searchForm" role="form">
               <div class="input-group input-group-sm">
-                <span class="input-group-addon">Filter</span>
-                <input type="search" class="form-control input-sm" placeholder="Type a part of any nodes name..."  ng-model="pattern">
+                <span class="input-group-addon">{{ 'topics.label.filter'|trans }}</span>
+                <input type="search" class="form-control input-sm" placeholder="{{ 'topics.label.filterplaceholder'|trans }}"  ng-model="pattern">
               </div>
             </form>
-            <h3>Add root topic</h3>
+            <h3>{{ 'topics.label.addroot'|trans }}</h3>
             <div class="alert alert-danger" ng-show="addTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
             <div class="alert alert-danger" ng-show="addTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
             <form class="form-inline" name="addTopicForm" ng-submit="addNewTopic()" role="form">
               <div class="form-group col-lg-9">
-                <label for="addNewTopic" class="sr-only">Topic name</label>
-                <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" id="addNewTopic" placeholder="Topic name">
+                <label for="addNewTopic" class="sr-only">{{ 'topics.label.topicname'|trans }}</label>
+                <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" id="addNewTopic" placeholder="{{ 'topics.label.topicname'|trans }}">
               </div>
-              <button style="width: 130px" ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-success">Add</button>
+              <button style="width: 130px" ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-success">{{ 'topics.btn.add'|trans }}</button>
             </form>
-            <h3>Tree view
-              <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
-              <a href="" class="btn btn-xs btn-default pull-right" ng-click="expandAll()">Expand all</a>
+            <h3>{{ 'topics.label.tree'|trans }}
+              <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">{{ 'topics.label.collapse'|trans }}</a>
+              <a href="" class="btn btn-xs btn-default pull-right" ng-click="expandAll()">{{ 'topics.label.expand'|trans }}</a>
             </h3>
             <!-- Nested node template -->
             <script type="text/ng-template" id="nodes_renderer.html">
@@ -64,48 +64,48 @@
                     <a data-nodrag ng-click="startEditing(this)" class="pointer"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
                     <a data-nodrag ng-click="removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="pointer"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
                 </div>
-                <span ng-if="node.translations.length == 1" ng-bind-html="node.translations[0].content | highlight:pattern | trust" class="ng-binding"></span></span>
-                <span ng-if="node.translations.length > 1" ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding"></span>
+                <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding"></span></span>
                 <div class="node-edit-div" data-nodrag ng-show="editing">
                   <div class="form-group">
-                  <div class="attached-title">Change topic name</div>
+                  <div class="attached-title">{{ 'topics.label.changename'|trans }} {[{ languageCode }]}</div>
                   <form name="editTopicForm" class="form-inline" role="form" novalidate>
                     <div class="alert alert-danger" ng-show="editTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                     <div class="alert alert-danger" ng-show="editTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                     <div class="form-group">
                       <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
                     </div>
-                    <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="updateTopic(node)">Save</button>
+                    <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="updateTopic(node)">{{ 'topics.btn.save'|trans }}</button>
                   </form>
                   </div>
                     <div class="form-group">
-                      <div class="attached-title">Add subtopic</div>
+                      <div class="attached-title">{{ 'topics.label.addsubtopic'|trans }}</div>
                           <form name="addSubTopicForm" class="form-inline" role="form" novalidate>
                             <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                             <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                             <div class="form-group">
-                              <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="Subtopic name">
+                              <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="{{ 'topics.label.subtopicname'|trans }}">
                             </div>
-                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(node.id)">Add</button>
+                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(node.id)">{{ 'topics.btn.add'|trans }}</button>
+                            <button ng-show="languageCode" title="{{ 'topics.btn.hide'|trans }}" style="float: right;" class="btn btn-sm btn-default" ng-click="startEditing(this)"><span class="glyphicon glyphicon-chevron-up"></span></button>
                           </form>
                       </div>
-                      <div class="form-group" style="margin-bottom: 0">
-                      <div class="attached-title">Add translation</div>
+                      <div ng-show="!languageCode" class="form-group"  style="margin-bottom: 0">
+                        <div class="attached-title">{{ 'topics.label.addtranslation'|trans }}</div>
                           <form name="addTranslationForm" class="form-inline" role="form" novalidate>
                             <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                             <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                             <div class="form-group">
                               <select ng-model="languageSelected" ng-options="language.name for language in languageList" ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
-                                <option value="">Choose...</option>
+                                <option value="">{{ 'topics.label.choose'|trans }}</option>
                               </select>
-                              <input style="width: 227px" type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="translationForm.title" placeholder="Translation string">
+                              <input style="width: 227px" type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="translationForm.title" placeholder="{{ 'topics.label.translationstring'|trans }}">
                             </div>
-                            <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node.id)">Add</button>
+                            <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node.id)">{{ 'topics.btn.add'|trans }}</button>
                             <button title="{{ 'topics.btn.hide'|trans }}" style="float: right;" class="btn btn-sm btn-default" ng-click="startEditing(this)"><span class="glyphicon glyphicon-chevron-up"></span></button>
                           </form>
                       </div>
                       </div>
-                        <ul class="list-group" ng-if="!languageCode" ng-model="node.translations">
+                      <ul class="list-group" ng-if="!languageCode" ng-model="node.translations">
                           <li class="list-group-item" ng-repeat="node in node.translations" ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}">
                             <span class="badge" style="float: left;">{[{ node.locale }]}</span>
                             <span ng-bind-html="node.content | highlight:pattern | trust" class="ng-binding"></span>
@@ -123,7 +123,7 @@
                 </li>
               </ol>
             </script>
-            <div ui-tree id="tree-root">
+            <div ui-tree="treeOptions" id="tree-root">
               <ol ui-tree-nodes="" ng-model="data">
                 <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
               </ol>

@@ -26,11 +26,32 @@ Top: Top
 'There are $1 articles using the topic.': 'There are $1 articles using the topic.'
 'Search for topics': 'Search for topics'
 topics:
+  label:
+    all: "All"
+    filterbylang: "Filter topics by language"
+    search: "Search"
+    filter: "Filter"
+    filterplaceholder: "Type a part of any topic name..."
+    addroot: "Add root topic"
+    topicname: "Topic name"
+    collapse: "Collapse all"
+    expand: "Expand all"
+    changename: "Change topic name"
+    for: "for"
+    addsubtopic: "Add subtopic"
+    subtopicname: "Subtopic name"
+    addtranslation: "Add translation"
+    choose: "Choose..."
+    translationstring: "Translation string"
+    tree: "Tree of topics"
+  title: "Topics management"
   btn:
     hide: "Hide"
     remove: "Remove topic"
     edit: "Edit topic"
     close: "Close"
+    add: "Add"
+    save: "Save"
     removetrans: "Remove Topic's translation"
   alerts:
     languagenotfound: "Could not found language by locale: %locale%"

@@ -71,7 +71,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @param Query $query Query object
      */
-    public function getTranslatableTopicsQuery($fallbackLocale, $translatableHint, $locale = null)
+    public function getTranslatableTopicsQuery($locale)
     {
         $query = $this
             ->getQueryBuilder()
@@ -79,12 +79,6 @@ class TopicRepository extends NestedTreeRepository
             ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
             ->leftJoin('node.translations', 't')
             ->where("t.field = 'title'");
-
-        if ($locale) {
-            $query
-                ->andWhere('t.locale IN (:locale)')
-                ->setParameter('locale', array($fallbackLocale, $locale));
-        }
 
         $query = $query
             ->orderBy('node.root, node.lft', 'ASC')
@@ -100,7 +94,7 @@ class TopicRepository extends NestedTreeRepository
         );
         $query->setHint(
             TranslatableListener::HINT_TRANSLATABLE_LOCALE,
-            $translatableHint
+            $locale
         );
         $query->setHint(
             TranslatableListener::HINT_FALLBACK,

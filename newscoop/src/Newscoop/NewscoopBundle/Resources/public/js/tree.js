@@ -23,17 +23,21 @@ app.factory('TopicsFactory',  function($http) {
         deleteTopic: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_delete", {id: id}));
         },
+        moveTopic: function(id, before) {
+            return $http.post(Routing.generate("newscoop_newscoop_topics_move", {id: id, before: before}));
+        },
         deleteTopicTranslation: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_deletetranslation", {id: id}));
         },
-        addTopic: function(formData) {
+        addTopic: function(formData, languageCode) {
           return $http({
             method: "POST",
             url: Routing.generate("newscoop_newscoop_topics_add"),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            data: $.param(formData)
+            data: $.param(formData),
+            params: {_code: languageCode}
           });
         },
         updateTopic: function(formData, id, languageCode) {
@@ -61,6 +65,68 @@ app.factory('TopicsFactory',  function($http) {
 });
 
 app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
+    $scope.treeOptions = {
+      dropped: function(event) {
+        var array = [];
+        /*if (event.dest.nodesScope.$$childHead.$$prevSibling) {//
+          console.log('$$childHead.$$prevSibling');
+          console.log(event.dest.nodesScope.$$childHead.$$prevSibling.node);
+        }
+        if (event.dest.nodesScope.$$childHead.$$nextSibling) {
+          console.log('$$childHead.$$nextSibling');
+          console.log(event.dest.nodesScope.$$childHead.$$nextSibling.node);
+          array.push(event.dest.nodesScope.$$childHead.$$nextSibling.node);
+        }
+        if (event.dest.nodesScope.$$childTail.$$prevSibling) {
+          console.log('$$childTail.$$prevSibling');
+          console.log(event.dest.nodesScope.$$childTail.$$prevSibling.node);
+           array.push(event.dest.nodesScope.$$childTail.$$prevSibling.node);
+        }
+        if (event.dest.nodesScope.$$childTail.$$nextSibling) {//
+          console.log('$$childTail.$$nextSibling');
+          console.log(event.dest.nodesScope.$$childTail.$$nextSibling.node);
+         
+        }*/
+//console.log();
+        var result = event.dest.nodesScope.$modelValue;
+        var next = null;
+        //var index = array.indexOf(event.dest.nodesScope.$modelValue);
+        var rr = $.each(result, function(i){
+            if(result[i].id === event.source.nodeScope.$modelValue.id) {
+                var l = result.length;
+
+              var current = result[i];
+              var previous = result[(i+l-1)%l];
+              next = result[(i+1)%l];
+              //console.log(previous, next);
+              if (previous == next) {
+                //result = previous;
+                return previous;
+              }
+                return next;
+            }
+        });
+        
+        //console.log(event.source.nodeScope.$modelValue.id, next.id);
+        //console.log(event.source.nodeScope.$$childHead.$nodeScope.$modelValue);
+        console.log(event.source.nodeScope);
+
+        /*TopicsFactory.moveTopic(event.source.nodeScope.$modelValue.id, next.id).success(function (response) {
+          if (response.status) {
+            flashMessage(response.message);
+          } else {
+            flashMessage(response.message, 'error');
+          }
+        }).error(function(response, status){
+            flashMessage(response.message, 'error');
+        });*/
+        
+      },
+      beforeDrop: function(event) {
+        console.log(event);
+
+      }
+    };
     $scope.treeFilter = $filter('uiTreeFilter');
     $scope.availableFields = ['content', 'title'];
     $scope.supportedFields = ['content', 'title'];
@@ -192,6 +258,21 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     }
 
+    $scope.dropped = function(e) {
+        console.log (e.source);     
+      }
+    $scope.moveTopic = function() {
+      
+      /*TopicsFactory.moveTopic(112, 109).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });*/
+    }
     $scope.toggle = function(scope) {
       scope.toggle();
     };
@@ -233,7 +314,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         addFormData.topic["title"] = $scope.formData.title;
       }
 
-      TopicsFactory.addTopic(addFormData).success(function (response) {
+      TopicsFactory.addTopic(addFormData, languageCode).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
           if (topicId == undefined) {
