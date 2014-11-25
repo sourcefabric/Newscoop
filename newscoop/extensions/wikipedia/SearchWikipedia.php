@@ -9,7 +9,7 @@
  */
 
 /**
- * @author Sourcefabric o.p.s.
+ * @author Sourcefabric z.ú.
  * @description Wikipedia search.
  * @homepage http://www.sourcefabric.org
  * @version 1.0

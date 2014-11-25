@@ -10,7 +10,7 @@
 
 /**
  * @title Hello World!
- * @author Sourcefabric o.p.s.
+ * @author Sourcefabric z.ú.
  * @description Widget sample.
  * @homepage http://www.sourcefabric.org
  * @version 1.0
