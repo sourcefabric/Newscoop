@@ -77,62 +77,62 @@ Currency: Pénznem
 'Article topics': Cikktémák
 publications:
     title:
-        list: null
-        edit: null
-        add: null
-        remove: null
-    no_publications: null
-    general_settings: null
-    comments_settings: null
-    seo_settings: null
-    publication_removed: null
-    publication_saved: null
+        list: Kiadványlista
+        edit: 'Kiadvány szerkesztése'
+        add: 'Új kiadvány hozzáadása'
+        remove: 'Kiadvány eltávolítása'
+    no_publications: 'Nincsenek kiadványok.'
+    general_settings: 'Általános beállítások'
+    comments_settings: 'Hozzászólások beállításai'
+    seo_settings: 'Keresőoptimalizálási beállítások'
+    publication_removed: 'A kiadvány eltávolításra került.'
+    publication_saved: 'A kiadvány módosításainak mentése sikerült.'
     remove:
-        cant_be_removed: null
-        can_be_removed: null
-        left_issues: null
-        left_sections: null
-        left_articles: null
-        show_issues: null
-        before_removing: null
-        you_sure: null
-        remove: null
+        cant_be_removed: 'Ez a kiadvány nem üres - és nem távolítható el.'
+        can_be_removed: 'Ez a kiadvány üres, és el lehet távolítani.'
+        left_issues: 'Maradt számok'
+        left_sections: 'Maradt rovatok'
+        left_articles: 'Maradt cikkek'
+        show_issues: 'számok megjelenítése'
+        before_removing: 'A kiadvány eltávolítása előtt el kell távolítanod/át kell helyezned az összes megmaradt elemet.'
+        you_sure: 'Biztosan el akarod távolítani a kiadványt'
+        remove: 'Kiadvány eltávolítása'
     buttons:
-        addNew: null
-        listPublications: null
-        listIssues: null
+        addNew: 'Új kiadvány hozzáadása'
+        listPublications: 'Kiadványok listázása'
+        listIssues: 'Kiadvány számainak listázása'
     table:
-        number: null
-        name: null
-        default_alias: null
-        default_language: null
-        comments_status: null
-        url_type: null
-        configure: null
-        remove: null
+        number: Szám
+        name: Név
+        default_alias: 'Alapértelmezett alias'
+        default_language: 'Alapértelmezett nyelv'
+        comments_status: 'Hozzászólások állapota'
+        url_type: 'URL-cím típusa'
+        configure: Konfigurálás
+        remove: Eltávolítás
     form_type:
         label:
-            name: null
-            template_path: null
-            short_names: null
-            alias: null
-            url_type: null
-            seo: null
-            seo_article_title: null
-            seo_article_keywords: null
-            seo_article_topics: null
-            edit_aliases: null
-            edit_languages: null
-            moderator_to: null
-            moderator_from: null
-            comments_enabled: null
-            public_comments_enabled: null
-            comments_article_default_enabled: null
-            comments_subscribers_moderated: null
-            comments_public_moderated: null
-            comments_captcha_enabled: null
-            comments_spam_blocking_enabled: null
-            meta_title: null
-            meta_keywords: null
-            meta_description: null
-    tip1: null
+            name: 'Kiadvány neve'
+            template_path: 'Sablon elérési útja'
+            short_names: 'Rövid név'
+            alias: 'Alapértelmezett alias'
+            url_type: 'URL-cím típusa'
+            seo: 'Cikk URL-címének részei'
+            seo_article_title: 'Cikk címe'
+            seo_article_keywords: 'Cikk kulcsszavai'
+            seo_article_topics: Cikktémák
+            edit_aliases: 'Aliasok szerkesztése'
+            edit_languages: 'Nyelvek szerkesztése'
+            moderator_to: 'Moderátor címe'
+            moderator_from: 'A moderálási e-mailek feladójának címe'
+            comments_enabled: 'A hozzászólások engedélyezése?'
+            public_comments_enabled: 'A nyilvános (névtelen) hozzászólások engedélyezése?'
+            comments_article_default_enabled: 'A hozzászólás a cikkekhez engedélyezése alapértelmezésként?'
+            comments_subscribers_moderated: 'A hozzászólások moderálása?'
+            comments_public_moderated: 'A nyilvános (névtelen) hozzászólások moderálása?'
+            comments_captcha_enabled: 'A CAPTCHA engedélyezése?'
+            comments_spam_blocking_enabled: 'A szemét hozzászólások (belső rendszer) tiltásának engedélyezése?'
+            meta_title: 'Kiadvány címe'
+            meta_keywords: 'Kiadvány kulcsszavai'
+            meta_description: 'Kiadvány leírása'
+    tip1: 'A Newscoop tartalma hierarchikus struktúrába szervezett, ami megfelel a hírlapok és a magazinok hagyományának: kiadványok, számok, rovatok és cikkek. A kiadványokat számok alkotják, a számok pedig cikkeket tartalmazó rovatokból épülnek fel.'
