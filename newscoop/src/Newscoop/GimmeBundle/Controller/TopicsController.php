@@ -38,7 +38,7 @@ class TopicsController extends FOSRestController
     {
         $em = $this->container->get('em');
 
-        $topics = $em->getRepository('Newscoop\Entity\Topic')
+        $topics = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
             ->getTopics();
 
         if (!$topics) {
@@ -84,7 +84,7 @@ class TopicsController extends FOSRestController
 
         $topic = $em->getRepository('Newscoop\Entity\Topic')
             ->findOneBy(array(
-                'id' => $id, 
+                'id' => $id,
                 'language' => $language->getId()
             ));
 

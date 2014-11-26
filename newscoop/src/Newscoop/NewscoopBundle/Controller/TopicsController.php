@@ -81,23 +81,52 @@ class TopicsController extends Controller
         $nodes = $topicsQuery->getArrayResult();
         $tree = $repository->buildTreeArray($nodes);
 
+        usort($tree, function ($node1, $node2) {
+            return $node1['topicOrder'] - $node2['topicOrder'];
+        });
+
         return new JsonResponse(array('tree' => $tree));
     }
 
     /**
-     * @Route("/admin/topics/move/{id}/{before}", options={"expose"=true})
+     * @Route("/admin/topics/move/{id}", options={"expose"=true})
      */
-    public function moveAction(Request $request, $id, $before)
+    public function moveAction(Request $request, $id)
     {
         $em = $this->get('em');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-        $beforeNode = $this->findOr404($before);
         $node = $this->findOr404($id);
-//ladybug_dump($beforeNode);die;
-        //if (count($node->getChildren())) {
-        //    $repository->persistAsFirstChildOf($node, $beforeNode);
-        //}
-        $repository->persistAsNextSiblingOf($node, $beforeNode);
+        if ($request->get('first') == 'true') {
+            if ($request->get('parent')) {
+                $parent = $this->findOr404($request->get('parent'));
+                $repository->persistAsFirstChildOf($node, $parent);
+            }
+        }
+
+        if ($request->get('last') == 'true') {
+            if ($request->get('parent')) {
+                $parent = $this->findOr404($request->get('parent'));
+                $repository->persistAsLastChildOf($node, $parent);
+            }
+        }
+
+        if ($request->get('middle') == 'true') {
+            if ($request->get('parent')) {
+                $parent = $this->findOr404($request->get('parent'));
+                $repository->persistAsNextSiblingOf($node, $parent);
+            }
+        }
+
+        if (($request->get('last') == 'true' || $request->get('first') == 'true' || $request->get('middle') == 'true') && !$request->get('parent')) {
+            $rootNodes = $repository->getRootNodes();
+            $order = explode(',', $request->get('order'));
+            if (count($order) != count($rootNodes)) {
+                //throw new InvalidParametersException("Number of sorted article authors must be this same as number of authors");
+            }
+
+            $this->reorderRootNodes($rootNodes, $order);
+        }
+
         $em->flush();
 
         return new JsonResponse(array(
@@ -105,6 +134,48 @@ class TopicsController extends Controller
             'message' => 'order saved',
         ), 200);
         //return $this->redirect($this->generateUrl('demo_category_tree'));
+    }
+
+    /**
+     * Reorder Article Authors
+     *
+     * @param Doctrine\ORM\EntityManager $em
+     * @param array                      $rootNodes
+     * @param array                      $order
+     *
+     * @return boolean
+     */
+    public function reorderRootNodes($rootNodes, $order = array())
+    {
+        $em = $this->get('em');
+        foreach ($rootNodes as $rootNode) {
+            $rootNode->setOrder(null);
+        }
+
+        $em->flush();
+
+        if (count($order) > 1) {
+            $counter = 0;
+
+            foreach ($order as $item) {
+                foreach ($rootNodes as $rootNode) {
+                    if ($rootNode->getId() == $item) {
+                        $rootNode->setOrder($counter + 1);
+                        $counter++;
+                    }
+                }
+            }
+        } else {
+            $counter = 1;
+            foreach ($rootNodes as $rootNode) {
+                $rootNode->setOrder($counter);
+                $counter++;
+            }
+        }
+
+        $em->flush();
+
+        return true;
     }
 
     /**
@@ -139,6 +210,16 @@ class TopicsController extends Controller
             $node->setTranslatableLocale($request->get('_code', $request->getLocale()));
             if ($parent) {
                 $node->setParent($parent);
+            } else {
+                $qb = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+                    ->createQueryBuilder('t');
+                $maxOrderValue = $qb
+                    ->select('MAX(t.topicOrder)')
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getSingleScalarResult();
+
+                $node->setOrder((int) $maxOrderValue + 1);
             }
 
             $em->persist($node);

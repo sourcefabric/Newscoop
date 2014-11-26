@@ -18,6 +18,24 @@ class TopicRepository extends NestedTreeRepository
 {
     public $onChildrenQuery;
 
+    public function getTopics()
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+            ->createQueryBuilder('t');
+
+        $countQueryBuilder = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+            ->createQueryBuilder('t')
+            ->select('count(t)');
+
+        $topicsCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $topicsCount);
+
+        return $query;
+    }
+
     public function findAllParentChoises(Category $node = null)
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
@@ -71,7 +89,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @param Query $query Query object
      */
-    public function getTranslatableTopicsQuery($locale)
+    public function getTranslatableTopicsQuery($locale, $order = 'asc')
     {
         $query = $this
             ->getQueryBuilder()
@@ -81,7 +99,7 @@ class TopicRepository extends NestedTreeRepository
             ->where("t.field = 'title'");
 
         $query = $query
-            ->orderBy('node.root, node.lft', 'ASC')
+            ->orderBy('node.root, node.lft', $order)
             ->getQuery();
 
         $query->setHint(

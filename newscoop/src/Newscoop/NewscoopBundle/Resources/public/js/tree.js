@@ -23,8 +23,12 @@ app.factory('TopicsFactory',  function($http) {
         deleteTopic: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_delete", {id: id}));
         },
-        moveTopic: function(id, before) {
-            return $http.post(Routing.generate("newscoop_newscoop_topics_move", {id: id, before: before}));
+        moveTopic: function(id, params) {
+            return $http({
+              method: "POST",
+              url: Routing.generate("newscoop_newscoop_topics_move", {id: id}),
+              data: params
+            });
         },
         deleteTopicTranslation: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_deletetranslation", {id: id}));
@@ -67,64 +71,64 @@ app.factory('TopicsFactory',  function($http) {
 app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.treeOptions = {
       dropped: function(event) {
-        var array = [];
-        /*if (event.dest.nodesScope.$$childHead.$$prevSibling) {//
-          console.log('$$childHead.$$prevSibling');
-          console.log(event.dest.nodesScope.$$childHead.$$prevSibling.node);
-        }
-        if (event.dest.nodesScope.$$childHead.$$nextSibling) {
-          console.log('$$childHead.$$nextSibling');
-          console.log(event.dest.nodesScope.$$childHead.$$nextSibling.node);
-          array.push(event.dest.nodesScope.$$childHead.$$nextSibling.node);
-        }
-        if (event.dest.nodesScope.$$childTail.$$prevSibling) {
-          console.log('$$childTail.$$prevSibling');
-          console.log(event.dest.nodesScope.$$childTail.$$prevSibling.node);
-           array.push(event.dest.nodesScope.$$childTail.$$prevSibling.node);
-        }
-        if (event.dest.nodesScope.$$childTail.$$nextSibling) {//
-          console.log('$$childTail.$$nextSibling');
-          console.log(event.dest.nodesScope.$$childTail.$$nextSibling.node);
-         
-        }*/
-//console.log();
-        var result = event.dest.nodesScope.$modelValue;
-        var next = null;
-        //var index = array.indexOf(event.dest.nodesScope.$modelValue);
-        var rr = $.each(result, function(i){
-            if(result[i].id === event.source.nodeScope.$modelValue.id) {
-                var l = result.length;
+        console.log('top closest node: \n');
+        console.log(event.dest.nodesScope.$$childHead);
+        console.log('dragged node: \n');
+        console.log(event.dest.nodesScope.$$childTail);
+        console.log('parent node: \n');
+        console.log(event.dest.nodesScope.$modelValue);
+        var closestNode = event.dest.nodesScope.$$childHead;
+        var draggedNode = event.dest.nodesScope.$$childTail;
+        var params = {};
 
-              var current = result[i];
-              var previous = result[(i+l-1)%l];
-              next = result[(i+1)%l];
-              //console.log(previous, next);
-              if (previous == next) {
-                //result = previous;
-                return previous;
-              }
-                return next;
+        if (draggedNode.$first) {
+            params['first'] = true;
+            if (event.dest.nodesScope.$parent.$modelValue) {
+              params['parent'] = event.dest.nodesScope.$parent.$modelValue.id;
+            } else {
+              params['order'] = [];
+              angular.forEach(event.dest.nodesScope.$modelValue, function(value, key) {
+                  params['order'].push(parseInt(value.id));
+              });
+
+              params['order'] = params['order'].join();
             }
-        });
-        
-        //console.log(event.source.nodeScope.$modelValue.id, next.id);
-        //console.log(event.source.nodeScope.$$childHead.$nodeScope.$modelValue);
-        console.log(event.source.nodeScope);
+        }
 
-        /*TopicsFactory.moveTopic(event.source.nodeScope.$modelValue.id, next.id).success(function (response) {
-          if (response.status) {
-            flashMessage(response.message);
-          } else {
-            flashMessage(response.message, 'error');
-          }
-        }).error(function(response, status){
-            flashMessage(response.message, 'error');
-        });*/
-        
-      },
-      beforeDrop: function(event) {
-        console.log(event);
+        if (draggedNode.$last) {
+            params['last'] = true;
+            if (event.dest.nodesScope.$parent.$modelValue) {
+              params['parent'] = event.dest.nodesScope.$parent.$modelValue.id;
+            } else {
+              params['order'] = [];
+              angular.forEach(event.dest.nodesScope.$modelValue, function(value, key) {
+                  params['order'].push(parseInt(value.id));
+              });
 
+              params['order'] = params['order'].join();
+            }
+        }
+
+        if (draggedNode.$middle) {
+            params['middle'] = true;
+            if (event.dest.nodesScope.$parent.$modelValue) {
+              var closestIndex = closestNode.$index;
+              var draggedIndex = draggedNode.$index;
+              if (draggedIndex > closestIndex) {
+                 params['parent'] = closestNode.node.id;
+              }
+            } else {
+              params['order'] = [];
+              angular.forEach(event.dest.nodesScope.$modelValue, function(value, key) {
+                  params['order'].push(parseInt(value.id));
+              });
+
+              params['order'] = params['order'].join();
+            }
+
+        }
+
+        moveTopic(event.source.nodeScope.$modelValue.id, params);
       }
     };
     $scope.treeFilter = $filter('uiTreeFilter');
@@ -143,6 +147,18 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     }).error(function(data, status){
         flashMessage(response.message, 'error');
     });
+
+    var moveTopic = function(draggedNode, params) {
+       TopicsFactory.moveTopic(draggedNode, params).success(function (response) {
+          if (response.status) {
+            flashMessage(response.message);
+          } else {
+            flashMessage(response.message, 'error');
+          }
+        }).error(function(response, status){
+            flashMessage(response.message, 'error');
+        });
+    }
 
     var updateList = function (children, id) {
         if (children) {
@@ -212,7 +228,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
                       title: response.topicTitle,
                       translations: [{locale: response.locale, field: "title", content: response.topicTitle }]
                     });
-                    //children[i].__children.translations.push([{locale: response.locale, field: "title", content: response.topicTitle }]);
                   }
                   return children[i];
                 }
@@ -258,21 +273,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     }
 
-    $scope.dropped = function(e) {
-        console.log (e.source);     
-      }
-    $scope.moveTopic = function() {
-      
-      /*TopicsFactory.moveTopic(112, 109).success(function (response) {
-        if (response.status) {
-          flashMessage(response.message);
-        } else {
-          flashMessage(response.message, 'error');
-        }
-      }).error(function(response, status){
-          flashMessage(response.message, 'error');
-      });*/
-    }
     $scope.toggle = function(scope) {
       scope.toggle();
     };

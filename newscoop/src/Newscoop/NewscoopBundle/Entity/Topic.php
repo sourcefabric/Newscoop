@@ -73,6 +73,7 @@ class Topic
 
     /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="parent")
+     * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;
 
@@ -100,6 +101,12 @@ class Topic
      * this is not a mapped field of entity metadata, just a simple property
      */
     protected $locale;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    protected $topicOrder;
 
     /**
      * @ORM\OneToMany(
@@ -479,6 +486,30 @@ class Topic
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of topic order.
+     *
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->topicOrder;
+    }
+
+    /**
+     * Sets the value of topic order.
+     *
+     * @param int topicOrder the topic order
+     *
+     * @return self
+     */
+    public function setOrder($topicOrder = null)
+    {
+        $this->topicOrder = $topicOrder;
 
         return $this;
     }
