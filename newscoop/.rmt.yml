@@ -30,3 +30,5 @@ _default:
             dump-commits: true
             exclude-merge-commits: true
         vcs-commit: ~              # Commit the CHANGELOG
+        vcs-publish:
+            ask-remote-name: true

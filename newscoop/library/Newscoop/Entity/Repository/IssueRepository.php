@@ -35,6 +35,10 @@ class IssueRepository extends EntityRepository
             ->getQuery()
             ->getArrayResult();
 
+        if (count($issuesIds) == 0) {
+            return false;
+        }
+
         $ids = array();
         foreach ($issuesIds as $key => $issue) {
             $ids[] = $issue['id'];
