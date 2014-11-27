@@ -10,7 +10,7 @@ namespace Newscoop\NewscoopBundle\Entity\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Doctrine\ORM\Query;
-use Gedmo\DemoBundle\Entity\Category;
+use Newscoop\NewscoopBundle\Entity\Topic;
 use Closure;
 use Gedmo\Translatable\TranslatableListener;
 
@@ -21,11 +21,11 @@ class TopicRepository extends NestedTreeRepository
     public function getTopics()
     {
         $em = $this->getEntityManager();
-        $queryBuilder = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->createQueryBuilder('t');
+        $queryBuilder = $this
+            ->getQueryBuilder('t');
 
-        $countQueryBuilder = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->createQueryBuilder('t')
+        $countQueryBuilder = $this
+            ->getQueryBuilder('t')
             ->select('count(t)');
 
         $topicsCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
@@ -36,7 +36,7 @@ class TopicRepository extends NestedTreeRepository
         return $query;
     }
 
-    public function findAllParentChoises(Category $node = null)
+    public function findAllParentChoises(Topic $node = null)
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
         if (!is_null($node)) {
@@ -76,12 +76,108 @@ class TopicRepository extends NestedTreeRepository
 
     public function getTopicsQuery($direction = 'ASC')
     {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+
         return $this
             ->getQueryBuilder()
             ->select('node')
-            ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
+            ->from($config['useObjectClass'], 'node')
             ->orderBy('node.root, node.lft', $direction)
             ->getQuery();
+    }
+
+    /**
+     * Saves topic position when it was dragged and dropped
+     *
+     * @param Topic   $node     Dragged topic object
+     * @param int     $parentId Parent of dragged topic
+     * @param boolean $asRoot   If topic is dragged from children to root level
+     * @param array   $params   Parameters with positions
+     *
+     * @return void|boolean
+     */
+    public function saveTopicPosition(Topic $node, $parentId, $asRoot, $params)
+    {
+        if ($parentId) {
+            $parent = $this->findOneBy(array(
+                'id' => $parentId,
+            ));
+
+            if (!$parent) {
+                return true;
+            }
+
+            $node->setOrder(null);
+            foreach ($params as $key => $isSet) {
+                switch ($key) {
+                    case 'first':
+                        if ($isSet) {
+                            $this->persistAsFirstChildOf($node, $parent);
+                        }
+                        break;
+                    case 'last':
+                        if ($isSet) {
+                            $this->persistAsLastChildOf($node, $parent);
+                        }
+                        break;
+                    case 'middle':
+                        if ($isSet) {
+                            $this->persistAsNextSiblingOf($node, $parent);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        // when dragging childrens to roots
+        if ($asRoot) {
+            $node->setParent(null);
+        }
+
+        $this->_em->flush();
+    }
+
+    /**
+     * Reorder root topics
+     *
+     * @param array $rootNodes Root topics
+     * @param array $order     Topics ids in order
+     *
+     * @return boolean
+     */
+    public function reorderRootNodes($rootNodes, $order = array())
+    {
+        foreach ($rootNodes as $rootNode) {
+            $rootNode->setOrder(null);
+        }
+
+        $this->_em->flush();
+
+        if (count($order) > 1) {
+            $counter = 0;
+
+            foreach ($order as $item) {
+                foreach ($rootNodes as $rootNode) {
+                    if ($rootNode->getId() == $item) {
+                        $rootNode->setOrder($counter + 1);
+                        $counter++;
+                    }
+                }
+            }
+        } else {
+            $counter = 1;
+            foreach ($rootNodes as $rootNode) {
+                $rootNode->setOrder($counter);
+                $counter++;
+            }
+        }
+
+        $this->_em->flush();
+
+        return true;
     }
 
     /**

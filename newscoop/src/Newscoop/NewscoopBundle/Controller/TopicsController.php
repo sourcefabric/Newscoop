@@ -95,87 +95,35 @@ class TopicsController extends Controller
     {
         $em = $this->get('em');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+        $translator = $this->get('translator');
         $node = $this->findOr404($id);
-        if ($request->get('first') == 'true') {
-            if ($request->get('parent')) {
-                $parent = $this->findOr404($request->get('parent'));
-                $repository->persistAsFirstChildOf($node, $parent);
-            }
+        $asRoot = $request->get('asRoot');
+        $parent = $request->get('parent');
+        $params = $request->request->all();
+        if (is_array($node)) {
+            return new JsonResponse($node, 404);
         }
 
-        if ($request->get('last') == 'true') {
-            if ($request->get('parent')) {
-                $parent = $this->findOr404($request->get('parent'));
-                $repository->persistAsLastChildOf($node, $parent);
-            }
+        $result = $repository->saveTopicPosition($node, $parent, $asRoot, $params);
+
+        if ($result) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics'),
+            ));
         }
 
-        if ($request->get('middle') == 'true') {
-            if ($request->get('parent')) {
-                $parent = $this->findOr404($request->get('parent'));
-                $repository->persistAsNextSiblingOf($node, $parent);
-            }
-        }
-
-        if (($request->get('last') == 'true' || $request->get('first') == 'true' || $request->get('middle') == 'true') && !$request->get('parent')) {
+        $or = ($request->get('last')|| $request->get('first') || $request->get('middle'));
+        if ($or && !$parent) {
             $rootNodes = $repository->getRootNodes();
             $order = explode(',', $request->get('order'));
-            if (count($order) != count($rootNodes)) {
-                //throw new InvalidParametersException("Number of sorted article authors must be this same as number of authors");
-            }
-
-            $this->reorderRootNodes($rootNodes, $order);
+            $repository->reorderRootNodes($rootNodes, $order);
         }
-
-        $em->flush();
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => 'order saved',
+            'message' => $translator->trans('topics.alerts.ordersaved', array(), 'topics'),
         ), 200);
-        //return $this->redirect($this->generateUrl('demo_category_tree'));
-    }
-
-    /**
-     * Reorder Article Authors
-     *
-     * @param Doctrine\ORM\EntityManager $em
-     * @param array                      $rootNodes
-     * @param array                      $order
-     *
-     * @return boolean
-     */
-    public function reorderRootNodes($rootNodes, $order = array())
-    {
-        $em = $this->get('em');
-        foreach ($rootNodes as $rootNode) {
-            $rootNode->setOrder(null);
-        }
-
-        $em->flush();
-
-        if (count($order) > 1) {
-            $counter = 0;
-
-            foreach ($order as $item) {
-                foreach ($rootNodes as $rootNode) {
-                    if ($rootNode->getId() == $item) {
-                        $rootNode->setOrder($counter + 1);
-                        $counter++;
-                    }
-                }
-            }
-        } else {
-            $counter = 1;
-            foreach ($rootNodes as $rootNode) {
-                $rootNode->setOrder($counter);
-                $counter++;
-            }
-        }
-
-        $em->flush();
-
-        return true;
     }
 
     /**
@@ -439,10 +387,10 @@ class TopicsController extends Controller
         ));
 
         if (!$node) {
-            return new JsonResponse(array(
+            return array(
                 'status' => false,
                 'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics'),
-            ), 404);
+            );
         }
 
         return $node;

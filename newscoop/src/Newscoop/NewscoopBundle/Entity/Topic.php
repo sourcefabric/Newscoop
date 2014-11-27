@@ -262,7 +262,7 @@ class Topic
      *
      * @return self
      */
-    public function setParent($parent)
+    public function setParent($parent = null)
     {
         $this->parent = $parent;
 

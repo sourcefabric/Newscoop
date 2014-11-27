@@ -76,7 +76,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         console.log('dragged node: \n');
         console.log(event.dest.nodesScope.$$childTail);
         console.log('parent node: \n');
-        console.log(event.dest.nodesScope.$modelValue);
+        console.log(event.dest.nodesScope.$parent.$modelValue);
         var closestNode = event.dest.nodesScope.$$childHead;
         var draggedNode = event.dest.nodesScope.$$childTail;
         var params = {};
@@ -92,6 +92,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
               });
 
               params['order'] = params['order'].join();
+              if (draggedNode.node.id != draggedNode.node.root) {
+                  params['asRoot'] = true;
+              }
             }
         }
 
@@ -106,6 +109,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
               });
 
               params['order'] = params['order'].join();
+              if (draggedNode.node.id != draggedNode.node.root) {
+                  params['asRoot'] = true;
+              }
             }
         }
 
@@ -118,12 +124,16 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
                  params['parent'] = closestNode.node.id;
               }
             } else {
+
               params['order'] = [];
               angular.forEach(event.dest.nodesScope.$modelValue, function(value, key) {
                   params['order'].push(parseInt(value.id));
               });
 
               params['order'] = params['order'].join();
+              if (draggedNode.node.id != draggedNode.node.root) {
+                  params['asRoot'] = true;
+              }
             }
 
         }
