@@ -20,13 +20,18 @@ class TopicRepository extends NestedTreeRepository
 
     public function getTopics()
     {
-        $em = $this->getEntityManager();
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+
         $queryBuilder = $this
-            ->getQueryBuilder('t');
+            ->getQueryBuilder('t')
+            ->select('t')
+            ->from($config['useObjectClass'], 't');
 
         $countQueryBuilder = $this
             ->getQueryBuilder('t')
-            ->select('count(t)');
+            ->select('count(t)')
+            ->from($config['useObjectClass'], 't');
 
         $topicsCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
 
@@ -95,7 +100,7 @@ class TopicRepository extends NestedTreeRepository
      * @param boolean $asRoot   If topic is dragged from children to root level
      * @param array   $params   Parameters with positions
      *
-     * @return void|boolean
+     * @return boolean
      */
     public function saveTopicPosition(Topic $node, $parentId, $asRoot, $params)
     {
@@ -105,7 +110,7 @@ class TopicRepository extends NestedTreeRepository
             ));
 
             if (!$parent) {
-                return true;
+                return false;
             }
 
             $node->setOrder(null);
@@ -138,6 +143,8 @@ class TopicRepository extends NestedTreeRepository
         }
 
         $this->_em->flush();
+
+        return true;
     }
 
     /**

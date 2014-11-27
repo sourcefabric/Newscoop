@@ -214,16 +214,16 @@ class Article implements DocumentInterface
     protected $lockUser;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\ManyToMany(targetEntity="Newscoop\NewscoopBundle\Entity\Topic")
      * @ORM\JoinTable(name="ArticleTopics",
      *      joinColumns={
      *          @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="id")
      *      }
      *  )
-     * @var Newscoop\Entity\Topic
+     * @var Newscoop\NewscoopBundle\Entity\Topic
      */
     protected $topics;
 

@@ -29,13 +29,6 @@ class Topic
 
     /**
      * @Gedmo\Translatable
-     * @Gedmo\Slug(fields={"title"})
-     * @ORM\Column(length=64, unique=true)
-     */
-    protected $slug;
-
-    /**
-     * @Gedmo\Translatable
      * @ORM\Column(length=64)
      */
     protected $title;
@@ -145,30 +138,6 @@ class Topic
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Gets the value of slug.
-     *
-     * @return mixed
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Sets the value of slug.
-     *
-     * @param mixed $slug the slug
-     *
-     * @return self
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
 
         return $this;
     }

@@ -38,10 +38,17 @@ Newscoop\NewscoopBundle\Entity\Topic:
             type: string
             groups: ["list", "details"]
             since_version: 1.2
+        topicOrder:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: order
+            since_version: 1.2
         translations:
             expose: true
             read_only: true
-            type: array
+            type: ArrayCollection<string, Newscoop\NewscoopBundle\Entity\TopicTranslation>
             groups: ["list", "details"]
             since_version: 1.2
         articlesLink:

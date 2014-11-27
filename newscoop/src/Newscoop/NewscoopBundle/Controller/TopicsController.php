@@ -106,15 +106,14 @@ class TopicsController extends Controller
 
         $result = $repository->saveTopicPosition($node, $parent, $asRoot, $params);
 
-        if ($result) {
+        if (!$result) {
             return new JsonResponse(array(
                 'status' => false,
                 'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics'),
             ));
         }
 
-        $or = ($request->get('last')|| $request->get('first') || $request->get('middle'));
-        if ($or && !$parent) {
+        if ($request->get('last') || $request->get('first') || $request->get('middle') && !$parent) {
             $rootNodes = $repository->getRootNodes();
             $order = explode(',', $request->get('order'));
             $repository->reorderRootNodes($rootNodes, $order);
@@ -212,15 +211,9 @@ class TopicsController extends Controller
             ), 403);
         }
 
-        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
-            'id' => $id,
-        ));
-
-        if (!$node) {
-            return new JsonResponse(array(
-                'status' => false,
-                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics'),
-            ), 404);
+        $node = $this->findOr404($id);
+        if (is_array($node)) {
+            return new JsonResponse($node, 404);
         }
 
         if ($form->isValid()) {
@@ -240,7 +233,6 @@ class TopicsController extends Controller
             try {
                 $topicTranslation = new TopicTranslation($language->getCode(), 'title', $data['title']);
                 $node->addTranslation($topicTranslation);
-                $em->persist($node);
                 $em->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(array(
@@ -269,15 +261,9 @@ class TopicsController extends Controller
     {
         $translator = $this->get('translator');
         $em = $this->get('em');
-        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
-            'id' => $id,
-        ));
-
-        if (!$node) {
-            return new JsonResponse(array(
-                'status' => false,
-                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics')
-            ), 404);
+        $node = $this->findOr404($id);
+        if (is_array($node)) {
+            return new JsonResponse($node, 404);
         }
 
         $em->remove($node);
@@ -333,15 +319,9 @@ class TopicsController extends Controller
             ), 403);
         }
 
-        $node = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
-            'id' => $id,
-        ));
-
-        if (!$node) {
-            return new JsonResponse(array(
-                'status' => false,
-                'message' => $translator->trans('topics.failedfind', array('%id%' => $id), 'topics')
-            ), 404);
+        $node = $this->findOr404($id);
+        if (is_array($node)) {
+            return new JsonResponse($node, 404);
         }
 
         $locale = $request->get('_code', $request->getLocale());

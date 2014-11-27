@@ -183,7 +183,7 @@ stof_doctrine_extensions:
     orm:
         default:
             tree: true
-            sluggable: true
+            sluggable: false
             translatable: true
-            sortable: true
-            loggable: true
+            sortable: false
+            loggable: false

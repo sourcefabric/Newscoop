@@ -19,20 +19,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class TopicsController extends FOSRestController
 {
     /**
-     * Get Topics
+     * Get all topics
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when succesfull",
-     *         404={
-     *           "Returned when topics are not found",
-     *         }
+     *         200="Returned when successful",
+     *         404="Returned when topics are not found"
      *     }
      * )
      *
      * @Route("/topics.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
+     *
+     * @return array
      */
     public function getTopicsAction(Request $request)
     {
