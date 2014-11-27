@@ -1,22 +1,22 @@
 'No thumbnails were fixed.': 'Bélyegképek nem kerültek javításra.'
-'Missing thumbnails fixed.': 'Hiányoznak javított bélyegképek.'
+'Missing thumbnails fixed.': 'A hiányzó bélyegképek javításra kerültek.'
 Slideshows: Diavetítések
 'You cant update used files.': 'Használatban lévő fájlokat nem frissíthetsz.'
 Source: Forrás
 Local: Helyi
 'Items updated.': 'Az elemek frissítése megtörtént.'
-Feedback: Visszajelzés
+Feedback: Visszajelzések
 'Do you want to update unused only?': 'Csak a nem használtakat akarod frissíteni?'
 'Disapprove selected': 'Kijelöltek elutasítása'
 'Are you sure you want to update selected items?': 'Biztosan frissíteni akarod a kijelölt elemeket?'
 'Approve selected': 'Kijelöltek jóváhagyása'
 'Image files': Képfájlok
 'Fix all thumbnails': 'Az összes bélyegkép javítása'
-'You do not have the right to add files.': 'Nincs jogod fájlok hozzáadásához.'
+'You do not have the right to add files.': 'Nincs jogod a fájlok hozzáadásához.'
 'Should this file only be available for this translation of the article, or for all translations?': 'Ez a fájl a cikk csak ezen fordításához vagy az összes fordításhoz legyen elérhető?'
 'Please enter a description for the file: $1.': 'Add meg a/z $1 fájl leírását.'
 'Only this translation': 'Csak ez a fordítás'
-'No files for multi editing.': null
+'No files for multi editing.': 'Nincsenek fájlok a többszörös szerkesztésre.'
 'Edit files': 'Fájlok szerkesztése'
 'Change file information': 'Fájlinformáció módosítása'
 'All translations': 'Minden fordítás'
@@ -40,11 +40,11 @@ Charset: Karakterkészlet
 'Attachment updated.': 'A csatolmány frissítése megtörtént.'
 'Are you sure you want to delete selected items?': 'Biztosan törölni akarod a kijelölt elemeket?'
 'Add new file': 'Új fájl hozzáadása'
-'You do not have the right to add images.': 'Nincs jogod képeket hozzáadni.'
-'Use for all': null
-'Specify image url if you want to load it.': 'Adja meg a kép URL-címét, ha be szeretné tölteni.'
+'You do not have the right to add images.': 'Nincs jogod a képek hozzáadásához.'
+'Use for all': 'Használat mindre'
+'Specify image url if you want to load it.': 'Add meg a kép URL-címét, ha be szeretnéd tölteni.'
 Size: Méret
-'No images for multi editing.': null
+'No images for multi editing.': 'Nincsenek képek a többszörös szerkesztéshez.'
 'Images updated.': 'A képek frissítése megtörtént'
 'Edit images': 'Képek szerkesztése'
 '$1 files uploaded.': 'A/z $1 fájl feltöltése megtörtént.'
@@ -58,5 +58,5 @@ Size: Méret
 'Used in articles': 'Cikkekben használva'
 'View image': 'Kép megtekintése'
 'Change image information': 'Képinformációk módosítása'
-'Photographer URL': 'Fényképész URL-címe'
+'Photographer URL': 'Fotós URL-címe'
 'Add website url starting with http://': 'A webhely http:// előtaggal kezdődő URL-címének hozzáadása'

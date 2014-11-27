@@ -34,7 +34,10 @@ class Publication extends DatabaseObject {
                                'seo',
 	                           'comments_public_enabled',
                                'comments_moderator_to',
-	                           'comments_moderator_from'
+	                           'comments_moderator_from',
+                               'meta_title',
+                               'meta_keywords',
+                               'meta_description'
 	                           );
 
 	/**

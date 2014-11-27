@@ -13,8 +13,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Publication entity
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
- * @ORM\Table(name="Publications")
+ * @ORM\Table(name="Publications", indexes={
+ *     @ORM\Index(name="Name", columns={"Name"}),
+ *     @ORM\Index(name="Alias", columns={"IdDefaultAlias"}),
+ * })
  */
 class Publication
 {
@@ -26,7 +30,7 @@ class Publication
     /* --------------------------------------------------------------- */
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="Id", type="integer")
      * @var int
@@ -34,14 +38,14 @@ class Publication
     protected $id;
 
     /**
-     * @ORM\Column(name="Name", nullable=True)
+     * @ORM\Column(name="Name", nullable=false)
      * @var string
      */
     protected $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Language")
-     * @ORM\JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id", columnDefinition="int(10)")
      * @var Newscoop\Entity\Language
      */
     protected $language;
@@ -143,6 +147,24 @@ class Publication
     protected $seo;
 
     /**
+     * @ORM\Column(name="meta_title", nullable=true)
+     * @var string
+     */
+    protected $metaTitle;
+
+    /**
+     * @ORM\Column(name="meta_keywords", nullable=true)
+     * @var string
+     */
+    protected $metaKeywords;
+
+    /**
+     * @ORM\Column(name="meta_description", nullable=true)
+     * @var string
+     */
+    protected $metaDescription;
+
+    /**
      */
     public function __construct()
     {
@@ -159,6 +181,13 @@ class Publication
         return $this->name;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     /**
      * Get language
      *
@@ -167,6 +196,13 @@ class Publication
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
     }
 
     /**
@@ -311,7 +347,7 @@ class Publication
      */
     public function setModeratorFrom($p_moderator_from)
     {
-        return $this->moderator_to = $p_moderator_from;
+        return $this->moderator_from = $p_moderator_from;
     }
 
     /**
@@ -334,6 +370,13 @@ class Publication
         return $this->defaultAlias;
     }
 
+    public function setDefaultAlias($alias)
+    {
+        $this->defaultAlias = $alias;
+
+        return $this;
+    }
+
     public function getCaptchaEnabled()
     {
         return $this->commentsCaptchaEnabled;
@@ -344,10 +387,25 @@ class Publication
         return $this->commentsSubscribersModerated;
     }
 
+    public function setCommentsSubscribersModerated($commentsSubscribersModerated)
+    {
+        $this->commentsSubscribersModerated = $commentsSubscribersModerated;
+
+        return $this;
+    }
+
     public function getCommentsPublicModerated()
     {
         return $this->commentsPublicModerated;
     }
+
+    public function setCommentsPublicModerated($commentsPublicModerated)
+    {
+        $this->commentsPublicModerated = $commentsPublicModerated;
+
+        return $this;
+    }
+
     /**
      * Gets the value of public_enabled.
      *
@@ -355,7 +413,7 @@ class Publication
      */
     public function getPublicCommentsEnabled()
     {
-        return $this->public_enabled;
+        return (boolean) $this->public_enabled;
     }
 
     /**
@@ -420,6 +478,28 @@ class Publication
         return (array) unserialize($this->seo);
     }
 
+    public function getSeoChoices()
+    {
+        $choices = array();
+        foreach ($this->getSeo() as $key => $value) {
+            if ($value == 'on') {
+                $choices[] = $key;
+            }
+        }
+
+        return $choices;
+    }
+
+    public function setSeoChoices($data)
+    {
+        $seo = array();
+        foreach($data as $value) {
+            $seo[$value] = 'on';
+        }
+
+        $this->setSeo($seo);
+    }
+
     /**
      * Gets the value of urlTypeId.
      *
@@ -440,6 +520,198 @@ class Publication
     public function setUrlTypeId($urlTypeId)
     {
         $this->urlTypeId = $urlTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of metaTitle.
+     *
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * Sets the value of metaTitle.
+     *
+     * @param string $metaTitle the meta title
+     *
+     * @return self
+     */
+    public function setMetaTitle($metaTitle)
+    {
+        $this->metaTitle = $metaTitle;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of metaKeywords.
+     *
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * Sets the value of metaKeywords.
+     *
+     * @param string $metaKeywords the meta keywords
+     *
+     * @return self
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of metaDescription.
+     *
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * Sets the value of metaDescription.
+     *
+     * @param string $metaDescription the meta description
+     *
+     * @return self
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsArticleDefaultEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsArticleDefaultEnabled()
+    {
+        return $this->commentsArticleDefaultEnabled;
+    }
+
+    /**
+     * Sets the value of commentsArticleDefaultEnabled.
+     *
+     * @param bool $commentsArticleDefaultEnabled the comments article default enabled
+     *
+     * @return self
+     */
+    public function setCommentsArticleDefaultEnabled($commentsArticleDefaultEnabled)
+    {
+        $this->commentsArticleDefaultEnabled = $commentsArticleDefaultEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsCaptchaEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsCaptchaEnabled()
+    {
+        return $this->commentsCaptchaEnabled;
+    }
+
+    /**
+     * Sets the value of commentsCaptchaEnabled.
+     *
+     * @param bool $commentsCaptchaEnabled the comments captcha enabled
+     *
+     * @return self
+     */
+    public function setCommentsCaptchaEnabled($commentsCaptchaEnabled)
+    {
+        $this->commentsCaptchaEnabled = $commentsCaptchaEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsSpamBlockingEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsSpamBlockingEnabled()
+    {
+        return $this->commentsSpamBlockingEnabled;
+    }
+
+    /**
+     * Sets the value of commentsSpamBlockingEnabled.
+     *
+     * @param bool $commentsSpamBlockingEnabled the comments spam blocking enabled
+     *
+     * @return self
+     */
+    public function setCommentsSpamBlockingEnabled($commentsSpamBlockingEnabled)
+    {
+        $this->commentsSpamBlockingEnabled = $commentsSpamBlockingEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsEnabled.
+     *
+     * @return bool
+     */
+    public function getCommentsEnabled()
+    {
+        return $this->commentsEnabled;
+    }
+
+    /**
+     * Sets the value of commentsEnabled.
+     *
+     * @param bool $commentsEnabled the comments enabled
+     *
+     * @return self
+     */
+    public function setCommentsEnabled($commentsEnabled)
+    {
+        $this->commentsEnabled = $commentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of public_enabled.
+     *
+     * @return bool
+     */
+    public function getPublicEnabled()
+    {
+        return (boolean) $this->public_enabled;
+    }
+
+    /**
+     * Sets the value of public_enabled.
+     *
+     * @param bool $public_enabled the public enabled
+     *
+     * @return self
+     */
+    public function setPublicEnabled($public_enabled)
+    {
+        $this->public_enabled = $public_enabled;
 
         return $this;
     }

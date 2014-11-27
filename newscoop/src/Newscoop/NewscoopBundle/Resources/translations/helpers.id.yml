@@ -1,0 +1,9 @@
+dynatable:
+    page: null
+    perPageText: null
+    pageText: null
+    recordCountPageBoundTemplate: null
+    recordCountPageUnboundedTemplate: null
+    recordCountFilteredTemplate: null
+    recordCountText: null
+    processingText: null

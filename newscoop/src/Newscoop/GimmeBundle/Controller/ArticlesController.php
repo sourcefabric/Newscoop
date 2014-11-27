@@ -318,6 +318,14 @@ class ArticlesController extends FOSRestController
         foreach ($articleFields as $dbColumnName => $text) {
             $articleTypeObj->setProperty($dbColumnName, $text);
         }
+
+        // Temporarily added to at least give some feedback,
+        // without it the status would always be 500
+        // @Author: Mischa
+        $response = new Response();
+        $response->setStatusCode(201);
+        
+        return $response;
     }
 
     /**

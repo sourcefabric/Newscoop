@@ -52,6 +52,14 @@ class ArticleAuthorRepository extends EntityRepository
             ))
             ->orderBy('au.order', 'asc');
 
-        return $qb->getQuery();
+        $countQueryBuilder = clone $qb;
+        $countQueryBuilder->select('COUNT(au)');
+
+        $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $qb->getQuery();
+        $query->setHint('knp_paginator.count', $count);
+
+        return $query;
     }
 }

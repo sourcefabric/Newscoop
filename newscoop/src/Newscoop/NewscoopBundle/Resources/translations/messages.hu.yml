@@ -3,7 +3,7 @@ Plugins: Bővítmények
 Account: Fiók
 'Items per page': 'Elemek oldalanként'
 'Add new': 'Új hozzáadása'
-Home: null
+Home: Kezdőlap
 Logout: Kijelentkezés
 More...: null
 Content: Tartalom
@@ -28,7 +28,7 @@ Path: 'Elérési út'
 URL: URL-cím
 Order: Rendezés
 Hide: Elrejtés
-Duplicate: null
+Duplicate: Megkettőzés
 Subscription: Előfizetés
 expires: lejár
 starts: kezdődik
@@ -129,7 +129,7 @@ YYYY-MM-DD: ÉÉÉÉ-HH-NN
 Submit: Küldés
 Image: Kép
 Description: Leírás
-Photographer: Fényképész
+Photographer: Fotós
 Place: Hely
 Date: Dátum
 Thumbnail: Bélyegkép
@@ -197,7 +197,7 @@ Unlink: 'Hivatkozás megszüntetése'
 'Are you sure you want to delete the image $1?': 'Biztosan törölni akarod a/z $1 képet?'
 'No such issue.': 'Nincs ilyen szám.'
 'Are you sure you want to delete the subscription to the publication $1?': 'Biztosan törölni akarod az előfizetést a/z $1 kiadványra?'
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nem lehet menteni a/z $1 szám változtatásait. Győződj meg róla, hogy a szám $2 URL-nevét nem használták-e korábban a/z $3 kiadványban.'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nem lehet menteni a/z $1 szám módosításait. Győződj meg róla, hogy a szám $2 URL-nevét nem használták-e korábban a/z $3 kiadványban.'
 GB: GB
 MB: MB
 KB: KB
@@ -211,8 +211,8 @@ Add: Hozzáadás
 'Select None': 'Kijelölés megszüntetése'
 'Add Event': 'Esemény hozzáadása'
 N/A: N.a.
-'On Front Page': 'A címlapon'
-'On Section Page': 'A rovatlapon'
+'On Front Page': Címlapon
+'On Section Page': Rovatlapon
 'Created by': Létrehozta
 'Creation date': 'Létrehozás dátuma'
 'Publication List': Kiadványlista
@@ -252,8 +252,8 @@ Send: Küldés
 'Thank you.': Köszönjük.
 'Please take a minute to send us an email.': 'Kérjük, szánj egy percet arra, hogy e-mailt küldesz nekünk.'
 (optional): (elhagyható)
-'The URL you entered is invalid: $1': 'Az Ön által megadott URL-cím érvénytelen: $1'
-Reads: Elolvasások
+'The URL you entered is invalid: $1': 'Az általad megadott URL-cím érvénytelen: $1'
+Reads: Olvasások
 'Publish with issue': 'Közzététel folyóiratszámmal'
 'Universal List': 'Univerzális lista'
 'Invalid security token!': 'Érvénytelen biztonsági jogkivonat!'
@@ -265,7 +265,7 @@ Title: Cím
 'Feed saved': 'A hírcsatorna mentése megtörtént.'
 'Item published': 'Az elem közzététele megtörtént'
 'Settings saved': 'A beállítások mentése megtörtént.'
-'Self-delete is not permitted.': null
+'Self-delete is not permitted.': 'Saját magad törlése nem engedélyezett.'
 'Edit staff member $1': 'A/z $1 nevű szerkesztőségi tag szerkesztése'
 'Delete staff member $1': 'A/z $1 nevű szerkesztőségi tag törlése'
 'Could not save user $1. Please make sure it does not already exist': 'A/z $1 nevű felhasználó nem menthető. Győződj meg róla, hogy nem létezik-e már.'
@@ -282,4 +282,4 @@ Confirm: Megerősítés
 at: null
 published: közzétéve
 unpublished: visszavonva
-nopermissions: 'A hozzáférés ehhez az erőforrásoz az Ön számára nem engedélyezett.'
+nopermissions: 'A hozzáférés ehhez az erőforrásoz a számodra nem engedélyezett.'

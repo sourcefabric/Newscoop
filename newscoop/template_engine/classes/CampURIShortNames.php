@@ -537,6 +537,11 @@ class CampURIShortNames extends CampURI
                     break;
                 }
 
+                if (is_null($this->_themePath)) {
+                    $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+                    $this->_themePath = $themesService->getThemePath();
+                }
+
                 $pathRsc = new Resource();
                 $pathRsc->setName('buildPage');
                 $pathRsc->setPath($this->_themePath.$option);

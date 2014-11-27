@@ -1,0 +1,65 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "pub" %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+    <span class="article-title">{{ 'publications.title.remove'|trans }}</span>
+    <div class="pull-right">
+        <div class="actions">
+            <ul class="navigation" style="height: auto;">
+                <a class="list-publications pull-left action-button" href="{{ url('newscoop_newscoop_publications_index')}}">
+                    <span class="glyphicon glyphicon-arrow-left"></span> {{ 'publications.buttons.listPublications'|trans }}
+                </a>
+                <li>
+                    <a class="add" href="{{ url('newscoop_newscoop_publications_add')}}">{{ 'publications.buttons.addNew'|trans }}</a>
+                </li>
+                {% if publication.id %}
+                    <a class="list-issues pull-left action-button" href="/admin/issues/?Pub={{ publication.id }}">
+                        {{ 'publications.buttons.listIssues'|trans }} <span class="glyphicon glyphicon-arrow-right"></span>
+                    </a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_title %}{{ 'publications.title.remove'|trans }} - {{ parent() }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
+<style type="text/css" media="screen">
+    .help-block{font-size: 13px;margin-bottom: 0px;}
+    .remaining-elements {font-size: 12px;}
+    .help-block {padding-bottom: 10px;}
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row publications ns_container col-md-5">
+{% if issuesRemaining > 0 or sectionsRemaining > 0 or articlesRemaining > 0 %}
+    <h3>{{ 'publications.remove.cant_be_removed'|trans }}</h3>
+    <ul class="remaining-elements">
+        <li>{{ 'publications.remove.left_issues'|trans }}: {{ issuesRemaining }} (<a href="/admin/issues/?Pub={{ publication.id }}">{{ 'publications.remove.show_issues'|trans }}</a>)</li>
+        <li>{{ 'publications.remove.left_sections'|trans }}: {{ sectionsRemaining }}</li>
+        <li>{{ 'publications.remove.left_articles'|trans }}: {{ articlesRemaining }}</li>
+    </ul>
+    <p>{{ 'publications.remove.before_removing'|trans }}</p>
+    <div class="clearfix"></div>
+    <a class="list-publications pull-left action-button" href="{{ url('newscoop_newscoop_publications_index')}}">
+        <span class="glyphicon glyphicon-arrow-left"></span> {{ 'publications.buttons.listPublications'|trans }}
+    </a>
+{% else %}
+    <h3>{{ 'publications.remove.can_be_removed'|trans }}</h3>
+    <p>{{ 'publications.remove.you_sure'|trans }}: "{{ publication.name }}"?</p>
+    <div class="clearfix"></div>
+    <div class="row">
+        {{ form_start(form) }}
+        <button type="submit" class="col-lg-4 center-block text-center action-button" style="float:none;">
+          <span class="glyphicon glyphicon-remove-circle"></span> {{ 'publications.remove.remove'|trans }}
+        </button>
+        {{ form_end(form) }}
+    </div>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 'Language id not specified': 'A nyelvazonosító nincs megadva'
 'No languages.': 'Nincsenek nyelvek.'
 'Native Name': 'Eredeti név'
-'Name taken.': null
+'Name taken.': 'A név foglalt.'
 'Language saved.': 'A nyelv mentése megtörtént.'
 'Language removed.': 'A nyelv eltávolítása megtörtént.'
 'Language not found.': 'A nyelv nem található.'
@@ -47,7 +47,7 @@ Apr: Ápr.
 'Edit language': 'Nyelv szerkesztése'
 'You do not have the right to edit languages.': 'Nincs jogod a nyelvek szerkesztéséhez.'
 'Please enter the translation for month names.': 'Add meg a hónapnevek fordítását.'
-'Please enter the translation for week day names.': 'Add meg a hét napneveik fordítását.'
+'Please enter the translation for week day names.': 'Add meg a hét napneveinek fordítását.'
 January: Január
 February: Február
 March: Március

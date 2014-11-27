@@ -64,6 +64,7 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('generateZendUrl', array($this, 'generateZendUrl')),
             new \Twig_SimpleFunction('hasPermission', array($this, 'hasPermission')),
             new \Twig_SimpleFunction('default_csrf_token', array($this, 'getCsrfToken')),
+            new \Twig_SimpleFunction('renderTip', array($this, 'renderTip'), array('is_safe' => array( 'html' ))),
         );
     }
 
@@ -132,6 +133,13 @@ class NewscoopExtension extends \Twig_Extension
         $csrfProvider = $this->container->get('form.csrf_provider');
 
         return $csrfProvider->generateCsrfToken('default');
+    }
+
+    public function renderTip($tipMessage)
+    {
+        return $this->container->get('templating')->render('NewscoopNewscoopBundle::tooltip.html.twig', array(
+            'tipMessage' => $tipMessage
+        ));
     }
 
     public function getName()
