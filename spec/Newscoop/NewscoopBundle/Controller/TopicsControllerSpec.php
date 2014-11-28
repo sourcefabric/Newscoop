@@ -20,6 +20,9 @@ use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfTokenManagerAdapter;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\NewscoopBundle\Entity\TopicTranslation;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\Form\FormErrorIterator;
+use Symfony\Component\Form\FormError;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -49,7 +52,8 @@ class TopicsControllerSpec extends ObjectBehavior
         FormView $formView,
         Topic $topic,
         CsrfTokenManagerAdapter $csrfTokenManagerAdapter,
-        AbstractQuery $query
+        AbstractQuery $query,
+        ParameterBag $parameterBag
     )
     {
         $container->get('em')->willReturn($entityManager);
@@ -77,37 +81,76 @@ class TopicsControllerSpec extends ObjectBehavior
         $request->get('_code')->willReturn('en');
         $request->getLocale()->willReturn('en');
         $request->get('_code', 'en')->willReturn('en');
+        $request->request = $parameterBag;
     }
 
     public function its_treeAction_should_render_the_tree_of_topics($topicRepository, $request, $entityManager, $query)
     {
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $topicRepository->getTranslatableTopicsQuery('en')->willReturn($query);
-        $topics = array(
+        $topics = array(array(
             'id' => 1,
             'level' => 0,
             'lft' => 1,
             'rgt' => 6,
             'root' => null,
-            'slug' => "new-root",
             'title' => "new root polish",
-        );
+            'topicOrder' => 1,
+        ), array(
+            'id' => 2,
+            'level' => 0,
+            'lft' => 2,
+            'rgt' => 8,
+            'root' => null,
+            'title' => "new root2 polish",
+            'topicOrder' => 2
+        ));
         $query->getArrayResult()->willReturn($topics);
-        $topicRepository->buildTreeArray($topics)->willReturn(Argument::type('array'));
+        $topicRepository->buildTreeArray($topics)->willReturn($topics);
         $response = $this->treeAction($request);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_addAction_should_add_a_new_topic($request, $form, $repository, $topic, $csrfTokenManagerAdapter)
+    public function its_addAction_should_add_a_new_topic_when_form_is_valid($request, $formFactory, $form, $entityManager, $topicRepository, $repository, $topic, $csrfTokenManagerAdapter)
     {
-        $repository->findOneBy(array(
-            'id' => 1,
-        ))->willReturn($topic);
-
+        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
-        $form->getData()->willReturn(array('title' => 'test topic', 'parent' => 1));
+
+        $classTopic = Argument::exact('Newscoop\NewscoopBundle\Entity\Topic')->getValue();
+        $topic = new $classTopic;
+        $classTopicType = Argument::exact('Newscoop\NewscoopBundle\Form\Type\TopicType')->getValue();
+        $topicType = new $classTopicType;
+
+        $formFactory->create($topicType, $topic)->willReturn($form);
+        $form->handleRequest($request)->willReturn($form);
+        $form->isValid()->willReturn(true);
+
+        $topicRepository->saveNewTopic($topic, 'en')->willReturn(true);
         $response = $this->addAction($request);
+        $response->getStatusCode()->shouldReturn(200);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_addAction_should_add_a_new_topic_when_form_is_invalid(FormErrorIterator $formIterator, FormError $formError, $request, $formFactory, $form, $entityManager, $topicRepository, $repository, $topic, $csrfTokenManagerAdapter)
+    {
+        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
+        $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
+
+        $classTopic = Argument::exact('Newscoop\NewscoopBundle\Entity\Topic')->getValue();
+        $topic = new $classTopic;
+        $classTopicType = Argument::exact('Newscoop\NewscoopBundle\Form\Type\TopicType')->getValue();
+        $topicType = new $classTopicType;
+
+        $formFactory->create($topicType, $topic)->willReturn($form);
+        $form->handleRequest($request)->willReturn($form);
+        $form->isValid()->willReturn(false);
+        $form->getErrors()->willReturn($formIterator);
+        $formIterator->getChildren()->willReturn($formError);
+        $formError->getMessage()->willReturn('Invalid form');
+        $responseArray = '{"status":false,"message":"Invalid form"}';
+        $response = $this->addAction($request);
+        $response->getContent()->shouldReturn($responseArray);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
@@ -168,11 +211,87 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_editAction_should_return_403_when_invalid_csrf_token($request, $repository, $csrfTokenManagerAdapter)
+    public function its_editAction_should_return_403_when_invalid_csrf_token($request, $csrfTokenManagerAdapter)
     {
         $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(false);
         $response = $this->editAction($request, 1);
         $response->getStatusCode()->shouldReturn(403);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_moveAction_should_move_child_topic_to_first_position_in_current_subtree($request, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
+    {
+        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
+        $parameterBag->all()->willReturn(array(
+            'first' => true,
+            'parent' => 2,
+        ));
+
+        $request->get('last')->willReturn(null);
+        $request->get('first')->willReturn(true);
+        $request->get('middle')->willReturn(null);
+        $request->request = $parameterBag;
+
+        $topicRepository->findOneBy(array(
+            'id' => 1
+        ))->willReturn($topic);
+
+        $topicRepository->saveTopicPosition($topic, $request->request->all())->willReturn(true);
+        $response = $this->moveAction($request, 1);
+        $response->getStatusCode()->shouldReturn(200);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_moveAction_should_move_child_topic_to_last_position_in_current_subtree($request, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
+    {
+        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
+        $parameterBag->all()->willReturn(array(
+            'last' => true,
+            'parent' => 2,
+        ));
+
+        $request->get('last')->willReturn(true);
+        $request->get('first')->willReturn(null);
+        $request->get('middle')->willReturn(null);
+        $request->request = $parameterBag;
+
+        $topicRepository->findOneBy(array(
+            'id' => 1
+        ))->willReturn($topic);
+
+        $topicRepository->saveTopicPosition($topic, $request->request->all())->willReturn(true);
+        $response = $this->moveAction($request, 1);
+        $response->getStatusCode()->shouldReturn(200);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_moveAction_should_move_child_topic_to_middle_position_in_current_subtree($request, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
+    {
+        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
+        $parameterBag->all()->willReturn(array(
+            'middle' => true,
+            'parent' => 3,
+        ));
+
+        $request->get('last')->willReturn(null);
+        $request->get('first')->willReturn(null);
+        $request->get('middle')->willReturn(true);
+        $request->request = $parameterBag;
+
+        $topicRepository->findOneBy(array(
+            'id' => 1
+        ))->willReturn($topic);
+
+        $topicRepository->saveTopicPosition($topic, $request->request->all())->willReturn(true);
+        $response = $this->moveAction($request, 1);
+        $response->getStatusCode()->shouldReturn(200);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_moveAction_should_return_404_status_code_when_topic_to_be_moved_not_found($request)
+    {
+        $response = $this->moveAction($request, 1);
+        $response->getStatusCode()->shouldReturn(404);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 }

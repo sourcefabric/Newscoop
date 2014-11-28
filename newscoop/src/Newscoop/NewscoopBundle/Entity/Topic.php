@@ -93,7 +93,7 @@ class Topic
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
-    protected $locale;
+    public $locale;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -481,5 +481,15 @@ class Topic
         $this->topicOrder = $topicOrder;
 
         return $this;
+    }
+
+    /**
+     * Returns topic's title when echo this object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 }

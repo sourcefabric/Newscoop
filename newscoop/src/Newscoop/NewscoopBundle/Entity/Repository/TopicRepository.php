@@ -102,11 +102,11 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return boolean
      */
-    public function saveTopicPosition(Topic $node, $parentId, $asRoot, $params)
+    public function saveTopicPosition(Topic $node, $params)
     {
-        if ($parentId) {
+        if (isset($params['parent']) && $params['parent']) {
             $parent = $this->findOneBy(array(
-                'id' => $parentId,
+                'id' => $params['parent'],
             ));
 
             if (!$parent) {
@@ -138,7 +138,7 @@ class TopicRepository extends NestedTreeRepository
         }
 
         // when dragging childrens to roots
-        if ($asRoot) {
+        if (isset($params['asRoot']) && $params['asRoot']) {
             $node->setParent(null);
         }
 
@@ -185,6 +185,60 @@ class TopicRepository extends NestedTreeRepository
         $this->_em->flush();
 
         return true;
+    }
+
+    /**
+     * Saves new topic
+     *
+     * @param Topic       $node   Topic object
+     * @param string|null $locale Language code
+     *
+     * @return boolean
+     */
+    public function saveNewTopic(Topic $node, $locale = null)
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+        $node->setTranslatableLocale($locale ?: $node->getTranslatableLocale());
+        if (!$node->getParent()) {
+            $qb = $this->getQueryBuilder('t')
+                ->from($config['useObjectClass'], 't');
+            $maxOrderValue = $qb
+                ->select('MAX(t.topicOrder)')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            $node->setOrder((int) $maxOrderValue + 1);
+        }
+
+        $this->_em->persist($node);
+        $this->_em->flush();
+
+        return true;
+    }
+
+    /**
+     * Gets the single topic's query by id
+     *
+     * @param int $id Topic id
+     *
+     * @return Query $query Query object
+     */
+    public function getSingleTopicQuery($id)
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+
+        $queryBuilder = $this->getQueryBuilder()
+            ->select('t')
+            ->from($config['useObjectClass'], 't')
+            ->where('t.id = :id')
+            ->setParameter('id', $id);
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
     }
 
     /**

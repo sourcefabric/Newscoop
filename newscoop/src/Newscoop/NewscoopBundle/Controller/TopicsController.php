@@ -1,9 +1,9 @@
 <?php
 /**
- * @package   Newscoop\NewscoopBundle
- * @author    Mischa Gorinskat <mischa.gorinskat@sourcefabric.org>
- * @copyright 2014 Sourcefabric o.p.s.
- * @license   http://www.gnu.org/licenses/gpl-3.0.txt
+ * @package Newscoop\NewscoopBundle
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
+ * @copyright 2014 Sourcefabric z.ú.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\NewscoopBundle\Controller;
@@ -97,14 +97,13 @@ class TopicsController extends Controller
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
         $translator = $this->get('translator');
         $node = $this->findOr404($id);
-        $asRoot = $request->get('asRoot');
-        $parent = $request->get('parent');
-        $params = $request->request->all();
         if (is_array($node)) {
             return new JsonResponse($node, 404);
         }
 
-        $result = $repository->saveTopicPosition($node, $parent, $asRoot, $params);
+        $params = $request->request->all();
+        $parent = isset($params['parent']) && $params['parent'] ? $params['parent'] : null;
+        $result = $repository->saveTopicPosition($node, $params);
 
         if (!$result) {
             return new JsonResponse(array(
@@ -113,7 +112,7 @@ class TopicsController extends Controller
             ));
         }
 
-        if ($request->get('last') || $request->get('first') || $request->get('middle') && !$parent) {
+        if (($request->get('last') || $request->get('first') || $request->get('middle')) && !$parent) {
             $rootNodes = $repository->getRootNodes();
             $order = explode(',', $request->get('order'));
             $repository->reorderRootNodes($rootNodes, $order);
@@ -133,7 +132,7 @@ class TopicsController extends Controller
     {
         $node = new Topic();
         $translator = $this->get('translator');
-        $form = $this->createForm(new TopicType());
+        $form = $this->createForm(new TopicType(), $node);
         $form->handleRequest($request);
         $response = array(
             'status' => false,
@@ -149,28 +148,8 @@ class TopicsController extends Controller
 
         if ($form->isValid()) {
             $em = $this->get('em');
-            $data = $form->getData();
-            $parent = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
-                'id' => $data['parent']
-            ));
-            $node->setTitle($data['title']);
-            $node->setTranslatableLocale($request->get('_code', $request->getLocale()));
-            if ($parent) {
-                $node->setParent($parent);
-            } else {
-                $qb = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-                    ->createQueryBuilder('t');
-                $maxOrderValue = $qb
-                    ->select('MAX(t.topicOrder)')
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getSingleScalarResult();
-
-                $node->setOrder((int) $maxOrderValue + 1);
-            }
-
-            $em->persist($node);
-            $em->flush();
+            $locale = $request->get('_code', $request->getLocale());
+            $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->saveNewTopic($node, $locale);
 
             $response = array(
                 'status' => true,
@@ -292,6 +271,13 @@ class TopicsController extends Controller
                 'status' => false,
                 'message' => $translator->trans('topics.failedfindTranslation', array('%id%' => $id), 'topics')
             ), 404);
+        }
+
+        if ($topicTranslation->getObject()->getTitle() === $topicTranslation->getContent()) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('topics.failedremoveTranslation', array(), 'topics')
+            ), 403);
         }
 
         $em->remove($topicTranslation);

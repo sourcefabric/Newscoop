@@ -66,6 +66,7 @@ topics:
   failedfindTranslation: "Failed to find Topic's translation by id: %id%"
   removed: "Topic %title% was removed"
   removedTranslation: "Topic's translation was removed"
+  failedremoveTranslation: "Can not remove default topic's translation. Remove topic instead."
   updated: "Topic was updated"
   error: "Error occured, please try again later."
   title: "Topics"

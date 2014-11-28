@@ -12,7 +12,7 @@ Newscoop\NewscoopBundle\Entity\TopicTranslation:
         getId:
             expose: true
             read_only: true
-            type: string
+            type: integer
             groups: ["details", "list"]
             serialized_name: id
             since_version: 1.2
