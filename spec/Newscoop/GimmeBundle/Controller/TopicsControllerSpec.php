@@ -115,4 +115,18 @@ class TopicsControllerSpec extends ObjectBehavior
 
         $this->searchTopicsAction($request)->shouldReturn($topics);
     }
+
+    public function its_searchTopicsAction_should_return_empty_array_when_no_results(ParameterBag $parameterBag, $topic, $paginator, $query, $request, $topicRepository)
+    {
+        $searchPhrase = 'topic1';
+        $parameterBag->get("query", "")->willReturn($searchPhrase);
+        $request->query = $parameterBag;
+        $topicRepository->searchTopicsQuery($searchPhrase)->willReturn($query);
+
+        $paginator->paginate($query, array(
+            'distinct' => false
+        ))->willReturn(array());
+
+        $this->searchTopicsAction($request)->shouldReturn(array());
+    }
 }

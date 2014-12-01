@@ -183,11 +183,11 @@ class TopicsController extends FOSRestController
     {
         $em = $this->container->get('em');
         $query = $request->query->get('query', '');
-        $authors = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+        $topics = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
             ->searchTopicsQuery($query);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $topics = $paginator->paginate($authors, array('distinct' => false));
+        $topics = $paginator->paginate($topics, array('distinct' => false));
 
         return $topics;
     }
