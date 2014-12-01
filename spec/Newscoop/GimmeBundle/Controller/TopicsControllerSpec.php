@@ -10,6 +10,8 @@ use Doctrine\ORM\AbstractQuery;
 use Newscoop\Gimme\PaginatorService;
 use Newscoop\NewscoopBundle\Entity\Repository\TopicRepository;
 use Newscoop\NewscoopBundle\Entity\Topic;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -86,5 +88,31 @@ class TopicsControllerSpec extends ObjectBehavior
         $this
             ->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
             ->during('getTopicByIdAction', array(1));
+    }
+
+    public function its_searchTopicsAction_should_return_array_of_topics_by_given_search_criteria(ParameterBag $parameterBag, $topic, $paginator, $query, $request, $topicRepository)
+    {
+        $searchPhrase = 'topic1';
+        $parameterBag->get("query", "")->willReturn($searchPhrase);
+        $request->query = $parameterBag;
+        $topicRepository->searchTopicsQuery($searchPhrase)->willReturn($query);
+        $topic->getId()->willReturn(1);
+        $topic->getTitle()->willReturn('topic1');
+        $topic->getRoot()->willReturn(1);
+        $topic->getParent()->willReturn(null);
+        $topic->getTranslations()->willReturn(new ArrayCollection());
+        $topics = array(
+            'id' => 1,
+            'title' => 'topic1',
+            'items' => array(
+                $topic
+            )
+        );
+
+        $paginator->paginate($query, array(
+            'distinct' => false
+        ))->willReturn($topics);
+
+        $this->searchTopicsAction($request)->shouldReturn($topics);
     }
 }

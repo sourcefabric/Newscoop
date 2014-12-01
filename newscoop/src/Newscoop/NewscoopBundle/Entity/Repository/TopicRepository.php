@@ -262,7 +262,15 @@ class TopicRepository extends NestedTreeRepository
         return $this->setTranslatableHint($query, $locale);
     }
 
-    public function setTranslatableHint($query, $locale)
+    /**
+     * Add hints to the query
+     *
+     * @param Query       $query  Query
+     * @param string|null $locale Lecale to which fallback
+     *
+     * @return Query
+     */
+    public function setTranslatableHint(Query $query, $locale = null)
     {
         $query->setHint(
             Query::HINT_CUSTOM_OUTPUT_WALKER,
@@ -312,5 +320,38 @@ class TopicRepository extends NestedTreeRepository
             ->setParameter('locale', $languageCode);
 
         return $query->getQuery();
+    }
+
+    /**
+     * Search topic by given query
+     *
+     * @param string $query
+     * @param array  $sort
+     *
+     * @return Query
+     */
+    public function searchTopicsQuery($query, $sort = array())
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+        $qb = $this->getQueryBuilder()
+            ->select('t')
+            ->from($config['useObjectClass'], 't')
+            ->leftJoin('t.translations', 'tt')
+            ->where("tt.field = 'title'");
+
+        $orX = $qb->expr()->orx();
+
+        $orX->add($qb->expr()->like('t.title', $qb->expr()->literal("%{$query}%")));
+        $orX->add($qb->expr()->like('tt.content', $qb->expr()->literal("%{$query}%")));
+        $qb->andWhere($orX);
+
+        if ((!empty($sort)) && is_array($sort)) {
+            foreach ($sort as $sortColumn => $sortDir) {
+                $qb->addOrderBy('t.'.$sortColumn, $sortDir);
+            }
+        }
+
+        return $this->setTranslatableHint($qb->getQuery());
     }
 }
