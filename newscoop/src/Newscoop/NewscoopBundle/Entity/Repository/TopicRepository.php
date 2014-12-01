@@ -34,8 +34,7 @@ class TopicRepository extends NestedTreeRepository
             ->from($config['useObjectClass'], 't');
 
         $topicsCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
-
-        $query = $queryBuilder->getQuery();
+        $query = $this->setTranslatableHint($queryBuilder->getQuery());
         $query->setHint('knp_paginator.count', $topicsCount);
 
         return $query;
