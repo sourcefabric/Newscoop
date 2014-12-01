@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
 use Newscoop\Search\DocumentInterface;
+use Newscoop\NewscoopBundle\Entity\Topic;
 
 /**
  * Article entity
@@ -214,7 +215,7 @@ class Article implements DocumentInterface
     protected $lockUser;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\NewscoopBundle\Entity\Topic")
+     * @ORM\ManyToMany(targetEntity="Newscoop\NewscoopBundle\Entity\Topic", inversedBy="articles")
      * @ORM\JoinTable(name="ArticleTopics",
      *      joinColumns={
      *          @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
@@ -223,7 +224,7 @@ class Article implements DocumentInterface
      *          @ORM\JoinColumn(name="TopicId", referencedColumnName="id")
      *      }
      *  )
-     * @var Newscoop\NewscoopBundle\Entity\Topic
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $topics;
 
@@ -1001,6 +1002,45 @@ class Article implements DocumentInterface
         }
 
         return $this->topics;
+    }
+
+    /**
+     * Add Topic to the Article
+     *
+     * @param Topic $topic the Topic to attach
+     *
+     * @return boolean
+     */
+    public function addTopic(Topic $topic)
+    {
+
+        if (!$this->topics->contains($topic)) {
+            $this->topics->add($topic);
+            $topic->addArticleTopic($this);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove a Topic from the Article
+     *
+     * @param Topic $topic the Topic to remove
+     *
+     * @return boolean
+     */
+    public function removeTopic(Topic $topic)
+    {
+        if ($this->topics->contains($topic)) {
+            $this->topics->removeElement($topic);
+            $topic->removeArticleTopic($this);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

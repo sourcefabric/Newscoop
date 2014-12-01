@@ -11,6 +11,8 @@ namespace Newscoop\NewscoopBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Newscoop\Entity\Article;
+use Newscoop\View\TopicView;
 
 /**
  * @Gedmo\Tree(type="nested")
@@ -110,12 +112,23 @@ class Topic
      */
     protected $translations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Article", mappedBy="topics")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number"),
+     *      @ORM\JoinColumn(name="LanguageId", referencedColumnName="IdLanguage")
+     *      })
+     * @var Newscoop\Entity\Article
+     */
+    protected $articles;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->translations = new ArrayCollection();
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
+        $this->articles = new ArrayCollection();
     }
 
     /**
@@ -484,6 +497,40 @@ class Topic
     }
 
     /**
+     * Adds Topic to Article
+     *
+     * @param Article $article the Article to attach
+     *
+     * @return Topic
+     */
+    public function addArticleTopic(Article $article)
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->addTopic($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Removes Topic from Article
+     *
+     * @param Article $article the Article to deattach topic
+     *
+     * @return Topic
+     */
+    public function removeArticleTopic(Article $article)
+    {
+        if (!$this->articles->contains($article)) {
+            $article->removeTopic($this);
+            $this->articles->removeElement($article);
+        }
+
+        return $this;
+    }
+
+    /**
      * Returns topic's title when echo this object
      *
      * @return string
@@ -491,5 +538,21 @@ class Topic
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * Get view
+     *
+     * @return Newscoop\View\TopicView
+     */
+    public function getView()
+    {
+        $view = new TopicView();
+        $view->defined = true;
+        $view->identifier = $this->id;
+        $view->name = $this->title;
+        $view->value = sprintf('%s:%s', $this->title, $this->locale);
+
+        return $view;
     }
 }

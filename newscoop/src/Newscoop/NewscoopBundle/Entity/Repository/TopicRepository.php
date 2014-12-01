@@ -259,6 +259,11 @@ class TopicRepository extends NestedTreeRepository
             ->orderBy('node.root, node.lft', $order)
             ->getQuery();
 
+        return $this->setTranslatableHint($query, $locale);
+    }
+
+    public function setTranslatableHint($query, $locale)
+    {
         $query->setHint(
             Query::HINT_CUSTOM_OUTPUT_WALKER,
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
@@ -277,5 +282,35 @@ class TopicRepository extends NestedTreeRepository
         );
 
         return $query;
+    }
+
+    /**
+     * Get all articles for given topic by topic id and language code
+     *
+     * @param int     $topicId         Topic id
+     * @param string  $languageCode    Language code
+     * @param boolean $defaultFallback Sets the language of the topic to the default one
+     *
+     * @return Query
+     */
+    public function getArticlesQueryByTopicIdAndLanguage($topicId, $languageCode, $defaultFallback = false)
+    {
+        $query = $this
+            ->getQueryBuilder()
+            ->select('node', 't')
+            ->from('Newscoop\NewscoopBundle\Entity\Topic', 'node')
+            ->leftJoin('node.translations', 't')
+            ->where("t.field = 'title'")
+            ->andWhere('node.id = :id')
+            ->setParameter('id', $topicId);
+
+        if ($defaultFallback) {
+            return $this->setTranslatableHint($query->getQuery(), $languageCode);
+        }
+
+        $query->andWhere('t.locale = :locale')
+            ->setParameter('locale', $languageCode);
+
+        return $query->getQuery();
     }
 }

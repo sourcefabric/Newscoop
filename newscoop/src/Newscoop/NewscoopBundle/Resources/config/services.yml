@@ -154,6 +154,10 @@ services:
         class: Newscoop\Services\ArticleService
         arguments:  ["@em"]
 
+    newscoop_newscoop.topic_service:
+        class: Newscoop\NewscoopBundle\Services\TopicService
+        arguments:  ["@em"]
+
     newscoop_newscoop.listener.article:
         class: Newscoop\NewscoopBundle\EventListener\ArticleListener
         arguments:  ["@newscoop_newscoop.article_service"]

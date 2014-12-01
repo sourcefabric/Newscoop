@@ -1,6 +1,7 @@
 <?php
 /**
  * @package Newscoop\GimmeBundle
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -136,13 +137,10 @@ class TopicsController extends FOSRestController
         $language = $em->getRepository('Newscoop\Entity\Language')
                 ->findOneByCode($language);
 
-        $topic = $em->getRepository('Newscoop\Entity\Topic')
-            ->findOneBy(array(
-                'id' => $id,
-                'language' => $language->getId()
-            ));
+        $query = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->getArticlesQueryByTopicIdAndLanguage($id, $language->getCode());
+        $topic = $query->getArrayResult();
 
-        if (!$topic) {
+        if (empty($topic)) {
             throw new NotFoundHttpException('Result was not found.');
         }
 
@@ -155,8 +153,8 @@ class TopicsController extends FOSRestController
         ));
 
         $allItems = array_merge(array(
-            'id' => $topic->getTopicId(),
-            'title' => $topic->getName(),
+            'id' => $topic[0]['id'],
+            'title' => $topic[0]['title'],
         ), $articles);
 
         return $allItems;
@@ -200,9 +198,10 @@ class TopicsController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /*if ($article) {
-                $snippet->addArticle($article);
-            }*/
+            if ($article) {
+                $topic->addArticleTopic($article);
+            }
+
             $locale = null;
             if (!$topic->getTranslatableLocale()) {
                 $locale = $request->getLocale();

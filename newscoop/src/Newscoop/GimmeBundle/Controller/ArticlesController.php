@@ -324,7 +324,7 @@ class ArticlesController extends FOSRestController
         // @Author: Mischa
         $response = new Response();
         $response->setStatusCode(201);
-        
+
         return $response;
     }
 
@@ -418,6 +418,11 @@ class ArticlesController extends FOSRestController
      *     header name: "link"
      *     header value: "</api/images/1; rel="image">"
      *
+     * **topics headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/topics/1; rel="topic">"
+     *
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when successful",
@@ -504,6 +509,15 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+            if ($object instanceof \Newscoop\NewscoopBundle\Entity\Topic) {
+                $topicService = $this->get('newscoop_newscoop.topic_service');
+                $topicService->addTopicToArticle($object, $article);
+
+                $matched = true;
+
+                continue;
+            }
         }
 
 
@@ -529,6 +543,11 @@ class ArticlesController extends FOSRestController
      *
      *     header name: "link"
      *     header value: "</api/images/1; rel="image">"
+     *
+     * **topics headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/topics/1; rel="topic">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -615,6 +634,15 @@ class ArticlesController extends FOSRestController
             if ($object instanceof \Newscoop\Entity\Snippet) {
                 $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
                 $snippetRepo->removeSnippetFromArticle($object, $article);
+
+                $matched = true;
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\NewscoopBundle\Entity\Topic) {
+                $topicService = $this->get('newscoop_newscoop.topic_service');
+                $topicService->removeTopicFromArticle($object, $article);
 
                 $matched = true;
 
