@@ -26,6 +26,7 @@ Top: Top
 'There are $1 articles using the topic.': 'There are $1 articles using the topic.'
 'Search for topics': 'Search for topics'
 topics:
+  tip: "In Newscoop, topics are the subject matters assigned by editors and journalists to articles, so that related articles can be identified and displayed together. A root topic can have many subtopics; for example: the sports root topic could have the subtopics football, basketball, and water polo. An individual article may have several root topics or subtopics assigned to it."
   label:
     all: "All"
     filterbylang: "Filter topics by language"

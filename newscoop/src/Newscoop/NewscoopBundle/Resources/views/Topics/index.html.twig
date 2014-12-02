@@ -1,7 +1,7 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "topics" %}
 {% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'topics.title'|trans }}{% endblock %}
-{% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'topics.title'|trans }}{% endblock %}
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/angular-ui-tree.min.css') }}">
 <style>
@@ -21,8 +21,7 @@
 {% block admin_content %}
 <div class="system_pref" ng-app="treeApp">
 <div class="bs-callout bs-callout-info">
-    <h4>Topics...</h4>
-    <p>Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit</p>
+{{ renderTip('topics.tip'|trans) }}
   </div>
 <div class="row" ng-controller="treeCtrl" ng-init="dim=false; highlight=true;">
         <div class="col-lg-6">

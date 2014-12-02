@@ -220,11 +220,12 @@ class TopicRepository extends NestedTreeRepository
     /**
      * Gets the single topic's query by id
      *
-     * @param int $id Topic id
+     * @param int    $id     Topic id
+     * @param string $locale Language code
      *
      * @return Query $query Query object
      */
-    public function getSingleTopicQuery($id)
+    public function getSingleTopicQuery($id, $locale = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
@@ -237,7 +238,7 @@ class TopicRepository extends NestedTreeRepository
 
         $query = $queryBuilder->getQuery();
 
-        return $query;
+        return $this->setTranslatableHint($query, $locale);
     }
 
     /**
@@ -329,12 +330,12 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return Query
      */
-    public function searchTopicsQuery($query, $sort = array())
+    public function searchTopicsQuery($query, $sort = array(), $limit = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
         $qb = $this->getQueryBuilder()
-            ->select('t')
+            ->select('t', 'tt')
             ->from($config['useObjectClass'], 't')
             ->leftJoin('t.translations', 'tt')
             ->where("tt.field = 'title'");
@@ -351,6 +352,50 @@ class TopicRepository extends NestedTreeRepository
             }
         }
 
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
         return $this->setTranslatableHint($qb->getQuery());
+    }
+
+    /**
+     * Find topic options
+     *
+     * @return array
+     */
+    public function findOptions()
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('t.id, t.title as name')
+            ->orderBy('t.title')
+            ->getQuery();
+
+        $options = array();
+        foreach ($query->getResult() as $row) {
+            $options[$row['id']] = $row['name'];
+        }
+
+        return $options;
+    }
+
+    /**
+     * Gets topic's path
+     *
+     * @param Topic $topic Topic
+     *
+     * @return string Path of the topic
+     */
+    public function getReadablePath(Topic $topic, $locale = null)
+    {
+        $pathQuery = $this->getPathQuery($topic);
+        $this->setTranslatableHint($pathQuery, $locale);
+        $path = $pathQuery->getArrayResult();
+        $pathStr = '';
+        foreach ($path as $element) {
+            $pathStr = $pathStr . ' / ' . $element['title'];
+        }
+
+        return $pathStr;
     }
 }

@@ -16,8 +16,8 @@
       </fieldset>
     </form>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('form#article-keywords').submit(function() {
+    $(document).ready(function () {
+        $('form#article-keywords').submit(function () {
             if (!$(this).hasClass('changed')) {
                 return false;
             }
@@ -26,13 +26,14 @@
             callServer(['Article', 'setKeywords'], [
                 <?php echo $f_language_selected; ?>,
                 <?php echo $articleObj->getArticleNumber(); ?>,
-                keywords], function(json) {
+                keywords], function (json) {
                     flashMessage('<?php echo $translator->trans('Keywords saved.', array(), 'articles'); ?>');
                 });
 
             $(this).removeClass('changed');
+
             return false;
-        }).change(function() {
+        }).change(function () {
             $(this).addClass('changed');
         });
     });
@@ -46,33 +47,18 @@
     <?php } ?>
       <label class="left-floated block-label"><?php echo $translator->trans('Topics'); ?></label>
       <div class="clear"></div>
-    <?php if (sizeof($articleTopics) > 0) { ?>
+    <?php if (count($articleTopics) > 0) { ?>
       <ul class="block-list">
     <?php
+    $em = \Zend_Registry::get('container')->getService('em');
+    $repo = $em->getRepository("Newscoop\NewscoopBundle\Entity\Topic");
+    $language = $em->getReference("Newscoop\Entity\Language", $f_language_id);
     foreach ($articleTopics as $tmpArticleTopic) {
+        $tmpArticleTopic = $tmpArticleTopic->getTopic();
         $detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
-        $path = $tmpArticleTopic->getPath();
-        $pathStr = '';
-        foreach ($path as $element) {
-            $name = $element->getName($f_language_selected);
-            if (empty($name)) {
-                // For backwards compatibility -
-                // get the english translation if the translation
-                // doesnt exist for the article's language.
-                $name = $element->getName(1);
-                if (empty($name)) {
-                    $name = '-----';
-                }
-            }
-            $pathStr .= ' / '. htmlspecialchars($name);
-        }
-
+        $pathStr = $repo->getReadablePath($tmpArticleTopic, $language->getCode());
         // Get the topic name for the 'detach topic' dialog box, below.
-        $tmpTopicName = $tmpArticleTopic->getName($f_language_selected);
-        // For backwards compatibility.
-        if (empty($tmpTopicName)) {
-            $tmpTopicName = $tmpArticleTopic->getName(1);
-        }
+        $tmpTopicName = $tmpArticleTopic->getName();
     ?>
         <li><?php p(wordwrap($pathStr, 45, '<br />&nbsp;&nbsp;')); ?>
         <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>

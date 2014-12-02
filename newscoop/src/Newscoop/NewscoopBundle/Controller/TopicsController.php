@@ -38,8 +38,8 @@ class TopicsController extends Controller
         }
 
         $topics = $this->container->get('em')
-            ->getRepository('Newscoop\Entity\Topic')
-            ->getTopicsByName($term, $limit)
+            ->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+            ->searchTopicsQuery($term, array('title' => 'asc'), $limit)
             ->getArrayResult();
 
         return new JsonResponse($topics);
@@ -51,6 +51,16 @@ class TopicsController extends Controller
     public function indexAction()
     {
         return $this->render('NewscoopNewscoopBundle:Topics:index.html.twig');
+    }
+
+    private function getClasses()
+    {
+        $em = $this->container->get('em');
+
+        return array(
+          $em->getClassMetadata('Newscoop\NewscoopBundle\Entity\Topic'),
+          $em->getClassMetadata('Newscoop\NewscoopBundle\Entity\TopicTranslation')
+        );
     }
 
     /**

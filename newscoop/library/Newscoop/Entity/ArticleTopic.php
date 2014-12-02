@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Article topic entity
  * @ORM\Entity()
  * @ORM\Table(name="ArticleTopics")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  */
 class ArticleTopic
 {
@@ -25,8 +26,8 @@ class ArticleTopic
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Topic")
-     * @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\NewscoopBundle\Entity\Topic")
+     * @ORM\JoinColumn(name="TopicId", referencedColumnName="id")
      */
     protected $topic;
 
@@ -55,7 +56,7 @@ class ArticleTopic
     /**
      * Get Topic
      *
-     * @return Newscoop\Entity\TopicNames
+     * @return Newscoop\NewscoopBundle\Entity\Topic
      */
     public function getTopic()
     {

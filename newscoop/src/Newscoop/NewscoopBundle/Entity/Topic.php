@@ -142,6 +142,16 @@ class Topic
     }
 
     /**
+     * Gets the value of id.
+     *
+     * @return mixed
+     */
+    public function getTopicId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Sets the value of id.
      *
      * @param mixed $id the id
@@ -149,6 +159,20 @@ class Topic
      * @return self
      */
     public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of id.
+     *
+     * @param mixed $id the id
+     *
+     * @return self
+     */
+    public function setTopicId($id)
     {
         $this->id = $id;
 
@@ -173,6 +197,30 @@ class Topic
      * @return self
      */
     public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of title.
+     *
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the value of title.
+     *
+     * @param mixed $title the title
+     *
+     * @return self
+     */
+    public function setName($title)
     {
         $this->title = $title;
 
