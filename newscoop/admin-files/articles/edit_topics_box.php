@@ -36,6 +36,40 @@
         }).change(function () {
             $(this).addClass('changed');
         });
+
+        $('a#detachTopic').click(function (e) {
+          var alertMsg = $(this).attr('data-msg');
+          var result = confirm(alertMsg);
+          var that = $(this);
+
+          if (checkChanged() && result) {
+            callServer('ping', [], function (json) {
+                $.ajax({
+                    type: "POST",
+                    url: that.attr('href'),
+                    data: {
+                      'articleNumber': that.attr('data-article-number'),
+                      'topicId': that.attr('data-topicId'),
+                      'language': that.attr('data-language')
+                    },
+                    dataType: "json",
+                    success: function (msg) {
+                      if (msg.status) {
+                        flashMessage(msg.message);
+                        that.parent().remove();
+                      } else {
+                        flashMessage(msg.message, 'error');
+                      }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        flashMessage(textStatus, 'error');
+                    }
+                });
+            });
+          }
+
+          e.preventDefault();
+        });
     });
     </script>
   <?php } ?>
@@ -55,15 +89,14 @@
     $language = $em->getReference("Newscoop\Entity\Language", $f_language_id);
     foreach ($articleTopics as $tmpArticleTopic) {
         $tmpArticleTopic = $tmpArticleTopic->getTopic();
-        $detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
         $pathStr = $repo->getReadablePath($tmpArticleTopic, $language->getCode());
         // Get the topic name for the 'detach topic' dialog box, below.
-        $tmpTopicName = $tmpArticleTopic->getName();
+        $tmpTopicName = end(array_values(explode(" / ", $pathStr)));
     ?>
         <li><?php p(wordwrap($pathStr, 45, '<br />&nbsp;&nbsp;')); ?>
         <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
-          <a class="corner-button" href="<?php p($detachUrl); ?>"
-            onclick="return checkChanged() && confirm('<?php echo $translator->trans("Are you sure you want to remove the topic $1 from the article?", array('$1' => camp_javascriptspecialchars($tmpTopicName)), 'articles'); ?>');"><span class="ui-icon ui-icon-closethick"></span></a></li>
+          <a class="corner-button" id="detachTopic" data-language="<?php echo $f_language_selected ?>" data-topicId="<?php echo $tmpArticleTopic->getTopicId() ?>" data-article-number="<?php echo $f_article_number ?>" href="/admin/topics/detach"
+            data-msg="<?php echo $translator->trans("Are you sure you want to remove the topic $1 from the article?", array('$1' => camp_javascriptspecialchars($tmpTopicName)), 'articles'); ?>"><span class="ui-icon ui-icon-closethick"></span></a></li>
         <?php } ?>
     <?php } ?>
       </ul>
