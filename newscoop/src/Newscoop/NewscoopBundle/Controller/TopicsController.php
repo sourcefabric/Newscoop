@@ -47,20 +47,18 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/new-topics/", options={"expose"=true})
+     * @Route("/admin/new-topics/view/{compactView}/{language}", options={"expose"=true})
      */
-    public function indexAction()
+    public function indexAction($compactView = false, $language = null)
     {
-        return $this->render('NewscoopNewscoopBundle:Topics:index.html.twig');
-    }
+        if ($compactView === 'compact') {
+            $compactView = true;
+        }
 
-    private function getClasses()
-    {
-        $em = $this->container->get('em');
-
-        return array(
-          $em->getClassMetadata('Newscoop\NewscoopBundle\Entity\Topic'),
-          $em->getClassMetadata('Newscoop\NewscoopBundle\Entity\TopicTranslation')
-        );
+        return $this->render('NewscoopNewscoopBundle:Topics:index.html.twig', array(
+            'compactView' => $compactView,
+            'articleLanguage' => $language
+        ));
     }
 
     /**
@@ -351,6 +349,56 @@ class TopicsController extends Controller
         return new JsonResponse(array(
             'status' => false,
             'message' => $translator->trans('topics.error', array(), 'topics')
+        ));
+    }
+
+    /**
+     * @Route("/admin/topics/detach", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function detachTopicAction(Request $request)
+    {
+        $translator = $this->get('translator');
+        $em = $this->get('em');
+        $userService = $this->get('user');
+        $user = $userService->getCurrentUser();
+        $topicService = $this->get('newscoop_newscoop.topic_service');
+        if (!$user->hasPermission('AttachTopicToArticle')) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans("You do not have the right to detach topics from articles.", array(), 'article_topics'),
+            ), 403);
+        }
+
+        $articleNumber = $request->get('articleNumber');
+        $topicId = $request->get('topicId');
+        $language = $request->get('language');
+        $articleObj = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array(
+            'number' => $articleNumber,
+            'language' => $language
+        ));
+
+        if (!$articleObj) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('Article does not exist.'),
+            ), 404);
+        }
+
+        $topicObj = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->getSingleTopicQuery($topicId)->getOneOrNullResult();
+
+        if (!$topicObj) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('Topic does not exist.'),
+            ), 404);
+        }
+
+        $topicService->removeTopicFromArticle($topicObj, $articleObj);
+
+        return new JsonResponse(array(
+            'status' => true,
+            'message' => $translator->trans("The topic $1 has been removed from article.", array('$1' => $topicName), 'article_topics')
         ));
     }
 

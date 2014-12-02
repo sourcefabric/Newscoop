@@ -146,11 +146,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.supportedFields = ['content', 'title'];
     var languageCode = null;
 
-    TopicsFactory.getTopics().success(function (data) {
-       $scope.data = data.tree;
-    }).error(function(data, status){
-        flashMessage(response.message, 'error');
-    });
+    $scope.loadTopicsTree = function() {
+      TopicsFactory.getTopics().success(function (data) {
+         $scope.data = data.tree;
+      }).error(function(data, status){
+          flashMessage(response.message, 'error');
+      });
+    }
 
     TopicsFactory.getLanguages().success(function (data) {
        $scope.languageList = data.languages;

@@ -72,11 +72,14 @@
         });
     });
     </script>
-  <?php } ?>
+  <?php }
+    $em = \Zend_Registry::get('container')->getService('em');
+    $language = $em->getReference("Newscoop\Entity\Language", $f_language_id);
+  ?>
     <div class="frame" id="topic_box_frame">
     <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="iframe ui-state-default icon-button right-floated"
-      href="<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>"><span
+      href="/admin/new-topics/view/compact/<?php echo $language->getCode() ?>"><span
         class="ui-icon ui-icon-pencil"></span><?php echo $translator->trans('Edit'); ?></a>
     <?php } ?>
       <label class="left-floated block-label"><?php echo $translator->trans('Topics'); ?></label>
@@ -84,9 +87,7 @@
     <?php if (count($articleTopics) > 0) { ?>
       <ul class="block-list">
     <?php
-    $em = \Zend_Registry::get('container')->getService('em');
     $repo = $em->getRepository("Newscoop\NewscoopBundle\Entity\Topic");
-    $language = $em->getReference("Newscoop\Entity\Language", $f_language_id);
     foreach ($articleTopics as $tmpArticleTopic) {
         $tmpArticleTopic = $tmpArticleTopic->getTopic();
         $pathStr = $repo->getReadablePath($tmpArticleTopic, $language->getCode());

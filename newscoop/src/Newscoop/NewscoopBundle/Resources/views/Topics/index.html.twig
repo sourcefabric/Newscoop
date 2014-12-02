@@ -18,13 +18,20 @@
 <script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
 <script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
 {% endblock %}
+{% if compactView %}
+    {% block admin_page_menu_bar %}
+    {% endblock %}
+{% endif %}
 {% block admin_content %}
 <div class="system_pref" ng-app="treeApp">
+{% if compactView == false %}
 <div class="bs-callout bs-callout-info">
-{{ renderTip('topics.tip'|trans) }}
-  </div>
-<div class="row" ng-controller="treeCtrl" ng-init="dim=false; highlight=true;">
-        <div class="col-lg-6">
+  {{ renderTip('topics.tip'|trans) }}
+</div>
+{% endif %}
+<div class="row" ng-controller="treeCtrl" ng-init="dim=false; highlight=true; {% if compactView %}onFilterLanguageChange('{{ articleLanguage }}'){% else %}loadTopicsTree(){% endif %}">
+        <div class="col-lg-{% if compactView %}12{% else %}6{% endif %}">
+          {% if compactView == false %}
           <h3>{{ 'topics.label.filterbylang'|trans }}</h3>
           <form class="form-inline" name="filterForm" role="form">
             <div class="input-group input-group-sm">
@@ -33,6 +40,7 @@
             </select>
           </div>
           </form>
+          {% endif %}
             <h3>{{ 'topics.label.search'|trans }}</h3>
             <form class="form-inline" name="searchForm" role="form">
               <div class="input-group input-group-sm">
@@ -153,3 +161,7 @@
     var token = "{{ default_csrf_token() }}";
 </script>
 {% endblock %}
+{% if compactView %}
+    {% block admin_page_footer_box %}
+    {% endblock %}
+{% endif %}
