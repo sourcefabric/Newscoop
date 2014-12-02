@@ -1333,4 +1333,18 @@ final class CampContext
 
         return false;
     }
+
+    /**
+     * Check system preferences in smarty
+     *
+     * @param string $preferenceName Systempreferences machine name
+     * @param string $defaultValue   Default value if preference is null (not set)
+     *
+     * @return mixed
+     */
+    public function getSystemPreference($preferenceName, $default = null)
+    {
+        $preferencesService = \Zend_Registry::get('container')->get('preferences');
+        return $preferencesService->get($preferenceName, $default);
+    }
 }
