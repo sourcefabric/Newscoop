@@ -11,6 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Newscoop\Entity\User;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
+use Newscoop\NewscoopException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
@@ -72,11 +73,13 @@ class UserService
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
                     $currentUser = $this->security->getToken()->getUser();
-                    if ( $this->security->isGranted('IS_AUTHENTICATED_FULLY') ) {
+                    if ($this->security->isGranted('IS_AUTHENTICATED_FULLY') ) {
                         $this->currentUser = $currentUser;
                     } else {
-                        $this->currentUser = null;
+                        throw new NewscoopException("User is not Authenticated", 1);
                     }
+                } else {
+                    throw new NewscoopException("User was not found", 1);
                 }
             }
         }
@@ -356,6 +359,41 @@ class UserService
     }
 
     /**
+     * Create new activated user
+     *
+     * @param string  $email
+     * @param string  $password
+     * @param string  $firstName
+     * @param string  $lastName
+     * @param integer $publication
+     */
+    public function createUser($email, $password, $username, $firstName = null, $lastName = null, $publication = null, $public = true, $userTypes = array())
+    {
+        $users = $this->findBy(array('email' => $email));
+        if (!empty($users)) {
+            throw new \Newscoop\Exception\ResourcesConflictException("User with this email already exists");
+        }
+
+        $user = new User($email);
+        $user->setPassword($password);
+        $user->setUsername($username);
+        $user->setPublic($public);
+        $user->setActive();
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+        $user->setPublication($publication);
+
+        foreach($userTypes as $type) {
+            $user->addUserType($this->em->getReference('Newscoop\Entity\User\Group', $type));
+        }
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
+
+    /**
      * Test if username is available
      *
      * @param string $username
@@ -378,6 +416,13 @@ class UserService
     {
         return $this->getRepository()->findOneBy(array(
             'author' => $authorId,
+        ));
+    }
+
+    public function loadUserByUsername($username)
+    {
+        return $this->getRepository()->findOneBy(array(
+            'username' => $username,
         ));
     }
 

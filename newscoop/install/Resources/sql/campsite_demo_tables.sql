@@ -252,6 +252,8 @@ CREATE TABLE `Articles` (
   `webcode` varchar(10) DEFAULT NULL,
   `indexed` timestamp NULL DEFAULT NULL,
   `rating_enabled` tinyint(1) DEFAULT '1',
+  `issue_id` INT DEFAULT NULL,
+  `section_id` INT DEFAULT NULL,
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -259,7 +261,9 @@ CREATE TABLE `Articles` (
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`ShortName`),
   KEY `Type` (`Type`),
   KEY `ArticleOrderIdx` (`ArticleOrder`),
-  FULLTEXT KEY `articles_name_skey` (`Name`)
+  FULLTEXT KEY `articles_name_skey` (`Name`),
+  INDEX IDX_46AB533E5E7AA58C (issue_id),
+  INDEX IDX_46AB533ED823E37A (section_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1083,10 +1087,10 @@ CREATE TABLE Publications (
   comments_spam_blocking_enabled TINYINT(1) DEFAULT NULL,
   url_error_tpl_id INT DEFAULT NULL,
   seo VARCHAR(255) DEFAULT NULL,
+  IdDefaultLanguage int(10),
   meta_title VARCHAR(255) DEFAULT NULL,
   meta_keywords VARCHAR(255) DEFAULT NULL,
   meta_description VARCHAR(255) DEFAULT NULL,
-  IdDefaultLanguage int(10),
   INDEX IDX_2A49E10CEC194F36 (IdDefaultLanguage),
   INDEX IDX_2A49E10CAB83D3A4 (IdDefaultAlias),
   INDEX Name (Name), PRIMARY KEY(Id)

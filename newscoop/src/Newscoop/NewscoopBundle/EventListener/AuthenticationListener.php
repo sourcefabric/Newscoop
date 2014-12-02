@@ -45,7 +45,9 @@ class AuthenticationListener
             return;
         }
 
-        if ($this->userService->getCurrentUser() === null) {
+        try {
+            $this->userService->getCurrentUser();
+        } catch (\Newscoop\NewscoopException $e) {
             return new RedirectResponse($this->router->generate('admin_logout'));
         }
     }

@@ -1,314 +1,236 @@
 <?php
+/**
+ * @author   Demin Yin <deminy@deminy.net>
+ * @license  MIT license
+ */
 
+use Behat\Behat\Context\ClosuredContextInterface;
 use Behat\Behat\Context\BehatContext;
-use Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-use Buzz\Message\Form\FormUpload;
+use Symfony\Component\Finder\Finder;
+
+require_once __DIR__ . '/RestContext.php';
 
 /**
  * Features context.
  */
-class FeatureContext extends BehatContext
+class FeatureContext extends BehatContext implements ClosuredContextInterface
 {
-    private $browser;
 
-    private $fields = array();
+    /**
+     * @var array
+     */
+    protected $parameters;
 
-    private $parameters;
+    /**
+     * Store data used across different subcontexts and steps.
+     *
+     * @var array
+     */
+    protected $data = array();
 
     /**
      * Initializes context.
      * Every scenario gets it's own context object.
      *
-     * @param array $parameters context parameters (set them up through behat.yml)
+     * @param array $parameters Context parameters (set them up through behat.yml)
+     * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public function __construct(array $parameters)
     {
-        $this->useContext(
-            'api',
-            new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\FileGetContents()))
-        );
-        $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
-
-        $url = str_replace($parameters['api_prefix'].'/', '', $parameters['base_url']).'oauth/v2/token?client_id=1_svdg45ew371vtsdgd29fgvwe5v&grant_type=client_credentials&client_secret=h48fgsmv0due4nexjsy40jdf3sswwr';
-        $this->browser->call($url, 'GET', array());
-        $token = json_decode($this->browser->getLastResponse()->getContent(), true);
-
-        $this->getMainContext()->getSubcontext('api')->setPlaceholder('<base_url>', $parameters['base_url']);
-        $this->browser->addListener(new PublicationListener(array(
-            'publication' => $parameters['publication'],
-            'access_token' => $token['access_token']
-        )));
+        if (empty($parameters)) {
+            throw new \InvalidArgumentException('Parameters not loaded.');
+        }
 
         $this->parameters = $parameters;
-    }
 
-    /**
-     * @Given /^response should have "([^"]*)" with elements$/
-     */
-    public function responseShouldHaveWithElements($key)
-    {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+        $this->useContext('RestContext', new RestContext($parameters));
 
-        if (!array_key_exists($key, $response)) {
-            throw new \Exception('key "'.$key.'" don\'t exist');
-        }
+        /**
+         * You may chain other contexts as sub-contexts of this main context via parameters. In this way all the
+         * context classes may communicate with each other.
+         */
+        if (array_key_exists('subContexts', $parameters) && is_array($parameters['subContexts'])) {
+            $this->loadBootstrapScripts($this->getResourcePath('bootstrap'));
 
-        if (!count($response[$key]) > 0) {
-            throw new \Exception('response["'.$key.'"] don\'t have elements');
-        }
-
-        return true;
-    }
-
-    /**
-     * @Given /^response should have keys "([^"]*)"$/
-     */
-    public function responseShouldHaveKeys($keys)
-    {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $keys = explode(', ', $keys);
-
-        foreach ($keys as $key) {
-            if (!array_key_exists($key, $response)) {
-                throw new \Exception('key "'.$key.'" don\'t exist');
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @Given /^response should have keys "([^"]*)" under "([^"]*)"$/
-     */
-    public function responseShouldHaveKeysUnder($keys, $mainKey)
-    {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $keys = explode(', ', $keys);
-
-        $this->responseShouldHaveWithElements($mainKey);
-
-        foreach ($keys as $key) {
-            if (!array_key_exists($key, $response[$mainKey])) {
-                throw new \Exception('key "'.$key.'" don\'t exist');
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @Given /^response should have "([^"]*)" with elements under "([^"]*)"$/
-     */
-    public function responseShouldHaveWithElementsUnder($keys, $mainKey)
-    {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-
-        $this->responseShouldHaveWithElements($mainKey);
-
-        if (!array_key_exists($key, $response[$mainKey])) {
-            throw new \Exception('key "'.$key.'" don\'t exist');
-        }
-
-        if (!count($response[$mainKey][$key]) > 0) {
-            throw new \Exception('response["'.$key.'"] don\'t have elements');
-        }
-
-        return true;
-    }
-
-    /**
-     * @Given /^response should have item with keys "([^"]*)"$/
-     */
-    public function responseShouldHaveItemWithKeys($keys)
-    {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $keys = explode(', ', $keys);
-
-        $this->responseShouldHaveWithElements('items');
-
-        $haveAllKeys = false;
-        foreach ($response['items'] as $item) {
-            $itemKeys = array_keys($item);
-            foreach ($keys as $key) {
-                if (!in_array($key, $itemKeys)) {
-                    continue;
+            foreach ($parameters['subContexts'] as $subContext) {
+                if (class_exists($subContext)) {
+                    $this->useContext($subContext, new $subContext());
+                } else {
+                    throw new \Exception("Context '{$subContext}' doesn't exist.");
                 }
-
-                return true;
             }
         }
-
-        throw new \Exception('There is no items with all provided keys');
     }
 
     /**
-     * @Given /^first item from response should have key "([^"]*)" with value (\d+)$/
+     * Returns array of step definition files (*.php).
+     *
+     * @return array
      */
-    public function firstItemFromResponseShouldHaveKeyWithValue($key, $value)
+    public function getStepDefinitionResources()
     {
+        $path = $this->getResourcePath('steps') ?: (__DIR__ . '/../steps');
 
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $this->responseShouldHaveWithElements('items');
+        return $this->getFiles($path);
+    }
 
-        if ($response['items'][0][$key] == $value) {
-            return true;
+    /**
+     * Returns array of hook definition files (*.php).
+     *
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getHookDefinitionResources()
+    {
+        $path = $this->getResourcePath('hooks') ?: (__DIR__ . '/../support');
+
+        return $this->getFiles($path);
+    }
+
+    /**
+     * Get data by field name, or return all data if no field name provided.
+     *
+     * @param string $name Field name.
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getData($name = null)
+    {
+        if (!isset($name)) {
+            return $this->data;
+        } elseif (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
         }
 
-        throw new \Exception($key.' don\'t have value '.$value);
+        throw new \Exception('Requested data not exist.');
     }
 
     /**
-     * @Then /^response should have key "([^"]*)" with value "([^"]*)"$/
+     * Set value on given field name.
+     *
+     * @param string $name Field name.
+     * @param mixed $value Field value.
+     * @return void
      */
-    public function responseShouldHaveKeyWithValue($key, $value)
+    public function setData($name, $value)
     {
-
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-
-        if ($response[$key] == $value) {
-            return true;
-        }
-
-        throw new \Exception($key.' don\'t have value '.$value);
+        $this->data[$name] = $value;
     }
 
     /**
-     * @Given /^i should have only "([^"]*)" items$/
+     * Check if specified field name exists or not.
+     *
+     * @param string $name Field name.
+     * @return mixed
      */
-    public function iShouldHaveOnlyItems($number)
+    public function dataExists($name)
     {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $this->responseShouldHaveWithElements('items');
-
-        if (count($response['items']) == $number) {
-            return true;
-        }
-
-        throw new \Exception('Items number is not equal '.$number);
+        return array_key_exists($name, $this->data);
     }
 
     /**
-     * @Given /^response should have item with only "([^"]*)" keys$/
+     * This public method is also for other context(s) to set parameter(s) into this context.
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
      */
-    public function responseShouldHaveItemWithOnlyKeys($keys)
+    public function setParameter($name, $value)
     {
-        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $keys = explode(', ', $keys);
+        $this->parameters[$name] = $value;
+    }
 
-        $this->responseShouldHaveWithElements('items');
+    /**
+     * Get context parameter.
+     *
+     * @param string $name Parameter name.
+     * @return mixed
+     */
+    public function getParameter($name)
+    {
+        return array_key_exists($name, $this->parameters) ? $this->parameters[$name] : null;
+    }
 
-        if (count(array_keys($response['items'][0])) == count($keys)) {
-            foreach ($keys as $key) {
-                if (!array_key_exists($key, $response['items'][0])) {
-                    throw new \Exception('Key '.$key.' don\'t exist');
+    /**
+     * Returns path that points to specified resources.
+     *
+     * @param string $type Resource type. Either 'boostrap', 'steps' or 'hooks'.
+     * @return string Return path back.
+     * @throws \RuntimeException
+     */
+    protected function getResourcePath($type)
+    {
+        $paths = $this->getParameter('paths');
+
+        if (array_key_exists($type, $paths)) {
+            $pathBase = array_key_exists('base', $paths) ? $paths['base'] : '';
+            $pathType = $paths[$type];
+
+            // Check if it's an absolute path.
+            if (substr($pathType, 0, 1) == DIRECTORY_SEPARATOR) {
+                if (empty($pathBase)) {
+                    return $pathType;
+                } else {
+                    throw new \RuntimeException(
+                        sprintf('You may only use relative path for type "%s" when base path is presented.', $type)
+                    );
                 }
-
-                return true;
-            }
-        }
-
-        throw new \Exception('Response is wrong');
-    }
-
-    /**
-     * @Given /^that i want to create new file \'([^\']*)\' with name \'([^\']*)\'$/
-     */
-    public function thatIWantToSendFileWithName($fileName, $name)
-    {
-        $upload = new FormUpload(__DIR__.'/assets/'.$fileName);
-        $upload->setName($name);
-        $this->fields[$name] = $upload;
-    }
-
-    /**
-     * @Given /^that i want to create "([^"]*)" with name "([^"]*)" and content "([^"]*)" with type "([^"]*)"$/
-     */
-    public function thatIWantToCreateWithNameAndContentWithType($form, $name, $content, $contentType)
-    {
-        if ($contentType == 'file') {
-            $fileName = $content;
-            $content = new FormUpload(__DIR__.'/assets/'.$fileName);
-            $content->setName($fileName);
-        }
-
-        if (!array_key_exists($form, $this->fields)) {
-            $this->fields[$form] = array();
-        }
-
-        $this->fields[$form][$name] = $content;
-    }
-
-    /**
-     * Sends HTTP request to specific URL with form data from PyString.
-     *
-     * @param string $method request method
-     * @param string $url    relative url
-     *
-     * @When /^I send a "([^"]*)" request to "([^"]+)" with custom form data$/
-     */
-    public function iSendARequestToWithCustomFormData($method, $url)
-    {
-        $webApiContext = $this->getMainContext()->getSubcontext('api');
-
-        if ($url == "last resource") {
-            if ($this->browser->getLastResponse()->getHeader('X-Location') !== null) {
-                $url = $this->browser->getLastResponse()->getHeader('X-Location');
             } else {
-                $url = $this->browser->getLastRequest()->getUrl();
+                // TODO: check if there is a trailing directory separator in the base path.
+                return ($pathBase ? ($pathBase . DIRECTORY_SEPARATOR) : '') . $pathType;
             }
-        } else {
-            $url = $this->parameters['base_url'].ltrim($webApiContext->replacePlaceHolder($url), '/');
         }
 
-        $this->browser->submit($url, $this->fields, $method);
-        $this->fields = array();
-
-        $request  = $this->browser->getLastRequest();
-        $response = $this->browser->getLastResponse();
-
-        $this->printDebug(sprintf("%s %s => %d:\n%s",
-            $request->getMethod(),
-            $request->getUrl(),
-            $response->getStatusCode(),
-            $response->getContent()
-        ));
+        return '';
     }
 
     /**
-     * @Given /^response should have header "([^"]*)"$/
+     * Get files of certain type under specified directory.
+     *
+     * @param string $dir A directory.
+     * @param string $ext File extension.
+     * @return array
+     * @throws \InvalidArgumentException
      */
-    public function responseShouldHaveHeader($name)
+    protected function getFiles($dir, $ext = 'php')
     {
-        $headers = $this->browser->getLastResponse()->getHeaders();
-        if ($this->browser->getLastResponse()->getHeader($name) !== null) {
-            return true;
+        if (!is_dir($dir)) {
+            throw new \InvalidArgumentException(sprintf('Given path "%s" is not a directory.', $dir));
         }
 
-        throw new \Exception('header "'.$name.'" don\'t exist');
+        if (!is_readable($dir)) {
+            throw new \InvalidArgumentException(sprintf('Given path "%s" is not readable.', $dir));
+        }
+
+        if (!preg_match('/^[0-9a-z]+$/i', $ext)) {
+            throw new \InvalidArgumentException(
+                sprintf('Given file extension "%s" is invalid (may only contain digits and/or letters).', $dir)
+            );
+        }
+
+        $finder = new Finder;
+
+        return $finder->files()->name('*.' . $ext)->in($dir);
     }
 
     /**
-     * @When /^I send a "([^"]*)" request to last resource$/
+     * Requires *.php scripts from bootstrap/ folder.
+     *
+     * @param string $path
+     * @see Behat\Behat\Console\Processor\LocatorProcessor::loadBootstrapScripts()
      */
-    public function iSendARequestToLastResource($method)
+    protected function loadBootstrapScripts($path)
     {
-        $url = $this->browser->getLastRequest()->getUrl();
-        if (array_key_exists('X-Location', $this->browser->getLastResponse()->getHeaders())) {
-            $url = $this->browser->getLastResponse()->getHeader('X-Location');
+        $iterator = Finder::create()
+            ->files()
+            ->name('*.php')
+            ->sortByName()
+            ->in($path)
+        ;
+
+        foreach ($iterator as $file) {
+            include_once (string) $file;
         }
-
-        $this->browser->call($url, $method);
-
-        $request  = $this->browser->getLastRequest();
-        $response = $this->browser->getLastResponse();
-
-        $this->printDebug(sprintf("%s %s => %d:\n%s",
-            $request->getMethod(),
-            $request->getUrl(),
-            $response->getStatusCode(),
-            $response->getContent()
-        ));
     }
 }

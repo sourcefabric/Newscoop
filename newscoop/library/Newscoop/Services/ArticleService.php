@@ -122,4 +122,128 @@ class ArticleService
             return null;
         }
     }
+
+    public function createArticle($articleType, $language, $user, $publication, $attributes = array(), $issue = null, $section = null)
+    {
+        $this->checkForArticleConflicts($attributes['name'], $publication, $issue, $section);
+
+        $this->em->getConnection()->beginTransaction();
+        try {
+            $article = new Article(
+                $this->em->getRepository('Newscoop\Entity\AutoId')->getNextArticleNumber(),
+                $language
+            );
+
+            if (!$section) {
+                $articleOrder = $article->getNumber();
+            } else {
+                $minArticleOrder = $this->em->getRepository('Newscoop\Entity\Article')
+                    ->getMinArticleOrder($publication, $issue, $section)
+                    ->getSingleScalarResult();
+
+
+                $increment = $minArticleOrder > 0 ? 1 : 2;
+                $result = $this->em->getRepository('Newscoop\Entity\Article')
+                    ->updateArticleOrder($increment, $publication, $issue, $section)
+                    ->getResult();
+
+                $articleOrder = 1;
+            }
+            $article->setArticleOrder($articleOrder);
+            $article->setPublication($publication);
+            $article->setType($articleType);
+            $article->setCreator($user);
+
+            $article->setIssueId((!is_null($issue)) ? $issue->getId() : 0);
+            $article->setSectionId((!is_null($section)) ? $section->getId() : 0);
+
+            $this->updateArticleMeta($article, $attributes);
+
+            $article->setCommentsLocked(false); //TODO - add this to type
+            $article->setWorkflowStatus('N');
+            $article->setShortName($article->getNumber());
+            $article->setLockTime(new \DateTime('0000:00:00 00:00:00'));
+            $article->setPublished(new \Datetime('0000:00:00 00:00:00'));
+            $article->setUploaded(new \Datetime());
+            $article->setLockUser();
+            $article->setPublic(true);
+            $article->setIsIndexed(false);
+
+            $this->em->persist($article);
+            $this->em->flush();
+            $this->em->getConnection()->commit();
+
+            $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
+            $articleData->create();
+        } catch (\Exception $e) {
+            $this->em->getConnection()->rollback();
+
+            throw $e;
+        }
+
+        return $article;
+    }
+
+    public function updateArticle($article, $attributes)
+    {
+        $this->checkForArticleConflicts(
+            $attributes['name'],
+            $article->getPublication(),
+            $article->getIssue(),
+            $article->getSection()
+        );
+
+        $this->updateArticleMeta($article, $attributes);
+        $article->setUpdated(new \DateTime());
+        $article->setIsIndexed(false);
+
+        if (array_key_exists('fields', $attributes)) {
+            foreach ($attributes['fields'] as $field => $value) {
+                $article->setFieldData($field, $value);
+            }
+        }
+
+        $this->em->flush();
+
+        return $article;
+    }
+
+    private function updateArticleMeta($article, $attributes)
+    {
+        $article->setName($attributes['name']);
+        $article->setCommentsEnabled($attributes['comments_enabled']);
+        $article->setOnFrontPage($attributes['onFrontPage']);
+        $article->setOnSection($attributes['onSection']);
+        $article->setKeywords($attributes['keywords']);
+
+        return $article;
+    }
+
+    /**
+     * Check if combination of article name, publication, issue and section is unique
+     *
+     * @param string                              $articleTitle
+     * @param integer|Newscoop\Entity\Publication $publication
+     * @param integer|Newscoop\Entity\Issue       $issue
+     * @param integer|Newscoop\Entity\Section     $section
+     *
+     * @return boolean|Newscoop\Exception\ResourcesConflictException
+     */
+    private function checkForArticleConflicts($articleTitle, $publication, $issue, $section)
+    {
+        $conflictingArticles = $this->em->getRepository('Newscoop\Entity\Article')->findBy(array(
+            'name' => $articleTitle,
+            'publication' => $publication,
+            'issue' => $issue,
+            'section' => $section
+        ));
+
+        if (count($conflictingArticles) > 0) {
+            throw new \Newscoop\Exception\ResourcesConflictException(
+                "You cannot have two articles in the same section with the same name. The article name you specified is already in use by the article ".$conflictingArticles[0]->getNumber() ." '".$conflictingArticles[0]->getName()."'"
+            );
+        }
+
+        return true;
+    }
 }

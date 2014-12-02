@@ -28,4 +28,16 @@ class AutoIdRepository extends EntityRepository
 
         return $autoId->getTranslationPhraseId();
     }
+
+    public function getNextArticleNumber()
+    {
+        $em = $this->getEntityManager();
+        $result = $em->getRepository('Newscoop\Entity\AutoId')->findAll();
+        $autoId = $result[0];
+
+        $autoId->setArticleId($autoId->getArticleId()+1);
+        $em->flush();
+
+        return $autoId->getArticleId();
+    }
 }

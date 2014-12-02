@@ -293,29 +293,24 @@ class ImageService
     public function fillImage($image, $attributes)
     {
         $attributes = array_merge(array(
-            'description' => '',
-            'photographer' => '',
-            'photographer_url' => '',
-            'place' => '',
             'date' => date('Y-m-d'),
-            'content_type' => 'image/jeg',
+            'content_type' => 'image/jpeg',
             'user' => null,
             'updated' => new \DateTime(),
             'status' => 'unapproved',
             'source' => 'local',
-            'url' => ''
         ), $attributes);
 
-        $image->setDescription($attributes['description']);
-        $image->setPhotographer($attributes['photographer']);
-        $image->setPhotographerUrl($attributes['photographer_url']);
-        $image->setPlace($attributes['place']);
+        if (isset($attributes['description'])) { $image->setDescription($attributes['description']); }
+        if (isset($attributes['photographer'])) { $image->setPhotographer($attributes['photographer']); }
+        if (isset($attributes['photographer_url'])) { $image->setPhotographerUrl($attributes['photographer_url']); }
+        if (isset($attributes['place'])) { $image->setPlace($attributes['place']); }
         $image->setDate($attributes['date']);
         $image->setContentType($attributes['content_type']);
         $image->setUser($attributes['user']);
         $image->setUpdated($attributes['updated']);
         $image->setSource($attributes['source']);
-        $image->setUrl($attributes['url']);
+        if (isset($attributes['url'])) { $image->setUrl($attributes['url']); }
 
         if ($image->getUser() && $image->getUser()->isAdmin() == true) {
             $image->setStatus('approved');
@@ -466,12 +461,9 @@ class ImageService
             ));
 
         if ($image === null) {
-            $image = array_pop(
-                $this->orm->getRepository('Newscoop\Image\ArticleImage')->findBy(
-                    array('articleNumber' => (int) $articleNumber),
-                    array('number' => 'asc'),
-                    1
-                )
+            $image = $this->orm->getRepository('Newscoop\Image\ArticleImage')->findOneBy(
+                array('articleNumber' => (int) $articleNumber),
+                array('number' => 'asc')
             );
 
             if ($image !== null) {

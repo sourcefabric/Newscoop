@@ -476,4 +476,56 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         return (int) $count;
     }
+
+    public function getMinArticleOrder($publication = null, $issue = null, $section = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('MIN(a.articleOrder)')
+            ->from('Newscoop\Entity\Article', 'a');
+
+        if ($publication) {
+            $qb->andWhere('a.publication = :publication')
+                ->setParameter('publication', $publication);
+        }
+
+        if ($issue) {
+            $qb->andWhere('a.issueId = :issue')
+                ->setParameter('issue', $issue->getId());
+        }
+
+        if ($section) {
+            $qb->andWhere('a.sectionId = :section')
+                ->setParameter('section', $section->getId());
+        }
+
+        return $qb->getQuery();
+    }
+
+    public function updateArticleOrder($increment, $publication = null, $issue = null, $section = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('a');
+
+        $qb->update('Newscoop\Entity\Article', 'a');
+
+        if ($publication) {
+            $qb->andWhere('a.publication = :publication')
+                ->setParameter('publication', $publication);
+        }
+
+        if ($issue) {
+            $qb->andWhere('a.issueId = :issue')
+                ->setParameter('issue', $issue->getId());
+        }
+
+        if ($section) {
+            $qb->andWhere('a.sectionId = :section')
+                ->setParameter('section', $section->getId());
+        }
+
+        $qb->set('a.articleOrder', 'a.articleOrder + :increment')
+            ->setParameter('increment', $increment);
+
+        return $qb->getQuery();
+    }
 }

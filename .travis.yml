@@ -20,11 +20,9 @@ before_script:
 - mysql -e 'create database newscoop;' -uroot
 - cd newscoop/
 - composer install --prefer-dist
-- "./application/console newscoop:install --fix --database_name newscoop --database_user
-  root"
+- "./application/console newscoop:install --fix --database_name newscoop --database_user root"
 - sudo php upgrade.php
-- "./application/console oauth:create-client testclient newscoop.dev newscoop.dev
-  --test"
+- "./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test"
 - cd ..
 - sudo php newscoop/scripts/fixer.php
 script:

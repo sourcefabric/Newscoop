@@ -280,10 +280,15 @@ class Builder
                 ->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
-            $issues = $this->container->get('em')
+            $query = $this->container->get('em')
                 ->getRepository('Newscoop\Entity\Issue')
-                ->getLatestByPublication($pubId, 11)
-                ->getArrayResult();
+                ->getLatestByPublication($pubId, 11);
+
+            if ($query) {
+                $issues = $query->getArrayResult();
+            } else {
+                $issues = array();
+            }
 
             $moreIssues = count($issues) > 10 ? true : false;
             if ($moreIssues) {

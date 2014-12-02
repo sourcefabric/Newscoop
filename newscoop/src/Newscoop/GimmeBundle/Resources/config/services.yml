@@ -43,11 +43,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
-    newscoop.gimme.listener.override_method:
-        class: Newscoop\GimmeBundle\EventListener\OverrideMethodListener
-        arguments: ["@em"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 1025 }
 
     newscoop.gimme.authorize.form_type:
         class: Newscoop\GimmeBundle\Form\Type\AuthorizeFormType
