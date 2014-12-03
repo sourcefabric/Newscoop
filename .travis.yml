@@ -19,6 +19,7 @@ before_script:
 - sudo service apache2 restart
 - mysql -e 'create database newscoop;' -uroot
 - cd newscoop/
+- composer self-update
 - composer install --prefer-dist
 - "./application/console newscoop:install --fix --database_name newscoop --database_user root"
 - sudo php upgrade.php
@@ -27,3 +28,4 @@ before_script:
 - sudo php newscoop/scripts/fixer.php
 script:
 - newscoop/vendor/bin/phpspec run --format pretty
+- newscoop/vendor/bin/phpspec behat -f progress

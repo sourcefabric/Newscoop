@@ -32,7 +32,6 @@ Feature: Images
                 | place            | <<address>>        | |
                 | image            | <<image>>          | /tmp,640,480 |
 
-            And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I submit "image" data to "/images"
             Then the response status code should be 201
             And the response is JSON
@@ -54,7 +53,6 @@ Feature: Images
             And the response is JSON
 
         Given that I want to delete an image
-            And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I request "<<new_image>>"
             Then the response status code should be 204
             And the response is JSON
