@@ -278,6 +278,13 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get number of articles assigned to Publication
+     *
+     * @param integer $publicationId
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getArticlesCountForPublication($publicationId)
     {
         $articlesCount = $this->createQueryBuilder('a')
@@ -477,6 +484,15 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return (int) $count;
     }
 
+    /**
+     * Get new minimal article order value
+     *
+     * @param integer $publication
+     * @param integer $issue
+     * @param integer $section
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function getMinArticleOrder($publication = null, $issue = null, $section = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -502,6 +518,16 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $qb->getQuery();
     }
 
+    /**
+     * Update article order
+     *
+     * @param integer $increment
+     * @param integer $publication
+     * @param integer $issue
+     * @param integer $section
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function updateArticleOrder($increment, $publication = null, $issue = null, $section = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('a');

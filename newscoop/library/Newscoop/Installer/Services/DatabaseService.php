@@ -128,6 +128,10 @@ class DatabaseService
 
         $connection->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($host));
         $connection->executeQuery('INSERT IGNORE INTO Publications (`Id`, `Name`, `IdDefaultLanguage`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_public_enabled`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`, `comments_moderator_to`, `comments_moderator_from`, `url_error_tpl_id`, `seo`, `meta_title`, `meta_keywords`, `meta_description`) VALUES ("1", ?, "1", "2", "2", NULL, "1", "1", NULL, "0", NULL, NULL, "1", NULL, NULL, NULL, "a:1:{s:4:\"name\";s:2:\"on\";}", NULL, NULL, NULL)', array($publicationName));
+
+        // needed for tests - sample new article type
+        $connection->executeQuery("CREATE TABLE `Xnews` (`NrArticle` int(11) NOT NULL,`IdLanguage` int(11) NOT NULL,`Fhighlight` tinyint(1) NOT NULL DEFAULT '0',`Fdeck` mediumblob,`Ffull_text` mediumblob,PRIMARY KEY (`NrArticle`,`IdLanguage`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+        $connection->executeQuery("INSERT INTO `ArticleTypeMetadata` VALUES ('news','NULL',NULL,0,1,NULL,NULL,NULL,0,NULL),('news','lead',2,0,0,NULL,'longtext',NULL,0,NULL),('news','content',3,0,0,NULL,'body','editor_size=750',1,NULL);");
     }
 
     /**

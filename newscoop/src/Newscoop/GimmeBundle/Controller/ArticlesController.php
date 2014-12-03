@@ -171,8 +171,6 @@ class ArticlesController extends FOSRestController
                     'number' => $article->getId(),
                 ), true))
             );
-
-            return $response;
         } else {
            // TODO add support for global for errors handler
         }

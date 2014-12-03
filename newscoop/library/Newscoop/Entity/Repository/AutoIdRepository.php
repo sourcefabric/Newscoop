@@ -17,6 +17,11 @@ use Doctrine\ORM\QueryBuilder;
 class AutoIdRepository extends EntityRepository
 {
 
+    /**
+     * Get next translations phrase Id.
+     *
+     * @return integer
+     */
     public function getNextTranslationPhraseId()
     {
         $em = $this->getEntityManager();
@@ -29,6 +34,11 @@ class AutoIdRepository extends EntityRepository
         return $autoId->getTranslationPhraseId();
     }
 
+    /**
+     * Get next article number
+     *
+     * @return integer
+     */
     public function getNextArticleNumber()
     {
         $em = $this->getEntityManager();

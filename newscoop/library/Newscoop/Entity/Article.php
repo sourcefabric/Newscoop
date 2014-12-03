@@ -841,9 +841,9 @@ class Article implements DocumentInterface
     /**
      * Set published
      *
-     * @param Datetime|null $published
+     * @param \Datetime|null $published
      *
-     * @return string
+     * @return self
      */
     public function setPublished($published)
     {
@@ -1551,7 +1551,7 @@ class Article implements DocumentInterface
     /**
      * Sets the value of public.
      *
-     * @param string $public the public
+     * @param boolean $public the public
      *
      * @return self
      */
@@ -1667,7 +1667,7 @@ class Article implements DocumentInterface
     /**
      * Sets the value of isIndexed.
      *
-     * @param string $isIndexed the is indexed
+     * @param boolean $isIndexed the is indexed
      *
      * @return self
      */

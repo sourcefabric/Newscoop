@@ -10,6 +10,7 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Article;
+use Newscoop\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -75,6 +76,7 @@ class ArticleService
 
     /**
      * Resolve article from provided data
+     *
      * @param Request $request Request object
      *
      * @return Article $article Article entity object
@@ -123,6 +125,19 @@ class ArticleService
         }
     }
 
+    /**
+     * Create new article
+     *
+     * @param string  $articleType
+     * @param integer $language
+     * @param User    $user
+     * @param integer $publication
+     * @param array   $attributes
+     * @param integer $issue
+     * @param integer $section
+     *
+     * @return Article
+     */
     public function createArticle($articleType, $language, $user, $publication, $attributes = array(), $issue = null, $section = null)
     {
         $this->checkForArticleConflicts($attributes['name'], $publication, $issue, $section);
@@ -143,7 +158,7 @@ class ArticleService
 
 
                 $increment = $minArticleOrder > 0 ? 1 : 2;
-                $result = $this->em->getRepository('Newscoop\Entity\Article')
+                $this->em->getRepository('Newscoop\Entity\Article')
                     ->updateArticleOrder($increment, $publication, $issue, $section)
                     ->getResult();
 
@@ -184,6 +199,14 @@ class ArticleService
         return $article;
     }
 
+    /**
+     * Update article
+     *
+     * @param Article $article
+     * @param array   $attributes
+     *
+     * @return Article
+     */
     public function updateArticle($article, $attributes)
     {
         $this->checkForArticleConflicts(
@@ -208,6 +231,14 @@ class ArticleService
         return $article;
     }
 
+    /**
+     * Update Article static properties
+     *
+     * @param Article $article
+     * @param array   $attributes
+     *
+     * @return Article
+     */
     private function updateArticleMeta($article, $attributes)
     {
         $article->setName($attributes['name']);

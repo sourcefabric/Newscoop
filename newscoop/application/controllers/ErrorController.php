@@ -49,7 +49,6 @@ class ErrorController extends Zend_Controller_Action
         }
 
         $errors = $this->_getParam('error_handler');
-        $request = $this->getRequest();
 
         if (!$errors) {
             $this->view->message = $translator->trans('You have reached the error page', array(), 'bug_reporting');
@@ -90,7 +89,7 @@ class ErrorController extends Zend_Controller_Action
             if ($this->getInvokeArg('displayExceptions') == true) {
                 $this->view->exception = $errors->exception;
             }
-        
+
             $this->view->request = $errors->request;
             $this->view->errors = $errors;
         }

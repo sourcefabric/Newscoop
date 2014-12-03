@@ -36,7 +36,7 @@ class IssueRepository extends EntityRepository
             ->getArrayResult();
 
         if (count($issuesIds) == 0) {
-            return false;
+            return null;
         }
 
         $ids = array();
