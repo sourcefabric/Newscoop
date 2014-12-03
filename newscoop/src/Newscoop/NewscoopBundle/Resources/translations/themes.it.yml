@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Assegnazione duplicata'
 Templates: Template
 'Import theme': 'Importa tema'
-'Import succeeded!': 'Importazione completata!'
+'Import succeeded!': null
 'Import failed!': 'Importazione fallita!'
 'Edit template: $1': 'Modifica template: $1'
 'Set new name to': 'Cambia il nome in '
