@@ -24,7 +24,7 @@ Feature: Images
             And the response should contain field "description"
         Then save new item location as "new_image"
 
-        Given that I want to find an article
+        Given that I want to find an image
             And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I request "<<new_image>>"
             Then the response status code should be 200

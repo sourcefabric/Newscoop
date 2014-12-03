@@ -79,7 +79,7 @@ class ArticlesController extends FOSRestController
             $section = $em->getRepository('Newscoop\Entity\Section')
                 ->findOneBy(array('publication' => $publication, 'issue' => $issue, 'id' => $attributes['section']));
 
-            $article = $articleService->createArticle($articleType, $language, $user, $publication, $attributes, $issue, $section);
+            $article = $articleService->createArticle($articleType, $language, $user, $publication, $attributes, $issue, $section);                
 
             if (!$user->getAuthor()) {
                 $author = new \Newscoop\Entity\Author($user->getFirstName(), $user->getLastName());
@@ -99,14 +99,14 @@ class ArticlesController extends FOSRestController
             $authorService = $this->container->get('author');
             $authorService->addAuthorToArticle($article, $user->getAuthor(), $authorType);
 
-
             $this->postAddUpdate($article);
 
-            return new FOSView\View($article, 201, array(
-                'X-Location' => $this->generateUrl('newscoop_gimme_articles_getarticle', array(
-                    'number' => $article->getId(),
-                ), true))
-            );
+            $view = FOSView\View::create($article, 201);
+            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_getarticle', array(
+                'number' => $article->getId(),
+            ), true));
+
+            return $view;
         }
 
         return $form;

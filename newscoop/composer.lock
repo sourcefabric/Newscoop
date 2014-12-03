@@ -198,12 +198,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "85ff6118558d7b2501cd85b31bdc1ffc0cab731a"
+                "reference": "9354b720cc97db4a914ab5aa28dbaa822cb3d300"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/85ff6118558d7b2501cd85b31bdc1ffc0cab731a",
-                "reference": "85ff6118558d7b2501cd85b31bdc1ffc0cab731a",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/9354b720cc97db4a914ab5aa28dbaa822cb3d300",
+                "reference": "9354b720cc97db4a914ab5aa28dbaa822cb3d300",
                 "shasum": ""
             },
             "require": {
@@ -260,7 +260,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-11-27 00:22:12"
+            "time": "2014-12-03 01:17:20"
         },
         {
             "name": "doctrine/collections",
@@ -1430,12 +1430,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "ba3f4401b5a7b697da18c39968fd9b16cdd2d720"
+                "reference": "47cb819658f0c2d1672eb8e3613db562eafb2d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/ba3f4401b5a7b697da18c39968fd9b16cdd2d720",
-                "reference": "ba3f4401b5a7b697da18c39968fd9b16cdd2d720",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/47cb819658f0c2d1672eb8e3613db562eafb2d75",
+                "reference": "47cb819658f0c2d1672eb8e3613db562eafb2d75",
                 "shasum": ""
             },
             "require": {
@@ -1449,6 +1449,7 @@
                 "doctrine/orm": "~2.1",
                 "doctrine/phpcr-odm": "~1.0.1",
                 "jackalope/jackalope-doctrine-dbal": "1.0.*",
+                "phpunit/phpunit": "~4.0",
                 "propel/propel1": "~1.7",
                 "symfony/filesystem": "2.*",
                 "symfony/form": "~2.1",
@@ -1490,7 +1491,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2014-11-16 21:01:59"
+            "time": "2014-12-03 15:35:26"
         },
         {
             "name": "jms/serializer-bundle",
@@ -2676,12 +2677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "ca188a500a7bef815a46f19f8616f0a775e7dbf2"
+                "reference": "fcb1b0d52c5b5396228e52e65bc6924e9797ee84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/ca188a500a7bef815a46f19f8616f0a775e7dbf2",
-                "reference": "ca188a500a7bef815a46f19f8616f0a775e7dbf2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/fcb1b0d52c5b5396228e52e65bc6924e9797ee84",
+                "reference": "fcb1b0d52c5b5396228e52e65bc6924e9797ee84",
                 "shasum": ""
             },
             "require": {
@@ -2720,7 +2721,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-11-23 18:30:35"
+            "time": "2014-12-03 13:51:42"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3246,12 +3247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "a0703cff9a486f971fef555a3231edcea544154a"
+                "reference": "51aa4788d193584c1805d68828f6a224014766c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/a0703cff9a486f971fef555a3231edcea544154a",
-                "reference": "a0703cff9a486f971fef555a3231edcea544154a",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/51aa4788d193584c1805d68828f6a224014766c2",
+                "reference": "51aa4788d193584c1805d68828f6a224014766c2",
                 "shasum": ""
             },
             "require": {
@@ -3309,7 +3310,7 @@
                 "doctrine/dbal": "~2.2",
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "egulias/email-validator": "~1.2",
-                "ircmaxell/password-compat": "1.0.*",
+                "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.3",
                 "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
                 "propel/propel1": "~1.6"
@@ -3351,7 +3352,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-30 10:12:31"
+            "time": "2014-12-03 16:34:22"
         },
         {
             "name": "twig/extensions",
@@ -4230,12 +4231,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "b8781bdc6379749fd3f3f76aa5109957f46bc9e6"
+                "reference": "818d3a4c09cfecb86f9521600ee5c72f701efcd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/b8781bdc6379749fd3f3f76aa5109957f46bc9e6",
-                "reference": "b8781bdc6379749fd3f3f76aa5109957f46bc9e6",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/818d3a4c09cfecb86f9521600ee5c72f701efcd8",
+                "reference": "818d3a4c09cfecb86f9521600ee5c72f701efcd8",
                 "shasum": ""
             },
             "require": {
@@ -4287,7 +4288,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-12-02 13:16:21"
+            "time": "2014-12-03 18:22:21"
         },
         {
             "name": "phpunit/php-file-iterator",

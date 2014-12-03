@@ -142,59 +142,51 @@ class ArticleService
     {
         $this->checkForArticleConflicts($attributes['name'], $publication, $issue, $section);
 
-        $this->em->getConnection()->beginTransaction();
-        try {
-            $article = new Article(
-                $this->em->getRepository('Newscoop\Entity\AutoId')->getNextArticleNumber(),
-                $language
-            );
+        $article = new Article(
+            $this->em->getRepository('Newscoop\Entity\AutoId')->getNextArticleNumber(),
+            $language
+        );
 
-            if (!$section) {
-                $articleOrder = $article->getNumber();
-            } else {
-                $minArticleOrder = $this->em->getRepository('Newscoop\Entity\Article')
-                    ->getMinArticleOrder($publication, $issue, $section)
-                    ->getSingleScalarResult();
+        if (!$section) {
+            $articleOrder = $article->getNumber();
+        } else {
+            $minArticleOrder = $this->em->getRepository('Newscoop\Entity\Article')
+                ->getMinArticleOrder($publication, $issue, $section)
+                ->getSingleScalarResult();
 
 
-                $increment = $minArticleOrder > 0 ? 1 : 2;
-                $this->em->getRepository('Newscoop\Entity\Article')
-                    ->updateArticleOrder($increment, $publication, $issue, $section)
-                    ->getResult();
+            $increment = $minArticleOrder > 0 ? 1 : 2;
+            $this->em->getRepository('Newscoop\Entity\Article')
+                ->updateArticleOrder($increment, $publication, $issue, $section)
+                ->getResult();
 
-                $articleOrder = 1;
-            }
-            $article->setArticleOrder($articleOrder);
-            $article->setPublication($publication);
-            $article->setType($articleType);
-            $article->setCreator($user);
-
-            $article->setIssueId((!is_null($issue)) ? $issue->getId() : 0);
-            $article->setSectionId((!is_null($section)) ? $section->getId() : 0);
-
-            $this->updateArticleMeta($article, $attributes);
-
-            $article->setCommentsLocked(false); //TODO - add this to type
-            $article->setWorkflowStatus('N');
-            $article->setShortName($article->getNumber());
-            $article->setLockTime(new \DateTime('0000:00:00 00:00:00'));
-            $article->setPublished(new \Datetime('0000:00:00 00:00:00'));
-            $article->setUploaded(new \Datetime());
-            $article->setLockUser();
-            $article->setPublic(true);
-            $article->setIsIndexed(false);
-
-            $this->em->persist($article);
-            $this->em->flush();
-            $this->em->getConnection()->commit();
-
-            $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
-            $articleData->create();
-        } catch (\Exception $e) {
-            $this->em->getConnection()->rollback();
-
-            throw $e;
+            $articleOrder = 1;
         }
+        $article->setArticleOrder($articleOrder);
+        $article->setPublication($publication);
+        $article->setType($articleType);
+        $article->setCreator($user);
+
+        $article->setIssueId((!is_null($issue)) ? $issue->getId() : 0);
+        $article->setSectionId((!is_null($section)) ? $section->getId() : 0);
+
+        $this->updateArticleMeta($article, $attributes);
+
+        $article->setCommentsLocked(false); //TODO - add this to type
+        $article->setWorkflowStatus('N');
+        $article->setShortName($article->getNumber());
+        $article->setLockTime(new \DateTime('0000:00:00 00:00:00'));
+        $article->setPublished(new \Datetime('0000:00:00 00:00:00'));
+        $article->setUploaded(new \Datetime());
+        $article->setLockUser();
+        $article->setPublic(true);
+        $article->setIsIndexed(false);
+
+        $this->em->persist($article);
+        $this->em->flush();
+
+        $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
+        $articleData->create();
 
         return $article;
     }

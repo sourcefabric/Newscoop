@@ -1561,9 +1561,8 @@ DROP TABLE IF EXISTS `Xnews`;
 CREATE TABLE `Xnews` (
   `NrArticle` int(11) NOT NULL,
   `IdLanguage` int(11) NOT NULL,
-  `Fhighlight` tinyint(1) NOT NULL DEFAULT '0',
-  `Fdeck` mediumblob,
-  `Ffull_text` mediumblob,
+  `Flead` mediumblob,
+  `Fcontent` mediumblob,
   PRIMARY KEY (`NrArticle`,`IdLanguage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

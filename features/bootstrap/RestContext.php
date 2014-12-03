@@ -97,7 +97,9 @@ class RestContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-        $this->client      = new \Buzz\Browser(new \Buzz\Client\FileGetContents());
+        $fileGetContent = new \Buzz\Client\FileGetContents();
+        $fileGetContent->setTimeout(15);
+        $this->client      = new \Buzz\Browser($fileGetContent);
         $this->associative = (array_key_exists('associative', $parameters) ? $parameters['associative'] : true);
     }
 
