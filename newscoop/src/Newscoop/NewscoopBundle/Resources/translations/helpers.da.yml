@@ -1,9 +1,9 @@
 dynatable:
-    page: null
-    perPageText: null
-    pageText: null
-    recordCountPageBoundTemplate: null
-    recordCountPageUnboundedTemplate: null
-    recordCountFilteredTemplate: null
-    recordCountText: null
-    processingText: null
+    page: Side
+    perPageText: 'Vis:'
+    pageText: 'Sider:'
+    recordCountPageBoundTemplate: '{pageLowerBound} til {pageUpperBound} af'
+    recordCountPageUnboundedTemplate: '{recordsShown} af'
+    recordCountFilteredTemplate: ' ({recordsTotal} i alt)'
+    recordCountText: Viser
+    processingText: Arbejder...
