@@ -28,4 +28,4 @@ before_script:
 - sudo php newscoop/scripts/fixer.php
 script:
 - newscoop/vendor/bin/phpspec run --format pretty
-- newscoop/vendor/bin/phpspec behat -f progress
+- newscoop/vendor/bin/behat -f progress
