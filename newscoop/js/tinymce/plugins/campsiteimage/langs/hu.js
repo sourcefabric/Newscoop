@@ -1,3 +1,3 @@
-tinyMCE.addI18n('en.campsiteimage',{
+tinyMCE.addI18n('hu.campsiteimage',{
     editor_button: "Insert image"
 });
