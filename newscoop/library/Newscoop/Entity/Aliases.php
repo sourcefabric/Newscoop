@@ -32,9 +32,9 @@ class Aliases
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
-     * @var Newscoop\Entity\Publication
+     * @var \Newscoop\Entity\Publication
      */
     protected $publication;
 
@@ -73,7 +73,7 @@ class Aliases
     /**
      * Get publication
      *
-     * @return Newscoop\Entity\Publication
+     * @return \Newscoop\Entity\Publication
      */
     public function getPublication()
     {
@@ -83,7 +83,7 @@ class Aliases
     /**
      * Sets the value of publication.
      *
-     * @param Newscoop\Entity\Publication $publication the publication
+     * @param \Newscoop\Entity\Publication $publication the publication
      *
      * @return self
      */

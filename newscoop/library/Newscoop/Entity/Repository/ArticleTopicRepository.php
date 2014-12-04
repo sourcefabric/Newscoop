@@ -27,4 +27,33 @@ class ArticleTopicRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getAllArticleTopics($articleNumber, $languageCode)
+    {
+        $languageId = $this->_em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($languageCode);
+
+        $qb = $this->createQueryBuilder('at')
+            ->select('at', 't')
+            ->leftJoin('at.article', 'a')
+            ->leftJoin('at.topic', 't')
+            ->leftJoin('t.translations', 'tt')
+            ->where('')
+            ->where('at.article = :articleNumber')
+            ->andWhere('a.language = :languageId')
+            ->setParameters(array(
+                'articleNumber' => $articleNumber,
+                'languageId' => $languageId
+            ));
+
+        $countQueryBuilder = clone $qb;
+        $countQueryBuilder->select('COUNT(at)');
+
+        $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+        $query = $qb->getQuery();
+        $query = $this->_em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->setTranslatableHint($query, $languageCode);
+        $query->setHint('knp_paginator.count', $count);
+
+        return $query;
+    }
 }

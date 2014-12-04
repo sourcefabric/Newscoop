@@ -1,0 +1,10 @@
+Newscoop\Entity\ArticleTopic:
+    exclusion_policy: ALL
+    exclude: false
+    properties:
+        topic:
+            expose: true
+            read_only: true
+            serialized_name: topic
+            groups: ["list", "details"]
+            since_version: 1.2

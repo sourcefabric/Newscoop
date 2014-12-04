@@ -1,7 +1,7 @@
 ALTER TABLE Publications DROP INDEX Alias, ADD INDEX IDX_2A49E10CAB83D3A4 (IdDefaultAlias);
 DROP INDEX Name ON Publications;
-ALTER TABLE
-Publications ADD meta_title VARCHAR(255) DEFAULT NULL,
+ALTER TABLE Publications 
+ADD meta_title VARCHAR(255) DEFAULT NULL,
 ADD meta_keywords VARCHAR(255) DEFAULT NULL,
 ADD meta_description VARCHAR(255) DEFAULT NULL,
 DROP TimeUnit, DROP UnitCost,
@@ -23,6 +23,5 @@ CHANGE comments_moderator_to comments_moderator_to VARCHAR(255) DEFAULT NULL,
 CHANGE comments_moderator_from comments_moderator_from VARCHAR(255) DEFAULT NULL,
 CHANGE url_error_tpl_id url_error_tpl_id INT DEFAULT NULL,
 CHANGE seo seo VARCHAR(255) DEFAULT NULL;
-
 CREATE INDEX IDX_2A49E10CEC194F36 ON Publications (IdDefaultLanguage);
 CREATE INDEX Name ON Publications (Name);

@@ -258,6 +258,8 @@ CREATE TABLE `Articles` (
   `webcode` varchar(10) DEFAULT NULL,
   `indexed` timestamp NULL DEFAULT NULL,
   `rating_enabled` tinyint(1) DEFAULT '1',
+  `issue_id` INT DEFAULT NULL,
+  `section_id` INT DEFAULT NULL,
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -265,7 +267,9 @@ CREATE TABLE `Articles` (
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`ShortName`),
   KEY `Type` (`Type`),
   KEY `ArticleOrderIdx` (`ArticleOrder`),
-  FULLTEXT KEY `articles_name_skey` (`Name`)
+  FULLTEXT KEY `articles_name_skey` (`Name`),
+  INDEX IDX_46AB533E5E7AA58C (issue_id),
+  INDEX IDX_46AB533ED823E37A (section_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1322,10 +1326,10 @@ CREATE TABLE Publications (
   comments_spam_blocking_enabled TINYINT(1) DEFAULT NULL,
   url_error_tpl_id INT DEFAULT NULL,
   seo VARCHAR(255) DEFAULT NULL,
+  IdDefaultLanguage int(10),
   meta_title VARCHAR(255) DEFAULT NULL,
   meta_keywords VARCHAR(255) DEFAULT NULL,
   meta_description VARCHAR(255) DEFAULT NULL,
-  IdDefaultLanguage int(10),
   INDEX IDX_2A49E10CEC194F36 (IdDefaultLanguage),
   INDEX IDX_2A49E10CAB83D3A4 (IdDefaultAlias),
   INDEX Name (Name), PRIMARY KEY(Id)
@@ -1743,55 +1747,43 @@ LOCK TABLES `TopicFields` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TopicNames`
+-- Table structure for table `main_topics`
 --
 
-DROP TABLE IF EXISTS `TopicNames`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TopicNames` (
-  `fk_topic_id` int(10) unsigned NOT NULL,
-  `fk_language_id` int(10) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`fk_topic_id`,`fk_language_id`),
-  UNIQUE KEY `fk_language_id` (`fk_language_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `TopicNames`
---
-
-LOCK TABLES `TopicNames` WRITE;
-/*!40000 ALTER TABLE `TopicNames` DISABLE KEYS */;
-/*!40000 ALTER TABLE `TopicNames` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Topics`
---
-
-DROP TABLE IF EXISTS `Topics`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Topics` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `node_left` int(10) unsigned NOT NULL,
-  `node_right` int(10) unsigned NOT NULL,
+CREATE TABLE IF NOT EXISTS `main_topics` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL,
+  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `lft` int(11) NOT NULL,
+  `rgt` int(11) NOT NULL,
+  `root` int(11) DEFAULT NULL,
+  `lvl` int(11) NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `topicOrder` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `node_left` (`node_left`),
-  KEY `node_right` (`node_right`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `IDX_EEAFE2F727ACA70` (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+ALTER TABLE `main_topics` ADD CONSTRAINT `FK_EEAFE2F727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `main_topics` (`id`) ON DELETE SET NULL;
 
 --
--- Dumping data for table `Topics`
+-- Table structure for table `topic_translations`
 --
 
-LOCK TABLES `Topics` WRITE;
-/*!40000 ALTER TABLE `Topics` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Topics` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `topic_translations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) DEFAULT NULL,
+  `locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `field` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `lookup_unique_idx` (`locale`,`object_id`,`field`),
+  KEY `IDX_98B25D13232D562B` (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+ALTER TABLE `topic_translations` ADD CONSTRAINT `FK_98B25D13232D562B` FOREIGN KEY (`object_id`) REFERENCES `main_topics` (`id`) ON DELETE CASCADE;
 
 --
 -- Table structure for table `Translations`

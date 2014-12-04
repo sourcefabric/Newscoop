@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Kettős hozzárendelés'
 Templates: Sablonok
 'Import theme': 'Téma importálása'
-'Import succeded!': 'Sikerült az importálás!'
+'Import succeeded!': null
 'Import failed!': 'Nem sikerült az importálás!'
 'Edit template: $1': 'Sablon szerkesztése: $1'
 'Set new name to': 'Új név beállítása'

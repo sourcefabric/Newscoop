@@ -166,13 +166,10 @@ class LanguageRepository extends EntityRepository
     }
 
     /**
-     * Tries to find Language entity by string. String should be in correct
-     * RFC3066bis standard.
+     * Tries to find Language entity by string. String should be in correct RFC3066bis standard.
      *
-     * @param string $languageString Language string
-     * @param string $languageHints  Array contianing hint to language objects
-     *                               if the language is not found on the
-     *                               specified locale string
+     * @param string $languageString  Language string
+     * @param string $firstResultOnly Return first result
      *
      * @return \Newscoop\Entity\Language|null Returns found entity or null
      */

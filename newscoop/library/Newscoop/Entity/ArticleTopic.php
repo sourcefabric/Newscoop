@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article topic entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  * @ORM\Table(name="ArticleTopics")
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  */

@@ -44,11 +44,17 @@ class NewscoopExtension extends \Twig_Extension
             $localeFromCookie = $this->request->cookies->has('TOL_Language') == true ? $this->request->cookies->get('TOL_Language') : 'en';
         }
 
+        try {
+            $currentUser = $this->container->getService('user')->getCurrentUser();
+        } catch (\Newscoop\NewscoopException $e) {
+            $currentUser = null;
+        }
+
         return array(
             'Newscoop' => $Campsite,
             'NewscoopVersion' => new \CampVersion(),
             'SecurityToken' => \SecurityToken::GetToken(),
-            'NewscoopUser' => $this->container->getService('user')->getCurrentUser(),
+            'NewscoopUser' => $currentUser,
             'localeFromCookie' => $localeFromCookie
         );
     }
