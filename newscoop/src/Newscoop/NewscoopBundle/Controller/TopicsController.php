@@ -460,11 +460,11 @@ class TopicsController extends Controller
 
         foreach ($idsDiff as $key => $topicId) {
             $topicObj = $em->getReference("Newscoop\NewscoopBundle\Entity\Topic", $topicId);
-           if (in_array($topicId, $topicsIds)) {
+            if (in_array($topicId, $topicsIds)) {
                 $topicService->removeTopicFromArticle($topicObj, $articleObj);
-           } else {
+            } else {
                 $topicService->addTopicToArticle($topicObj, $articleObj);
-           }
+            }
         }
 
         return new JsonResponse(array(
