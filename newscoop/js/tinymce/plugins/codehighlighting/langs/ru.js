@@ -1,4 +1,3 @@
-// UK lang variables
 tinyMCE.addI18n('ru.codehighlighting',{
 codehighlighting_desc : "Подсветка кода",
 codehighlighting_title : "Подсветка кода",
