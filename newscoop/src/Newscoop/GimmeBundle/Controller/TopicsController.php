@@ -161,6 +161,35 @@ class TopicsController extends FOSRestController
     }
 
     /**
+     * Get article's topics
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when topic successfully found",
+     *         404={
+     *           "Returned when the topics are not found",
+     *         }
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}/{language}/topics.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/topics/article/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     */
+    public function getArticlesTopicsAction($number, $language)
+    {
+        $em = $this->container->get('em');
+        $topics = $em->getRepository('Newscoop\Entity\ArticleTopic')
+            ->getAllArticleTopics($number, $language);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $topics = $paginator->paginate($topics, array('distinct' => false));
+
+        return $topics;
+    }
+
+    /**
      * Search for topics by title
      *
      * Get list of topics by given search query
