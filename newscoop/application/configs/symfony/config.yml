@@ -34,6 +34,13 @@ doctrine:
             point: Newscoop\NewscoopBundle\ORM\PointType
     orm:
         auto_mapping: true
+        mappings:
+            gedmo_translatable:
+                type: annotation
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity/MappedSuperclass"
+                alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+                is_bundle: false
 
 # FOSRestBundle Configuration
 fos_rest:
@@ -100,6 +107,9 @@ jms_serializer:
         directories:
             Newscoop:
                 namespace_prefix: Newscoop\Entity
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            NewscoopBundle:
+                namespace_prefix: Newscoop\NewscoopBundle\Entity
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Comment:
                 namespace_prefix: Newscoop\Entity\Comment
@@ -173,3 +183,13 @@ ewz_recaptcha:
     private_key:
     enabled: true
     locale_key: kernel.default_locale
+
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
+            sluggable: false
+            translatable: true
+            sortable: false
+            loggable: false

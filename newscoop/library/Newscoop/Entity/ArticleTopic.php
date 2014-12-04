@@ -7,9 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Utils\Validation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article topic entity
@@ -50,7 +48,7 @@ class ArticleTopic
     public function setArticle($article)
     {
         $this->article = $article;
-        
+
         return $this;
     }
 
@@ -72,7 +70,7 @@ class ArticleTopic
     public function setTopic($topic)
     {
         $this->topic = $topic;
-        
+
         return $this;
     }
 }

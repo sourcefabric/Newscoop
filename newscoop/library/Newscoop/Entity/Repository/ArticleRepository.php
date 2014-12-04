@@ -14,6 +14,7 @@ use Newscoop\Search\RepositoryInterface;
 use Newscoop\NewscoopException\IndexException;
 use Newscoop\Entity\Article;
 use Newscoop\Entity\User;
+use Newscoop\NewscoopBundle\Entity\Topic;
 
 /**
  * Article repository
@@ -482,6 +483,42 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         $count = $qb->getQuery()->getSingleScalarResult();
 
         return (int) $count;
+    }
+
+    /**
+     * Adds topic to the article
+     *
+     * @param Topic   $topic   Topic object
+     * @param Article $article Article object
+     *
+     * @return boolean
+     */
+    public function addTopicToArticle(Topic $topic, Article $article)
+    {
+        $result = $article->addTopic($topic);
+        if ($result) {
+            $this->_em->flush();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Removes topic from the article
+     *
+     * @param Topic   $topic   Topic object
+     * @param Article $article Article object
+     *
+     * @return boolean
+     */
+    public function removeTopicFromArticle(Topic $topic, Article $article)
+    {
+        $result = $article->removeTopic($topic);
+        if ($result) {
+            $this->_em->flush();
+        }
+
+        return $result;
     }
 
     /**

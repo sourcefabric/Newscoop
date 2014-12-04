@@ -1,0 +1,33 @@
+Newscoop\NewscoopBundle\Entity\TopicTranslation:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: false
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: id
+            since_version: 1.2
+    virtual_properties:
+        getId:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: id
+            since_version: 1.2
+        getContent:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: content
+            since_version: 1.2
+        getLocale:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: locale
+            since_version: 1.2
+

@@ -79,7 +79,7 @@ class ArticlesController extends FOSRestController
             $section = $em->getRepository('Newscoop\Entity\Section')
                 ->findOneBy(array('publication' => $publication, 'issue' => $issue, 'id' => $attributes['section']));
 
-            $article = $articleService->createArticle($articleType, $language, $user, $publication, $attributes, $issue, $section);                
+            $article = $articleService->createArticle($articleType, $language, $user, $publication, $attributes, $issue, $section);
 
             if (!$user->getAuthor()) {
                 $author = new \Newscoop\Entity\Author($user->getFirstName(), $user->getLastName());
@@ -174,6 +174,14 @@ class ArticlesController extends FOSRestController
         } else {
            // TODO add support for global for errors handler
         }
+
+        // Temporarily added to at least give some feedback,
+        // without it the status would always be 500
+        // @Author: Mischa
+        $response = new Response();
+        $response->setStatusCode(201);
+
+        return $response;
     }
 
     private function postAddUpdate($article)
@@ -274,6 +282,11 @@ class ArticlesController extends FOSRestController
      *     header name: "link"
      *     header value: "</api/images/1; rel="image">"
      *
+     * **topics headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/topics/1; rel="topic">"
+     *
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when successful",
@@ -361,8 +374,16 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
-        }
 
+            if ($object instanceof \Newscoop\NewscoopBundle\Entity\Topic) {
+                $topicService = $this->get('newscoop_newscoop.topic_service');
+                $topicService->addTopicToArticle($object, $article);
+
+                $matched = true;
+
+                continue;
+            }
+        }
 
         if ($matched === false) {
             throw new InvalidParametersException('Any supported link object not found');
@@ -388,6 +409,11 @@ class ArticlesController extends FOSRestController
      *
      *     header name: "link"
      *     header value: "</api/images/1; rel="image">"
+     *
+     * **topics headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/topics/1; rel="topic">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -475,6 +501,15 @@ class ArticlesController extends FOSRestController
             if ($object instanceof \Newscoop\Entity\Snippet) {
                 $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
                 $snippetRepo->removeSnippetFromArticle($object, $article);
+
+                $matched = true;
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\NewscoopBundle\Entity\Topic) {
+                $topicService = $this->get('newscoop_newscoop.topic_service');
+                $topicService->removeTopicFromArticle($object, $article);
 
                 $matched = true;
 

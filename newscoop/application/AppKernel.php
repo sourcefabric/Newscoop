@@ -36,7 +36,8 @@ class AppKernel extends Kernel
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
             new Newscoop\NewscoopBundle\NewscoopNewscoopBundle(),
             new Newscoop\CommunityTickerBundle\NewscoopCommunityTickerBundle(),
-            new Newscoop\ArticlesBundle\NewscoopArticlesBundle()
+            new Newscoop\ArticlesBundle\NewscoopArticlesBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -88,7 +89,8 @@ class AppKernel extends Kernel
      * @param string The original path, can be relative etc.
      * @return string The resolved path, it might not exist.
      */
-    public function truepath($path){
+    public function truepath($path)
+    {
         // whether $path is unix or not
         $unipath=strlen($path)==0 || $path{0}!='/';
         // attempts to detect if path is relative in which case, add cwd
@@ -111,6 +113,7 @@ class AppKernel extends Kernel
         if(file_exists($path) && linkinfo($path)>0)$path=readlink($path);
         // put initial separator that could have been lost
         $path=!$unipath ? '/'.$path : $path;
+
         return $path;
     }
 }
