@@ -330,7 +330,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
-     * Get password salt for authentication (symfony)
+     * Get password salt for authentication
      * @return string
      */
     public function getSalt()
@@ -341,7 +341,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
-     * Get password for authentication (symfony)
+     * Get password for authentication
      * @return [type] [description]
      */
     public function getPassword()
@@ -687,7 +687,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
-     * Get user roles for authentication (symfony)
+     * Get user roles for authentication
      * @return array array with roles
      */
     public function getRoles()

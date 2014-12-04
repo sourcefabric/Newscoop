@@ -45,9 +45,13 @@ class AuthorType
      */
     protected $authors;
 
-    private function __construct()
+    /**
+     * @param string $type
+     */
+    public function __construct($type = null)
     {
         $this->authors = new ArrayCollection();
+        $this->type = $type;
     }
 
     /**

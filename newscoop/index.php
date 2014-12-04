@@ -12,7 +12,7 @@ switch (true) {
         Statistics::ProcessStats($stats_only);
         exit(0);
         break;
-        
+
     default:
         require_once __DIR__ . '/public/index.php';
 }

@@ -17,6 +17,11 @@ use Doctrine\ORM\QueryBuilder;
 class AutoIdRepository extends EntityRepository
 {
 
+    /**
+     * Get next translations phrase Id.
+     *
+     * @return integer
+     */
     public function getNextTranslationPhraseId()
     {
         $em = $this->getEntityManager();
@@ -27,5 +32,22 @@ class AutoIdRepository extends EntityRepository
         $em->flush();
 
         return $autoId->getTranslationPhraseId();
+    }
+
+    /**
+     * Get next article number
+     *
+     * @return integer
+     */
+    public function getNextArticleNumber()
+    {
+        $em = $this->getEntityManager();
+        $result = $em->getRepository('Newscoop\Entity\AutoId')->findAll();
+        $autoId = $result[0];
+
+        $autoId->setArticleId($autoId->getArticleId()+1);
+        $em->flush();
+
+        return $autoId->getArticleId();
     }
 }

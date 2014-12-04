@@ -94,7 +94,8 @@ class AuthController extends Zend_Controller_Action
                 $user = $this->_helper->service('user')->findOneBy(array('email' => $userData->email));
 
                 if (!$user) {
-                    $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName);
+                    $publicationService = \Zend_Registry::get('container')->getService('newscoop_newscoop.publication_service');
+                    $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName, null, $publicationService->getPublication()->getId());
                 }
 
                 $this->_helper->service('auth.adapter.social')->addIdentity($user, $adapter->id, $userData->identifier);
@@ -112,6 +113,10 @@ class AuthController extends Zend_Controller_Action
                     'social' => true,
                 ));
             } else {
+                $request = \Zend_Registry::get('container')->getService('request');
+                if ($request->query->has('_target_path')) {
+                    $this->_helper->redirector->gotoUrl($request->query->get('_target_path'));
+                }
                 $this->_helper->redirector('index', 'dashboard');
             }
         } catch (\Exception $e) {

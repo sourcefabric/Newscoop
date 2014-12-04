@@ -32,7 +32,7 @@ class Aliases
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
@@ -83,7 +83,7 @@ class Aliases
     /**
      * Sets the value of publication.
      *
-     * @param Newscoop\Entity\Publication $publication the publication
+     * @param \Newscoop\Entity\Publication $publication the publication
      *
      * @return self
      */
