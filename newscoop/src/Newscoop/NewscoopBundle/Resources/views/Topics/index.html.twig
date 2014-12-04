@@ -1,7 +1,13 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "topics" %}
 {% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'topics.title'|trans }}{% endblock %}
-{% block admin_page_title_content %}{{ 'topics.title'|trans }}{% endblock %}
+{% block admin_page_title_box %}
+  {% if compactView == false %}
+      <div class="toolbar row"><span class="article-title">
+    {{ 'topics.title'|trans }}
+  </span></div>
+  {% endif %}
+{% endblock %}
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/angular-ui-tree.min.css') }}">
 <style>
@@ -16,20 +22,26 @@
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree.js') }}"></script>
 <script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/highlight.min.js') }}"></script>
 <script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
+<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
 <script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
 {% endblock %}
-{% if compactView %}
-    {% block admin_page_menu_bar %}
-    {% endblock %}
-{% endif %}
+{% block admin_page_menu_bar %}
+  {% if compactView == false %}
+    {{ parent() }}
+  {% endif %}
+{% endblock %}
 {% block admin_content %}
-<div class="system_pref" ng-app="treeApp">
+
+<div class="system_pref" ng-app="treeApp" ng-controller="treeCtrl">
+  <button class="button right-floated" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
+  <button class="button right-floated" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
+  <h3>{{ 'topics.title'|trans }}</h3>
 {% if compactView == false %}
 <div class="bs-callout bs-callout-info">
   {{ renderTip('topics.tip'|trans) }}
 </div>
 {% endif %}
-<div class="row" ng-controller="treeCtrl" ng-init="dim=false; highlight=true; {% if compactView %}onFilterLanguageChange('{{ articleLanguage }}'){% else %}loadTopicsTree(){% endif %}">
+<div class="row" ng-init="dim=false; highlight=true; {% if compactView %}onFilterLanguageChange('{{ articleLanguage }}', '{{ articleNumber }}'){% else %}loadTopicsTree(){% endif %}">
         <div class="col-lg-{% if compactView %}12{% else %}6{% endif %}">
           {% if compactView == false %}
           <h3>{{ 'topics.label.filterbylang'|trans }}</h3>
@@ -64,12 +76,15 @@
             </h3>
             <!-- Nested node template -->
             <script type="text/ng-template" id="nodes_renderer.html">
-              <div ui-tree-handle class="tree-node tree-node-content">
-              <div class="drag-bar"></div>
+              <div ui-tree-handle {% if compactView %}style="cursor:auto"{% endif %} class="tree-node tree-node-content">
+              <div class="drag-bar" {% if compactView %}style="display: none;"{% endif %}></div>
                 <a data-nodrag ng-click="toggle(this)" class="pointer"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin: 0 5px;" />{% endif %}
                 <div class="pull-right action-buttons">
                     <a data-nodrag ng-click="startEditing(this)" class="pointer"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
+                    {% if compactView == false %}
                     <a data-nodrag ng-click="removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="pointer"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
+                    {% endif %}
                 </div>
                 <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding"></span></span>
                 <div class="node-edit-div" data-nodrag ng-show="editing">
@@ -130,9 +145,9 @@
                 </li>
               </ol>
             </script>
-            <div ui-tree="treeOptions" id="tree-root">
+            <div ui-tree="treeOptions" {% if compactView %}data-drag-enabled="false"{% endif %} id="tree-root">
               <ol ui-tree-nodes="" ng-model="data">
-                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" {% if compactView %}ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}" {% endif %}></li>
               </ol>
             </div>
             <!-- Modal -->
@@ -159,9 +174,13 @@
 </div>
 <script>
     var token = "{{ default_csrf_token() }}";
+    $('#selectedCheckbox').prop('type', 'checkbox');
+
 </script>
 {% endblock %}
-{% if compactView %}
-    {% block admin_page_footer_box %}
-    {% endblock %}
-{% endif %}
+{% block admin_page_footer_box %}
+  {% if compactView == false %}
+    {{ parent() }}
+  {% endif %}
+{% endblock %}
+

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'])
+var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight', 'checklist-model'])
   .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, $locationProvider, uiTreeFilterSettingsProvider) {
       $locationProvider.html5Mode(true);
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
@@ -10,11 +10,14 @@ var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'
 
 app.factory('TopicsFactory',  function($http) {
   return {
-        getTopics: function(languageCode) {
+        getTopics: function(languageCode, articleNumber) {
             return $http({
               method: "GET",
               url: Routing.generate("newscoop_newscoop_topics_tree"),
-              params: {_code: languageCode}
+              params: {
+                _code: languageCode,
+                _articleNumber: articleNumber
+              }
             });
         },
         getLanguages: function() {
@@ -44,6 +47,20 @@ app.factory('TopicsFactory',  function($http) {
             params: {_code: languageCode}
           });
         },
+        attachTopics: function(formData, articleNumber, languageCode) {
+          return $http({
+            method: "POST",
+            url: Routing.generate("newscoop_newscoop_topics_attachtopic"),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: $.param(formData),
+            params: {
+              _articleNumber: articleNumber,
+              _languageCode: languageCode
+            }
+          });
+        },
         updateTopic: function(formData, id, languageCode) {
           return $http({
             method: "POST",
@@ -71,12 +88,6 @@ app.factory('TopicsFactory',  function($http) {
 app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.treeOptions = {
       dropped: function(event) {
-        console.log('top closest node: \n');
-        console.log(event.dest.nodesScope.$$childHead);
-        console.log('dragged node: \n');
-        console.log(event.dest.nodesScope.$$childTail);
-        console.log('parent node: \n');
-        console.log(event.dest.nodesScope.$parent.$modelValue);
         var closestNode = event.dest.nodesScope.$$childHead;
         var draggedNode = event.dest.nodesScope.$$childTail;
         var params = {};
@@ -171,6 +182,22 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
             flashMessage(response.message, 'error');
         });
     }
+
+    $scope.selectedTopics = {
+      ids: []
+    };
+
+    var getSelectedTopics = function (array) {
+        if (array) {
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].attached) {
+                  $scope.selectedTopics.ids.push(array[i].id);
+                }
+
+                getSelectedTopics(array[i].__children);
+            }
+        }
+    };
 
     var updateList = function (children, id) {
         if (children) {
@@ -349,6 +376,19 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     };
 
+    $scope.attachTopics = function(articleNumber, languageCode) {
+      var topicsIds = $scope.selectedTopics;
+      TopicsFactory.attachTopics(topicsIds, articleNumber, languageCode).success(function (response) {
+        if (response.status) {
+          flashMessage(response.message);
+        } else {
+          flashMessage(response.message, 'error');
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+      });
+    }
+
     $scope.editFormData = {};
     $scope.updateTopic = function(node, event) {
        var postData = {
@@ -374,11 +414,12 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         languageCode = language.code;
     }
 
-    $scope.onFilterLanguageChange = function(langCode) {
+    $scope.onFilterLanguageChange = function(langCode, articleNumber) {
         languageCode = langCode;
         $scope.languageCode = langCode;
-        TopicsFactory.getTopics(langCode).success(function (data) {
+        TopicsFactory.getTopics(langCode, articleNumber).success(function (data) {
            $scope.data = data.tree;
+          getSelectedTopics(data.tree);
         }).error(function(data, status){
             flashMessage(response.message, 'error');
         });

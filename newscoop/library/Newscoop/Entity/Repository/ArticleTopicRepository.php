@@ -12,10 +12,15 @@ use Doctrine\ORM\EntityRepository;
 
 class ArticleTopicRepository extends EntityRepository
 {
-    public function getArticleTopicsQuery($articleNumber)
+    public function getArticleTopicsQuery($articleNumber, $topicsOnly = false)
     {
-        $queryBuilder = $this->createQueryBuilder('at')
-            ->where('at.article = :articleNumber')
+        $queryBuilder = $this->createQueryBuilder('at');
+
+        if ($topicsOnly) {
+            $queryBuilder->select('IDENTITY(at.topic)');
+        }
+
+        $queryBuilder->where('at.article = :articleNumber')
             ->setParameter('articleNumber', $articleNumber);
 
         $query = $queryBuilder->getQuery();

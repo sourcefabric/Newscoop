@@ -79,7 +79,7 @@
     <div class="frame" id="topic_box_frame">
     <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="iframe ui-state-default icon-button right-floated"
-      href="/admin/new-topics/view/compact/<?php echo $language->getCode() ?>"><span
+      href="/admin/new-topics/view/compact/<?php echo $articleObj->getArticleNumber() . '/' . $language->getCode() ?>"><span
         class="ui-icon ui-icon-pencil"></span><?php echo $translator->trans('Edit'); ?></a>
     <?php } ?>
       <label class="left-floated block-label"><?php echo $translator->trans('Topics'); ?></label>

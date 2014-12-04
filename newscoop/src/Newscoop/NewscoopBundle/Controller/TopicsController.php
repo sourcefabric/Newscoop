@@ -47,9 +47,9 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/new-topics/", options={"expose"=true})
-     * @Route("/admin/new-topics/view/{compactView}/{language}", options={"expose"=true})
+     * @Route("/admin/new-topics/view/{compactView}/{articleNumber}/{language}", options={"expose"=true})
      */
-    public function indexAction($compactView = false, $language = null)
+    public function indexAction($compactView = false, $articleNumber = null, $language = null)
     {
         if ($compactView === 'compact') {
             $compactView = true;
@@ -57,7 +57,8 @@ class TopicsController extends Controller
 
         return $this->render('NewscoopNewscoopBundle:Topics:index.html.twig', array(
             'compactView' => $compactView,
-            'articleLanguage' => $language
+            'articleLanguage' => $language,
+            'articleNumber' => $articleNumber
         ));
     }
 
@@ -84,9 +85,22 @@ class TopicsController extends Controller
     {
         $em = $this->get('em');
         $locale = $request->get('_code');
+        $articleNumber = $request->get('_articleNumber');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
         $topicsQuery = $repository->getTranslatableTopicsQuery($locale);
         $nodes = $topicsQuery->getArrayResult();
+
+        if ($articleNumber) {
+            $topicsIds = $this->getArticleTopicsIds($articleNumber);
+
+            foreach ($nodes as $key => $topic) {
+                if (in_array($topic['id'], $topicsIds)) {
+                    $topic['attached'] = true;
+                    $nodes[$key] = $topic;
+                }
+            }
+        }
+
         $tree = $repository->buildTreeArray($nodes);
 
         usort($tree, function ($node1, $node2) {
@@ -402,6 +416,63 @@ class TopicsController extends Controller
         ));
     }
 
+    /**
+     * @Route("/admin/topics/attach", options={"expose"=true})
+     * @Method("POST")
+     */
+    public function attachTopicAction(Request $request)
+    {
+        $translator = $this->get('translator');
+        $em = $this->get('em');
+        $userService = $this->get('user');
+        $user = $userService->getCurrentUser();
+        $topicService = $this->get('newscoop_newscoop.topic_service');
+        if (!$user->hasPermission('AttachTopicToArticle')) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans("You do not have the right to attach topics to articles.", array(), 'article_topics'),
+            ), 403);
+        }
+
+        $articleNumber = $request->get('_articleNumber');
+        $languageCode = $request->get('_languageCode');
+        $qb = $em->getRepository('Newscoop\Entity\Article')->createQueryBuilder('a')
+            ->join('a.language', 'l')
+            ->where('a.number = :number')
+            ->andWhere('l.code = :code')
+            ->setParameters(array(
+                'number' => $articleNumber,
+                'code' => $languageCode
+            ));
+
+        $articleObj = $qb->getQuery()->getOneOrNullResult();
+
+        if (!$articleObj) {
+            return new JsonResponse(array(
+                'status' => false,
+                'message' => $translator->trans('Article does not exist.'),
+            ), 404);
+        }
+
+        $ids = $request->get('ids');
+        $topicsIds = $this->getArticleTopics($articleNumber);
+        $idsDiff = array_merge(array_diff($ids, $topicsIds), array_diff($topicsIds, $ids));
+
+        foreach ($idsDiff as $key => $topicId) {
+            $topicObj = $em->getReference("Newscoop\NewscoopBundle\Entity\Topic", $topicId);
+           if (in_array($topicId, $topicsIds)) {
+                $topicService->removeTopicFromArticle($topicObj, $articleObj);
+           } else {
+                $topicService->addTopicToArticle($topicObj, $articleObj);
+           }
+        }
+
+        return new JsonResponse(array(
+            'status' => true,
+            'message' => $translator->trans('topics.alerts.saved', array(), 'topics')
+        ));
+    }
+
     public function findOr404($id)
     {
         $em = $this->get('em');
@@ -418,5 +489,26 @@ class TopicsController extends Controller
         }
 
         return $node;
+    }
+
+    /**
+     * Get Article Topics
+     *
+     * @param string $articleNumber Article number
+     *
+     * @return array Ids of article topics
+     */
+    private function getArticleTopicsIds($articleNumber)
+    {
+        $em = $this->get('em');
+        $query = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsQuery($articleNumber, true);
+        $articleTopics = $query->getArrayResult();
+
+        $topicsIds = array();
+        foreach ($articleTopics as $articleTopic) {
+            $topicsIds[] = reset($articleTopic);
+        }
+
+        return $topicsIds;
     }
 }

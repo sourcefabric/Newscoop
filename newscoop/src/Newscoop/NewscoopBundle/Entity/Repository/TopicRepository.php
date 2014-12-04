@@ -40,7 +40,7 @@ class TopicRepository extends NestedTreeRepository
         return $query;
     }
 
-    public function findAllParentChoises(Topic $node = null)
+    public function findAllParentChoices(Topic $node = null)
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
         if (!is_null($node)) {
