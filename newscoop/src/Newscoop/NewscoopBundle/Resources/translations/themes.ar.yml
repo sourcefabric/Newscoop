@@ -1,7 +1,7 @@
 'Duplicate assignment': 'كرر المهمة'
 Templates: نماذج
 'Import theme': 'استيراد النسق'
-'Import succeeded!': 'تم الاستيراد بنجاح!'
+'Import succeeded!': null
 'Import failed!': 'فشل الاستيراد!'
 'Edit template: $1': 'عدل النموذج: $1'
 'Set new name to': 'عين اسم جديد الى'
