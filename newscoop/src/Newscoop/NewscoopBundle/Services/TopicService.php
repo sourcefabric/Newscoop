@@ -35,6 +35,9 @@ class TopicService
      *
      * @param Topic   $topic   Topic object
      * @param Article $article Article object
+     *
+     * @return boolean
+     * @throws ResourcesConflictException
      */
     public function addTopicToArticle(Topic $topic, Article $article)
     {
@@ -44,6 +47,8 @@ class TopicService
         if (!$result) {
             throw new ResourcesConflictException("Topic already attached to article", 409);
         }
+
+        return true;
     }
 
     /**
@@ -51,6 +56,9 @@ class TopicService
      *
      * @param Topic   $topic   Topic object
      * @param Article $article Article object
+     *
+     * @return boolean
+     * @throws ResourcesConflictException
      */
     public function removeTopicFromArticle(Topic $topic, Article $article)
     {
@@ -60,5 +68,7 @@ class TopicService
         if (!$result) {
             throw new ResourcesConflictException("Topic already removed from the article", 409);
         }
+
+        return true;
     }
 }

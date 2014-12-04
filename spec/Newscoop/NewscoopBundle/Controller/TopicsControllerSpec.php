@@ -358,7 +358,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_detachTopicAction_should_detach_topic_from_the_article($request, $topic, $query, $user, $topicRepository, $entityManager, $repository, $article)
+    public function its_detachTopicAction_should_detach_topic_from_the_article($request, $topicService, $topic, $query, $user, $topicRepository, $entityManager, $repository, $article)
     {
         $user->hasPermission('AttachTopicToArticle')->willReturn(true);
         $entityManager->getRepository('Newscoop\Entity\Article')->willReturn($repository);
@@ -370,12 +370,24 @@ class TopicsControllerSpec extends ObjectBehavior
             'language' => '1'
         ))->willReturn($article);
 
+        $topic->getTitle()->willReturn('test topic');
+
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $topicRepository->getSingleTopicQuery('1')->willReturn($query);
         $query->getOneOrNullResult()->willReturn($topic);
 
+        $topicService->removeTopicFromArticle($topic, $article)->willReturn(true);
+
         $response = $this->detachTopicAction($request);
-        $response->getStatusCode()->shouldReturn(404);
+        $response->getStatusCode()->shouldReturn(200);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_attachTopicAction_should_return_403_status_code_when_no_permissions($request, $user)
+    {
+        $user->hasPermission('AttachTopicToArticle')->willReturn(false);
+        $response = $this->attachTopicAction($request);
+        $response->getStatusCode()->shouldReturn(403);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 }

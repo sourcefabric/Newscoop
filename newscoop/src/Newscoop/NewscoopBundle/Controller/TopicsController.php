@@ -412,7 +412,7 @@ class TopicsController extends Controller
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => $translator->trans("The topic $1 has been removed from article.", array('$1' => $topicName), 'article_topics')
+            'message' => $translator->trans("The topic $1 has been removed from article.", array('$1' => $topicObj->getTitle()), 'article_topics')
         ));
     }
 
