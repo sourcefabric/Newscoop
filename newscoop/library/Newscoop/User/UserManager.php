@@ -24,6 +24,13 @@ class UserManager implements UserProviderInterface
         $this->em = $em;
     }
 
+    /**
+     * Load user by his username
+     *
+     * @param string $username
+     *
+     * @return \Newscoop\Entity\User
+     */
     public function loadUserByUsername($username)
     {
         return $this->em->getRepository('Newscoop\Entity\User')->findOneBy(array(
@@ -31,11 +38,25 @@ class UserManager implements UserProviderInterface
         ));
     }
 
+    /**
+     * Clear user sensitive data
+     *
+     * @param  UserInterface $user
+     *
+     * @return boolean
+     */
     public function refreshUser(UserInterface $user)
     {
         return true;
     }
 
+    /**
+     * Decide if privded class is supported
+     *
+     * @param string $class
+     *
+     * @return boolean
+     */
     public function supportsClass($class) {
         if ($class === 'Newscoop\Entity\User') {
             return true;

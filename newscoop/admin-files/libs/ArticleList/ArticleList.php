@@ -28,7 +28,7 @@ class ArticleList extends BaseList
     /** @var int */
     protected $language = null;
 
-    /** @var int */
+    /** @var string */
     protected $workflow_status = null;
 
     /** @var string */
