@@ -35,6 +35,10 @@ class IssueRepository extends EntityRepository
             ->getQuery()
             ->getArrayResult();
 
+        if (count($issuesIds) == 0) {
+            return null;
+        }
+
         $ids = array();
         foreach ($issuesIds as $key => $issue) {
             $ids[] = $issue['id'];
@@ -46,6 +50,7 @@ class IssueRepository extends EntityRepository
             ->leftJoin('i.language', 'l')
             ->leftJoin('i.sections', 's')
             ->setParameter('ids', $ids)
+            ->orderBy('i.id', 'DESC')
             ->getQuery();
 
         return $query;

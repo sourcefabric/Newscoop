@@ -11,10 +11,12 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\View as FOSView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Newscoop\NewscoopException;
 use Newscoop\Exception\InvalidParametersException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Doctrine\ORM\EntityNotFoundException;
 use Newscoop\GimmeBundle\Form\Type\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -32,300 +34,154 @@ class ArticlesController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         201="Returned when Article is created"
+     *         201="Returned when Article is created",
+     *         404="Returned when one of required relations is not found"
      *     },
-     *     parameters={
-     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
-     *         {"name"="publication", "dataType"="integer", "required"=true, "description"="Publication ID"},
-     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"},
-     *         {"name"="section", "dataType"="integer", "required"=true, "description"="Section number"},
-     *         {"name"="articleType", "dataType"="string", "required"=true, "description"="Article Type name"},
-     *         {"name"="articleTitle", "dataType"="string", "required"=true, "description"="Article name"},
-     *     }
+     *     input="\Newscoop\GimmeBundle\Form\Type\ArticleType"
      * )
      *
-     * @Route("/articles/create/{language}/{publication}/{issue}/{section}/{articleType}/{articleTitle}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
+     * @Route("/articles/create.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
      * @Method("POST")
      */
-    public function createArticleAction(Request $request, $language, $publication, $issue, $section, $articleType, $articleTitle)
+    public function createArticleAction(Request $request)
     {
-        // Create article
-        $em = $this->container->get('em');
-        $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
-
-        // Fetch article
-        $articleObj = new \Article($languageObject->getId());
-
-        // This is here if we decide to later use default Publication anyway
-        //$publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
-
-        $conflictingArticles = \Article::GetByName($articleTitle, $publication, $issue, $section, null, true);
-        if (count($conflictingArticles) > 0) {
-            $conflictingArticle = array_pop($conflictingArticles);
-            $conflictingArticleLink = camp_html_article_url($conflictingArticle, $conflictingArticle->getLanguageId(), 'edit.php');
-            throw new \Exception("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article ".$conflictingArticle->getArticleNumber() ." '".$conflictingArticle->getName()."'");
-        } else {
-            $articleObj->create($articleType, $articleTitle, $publication, $issue, $section);
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('AddArticle')) {
+            throw new AccessDeniedException("You do not have the right to add articles.");
         }
 
-        if ($articleObj->exists()) {
-            $currentUser = $this->getUser();
-            $author = $currentUser->getAuthorId();
-            $articleObj->setCreatorId($currentUser->getUserId());
-            if (empty($author)) {
-                $authorObj = new \Author($currentUser->getRealName());
-                if (!$authorObj->exists()) {
-                    $authorData = Author::ReadName($currentUser->getRealName());
-                    $authorData['email'] = $currentUser->getEmail();
-                    $authorObj->create($authorData);
-                } else {
-                    $authorUser = $em->getRepository('Newscoop\Entity\Author')
-                        ->findOneById($authorObj->getId());
+        $form = $this->createForm(new ArticleType(), array());
+        $form->handleRequest($request);
 
-                    $currentUser->setAuthor($authorUser);
-                    $em->flush();
-                }
-            } else {
-                $authorObj = new \Author($author);
+        if ($form->isValid()) {
+            $em = $this->container->get('em');
+            $articleService = $this->container->get('newscoop_newscoop.article_service');
+
+            $attributes = $form->getData();
+            $language = $em->getRepository('Newscoop\Entity\Language')->findOneBy(array('id' => $attributes['language']));
+            if (!$language) {
+                throw new EntityNotFoundException("Language was not found");
             }
 
-            if ($authorObj->exists()) {
-                $articleObj->setAuthor($authorObj);
+            $articleType = $em->getRepository('Newscoop\Entity\ArticleType')->findOneBy(array('name' => $attributes['type']));
+            if (!$articleType) {
+                throw new EntityNotFoundException("Article type was not found");
             }
 
-            $articleObj->setIsPublic(true);
-            if ($publication_id > 0) {
-                $commentDefault = $publicationObj->commentsArticleDefaultEnabled();
-                $articleObj->setCommentsEnabled($commentDefault);
+            $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneBy(array('id' => $attributes['publication']));
+            if (!$publication) {
+                throw new EntityNotFoundException("Publication was not found");
             }
 
-            $response = new Response();
-            $response->setStatusCode(201);
+            $issue = $em->getRepository('Newscoop\Entity\Issue')
+                ->findOneBy(array('publication' => $publication, 'id' => $attributes['issue']));
 
-            $response->headers->set(
-                'X-Location',
-                $this->generateUrl('newscoop_gimme_articles_getarticle', array(
-                    'number' => $articleObj->getArticleNumber(),
-                ), true)
-            );
+            $section = $em->getRepository('Newscoop\Entity\Section')
+                ->findOneBy(array('publication' => $publication, 'issue' => $issue, 'id' => $attributes['section']));
 
-            \ArticleIndex::RunIndexer(3, 10, true);
+            $article = $articleService->createArticle($articleType, $language, $user, $publication, $attributes, $issue, $section);                
 
-            return $response;
-        } else {
-            throw new \Exception("Could not create article.");
+            if (!$user->getAuthor()) {
+                $author = new \Newscoop\Entity\Author($user->getFirstName(), $user->getLastName());
+                $em->persist($author);
+                $user->setAuthor($author);
+            }
+
+            $authorType = $em->getRepository('Newscoop\Entity\AuthorType')->findOneBy(array(
+                'type' => 'Journalist'
+            ));
+            if (!$authorType) {
+                $authorType = new \Newscoop\Entity\AuthorType('Journalist');
+                $em->persist($authorType);
+            }
+            $em->flush();
+
+            $authorService = $this->container->get('author');
+            $authorService->addAuthorToArticle($article, $user->getAuthor(), $authorType);
+
+            $this->postAddUpdate($article);
+
+            $view = FOSView\View::create($article, 201);
+            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_getarticle', array(
+                'number' => $article->getId(),
+            ), true));
+
+            return $view;
         }
+
+        return $form;
     }
 
     /**
-     * Write Article
+     * Update Article
+     *
+     * Additional form aparameters:
+     *
+     *  fields: array with article type fields and ther values.
+     *
+     *     article[fields][Flead] = 'new lead'
+     *
+     *  field name is composed from "F"+"field_name": "Flead", "Fbody"
      *
      * @ApiDoc(
      *     statusCodes={
-     *         201="Returned when Article is created"
+     *         201="Returned when Article is updated"
      *     },
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
      *         {"name"="language", "dataType"="string", "required"=false, "description"="Language code"}
-     *     }
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\ArticleType"
      * )
      *
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_patcharticle")
-     * @Method("PATCH")
+     * @Method("PATCH|POST")
      */
     public function patchArticleAction(Request $request, $number, $language)
     {
-        $params = array();
-        $user = $this->getUser();
-        $translator = \Zend_Registry::get('container')->getService('translator');
-        // Fetch article
-        $articleObj = $this->getArticle($number, $language);
-
-        $content = $this->get("request")->getContent();
-        if (!empty($content)) {
-            $params = json_decode($content, true); // 2nd param to get as array
-        }
-
         $em = $this->container->get('em');
-        $inputManipulator = $this->get('newscoop.input_manipulator');
-        $clean = array();
-
-        if (array_key_exists('authors', $params)) {
-            $authors = array();
-            foreach ($params['authors'] as $key => $value) {
-                $authors[] = $inputManipulator::getVar(array('inputObject' => $value, 'variableName' => 'name'));
-            }
-
-            $clean['articleAuthor'] = $authors;
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('AddArticle')) {
+            throw new AccessDeniedException("You do not have the right to add articles.");
         }
 
-        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title', 'checkIfExists' => true))) {
-            $clean['articleTitle'] = $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title'));
-        }
-        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created', 'checkIfExists' => true))) {
-            $clean['creationDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created'))), 'Y-m-d H:i:s');
-        }
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $request->get('language'))
+            ->getOneOrNullResult();
 
-        if ($articleObj->isPublished() && $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
-            $clean['publishDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
+        if (!$article) {
+            throw new NotFoundHttpException('Article was not found');
         }
 
-        $commentStatus = null;
+        $form = $this->createForm(new ArticleType($article->getData(null)), array(), array(
+            'method' => $request->getMethod()
+        ));
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $articleService = $this->container->get('newscoop_newscoop.article_service');
 
-        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_locked', 'checkIfExists' => true))) {
-            if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_locked')) == 1) {
-                $commentStatus = 'locked';
-            }
+            $attributes = $form->getData();
+
+            $article = $articleService->updateArticle($article, $attributes);
+
+            $this->postAddUpdate($article);
+
+            return new FOSView\View($article, 200, array(
+                'X-Location' => $this->generateUrl('newscoop_gimme_articles_getarticle', array(
+                    'number' => $article->getId(),
+                ), true))
+            );
+        } else {
+           // TODO add support for global for errors handler
         }
+    }
 
-        if ($commentStatus != 'locked') {
-            if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_enabled', 'checkIfExists' => true))) {
-                $commentsEnabled = $inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_enabled'));
-                if ($commentsEnabled == 0) {
-                    $commentStatus = 'disabled';
-                } elseif ($commentsEnabled == 1) {
-                    $commentStatus = 'enabled';
-                }
-            }
-        }
-
-        $articleTypeObj = $articleObj->getArticleData();
-        $articleType = new \ArticleType($articleTypeObj->m_articleTypeName);
-        $fields = $articleType->getUserDefinedColumns(null, true, true);
-
-        $notBodyFields = array();
-        foreach ($fields as $field) {
-            if (!$field->isContent()) {
-                $notBodyFields[] = $field->getPrintName();
-            }
-        }
-
-        if (array_key_exists('fields', $params)) {
-            foreach ($params['fields'] as $key => $value) {
-                if (!in_array($key, $notBodyFields)) {
-                    $clean['F'.$key.'_'.$number] = $value;
-                } else {
-                    $clean['F'.$key] = $value;
-                }
-            }
-        }
-
-        $dbColumns = $articleTypeObj->getUserDefinedColumns(false, true);
-
-        $articleFields = array();
-        foreach ($dbColumns as $dbColumn) {
-            if ($dbColumn->getType() == \ArticleTypeField::TYPE_BODY) {
-                $dbColumnParam = $dbColumn->getName() . '_' . $number;
-            } else {
-                $dbColumnParam = $dbColumn->getName();
-            }
-
-            if (isset($clean[$dbColumnParam])) {
-                if ($dbColumn->getType() == \ArticleTypeField::TYPE_TEXT
-                    && $dbColumn->getMaxSize()!=0
-                    && $dbColumn->getMaxSize()!='') {
-                        $fieldValue = trim($clean[$dbColumnParam]);
-                        $articleFields[$dbColumn->getName()] = mb_strlen($fieldValue, 'utf8') > $dbColumn->getMaxSize()
-                            ? substr($fieldValue, 0, $dbColumn->getMaxSize())
-                            : $fieldValue;
-                } else {
-                    $articleFields[$dbColumn->getName()] = trim($clean[$dbColumnParam]);
-                }
-            } else {
-                unset($articleFields[$dbColumn->getName()]); // ignore if not set
-            }
-        }
-
-        /**
-         * TODO
-         * This still has to be placed back in
-         */
-        // Update the article author
-            // $blogService = \Zend_Registry::get('container')->getService('blog');
-            // $blogInfo = $blogService->getBlogInfo($user);
-            // if (!empty($articleAuthor)) {
-            //     ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-            //     $i = 0;
-            //     forclean['each'] ($articleAuthor as $author) {
-            //         $authorObj = new Author($author);
-            //         if (!$authorObj->exists() && strlen(trim($author)) > 0) {
-            //             if ($blogService->isBlogger($user)) { // blogger can't create authors
-            //                 continue;
-            //             }
-
-            //             $authorData = Author::ReadName($author);
-            //             $authorObj->create($authorData);
-            //         } elseif ($blogService->isBlogger($user)) { // test if using authors from blog
-            //             if (!$blogService->isBlogAuthor($authorObj, $blogInfo)) {
-            //                 continue;
-            //             }
-            //         }
-
-            //         // Sets the author type selected
-            //         $author_type = $articleAuthor_type[$i];
-            //         $authorObj->setType($author_type);
-            //         // Links the author to the article
-            //         if ($authorObj->getId() != 0) {
-            //             $articleAuthorObj = new ArticleAuthor($articleObj->getArticleNumber(),
-            //                                               $articleObj->getLanguageId(),
-            //                                               $authorObj->getId(), $author_type, $i + 1);
-            //         }
-
-            //         if (isset($articleAuthorObj) && !$articleAuthorObj->exists()) {
-            //             $articleAuthorObj->create();
-            //         }
-
-            //         $i++;
-            //     }
-            // }
-
-        // Update the article.
-        if (array_key_exists('articleTitle', $clean)) {
-            $articleObj->setTitle($clean['articleTitle']);
-        }
-        $articleObj->setIsIndexed(false);
-
-        if (!empty($commentStatus)) {
-            if ($commentStatus == "enabled" || $commentStatus == "locked") {
-                $commentsEnabled = true;
-            } else {
-                $commentsEnabled = false;
-            }
-            // If status has changed, then you need to show/hide all the comments
-            // as appropriate.
-            if ($articleObj->commentsEnabled() != $commentsEnabled) {
-                $articleObj->setCommentsEnabled($commentsEnabled);
-                $repository = $em->getRepository('Newscoop\Entity\Comment');
-                $repository->setArticleStatus($number, $clean['languageId'], $commentsEnabled ? 'approved':'hidden');
-                $repository->flush();
-            }
-            $articleObj->setCommentsLocked($commentStatus == "locked");
-        }
-
-        // Make sure that the time stamp is updated.
-        $articleObj->setProperty('time_updated', 'NOW()', true, true);
-
-        if (array_key_exists('creationDate', $clean) && preg_match("/\d{4}-\d{2}-\d{2}/", $clean['creationDate'])) {
-            $articleObj->setCreationDate($clean['creationDate']);
-        }
-
-        // Verify publish date is in the correct format.
-        // If not, dont change it.
-        if (array_key_exists('publishDate', $clean) && preg_match("/\d{4}-\d{2}-\d{2}/", $clean['publishDate'])) {
-            $articleObj->setPublishDate($clean['publishDate']);
-        }
-
-        foreach ($articleFields as $dbColumnName => $text) {
-            $articleTypeObj->setProperty($dbColumnName, $text);
-        }
-
-        // Temporarily added to at least give some feedback,
-        // without it the status would always be 500
-        // @Author: Mischa
-        $response = new Response();
-        $response->setStatusCode(201);
-        
-        return $response;
+    private function postAddUpdate($article)
+    {
+        $cacheService = $this->container->get('newscoop.cache');
+        $cacheService->clearNamespace('article');
+        $cacheService->clearNamespace('article_type');
+        $cacheService->clearNamespace('boxarticles');
     }
 
     /**
@@ -433,12 +289,13 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_linkarticle")
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_linkarticle_default_lang")
      * @Method("LINK")
      * @View(statusCode=201)
      *
-     * @return Form
+     * @return Article
      */
-    public function linkArticleAction(Request $request, $number, $language)
+    public function linkArticleAction(Request $request, $number, $language = null)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication();
@@ -510,6 +367,8 @@ class ArticlesController extends FOSRestController
         if ($matched === false) {
             throw new InvalidParametersException('Any supported link object not found');
         }
+
+        return $article;
     }
 
     /**
@@ -541,12 +400,13 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_unlinkarticle")
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_unlinkarticle_default_lang")
      * @Method("UNLINK")
      * @View(statusCode=204)
      *
-     * @return Form
+     * @return Article
      */
-    public function unlinkArticleAction(Request $request, $number)
+    public function unlinkArticleAction(Request $request, $number, $language = null)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication();
@@ -625,6 +485,8 @@ class ArticlesController extends FOSRestController
         if ($matched === false) {
             throw new InvalidParametersException('Any supported unlink object not found');
         }
+
+        return $article;
     }
 
     /**
@@ -716,6 +578,36 @@ class ArticlesController extends FOSRestController
         return $response;
     }
 
+    private function getArticle($number, $language, $user)
+    {
+        $em = $this->container->get('em');
+        $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
+
+        // Fetch article
+        $articleObj = new \Article($languageObject->getId(), $number);
+
+        if (!$articleObj->exists()) {
+            throw new NewscoopException('Article does not exist');
+        }
+
+        if (!$articleObj->userCanModify($user)) {
+            throw new AccessDeniedException('User cannot modify article.');
+        }
+
+        // Only users with a lock on the article can change it.
+        if ($articleObj->isLocked() && ($user->getUserId() != $articleObj->getLockedByUser())) {
+            $lockTime = new \DateTime($articleObj->getLockTime());
+            $now = new \DateTime("now");
+            $difference = $now->diff($lockTime);
+            $ago = $difference->format("%R%H:%I:%S");
+            $lockUser = new \User($articleObj->getLockedByUser());
+
+            throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
+        }
+
+        return $articleObj;
+    }
+
     private function processForm($request, $number, $language)
     {
         $em = $this->container->get('em');
@@ -747,36 +639,5 @@ class ArticlesController extends FOSRestController
         }
 
         return $form;
-    }
-
-    private function getArticle($number, $language)
-    {
-        $em = $this->container->get('em');
-        $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
-
-        $user = $this->getUser();
-        // Fetch article
-        $articleObj = new \Article($languageObject->getId(), $number);
-
-        if (!$articleObj->exists()) {
-            throw new NewscoopException('Article does not exist');
-        }
-
-        if (!$articleObj->userCanModify($user)) {
-            throw new AccessDeniedException('User cannot modify article.');
-        }
-
-        // Only users with a lock on the article can change it.
-        if ($articleObj->isLocked() && ($user->getUserId() != $articleObj->getLockedByUser())) {
-            $lockTime = new \DateTime($articleObj->getLockTime());
-            $now = new \DateTime("now");
-            $difference = $now->diff($lockTime);
-            $ago = $difference->format("%R%H:%I:%S");
-            $lockUser = new \User($articleObj->getLockedByUser());
-
-            throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
-        }
-
-        return $articleObj;
     }
 }

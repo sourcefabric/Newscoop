@@ -393,6 +393,9 @@ class Statistics {
         if (!isset($p_params['request_object_id'])) {
             return '';
         }
+        if (!isset($p_params['count_automatically'])) {
+            $p_params['count_automatically'] = true;
+        }
 
         $name_spec = $p_params['name_spec'];
         $object_type_id = $p_params['object_type_id'];
@@ -401,6 +404,11 @@ class Statistics {
         $stat_web_url = $Campsite['WEBSITE_URL'];
         if ('/' != $stat_web_url[strlen($stat_web_url)-1]) {
             $stat_web_url .= '/';
+        }
+
+        $runStats = '';
+        if ($p_params['count_automatically'] == true) {
+            $runStats = 'stats_submit' . $name_spec . '();';
         }
 
         $trigger = '
@@ -449,7 +457,7 @@ class Statistics {
                     */
                 } catch (e) {}
             };
-            stats_submit' . $name_spec . '();
+            '.$runStats.'
             -->
             </script>
         ';

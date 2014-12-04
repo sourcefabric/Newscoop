@@ -16,6 +16,7 @@ framework:
         handler_id: ~
     fragments: ~
     translator: { fallback: en }
+    http_method_override: true
 
 monolog:
     channels: ["sentry"]
@@ -67,6 +68,8 @@ fos_rest:
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
             'Newscoop\Exception\ResourceNotModifiedException': 304
+            'Newscoop\NewscoopException': 500
+            'OAuth2\OAuth2AuthenticateException': 401
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
             'Newscoop\Exception\InvalidParametersException': true
@@ -77,11 +80,14 @@ fos_rest:
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
             'Newscoop\Exception\ResourceNotModifiedException': false
+            'OAuth2\OAuth2AuthenticateException': true
+            'Newscoop\NewscoopException': true
 
 fos_oauth_server:
     service:
         options:
             supported_scopes: standard_access
+        user_provider: user.manager
     db_driver: orm
     client_class:        Newscoop\GimmeBundle\Entity\Client
     access_token_class:  Newscoop\GimmeBundle\Entity\AccessToken

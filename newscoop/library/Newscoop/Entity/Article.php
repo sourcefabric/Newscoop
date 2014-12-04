@@ -38,33 +38,35 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\Publication
      */
     protected $publication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */
     protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @ORM\JoinColumn(name="NrSection", referencedColumnName="Number")
+     * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     protected $section;
 
     /**
-     * @ORM\Column(name="NrSection", nullable=True)
+     * TODO: Fix this bug. It's not section Id - it's sectionNumber!
+     * @ORM\Column(name="NrSection", nullable=true)
      * @var int
      */
     protected $sectionId;
 
     /**
-     * @ORM\Column(name="NrIssue", nullable=True)
+     * TODO: Fix this bug. It's not Issue Id - it's issueNumber!
+     * @ORM\Column(name="NrIssue", nullable=true)
      * @var int
      */
     protected $issueId;
@@ -361,7 +363,7 @@ class Article implements DocumentInterface
         $this->number = (int) $number;
         $this->language = $language;
         $this->updated = new DateTime();
-        $this->authors = new Collection();
+        $this->authors = new ArrayCollection();
         $this->topics = new ArrayCollection();
         $this->attachments = new ArrayCollection();
         $this->images = new ArrayCollection();
@@ -399,6 +401,20 @@ class Article implements DocumentInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Sets the value of name.
+     *
+     * @param string $name the name
+     *
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -459,16 +475,6 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get issue id
-     *
-     * @return int
-     */
-    public function getIssueId()
-    {
-        return $this->issueId;
-    }
-
-    /**
      * Get section
      *
      * @return \Newscoop\Entity\Section
@@ -490,16 +496,6 @@ class Article implements DocumentInterface
         $this->section = $section;
 
         return $this;
-    }
-
-    /**
-     * Get section id
-     *
-     * @return int
-     */
-    public function getSectionId()
-    {
-        return $this->sectionId;
     }
 
     /**
@@ -590,6 +586,18 @@ class Article implements DocumentInterface
     }
 
     /**
+     * Set number
+     *
+     * @return int
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
      * Get title
      *
      * @return string
@@ -655,6 +663,10 @@ class Article implements DocumentInterface
             $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
         }
 
+        if ($field == null) {
+            return $this->data;
+        }
+
         if (is_array($this->data)) {
             return array_key_exists($field, $this->data) ? $this->data[$field] : null;
         } else {
@@ -673,6 +685,7 @@ class Article implements DocumentInterface
     {
         if ($this->data === null) {
             $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+            $this->data->create();
         }
 
         return $this->data->setProperty('F'.$field, $value);
@@ -828,9 +841,9 @@ class Article implements DocumentInterface
     /**
      * Set published
      *
-     * @param Datetime|null $published
+     * @param \Datetime|null $published
      *
-     * @return string
+     * @return self
      */
     public function setPublished($published)
     {
@@ -1252,14 +1265,14 @@ class Article implements DocumentInterface
                 'updated' => $this->updated,
                 'published' => $this->published,
                 'indexed' => $this->indexed,
+                'onFrontPage' => $this->onFrontPage,
+                'onSection' => $this->onSection,
                 'type' => $this->type,
                 'webcode' => $this->getWebcode(),
                 'publication_number' => $this->publication ? $this->publication->getId() : null,
                 'issue_number' => $this->issue ? $this->issue->getNumber() : null,
                 'section_number' => $this->section ? $this->section->getNumber() : null,
                 'keywords' => array_filter(explode(',', $this->keywords)),
-                'onFrontPage' => $this->onFrontPage,
-                'onSection' => $this->onSection,
             ));
         } catch (EntityNotFoundException $e) {
             return new ArticleView();
@@ -1314,6 +1327,7 @@ class Article implements DocumentInterface
     {
         if ($this->data === null) {
             $this->data = new ArticleData($this->type, $this->number, $this->getLanguageId());
+            $this->data->create();
         }
 
         return $this->data;
@@ -1460,5 +1474,255 @@ class Article implements DocumentInterface
             'minutes' => $sinceStart->i,
             'seconds' => $sinceStart->s
         );
+    }
+
+    /**
+     * Gets the value of articleOrder.
+     *
+     * @return int
+     */
+    public function getArticleOrder()
+    {
+        return $this->articleOrder;
+    }
+
+    /**
+     * Sets the value of articleOrder.
+     *
+     * @param int $articleOrder the article order
+     *
+     * @return self
+     */
+    public function setArticleOrder($articleOrder)
+    {
+        $this->articleOrder = $articleOrder;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of shortName.
+     *
+     * @return string
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
+    }
+
+    /**
+     * Sets the value of shortName.
+     *
+     * @param string $shortName the short name
+     *
+     * @return self
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of type.
+     *
+     * @param string $type the type
+     *
+     * @return self
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of public.
+     *
+     * @return string
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * Sets the value of public.
+     *
+     * @param boolean $public the public
+     *
+     * @return self
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of onFrontPage.
+     *
+     * @return string
+     */
+    public function getOnFrontPage()
+    {
+        return $this->onFrontPage;
+    }
+
+    /**
+     * Sets the value of onFrontPage.
+     *
+     * @param string $onFrontPage the on front page
+     *
+     * @return self
+     */
+    public function setOnFrontPage($onFrontPage = false)
+    {
+        if (is_bool($onFrontPage)) {
+            if ($onFrontPage) {
+                $this->onFrontPage = 'Y';
+            } else {
+                $this->onFrontPage = 'N';
+            }
+
+            return $this;
+        }
+
+        $this->onFrontPage = $onFrontPage;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of onSection.
+     *
+     * @return string
+     */
+    public function getOnSection()
+    {
+        return $this->onSection;
+    }
+
+    /**
+     * Sets the value of onSection.
+     *
+     * @param string $onSection the on section
+     *
+     * @return self
+     */
+    public function setOnSection($onSection = false)
+    {
+        if (is_bool($onSection)) {
+            if ($onSection) {
+                $this->onSection = 'Y';
+            } else {
+                $this->onSection = 'N';
+            }
+
+            return $this;
+        }
+
+        $this->onSection = $onSection;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of uploaded.
+     *
+     * @return DateTime
+     */
+    public function getUploaded()
+    {
+        return $this->uploaded;
+    }
+
+    /**
+     * Sets the value of uploaded.
+     *
+     * @param DateTime $uploaded the uploaded
+     *
+     * @return self
+     */
+    public function setUploaded(DateTime $uploaded)
+    {
+        $this->uploaded = $uploaded;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of isIndexed.
+     *
+     * @return string
+     */
+    public function getIsIndexed()
+    {
+        return $this->isIndexed;
+    }
+
+    /**
+     * Sets the value of isIndexed.
+     *
+     * @param boolean $isIndexed the is indexed
+     *
+     * @return self
+     */
+    public function setIsIndexed($isIndexed)
+    {
+        $this->isIndexed = $isIndexed;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of issueId.
+     *
+     * @return int
+     */
+    public function getIssueId()
+    {
+        return $this->issueId;
+    }
+
+    /**
+     * Sets the value of issueId.
+     *
+     * @param int $issueId the issue id
+     *
+     * @return self
+     */
+    public function setIssueId($issueId)
+    {
+        $this->issueId = $issueId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of sectionId.
+     *
+     * @return int
+     */
+    public function getSectionId()
+    {
+        return $this->sectionId;
+    }
+
+    /**
+     * Sets the value of sectionId.
+     *
+     * @param int $sectionId the section id
+     *
+     * @return self
+     */
+    public function setSectionId($sectionId)
+    {
+        $this->sectionId = $sectionId;
+
+        return $this;
     }
 }

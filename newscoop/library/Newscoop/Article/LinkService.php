@@ -102,6 +102,10 @@ class LinkService
      */
     public function getLink(Article $article)
     {
+        if (!$article->isPublished()) {
+            return null;
+        }
+
         $link = array(
             $this->getPublicationAliasName($article),
             ($article->getLanguage()) ? $article->getLanguage()->getCode() : null,
@@ -119,6 +123,7 @@ class LinkService
         }, $link);
 
         $link = implode('/', $link);
+        
         return strpos($link, 'http') === 0 ? $link : 'http://' . $link;
     }
 
@@ -193,6 +198,10 @@ class LinkService
                 'publication' => $article->getPublicationId(),
                 'language' => $article->getLanguageId(),
             ));
+
+        if (!$issue) {
+            return null;
+        }
 
         $section = $this->em->getRepository('Newscoop\Entity\Section')->findOneBy(array(
             'number' => $article->getSectionId(),
