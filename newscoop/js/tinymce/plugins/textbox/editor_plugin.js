@@ -32,7 +32,7 @@
 
 			// Register example button
 			ed.addButton('textbox', {
-				title : 'textobx.textobx_button_desc',
+				title : 'textbox.textbox_button_desc',
 				cmd : 'mceaddtextbox',
 				image : url + '/img/textbox.gif'
 			});
