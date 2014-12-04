@@ -455,7 +455,7 @@ class TopicsController extends Controller
         }
 
         $ids = $request->get('ids');
-        $topicsIds = $this->getArticleTopics($articleNumber);
+        $topicsIds = $this->getArticleTopicsIds($articleNumber);
         $idsDiff = array_merge(array_diff($ids, $topicsIds), array_diff($topicsIds, $ids));
 
         foreach ($idsDiff as $key => $topicId) {

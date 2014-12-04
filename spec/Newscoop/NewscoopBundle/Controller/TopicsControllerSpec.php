@@ -28,6 +28,7 @@ use Newscoop\Entity\User;
 use Newscoop\Services\UserService;
 use Newscoop\NewscoopBundle\Services\TopicService;
 use Newscoop\Entity\Article;
+use Doctrine\ORM\QueryBuilder;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -64,7 +65,8 @@ class TopicsControllerSpec extends ObjectBehavior
         UserService $userService,
         User $user,
         TopicService $topicService,
-        Article $article
+        Article $article,
+        QueryBuilder $queryBuilder
     )
     {
         $container->get('em')->willReturn($entityManager);
@@ -388,6 +390,53 @@ class TopicsControllerSpec extends ObjectBehavior
         $user->hasPermission('AttachTopicToArticle')->willReturn(false);
         $response = $this->attachTopicAction($request);
         $response->getStatusCode()->shouldReturn(403);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_attachTopicAction_should_return_404_status_code_when_no_article($request, $queryBuilder, $user, $entityManager, $repository, $query)
+    {
+        $user->hasPermission('AttachTopicToArticle')->willReturn(true);
+        $entityManager->getRepository('Newscoop\Entity\Article')->willReturn($repository);
+        $request->get('_articleNumber')->willReturn('64');
+        $request->get('_languageCode')->willReturn('1');
+        $repository
+            ->createQueryBuilder('a')
+            ->willReturn($queryBuilder);
+        $queryBuilder->join('a.language', 'l')->willReturn($queryBuilder);
+        $queryBuilder->where('a.number = :number')->willReturn($queryBuilder);
+        $queryBuilder->andWhere('l.code = :code')->willReturn($queryBuilder);
+        $queryBuilder->setParameters(array("number" => "64", "code" => "1"))->willReturn($queryBuilder);
+        $queryBuilder->getQuery()->willReturn($query);
+        $query->getOneOrNullResult()->willReturn(null);
+
+        $response = $this->attachTopicAction($request);
+        $response->getStatusCode()->shouldReturn(404);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
+
+    public function its_attachTopicAction_should_attach_topics($request, $topic, $topicService, $queryBuilder, $user, $entityManager, $repository, $articleTopicrepository, $query, $article)
+    {
+        $user->hasPermission('AttachTopicToArticle')->willReturn(true);
+        $entityManager->getRepository('Newscoop\Entity\Article')->willReturn($repository);
+        $request->get('_articleNumber')->willReturn('64');
+        $request->get('_languageCode')->willReturn('1');
+        $request->get('ids')->willReturn(array("112", "113"));
+        $repository
+            ->createQueryBuilder('a')
+            ->willReturn($queryBuilder);
+        $queryBuilder->join('a.language', 'l')->willReturn($queryBuilder);
+        $queryBuilder->where('a.number = :number')->willReturn($queryBuilder);
+        $queryBuilder->andWhere('l.code = :code')->willReturn($queryBuilder);
+        $queryBuilder->setParameters(array("number" => "64", "code" => "1"))->willReturn($queryBuilder);
+        $queryBuilder->getQuery()->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($article);
+
+        $entityManager->getReference("Newscoop\NewscoopBundle\Entity\Topic", Argument::type('string', 'integer'))->willReturn($topic);
+        $articleTopicrepository->getArticleTopicsQuery('64', true)->willReturn($query);
+        $query->getArrayResult()->willReturn(array(array("109"), array("111")));
+
+        $response = $this->attachTopicAction($request);
+        $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 }
