@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
 use Newscoop\Search\DocumentInterface;
-use Newscoop\NewscoopBundle\Entity\Topic;
 
 /**
  * Article entity
@@ -1024,7 +1023,7 @@ class Article implements DocumentInterface
      *
      * @return boolean
      */
-    public function addTopic(Topic $topic)
+    public function addTopic(Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
 
         if (!$this->topics->contains($topic)) {
@@ -1044,7 +1043,7 @@ class Article implements DocumentInterface
      *
      * @return boolean
      */
-    public function removeTopic(Topic $topic)
+    public function removeTopic(Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
         if ($this->topics->contains($topic)) {
             $this->topics->removeElement($topic);
