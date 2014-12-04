@@ -36,7 +36,6 @@ final class MetaImage extends MetaDbObject {
         $this->m_properties['description'] = 'Description';
         $this->m_properties['date'] = 'Date';
         $this->m_properties['last_update'] = 'LastModified';
-        $this->m_properties['caption'] = 'getCaption';
 
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';
@@ -56,6 +55,7 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['is_local'] = 'isLocal';
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['photographer_url'] = 'getPhotographerUrl';
+        $this->m_customProperties['caption'] = 'getCaption';
     } // fn __construct
 
 
@@ -193,7 +193,7 @@ final class MetaImage extends MetaDbObject {
     */
     protected function getCaption()
     {
-        $article = $this->getContext()->article;
+        $article = CampTemplate::singleton()->context()->article;
         $imageService = \Zend_Registry::get('container')->getService('image');
         $caption = $imageService->getCaption(
             $imageService->find($this->m_dbObject->getImageId()),
