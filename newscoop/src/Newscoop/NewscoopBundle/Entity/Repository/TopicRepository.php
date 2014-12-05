@@ -364,7 +364,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return Doctrine\ORM\Query Query
      */
-    public function getArticleTopics($articleNr, $languageCode)
+    public function getArticleTopics($articleNr, $languageCode, $order = "asc")
     {
         $em = $this->getEntityManager();
         $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsQuery($articleNr, true);
@@ -378,7 +378,8 @@ class TopicRepository extends NestedTreeRepository
             ->where('t.id IN(:ids)')
             ->setParameters(array(
                 'ids' => $topicsIds,
-            ));
+            ))
+            ->orderBy('t.root, t.lft', $order);
 
         $countQueryBuilder = clone $queryBuilder;
         $countQueryBuilder->select('COUNT(t)');
