@@ -386,7 +386,7 @@ class TopicRepository extends NestedTreeRepository
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $count);
-        $query = $this->_em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->setTranslatableHint($query, $languageCode);
+        $query = $this->setTranslatableHint($query, $languageCode);
 
         return $query;
     }
