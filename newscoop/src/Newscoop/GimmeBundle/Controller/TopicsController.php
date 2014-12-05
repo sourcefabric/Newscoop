@@ -180,11 +180,12 @@ class TopicsController extends FOSRestController
     public function getArticlesTopicsAction($number, $language)
     {
         $em = $this->container->get('em');
-        $topics = $em->getRepository('Newscoop\Entity\ArticleTopic')
-            ->getAllArticleTopics($number, $language);
+        $topics = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+            ->getArticleTopics($number, $language);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $topics = $paginator->paginate($topics, array('distinct' => false));
+        $paginator->setUsedRouteParams(array('number' => $number, 'language' => $language));
+        $topics = $paginator->paginate($topics);
 
         return $topics;
     }
