@@ -361,6 +361,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @param int    $articleNr    Article number
      * @param string $languageCode Language code in format "en" for example.
+     * @param string $order        Order of the topics, default ascending
      *
      * @return Doctrine\ORM\Query Query
      */
