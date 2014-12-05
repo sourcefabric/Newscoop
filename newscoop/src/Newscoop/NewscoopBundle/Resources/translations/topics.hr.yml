@@ -25,3 +25,50 @@ Top: Vrh
 'Change topic name': 'Izmjena imena teme'
 'There are $1 articles using the topic.': 'Ostalo je $1 članaka koji koriste temu.'
 'Search for topics': null
+topics:
+    label:
+        all: null
+        filterbylang: null
+        search: null
+        filter: null
+        filterplaceholder: null
+        addroot: null
+        topicname: null
+        collapse: null
+        expand: null
+        changename: null
+        for: null
+        addsubtopic: null
+        subtopicname: null
+        addtranslation: null
+        choose: null
+        translationstring: null
+        tree: null
+    title: null
+    btn:
+        hide: null
+        remove: null
+        edit: null
+        close: null
+        add: null
+        save: null
+        removetrans: null
+    alerts:
+        languagenotfound: null
+        translationadded: null
+        translationexists: null
+        beforedelete: null
+        wrongparams: null
+        ordersaved: null
+        beforedeleteinfo: null
+    added: null
+    failedfind: null
+    failedfindTranslation: null
+    removed: null
+    removedTranslation: null
+    failedremoveTranslation: null
+    updated: null
+    error: null
+    csrfinvalid: null
+    tooshort: null
+    toolong: null

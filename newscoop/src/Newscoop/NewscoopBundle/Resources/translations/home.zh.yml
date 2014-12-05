@@ -146,11 +146,11 @@ Download: 下载
 'CAPTCHA code is not valid.  Please try again.': null
 'Signed in: $1': null
 Help: null
-'Please enter your user name and password': '&#35831;&#36755;&#20837;&#29992;&#25143;&#21517;&#19982;&#23494;&#30721;'
+'Please enter your user name and password': null
 'You do not have the right to access this page.': '&#20320;&#26080;&#26435;&#38480;&#35775;&#38382;&#27492;&#39029;&#38754;'
 'Login failed': '&#30331;&#38470;&#22833;&#36133;'
-'Please make sure that you typed the correct user name and password.': '&#35831;&#30830;&#35748;&#26159;&#21542;&#36755;&#20837;&#27491;&#30830;&#29992;&#25143;&#21517;&#19982;&#23494;&#30721;'
-'If your problem persists please contact the site administrator $1': '&#22914;&#26524;&#38382;&#39064;&#20173;&#28982;&#23384;&#22312;&#35831;&#19982;&#31649;&#29702;&#21592;$1&#32852;&#31995;'
+'Please make sure that you typed the correct user name and password.': null
+'If your problem persists please contact the site administrator $1': null
 Backup/Restore: null
 'Step 2': null
 'Step 3': null
