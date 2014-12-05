@@ -12,7 +12,7 @@ use Newscoop\NewscoopBundle\Entity\Repository\TopicRepository;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Entity\Repository\ArticleTopicRepository;
+use Knp\Component\Pager\Paginator;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -24,7 +24,7 @@ class TopicsControllerSpec extends ObjectBehavior
         TopicRepository $topicRepository,
         PaginatorService $paginator,
         Topic $topic,
-        ArticleTopicRepository $articleTopicRepository
+        Paginator $knpPaginator
     ) {
         $container->get('em')->willReturn($entityManager);
         $container->get('request')->willReturn($request);
@@ -132,9 +132,9 @@ class TopicsControllerSpec extends ObjectBehavior
         $this->searchTopicsAction($request)->shouldReturn(array());
     }
 
-    public function its_getArticlesTopicsAction_should_return_list_of_topics_for_given_article($request, $entityManager, $articleTopicRepository, $query, $topic, $paginator)
+    public function its_getArticlesTopicsAction_should_return_list_of_topics_for_given_article($request, $topicRepository, $entityManager, $query, $topic, $paginator, $knpPaginator)
     {
-        $entityManager->getRepository('Newscoop\Entity\ArticleTopic')->willReturn($articleTopicRepository);
+        $entityManager->getRepository('Newscoop\Entity\Topic')->willReturn($topicRepository);
         $topic->getId()->willReturn(1);
         $topic->getTitle()->willReturn('test topic');
         $topic->getRoot()->willReturn(1);
@@ -143,11 +143,9 @@ class TopicsControllerSpec extends ObjectBehavior
             $topic
         ));
 
-        $articleTopicRepository->getAllArticleTopics(64, 'en')->willReturn($query);
-
-        $paginator->paginate($query, array(
-            'distinct' => false
-        ))->willReturn($topics);
+        $topicRepository->getArticleTopics(64, 'en')->willReturn($query);
+        $paginator->setUsedRouteParams(array("number" => 64, "language" => "en"))->willReturn($knpPaginator);
+        $paginator->paginate($query)->willReturn($topics);
 
         $this->getArticlesTopicsAction(64, 'en')->shouldReturn($topics);
     }
