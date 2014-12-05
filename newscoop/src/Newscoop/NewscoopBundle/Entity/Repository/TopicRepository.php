@@ -353,4 +353,41 @@ class TopicRepository extends NestedTreeRepository
 
         return $this->setTranslatableHint($qb->getQuery());
     }
+
+    /**
+     * Get Topics for Article
+     *
+     * Returns all the associated Topics to an Article.
+     *
+     * @param int    $article  Article number
+     * @param string $language Language code in format "en" for example.
+     *
+     * @return Doctrine\ORM\Query Query
+     */
+    public function getArticleTopics($articleNr, $languageCode)
+    {
+        $em = $this->getEntityManager();
+        $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsQuery($articleNr, true);
+        $articleTopicsIds = $articleTopicsIds->getArrayResult();
+        $topicsIds = array();
+        foreach ($articleTopicsIds as $key => $value) {
+            $topicsIds[$key] = $value[1];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->where('t.id IN(:ids)')
+            ->setParameters(array(
+                'ids' => $topicsIds,
+            ));
+
+        $countQueryBuilder = clone $queryBuilder;
+        $countQueryBuilder->select('COUNT(t)');
+        $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $count);
+        $query = $this->_em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->setTranslatableHint($query, $languageCode);
+
+        return $query;
+    }
 }
