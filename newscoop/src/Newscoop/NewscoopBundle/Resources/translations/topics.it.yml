@@ -27,48 +27,48 @@ Top: 'Vai su'
 'Search for topics': null
 topics:
     label:
-        all: All
-        filterbylang: 'Filter topics by language'
-        search: Search
-        filter: Filter
-        filterplaceholder: 'Type a part of any topic name...'
-        addroot: 'Add root topic'
-        topicname: 'Topic name'
-        collapse: 'Collapse all'
-        expand: 'Expand all'
-        changename: 'Change topic name'
-        for: for
-        addsubtopic: 'Add subtopic'
-        subtopicname: 'Subtopic name'
-        addtranslation: 'Add translation'
-        choose: Choose...
-        translationstring: 'Translation string'
-        tree: 'Tree of topics'
-    title: Topics
+        all: null
+        filterbylang: null
+        search: null
+        filter: null
+        filterplaceholder: null
+        addroot: null
+        topicname: null
+        collapse: null
+        expand: null
+        changename: null
+        for: null
+        addsubtopic: null
+        subtopicname: null
+        addtranslation: null
+        choose: null
+        translationstring: null
+        tree: null
+    title: null
     btn:
-        hide: Hide
-        remove: 'Remove topic'
-        edit: 'Edit topic'
-        close: Close
-        add: Add
-        save: Save
-        removetrans: 'Remove Topic''s translation'
+        hide: null
+        remove: null
+        edit: null
+        close: null
+        add: null
+        save: null
+        removetrans: null
     alerts:
-        languagenotfound: 'Could not found language by locale: %locale%'
-        translationadded: 'Translation was added'
-        translationexists: 'Translation for locale %locale% already exists!'
-        beforedelete: 'Are you sure you want to delete this topic?'
-        wrongparams: 'Number of sorted root topics must be the same as number of all root topics'
-        ordersaved: 'Order saved.'
-        beforedeleteinfo: 'When deleting topic with subtopics, all subtopics together with translations will be removed permanently. Are you sure?'
-    added: 'Topic was added'
-    failedfind: 'Failed to find Topic by id: %id%'
-    failedfindTranslation: 'Failed to find Topic''s translation by id: %id%'
-    removed: 'Topic %title% was removed'
-    removedTranslation: 'Topic''s translation was removed'
-    failedremoveTranslation: 'Can not remove default topic''s translation. Remove topic instead.'
-    updated: 'Topic was updated'
-    error: 'Error occured, please try again later.'
-    csrfinvalid: 'The CSRF token is invalid. Please try to resubmit the form.'
-    tooshort: 'Topic name is too short!'
-    toolong: 'Topic name is too long!'
+        languagenotfound: null
+        translationadded: null
+        translationexists: null
+        beforedelete: null
+        wrongparams: null
+        ordersaved: null
+        beforedeleteinfo: null
+    added: null
+    failedfind: null
+    failedfindTranslation: null
+    removed: null
+    removedTranslation: null
+    failedremoveTranslation: null
+    updated: null
+    error: null
+    csrfinvalid: null
+    tooshort: null
+    toolong: null
