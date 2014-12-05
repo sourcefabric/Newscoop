@@ -359,8 +359,8 @@ class TopicRepository extends NestedTreeRepository
      *
      * Returns all the associated Topics to an Article.
      *
-     * @param int    $article  Article number
-     * @param string $language Language code in format "en" for example.
+     * @param int    $article      Article number
+     * @param string $languageCode Language code in format "en" for example.
      *
      * @return Doctrine\ORM\Query Query
      */
