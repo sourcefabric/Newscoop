@@ -1,4 +1,4 @@
-tinyMCE.addI18n('en.iframe',{
+tinyMCE.addI18n('ru.iframe',{
 desc:"Втавить карту/фрейм",
 error:"URL неверный.",
 url:"URL",

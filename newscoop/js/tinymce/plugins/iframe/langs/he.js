@@ -1,4 +1,4 @@
-tinyMCE.addI18n('hr.iframe',{
+tinyMCE.addI18n('he.iframe',{
 desc:"Insert Map/Other iframe",
 error:"URL is not valid.",
 url:"URL",
