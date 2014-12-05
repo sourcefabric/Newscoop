@@ -8,6 +8,25 @@ var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'
       uiTreeFilterSettingsProvider.descendantCollection = "__children";
   });
 
+app.directive('ngCloseIframeClick', [
+  function(){
+        return {
+          link: function (scope, element, attr) {
+              var attachFunction = attr.ngCloseIframeClick;
+              var clickAction = attr.ngConfirmedClick;
+              element.bind('click', function (event) {
+                //console.log(attachFunction);
+                var result = scope.$eval(function(scope, locals) {
+                   //$scope.attachFunction()
+                   console.log(scope);
+                   console.log(locals);
+                });
+                console.log(scope);
+          });
+        }
+    };
+}]);
+
 app.factory('TopicsFactory',  function($http) {
   return {
         getTopics: function(languageCode, articleNumber) {
@@ -381,6 +400,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       TopicsFactory.attachTopics(topicsIds, articleNumber, languageCode).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
+          return true;
         } else {
           flashMessage(response.message, 'error');
         }

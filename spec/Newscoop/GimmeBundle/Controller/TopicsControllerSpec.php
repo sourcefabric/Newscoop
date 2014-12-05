@@ -12,6 +12,7 @@ use Newscoop\NewscoopBundle\Entity\Repository\TopicRepository;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\Repository\ArticleTopicRepository;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -22,7 +23,8 @@ class TopicsControllerSpec extends ObjectBehavior
         AbstractQuery $query,
         TopicRepository $topicRepository,
         PaginatorService $paginator,
-        Topic $topic
+        Topic $topic,
+        ArticleTopicRepository $articleTopicRepository
     ) {
         $container->get('em')->willReturn($entityManager);
         $container->get('request')->willReturn($request);
@@ -128,5 +130,25 @@ class TopicsControllerSpec extends ObjectBehavior
         ))->willReturn(array());
 
         $this->searchTopicsAction($request)->shouldReturn(array());
+    }
+
+    public function its_getArticlesTopicsAction_should_return_list_of_topics_for_given_article($request, $entityManager, $articleTopicRepository, $query, $topic, $paginator)
+    {
+        $entityManager->getRepository('Newscoop\Entity\ArticleTopic')->willReturn($articleTopicRepository);
+        $topic->getId()->willReturn(1);
+        $topic->getTitle()->willReturn('test topic');
+        $topic->getRoot()->willReturn(1);
+        $topic->getParent()->willReturn(null);
+        $topics = array('items' => array(
+            $topic
+        ));
+
+        $articleTopicRepository->getAllArticleTopics(64, 'en')->willReturn($query);
+
+        $paginator->paginate($query, array(
+            'distinct' => false
+        ))->willReturn($topics);
+
+        $this->getArticlesTopicsAction(64, 'en')->shouldReturn($topics);
     }
 }
