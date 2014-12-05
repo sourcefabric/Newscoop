@@ -95,6 +95,15 @@ class RouterFactory
                 'action' => 'profile',
             ))
         );
+        
+        $router->addRoute(
+            'author',
+            new \Zend_Controller_Router_Route('author/:author', array(
+                'module' => 'default',
+                'controller' => 'author',
+                'action' => 'profile',
+            ))
+        );
 
         $image = $container->getParameter('image');
         $router->addRoute('image',
