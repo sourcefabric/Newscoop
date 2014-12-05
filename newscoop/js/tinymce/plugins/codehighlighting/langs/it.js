@@ -1,5 +1,5 @@
 // UK lang variables
-tinyMCE.addI18n('hr.codehighlighting',{
+tinyMCE.addI18n('it.codehighlighting',{
 codehighlighting_desc : "Code Highlighting",
 codehighlighting_title : "Code Highlighting",
 codehighlighting_langaugepicker : "Choose the language",
