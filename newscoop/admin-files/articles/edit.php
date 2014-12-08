@@ -69,9 +69,9 @@ $articleCreator = new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, TRUE);
 $em = \Zend_Registry::get('container')->getService('em');
 $articleTopics = $em->getRepository("Newscoop\Entity\ArticleTopic")
-   ->getArticleTopicsQuery($f_article_number)
+   ->getArticleTopicsIds($f_article_number)
    ->getResult();
-//ArticleTopic::GetArticleTopics($f_article_number);
+
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
 

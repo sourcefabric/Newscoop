@@ -486,42 +486,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Adds topic to the article
-     *
-     * @param Topic   $topic   Topic object
-     * @param Article $article Article object
-     *
-     * @return boolean
-     */
-    public function addTopicToArticle(Topic $topic, Article $article)
-    {
-        $result = $article->addTopic($topic);
-        if ($result) {
-            $this->_em->flush();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Removes topic from the article
-     *
-     * @param Topic   $topic   Topic object
-     * @param Article $article Article object
-     *
-     * @return boolean
-     */
-    public function removeTopicFromArticle(Topic $topic, Article $article)
-    {
-        $result = $article->removeTopic($topic);
-        if ($result) {
-            $this->_em->flush();
-        }
-
-        return $result;
-    }
-
-    /**
      * Get new minimal article order value
      *
      * @param integer $publication

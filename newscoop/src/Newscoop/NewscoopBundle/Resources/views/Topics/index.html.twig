@@ -33,10 +33,11 @@
 {% block admin_content %}
 
 <div class="system_pref" ng-app="treeApp" ng-controller="treeCtrl">
+{% if compactView %}
   <button class="button right-floated" type="button" confirmed-click="parent.$.fancybox.close()" ng-close-iframe-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
   <button class="button right-floated" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
   <h3>{{ 'topics.title'|trans }}</h3>
-{% if compactView == false %}
+{% else %}
 <div class="bs-callout bs-callout-info">
   {{ renderTip('topics.tip'|trans) }}
 </div>

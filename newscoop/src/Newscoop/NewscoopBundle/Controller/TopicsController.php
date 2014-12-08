@@ -46,8 +46,8 @@ class TopicsController extends Controller
     }
 
     /**
-     * @Route("/admin/new-topics/", options={"expose"=true})
-     * @Route("/admin/new-topics/view/{compactView}/{articleNumber}/{language}", options={"expose"=true})
+     * @Route("/admin/topics/", options={"expose"=true}, name="newscoop_newscoop_topics_index")
+     * @Route("/admin/topics/view/{compactView}/{articleNumber}/{language}", options={"expose"=true}, name="newscoop_newscoop_topics_index_compact")
      */
     public function indexAction($compactView = false, $articleNumber = null, $language = null)
     {
@@ -69,7 +69,7 @@ class TopicsController extends Controller
     {
         $languages = $this->get('em')
             ->getRepository('Newscoop\Entity\Language')
-            ->getAllLanguagesQuery()
+            ->getAllLanguages()
             ->getArrayResult();
 
         return new JsonResponse(array(
@@ -87,7 +87,7 @@ class TopicsController extends Controller
         $locale = $request->get('_code');
         $articleNumber = $request->get('_articleNumber');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-        $topicsQuery = $repository->getTranslatableTopicsQuery($locale);
+        $topicsQuery = $repository->getTranslatableTopics($locale);
         $nodes = $topicsQuery->getArrayResult();
 
         if ($articleNumber) {
@@ -117,6 +117,7 @@ class TopicsController extends Controller
     {
         $em = $this->get('em');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+        $topicService = $this->get('newscoop_newscoop.topic_service');
         $translator = $this->get('translator');
         $node = $this->findOr404($id);
         if (is_array($node)) {
@@ -125,7 +126,7 @@ class TopicsController extends Controller
 
         $params = $request->request->all();
         $parent = isset($params['parent']) && $params['parent'] ? $params['parent'] : null;
-        $result = $repository->saveTopicPosition($node, $params);
+        $result = $topicService->saveTopicPosition($node, $params);
 
         if (!$result) {
             return new JsonResponse(array(
@@ -137,7 +138,7 @@ class TopicsController extends Controller
         if (($request->get('last') || $request->get('first') || $request->get('middle')) && !$parent) {
             $rootNodes = $repository->getRootNodes();
             $order = explode(',', $request->get('order'));
-            $repository->reorderRootNodes($rootNodes, $order);
+            $topicService->reorderRootNodes($rootNodes, $order);
         }
 
         return new JsonResponse(array(
@@ -171,7 +172,17 @@ class TopicsController extends Controller
         if ($form->isValid()) {
             $em = $this->get('em');
             $locale = $request->get('_code', $request->getLocale());
-            $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->saveNewTopic($node, $locale);
+            $topicService = $this->get('newscoop_newscoop.topic_service');
+            try {
+                $topicService->saveNewTopic($node, $locale);
+            } catch (\Exception $e) {
+                $response = array(
+                    'status' => false,
+                    'message' => $translator->trans('topics.exists', array(), 'topics'),
+                );
+
+                return new JsonResponse($response, 409);
+            }
 
             $response = array(
                 'status' => true,
@@ -191,7 +202,7 @@ class TopicsController extends Controller
     }
 
     /**
-     * @Route("/admin/new-topics/add/translation/{id}", requirements={"id" = "\d+"}, options={"expose"=true})
+     * @Route("/admin/topics/add/translation/{id}", requirements={"id" = "\d+"}, options={"expose"=true})
      * @Method("POST")
      */
     public function addTranslation(Request $request, $id)
@@ -501,7 +512,7 @@ class TopicsController extends Controller
     private function getArticleTopicsIds($articleNumber)
     {
         $em = $this->get('em');
-        $query = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsQuery($articleNumber, true);
+        $query = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsIds($articleNumber, true);
         $articleTopics = $query->getArrayResult();
 
         $topicsIds = array();

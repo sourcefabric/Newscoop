@@ -74,12 +74,17 @@
     </script>
   <?php }
     $em = \Zend_Registry::get('container')->getService('em');
+    $router = \Zend_Registry::get('container')->getService('router');
     $language = $em->getReference("Newscoop\Entity\Language", $f_language_id);
   ?>
     <div class="frame" id="topic_box_frame">
     <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="iframe ui-state-default icon-button right-floated"
-      href="/admin/new-topics/view/compact/<?php echo $articleObj->getArticleNumber() . '/' . $language->getCode() ?>"><span
+      href="<?php echo $router->generate('newscoop_newscoop_topics_index_compact', array(
+          'compactView' => 'compact',
+          'articleNumber' => $articleObj->getArticleNumber(),
+          'language' => $language->getCode()
+      )); ?>"><span
         class="ui-icon ui-icon-pencil"></span><?php echo $translator->trans('Edit'); ?></a>
     <?php } ?>
       <label class="left-floated block-label"><?php echo $translator->trans('Topics'); ?></label>

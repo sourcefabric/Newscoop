@@ -14,7 +14,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Exception\InvalidParametersException;
 
@@ -156,10 +155,7 @@ class AuthorsController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when successful",
-     *         404={
-     *           "Returned when the authors are not found",
-     *         }
+     *         200="Returned when successful"
      *     },
      *     filters={
      *          {"name"="query", "dataType"="string", "description"="search query"}

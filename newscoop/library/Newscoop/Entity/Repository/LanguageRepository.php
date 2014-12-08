@@ -109,7 +109,7 @@ class LanguageRepository extends EntityRepository
      *
      * @return array
      */
-    public function getAllLanguagesQuery($order = 'asc')
+    public function getAllLanguages($order = 'asc')
     {
         $qb = $this->createQueryBuilder('l');
 

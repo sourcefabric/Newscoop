@@ -18,6 +18,11 @@ class TopicRepository extends NestedTreeRepository
 {
     public $onChildrenQuery;
 
+    /**
+     * Get all topics
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getTopics()
     {
         $meta = $this->getClassMetadata();
@@ -40,6 +45,13 @@ class TopicRepository extends NestedTreeRepository
         return $query;
     }
 
+    /**
+     * Get all parent choices
+     *
+     * @param Topic|null $node Topic object
+     *
+     * @return array
+     */
     public function findAllParentChoices(Topic $node = null)
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
@@ -92,132 +104,6 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Saves topic position when it was dragged and dropped
-     *
-     * @param Topic   $node     Dragged topic object
-     * @param int     $parentId Parent of dragged topic
-     * @param boolean $asRoot   If topic is dragged from children to root level
-     * @param array   $params   Parameters with positions
-     *
-     * @return boolean
-     */
-    public function saveTopicPosition(Topic $node, $params)
-    {
-        if (isset($params['parent']) && $params['parent']) {
-            $parent = $this->findOneBy(array(
-                'id' => $params['parent'],
-            ));
-
-            if (!$parent) {
-                return false;
-            }
-
-            $node->setOrder(null);
-            foreach ($params as $key => $isSet) {
-                switch ($key) {
-                    case 'first':
-                        if ($isSet) {
-                            $this->persistAsFirstChildOf($node, $parent);
-                        }
-                        break;
-                    case 'last':
-                        if ($isSet) {
-                            $this->persistAsLastChildOf($node, $parent);
-                        }
-                        break;
-                    case 'middle':
-                        if ($isSet) {
-                            $this->persistAsNextSiblingOf($node, $parent);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        // when dragging childrens to roots
-        if (isset($params['asRoot']) && $params['asRoot']) {
-            $node->setParent(null);
-        }
-
-        $this->_em->flush();
-
-        return true;
-    }
-
-    /**
-     * Reorder root topics
-     *
-     * @param array $rootNodes Root topics
-     * @param array $order     Topics ids in order
-     *
-     * @return boolean
-     */
-    public function reorderRootNodes($rootNodes, $order = array())
-    {
-        foreach ($rootNodes as $rootNode) {
-            $rootNode->setOrder(null);
-        }
-
-        $this->_em->flush();
-
-        if (count($order) > 1) {
-            $counter = 0;
-
-            foreach ($order as $item) {
-                foreach ($rootNodes as $rootNode) {
-                    if ($rootNode->getId() == $item) {
-                        $rootNode->setOrder($counter + 1);
-                        $counter++;
-                    }
-                }
-            }
-        } else {
-            $counter = 1;
-            foreach ($rootNodes as $rootNode) {
-                $rootNode->setOrder($counter);
-                $counter++;
-            }
-        }
-
-        $this->_em->flush();
-
-        return true;
-    }
-
-    /**
-     * Saves new topic
-     *
-     * @param Topic       $node   Topic object
-     * @param string|null $locale Language code
-     *
-     * @return boolean
-     */
-    public function saveNewTopic(Topic $node, $locale = null)
-    {
-        $meta = $this->getClassMetadata();
-        $config = $this->listener->getConfiguration($this->_em, $meta->name);
-        $node->setTranslatableLocale($locale ?: $node->getTranslatableLocale());
-        if (!$node->getParent()) {
-            $qb = $this->getQueryBuilder('t')
-                ->from($config['useObjectClass'], 't');
-            $maxOrderValue = $qb
-                ->select('MAX(t.topicOrder)')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getSingleScalarResult();
-
-            $node->setOrder((int) $maxOrderValue + 1);
-        }
-
-        $this->_em->persist($node);
-        $this->_em->flush();
-
-        return true;
-    }
-
-    /**
      * Gets the single topic's query by id
      *
      * @param int    $id     Topic id
@@ -246,7 +132,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @param Query $query Query object
      */
-    public function getTranslatableTopicsQuery($locale, $order = 'asc')
+    public function getTranslatableTopics($locale, $order = 'asc')
     {
         $query = $this
             ->getQueryBuilder()
@@ -330,7 +216,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return Query
      */
-    public function searchTopicsQuery($query, $sort = array(), $limit = null)
+    public function searchTopics($query, $sort = array(), $limit = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
@@ -413,7 +299,7 @@ class TopicRepository extends NestedTreeRepository
     public function getArticleTopics($articleNr, $languageCode, $order = "asc")
     {
         $em = $this->getEntityManager();
-        $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsQuery($articleNr, true);
+        $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsIds($articleNr, true);
         $articleTopicsIds = $articleTopicsIds->getArrayResult();
         $topicsIds = array();
         foreach ($articleTopicsIds as $key => $value) {

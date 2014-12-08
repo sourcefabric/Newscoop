@@ -197,8 +197,7 @@ class TopicsController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when successfully found the result",
-     *         404="Returned when the topics are not found"
+     *         200="Returned when successful"
      *     },
      *     filters={
      *          {"name"="query", "dataType"="string", "description"="search query"}
@@ -214,7 +213,7 @@ class TopicsController extends FOSRestController
         $em = $this->container->get('em');
         $query = $request->query->get('query', '');
         $topics = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->searchTopicsQuery($query);
+            ->searchTopics($query);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $topics = $paginator->paginate($topics, array('distinct' => false));
@@ -269,7 +268,8 @@ class TopicsController extends FOSRestController
                 $locale = $request->getLocale();
             }
 
-            $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->saveNewTopic($topic, $locale);
+            $topicService = $this->get('newscoop_newscoop.topic_service');
+            $topicService->saveNewTopic($topic, $locale);
             $response = new Response();
             $response->setStatusCode($statusCode);
 

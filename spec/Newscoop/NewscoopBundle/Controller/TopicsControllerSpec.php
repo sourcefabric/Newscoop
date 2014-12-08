@@ -105,7 +105,7 @@ class TopicsControllerSpec extends ObjectBehavior
     public function its_treeAction_should_render_the_tree_of_topics($topicRepository, $articleTopicrepository, $request, $query2, $entityManager, $query)
     {
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
-        $topicRepository->getTranslatableTopicsQuery('en')->willReturn($query);
+        $topicRepository->getTranslatableTopics('en')->willReturn($query);
         $topics = array(array(
             'id' => 1,
             'level' => 0,
@@ -124,7 +124,7 @@ class TopicsControllerSpec extends ObjectBehavior
             'topicOrder' => 2
         ));
         $query->getArrayResult()->willReturn($topics);
-        $articleTopicrepository->getArticleTopicsQuery(64, true)->willReturn($query2);
+        $articleTopicrepository->getArticleTopicsIds(64, true)->willReturn($query2);
         $query2->getArrayResult()->willReturn(array(array("109"), array("111")));
         $topicRepository->buildTreeArray($topics)->willReturn($topics);
         $response = $this->treeAction($request);
@@ -132,9 +132,8 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_addAction_should_add_a_new_topic_when_form_is_valid($request, $formFactory, $form, $entityManager, $topicRepository, $repository, $topic, $csrfTokenManagerAdapter)
+    public function its_addAction_should_add_a_new_topic_when_form_is_valid($request, $formFactory, $form, $entityManager, $topicService, $repository, $topic, $csrfTokenManagerAdapter)
     {
-        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $csrfTokenManagerAdapter->isCsrfTokenValid('default', $this->token)->willReturn(true);
 
         $classTopic = Argument::exact('Newscoop\NewscoopBundle\Entity\Topic')->getValue();
@@ -146,7 +145,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $form->handleRequest($request)->willReturn($form);
         $form->isValid()->willReturn(true);
 
-        $topicRepository->saveNewTopic($topic, 'en')->willReturn(true);
+        $topicService->saveNewTopic($topic, 'en')->willReturn(true);
         $response = $this->addAction($request);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
@@ -239,7 +238,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_moveAction_should_move_child_topic_to_first_position_in_current_subtree($request, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
+    public function its_moveAction_should_move_child_topic_to_first_position_in_current_subtree($request, $topicService, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
     {
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $parameterBag->all()->willReturn(array(
@@ -256,13 +255,13 @@ class TopicsControllerSpec extends ObjectBehavior
             'id' => 1
         ))->willReturn($topic);
 
-        $topicRepository->saveTopicPosition($topic, $request->request->all())->willReturn(true);
+        $topicService->saveTopicPosition($topic, $request->request->all())->willReturn(true);
         $response = $this->moveAction($request, 1);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_moveAction_should_move_child_topic_to_last_position_in_current_subtree($request, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
+    public function its_moveAction_should_move_child_topic_to_last_position_in_current_subtree($request, $topicService, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
     {
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $parameterBag->all()->willReturn(array(
@@ -279,13 +278,13 @@ class TopicsControllerSpec extends ObjectBehavior
             'id' => 1
         ))->willReturn($topic);
 
-        $topicRepository->saveTopicPosition($topic, $request->request->all())->willReturn(true);
+        $topicService->saveTopicPosition($topic, $request->request->all())->willReturn(true);
         $response = $this->moveAction($request, 1);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
 
-    public function its_moveAction_should_move_child_topic_to_middle_position_in_current_subtree($request, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
+    public function its_moveAction_should_move_child_topic_to_middle_position_in_current_subtree($request, $topicService, $entityManager, $topicRepository, $parameterBag, $repository, $topic)
     {
         $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($topicRepository);
         $parameterBag->all()->willReturn(array(
@@ -302,7 +301,7 @@ class TopicsControllerSpec extends ObjectBehavior
             'id' => 1
         ))->willReturn($topic);
 
-        $topicRepository->saveTopicPosition($topic, $request->request->all())->willReturn(true);
+        $topicService->saveTopicPosition($topic, $request->request->all())->willReturn(true);
         $response = $this->moveAction($request, 1);
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
@@ -432,7 +431,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $query->getOneOrNullResult()->willReturn($article);
 
         $entityManager->getReference("Newscoop\NewscoopBundle\Entity\Topic", Argument::type('string', 'integer'))->willReturn($topic);
-        $articleTopicrepository->getArticleTopicsQuery('64', true)->willReturn($query);
+        $articleTopicrepository->getArticleTopicsIds('64', true)->willReturn($query);
         $query->getArrayResult()->willReturn(array(array("109"), array("111")));
 
         $response = $this->attachTopicAction($request);

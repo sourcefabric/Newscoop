@@ -97,7 +97,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $searchPhrase = 'topic1';
         $parameterBag->get("query", "")->willReturn($searchPhrase);
         $request->query = $parameterBag;
-        $topicRepository->searchTopicsQuery($searchPhrase)->willReturn($query);
+        $topicRepository->searchTopics($searchPhrase)->willReturn($query);
         $topic->getId()->willReturn(1);
         $topic->getTitle()->willReturn('topic1');
         $topic->getRoot()->willReturn(1);
@@ -123,7 +123,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $searchPhrase = 'topic1';
         $parameterBag->get("query", "")->willReturn($searchPhrase);
         $request->query = $parameterBag;
-        $topicRepository->searchTopicsQuery($searchPhrase)->willReturn($query);
+        $topicRepository->searchTopics($searchPhrase)->willReturn($query);
 
         $paginator->paginate($query, array(
             'distinct' => false

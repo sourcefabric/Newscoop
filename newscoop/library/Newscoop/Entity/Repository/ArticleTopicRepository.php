@@ -12,7 +12,15 @@ use Doctrine\ORM\EntityRepository;
 
 class ArticleTopicRepository extends EntityRepository
 {
-    public function getArticleTopicsQuery($articleNumber, $topicsOnly = false)
+    /**
+     * Get all topics for an Article - Topic and article objects
+     *
+     * @param int|string $articleNumber Article number
+     * @param boolean    $topicsOnly    If get only topics in the result
+     *
+     * @return Doctrine\ORM\Query
+     */
+    public function getArticleTopicsIds($articleNumber, $topicsOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder('at');
 
@@ -28,6 +36,14 @@ class ArticleTopicRepository extends EntityRepository
         return $query;
     }
 
+    /**
+     * Get all topics for an Article
+     *
+     * @param int|string $articleNumber Article number
+     * @param string     $languageCode  Article's language code
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getAllArticleTopics($articleNumber, $languageCode)
     {
         $languageId = $this->_em->getRepository('Newscoop\Entity\Language')

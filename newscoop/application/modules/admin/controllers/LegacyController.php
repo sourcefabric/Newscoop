@@ -28,7 +28,6 @@ class Admin_LegacyController extends Zend_Controller_Action
             '/articles/autopublish_do_add.php',
             '/articles/images/popup.php',
             '/articles/images/view.php',
-            '/articles/topics/popup.php',
             '/articles/files/popup.php',
             '/articles/empty.php',
             '/articles/post.php',
@@ -127,6 +126,7 @@ class Admin_LegacyController extends Zend_Controller_Action
 
             // render view
             require_once $path_name;
+
             return;
 
         } elseif (file_exists($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script")) {
