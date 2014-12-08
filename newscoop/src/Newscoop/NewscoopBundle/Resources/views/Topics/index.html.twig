@@ -67,7 +67,7 @@
             <form class="form-inline" name="addTopicForm" ng-submit="addNewTopic()" role="form">
               <div class="form-group col-lg-9">
                 <label for="addNewTopic" class="sr-only">{{ 'topics.label.topicname'|trans }}</label>
-                <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" id="addNewTopic" placeholder="{{ 'topics.label.topicname'|trans }}">
+                <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="60" class="form-control input-sm" id="addNewTopic" placeholder="{{ 'topics.label.topicname'|trans }}">
               </div>
               <button style="width: 130px" ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-success">{{ 'topics.btn.add'|trans }}</button>
             </form>
@@ -95,7 +95,7 @@
                     <div class="alert alert-danger" ng-show="editTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                     <div class="alert alert-danger" ng-show="editTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                     <div class="form-group">
-                      <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
+                      <input type="text" name="title" required ng-minlength="3" ng-maxlength="60" class="form-control input-sm" placeholder="Topic name" ng-model="node.title">
                     </div>
                     <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="updateTopic(node)">{{ 'topics.btn.save'|trans }}</button>
                   </form>
@@ -106,7 +106,7 @@
                             <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                             <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                             <div class="form-group">
-                              <input type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="{{ 'topics.label.subtopicname'|trans }}">
+                              <input type="text" name="title" required ng-minlength="3" ng-maxlength="60" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="{{ 'topics.label.subtopicname'|trans }}">
                             </div>
                             <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(node.id)">{{ 'topics.btn.add'|trans }}</button>
                             <button ng-show="languageCode" title="{{ 'topics.btn.hide'|trans }}" style="float: right;" class="btn btn-sm btn-default" ng-click="startEditing(this)"><span class="glyphicon glyphicon-chevron-up"></span></button>
@@ -121,7 +121,7 @@
                               <select ng-model="languageSelected" ng-options="language.name for language in languageList" ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
                                 <option value="">{{ 'topics.label.choose'|trans }}</option>
                               </select>
-                              <input style="width: 227px" type="text" name="title" required ng-minlength="3" ng-maxlength="25" class="form-control input-sm" ng-model="translationForm.title" placeholder="{{ 'topics.label.translationstring'|trans }}">
+                              <input style="width: 227px" type="text" name="title" required ng-minlength="3" ng-maxlength="60" class="form-control input-sm" ng-model="translationForm.title" placeholder="{{ 'topics.label.translationstring'|trans }}">
                             </div>
                             <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node.id)">{{ 'topics.btn.add'|trans }}</button>
                             <button title="{{ 'topics.btn.hide'|trans }}" style="float: right;" class="btn btn-sm btn-default" ng-click="startEditing(this)"><span class="glyphicon glyphicon-chevron-up"></span></button>
