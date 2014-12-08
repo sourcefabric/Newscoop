@@ -54,7 +54,7 @@ topics:
     save: "Save"
     removetrans: "Remove Topic's translation"
   alerts:
-    languagenotfound: "Could not found language by locale: %locale%"
+    languagenotfound: "Could not find language by locale: %locale%"
     translationadded: "Translation was added"
     translationexists: "Translation for locale %locale% already exists!"
     beforedelete: "Are you sure you want to delete this topic?"
