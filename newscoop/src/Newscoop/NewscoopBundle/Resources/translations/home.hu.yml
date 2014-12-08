@@ -126,7 +126,7 @@ Download: Letöltés
 'Clear system cache': 'Rendszergyorsítótár törlése'
 'The system was unable to upload the file $1. ': 'A rendszer nem tudta feltölteni a/z $1 fájlt.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Ellenőrizd a feltölteni kívánt fájlt, mert lehet, hogy sérült.'
-'An error occured in session management. Please reload the login page.': 'Hiba történt a munkamenet-kezelésben. Töltsd be újra a bejelentkezési lapot.'
+'An error occurred in session management. Please reload the login page.': 'Hiba történt a munkamenet-kezelésben. Töltsd be újra a bejelentkezési lapot.'
 'This file is stored on disk as $1.': 'Ez a fájl $1 néven lemezen kerül tárolásra.'
 'The system is unable to write to the directory $1.': 'A rendszer nem tud írni a/z $1 könyvtárba.'
 'The system was unable to read the file $1.': 'A rendszer nem tudta olvasni a/z $1 fájlt.'

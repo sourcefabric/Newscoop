@@ -126,7 +126,7 @@ Download: null
 'Clear system cache': null
 'The system was unable to upload the file $1. ': null
 'Please check the file you are trying to upload, it might be corrupted.': 'בבקשה בדוק את הקובץ שהנך מנסה להעלות. יתכן שהוא לא תקין'
-'An error occured in session management. Please reload the login page.': 'ארעה שגיאה. בבקשה טען מחדש את עמוד הכניסה למערכת'
+'An error occurred in session management. Please reload the login page.': 'ארעה שגיאה. בבקשה טען מחדש את עמוד הכניסה למערכת'
 'This file is stored on disk as $1.': 'הקובץ נשמר בכונן בשם $11'
 'The system is unable to write to the directory $1.': 'המערכת לא הצליחה לכתוב לתיקייה $11'
 'The system was unable to read the file $1.': 'המערכת לא הצליחה לקרוא את הקובץ $11'
