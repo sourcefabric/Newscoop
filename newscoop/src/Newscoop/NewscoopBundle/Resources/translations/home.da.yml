@@ -126,7 +126,7 @@ Download: Download
 'Clear system cache': 'Tøm systemets cache'
 'The system was unable to upload the file $1. ': 'Systemet kunne ikke uploade filen $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Kontrollér filen du prøver at sende, den kan være beskadiget.'
-'An error occured in session management. Please reload the login page.': 'Fejl i sessionshåndteringen. Indlæs siden igen.'
+'An error occurred in session management. Please reload the login page.': 'Fejl i sessionshåndteringen. Indlæs siden igen.'
 'This file is stored on disk as $1.': 'Filen er gemt på disk som $1.'
 'The system is unable to write to the directory $1.': 'Systemet kunne ikke skrive til mappen $1.'
 'The system was unable to read the file $1.': 'Systemet kunne ikke læse filen $1.'

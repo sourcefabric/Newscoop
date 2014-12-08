@@ -55,7 +55,7 @@ E-Mail: იმეილი
 'Change subscriber information': 'გამომწერის ინფორმაციის შეცვლა'
 'Add new IP address': 'ახალი IP მისამართის დამატება'
 'Add new IP Address': 'ახალი IP მისამართის დამატება'
-'Accout Name': 'მომხმარებლის სახელი'
+'Account Name': 'მომხმარებლის სახელი'
 '%value% must be greater than %min%': ' %value% უნდა იყოს მეტი ვიდრე %min%'
 '%value% is not a valid IP Address': '%value% არ არის სწორი IP მისამართი'
 'Regardless of the language': 'ენის მიუხედავად'

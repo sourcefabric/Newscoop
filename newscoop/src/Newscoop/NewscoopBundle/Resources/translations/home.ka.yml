@@ -126,7 +126,7 @@ Download: ჩამოქაჩვა
 'Clear system cache': 'გაწმინდეთ სისტუმერი კაშე'
 'The system was unable to upload the file $1. ': 'სისტემამ ვერ შეძლო $1 ფაილის ატვირთვა'
 'Please check the file you are trying to upload, it might be corrupted.': 'გთხოვთ შეამოწმოთ ფაილი რომლის ატვირთვასაც ცდილობთ, ის შეიძლება იყოს დაზიანებული.'
-'An error occured in session management. Please reload the login page.': 'ვიზიტის მენეჯმენტისას დაფიქსირდა შეცდომა. გთხოვთ გადატვირთოთ ავტორიზაციის გვერდი.'
+'An error occurred in session management. Please reload the login page.': 'ვიზიტის მენეჯმენტისას დაფიქსირდა შეცდომა. გთხოვთ გადატვირთოთ ავტორიზაციის გვერდი.'
 'This file is stored on disk as $1.': 'ფაილი შენახულია დისკზე როგორც $1'
 'The system is unable to write to the directory $1.': 'სისტემა ვერ ახერხებს $1 დირექტორიისთვის მიწერას'
 'The system was unable to read the file $1.': 'სისტემამ ვერ კითხულობს $1 ფაილს'

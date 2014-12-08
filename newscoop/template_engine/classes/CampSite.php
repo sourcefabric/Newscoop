@@ -124,7 +124,7 @@ final class CampSite extends CampSystem
             if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
                 $error_message = $errors->exception;
             } else {
-                $error_message = 'Error occured.';
+                $error_message = 'Error occurred.';
             }
         } else {
             $template = $uri->getTemplate(CampRequest::GetVar(CampRequest::TEMPLATE_ID));

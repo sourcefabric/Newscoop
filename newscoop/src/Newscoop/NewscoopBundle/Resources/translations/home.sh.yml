@@ -126,7 +126,7 @@ Download: Preuzmi
 'Clear system cache': 'Obriši sistemski keš'
 'The system was unable to upload the file $1. ': 'Sistem nije bio u stanju da uploaduje fajl $1. '
 'Please check the file you are trying to upload, it might be corrupted.': 'Proverite fajl koji pokušavate da uploadujete, moguće je da je oštećen.'
-'An error occured in session management. Please reload the login page.': 'Došlo je do greške u sesiji. Molimo Vas učitajte ponovo stranicu za prijavljivanje.'
+'An error occurred in session management. Please reload the login page.': 'Došlo je do greške u sesiji. Molimo Vas učitajte ponovo stranicu za prijavljivanje.'
 'This file is stored on disk as $1.': 'Fajl je spremljen na disku kao $1.'
 'The system is unable to write to the directory $1.': 'Sistem nije u stanju da upisuje u direktorijum $1.'
 'The system was unable to read the file $1.': 'Sistem nije u stanju da čita fajl $1.'

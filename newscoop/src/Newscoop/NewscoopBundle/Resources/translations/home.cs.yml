@@ -126,7 +126,7 @@ Download: Stáhnout
 'Clear system cache': 'Vymazat system cache'
 'The system was unable to upload the file $1. ': 'Systém byl neschopen nahrát soubor $1. '
 'Please check the file you are trying to upload, it might be corrupted.': 'Prosím, zkontrolujte soubor, který se snažíte nahrát zda není poškozený. '
-'An error occured in session management. Please reload the login page.': 'Objevila se chyba v session managementu. Prosime znovu si nahrajte přihlašovací stránku.'
+'An error occurred in session management. Please reload the login page.': 'Objevila se chyba v session managementu. Prosime znovu si nahrajte přihlašovací stránku.'
 'This file is stored on disk as $1.': 'Tento soubor je uložen na disku jako $1. '
 'The system is unable to write to the directory $1.': 'Systém není schopen psát do adresáře $1. '
 'The system was unable to read the file $1.': 'Systém nebyl schopen přečíst soubor $1. '
