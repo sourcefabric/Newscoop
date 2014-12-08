@@ -41,8 +41,15 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
     $statusIdx = 'uploader_' . $i . '_status';
     if ($params[$statusIdx] == 'done') {
         $fileLocation = $attachmentService->getStorageLocation(new \Newscoop\Entity\Attachment()).'/'.$params[$tmpnameIdx];
-        $file = new UploadedFile($fileLocation, $params[$nameIdx], mime_content_type($fileLocation), filesize($fileLocation), null, true);
-        $result = $attachmentService->upload($file, '', $language, array('user' => $user));
+        if (file_exists($fileLocation) && is_readable($fileLocation)) {
+            $file = new UploadedFile($fileLocation, $params[$nameIdx], mime_content_type($fileLocation), filesize($fileLocation), null, true);
+            $result = $attachmentService->upload($file, '', $language, array('user' => $user));
+        } else {
+            camp_html_add_msg($translator->trans("An error occured while uploading the file $1", array('$1' => $params[$nameIdx]), 'media_archive'));
+            if ($nrOfFiles == 1) {
+                camp_html_goto_page("/$ADMIN/media-archive/add_file.php", true);
+            }
+        }
     }
 }
 
