@@ -2334,7 +2334,7 @@ class Article extends DatabaseObject
         $queryStr2 = 'SELECT *';
         // This causes the preferred language to be listed first.
         if (!is_null($p_preferredLanguage)) {
-            $queryStr2 .= ", abs($p_preferredLanguage - IdLanguage) as LanguageOrder ";
+            $queryStr2 .= ", abs($p_preferredLanguage - CAST(IdLanguage AS SIGNED)) as LanguageOrder ";
         }
         $queryStr2 .= ' FROM Articles';
 
