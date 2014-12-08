@@ -68,7 +68,7 @@ topics:
   removedTranslation: "Topic's translation was removed"
   failedremoveTranslation: "Can not remove default topic's translation. Remove topic instead."
   updated: "Topic was updated"
-  error: "Error occured, please try again later."
+  error: "Error occurred, please try again later."
   title: "Topics"
   csrfinvalid: "The CSRF token is invalid. Please try to resubmit the form."
   tooshort: "Topic name is too short!"
