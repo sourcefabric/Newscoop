@@ -8,6 +8,11 @@ var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'
       uiTreeFilterSettingsProvider.descendantCollection = "__children";
   });
 
+/**
+* A factory which keeps routes to manage topics.
+*
+* @class Topic
+*/
 app.factory('TopicsFactory',  function($http) {
   return {
         getTopics: function(languageCode, articleNumber) {
@@ -88,6 +93,12 @@ app.factory('TopicsFactory',  function($http) {
     };
 });
 
+/**
+* AngularJS controller for managing various actions on the topics, e.g.
+* changing topic's position in tree, adding new topics, adding new translations etc.
+*
+* @class TreeCtrl
+*/
 app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.treeOptions = {
       dropped: function(event) {
@@ -160,6 +171,11 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.supportedFields = ['content', 'title'];
     var languageCode = null;
 
+    /**
+     * Loads all topics. It loads all the topics in tree structure
+     *
+     * @method loadTopicsTree
+     */
     $scope.loadTopicsTree = function() {
       TopicsFactory.getTopics().success(function (data) {
          $scope.data = data.tree;
@@ -174,6 +190,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         flashMessage(response.message, 'error');
     });
 
+    /**
+     * Moves topic. It moves topic to given position in a tree.
+     *
+     * @method moveTopic
+     * @param draggedNode {string} topic's id which will be moved
+     * @param params {array} parameters e.g. order, parent etc.
+     */
     var moveTopic = function(draggedNode, params) {
        TopicsFactory.moveTopic(draggedNode, params).success(function (response) {
           if (response.status) {
@@ -190,6 +213,11 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       ids: []
     };
 
+    /**
+     * Get topics assigned to the article
+     *
+     * @param  {Array} array array of all the topics
+     */
     var getSelectedTopics = function (array) {
         if (array) {
             for (var i = 0; i < array.length; i++) {
@@ -202,6 +230,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
     };
 
+    /**
+     * Removes topic from the array of the topics
+     *
+     * @param  {array} children Array of children
+     * @param  {integer} id     Topic id
+     * @return {boolean}        true or false
+     */
     var updateList = function (children, id) {
         if (children) {
             for (var i = 0; i < children.length; i++) {
@@ -219,6 +254,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
     };
 
+    /**
+     * Removes topic from the array of the topics
+     *
+     * @param  {array} children Array of children
+     * @param  {integer} id     Topic id
+     * @return {boolean}        True when topic removed from array
+     */
     var updateTranslations = function (children, id) {
         if (children) {
             for (var i = 0; i < children.length; i++) {
@@ -238,6 +280,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
     };
 
+    /**
+     * Removes topic's translation from the array of the topics' translations
+     *
+     * @param  {array} children   Array of children
+     * @param  {integer} id       Topic id
+     * @param  {object}  response Object with data returned from the server
+     * @return {boolean}          True when topic removed from array
+     */
     var updateAfterAddTranslation = function (children, id, response) {
         if (children) {
             for (var i = 0; i < children.length; i++) {
@@ -254,16 +304,23 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
     };
 
+    /**
+     * Updates topics' array. It adds a new topic to the array
+     * of the topics when it is added.
+     *
+     * @param  {array} children   Array of children
+     * @param  {integer} id       Topic id
+     * @param  {object}  response Object with data returned from the server
+     * @return {object}           Returns added topic object
+     */
     var updateAfterAddSubtopic = function (children, id, response) {
         if (children) {
             for (var i = 0; i < children.length; i++) {
                 if (children[i].id == id) {
                   if (children[i].__children == undefined) {
-                    console.log(children[i]);
                     children[i]['__children'] = [{id: response.topicId, locale: response.locale, title: response.topicTitle }];
                     children[i]['__children'][0]['translations'] = [{locale: response.locale, field: "title", content: response.topicTitle }];
                   } else {
-                    console.log(children[i].__children);
                     children[i].__children.push({
                       id: response.topicId,
                       locale: response.locale,
@@ -283,6 +340,15 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     };
 
     var removeTopicId = null;
+
+    /**
+     * Displays alert to inform user if he/she is sure to remove this topic.
+     * It also checks if topic is assigned to any article and returns number
+     * of articles its assigned to.
+     *
+     * @method removeTopicAlert
+     * @param topicId {integer} topic's id which will be removed
+     */
     $scope.removeTopicAlert = function(topicId) {
       removeTopicId = topicId;
       var attachedInfo = $('#removeAlert').find('.attached-info');
@@ -299,6 +365,11 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     }
 
+    /**
+     * Removes topic by given id and closes the alert popup
+     *
+     * @method removeTopic
+     */
     $scope.removeTopic = function() {
       TopicsFactory.deleteTopic(removeTopicId).success(function (response) {
         if (response.status) {
@@ -313,6 +384,11 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     };
 
+    /**
+     * Removes topic's translation by given translation id.
+     *
+     * @method removeTranslation
+     */
     $scope.removeTranslation = function(translationId)
     {
       TopicsFactory.deleteTopicTranslation(translationId).success(function (response) {
@@ -327,24 +403,52 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     }
 
+    /**
+     * Toggles the tree.
+     *
+     * @method toggle
+     *
+     * @param scope {object} current scope
+     */
     $scope.toggle = function(scope) {
       scope.toggle();
     };
 
+    /**
+     * Get root nodes.
+     *
+     * @method getRootNodesScope
+     */
     var getRootNodesScope = function() {
       return angular.element(document.getElementById("tree-root")).scope();
     };
 
+    /**
+     * Collapse the tree.
+     *
+     * @method collapseAll
+     */
     $scope.collapseAll = function() {
       var scope = getRootNodesScope();
       scope.collapseAll();
     };
 
+    /**
+     * Expands all elements in the tree
+     *
+     * @method collapseAll
+     */
     $scope.expandAll = function() {
       var scope = getRootNodesScope();
       scope.expandAll();
     };
 
+    /**
+     * Hides/shows more options of the tree node
+     *
+     * @method collapseAll
+     * @parent scope {object} currently selected element in a tree
+     */
     $scope.startEditing = function(scope) {
       if (scope.editing) {
         scope.editing = false;
@@ -355,7 +459,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
 
     $scope.formData = {};
     $scope.subtopicForm = {};
-    $scope.addNewTopic = function(topicId, event) {
+
+    /**
+     * Adds a new topic
+     *
+     * @method addNewTopic
+     * @param topicId {integer} Parent topic's id
+     */
+    $scope.addNewTopic = function(topicId) {
       var addFormData = {
             topic: {},
             _csrf_token: token
@@ -391,6 +502,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     };
 
+    /**
+     * Attach topics to the articles. If attaching topics from AES, it also closes the iframe
+     * when the topic has been assigned successfully.
+     *
+     * @method attachTopics
+     * @param articleNumber {integer} article's number to which topic will be assigned
+     * @param languageCode {integer} article's language to which topic will be assigned
+     */
     $scope.attachTopics = function(articleNumber, languageCode) {
       var topicsIds = $scope.selectedTopics;
       TopicsFactory.attachTopics(topicsIds, articleNumber, languageCode).success(function (response) {
@@ -408,7 +527,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     }
 
     $scope.editFormData = {};
-    $scope.updateTopic = function(node, event) {
+
+    /**
+     * Updates topic's name
+     *
+     * @method updateTopic
+     * @param node {object} topic object
+     */
+    $scope.updateTopic = function(node) {
        var postData = {
           topic: {
               title: node.title,
@@ -428,10 +554,25 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     };
 
+    /**
+     * On language change in adding a new translation box, it assigns selected
+     * language code it the variable so it can be used later elsewhere.
+     *
+     * @method onLanguageChange
+     * @param language {object} language object
+     */
     $scope.onLanguageChange = function(language) {
         languageCode = language.code;
     }
 
+    /**
+     * It loads the topics' tree by given language. If selected language is english,
+     * it will load tree with topics by english language.
+     *
+     * @method onFilterLanguageChange
+     * @param langCode {string} language's code
+     * @param articleNumber {integer} article's number
+     */
     $scope.onFilterLanguageChange = function(langCode, articleNumber) {
         languageCode = langCode;
         $scope.languageCode = langCode;
@@ -444,6 +585,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     }
 
     $scope.translationForm = {};
+
+    /**
+     * It adds a new translation for given topic id
+     *
+     * @method addTranslation
+     * @param topicId {integer} topic's id
+     */
     $scope.addTranslation = function(topicId) {
       var postData = {
           topicTranslation: {
