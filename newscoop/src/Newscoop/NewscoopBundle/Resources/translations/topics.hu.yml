@@ -28,47 +28,47 @@ Top: null
 topics:
     label:
         all: null
-        filterbylang: null
+        filterbylang: 'Témák nyelv szerinti szűrése'
         search: null
         filter: null
-        filterplaceholder: null
+        filterplaceholder: 'Írd be valanelyik téma nevének egy részét...'
         addroot: null
-        topicname: null
-        collapse: null
-        expand: null
+        topicname: 'Téma neve'
+        collapse: 'Az összes összecsukása'
+        expand: 'Az összes kibontása'
         changename: null
         for: null
-        addsubtopic: null
-        subtopicname: null
-        addtranslation: null
+        addsubtopic: 'Altéma hozzáadása'
+        subtopicname: 'Altéma neve'
+        addtranslation: 'Fordítás hozzáadása'
         choose: null
-        translationstring: null
-        tree: null
+        translationstring: 'Fordítási karakterlánc'
+        tree: Témák
     title: null
     btn:
         hide: null
-        remove: null
-        edit: null
+        remove: 'Téma eltávolítása'
+        edit: 'Téma szerkesztése'
         close: null
         add: null
         save: null
-        removetrans: null
+        removetrans: 'A téma fordításának eltávolítása'
     alerts:
-        languagenotfound: null
-        translationadded: null
-        translationexists: null
-        beforedelete: null
-        wrongparams: null
+        languagenotfound: 'Nem található a nyelv a következő területi beállítás szerint: %locale%'
+        translationadded: 'A fordítás hozzáadásra került'
+        translationexists: 'Már létezik %locale% nyelvű fordítás!'
+        beforedelete: 'Biztosan törölni akarod ezt a témát?'
+        wrongparams: 'A rendszerezett gyökértémák számának azonosnak kell lennie az összes gyökértéma számával.'
         ordersaved: null
-        beforedeleteinfo: null
-    added: null
-    failedfind: null
-    failedfindTranslation: null
-    removed: null
-    removedTranslation: null
-    failedremoveTranslation: null
-    updated: null
-    error: null
-    csrfinvalid: null
-    tooshort: null
-    toolong: null
+        beforedeleteinfo: 'Altémákat tartalmazó témák törlésekor végleg eltávolításra fog kerülni az összes altéma a fordításokkal együtt. Biztos vagy benne?'
+    added: 'A téma hozzáadása megtörtént'
+    failedfind: 'Nem sikerült megtalálni a témát az azonosító alapján: %id%'
+    failedfindTranslation: 'Nem sikerült megtalálni a téma fordítását az azonosító alapján: %id%'
+    removed: 'A/z %title% téma eltávolításra került'
+    removedTranslation: 'A téma fordítása eltávolításra került'
+    failedremoveTranslation: 'Nem távolítható el az alapértelmezett téma fordítása. Távolítsd el inkább a témát.'
+    updated: 'A téma frissítésre került'
+    error: 'Hiba történt, próbálkozz később.'
+    csrfinvalid: 'A CSRF-jogkivonat érvénytelen. Próbáld meg ismét beküldeni az űrlapot.'
+    tooshort: 'Túl rövid a téma neve!'
+    toolong: 'Túl hosszú a téma neve!'
