@@ -54,7 +54,7 @@ topics:
         save: null
         removetrans: 'A téma fordításának eltávolítása'
     alerts:
-        languagenotfound: 'Nem található a nyelv a következő területi beállítás szerint: %locale%'
+        languagenotfound: null
         translationadded: 'A fordítás hozzáadásra került'
         translationexists: 'Már létezik %locale% nyelvű fordítás!'
         beforedelete: 'Biztosan törölni akarod ezt a témát?'
@@ -68,7 +68,7 @@ topics:
     removedTranslation: 'A téma fordítása eltávolításra került'
     failedremoveTranslation: 'Nem távolítható el az alapértelmezett téma fordítása. Távolítsd el inkább a témát.'
     updated: 'A téma frissítésre került'
-    error: 'Hiba történt, próbálkozz később.'
+    error: null
     csrfinvalid: 'A CSRF-jogkivonat érvénytelen. Próbáld meg ismét beküldeni az űrlapot.'
     tooshort: 'Túl rövid a téma neve!'
     toolong: 'Túl hosszú a téma neve!'
