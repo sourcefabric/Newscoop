@@ -16,6 +16,13 @@ Newscoop\NewscoopBundle\Entity\Topic:
             read_only: true
             type: integer
             groups: ["list", "details"]
+            serialized_name: root
+            since_version: 1.2
+        parent:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
             serialized_name: parent
             since_version: 1.2
         lft:
