@@ -438,4 +438,14 @@ class TopicsControllerSpec extends ObjectBehavior
         $response->getStatusCode()->shouldReturn(200);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
     }
+
+    public function its_isAttachedAction_should_return_404_status_code_when_topic_doesnt_exist($request, $repository)
+    {
+        $repository->findOneBy(array(
+            'id' => 3,
+        ))->willReturn(null);
+        $response = $this->isAttachedAction($request, 3);
+        $response->getStatusCode()->shouldReturn(404);
+        $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\JsonResponse');
+    }
 }

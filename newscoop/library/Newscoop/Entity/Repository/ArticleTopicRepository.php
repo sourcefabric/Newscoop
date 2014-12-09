@@ -72,4 +72,22 @@ class ArticleTopicRepository extends EntityRepository
 
         return $query;
     }
+
+    /**
+     * Gets the occurence of the topic
+     *
+     * @param string|int $topicId Topic id
+     *
+     * @return Doctrine\ORM\Query
+     */
+    public function getTheOccurrenceOfTheTopic($topicId)
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('count(t)')
+            ->where('t.topic = :topicId')
+            ->setParameter('topicId', $topicId)
+            ->getQuery();
+
+        return $query;
+    }
 }

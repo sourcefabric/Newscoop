@@ -77,3 +77,4 @@ topics:
   csrfinvalid: "The CSRF token is invalid. Please try to resubmit the form."
   tooshort: "Topic name is too short!"
   toolong: "Topic name is too long!"
+  attached: "This topic is attached to %occurence% article(s). When you remove this topic, it will be automatically detached from all articles it is attached to. If the topic has children topics, they will be also detached."

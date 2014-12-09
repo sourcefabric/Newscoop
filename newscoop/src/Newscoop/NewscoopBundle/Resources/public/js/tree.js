@@ -8,25 +8,6 @@ var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'
       uiTreeFilterSettingsProvider.descendantCollection = "__children";
   });
 
-app.directive('ngCloseIframeClick', [
-  function(){
-        return {
-          link: function (scope, element, attr) {
-              var attachFunction = attr.ngCloseIframeClick;
-              var clickAction = attr.ngConfirmedClick;
-              element.bind('click', function (event) {
-                //console.log(attachFunction);
-                var result = scope.$eval(function(scope, locals) {
-                   //$scope.attachFunction()
-                   console.log(scope);
-                   console.log(locals);
-                });
-                console.log(scope);
-          });
-        }
-    };
-}]);
-
 app.factory('TopicsFactory',  function($http) {
   return {
         getTopics: function(languageCode, articleNumber) {
@@ -41,6 +22,9 @@ app.factory('TopicsFactory',  function($http) {
         },
         getLanguages: function() {
             return $http.get(Routing.generate("newscoop_newscoop_topics_getlanguages"));
+        },
+        isAttached: function(id) {
+            return $http.get(Routing.generate("newscoop_newscoop_topics_isattached", {id: id}));
         },
         deleteTopic: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_delete", {id: id}));
@@ -301,6 +285,18 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     var removeTopicId = null;
     $scope.removeTopicAlert = function(topicId) {
       removeTopicId = topicId;
+      var attachedInfo = $('#removeAlert').find('.attached-info');
+      attachedInfo.hide();
+      attachedInfo.html('');
+      TopicsFactory.isAttached(removeTopicId).success(function (response) {
+        if (response.status) {
+          attachedInfo.show();
+          attachedInfo.append(response.message);
+        }
+      }).error(function(response, status){
+          flashMessage(response.message, 'error');
+          $('#removeAlert').modal('hide');
+      });
     }
 
     $scope.removeTopic = function() {
@@ -400,7 +396,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       TopicsFactory.attachTopics(topicsIds, articleNumber, languageCode).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
-          return true;
+          setTimeout(function() {
+            window.parent.$.fancybox.close();
+          }, 1500);
         } else {
           flashMessage(response.message, 'error');
         }

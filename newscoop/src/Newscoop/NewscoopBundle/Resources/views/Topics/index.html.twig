@@ -34,7 +34,7 @@
 
 <div class="system_pref" ng-app="treeApp" ng-controller="treeCtrl">
 {% if compactView %}
-  <button class="button right-floated" type="button" confirmed-click="parent.$.fancybox.close()" ng-close-iframe-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
+  <button class="button right-floated" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
   <button class="button right-floated" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
   <h3>{{ 'topics.title'|trans }}</h3>
 {% else %}
@@ -43,7 +43,7 @@
 </div>
 {% endif %}
 <div class="row" ng-init="dim=false; highlight=true; {% if compactView %}onFilterLanguageChange('{{ articleLanguage }}', '{{ articleNumber }}'){% else %}loadTopicsTree(){% endif %}">
-        <div class="col-lg-{% if compactView %}12{% else %}6{% endif %}">
+        <div class="col-lg-12">
           {% if compactView == false %}
           <h3>{{ 'topics.label.filterbylang'|trans }}</h3>
           <form class="form-inline" name="filterForm" role="form">
@@ -65,11 +65,17 @@
             <div class="alert alert-danger" ng-show="addTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
             <div class="alert alert-danger" ng-show="addTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
             <form class="form-inline" name="addTopicForm" ng-submit="addNewTopic()" role="form">
-              <div class="form-group col-lg-9">
-                <label for="addNewTopic" class="sr-only">{{ 'topics.label.topicname'|trans }}</label>
-                <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="60" class="form-control input-sm" id="addNewTopic" placeholder="{{ 'topics.label.topicname'|trans }}">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-10">
+                    <label for="addNewTopic" class="sr-only">{{ 'topics.label.topicname'|trans }}</label>
+                      <input type="text" name="title" ng-model="formData.title" required ng-minlength="3" ng-maxlength="60" class="form-control input-sm" id="addNewTopic" style="width:100%" placeholder="{{ 'topics.label.topicname'|trans }}">
+                    </div>
+                    <div class="col-lg-2">
+                        <button style="width: 130px" ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-success">{{ 'topics.btn.add'|trans }}</button>
+                    </div>
+                </div>
               </div>
-              <button style="width: 130px" ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-success">{{ 'topics.btn.add'|trans }}</button>
             </form>
             <h3>{{ 'topics.label.tree'|trans }}
               <a href="" class="btn btn-xs btn-default pull-right" ng-click="collapseAll()">{{ 'topics.label.collapse'|trans }}</a>
@@ -162,6 +168,8 @@
                   <div class="modal-body" style="font-size: 14px;">
                     {{ 'topics.alerts.beforedeleteinfo'|trans }}
                   </div>
+                  <div class="modal-body attached-info" style="font-size: 14px; display: none;">
+                  </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'topics.btn.close'|trans }}</button>
                     <button type="button" ng-click="removeTopic()" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
@@ -172,11 +180,14 @@
 
         </div>
     </div>
+{% if compactView %}
+<br>
+  <button class="button right-floated" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
+  <button class="button right-floated" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
+{% endif %}
 </div>
 <script>
     var token = "{{ default_csrf_token() }}";
-    $('#selectedCheckbox').prop('type', 'checkbox');
-
 </script>
 {% endblock %}
 {% block admin_page_footer_box %}

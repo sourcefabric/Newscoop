@@ -278,12 +278,45 @@ class TopicsController extends Controller
             return new JsonResponse($node, 404);
         }
 
+        $topicService = $this->get('newscoop_newscoop.topic_service');
+        $isAttached = $topicService->isAttached($id);
+        if ($isAttached) {
+            $topicService->removeTopicFromAllArticles($id);
+        }
+
         $em->remove($node);
         $em->flush();
 
         return new JsonResponse(array(
             'status' => true,
             'message' => $translator->trans('topics.removed', array('%title%' => $node->getTitle()), 'topics')
+        ));
+    }
+
+    /**
+     * @Route("/admin/topics/is-attached/{id}", options={"expose"=true})
+     * @Method("GET")
+     */
+    public function isAttachedAction(Request $request, $id)
+    {
+        $translator = $this->get('translator');
+        $topicService = $this->get('newscoop_newscoop.topic_service');
+        $node = $this->findOr404($id);
+        if (is_array($node)) {
+            return new JsonResponse($node, 404);
+        }
+
+        $result = $topicService->isAttached($id, true);
+
+        if ($result[1]) {
+            return new JsonResponse(array(
+                'status' => true,
+                'message' => $translator->trans('topics.attached', array('%occurence%' => $result[0]), 'topics')
+            ));
+        }
+
+        return new JsonResponse(array(
+            'status' => false,
         ));
     }
 

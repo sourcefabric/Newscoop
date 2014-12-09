@@ -109,6 +109,36 @@ class TopicService
     }
 
     /**
+     * Removes topic from all articles it is attached to
+     *
+     * @param string|int $topicId Topic id
+     *
+     * @return boolean
+     */
+    public function removeTopicFromAllArticles($topicId)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $topic = $this->em->getReference('Newscoop\NewscoopBundle\Entity\Topic', $topicId);
+        $children = $this->getTopicRepository()->childrenQuery($topic)->getArrayResult();
+        $attachedTopics = array();
+        foreach ($children as $key => $child) {
+            if ($this->isAttached($child['id'])) {
+                $attachedTopics[] = $child['id'];
+            }
+        }
+
+        $attachedTopics[] = $topicId;
+        $topicsQuery = $qb->delete('Newscoop\Entity\ArticleTopic', 'at')
+            ->where('at.topic IN (?1)')
+            ->setParameter(1, $attachedTopics)
+            ->getQuery();
+
+        $topicsQuery->execute();
+
+        return true;
+    }
+
+    /**
      * Saves topic position when it was dragged and dropped
      *
      * @param Topic   $node     Dragged topic object
@@ -249,6 +279,39 @@ class TopicService
         $this->em->flush();
 
         return true;
+    }
+
+    /**
+     * Checks if topic is attached to any article
+     *
+     * If $attachedCount is set to yes, returns an array with the number of topics attached to articles,
+     * else returns boolean. By default set to false.
+     *
+     * @param string|int $topicId       Topic id
+     * @param boolean    $attachedCount Switch to include/exclude number of topics
+     *
+     * @return boolean|array
+     */
+    public function isAttached($topicId, $attachedCount = false)
+    {
+        $topic = $this->em->getRepository('Newscoop\Entity\ArticleTopic')
+            ->getTheOccurrenceOfTheTopic($topicId)
+            ->getSingleScalarResult();
+
+        $count = (int) $topic;
+        if ($attachedCount) {
+            if ($count > 0) {
+                return array($count, true);
+            }
+
+            return array($count, false);
+        }
+
+        if ($count > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
