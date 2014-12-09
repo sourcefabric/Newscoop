@@ -41,7 +41,6 @@ class TopicService
      */
     public function addTopicToArticle(Topic $topic, Article $article)
     {
-        $topicRepository = $this->em->getRepository('Newscoop\Entity\Article');
         $result = $this->attachTopicToArticle($topic, $article);
 
         if (!$result) {
@@ -62,7 +61,6 @@ class TopicService
      */
     public function removeTopicFromArticle(Topic $topic, Article $article)
     {
-        $topicRepository = $this->em->getRepository('Newscoop\Entity\Article');
         $result = $this->detachTopicFromArticle($topic, $article);
 
         if (!$result) {

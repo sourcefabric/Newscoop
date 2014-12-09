@@ -170,7 +170,6 @@ class TopicsController extends Controller
         }
 
         if ($form->isValid()) {
-            $em = $this->get('em');
             $locale = $request->get('_code', $request->getLocale());
             $topicService = $this->get('newscoop_newscoop.topic_service');
             try {

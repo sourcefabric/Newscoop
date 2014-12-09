@@ -35,13 +35,13 @@ class UserTopic
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
      *  })
-     * @var Topic
+     * @var Newscoop\NewscoopBundle\Entity\Topic
      */
     protected $topic;
 
     /**
-     * @param User  $user
-     * @param Topic $topic
+     * @param User                                 $user
+     * @param Newscoop\NewscoopBundle\Entity\Topic $topic
      */
     public function __construct(User $user, \Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
@@ -52,7 +52,7 @@ class UserTopic
     /**
      * Get topic
      *
-     * @return Topic
+     * @return Newscoop\NewscoopBundle\Entity\Topic
      */
     public function getTopic()
     {

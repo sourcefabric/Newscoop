@@ -34,9 +34,11 @@
 
 <div class="system_pref" ng-app="treeApp" ng-controller="treeCtrl">
 {% if compactView %}
-  <button class="button right-floated" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
-  <button class="button right-floated" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
-  <h3>{{ 'topics.title'|trans }}</h3>
+<div class="fixed-top topics-top">
+  <button class="button right-floated with-margin-top" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
+  <button class="button right-floated with-margin-top" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
+  <h3>{{ 'topics.title'|trans }} - {{ 'topics.attachtopics'|trans }}</h3>
+  </div>
 {% else %}
 <div class="bs-callout bs-callout-info">
   {{ renderTip('topics.tip'|trans) }}
@@ -180,11 +182,6 @@
 
         </div>
     </div>
-{% if compactView %}
-<br>
-  <button class="button right-floated" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
-  <button class="button right-floated" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
-{% endif %}
 </div>
 <script>
     var token = "{{ default_csrf_token() }}";

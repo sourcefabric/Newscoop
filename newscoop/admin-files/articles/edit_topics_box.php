@@ -97,7 +97,8 @@
         $tmpArticleTopic = $tmpArticleTopic->getTopic();
         $pathStr = $repo->getReadablePath($tmpArticleTopic, $language->getCode());
         // Get the topic name for the 'detach topic' dialog box, below.
-        $tmpTopicName = end(array_values(explode(" / ", $pathStr)));
+        $tempArray = array_values(explode(" / ", $pathStr));
+        $tmpTopicName = end($tempArray);
     ?>
         <li><?php p(wordwrap($pathStr, 45, '<br />&nbsp;&nbsp;')); ?>
         <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
