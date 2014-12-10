@@ -54,7 +54,7 @@ topics:
         save: null
         removetrans: 'A téma fordításának eltávolítása'
     alerts:
-        languagenotfound: null
+        languagenotfound: 'Nem található a nyelv a következő területi beállítás szerint: %locale%'
         translationadded: 'A fordítás hozzáadásra került'
         translationexists: 'Már létezik %locale% nyelvű fordítás!'
         beforedelete: 'Biztosan törölni akarod ezt a témát?'
