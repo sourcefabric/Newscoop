@@ -68,7 +68,7 @@ topics:
     removedTranslation: 'A téma fordítása eltávolításra került'
     failedremoveTranslation: 'Nem távolítható el az alapértelmezett téma fordítása. Távolítsd el inkább a témát.'
     updated: 'A téma frissítésre került'
-    error: null
+    error: 'Hiba történt, próbálkozz később.'
     csrfinvalid: 'A CSRF-jogkivonat érvénytelen. Próbáld meg ismét beküldeni az űrlapot.'
     tooshort: 'Túl rövid a téma neve!'
     toolong: 'Túl hosszú a téma neve!'
