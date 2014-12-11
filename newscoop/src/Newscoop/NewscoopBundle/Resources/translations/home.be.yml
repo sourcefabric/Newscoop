@@ -126,7 +126,7 @@ Download: Загрузіць
 'Clear system cache': 'Ачысьціць сыстэму кэшаваньня'
 'The system was unable to upload the file $1. ': 'Сыстэма ня можа загрузіць файл $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Калі ласка  праверце, які файл Вы спрабуеце загрузіць. Файл можа быць сапсаваны.'
-'An error occured in session management. Please reload the login page.': 'Адбылася памылка ў кiраваньнi БД. Калi ласка, перагрузiце старонку.'
+'An error occurred in session management. Please reload the login page.': 'Адбылася памылка ў кiраваньнi БД. Калi ласка, перагрузiце старонку.'
 'This file is stored on disk as $1.': 'Гэты файл захаваны на дыску як $1.'
 'The system is unable to write to the directory $1.': 'Немагчыма запісаць у папку $1.'
 'The system was unable to read the file $1.': 'Немагчыма прачытаць файл $1.'

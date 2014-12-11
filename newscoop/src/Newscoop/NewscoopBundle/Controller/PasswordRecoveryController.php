@@ -49,7 +49,7 @@ class PasswordRecoveryController extends Controller
                             $this->sendToken($data['email'], $token);
                             $sent = true;
                         } catch (\Exception $exception) {
-                            $error = $translator->trans("Fatal error occured. Please try again later.", array(), 'home');
+                            $error = $translator->trans("Fatal error occurred. Please try again later.", array(), 'home');
                         }
                     } else {
                         $error = $translator->trans("No user is registered with this email.", array(), 'home');

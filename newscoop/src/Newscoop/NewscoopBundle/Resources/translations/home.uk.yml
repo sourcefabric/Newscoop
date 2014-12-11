@@ -126,7 +126,7 @@ Download: Завантажити
 'Clear system cache': 'Очистити системний кеш'
 'The system was unable to upload the file $1. ': 'Система не може завантажити файл $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Будь ласка перевірти файл який ви намагаєтесь завантажити, можливо він пошкоджений.'
-'An error occured in session management. Please reload the login page.': 'Помилка керування сесіями. Будь ласка перезавантажте сторінку авторізації'
+'An error occurred in session management. Please reload the login page.': 'Помилка керування сесіями. Будь ласка перезавантажте сторінку авторізації'
 'This file is stored on disk as $1.': 'Файл збережено на диску як $1.'
 'The system is unable to write to the directory $1.': 'Система не може записати до директорії $1.'
 'The system was unable to read the file $1.': 'Система не може прочитати файл $1.'

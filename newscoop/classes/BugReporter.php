@@ -354,7 +354,7 @@ class BugReporter
     /**
      * Manually set the message of the error which occurred.
      *
-     * @param string Set the message for the error which just occured
+     * @param string Set the message for the error which just occurred
      * @return void
      */
     public function setStr($p_str)

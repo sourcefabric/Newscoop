@@ -59,7 +59,7 @@ if (isset($_REQUEST['image_id'])) {
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="css/campsiteimage.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-  <script type="text/javascript" src="js/campsiteimage.js"></script>
+  <script type="text/javascript" src="js/campsiteimage.js?v=4.3.1"></script>
   <script type="text/javascript" src="assets/popup.js"></script>
   <script type="text/javascript" src="assets/dialog.js"></script>
   <script type="text/javascript" src="assets/manager.js"></script>

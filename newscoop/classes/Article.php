@@ -2334,7 +2334,7 @@ class Article extends DatabaseObject
         $queryStr2 = 'SELECT *';
         // This causes the preferred language to be listed first.
         if (!is_null($p_preferredLanguage)) {
-            $queryStr2 .= ", abs($p_preferredLanguage - IdLanguage) as LanguageOrder ";
+            $queryStr2 .= ", abs($p_preferredLanguage - CAST(IdLanguage AS SIGNED)) as LanguageOrder ";
         }
         $queryStr2 .= ' FROM Articles';
 
@@ -2603,8 +2603,8 @@ class Article extends DatabaseObject
                 $symbol = $comparisonOperation['symbol'];
                 $valModifier = strtolower($symbol) == 'like' ? '%' : '';
 
-                $firstName = trim($g_ado_db->escape($author['first_name']), "'");
-                $lastName = trim($g_ado_db->escape($author['last_name']), "'");
+                $firstName = trim(trim($g_ado_db->escape($author['first_name']), "'"));
+                $lastName = trim(trim($g_ado_db->escape($author['last_name']), "'"));
 
                 $authors = $g_ado_db->GetAll("
                     SELECT Authors.id

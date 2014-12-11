@@ -69,11 +69,19 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
     $statusIdx = 'uploader_' . $i . '_status';
     if ($params[$statusIdx] == 'done') {
         $fileLocation = $imageService->getImagePath() . $params[$tmpnameIdx];
-        $mime = getimagesize($fileLocation);
-        $file = new UploadedFile($fileLocation, $params[$nameIdx], $mime['mime'], filesize($fileLocation), null, true);
-        $result = $imageService->upload($file, array('user' => $user));
-        $result->setDate('0000-00-00');
-        $images[] = $result;
+
+        if (file_exists($fileLocation) && is_readable($fileLocation)) {
+            $mime = getimagesize($fileLocation);
+            $file = new UploadedFile($fileLocation, $params[$nameIdx], $mime['mime'], filesize($fileLocation), null, true);
+            $result = $imageService->upload($file, array('user' => $user));
+            $result->setDate('0000-00-00');
+            $images[] = $result;
+        } else {
+            camp_html_add_msg($translator->trans("An error occured while uploading the file $1", array('$1' => $params[$nameIdx]), 'media_archive'));
+            if ($nrOfFiles == 1) {
+                camp_html_goto_page("/$ADMIN/media-archive/add.php", true);
+            }
+        }
     }
 }
 

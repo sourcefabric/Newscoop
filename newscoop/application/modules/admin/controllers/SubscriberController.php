@@ -106,7 +106,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
 
         $table->setCols(array(
             'name' => $translator->trans('Full Name', array(), 'user_subscriptions'),
-            'username' => $translator->trans('Accout Name', array(), 'user_subscriptions'),
+            'username' => $translator->trans('Account Name', array(), 'user_subscriptions'),
             'email' => $translator->trans('E-Mail', array(), 'user_subscriptions'),
             'subscription' => $translator->trans('Subscriptions'),
             'timeCreated' => $translator->trans('Creation Date', array(), 'user_subscriptions'),
