@@ -82,6 +82,33 @@ LOCK TABLES `ArticleAuthors` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ArticleImageCaptions`
+--
+
+DROP TABLE IF EXISTS `ArticleImageCaptions`;
+
+CREATE TABLE `ArticleImageCaptions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdLanguage` int(11) NOT NULL,
+  `IdImage` int(11) NOT NULL,
+  `NrArticle` int(11) NOT NULL,
+  `caption` varchar(255) NOT NULL,
+  `articleImage_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `imageId` (`IdImage`,`NrArticle`,`IdLanguage`),
+  KEY `IDX_1E9BFCA410F3034D6CB384EF` (`IdImage`,`NrArticle`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `ArticleImageCaptions`
+--
+
+LOCK TABLES `ArticleImageCaptions` WRITE;
+/*!40000 ALTER TABLE `ArticleImageCaptions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ArticleImageCaptions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ArticleImages`
 --
 
