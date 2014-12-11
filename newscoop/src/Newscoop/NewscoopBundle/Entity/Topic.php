@@ -286,13 +286,12 @@ class Topic
     }
 
     /**
-     * Gets the value of parent.
+     * Gets the integer value of parent.
      *
-     * @return mixed
+     * @return integer
      */
     public function getParentAsInteger()
     {
-        //ladybug_dump($this->parent);die;
         if ($this->parent) {
             return (int) $this->parent->getId();
         }
