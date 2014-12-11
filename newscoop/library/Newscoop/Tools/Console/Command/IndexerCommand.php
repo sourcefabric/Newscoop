@@ -34,13 +34,6 @@ class IndexerCommand extends Console\Command\Command
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $res = \ArticleIndex::RunIndexer($input->getOption('time-limit'));
-        if (\PEAR::isError($res)) {
-            if ($input->getOption('verbose')) {
-                $output->writeln($res->getMessage());
-            }
-
-            return;
-        }
 
         if ($input->getOption('verbose')) {
             $output->writeln($res['articles'] . ' out of ' . $res['total articles'] . ' articles were indexed with a total of ' . $res['words'] . ' words.');

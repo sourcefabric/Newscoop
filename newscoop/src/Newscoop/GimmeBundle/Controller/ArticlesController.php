@@ -41,6 +41,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/create.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
+     * @Route("/articles/.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle_clear")
      * @Method("POST")
      */
     public function createArticleAction(Request $request)
@@ -227,6 +228,118 @@ class ArticlesController extends FOSRestController
     }
 
     /**
+     * Search for articles
+     *
+     * Parameter 'query' contains keywords seperated with ",". Example: test,article,keyword3 
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the articles are not found"
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="query", "dataType"="mixed", "required"=false, "description"="article serach query"}
+     *     }
+     * )
+     *
+     * @Route("/search/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     *
+     * @return array
+     */
+    public function searchArticlesAction(Request $request)
+    {
+        $em = $this->container->get('em');
+        $articleSearch = $this->container->get('search.article');
+        $publication = $this->get('newscoop.publication_service')->getPublication();
+        $onlyPublished = true;
+
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $onlyPublished = false;
+            }
+        } catch (\Newscoop\NewscoopException $e) {}
+
+        $articles = $articleSearch->searchArticles($request->get('language', $publication->getLanguage()->getCode()), $request->query->get('query', null), $onlyPublished);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $articles = $paginator->paginate($articles, array(
+            'distinct' => false
+        ));
+
+        return $articles;
+    }
+
+    /**
+     * Get related articles
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the articles are not found"
+     *         }
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}/related.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_related_default_lang")
+     * @Route("/articles/{number}/{language}/related.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_related")
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     *
+     * @return array
+     */
+    public function relatedArticlesAction(Request $request, $number, $language = null)
+    {
+        $em = $this->container->get('em');
+        $publication = $this->get('newscoop.publication_service')->getPublication();
+        $relatedArticlesService = $this->get('related_articles');
+
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Article was not found');
+        }
+
+        $onlyPublished = true;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $onlyPublished = false;
+            }
+        } catch (\Newscoop\NewscoopException $e) {}
+
+        $relatedArticles = $relatedArticlesService
+            ->getRelatedArticles($article);
+
+        $ids = array();
+        foreach ($relatedArticles as $relatedArticle) {
+            $ids[]  = $relatedArticle->getArticleNumber();
+        }
+
+        $articles = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticlesByIds(
+                $article->getLanguage()->getCode(),
+                $ids,
+                $onlyPublished
+            );
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $paginator->setUsedRouteParams(array('number' => $number, 'language' => $article->getLanguage()->getCode()));
+        $articles = $paginator->paginate($articles, array(
+            'distinct' => false
+        ));
+
+        return $articles;
+    }
+
+    /**
      * Get article
      *
      * @ApiDoc(
@@ -286,6 +399,17 @@ class ArticlesController extends FOSRestController
      *
      *     header name: "link"
      *     header value: "</api/topics/1; rel="topic">"
+     *
+     * **related articles headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/article/1; rel="topic">"
+     * or with specific language
+     *
+     *     header value: "</api/article/1?language=en; rel="article">"
+     * you can also specify position on list
+     *
+     *     header value: "</api/article/1?language=en; rel="article">,<1; rel="article-position">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -383,6 +507,15 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+            if ($object instanceof \Newscoop\Entity\Article) {
+                $relatedArticlesService = $this->get('related_articles');
+                $relatedArticlesService->addArticle($article, $object);
+
+                $matched = true;
+
+                continue;
+            }
         }
 
         if ($matched === false) {
@@ -414,6 +547,14 @@ class ArticlesController extends FOSRestController
      *
      *     header name: "link"
      *     header value: "</api/topics/1; rel="topic">"
+     *
+     * **related articles headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/article/1; rel="topic">"
+     * or with specific language
+     *
+     *     header value: "</api/article/1?language=en; rel="article">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -510,6 +651,15 @@ class ArticlesController extends FOSRestController
             if ($object instanceof \Newscoop\NewscoopBundle\Entity\Topic) {
                 $topicService = $this->get('newscoop_newscoop.topic_service');
                 $topicService->removeTopicFromArticle($object, $article);
+
+                $matched = true;
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\Entity\Article) {
+                $relatedArticlesService = $this->get('related_articles');
+                $relatedArticlesService->removeRelatedArticle($article, $object);
 
                 $matched = true;
 

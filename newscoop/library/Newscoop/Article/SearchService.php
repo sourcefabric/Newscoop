@@ -14,6 +14,7 @@ use Newscoop\Search\DocumentInterface;
 use Newscoop\WebcodeFacade;
 use Newscoop\Image\RenditionService;
 use Newscoop\Article\LinkService;
+use Newscoop\Entity\Article;
 
 /**
  * Search Service
@@ -190,9 +191,28 @@ class SearchService implements ServiceInterface
                 if ($article->getData($switch)) {
                     $switches[] = $switch;
                 }
-            } catch (\Exception $e) {
-                // @noop
+            } catch (\Exception $e) {}
+        }
+    }
+
+    public function searchArticles($language, $query = null, $onlyPublished = true)
+    {
+        $keywords = array_diff(explode(',', $query), array(''));
+
+        $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
+        if (count($webcodeMatches)) {
+            $webcode = ltrim(current($webcodeMatches), '@+');
+            $article = $this->webcoder->findArticleByWebcode($webcode);
+
+            if ($article) {
+                return array($article);
             }
         }
+
+        $articles = $this->em->getRepository('Newscoop\Entity\Article')
+            ->searchArticles($language, $keywords, $onlyPublished)
+            ->getResult();
+
+        return $articles;
     }
 }

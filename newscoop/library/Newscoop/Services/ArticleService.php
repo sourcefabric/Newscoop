@@ -180,7 +180,7 @@ class ArticleService
         $article->setUploaded(new \Datetime());
         $article->setLockUser();
         $article->setPublic(true);
-        $article->setIsIndexed(false);
+        $article->setIsIndexed('N');
 
         $this->em->persist($article);
         $this->em->flush();
@@ -221,6 +221,11 @@ class ArticleService
         $this->em->flush();
 
         return $article;
+    }
+
+    public function addRelatedArticle($relatedArticle, $originalArticle)
+    {
+        //$originalArticle->
     }
 
     /**

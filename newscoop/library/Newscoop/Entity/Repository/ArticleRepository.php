@@ -84,6 +84,69 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    public function searchArticles($language, $keywords = array(), $onlyPublished = true)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
+            ->select('DISTINCT(a.article) as number')
+            ->leftJoin('a.keyword', 'k')
+            ->leftJoin('a.article', 'aa');
+
+        $orX = $queryBuilder->expr()->orx();
+
+        foreach ($keywords as $keyword) {
+            $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
+        }
+
+        if (count($keywords) > 0) {
+            $queryBuilder->andWhere($orX);
+        }
+
+
+        $articleNumbers = $queryBuilder->getQuery()->getResult();
+        $tmpNumbers = array();
+        foreach ($articleNumbers as $key => $value) {
+            $tmpNumbers[] = $value['number'];
+        }
+        $articleNumbers = $tmpNumbers;
+
+        $query = $this->getArticlesByIds($languageId, $articleNumbers, $onlyPublished);
+
+        return $query;
+    }
+
+    public function getArticlesByIds($language, $ids = array(), $onlyPublished = true)
+    {
+        $em = $this->getEntityManager();
+
+        $languageId = $em->getRepository('Newscoop\Entity\Language')
+            ->findOneByCode($language);
+        if (!$languageId) {
+            throw new NotFoundHttpException('Results with language "'.$language.'" was not found.');
+        }
+        $language = $languageId;
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->andWhere('a.number IN (:ids)')
+            ->andWhere('a.language = :language')
+            ->setParameters(array(
+                'ids' => $ids,
+                'language' => $language
+            ));
+
+        if ($onlyPublished) {
+            $queryBuilder->andWhere('a.workflowStatus  = :workflowStatus')
+                ->setParameter('workflowStatus', Article::STATUS_PUBLISHED);
+        }
+
+        $countQueryBuilder = clone $queryBuilder;
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $countQueryBuilder->select('COUNT(a)')->getQuery()->getSingleScalarResult());
+
+        return $query;
+    }
+
     /**
      * Get Single Article
      *

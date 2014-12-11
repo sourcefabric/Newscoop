@@ -61,6 +61,9 @@ services:
     article.link:
         class:      Newscoop\Article\LinkService
         arguments:  ["@em", "@zend_router", "@router"]
+    related_articles:
+        class:      Newscoop\Services\RelatedArticlesService
+        arguments:  ["@em"]
     article.repository:
         class:      Doctrine\Common\Persistence\ObjectRepository
         factory_service: doctrine
