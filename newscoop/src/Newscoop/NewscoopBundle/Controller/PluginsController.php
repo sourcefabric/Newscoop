@@ -120,6 +120,8 @@ class PluginsController extends Controller
         @apache_setenv('no-gzip', 1);
         @ini_set('implicit_flush', 1);
 
+        ob_start();
+
         $response = new Response();
         $response->sendHeaders();
 

@@ -1,0 +1,37 @@
+<?php
+
+namespace {{ namespace }}\EventListener;
+
+{% block use_statements %}
+use Newscoop\NewscoopBundle\Event\ConfigureMenuEvent;
+use Symfony\Component\Translation\Translator;
+{% endblock use_statements %}
+
+{% block class_definition %}
+class ConfigureMenuListener
+{% endblock class_definition %}
+{
+{% block class_body %}
+    protected $translator;
+
+    /**
+     * @param Translator $translator
+     */
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * @param \Newscoop\NewscoopBundle\Event\ConfigureMenuEvent $event
+     */
+    public function onMenuConfigure(ConfigureMenuEvent $event)
+    {
+        $menu = $event->getMenu();
+        $menu[$this->translator->trans('Plugins')]->addChild(
+            '{{ pluginName }} Plugin',
+            array('uri' => $event->getRouter()->generate('{{ vendor | lower }}_{{ pluginName | lower }}plugin_admin_index'))
+        );
+    }
+{% endblock class_body %}
+}
