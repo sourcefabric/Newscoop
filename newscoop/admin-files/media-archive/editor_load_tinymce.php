@@ -158,6 +158,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
         paste_convert_headers_to_strong: true,
         paste_remove_spans: true,
         paste_remove_styles: true,
+
+        // not escaping greek characters
+        entity_encoding: 'raw',
      
         setup : function(ed) {
              // Character limit
