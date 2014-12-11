@@ -24,6 +24,8 @@ Newscoop\NewscoopBundle\Entity\Topic:
             type: integer
             groups: ["list", "details"]
             serialized_name: parent
+            accessor:
+                getter: getParentAsInteger
             since_version: 1.2
         lft:
             expose: true
@@ -35,14 +37,14 @@ Newscoop\NewscoopBundle\Entity\Topic:
         rgt:
             expose: true
             read_only: true
-            type: string
+            type: integer
             groups: ["list", "details"]
             serialized_name: right
             since_version: 1.2
         level:
             expose: true
             read_only: true
-            type: string
+            type: integer
             groups: ["list", "details"]
             since_version: 1.2
         topicOrder:
