@@ -66,3 +66,11 @@ Newscoop\NewscoopBundle\Entity\Topic:
             type: articles_link
             groups: ["list", "details"]
             serialized_name: articlesLink
+    virtual_properties:
+        getObject:
+            expose: true
+            read_only: true
+            type: topic_path
+            groups: ["list", "details"]
+            serialized_name: path
+            since_version: 1.2

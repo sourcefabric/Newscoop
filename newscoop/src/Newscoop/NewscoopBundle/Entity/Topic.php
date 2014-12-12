@@ -615,4 +615,14 @@ class Topic
 
         return $view;
     }
+
+    /**
+     * Gets object
+     *
+     * @return Topic
+     */
+    public function getObject()
+    {
+        return clone $this;
+    }
 }
