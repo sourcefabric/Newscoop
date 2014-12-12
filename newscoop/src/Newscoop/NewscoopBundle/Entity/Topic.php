@@ -122,6 +122,12 @@ class Topic
      */
     protected $articles;
 
+    /**
+     * Link to topic articles resource
+     * @var string
+     */
+    protected $articlesLink;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -624,5 +630,26 @@ class Topic
     public function getObject()
     {
         return clone $this;
+    }
+
+    /**
+     * Set link to topic articles resource
+     *
+     * @param string $articlesLink Link to topic articles resource
+     */
+    public function setArticlesLink($articlesLink)
+    {
+        $this->articlesLink = $articlesLink;
+
+        return $this;
+    }
+
+    /**
+     * Get link to topic articles resource
+     * @return string Link to topic articles resource
+     */
+    public function getArticlesLink()
+    {
+        return $this->articlesLink;
     }
 }
