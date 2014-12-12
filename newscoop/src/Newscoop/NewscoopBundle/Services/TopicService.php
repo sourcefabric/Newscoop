@@ -187,6 +187,8 @@ class TopicService
             $node->setParent(null);
         }
 
+        $metadata = $this->em->getClassMetaData(get_class($node));
+        $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
         $this->em->flush();
 
         return true;
@@ -233,7 +235,7 @@ class TopicService
     }
 
     /**
-     * Saves new topic
+     * Saves new topic. Possibility to overwrite AUTO strategy (set custom ids)
      *
      * @param Topic       $node   Topic object
      * @param string|null $locale Language code
@@ -274,6 +276,8 @@ class TopicService
         }
 
         $this->em->persist($node);
+        $metadata = $this->em->getClassMetaData(get_class($node));
+        $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
         $this->em->flush();
 
         return true;
@@ -310,6 +314,28 @@ class TopicService
         }
 
         return false;
+    }
+
+    /**
+     * Count topics by given criteria
+     *
+     * @param array $criteria
+     *
+     * @return integer
+     */
+    public function countBy(array $criteria = array())
+    {
+        return $this->getTopicRepository()->countBy($criteria);
+    }
+
+    /**
+     * Get options for forms
+     *
+     * @return array
+     */
+    public function getMultiOptions()
+    {
+        return $this->getTopicRepository()->findOptions();
     }
 
     /**

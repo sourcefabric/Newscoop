@@ -29,6 +29,7 @@ use Newscoop\Services\UserService;
 use Newscoop\NewscoopBundle\Services\TopicService;
 use Newscoop\Entity\Article;
 use Doctrine\ORM\QueryBuilder;
+use Newscoop\Services\CacheService;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -66,7 +67,8 @@ class TopicsControllerSpec extends ObjectBehavior
         User $user,
         TopicService $topicService,
         Article $article,
-        QueryBuilder $queryBuilder
+        QueryBuilder $queryBuilder,
+        CacheService $cacheService
     )
     {
         $container->get('em')->willReturn($entityManager);
@@ -75,6 +77,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $container->get('translator')->willReturn($translator);
         $container->get('form.factory')->willReturn($formFactory);
         $container->get('form.csrf_provider')->willReturn($csrfTokenManagerAdapter);
+        $container->get('newscoop.cache')->willReturn($cacheService);
         $container->get('user')->willReturn($userService);
         $userService->getCurrentUser()->willReturn($user);
         $container->get('newscoop_newscoop.topic_service')->willReturn($topicService);

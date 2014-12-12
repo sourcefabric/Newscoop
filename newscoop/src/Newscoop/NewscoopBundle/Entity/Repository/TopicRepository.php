@@ -323,4 +323,33 @@ class TopicRepository extends NestedTreeRepository
 
         return $query;
     }
+
+    /**
+     * Count topics by given criteria
+     *
+     * @param array $criteria
+     *
+     * @return integer
+     */
+    public function countBy(array $criteria = array())
+    {
+        $queryBuilder = $this->getQueryBuilder()
+            ->select('COUNT(t)')
+            ->from($this->getEntityName(), 't');
+
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $queryBuilder->andWhere("t.$property = :$property");
+            }
+        }
+
+        $query = $queryBuilder->getQuery();
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $query->setParameter($property, $value);
+            }
+        }
+
+        return (int) $query->getSingleScalarResult();
+    }
 }

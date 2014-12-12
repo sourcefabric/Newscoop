@@ -39,8 +39,8 @@ class UserTopicService
     /**
      * Follow topic by user
      *
-     * @param  Newscoop\Entity\User  $user
-     * @param  Newscoop\Entity\Topic $topic
+     * @param  Newscoop\Entity\User                 $user
+     * @param  Newscoop\NewscoopBundle\Entity\Topic $topic
      * @return void
      */
     public function followTopic(User $user, Topic $topic)
@@ -104,12 +104,12 @@ class UserTopicService
     /**
      * Find topic
      *
-     * @param  int                   $id
-     * @return Newscoop\Entity\Topic
+     * @param  int                                  $id
+     * @return Newscoop\NewscoopBundle\Entity\Topic
      */
     public function findTopic($id)
     {
-        $topics = $this->em->getRepository('Newscoop\Entity\Topic')
+        $topics = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
             ->findBy(array(
                 'id' => $id,
             ));
@@ -120,7 +120,7 @@ class UserTopicService
 
         $germanTopic = null;
         foreach ($topics as $topic) {
-            if (5 == $topic->getLanguageId()) { // first go for german
+            if ("de" == $topic->getTranslatableLocale()) { // first go for german
                 $germanTopic = $topic;
                 break;
             }

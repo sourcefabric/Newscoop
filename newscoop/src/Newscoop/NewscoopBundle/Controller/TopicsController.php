@@ -86,9 +86,20 @@ class TopicsController extends Controller
         $em = $this->get('em');
         $locale = $request->get('_code');
         $articleNumber = $request->get('_articleNumber');
+        $topicService = $this->get('newscoop_newscoop.topic_service');
+        $cacheService = $this->get('newscoop.cache');
+        $topicsCount = $topicService->countBy();
+        $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount), 'topic');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-        $topicsQuery = $repository->getTranslatableTopics($locale);
-        $nodes = $topicsQuery->getArrayResult();
+        $tree = array();
+        if ($cacheService->contains($cacheKey)) {
+            $tree = $cacheService->fetch($cacheKey);
+        } else {
+            $topicsQuery = $repository->getTranslatableTopics($locale);
+            $nodes = $topicsQuery->getArrayResult();
+
+            $cacheService->save($cacheKey, $tree);
+        }
 
         if ($articleNumber) {
             $topicsIds = $this->getArticleTopicsIds($articleNumber);

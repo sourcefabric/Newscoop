@@ -40,9 +40,9 @@
   <h3>{{ 'topics.title'|trans }} - {{ 'topics.attachtopics'|trans }}</h3>
   </div>
 {% else %}
-<div class="bs-callout bs-callout-info">
-  {{ renderTip('topics.tip'|trans) }}
-</div>
+
+{{ renderTip('topics.tip'|trans) }}
+
 {% endif %}
 <div class="row" ng-init="dim=false; highlight=true; {% if compactView %}onFilterLanguageChange('{{ articleLanguage }}', '{{ articleNumber }}'){% else %}loadTopicsTree(){% endif %}">
         <div class="col-lg-12">
@@ -87,7 +87,7 @@
             <script type="text/ng-template" id="nodes_renderer.html">
               <div ui-tree-handle {% if compactView %}style="cursor:auto"{% endif %} class="tree-node tree-node-content">
               <div class="drag-bar" {% if compactView %}style="display: none;"{% endif %}></div>
-                <a data-nodrag ng-click="toggle(this)" class="pointer"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+                <a data-nodrag ng-click="toggle(this)" class="pointer"><span ng-show="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
                 {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin: 0 5px;" />{% endif %}
                 <div class="pull-right action-buttons">
                     <a data-nodrag ng-click="startEditing(this)" class="pointer"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
