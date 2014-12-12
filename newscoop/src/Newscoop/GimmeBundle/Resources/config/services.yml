@@ -105,6 +105,12 @@ services:
         arguments:  ["@article.link"]
         tags:
             - { name: jms_serializer.handler, type: article_url, direction: serialization, format:json, method:getArticleUrl }
+
+    newscoop.gimme.serializer.topic_path_handler:
+        class: Newscoop\GimmeBundle\Serializer\Topic\TopicPathHandler
+        arguments:  ["@em"]
+        tags:
+            - { name: jms_serializer.handler, type: topic_path, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.oauth_event_listener:
         class:  Newscoop\GimmeBundle\EventListener\OAuthEventListener
         arguments:  ["@em"]
