@@ -352,4 +352,36 @@ class TopicRepository extends NestedTreeRepository
 
         return (int) $query->getSingleScalarResult();
     }
+
+    /**
+     * Gets topic by given id or name
+     *
+     * @param string|integer $topicIdOrName Topicid or name
+     * @param string         $locale        Current locale
+     *
+     * @return Query
+     */
+    public function getTopicByIdOrName($topicIdOrName, $locale)
+    {
+        $qb = $this->getQueryBuilder()
+            ->select('t', 'tt', "p")
+            ->from($this->getEntityName(), 't')
+            ->leftJoin("t.translations", "tt")
+            ->leftJoin("t.parent", "p")
+            ->where("tt.field = 'title'");
+
+        if (is_numeric($topicIdOrName)) {
+            $qb
+                 ->andWhere("t.id = :id")
+                 ->setParameter("id", $topicIdOrName);
+        } else {
+            $qb
+                ->andWhere("t.title = :title")
+                ->setParameter("title", $topicIdOrName);
+        }
+
+        $topic = $this->setTranslatableHint($qb->getQuery(), $locale);
+
+        return $topic;
+    }
 }

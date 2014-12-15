@@ -246,8 +246,6 @@ class TopicService
     public function saveNewTopic(Topic $node, $locale = null)
     {
         $node->setTranslatableLocale($locale ?: $node->getTranslatableLocale());
-        $topic = $this->getTopicRepository()->findOneByTitle($node->getTitle());
-
         $topicTranslation = $this->getTopicRepository()->createQueryBuilder('t')
             ->join('t.translations', 'tt')
             ->where('tt.locale = :locale')
@@ -255,12 +253,12 @@ class TopicService
             ->andWhere("tt.field = 'title'")
             ->setParameters(array(
                 'title' => $node->getTitle(),
-                'locale' => $node->getTranslatableLocale()
+                'locale' => $node->getTranslatableLocale(),
             ))
             ->getQuery()
             ->getOneOrNullResult();
 
-        if ($topic || $topicTranslation) {
+        if ($topicTranslation) {
              throw new ResourcesConflictException("Topic already exists", 409);
         }
 
@@ -314,6 +312,38 @@ class TopicService
         }
 
         return false;
+    }
+
+    /**
+     * Returns a topic object identified by the full name in the
+     * format topic_name:language_code
+     *
+     * @param string $fullName Topic's full name
+     *
+     * @return Topic|null object
+     */
+    public function getTopicByFullName($fullName)
+    {
+        $fullName = trim($fullName);
+        $lastColon = strrpos($fullName, ':');
+        if (!$lastColon) {
+            return null;
+        }
+
+        $name = substr($fullName, 0, $lastColon);
+        $languageCode = substr($fullName, $lastColon + 1);
+
+        $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')->findOneBy(array(
+            'content' => $name,
+            'locale' => $languageCode,
+            'field' => 'title'
+        ));
+
+        if (!$topicTranslation) {
+            return null;
+        }
+
+        return $topicTranslation->getObject();
     }
 
     /**

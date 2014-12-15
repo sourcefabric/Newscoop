@@ -54,7 +54,6 @@ class ArticleTopicRepository extends EntityRepository
             ->leftJoin('at.article', 'a')
             ->leftJoin('at.topic', 't')
             ->leftJoin('t.translations', 'tt')
-            ->where('')
             ->where('at.article = :articleNumber')
             ->andWhere('a.language = :languageId')
             ->setParameters(array(

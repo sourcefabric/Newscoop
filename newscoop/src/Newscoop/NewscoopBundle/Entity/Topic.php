@@ -318,6 +318,20 @@ class Topic
     }
 
     /**
+     * Checkes if topic is root
+     *
+     * @return boolean
+     */
+    public function isRoot()
+    {
+        if ($this->root == $this->id) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Gets the value of root.
      *
      * @return mixed
