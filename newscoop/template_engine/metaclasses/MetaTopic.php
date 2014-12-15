@@ -6,10 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\NewscoopBundle\Entity\Topic;
-
 /**
- * Meta comment class
+ * Meta topic class
  */
 class MetaTopic
 {
