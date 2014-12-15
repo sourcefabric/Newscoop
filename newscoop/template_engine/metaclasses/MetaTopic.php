@@ -29,8 +29,8 @@ class MetaTopic
         } else {
             $em = \Zend_Registry::get('container')->getService('em');
             $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-            $topic = $repository->getTopicByIdOrName($topicIdOrName, $locale)->getArrayResult();
             $locale = $this->getLocale();
+            $topic = $repository->getTopicByIdOrName($topicIdOrName, $locale)->getArrayResult();
 
             if (!empty($topic)) {
                 $this->topic = $topic[0];
