@@ -84,14 +84,16 @@ class UserTopicService
     /**
      * Get user topics
      *
-     * @param  mixed $user
+     * @param mixed  $user   User id or object
+     * @param string $locale Current locale
+     *
      * @return array
      */
-    public function getTopics($user)
+    public function getTopics($user, $locale = null)
     {
         $userId = is_int($user) ? $user : $user->getId();
         $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
-            ->findByUser($userId);
+            ->findByUser($userId, $locale);
 
         $topics = array();
         foreach ($userTopics as $userTopic) {
@@ -109,24 +111,15 @@ class UserTopicService
      */
     public function findTopic($id)
     {
-        $topics = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->findBy(array(
-                'id' => $id,
-            ));
+        $topic = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
 
-        if (empty($topics)) {
+        if (!$topic) {
             return null;
         }
 
-        $germanTopic = null;
-        foreach ($topics as $topic) {
-            if ("de" == $topic->getTranslatableLocale()) { // first go for german
-                $germanTopic = $topic;
-                break;
-            }
-        }
-
-        return empty($germanTopic) ? $topics[0] : $germanTopic;
+        return $topic;
     }
 
     /**

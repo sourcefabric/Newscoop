@@ -22,12 +22,23 @@ class UserTopicRepository extends EntityRepository
      * @param Newscoop\Entity\User
      * @return array
      */
-    public function findByUser($user)
+    public function findByUser($user, $locale = null)
     {
         $userId = is_int($user) ? $user : $user->getId();
         $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT ut FROM Newscoop\Entity\UserTopic ut INNER JOIN ut.topic t WHERE ut.user = :user');
-        $query->setParameter('user', $userId);
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select(array('ut', 't'))
+            ->from('Newscoop\Entity\UserTopic', 'ut')
+            ->leftJoin('ut.user', 'u')
+            ->leftJoin('ut.topic', 't')
+            ->where('u.id = :user_id')
+            ->setParameters(array(
+                'user_id' => $userId
+            ));
+
+        $query = $em->getRepository("Newscoop\NewscoopBundle\Entity\Topic")->setTranslatableHint($qb->getQuery(), $locale);
 
         return $query->getResult();
     }

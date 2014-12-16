@@ -13,6 +13,7 @@ use Newscoop\NewscoopBundle\Entity\Topic;
 use Newscoop\Entity\Article;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Exception\ResourcesConflictException;
+use Doctrine\ORM\Query;
 
 /**
  * Topcis service
@@ -344,6 +345,21 @@ class TopicService
         }
 
         return $topicTranslation->getObject();
+    }
+
+    /**
+     * Wrapper method for setting translatable hint.
+     * When for instance getting topic with German name
+     * $locale should be set to "de".
+     *
+     * @param Query  $query  Query object
+     * @param string $locale Locale
+     *
+     * @return Query
+     */
+    public function setTranslatableHint(Query $query, $locale = null)
+    {
+        return $this->getTopicRepository()->setTranslatableHint($query, $locale);
     }
 
     /**

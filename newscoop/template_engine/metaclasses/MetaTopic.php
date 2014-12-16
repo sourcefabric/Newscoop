@@ -11,9 +11,53 @@
  */
 class MetaTopic
 {
+    /**
+     * Topic
+     * @var Topic object
+     */
     private $topic;
 
     /**
+     * Topic id
+     * @var integer
+     */
+    public $identifier;
+
+    /**
+     * Topic name
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Topic full name e.g. topic:en
+     * @var string
+     */
+    public $value;
+
+    /**
+     * Is topic root
+     * @var boolean
+     */
+    public $is_root;
+
+    /**
+     * Parent topic
+     * @var MetaTopic
+     */
+    public $parent;
+
+    /**
+     * Checks if topic is defined
+     * @var boolean
+     */
+    public $defined;
+
+    public $id;
+
+    /**
+     * Construct
+     *
      * @param string $topicIdOrName
      */
     public function __construct($topicIdOrName = null)
@@ -44,6 +88,7 @@ class MetaTopic
             return null;
         }
 
+        $this->id = $this->topic['id'];
         $this->identifier = $this->topic['id'];
         $this->name = $this->getName();
         $this->value = $this->getValue();
