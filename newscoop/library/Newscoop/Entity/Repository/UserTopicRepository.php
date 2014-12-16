@@ -19,7 +19,9 @@ class UserTopicRepository extends EntityRepository
     /**
      * Find topics for user
      *
-     * @param Newscoop\Entity\User
+     * @param Newscoop\Entity\User $user   User object or user id
+     * @param string               $locale Topic locale
+     *
      * @return array
      */
     public function findByUser($user, $locale = null)

@@ -53,6 +53,10 @@ class MetaTopic
      */
     public $defined;
 
+    /**
+     * Alias to identifier
+     * @var integer
+     */
     public $id;
 
     /**

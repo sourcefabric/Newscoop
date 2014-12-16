@@ -363,6 +363,19 @@ class TopicService
     }
 
     /**
+     * Wrapper method for getting readable topic path
+     *
+     * @param Topic       $topic  Topic object
+     * @param string|null $locale Locale e.g. "en"
+     *
+     * @return string Topic's readable path
+     */
+    public function getReadablePath(Topic $topic, $locale = null)
+    {
+        return $this->getTopicRepository()->getReadablePath($topic, $locale);
+    }
+
+    /**
      * Count topics by given criteria
      *
      * @param array $criteria

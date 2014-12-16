@@ -142,7 +142,7 @@ class TopicRepository extends NestedTreeRepository
             ->where("t.field = 'title'");
 
         $query = $query
-            ->orderBy('node.root, node.lft', $order)
+            ->orderBy('node.root, node.lft', 'desc')
             ->getQuery();
 
         return $this->setTranslatableHint($query, $locale);
@@ -275,7 +275,10 @@ class TopicRepository extends NestedTreeRepository
     public function getReadablePath(Topic $topic, $locale = null)
     {
         $pathQuery = $this->getPathQuery($topic);
-        $this->setTranslatableHint($pathQuery, $locale);
+        if ($locale) {
+            $this->setTranslatableHint($pathQuery, $locale);
+        }
+
         $path = $pathQuery->getArrayResult();
         $pathStr = '';
         foreach ($path as $element) {
