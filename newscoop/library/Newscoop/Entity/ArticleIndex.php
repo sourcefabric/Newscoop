@@ -61,7 +61,7 @@ class ArticleIndex
      * @ORM\Column(name="NrIssue")
      * @var int
      */
-    protected $issueMumber;
+    protected $issueNumber;
 
     /**
      * Gets the value of article.
@@ -83,6 +83,78 @@ class ArticleIndex
     protected function setArticle(\Newscoop\Entity\Article $article)
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of publication.
+     *
+     * @return \Newscoop\Entity\Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Sets the value of publication.
+     *
+     * @param \Newscoop\Entity\Publication $publication the publication
+     *
+     * @return self
+     */
+    protected function setPublication(\Newscoop\Entity\Publication $publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of sectionNumber.
+     *
+     * @return int
+     */
+    public function getSectionNumber()
+    {
+        return $this->sectionNumber;
+    }
+
+    /**
+     * Sets the value of sectionNumber.
+     *
+     * @param int $sectionNumber the section number
+     *
+     * @return self
+     */
+    protected function setSectionNumber($sectionNumber)
+    {
+        $this->sectionNumber = $sectionNumber;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of issueNumber.
+     *
+     * @return int
+     */
+    public function getIssueNumber()
+    {
+        return $this->issueNumber;
+    }
+
+    /**
+     * Sets the value of issueNumber.
+     *
+     * @param int $issueNumber the issue number
+     *
+     * @return self
+     */
+    protected function setIssueNumber($issueNumber)
+    {
+        $this->issueNumber = $issueNumber;
 
         return $this;
     }

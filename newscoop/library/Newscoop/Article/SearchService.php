@@ -191,11 +191,11 @@ class SearchService implements ServiceInterface
                 if ($article->getData($switch)) {
                     $switches[] = $switch;
                 }
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {/*just ignore if switch don't exists*/}
         }
     }
 
-    public function searchArticles($language, $query = null, $onlyPublished = true)
+    public function searchArticles($language, $query = null, $publication = false, $issue = false, $section = false, $onlyPublished = true)
     {
         $keywords = array_diff(explode(',', $query), array(''));
 
@@ -210,7 +210,14 @@ class SearchService implements ServiceInterface
         }
 
         $articles = $this->em->getRepository('Newscoop\Entity\Article')
-            ->searchArticles($language, $keywords, $onlyPublished)
+            ->searchArticles(
+                $language,
+                $keywords,
+                $publication,
+                $issue,
+                $section,
+                $onlyPublished
+            )
             ->getResult();
 
         return $articles;

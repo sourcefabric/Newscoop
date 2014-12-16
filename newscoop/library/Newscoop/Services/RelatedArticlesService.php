@@ -70,26 +70,45 @@ class RelatedArticlesService
         $this->em->persist($relatedArticle);
         $this->em->flush();
 
+        $this->positionRelateArticle($relatedArticles, $relatedArticle, $position);
+
         return true;
     }
 
     private function reorderAfterRemove($relatedArticles, $removedRelatedArticle)
     {
-        // find possition of removed articles and change all next with "position -1".
+        // lock table
+        // get old position
+        // move all bigger than old position up (-1)
+        // unlock table
     }
 
     private function positionRelateArticle($relatedArticles, $relatedArticle, $position)
     {
-        // if article is already in related articles
-        // http://stackoverflow.com/questions/12624153/move-an-array-element-to-a-new-index-in-php
-        // if it's new and position is specified
-        // http://stackoverflow.com/questions/3797239/insert-new-item-in-array-on-any-position-in-php
-
-        // add new field to related article - position
+        if ($position == false) {
+            return;
+        }
 
         // when adding new article with precised position update segments of articles with lower and bigger possition (than new one).
         // This will allow for rendering only few lats articles in playlist and related articles boxes (with load more option)
         // and still allowing updating list order and adding new elements
+
+        try {
+            $this->em->getConnection()->exec('LOCK TABLES context_articles WRITE;');
+
+            $this->em->getConnection()->exec('UNLOCK TABLES;');
+        } catch (\Exception $e) {
+            $this->em->getConnection()->exec('UNLOCK TABLES;');
+            ladybug_dump_die($e);
+        }
+
+        // lock table
+        // get old position - move to position 0
+        // move all bigger than old position up (-1)
+        // check new position and update
+        // move all bigger than new position down (+1)
+        // move changed element from position 0 to new position
+        // unlock table
     }
 
     private function findRelatedArticlesBox($article)

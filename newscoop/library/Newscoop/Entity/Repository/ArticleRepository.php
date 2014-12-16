@@ -84,7 +84,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
-    public function searchArticles($language, $keywords = array(), $onlyPublished = true)
+    public function searchArticles($language, $keywords = array(), $publication = false, $issue = false, $section = false, $onlyPublished = true)
     {
         $em = $this->getEntityManager();
         $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
@@ -102,6 +102,22 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $queryBuilder->andWhere($orX);
         }
 
+        if ($publication) {
+            $queryBuilder->andWhere('a.publication = :publication')
+                ->setParameter('publication', $publication);
+        }
+
+        if ($section) {
+            $queryBuilder->andWhere('a.sectionNumber = :section')
+                ->setParameter('section', $section);
+        }
+
+        if ($issue) {
+            $queryBuilder->andWhere('a.issueNumber = :issue')
+                ->setParameter('issue', $issue);
+        }
+
+        $queryBuilder->setMaxResults(90);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
         $tmpNumbers = array();
@@ -110,7 +126,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
         $articleNumbers = $tmpNumbers;
 
-        $query = $this->getArticlesByIds($languageId, $articleNumbers, $onlyPublished);
+        $query = $this->getArticlesByIds($language, $articleNumbers, $onlyPublished);
 
         return $query;
     }
@@ -130,6 +146,10 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->createQueryBuilder('a')
             ->andWhere('a.number IN (:ids)')
             ->andWhere('a.language = :language')
+            ->leftJoin('a.publication', 'p')
+            ->leftJoin('a.issue', 'i')
+            ->leftJoin('a.section', 's')
+            ->orderBy('a.number', 'ASC')
             ->setParameters(array(
                 'ids' => $ids,
                 'language' => $language

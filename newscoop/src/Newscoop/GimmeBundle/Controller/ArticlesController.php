@@ -240,7 +240,10 @@ class ArticlesController extends FOSRestController
      *         }
      *     },
      *     parameters={
-     *         {"name"="query", "dataType"="mixed", "required"=false, "description"="article serach query"}
+     *         {"name"="query", "dataType"="string", "required"=true, "description"="article serach query"},
+     *         {"name"="publication", "dataType"="string", "required"=false, "description"="Filter by publication"},
+     *         {"name"="issue", "dataType"="string", "required"=false, "description"="Filter by issue"},
+     *         {"name"="section", "dataType"="string", "required"=false, "description"="Filter by section"}
      *     }
      * )
      *
@@ -252,7 +255,6 @@ class ArticlesController extends FOSRestController
      */
     public function searchArticlesAction(Request $request)
     {
-        $em = $this->container->get('em');
         $articleSearch = $this->container->get('search.article');
         $publication = $this->get('newscoop.publication_service')->getPublication();
         $onlyPublished = true;
@@ -264,7 +266,14 @@ class ArticlesController extends FOSRestController
             }
         } catch (\Newscoop\NewscoopException $e) {}
 
-        $articles = $articleSearch->searchArticles($request->get('language', $publication->getLanguage()->getCode()), $request->query->get('query', null), $onlyPublished);
+        $articles = $articleSearch->searchArticles(
+            $request->get('language', $publication->getLanguage()->getCode()),
+            $request->query->get('query', null),
+            $request->get('publication', false),
+            $request->get('issue', false),
+            $request->get('section', false),
+            $onlyPublished
+        );
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
@@ -447,6 +456,10 @@ class ArticlesController extends FOSRestController
 
         $matched = false;
         foreach ($request->attributes->get('links', array()) as $key => $objectArray) {
+            if (!is_array($objectArray)) {
+                return true;
+            }
+
             $resourceType = $objectArray['resourceType'];
             $object = $objectArray['object'];
 
@@ -510,7 +523,17 @@ class ArticlesController extends FOSRestController
 
             if ($object instanceof \Newscoop\Entity\Article) {
                 $relatedArticlesService = $this->get('related_articles');
-                $relatedArticlesService->addArticle($article, $object);
+
+                $position = false;
+                if (count($notConvertedLinks = $this->getNotConvertedLinks($request)) > 0) {
+                    foreach ($notConvertedLinks as $link) {
+                        if (isset($link['resourceType']) && $link['resourceType'] == 'article-position') {
+                            $position = $link['resource'];
+                        }
+                    }
+                }
+
+                $relatedArticlesService->addArticle($article, $object, $position);
 
                 $matched = true;
 
@@ -761,6 +784,30 @@ class ArticlesController extends FOSRestController
         $em->flush();
 
         return $response;
+    }
+
+    private function getNotConvertedLinks($request)
+    {
+        $links = array();
+        foreach ($request->attributes->get('links') as $idx => $link) {
+            if (is_string($link)) {
+                $linkParams = explode(';', trim($link));
+                $resourceType = null;
+                if (count($linkParams) > 1) {
+                    $resourceType = trim(preg_replace('/<|>/', '', $linkParams[1]));
+                    $resourceType = str_replace("\"", "", str_replace("rel=", "", $resourceType));
+                }
+                $resource   = array_shift($linkParams);
+                $resource   = preg_replace('/<|>/', '', $resource);
+
+                $links= array(
+                    'resource' => $resource,
+                    'resourceType' => $resourceType
+                );
+            }
+        }
+
+        return $links;
     }
 
     private function getArticle($number, $language, $user)
