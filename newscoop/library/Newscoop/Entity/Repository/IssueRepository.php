@@ -30,9 +30,13 @@ class IssueRepository extends EntityRepository
             ->select('i.id')
             ->andWhere('i.publication = :publicationId')
             ->setParameter('publicationId', $publicationId)
-            ->setMaxResults($maxResults)
-            ->orderBy('i.id', 'DESC')
-            ->getQuery()
+            ->orderBy('i.id', 'DESC');
+
+        if ($maxResults) {
+            $issuesIds->setMaxResults($maxResults);
+        }
+
+        $issuesIds = $issuesIds->getQuery()
             ->getArrayResult();
 
         if (count($issuesIds) == 0) {
@@ -54,6 +58,18 @@ class IssueRepository extends EntityRepository
             ->getQuery();
 
         return $query;
+    }
+
+    public function getByPublicationAndNumber($publication, $number)
+    {
+        $issue = $this->createQueryBuilder('i')
+            ->andWhere('i.publication = :publication')
+            ->setParameter('publication', $publication)
+            ->andWhere('i.number = :number')
+            ->setParameter('number', $number)
+            ->getQuery();
+
+        return $issue;
     }
 
     public function getIssuesCountForPublication($publicationId)

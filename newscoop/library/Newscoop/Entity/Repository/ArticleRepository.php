@@ -13,6 +13,7 @@ use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Search\RepositoryInterface;
 use Newscoop\NewscoopException\IndexException;
 use Newscoop\Entity\Article;
+use Newscoop\Entity\Language;
 use Newscoop\Entity\User;
 use Newscoop\NewscoopBundle\Entity\Topic;
 
@@ -84,6 +85,18 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Search fo articles by keyword and filters
+     *
+     * @param  Language  $language
+     * @param  array     $keywords
+     * @param  integer   $publication   Publication Id
+     * @param  integer   $issue         Issue Number
+     * @param  integer   $section       Section Number
+     * @param  boolean   $onlyPublished
+     *
+     * @return \Doctrine\ORM\Query
+     */
     public function searchArticles($language, $keywords = array(), $publication = false, $issue = false, $section = false, $onlyPublished = true)
     {
         $em = $this->getEntityManager();

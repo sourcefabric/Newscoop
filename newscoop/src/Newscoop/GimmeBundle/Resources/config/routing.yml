@@ -68,3 +68,13 @@ NewscoopEditorialCommentsApiController:
     resource: "@NewscoopGimmeBundle/Controller/EditorialCommentsApiController.php"
     prefix:   /
     type:     annotation
+
+NewscoopPublicationController:
+    resource: "@NewscoopGimmeBundle/Controller/PublicationsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopIssuesController:
+    resource: "@NewscoopGimmeBundle/Controller/IssuesController.php"
+    prefix:   /
+    type:     annotation
