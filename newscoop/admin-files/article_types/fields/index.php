@@ -225,9 +225,11 @@ foreach ($fields as $field) {
         $setContentField = 'true';
 	}
 	if ($field->showInEditor()) {
+	    $editorType = 'not displayed in editor';
         $showInEditor = 'true';
         $setShowInEditor = 'false';
 	} else {
+	    $editorType = 'displayed in editor';
         $showInEditor = 'false';
         $setShowInEditor = 'true';
 	}
@@ -289,7 +291,7 @@ foreach ($fields as $field) {
 
     <TD ALIGN="CENTER">
         <input type="checkbox" title="<?php echo $translator->trans('Show field in article edit screen', array(), 'article_type_fields'); ?>" <?php if ($field->showInEditor()) { ?>checked<?php } ?> id="set_show_in_editor_<?php echo $i; ?>" name="set_show_in_editor_<?php echo $i; ?>" 
-        onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make $1 a $2 field?', array('$1' => $field->getPrintName(), '$2' => $contentType), 'article_type_fields'); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_show_in_editor.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_show_in_editor=<?php print $setShowInEditor; ?>&<?php echo SecurityToken::URLParameter(); ?>' } else { document.getElementById('set_show_in_editor_<?php echo $i; ?>').checked = <?php echo $showInEditor; ?> }">
+        onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make $1 a $2 field?', array('$1' => $field->getPrintName(), '$2' => $editorType), 'article_type_fields'); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_show_in_editor.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_show_in_editor=<?php print $setShowInEditor; ?>&<?php echo SecurityToken::URLParameter(); ?>' } else { document.getElementById('set_show_in_editor_<?php echo $i; ?>').checked = <?php echo $showInEditor; ?> }">
     </TD>
 
 <TD>
