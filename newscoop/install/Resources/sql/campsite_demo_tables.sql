@@ -1765,14 +1765,14 @@ CREATE TABLE `comment_commenter` (
 DROP TABLE IF EXISTS `context_articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `context_articles` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `fk_context_id` int(10) NOT NULL,
-  `fk_article_no` int(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `article_number` (`fk_article_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE context_articles (
+  Id INT AUTO_INCREMENT NOT NULL,
+  fk_context_id INT NOT NULL,
+  fk_article_no INT NOT NULL,
+  `order_number` INT NOT NULL,
+  INDEX article_number (fk_article_no),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Table structure for table `context_boxes`
@@ -1786,7 +1786,7 @@ CREATE TABLE `context_boxes` (
   `fk_article_no` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `article_number` (`fk_article_no`)
-) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

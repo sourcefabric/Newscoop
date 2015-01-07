@@ -800,7 +800,7 @@ class ArticlesController extends FOSRestController
                 $resource   = array_shift($linkParams);
                 $resource   = preg_replace('/<|>/', '', $resource);
 
-                $links= array(
+                $links[] = array(
                     'resource' => $resource,
                     'resourceType' => $resourceType
                 );

@@ -14,7 +14,9 @@ use Doctrine\ORM\Mapping AS ORM;
  * RelatedArticle entity
  *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\RelatedArticleRepository")
- * @ORM\Table(name="context_articles")
+ * @ORM\Table(name="context_articles", indexes={
+ *   @ORM\Index(name="article_number", columns={"fk_article_no"}),
+ * })
  */
 class RelatedArticle
 {
@@ -38,10 +40,17 @@ class RelatedArticle
      */
     protected $articleNumber;
 
+    /**
+     * @ORM\Column(type="integer", name="order_number")
+     * @var integer
+     */
+    protected $order;
+
     public function __construct($articleListId, $articleNumber)
     {
         $this->setArticleListId($articleListId);
         $this->setArticleNumber($articleNumber);
+        $this->setOrder(0);
     }
 
     /**
@@ -100,5 +109,29 @@ class RelatedArticle
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Gets the value of order.
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Sets the value of order.
+     *
+     * @param integer $order the order
+     *
+     * @return self
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
     }
 }

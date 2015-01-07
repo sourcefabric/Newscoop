@@ -9,12 +9,22 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\RelatedArticles;
+use Doctrine\ORM\Query;
 
 /**
  * RelatedArticle repository
  */
 class RelatedArticleRepository extends EntityRepository
 {
+    /**
+     * Get all rlated articles for article and related articles container
+     *
+     * @param  RelatedArticles $relatedArticles
+     * @param  integer         $articleNumber
+     *
+     * @return Query
+     */
     public function getRelatedArticle($relatedArticles, $articleNumber)
     {
         $qb = $this->createQueryBuilder('r')
@@ -30,35 +40,29 @@ class RelatedArticleRepository extends EntityRepository
         return $query;
     }
 
-    public function getAllArticles($relatedArticles)
+    /**
+     * Get all related articles for related articles container, optionaly get only count of articles
+     *
+     * @param  RelatedArticles $relatedArticles
+     * @param  boolean         $countOnly
+     *
+     * @return Query
+     */
+    public function getAllArticles($relatedArticles, $countOnly = false)
     {
         $qb = $this->createQueryBuilder('r')
             ->where('r.articleListId = :articleListId')
             ->setParameters(array(
                 'articleListId' => $relatedArticles->getId()
-            ));
+            ))
+            ->orderBy('r.order', 'ASC');
+
+        if ($countOnly) {
+            return $qb->select('COUNT(r.id)')->getQuery();
+        }
 
         $query = $qb->getQuery();
 
         return $query;
-    }
-
-    public function changeOneArticlePosition()
-    {
-/*        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb = $qb->update('Newscoop\Entity\Article', 'a')
-                ->set('a.indexed', 'CURRENT_TIMESTAMP()');
-
-        if (!is_null($articles) && count($articles) > 0) {
-            $articleNumbers = array();
-
-            foreach ($articles AS $article) {
-                $articleNumbers[] = $article->getNumber();
-            }
-
-            $qb = $qb->where($qb->expr()->in('a.number',  $articleNumbers));
-        }
-
-        return $qb->getQuery()->execute();*/
     }
 }

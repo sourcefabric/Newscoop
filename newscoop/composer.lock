@@ -170,12 +170,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "3b6668f54ad3f95d68b64a742f6b0de55d6caeb1"
+                "reference": "04fb8c20354236bf72d194400a345c8f43191b99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/3b6668f54ad3f95d68b64a742f6b0de55d6caeb1",
-                "reference": "3b6668f54ad3f95d68b64a742f6b0de55d6caeb1",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/04fb8c20354236bf72d194400a345c8f43191b99",
+                "reference": "04fb8c20354236bf72d194400a345c8f43191b99",
                 "shasum": ""
             },
             "require": {
@@ -230,7 +230,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-11-04 15:34:10"
+            "time": "2014-12-18 18:33:26"
         },
         {
             "name": "doctrine/cache",
@@ -584,12 +584,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "8a0b96e65d2399d6f95b75de11134843a2c61feb"
+                "reference": "31df573a9f3797b8fc2fb92e4229a1c582d41598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/8a0b96e65d2399d6f95b75de11134843a2c61feb",
-                "reference": "8a0b96e65d2399d6f95b75de11134843a2c61feb",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/31df573a9f3797b8fc2fb92e4229a1c582d41598",
+                "reference": "31df573a9f3797b8fc2fb92e4229a1c582d41598",
                 "shasum": ""
             },
             "require": {
@@ -643,7 +643,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2014-10-05 18:49:49"
+            "time": "2014-12-17 14:32:07"
         },
         {
             "name": "doctrine/lexer",
@@ -1205,12 +1205,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "3ee922b757080b4c4e46a002a6d1202b71cb61a5"
+                "reference": "ec6eece23cafe46a338fe47201c4c14ef298e66f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/3ee922b757080b4c4e46a002a6d1202b71cb61a5",
-                "reference": "3ee922b757080b4c4e46a002a6d1202b71cb61a5",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/ec6eece23cafe46a338fe47201c4c14ef298e66f",
+                "reference": "ec6eece23cafe46a338fe47201c4c14ef298e66f",
                 "shasum": ""
             },
             "require": {
@@ -1246,7 +1246,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-12-09 17:00:47"
+            "time": "2014-12-10 15:28:42"
         },
         {
             "name": "imagine/imagine",
@@ -1303,16 +1303,15 @@
         {
             "name": "incenteev/composer-parameter-handler",
             "version": "dev-master",
-            "target-dir": "Incenteev/ParameterHandler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Incenteev/ParameterHandler.git",
-                "reference": "ea15f3dd22e5720eec244afb9bf2d5737a0b6c76"
+                "reference": "8f9608d4bcbfbc9ccc6878e8068341e127037e76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/ea15f3dd22e5720eec244afb9bf2d5737a0b6c76",
-                "reference": "ea15f3dd22e5720eec244afb9bf2d5737a0b6c76",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/8f9608d4bcbfbc9ccc6878e8068341e127037e76",
+                "reference": "8f9608d4bcbfbc9ccc6878e8068341e127037e76",
                 "shasum": ""
             },
             "require": {
@@ -1331,8 +1330,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Incenteev\\ParameterHandler": ""
+                "psr-4": {
+                    "Incenteev\\ParameterHandler\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1350,7 +1349,7 @@
             "keywords": [
                 "parameters management"
             ],
-            "time": "2014-08-20 22:30:03"
+            "time": "2014-12-17 16:24:52"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1923,12 +1922,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "0db20de988b7adc79375d33b2a566183af83c930"
+                "reference": "bdd814c775a554522838c583af9e381f3a5cc95a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/0db20de988b7adc79375d33b2a566183af83c930",
-                "reference": "0db20de988b7adc79375d33b2a566183af83c930",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/bdd814c775a554522838c583af9e381f3a5cc95a",
+                "reference": "bdd814c775a554522838c583af9e381f3a5cc95a",
                 "shasum": ""
             },
             "require": {
@@ -1960,7 +1959,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -1989,7 +1988,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-11-25 17:50:26"
+            "time": "2014-12-17 00:27:33"
         },
         {
             "name": "kriswallsmith/buzz",
@@ -2096,12 +2095,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "3d2567a2f19566a93b6b4add76840266d5f6742d"
+                "reference": "5bee6fe56c2e8d1fc22b5188d49b6a2500df065f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3d2567a2f19566a93b6b4add76840266d5f6742d",
-                "reference": "3d2567a2f19566a93b6b4add76840266d5f6742d",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5bee6fe56c2e8d1fc22b5188d49b6a2500df065f",
+                "reference": "5bee6fe56c2e8d1fc22b5188d49b6a2500df065f",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2159,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-12-06 18:16:08"
+            "time": "2014-12-17 10:47:08"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2210,12 +2209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "847b1fe757c6b4eb79db7bcff0d423da4d193e59"
+                "reference": "a84c53bf6ac9658774b1bd4d39ed93b7a1ae8dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/847b1fe757c6b4eb79db7bcff0d423da4d193e59",
-                "reference": "847b1fe757c6b4eb79db7bcff0d423da4d193e59",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/a84c53bf6ac9658774b1bd4d39ed93b7a1ae8dd9",
+                "reference": "a84c53bf6ac9658774b1bd4d39ed93b7a1ae8dd9",
                 "shasum": ""
             },
             "require": {
@@ -2276,7 +2275,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2014-10-26 23:51:54"
+            "time": "2014-12-12 15:27:51"
         },
         {
             "name": "newscoop/plugins-installer",
@@ -2793,12 +2792,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "fcb1b0d52c5b5396228e52e65bc6924e9797ee84"
+                "reference": "a46e422c1135f2efa27b72a94e58852849134420"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/fcb1b0d52c5b5396228e52e65bc6924e9797ee84",
-                "reference": "fcb1b0d52c5b5396228e52e65bc6924e9797ee84",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/a46e422c1135f2efa27b72a94e58852849134420",
+                "reference": "a46e422c1135f2efa27b72a94e58852849134420",
                 "shasum": ""
             },
             "require": {
@@ -2837,7 +2836,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-12-03 13:51:42"
+            "time": "2014-12-17 06:40:12"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2993,12 +2992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "8643b3b9702dd6310298fc59c1694d5f4352d894"
+                "reference": "f64ac7b8c859a9f4df572c0cd0e4348097475002"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/8643b3b9702dd6310298fc59c1694d5f4352d894",
-                "reference": "8643b3b9702dd6310298fc59c1694d5f4352d894",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/f64ac7b8c859a9f4df572c0cd0e4348097475002",
+                "reference": "f64ac7b8c859a9f4df572c0cd0e4348097475002",
                 "shasum": ""
             },
             "require": {
@@ -3067,7 +3066,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2014-11-24 18:46:51"
+            "time": "2014-12-16 14:03:38"
         },
         {
             "name": "smarty/smarty",
@@ -3424,12 +3423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "7bb6f4445c7066002d08b39b9384233b6c836dca"
+                "reference": "b2e0a803a66befa3d0c9a4f08d514e1287340f9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/7bb6f4445c7066002d08b39b9384233b6c836dca",
-                "reference": "7bb6f4445c7066002d08b39b9384233b6c836dca",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/b2e0a803a66befa3d0c9a4f08d514e1287340f9d",
+                "reference": "b2e0a803a66befa3d0c9a4f08d514e1287340f9d",
                 "shasum": ""
             },
             "require": {
@@ -3489,7 +3488,7 @@
                 "egulias/email-validator": "~1.2",
                 "ircmaxell/password-compat": "~1.0",
                 "monolog/monolog": "~1.3",
-                "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
+                "ocramius/proxy-manager": "~0.4|~1.0",
                 "propel/propel1": "~1.6"
             },
             "type": "library",
@@ -3529,7 +3528,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-12-08 08:43:12"
+            "time": "2014-12-16 15:30:07"
         },
         {
             "name": "twig/extensions",
@@ -3786,12 +3785,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yzalis/Crontab.git",
-                "reference": "4f3658ab79d61035430a8d2b0181a7705af07eb7"
+                "reference": "459f5be7d422ef1f536ea6b4b8c9db65c33c1031"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yzalis/Crontab/zipball/4f3658ab79d61035430a8d2b0181a7705af07eb7",
-                "reference": "4f3658ab79d61035430a8d2b0181a7705af07eb7",
+                "url": "https://api.github.com/repos/yzalis/Crontab/zipball/459f5be7d422ef1f536ea6b4b8c9db65c33c1031",
+                "reference": "459f5be7d422ef1f536ea6b4b8c9db65c33c1031",
                 "shasum": ""
             },
             "require": {
@@ -3825,7 +3824,7 @@
                 "cron job",
                 "crontab"
             ],
-            "time": "2014-10-07 05:46:03"
+            "time": "2014-12-15 07:56:21"
         }
     ],
     "packages-dev": [
@@ -4032,12 +4031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "f976e5de371104877ebc89bd8fecb0019ed9c119"
+                "reference": "40efa2d8c9e2948b29fdf5d782babaacb08d0c86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/f976e5de371104877ebc89bd8fecb0019ed9c119",
-                "reference": "f976e5de371104877ebc89bd8fecb0019ed9c119",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/40efa2d8c9e2948b29fdf5d782babaacb08d0c86",
+                "reference": "40efa2d8c9e2948b29fdf5d782babaacb08d0c86",
                 "shasum": ""
             },
             "require": {
@@ -4048,7 +4047,7 @@
                 "ext-pdo": "*",
                 "ext-phar": "*",
                 "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "2.0.*@ALPHA"
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
             "extra": {
@@ -4057,8 +4056,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Doctrine\\Instantiator\\": "src"
+                "psr-4": {
+                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4078,7 +4077,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2014-10-13 12:58:55"
+            "time": "2014-12-12 16:47:07"
         },
         {
             "name": "fzaninotto/faker",
@@ -4086,12 +4085,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "eebe556a7c5ec7df04b65584d78adf8252c8e10f"
+                "reference": "d82603adc7aa0f7d47c2e767fd33636803f4117a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/eebe556a7c5ec7df04b65584d78adf8252c8e10f",
-                "reference": "eebe556a7c5ec7df04b65584d78adf8252c8e10f",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d82603adc7aa0f7d47c2e767fd33636803f4117a",
+                "reference": "d82603adc7aa0f7d47c2e767fd33636803f4117a",
                 "shasum": ""
             },
             "require": {
@@ -4127,7 +4126,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2014-12-05 13:11:34"
+            "time": "2014-12-18 07:45:28"
         },
         {
             "name": "liip/rmt",
@@ -4655,12 +4654,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "8da607e5bbcd355ab8b173d4398bd1dd6f688f2f"
+                "reference": "a26a348a8686a8f523c53ed2683d65b3d36956bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8da607e5bbcd355ab8b173d4398bd1dd6f688f2f",
-                "reference": "8da607e5bbcd355ab8b173d4398bd1dd6f688f2f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a26a348a8686a8f523c53ed2683d65b3d36956bd",
+                "reference": "a26a348a8686a8f523c53ed2683d65b3d36956bd",
                 "shasum": ""
             },
             "require": {
@@ -4719,7 +4718,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-12-08 09:42:37"
+            "time": "2014-12-19 06:27:31"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4898,12 +4897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6e6c71d918088c251b181ba8b3088af4ac336dd7"
+                "reference": "a4420fdad8ef5e525cdeb66adbb5ed9e873e6128"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e6c71d918088c251b181ba8b3088af4ac336dd7",
-                "reference": "6e6c71d918088c251b181ba8b3088af4ac336dd7",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/a4420fdad8ef5e525cdeb66adbb5ed9e873e6128",
+                "reference": "a4420fdad8ef5e525cdeb66adbb5ed9e873e6128",
                 "shasum": ""
             },
             "require": {
@@ -4940,7 +4939,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2014-10-25 08:00:45"
+            "time": "2014-12-15 10:20:32"
         },
         {
             "name": "sebastian/exporter",

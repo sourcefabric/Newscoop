@@ -1,0 +1,1 @@
+ALTER TABLE context_articles ADD `order_number` INT NOT NULL;

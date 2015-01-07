@@ -42,6 +42,9 @@ class ArticleType extends AbstractType
         ->add('comments_enabled', 'checkbox', array(
             'required' => false,
         ))
+        ->add('comments_locked', 'checkbox', array(
+            'required' => false,
+        ))
         ->add('type', 'text', array(
             'required' => true,
         ))

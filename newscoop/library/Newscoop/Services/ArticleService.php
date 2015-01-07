@@ -240,6 +240,7 @@ class ArticleService
     {
         $article->setName($attributes['name']);
         $article->setCommentsEnabled($attributes['comments_enabled']);
+        $article->setCommentsLocked($attributes['comments_locked']);
         $article->setOnFrontPage($attributes['onFrontPage']);
         $article->setOnSection($attributes['onSection']);
         $article->setKeywords($attributes['keywords']);
