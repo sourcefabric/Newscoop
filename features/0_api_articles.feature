@@ -41,10 +41,10 @@ Feature: Endpoints
                 | onFrontPage      | 1                  ||
                 | onSection        | 1                  ||
                 | keywords         | test keywords      | 30 |
-                | fields[lead]     | <<sentence>>       | 15 |
-                | fields[content]  | <<sentence>>       | 35 |
+                | fields[content] | <<sentence>>       | 35 |
 
         When I submit "article" data to "<<new_article>>"
+            Then echo last response
             Then the response status code should be 200
             And the response is JSON
             And field "keywords" in the response should be "test keywords"

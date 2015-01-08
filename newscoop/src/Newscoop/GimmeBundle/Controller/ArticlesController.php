@@ -120,9 +120,7 @@ class ArticlesController extends FOSRestController
      *
      *  fields: array with article type fields and ther values.
      *
-     *     article[fields][Flead] = 'new lead'
-     *
-     *  field name is composed from "F"+"field_name": "Flead", "Fbody"
+     *     article[fields][lead] = 'new lead'
      *
      * @ApiDoc(
      *     statusCodes={
@@ -176,13 +174,7 @@ class ArticlesController extends FOSRestController
            // TODO add support for global for errors handler
         }
 
-        // Temporarily added to at least give some feedback,
-        // without it the status would always be 500
-        // @Author: Mischa
-        $response = new Response();
-        $response->setStatusCode(201);
-
-        return $response;
+        return new FOSView\View($form, 400);
     }
 
     private function postAddUpdate($article)
