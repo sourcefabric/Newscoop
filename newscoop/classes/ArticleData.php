@@ -111,7 +111,11 @@ class ArticleData extends DatabaseObject {
             $p_value = preg_replace_callback($pattern, array($this, "transformImageTags"), $text);
         }
         if ($articleField->getType() == ArticleTypeField::TYPE_SWITCH) {
-            return parent::setProperty($p_dbColumnName, (int)($p_value == 'on'), $p_commit);
+            if (is_string($p_value)) {
+                return parent::setProperty($p_dbColumnName, (int)($p_value == 'on'), $p_commit);
+            } else if (is_int($p_value)) {
+                return parent::setProperty($p_dbColumnName, $p_value, $p_commit);
+            }
         }
         return parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
     }

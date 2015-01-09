@@ -201,13 +201,6 @@ class ArticleService
      */
     public function updateArticle($article, $attributes)
     {
-        $this->checkForArticleConflicts(
-            $attributes['name'],
-            $article->getPublication(),
-            $article->getIssue(),
-            $article->getSection()
-        );
-
         $this->updateArticleMeta($article, $attributes);
         $article->setUpdated(new \DateTime());
         $article->setIsIndexed(false);
@@ -221,11 +214,6 @@ class ArticleService
         $this->em->flush();
 
         return $article;
-    }
-
-    public function addRelatedArticle($relatedArticle, $originalArticle)
-    {
-        //$originalArticle->
     }
 
     /**
