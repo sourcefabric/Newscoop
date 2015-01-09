@@ -157,12 +157,13 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
+            ->select('a, FIELD(a.number, :ids) as HIDDEN field')
             ->andWhere('a.number IN (:ids)')
             ->andWhere('a.language = :language')
             ->leftJoin('a.publication', 'p')
             ->leftJoin('a.issue', 'i')
             ->leftJoin('a.section', 's')
-            ->orderBy('a.number', 'ASC')
+            ->orderBy('field')
             ->setParameters(array(
                 'ids' => $ids,
                 'language' => $language
@@ -175,7 +176,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $countQueryBuilder = clone $queryBuilder;
         $query = $queryBuilder->getQuery();
-        $query->setHint('knp_paginator.count', $countQueryBuilder->select('COUNT(a)')->getQuery()->getSingleScalarResult());
+        $query->setHint('knp_paginator.count', $countQueryBuilder->select('COUNT(a)')->orderBy('a.number')->getQuery()->getSingleScalarResult());
 
         return $query;
     }

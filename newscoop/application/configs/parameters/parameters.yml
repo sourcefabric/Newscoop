@@ -41,6 +41,7 @@ parameters:
             dayofmonth: "Newscoop\Query\MysqlDayOfMonth"
             dayofyear: "Newscoop\Query\MysqlDayOfYear"
             date_format: "Newscoop\Query\MysqlDateFormat"
+            field: "Newscoop\Query\MysqlField"
     admin:
         resources:
             layout:
