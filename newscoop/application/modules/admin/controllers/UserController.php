@@ -213,10 +213,10 @@ class Admin_UserController extends Zend_Controller_Action
             try {
                 $values = $form->getValues();
 
-                $values['attributes']['geolocation'] = $values['geolocation'];
+                $values['attributes']['is_featured'] = $values['is_featured'];
                 $values['attributes']['is_verified'] = $values['is_verified'];
+                unset($values['is_featured']);
                 unset($values['is_verified']);
-                unset($values['geolocation']);
 
                 $this->userService->save($values, $user);
 
@@ -250,6 +250,16 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->baseImage = $baseUrl.'/'.$user->getImage();
         $this->view->originalImage = $user->getImage();
         $this->view->actions = array(
+            array(
+                'label' => $translator->trans('Edit geolocation', array(), 'users'),
+                'module' => 'admin',
+                'controller' => 'user',
+                'action' => 'geolocation',
+                'class' => 'iframe',
+                'params' => array(
+                    'user' => $user->getId()
+                ),
+            ),
             array(
                 'label' => $translator->trans('Edit permissions', array(), 'users'),
                 'module' => 'admin',
@@ -332,6 +342,31 @@ class Admin_UserController extends Zend_Controller_Action
                 } else {
                     unset($values['image']);
                 }
+                $this->_helper->service('user')->save($values, $user);
+                $this->view->close = true;
+            } catch (\InvalidArgumentException $e) {
+                $form->image->addError($e->getMessage());
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
+    public function geolocationAction()
+    {
+        $this->_helper->layout->setLayout('iframe');
+
+        $form = new Admin_Form_Geolocation();
+        $user = $this->getUser();
+        $form->setDefaultsFromEntity($user);
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+
+            try {
+                $values['attributes']['geolocation'] = $values['geolocation'];
+                unset($values['geolocation']);
                 $this->_helper->service('user')->save($values, $user);
                 $this->view->close = true;
             } catch (\InvalidArgumentException $e) {

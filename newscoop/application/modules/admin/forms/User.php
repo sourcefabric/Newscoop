@@ -81,6 +81,10 @@ class Admin_Form_User extends Zend_Form
             'label' => $translator->trans('User account is verified', array(), 'users'),
         ));
 
+        $this->addElement('checkbox', 'is_featured', array(
+            'label' => $translator->trans('User account is highlighted as "featured account"', array(), 'users'),
+        ));
+
         $profile = new Zend_Form_SubForm();
 
         $profile->addElement('radio', 'gender', array(
@@ -94,7 +98,7 @@ class Admin_Form_User extends Zend_Form
         $profile->addElement('textarea', 'bio', array(
             'label' => $translator->trans('About me', array(), 'users'),
             'filters' => array('stringTrim'),
-            'cols' => 60,
+            'cols' => 98,
             'rows' => 4,
         ));
 
@@ -129,8 +133,18 @@ class Admin_Form_User extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
-        $this->addElement('text', 'geolocation', array(
-            'label' => $translator->trans('Geolocation', array(), 'users'),
+        $profile->addElement('text', 'custom_attr_1', array(
+            'filters' => array('stringTrim'),
+            'placeholder' => $translator->trans('Custom attribute...', array(), 'users'),
+        ));
+
+        $profile->addElement('text', 'custom_attr_2', array(
+            'filters' => array('stringTrim'),
+            'placeholder' => $translator->trans('Custom attribute...', array(), 'users'),
+        ));
+
+        $profile->addElement('text', 'google', array(
+            'label' => $translator->trans('Google+', array(), 'users'),
             'filters' => array('stringTrim'),
         ));
 
@@ -161,6 +175,7 @@ class Admin_Form_User extends Zend_Form
             'is_admin',
             'is_public',
             'is_verified',
+            'is_featured',
             'user_type',
             'author'
         ), 'adminSettings');
@@ -174,7 +189,6 @@ class Admin_Form_User extends Zend_Form
             'twitter',
             'facebook',
             'google',
-            'geolocation',
             'submit'
         ), 'attributes');
     }
@@ -218,6 +232,8 @@ class Admin_Form_User extends Zend_Form
             'status' => $user->isActive(),
             'is_admin' => $user->isAdmin(),
             'is_public' => $user->isPublic(),
+            'is_verified' => $user->getAttribute('is_verified'),
+            'is_featured' => $user->getAttribute('is_featured'),
             'user_type' => $types,
             'author' => $user->getAuthorId(),
         );
