@@ -23,7 +23,7 @@ class Admin_Form_Geolocation extends Zend_Form
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'Save',
+            'label' => $translator->trans('Save'),
             'ignore' => true,
             'order' => 99,
         ));
