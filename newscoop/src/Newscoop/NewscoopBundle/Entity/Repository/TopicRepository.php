@@ -13,6 +13,8 @@ use Doctrine\ORM\Query;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Closure;
 use Gedmo\Translatable\TranslatableListener;
+use Gedmo\Tool\Wrapper\EntityWrapper;
+use Gedmo\Exception\InvalidArgumentException;
 
 class TopicRepository extends NestedTreeRepository
 {
@@ -142,7 +144,7 @@ class TopicRepository extends NestedTreeRepository
             ->where("t.field = 'title'");
 
         $query = $query
-            ->orderBy('node.root, node.lft', 'desc')
+            ->orderBy('node.root, node.lft', $order)
             ->getQuery();
 
         return $this->setTranslatableHint($query, $locale);
@@ -386,5 +388,109 @@ class TopicRepository extends NestedTreeRepository
         $topic = $this->setTranslatableHint($qb->getQuery(), $locale);
 
         return $topic;
+    }
+
+    /**
+     * @see getChildrenQueryBuilder
+     */
+    public function childrenWithTranslations($node = null, $locale = null, $direct = false, $sortByField = null, $direction = 'ASC', $includeNode = false)
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+
+        $qb = $this->getQueryBuilder();
+        $qb->select('node', 't')
+            ->from($config['useObjectClass'], 'node')
+            ->leftJoin('node.translations', 't')
+        ;
+        if ($node !== null) {
+            if ($node instanceof $meta->name) {
+                $wrapped = new EntityWrapper($node, $this->_em);
+                if (!$wrapped->hasValidIdentifier()) {
+                    throw new InvalidArgumentException("Node is not managed by UnitOfWork");
+                }
+                if ($direct) {
+                    $id = $wrapped->getIdentifier();
+                    $qb->where($id === null ?
+                        $qb->expr()->isNull('node.'.$config['parent']) :
+                        $qb->expr()->eq('node.'.$config['parent'], is_string($id) ? $qb->expr()->literal($id) : $id)
+                    );
+                } else {
+                    $left = $wrapped->getPropertyValue($config['left']);
+                    $right = $wrapped->getPropertyValue($config['right']);
+                    if ($left && $right) {
+                        $qb
+                            ->where($qb->expr()->lt('node.'.$config['right'], $right))
+                            ->andWhere($qb->expr()->gt('node.'.$config['left'], $left))
+                        ;
+                    }
+                }
+                if (isset($config['root'])) {
+                    $rootId = $wrapped->getPropertyValue($config['root']);
+                    $qb->andWhere($rootId === null ?
+                        $qb->expr()->isNull('node.'.$config['root']) :
+                        $qb->expr()->eq('node.'.$config['root'], is_string($rootId) ? $qb->expr()->literal($rootId) : $rootId)
+                    );
+                }
+                if ($includeNode) {
+                    $idField = $meta->getSingleIdentifierFieldName();
+                    $qb->where('('.$qb->getDqlPart('where').') OR node.'.$idField.' = :rootNode');
+                    $qb->setParameter('rootNode', $node);
+                }
+            } else {
+                throw new \InvalidArgumentException("Node is not related to this repository");
+            }
+        } else {
+            if ($direct) {
+                $qb->where($qb->expr()->isNull('node.'.$config['parent']));
+            }
+        }
+        if (!$sortByField) {
+            $qb->orderBy('node.'.$config['left'], 'ASC');
+        } elseif (is_array($sortByField)) {
+            $fields = '';
+            foreach ($sortByField as $field) {
+                $fields .= 'node.'.$field.',';
+            }
+            $fields = rtrim($fields, ',');
+            $qb->orderBy($fields, $direction);
+        } else {
+            if ($meta->hasField($sortByField) && in_array(strtolower($direction), array('asc', 'desc'))) {
+                $qb->orderBy('node.'.$sortByField, $direction);
+            } else {
+                throw new InvalidArgumentException("Invalid sort options specified: field - {$sortByField}, direction - {$direction}");
+            }
+        }
+
+        return $this->setTranslatableHint($qb->getQuery(), $locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRootNodes($locale = null, $childrenLevel = false, $sortByField = null, $direction = 'asc')
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+        $qb = $this->getQueryBuilder();
+        $qb
+            ->select('node', 't', 'c')
+            ->from($config['useObjectClass'], 'node')
+            ->leftJoin('node.translations', 't')
+            ->leftJoin('node.children', 'c');
+
+        if (!$childrenLevel) {
+            $qb->where($qb->expr()->isNull('node.'.$config['parent']));
+        } else {
+            $qb->where($qb->expr()->isNull('node.'.$config['parent']));
+        }
+
+        if ($sortByField !== null) {
+            $qb->orderBy('node.'.$sortByField, strtolower($direction) === 'asc' ? 'asc' : 'desc');
+        } else {
+            $qb->orderBy('node.'.$config['left'], 'ASC');
+        }
+
+        return $this->setTranslatableHint($qb->getQuery(), $locale);
     }
 }

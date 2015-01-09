@@ -49,7 +49,7 @@ class TopicsController extends Controller
      * @Route("/admin/topics/", options={"expose"=true}, name="newscoop_newscoop_topics_index")
      * @Route("/admin/topics/view/{compactView}/{articleNumber}/{language}", options={"expose"=true}, name="newscoop_newscoop_topics_index_compact")
      */
-    public function indexAction($compactView = false, $articleNumber = null, $language = null)
+    public function indexAction(Request $request, $compactView = false, $articleNumber = null, $language = null)
     {
         if ($compactView === 'compact') {
             $compactView = true;
@@ -97,13 +97,11 @@ class TopicsController extends Controller
         } else {
             $topicsQuery = $repository->getTranslatableTopics($locale);
             $nodes = $topicsQuery->getArrayResult();
-
             $cacheService->save($cacheKey, $tree);
         }
 
         if ($articleNumber) {
             $topicsIds = $this->getArticleTopicsIds($articleNumber);
-
             foreach ($nodes as $key => $topic) {
                 if (in_array($topic['id'], $topicsIds)) {
                     $topic['attached'] = true;
@@ -113,9 +111,8 @@ class TopicsController extends Controller
         }
 
         $tree = $repository->buildTreeArray($nodes);
-
         usort($tree, function ($node1, $node2) {
-            return $node1['topicOrder'] - $node2['topicOrder'];
+            return $node2['topicOrder'] - $node1['topicOrder'];
         });
 
         return new JsonResponse(array('tree' => $tree));
@@ -373,6 +370,7 @@ class TopicsController extends Controller
     {
         $em = $this->get('em');
         $translator = $this->get('translator');
+        $topicService = $this->get('newscoop_newscoop.topic_service');
 
         if (!$this->get('form.csrf_provider')->isCsrfTokenValid('default', $request->get('_csrf_token'))) {
             return new JsonResponse(array(
@@ -392,18 +390,18 @@ class TopicsController extends Controller
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $exists = false;
+            if ($topicService->checkTopicName($locale, $data['title'])) {
+                 return new JsonResponse(array(
+                    'status' => false,
+                    'message' => $translator->trans('topics.existsname', array(), 'topics')
+                ));
+            }
+
             foreach ($node->getTranslations() as $translation) {
                 if ($translation->getLocale() == $locale && $translation->getField() == 'title') {
                     $translation->setContent($data['title']);
                     $exists = true;
                 }
-            }
-
-            if (!$exists) {
-                $topicTranslation = new TopicTranslation($locale, 'title', $data['title']);
-                $node->addTranslation($topicTranslation);
-                $em->persist($node);
             }
 
             $em->flush();

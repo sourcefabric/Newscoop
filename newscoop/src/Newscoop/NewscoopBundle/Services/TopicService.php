@@ -388,6 +388,36 @@ class TopicService
     }
 
     /**
+     * Check if topic name already exists by given locale
+     *
+     * @param string $locale Locale
+     * @param string $title  Topic name
+     *
+     * @return boolean
+     */
+    public function checkTopicName($locale, $title)
+    {
+        $topicTranslation = $this->getTopicRepository()->createQueryBuilder('t')
+            ->select('count(t)')
+            ->join('t.translations', 'tt')
+            ->where('tt.locale = :locale')
+            ->andWhere('tt.content = :title')
+            ->andWhere("tt.field = 'title'")
+            ->setParameters(array(
+                'title' => $title,
+                'locale' => $locale,
+            ))
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        if ((int) $topicTranslation > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get options for forms
      *
      * @return array

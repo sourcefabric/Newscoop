@@ -15,12 +15,12 @@ var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight'
 */
 app.factory('TopicsFactory',  function($http) {
   return {
-        getTopics: function(languageCode, articleNumber) {
+        getTopics: function(language, articleNumber) {
             return $http({
               method: "GET",
               url: Routing.generate("newscoop_newscoop_topics_tree"),
               params: {
-                _code: languageCode,
+                _code: language,
                 _articleNumber: articleNumber
               }
             });
@@ -44,7 +44,7 @@ app.factory('TopicsFactory',  function($http) {
         deleteTopicTranslation: function(id) {
             return $http.post(Routing.generate("newscoop_newscoop_topics_deletetranslation", {id: id}));
         },
-        addTopic: function(formData, languageCode) {
+        addTopic: function(formData, language) {
           return $http({
             method: "POST",
             url: Routing.generate("newscoop_newscoop_topics_add"),
@@ -52,10 +52,10 @@ app.factory('TopicsFactory',  function($http) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             data: $.param(formData),
-            params: {_code: languageCode}
+            params: {_code: language}
           });
         },
-        attachTopics: function(formData, articleNumber, languageCode) {
+        attachTopics: function(formData, articleNumber, language) {
           return $http({
             method: "POST",
             url: Routing.generate("newscoop_newscoop_topics_attachtopic"),
@@ -65,11 +65,11 @@ app.factory('TopicsFactory',  function($http) {
             data: $.param(formData),
             params: {
               _articleNumber: articleNumber,
-              _languageCode: languageCode
+              _languageCode: language
             }
           });
         },
-        updateTopic: function(formData, id, languageCode) {
+        updateTopic: function(formData, id, language) {
           return $http({
             method: "POST",
             url: Routing.generate("newscoop_newscoop_topics_edit", {id: id}),
@@ -77,7 +77,7 @@ app.factory('TopicsFactory',  function($http) {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             data: $.param(formData),
-            params: {_code: languageCode}
+            params: {_code: language}
           });
         },
         addTranslation: function(formData, id) {
@@ -170,6 +170,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.availableFields = ['content', 'title'];
     $scope.supportedFields = ['content', 'title'];
     var languageCode = null;
+    var languageSelected = null;
 
     /**
      * Loads all topics. It loads all the topics in tree structure
@@ -414,6 +415,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       scope.toggle();
     };
 
+
+    $scope.showSelectedTopic = function(scope, node) {
+      if (node.attached) {
+        scope.$parent.$nodeScope.toggle();
+      }
+    };
+
     /**
      * Get root nodes.
      *
@@ -424,29 +432,25 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     };
 
     /**
-     * Collapse the tree.
+     * Expand or collapse all elements in the tree
      *
-     * @method collapseAll
+     * @method expandCollapseAll
      */
-    $scope.collapseAll = function() {
+    $scope.expandCollapseAll = function(s) {
       var scope = getRootNodesScope();
-      scope.collapseAll();
-    };
-
-    /**
-     * Expands all elements in the tree
-     *
-     * @method collapseAll
-     */
-    $scope.expandAll = function() {
-      var scope = getRootNodesScope();
-      scope.expandAll();
+      if (s.collapsedTree) {
+        scope.expandAll();
+        s.collapsedTree = false;
+      } else {
+        scope.collapseAll();
+        s.collapsedTree = true;
+      }
     };
 
     /**
      * Hides/shows more options of the tree node
      *
-     * @method collapseAll
+     * @method startEditing
      * @parent scope {object} currently selected element in a tree
      */
     $scope.startEditing = function(scope) {
@@ -454,8 +458,35 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         scope.editing = false;
       } else {
         scope.editing = true;
+        scope.addingSubtopic = false;
       }
     };
+
+    /**
+     * Hides/shows options to add new subtopic
+     *
+     * @method showNewSubtopicBox
+     * @parent scope {object} currently selected element in a tree
+     */
+    $scope.showNewSubtopicBox = function(scope) {
+      if (scope.addingSubtopic) {
+        scope.addingSubtopic = false;
+      } else {
+        scope.addingSubtopic = true;
+        scope.editing = false;
+      }
+    };
+
+    /**
+     * Hide button, hiding extra options like e.g. adding new substopic etc.
+     *
+     * @method hideExtraOptions
+     * @parent scope {object} currently selected element in a tree
+     */
+    $scope.hideExtraOptions = function(scope) {
+      scope.editing = false;
+      scope.addingSubtopic = false;
+    }
 
     $scope.formData = {};
     $scope.subtopicForm = {};
@@ -483,7 +514,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         if (response.status) {
           flashMessage(response.message);
           if (topicId == undefined) {
-              $scope.data.push({
+              $scope.data.unshift({
                 id: response.topicId,
                 title: response.topicTitle,
                 root: response.topicId,
@@ -491,7 +522,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
               });
 
           } else {
-            updateAfterAddSubtopic($scope.data, topicId, response)
+            updateAfterAddSubtopic($scope.data, topicId, response);
           }
           $scope.formData = null;
         } else {
@@ -555,14 +586,15 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     };
 
     /**
-     * On language change in adding a new translation box, it assigns selected
-     * language code it the variable so it can be used later elsewhere.
+     * On language change in box when adding a new translation, it assigns selected
+     * language code to the variable so it can be used later elsewhere.
      *
      * @method onLanguageChange
      * @param language {object} language object
      */
     $scope.onLanguageChange = function(language) {
         languageCode = language.code;
+        languageSelected = languageCode;
     }
 
     /**
@@ -580,7 +612,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
            $scope.data = data.tree;
           getSelectedTopics(data.tree);
         }).error(function(data, status){
-            flashMessage(response.message, 'error');
+            flashMessage(data.message, 'error');
         });
     }
 
@@ -596,7 +628,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       var postData = {
           topicTranslation: {
               title: $scope.translationForm.title,
-              locale: languageCode
+              locale: languageSelected
           },
           _csrf_token: token
       };
@@ -604,6 +636,8 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       TopicsFactory.addTranslation(postData, topicId).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
+          $scope.languageCode = null;
+          languageCode = null;
           updateAfterAddTranslation($scope.data, topicId, response);
         } else {
           flashMessage(response.message, 'error');
@@ -612,6 +646,16 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
           flashMessage(response.message, 'error');
       });
     };
+
+    $scope.setLanguageLabel = function(node, langCode) {
+      if(languageCode === node.locale) {
+        return 'active';
+      }
+
+      if (node.locale === langCode && !languageCode) {
+        return 'active';
+      }
+    }
   })
     /**
      * Ad-hoc $sce trusting to be used with ng-bind-html
@@ -620,5 +664,12 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
             return function (val) {
                 return $sce.trustAsHtml(val);
             };
-        });
+        })
+        .filter('startFrom', function() {
+          return function(input, start) {
+              if(!input) return input;
+              start = +start;
+              return input.slice(start);
+          };
+      });
 })();
