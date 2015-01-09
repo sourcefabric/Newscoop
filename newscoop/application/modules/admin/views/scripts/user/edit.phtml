@@ -2,20 +2,48 @@
 $translator = \Zend_Registry::get('container')->getService('translator');
 $this->placeholder('title')->set($translator->trans("Edit user $1", array('$1' => $this->user->getUsername()), 'users')); ?>
 
-<?php $this->renderActions(); ?>
-
-<?php if ($this->user->isPublic()) { ?>
-<div class="edit-image">
-    <a href="<?php echo $this->url(array(
-        'module' => 'admin',
-        'controller' => 'user',
-        'action' => 'profile',
-        'user' => $this->user->getId(),
-    )); ?>" class="iframe"><img src="<?php echo $this->originalImage ? $this->url(array('src' => $this->image), 'image', false, false) : $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php echo $translator->trans('Edit profile', array(), 'users'); ?></a>
+<style type="text/css" media="screen">
+    .form-div {
+        float: left;
+    }
+    .form-div.left-box {
+        width: 48%;
+        margin-right: 25px;
+    }
+    .form-div.right-box {
+        width: 50%;
+    }
+</style>
+<div style="width: 100%;">
+<form id="edit-form" enctype="application/x-www-form-urlencoded" action="" method="post">
+<dl class="zend_form" style="width: 99%;">
+ <div class="form-div left-box"><?php echo $this->form->getDisplayGroup('adminSettings'); ?></div>
+ <div class="form-div right-box">
+    <dd id="attributes-element">
+        <fieldset id="fieldset-attributes">
+        <dl>
+            <?php $this->renderActions(); ?>
+            <?php if ($this->user->isPublic()) { ?>
+            <div class="edit-image">
+                <a href="<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'profile',
+                    'user' => $this->user->getId(),
+                )); ?>" class="iframe"><img src="<?php echo $this->originalImage ? $this->url(array('src' => $this->image), 'image', false, false) : $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php echo $translator->trans('Edit profile', array(), 'users'); ?></a>
+            </div>
+            <?php } ?>
+        </dl>
+        </fieldset>
+    </dd>
+    <?php echo $this->form->getSubForm('attributes'); ?>
+    <?php echo $this->form->submit->setAttrib('style', 'float:right;'); ?>
+    </div>
+ <br style="clear: left;" />
+</dl>
+</form>
 </div>
-<?php } ?>
 
-<?php echo $this->form->setAttrib('id', 'edit-form'); ?>
 
 <div id="user-image" style="display:none">
     <img id="original-image" src="<?php echo $this->url(array('src' => '../'.$this->originalImage), 'image', false, false); ?>" width="100%" height="100%"/><br>

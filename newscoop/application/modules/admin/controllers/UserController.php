@@ -55,6 +55,7 @@ class Admin_UserController extends Zend_Controller_Action
             $userView = $user->getDataTableView($this->view);
             $this->view->users[] = $userView;
         }
+
         return;
     }
 
@@ -163,7 +164,7 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function createAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
@@ -198,7 +199,7 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
@@ -211,9 +212,10 @@ class Admin_UserController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
                 $values = $form->getValues();
-                $values['attributes'] = array(
-                    'is_verified' => $values['is_verified'],
-                );
+
+                $values['attributes']['is_featured'] = $values['is_featured'];
+                $values['attributes']['is_verified'] = $values['is_verified'];
+                unset($values['is_featured']);
                 unset($values['is_verified']);
 
                 $this->userService->save($values, $user);
@@ -249,6 +251,16 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->originalImage = $user->getImage();
         $this->view->actions = array(
             array(
+                'label' => $translator->trans('Edit geolocation', array(), 'users'),
+                'module' => 'admin',
+                'controller' => 'user',
+                'action' => 'geolocation',
+                'class' => 'iframe',
+                'params' => array(
+                    'user' => $user->getId()
+                ),
+            ),
+            array(
                 'label' => $translator->trans('Edit permissions', array(), 'users'),
                 'module' => 'admin',
                 'controller' => 'acl',
@@ -272,7 +284,7 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function renameAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $user = $this->getUser()->render();
         $form = new Admin_Form_RenameUser();
@@ -340,11 +352,36 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function geolocationAction()
+    {
+        $this->_helper->layout->setLayout('iframe');
+
+        $form = new Admin_Form_Geolocation();
+        $user = $this->getUser();
+        $form->setDefaultsFromEntity($user);
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+
+            try {
+                $values['attributes']['geolocation'] = $values['geolocation'];
+                unset($values['geolocation']);
+                $this->_helper->service('user')->save($values, $user);
+                $this->view->close = true;
+            } catch (\InvalidArgumentException $e) {
+                $form->image->addError($e->getMessage());
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
     /**
      * @Acl(ignore=true)
      */
     public function editPasswordAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $user = $this->_helper->service('user')->getCurrentUser();
         $form = new Admin_Form_EditPassword();
@@ -366,7 +403,7 @@ class Admin_UserController extends Zend_Controller_Action
      * @return Newscoop\Entity\User
      */
     protected function getUser()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $id = (int) $this->_getParam('user', false);
         if (!$id) {
@@ -382,27 +419,27 @@ class Admin_UserController extends Zend_Controller_Action
 
         return $user;
     }
-    
+
     public function toggleBanAction()
-    {   
+    {
         $parameters = $this->getRequest()->getParams();
-        
+
         $userRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User');
         $publicationRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
-        
+
         if (!isset($parameters['user']) && !isset($parameters['publication'])) {
             throw new InvalidArgumentException;
         }
-        
+
         $user = $userRepository->find($parameters['user']);
         $publication = $publicationRepository->find($parameters['publication']);
-            
+
         $form = new Admin_Form_BanUser;
         $this->handleBanForm($form, $user, $publication);
-        
+
         $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => $user->getEmail(), 'ip' => ''), $publication);
-        
+
         $form->setValues($user, $banned);
         $this->view->form = $form;
     }
@@ -415,15 +452,15 @@ class Admin_UserController extends Zend_Controller_Action
             $this->_helper->service('email')->sendConfirmationToken($user);
         }
     }
-    
+
     /**
      * Method for saving a banned
      *
-     * @param ZendForm $p_form
+     * @param ZendForm             $p_form
      * @param Newscoop\Entity\User $p_user
      */
     private function handleBanForm(Admin_Form_BanUser $p_form, $p_user, $p_publication)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             if ($p_form->getSubmit()->isChecked()) {
@@ -434,22 +471,22 @@ class Admin_UserController extends Zend_Controller_Action
                 else $unbanValues['name'] = $p_user->getName();
                 if ($parameters['email'] == 1) $banValues['email'] = $p_user->getEmail();
                 else $unbanValues['email'] = $p_user->getEmail();
-                
+
                 $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
                 $acceptanceRepository->ban($p_publication, $banValues);
                 $acceptanceRepository->flush();
                 $acceptanceRepository->unban($p_publication, $unbanValues);
                 $acceptanceRepository->flush();
-                
+
                 $this->_helper->flashMessenger($translator->trans('Ban for user $1 saved.', array('$1' => $p_user->getName()), 'users'));
-                
+
                 if ($parameters['delete_messages'] == 1) {
-					$feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
-					$feedbacks = $feedbackRepository->getByUser($p_user->getId());
-					
-					$feedbackRepository->setStatus($feedbacks, 'deleted');
-					$feedbackRepository->flush();
-				}
+                    $feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
+                    $feedbacks = $feedbackRepository->getByUser($p_user->getId());
+
+                    $feedbackRepository->setStatus($feedbacks, 'deleted');
+                    $feedbackRepository->flush();
+                }
             }
             $this->_helper->redirector->gotoSimple('index', 'feedback');
         }
@@ -458,12 +495,12 @@ class Admin_UserController extends Zend_Controller_Action
     /**
      * Add user attributes subform to form
      *
-     * @param Zend_Form $form
-     * @param Newscoop\Entity\User $user
+     * @param  Zend_Form            $form
+     * @param  Newscoop\Entity\User $user
      * @return void
      */
     private function addUserAttributesSubForm(Zend_Form $form, User $user)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $subForm = new Zend_Form_SubForm();
         $subForm->setLegend($translator->trans('User attributes', array(), 'users'));
