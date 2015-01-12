@@ -98,7 +98,7 @@ class Admin_Form_User extends Zend_Form
         $profile->addElement('textarea', 'bio', array(
             'label' => $translator->trans('About me', array(), 'users'),
             'filters' => array('stringTrim'),
-            'cols' => 98,
+            'style' => 'width: 80%',
             'rows' => 4,
         ));
 
