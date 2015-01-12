@@ -14,6 +14,7 @@ use Newscoop\Entity\Acl\Role;
 use Newscoop\Entity\User\Group;
 use Newscoop\View\UserView;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Zend_View_Abstract;
 use Newscoop\Search\DocumentInterface;
@@ -26,7 +27,7 @@ use DateTime;
  * })
  * @ORM\HasLifecycleCallbacks
  */
-class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, EquatableInterface, DocumentInterface
+class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInterface, \Serializable, EquatableInterface, DocumentInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -494,6 +495,16 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function isActive()
     {
         return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Test if user is banned
+     *
+     * @return bool
+     */
+    public function isBanned()
+    {
+        return $this->status == self::STATUS_BANNED;
     }
 
     /**
@@ -1227,17 +1238,65 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     public function serialize()
     {
-        return serialize($this->id);
+        return serialize(array(
+            $this->id,
+            $this->status
+        ));
     }
 
     public function unserialize($data)
     {
-        $this->id = unserialize($data);
+        list(
+            $this->id,
+            $this->status
+        ) = unserialize($data);
     }
 
     public function isEqualTo(UserInterface $user)
     {
         return $this->id === $user->getId();
+    }
+
+    /**
+     * Checks if the user account is not expired.
+     *
+     * @return boolean In active status
+     */
+    public function isAccountNonExpired()
+    {
+        return !$this->isPending();
+    }
+
+    /**
+     * Checks if the user account is not locked. Currently there is no
+     * seperation between pending and banned.
+     *
+     * @return boolean Not locked status
+     */
+    public function isAccountNonLocked()
+    {
+        return !$this->isBanned();
+    }
+
+    /**
+     * Checks if credentials are expired. We don't have this mechanism in
+     * Newscoop.
+     *
+     * @return boolean Not credentials expired status
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * Checks if the user account is enabled.
+     *
+     * @return boolean Active status
+     */
+    public function isEnabled()
+    {
+        return $this->isActive();
     }
 
     /**
