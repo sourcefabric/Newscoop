@@ -407,19 +407,19 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     /**
      * Toggles the tree.
      *
-     * @method toggle
+     * @method toggleTopic
      *
      * @param scope {object} current scope
      */
-    $scope.toggle = function(scope) {
-      scope.toggle();
-    };
-
-
-    $scope.showSelectedTopic = function(scope, node) {
-      if (node.attached) {
-        scope.$parent.$nodeScope.toggle();
+    $scope.toggleTopic = function(scope) {
+      if (scope.$nodeScope.$modelValue.hasAttachedSubtopic !== undefined) {
+        if (scope.$nodeScope.$modelValue.hasAttachedSubtopic) {
+          scope.$nodeScope.$modelValue.hasAttachedSubtopic = false;
+          scope.$nodeScope.collapse();
+        }
       }
+
+      scope.toggle();
     };
 
     /**
@@ -647,14 +647,43 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       });
     };
 
+    /**
+     * It sets a proper key: "activeLabel" or "fallback" in translation
+     * object, based on the current locale and selected filter language
+     *
+     * @method setLanguageLabel
+     * @param node {Object} topic
+     * @param langCode {String} Current locale
+     */
     $scope.setLanguageLabel = function(node, langCode) {
-      if(languageCode === node.locale) {
-        return 'active';
-      }
+      angular.forEach(node.translations, function(value, key) {
+          if (languageCode === value.locale) {
+            value.activeLabel = true;
+          }
 
-      if (node.locale === langCode && !languageCode) {
-        return 'active';
-      }
+          if (!languageCode) {
+            if (value.locale === langCode) {
+               value.activeLabel = true;
+            }
+          }
+
+      });
+
+      // find element with activeLabel set to true
+      // if set to true, set fallback to false
+      // else to true
+      var setfallback = true;
+      angular.forEach(node.translations, function(value, key) {
+          if (value.activeLabel) {
+              setfallback = false;
+          }
+      });
+
+      angular.forEach(node.translations, function(value, key) {
+          if (value.activeLabel == undefined && setfallback) {
+              value.fallback = true;
+          }
+      });
     }
   })
     /**

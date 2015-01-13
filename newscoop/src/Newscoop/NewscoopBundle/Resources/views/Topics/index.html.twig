@@ -99,13 +99,13 @@
                 {% endif %}
               </div>
                 <div class="drag-bar" {% if compactView %}style="display: none;"{% endif %}></div>
-                <a data-nodrag ng-click="toggle(this)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed, 'glyphicon-chevron-down': collapsed}"></span></a>
+                <a data-nodrag ng-click="toggleTopic(this)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed, 'glyphicon-chevron-down': collapsed || node.hasAttachedSubtopic}"></span></a>
                 {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin-right: 4px;position: absolute;top: 8px;" />{% endif %}
 
                 <div class="default-wrap" ng-if="!editing">
                   <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding" {% if compactView %}style="margin-left: 20px;"{% endif %}></span>
-                  <ul class="list-group" ng-model="node.translations">
-                      <li class="list-group-item" ng-class="setLanguageLabel(node, '{{ app.request.locale }}')"  ng-repeat="node in node.translations">
+                  <ul class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
+                      <li class="list-group-item" ng-class="{'active': node.activeLabel, 'fallback': node.locale == '{{ app.request.locale }}' && languageCode != node.locale && !node.activeLabel && node.fallback}" ng-repeat="node in node.translations">
 
                           <span class="badge ng-binding">{[{ node.locale }]}</span>
                       </li>
@@ -164,15 +164,15 @@
                   <a class="btn btn-sm btn-default" data-nodrag ng-click="hideExtraOptions(this)"><span title="{{ 'topics.btn.hide'|trans }}" class="glyphicon glyphicon-chevron-up"></span></a>
                 </div>
               </div>
-              <ol ui-tree-nodes="" ng-model="node.__children" ng-if="collapsed">
+              <ol ui-tree-nodes="" ng-model="node.__children" ng-if="collapsed || node.hasAttachedSubtopic">
                   <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'">
 
                   </li>
               </ol>
             </script>
             <div ui-tree="treeOptions" {% if compactView %}data-drag-enabled="false"{% endif %} id="tree-root">
-              <ol ui-tree-nodes="" ng-model="data">
-                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" ng-hide="!treeFilter(node, pattern, supportedFields) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields) && dim}"></li>
+              <ol ui-tree-nodes ng-model="data">
+                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" ng-hide="!treeFilter(node, pattern, supportedFields, this) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields, this) && dim}"></li>
               </ol>
             </div>
             <!-- Modal -->

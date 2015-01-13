@@ -91,23 +91,17 @@ class TopicsController extends Controller
         $topicsCount = $topicService->countBy();
         $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount), 'topic');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-        $tree = array();
+        $nodes = array();
         if ($cacheService->contains($cacheKey)) {
-            $tree = $cacheService->fetch($cacheKey);
+            $nodes = $cacheService->fetch($cacheKey);
         } else {
             $topicsQuery = $repository->getTranslatableTopics($locale);
             $nodes = $topicsQuery->getArrayResult();
-            $cacheService->save($cacheKey, $tree);
-        }
-
-        if ($articleNumber) {
-            $topicsIds = $this->getArticleTopicsIds($articleNumber);
-            foreach ($nodes as $key => $topic) {
-                if (in_array($topic['id'], $topicsIds)) {
-                    $topic['attached'] = true;
-                    $nodes[$key] = $topic;
-                }
+            if ($articleNumber) {
+                $nodes = $this->setAttachedKeysForArticleTopics($nodes, $articleNumber);
             }
+
+            $cacheService->save($cacheKey, $nodes);
         }
 
         $tree = $repository->buildTreeArray($nodes);
@@ -116,6 +110,68 @@ class TopicsController extends Controller
         });
 
         return new JsonResponse(array('tree' => $tree));
+    }
+
+    /**
+     * Adds "attached" and "hasAttachedSubtopic" keys with values to the array of the topic;
+     *
+     * @param array  $nodes         Array of topics
+     * @param string $articleNumber Article number
+     *
+     * @return array
+     */
+    private function setAttachedKeysForArticleTopics($nodes, $articleNumber)
+    {
+        $topicsIds = $this->getArticleTopicsIds($articleNumber);
+        foreach ($nodes as $key => $topic) {
+            if (in_array($topic['id'], $topicsIds)) {
+                $topic['attached'] = true;
+                $nodes[$key] = $topic;
+                $nodes = $this->markTopicAsHavingAttachedTopics($nodes, $topic);
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * Marks topic as having article attached topics by adding
+     * "hasAttachedTopics". This switch is used to expand the whole subtree
+     * which contains attached topic(s) to the place where it is located on.
+     *
+     * @param array $nodes         Array of all topics
+     * @param array $attachedTopic Attached topic details
+     *
+     * @return array
+     */
+    private function markTopicAsHavingAttachedTopics($nodes, $attachedTopic)
+    {
+        foreach ($nodes as $key => $node) {
+            if ($this->hasAttachedSubtopic($node, $attachedTopic)) {
+                $node['hasAttachedSubtopic'] = true;
+                $nodes[$key] = $node;
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * It checkes if we can add "hasAttachedSubtopic" key set to true, if the "root" value
+     * of the topic (from the array of the topics) equals the "root" value of the attached topic.
+     *
+     * @param array $node          Currently checked topic
+     * @param array $attachedTopic Attached topic
+     *
+     * @return boolean
+     */
+    private function hasAttachedSubtopic($node, $attachedTopic)
+    {
+        if ($node['root'] == $attachedTopic['root'] && $attachedTopic['id'] != $node['id'] && !isset($node['hasAttachedSubtopic'])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
