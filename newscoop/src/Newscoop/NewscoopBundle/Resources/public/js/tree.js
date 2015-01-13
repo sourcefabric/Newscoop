@@ -419,6 +419,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
       }
 
+      if (scope.expanded) {
+        scope.$nodeScope.collapsed = true;
+        scope.$nodeScope.expanded = false;
+      } else {
+        scope.$nodeScope.collapsed = false;
+        scope.$nodeScope.expanded = true;
+      }
+
       scope.toggle();
     };
 
@@ -438,12 +446,10 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
      */
     $scope.expandCollapseAll = function(s) {
       var scope = getRootNodesScope();
-      if (s.collapsedTree) {
-        scope.expandAll();
-        s.collapsedTree = false;
+      if (!scope.expanded) {
+        scope.expanded = true;
       } else {
-        scope.collapseAll();
-        s.collapsedTree = true;
+        scope.expanded = false;
       }
     };
 
@@ -673,18 +679,39 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       // if set to true, set fallback to false
       // else to true
       var setfallback = true;
+      var i;
       angular.forEach(node.translations, function(value, key) {
           if (value.activeLabel) {
               setfallback = false;
           }
       });
 
-      angular.forEach(node.translations, function(value, key) {
-          if (value.activeLabel == undefined && setfallback) {
-              value.fallback = true;
+      for (i = 0; i < node.translations.length; i++) {
+        if (node.translations[i].activeLabel == undefined && setfallback) {
+              node.translations[i].fallback = true;
+        }
+      }
+
+      // if languageCode not in array
+      // choose first locale and set fallback
+      var inArray = false;
+      for (i = 0; i < node.translations.length; i++) {
+        if (angular.equals(node.translations[i].locale, languageCode)) {
+            inArray = true;
+        }
+      }
+
+      if (!inArray) {
+        // restore fallback fields
+        // first translation is always default, so  we unset fallback
+        // for all translations diffrent than default
+        for (i = 0; i < node.translations.length; i++) {
+          if (!angular.equals(node.translations[i].locale, languageCode) && i !== 0) {
+              node.translations[i].fallback = false;
           }
-      });
-    }
+        }
+      }
+    };
   })
     /**
      * Ad-hoc $sce trusting to be used with ng-bind-html
@@ -693,12 +720,5 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
             return function (val) {
                 return $sce.trustAsHtml(val);
             };
-        })
-        .filter('startFrom', function() {
-          return function(input, start) {
-              if(!input) return input;
-              start = +start;
-              return input.slice(start);
-          };
-      });
+        });
 })();
