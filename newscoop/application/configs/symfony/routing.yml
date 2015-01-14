@@ -9,9 +9,9 @@ admin_logout:
 fos_js_routing:
     prefix: /admin
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-_bazinga_exposetranslation:
+_bazinga_jstranslation:
     prefix: /admin
-    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
     options:
