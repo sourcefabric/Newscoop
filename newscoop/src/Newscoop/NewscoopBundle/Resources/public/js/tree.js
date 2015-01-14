@@ -613,6 +613,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         $scope.languageCode = langCode;
         TopicsFactory.getTopics(langCode, articleNumber).success(function (data) {
            $scope.data = data.tree;
+           $scope.pattern = undefined;
           getSelectedTopics(data.tree);
         }).error(function(data, status){
             flashMessage(data.message, 'error');
