@@ -30,7 +30,7 @@ class AppKernel extends Kernel
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
