@@ -419,14 +419,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         }
       }
 
-      if (scope.expanded) {
-        scope.$nodeScope.collapsed = true;
-        scope.$nodeScope.expanded = false;
-      } else {
-        scope.$nodeScope.collapsed = false;
-        scope.$nodeScope.expanded = true;
-      }
-
       scope.toggle();
     };
 
@@ -446,10 +438,15 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
      */
     $scope.expandCollapseAll = function(s) {
       var scope = getRootNodesScope();
-      if (!scope.expanded) {
-        scope.expanded = true;
+      if (!scope.ex) {
+        scope.ex = true;
+        scope.showExpanded = true;
       } else {
-        scope.expanded = false;
+        if (scope.showExpanded) {
+          scope.showExpanded = false;
+        } else {
+          scope.showExpanded = true;
+        }
       }
     };
 
