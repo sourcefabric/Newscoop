@@ -45,7 +45,7 @@
         "knplabs\/knp-menu":"2.0.*@dev",
         "raulfraile\/ladybug-bundle":"0.*@dev",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
-        "willdurand\/js-translation-bundle":"1.2.0",
+        "willdurand\/js-translation-bundle": "2.2.0",
         "recaptcha\/php5":"v1.0.0",
         "yzalis\/crontab":"1.0.x-dev",
         "imagine\/imagine":"v0.5.0",
