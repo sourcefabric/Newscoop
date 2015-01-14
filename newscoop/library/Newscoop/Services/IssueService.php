@@ -97,8 +97,7 @@ class IssueService implements IssueServiceInterface
         $uriParts = array_filter(explode('/', $request->getRequestUri()));
         $uriPartsCount = count($uriParts);
         $issue = null;
-        // Don't try to resolve issues for the admin interface
-        if (!in_array('admin', $uriParts) && $uriPartsCount >= 2 && $uriPartsCount <= 5) {
+        if ($uriPartsCount >= 2 && $uriPartsCount <= 5) {
             $publication = $this->publicationService->getPublication();
             $cacheKey = $this->cacheService->getCacheKey(array(
                 'resolver',
