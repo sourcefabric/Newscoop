@@ -222,7 +222,7 @@ function parseTextBody($text, $articleNumber)
         if (isset($titles) && sizeof($titles) > 0) {
             for($x = 0; $x < sizeof($titles[0]); $x++) {
                 $text = preg_replace("/\s*".preg_replace('~\/~', '\/',
-                preg_quote($titles[0][$x]))."/", ' title="'.$titles[1][$x].'"', $text);
+                preg_quote($titles[0][$x]))."/", ' title="'.htmlspecialchars($titles[1][$x], ENT_QUOTES, 'UTF-8').'"', $text);
             }
         }
 

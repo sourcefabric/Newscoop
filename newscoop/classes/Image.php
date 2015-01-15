@@ -184,7 +184,7 @@ class Image extends DatabaseObject
 	 */
 	public function getDescription()
 	{
-		return strip_tags($this->m_data['Description']);
+		return $this->m_data['Description'];
 	} // fn getDescription
 
 

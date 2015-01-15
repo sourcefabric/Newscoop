@@ -603,7 +603,7 @@ CREATE TABLE `Images` (
   PRIMARY KEY (`Id`),
   KEY `IDX_E7B3BB5C447C15B9` (`UploadedByUser`),
   KEY `is_updated_storage` (`is_updated_storage`),
-  KEY `Description` (`Description`),
+  KEY `Description` (`Description`(100)),
   KEY `Photographer` (`Photographer`),
   KEY `Place` (`Place`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -2130,7 +2130,7 @@ CREATE TABLE `package_item` (
   `package_id` int(11) DEFAULT NULL,
   `image_id` int(11) DEFAULT NULL,
   `offset` int(11) NOT NULL,
-  `caption` varchar(255) DEFAULT NULL,
+  `caption` text DEFAULT NULL,
   `coords` varchar(255) DEFAULT NULL,
   `video_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),

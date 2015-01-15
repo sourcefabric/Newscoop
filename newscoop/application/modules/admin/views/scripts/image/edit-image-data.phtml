@@ -63,14 +63,13 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
                     $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
                     $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
 
-                    $loadAsRichtext[]   = 'data['.$image->getId().'][description]';
+                    $loadAsRichtext[]   = 'image_description_'.$image->getId();
                     ?>
                         <textarea name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" rows="4" class="image-description" style="float:none; width:380px;"><?php echo $image->getDescription(); ?></textarea>
                     <?php
                 } else {
                     ?>
-                        <textarea name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" rows="4" class="image-description" style="float:none; width:380px;"><?php echo $image->getDescription(); ?></textarea><br/>
-                        <!-- <INPUT TYPE="TEXT" name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" VALUE="<?php echo htmlspecialchars($image->getDescription()); ?>" SIZE="32" class="input_text" maxlength="<?php echo $preferencesService->MediaCaptionLength; ?>"> -->
+                        <input name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" class="image-place" value="<?php echo htmlspecialchars(strip_tags($image->getDescription())); ?>" style="float:none; width:380px;" maxlength="<?php echo $preferencesService->MediaCaptionLength; ?>"><br/>
                     <?php
                 }
             ?>
@@ -95,10 +94,10 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
 
         $editorOptions  = array(
             'max_chars' => $preferencesService->MediaCaptionLength,
-            'toolbar_length' => 20,
+            'toolbar_length' => 16,
         );
 
-        editor_load_tinymce(implode(',', $loadAsRichtext), $this->currentUser, $editorLanguage, $editorOptions);
+        editor_load_tinymce($loadAsRichtext, $this->currentUser, $editorLanguage, $editorOptions);
     }
 ?>
 

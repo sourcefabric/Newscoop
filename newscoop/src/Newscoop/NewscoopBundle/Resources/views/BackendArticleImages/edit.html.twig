@@ -82,6 +82,7 @@
 
     <script type="text/javascript">
     $(function() {
+        var richTextCaptions = '{{ rich_text_caption }}';
         var currentCaption = {{ caption|json_encode()|raw }};
         var captions = {{ captions|json_encode()|raw }}.filter(function(caption) {
             return caption.length && caption !== currentCaption;
@@ -94,7 +95,13 @@
             for (var i = 0; i < captions.length; i++) {
                 var other = $('<div class="col-sm-11" style="margin-bottom: 7px;"></div>').appendTo('#other-article-caption');
                 $('<button style="margin-right: 15px;" />').appendTo(other).text('{{ 'articles.images.edit.form.use'|trans }}').click(function(e) {
-                    $('.current-article-caption-value').val($(e.target).parent().find('input').val());
+
+                    if (richTextCaptions == 'Y') {
+                        tinyMCE.editors['article_image_caption'].setContent($(e.target).parent().find('input').val());
+                    } else {
+                        $('.current-article-caption-value').val($(e.target).parent().find('input').val());
+                    }
+
                     return false;
                 });
                 $('<input class="js-caption" type="text"  style="float:right;width:180px;" />').appendTo(other).val(captions[i]).attr('disabled', 'disabled');
@@ -102,23 +109,26 @@
         }
 
         $('#save-button').click(function(e) {
+            if (richTextCaptions == 'Y' && !validateTinyMCEEditors()) {
+                return false;
+            }
             $('#article-image-edit-form form').submit();
         });
 
         if (parent) { // updates parent view
 
-            if (currentCaption.length > 0) {
-                {% if rich_text_caption == 'Y' %}
+            if (currentCaption !== null && currentCaption.length > 0) {
+                if (richTextCaptions == 'Y') {
                     parent.$('{{'#image-%d-caption'|format(image.id)}}').html(currentCaption);
-                {% else %}
+                } else {
                     parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
-                {% endif %}
+                }
             } else {
-                {% if rich_text_caption == 'Y' %}
-                    parent.$('{{'#image-%d-caption'|format(image.id)}}').html("{{ form.vars.value.description }}");
-                {% else %}
-                    parent.$('{{'#image-%d-caption'|format(image.id)}}').text("{{ form.vars.value.description }}");
-                {% endif %}
+                if (richTextCaptions == 'Y') {
+                    parent.$('{{'#image-%d-caption'|format(image.id)}}').html("{{ form.vars.value.description|raw|escape('js') }}");
+                } else {
+                    parent.$('{{'#image-%d-caption'|format(image.id)}}').text("{{ form.vars.value.description|raw|escape('js') }}");
+                }
             }
         }
     });

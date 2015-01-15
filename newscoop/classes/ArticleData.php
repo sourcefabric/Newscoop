@@ -308,7 +308,11 @@ class ArticleData extends DatabaseObject {
             $attr = explode('=', $attr);
             if (isset($attr[0]) && !empty($attr[0])) {
                 $attrName = trim(strtolower($attr[0]));
-                $attrValue = isset($attr[1]) ? $attr[1] : '';
+                if (isset($attr[1]) && count($attr) > 2) {
+                    $attrValue = implode('=', array_slice($attr, 1));
+                } else {
+                   $attrValue = isset($attr[1]) ? $attr[1] : '';
+                }
                 // Strip out the quotes
                 $attrValue = str_replace('"', '', $attrValue);
                 $attrs[$attrName] = $attrValue;
