@@ -22,7 +22,7 @@ class TopicTranslationType extends AbstractType
             'constraints' => array(
                 new Assert\NotBlank(),
                 new Assert\Length(array(
-                    'max' => 25,
+                    'max' => 60,
                 ))
             ),
             'error_bubbling' => true

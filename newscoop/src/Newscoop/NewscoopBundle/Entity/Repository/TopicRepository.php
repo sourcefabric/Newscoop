@@ -13,11 +13,18 @@ use Doctrine\ORM\Query;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Closure;
 use Gedmo\Translatable\TranslatableListener;
+use Gedmo\Tool\Wrapper\EntityWrapper;
+use Gedmo\Exception\InvalidArgumentException;
 
 class TopicRepository extends NestedTreeRepository
 {
     public $onChildrenQuery;
 
+    /**
+     * Get all topics
+     *
+     * @return Doctrine\ORM\Query
+     */
     public function getTopics()
     {
         $meta = $this->getClassMetadata();
@@ -40,7 +47,14 @@ class TopicRepository extends NestedTreeRepository
         return $query;
     }
 
-    public function findAllParentChoises(Topic $node = null)
+    /**
+     * Get all parent choices
+     *
+     * @param Topic|null $node Topic object
+     *
+     * @return array
+     */
+    public function findAllParentChoices(Topic $node = null)
     {
         $dql = "SELECT c FROM {$this->_entityName} c";
         if (!is_null($node)) {
@@ -92,139 +106,14 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Saves topic position when it was dragged and dropped
-     *
-     * @param Topic   $node     Dragged topic object
-     * @param int     $parentId Parent of dragged topic
-     * @param boolean $asRoot   If topic is dragged from children to root level
-     * @param array   $params   Parameters with positions
-     *
-     * @return boolean
-     */
-    public function saveTopicPosition(Topic $node, $params)
-    {
-        if (isset($params['parent']) && $params['parent']) {
-            $parent = $this->findOneBy(array(
-                'id' => $params['parent'],
-            ));
-
-            if (!$parent) {
-                return false;
-            }
-
-            $node->setOrder(null);
-            foreach ($params as $key => $isSet) {
-                switch ($key) {
-                    case 'first':
-                        if ($isSet) {
-                            $this->persistAsFirstChildOf($node, $parent);
-                        }
-                        break;
-                    case 'last':
-                        if ($isSet) {
-                            $this->persistAsLastChildOf($node, $parent);
-                        }
-                        break;
-                    case 'middle':
-                        if ($isSet) {
-                            $this->persistAsNextSiblingOf($node, $parent);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        // when dragging childrens to roots
-        if (isset($params['asRoot']) && $params['asRoot']) {
-            $node->setParent(null);
-        }
-
-        $this->_em->flush();
-
-        return true;
-    }
-
-    /**
-     * Reorder root topics
-     *
-     * @param array $rootNodes Root topics
-     * @param array $order     Topics ids in order
-     *
-     * @return boolean
-     */
-    public function reorderRootNodes($rootNodes, $order = array())
-    {
-        foreach ($rootNodes as $rootNode) {
-            $rootNode->setOrder(null);
-        }
-
-        $this->_em->flush();
-
-        if (count($order) > 1) {
-            $counter = 0;
-
-            foreach ($order as $item) {
-                foreach ($rootNodes as $rootNode) {
-                    if ($rootNode->getId() == $item) {
-                        $rootNode->setOrder($counter + 1);
-                        $counter++;
-                    }
-                }
-            }
-        } else {
-            $counter = 1;
-            foreach ($rootNodes as $rootNode) {
-                $rootNode->setOrder($counter);
-                $counter++;
-            }
-        }
-
-        $this->_em->flush();
-
-        return true;
-    }
-
-    /**
-     * Saves new topic
-     *
-     * @param Topic       $node   Topic object
-     * @param string|null $locale Language code
-     *
-     * @return boolean
-     */
-    public function saveNewTopic(Topic $node, $locale = null)
-    {
-        $meta = $this->getClassMetadata();
-        $config = $this->listener->getConfiguration($this->_em, $meta->name);
-        $node->setTranslatableLocale($locale ?: $node->getTranslatableLocale());
-        if (!$node->getParent()) {
-            $qb = $this->getQueryBuilder('t')
-                ->from($config['useObjectClass'], 't');
-            $maxOrderValue = $qb
-                ->select('MAX(t.topicOrder)')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getSingleScalarResult();
-
-            $node->setOrder((int) $maxOrderValue + 1);
-        }
-
-        $this->_em->persist($node);
-        $this->_em->flush();
-
-        return true;
-    }
-
-    /**
      * Gets the single topic's query by id
      *
-     * @param int $id Topic id
+     * @param int    $id     Topic id
+     * @param string $locale Language code
      *
      * @return Query $query Query object
      */
-    public function getSingleTopicQuery($id)
+    public function getSingleTopicQuery($id, $locale = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
@@ -237,7 +126,7 @@ class TopicRepository extends NestedTreeRepository
 
         $query = $queryBuilder->getQuery();
 
-        return $query;
+        return $this->setTranslatableHint($query, $locale);
     }
 
     /**
@@ -245,7 +134,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @param Query $query Query object
      */
-    public function getTranslatableTopicsQuery($locale, $order = 'asc')
+    public function getTranslatableTopics($locale, $order = 'asc')
     {
         $query = $this
             ->getQueryBuilder()
@@ -329,12 +218,12 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return Query
      */
-    public function searchTopicsQuery($query, $sort = array())
+    public function searchTopics($query, $sort = array(), $limit = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
         $qb = $this->getQueryBuilder()
-            ->select('t')
+            ->select('t', 'tt')
             ->from($config['useObjectClass'], 't')
             ->leftJoin('t.translations', 'tt')
             ->where("tt.field = 'title'");
@@ -351,7 +240,54 @@ class TopicRepository extends NestedTreeRepository
             }
         }
 
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
         return $this->setTranslatableHint($qb->getQuery());
+    }
+
+    /**
+     * Find topic options
+     *
+     * @return array
+     */
+    public function findOptions()
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('t.id, t.title as name')
+            ->orderBy('t.title')
+            ->getQuery();
+
+        $options = array();
+        foreach ($query->getResult() as $row) {
+            $options[$row['id']] = $row['name'];
+        }
+
+        return $options;
+    }
+
+    /**
+     * Gets topic's path
+     *
+     * @param Topic $topic Topic
+     *
+     * @return string Path of the topic
+     */
+    public function getReadablePath(Topic $topic, $locale = null)
+    {
+        $pathQuery = $this->getPathQuery($topic);
+        if ($locale) {
+            $this->setTranslatableHint($pathQuery, $locale);
+        }
+
+        $path = $pathQuery->getArrayResult();
+        $pathStr = '';
+        foreach ($path as $element) {
+            $pathStr = $pathStr . ' / ' . $element['title'];
+        }
+
+        return $pathStr;
     }
 
     /**
@@ -368,7 +304,7 @@ class TopicRepository extends NestedTreeRepository
     public function getArticleTopics($articleNr, $languageCode, $order = "asc")
     {
         $em = $this->getEntityManager();
-        $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsQuery($articleNr, true);
+        $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsIds($articleNr, true);
         $articleTopicsIds = $articleTopicsIds->getArrayResult();
         $topicsIds = array();
         foreach ($articleTopicsIds as $key => $value) {
@@ -391,5 +327,170 @@ class TopicRepository extends NestedTreeRepository
         $query = $this->setTranslatableHint($query, $languageCode);
 
         return $query;
+    }
+
+    /**
+     * Count topics by given criteria
+     *
+     * @param array $criteria
+     *
+     * @return integer
+     */
+    public function countBy(array $criteria = array())
+    {
+        $queryBuilder = $this->getQueryBuilder()
+            ->select('COUNT(t)')
+            ->from($this->getEntityName(), 't');
+
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $queryBuilder->andWhere("t.$property = :$property");
+            }
+        }
+
+        $query = $queryBuilder->getQuery();
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $query->setParameter($property, $value);
+            }
+        }
+
+        return (int) $query->getSingleScalarResult();
+    }
+
+    /**
+     * Gets topic by given id or name
+     *
+     * @param string|integer $topicIdOrName Topicid or name
+     * @param string         $locale        Current locale
+     *
+     * @return Query
+     */
+    public function getTopicByIdOrName($topicIdOrName, $locale)
+    {
+        $qb = $this->getQueryBuilder()
+            ->select('t', 'tt', "p")
+            ->from($this->getEntityName(), 't')
+            ->leftJoin("t.translations", "tt")
+            ->leftJoin("t.parent", "p")
+            ->where("tt.field = 'title'");
+
+        if (is_numeric($topicIdOrName)) {
+            $qb
+                 ->andWhere("t.id = :id")
+                 ->setParameter("id", $topicIdOrName);
+        } else {
+            $qb
+                ->andWhere("t.title = :title")
+                ->setParameter("title", $topicIdOrName);
+        }
+
+        $topic = $this->setTranslatableHint($qb->getQuery(), $locale);
+
+        return $topic;
+    }
+
+    /**
+     * @see getChildrenQueryBuilder
+     */
+    public function childrenWithTranslations($node = null, $locale = null, $direct = false, $sortByField = null, $direction = 'ASC', $includeNode = false)
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+
+        $qb = $this->getQueryBuilder();
+        $qb->select('node', 't')
+            ->from($config['useObjectClass'], 'node')
+            ->leftJoin('node.translations', 't')
+        ;
+        if ($node !== null) {
+            if ($node instanceof $meta->name) {
+                $wrapped = new EntityWrapper($node, $this->_em);
+                if (!$wrapped->hasValidIdentifier()) {
+                    throw new InvalidArgumentException("Node is not managed by UnitOfWork");
+                }
+                if ($direct) {
+                    $id = $wrapped->getIdentifier();
+                    $qb->where($id === null ?
+                        $qb->expr()->isNull('node.'.$config['parent']) :
+                        $qb->expr()->eq('node.'.$config['parent'], is_string($id) ? $qb->expr()->literal($id) : $id)
+                    );
+                } else {
+                    $left = $wrapped->getPropertyValue($config['left']);
+                    $right = $wrapped->getPropertyValue($config['right']);
+                    if ($left && $right) {
+                        $qb
+                            ->where($qb->expr()->lt('node.'.$config['right'], $right))
+                            ->andWhere($qb->expr()->gt('node.'.$config['left'], $left))
+                        ;
+                    }
+                }
+                if (isset($config['root'])) {
+                    $rootId = $wrapped->getPropertyValue($config['root']);
+                    $qb->andWhere($rootId === null ?
+                        $qb->expr()->isNull('node.'.$config['root']) :
+                        $qb->expr()->eq('node.'.$config['root'], is_string($rootId) ? $qb->expr()->literal($rootId) : $rootId)
+                    );
+                }
+                if ($includeNode) {
+                    $idField = $meta->getSingleIdentifierFieldName();
+                    $qb->where('('.$qb->getDqlPart('where').') OR node.'.$idField.' = :rootNode');
+                    $qb->setParameter('rootNode', $node);
+                }
+            } else {
+                throw new \InvalidArgumentException("Node is not related to this repository");
+            }
+        } else {
+            if ($direct) {
+                $qb->where($qb->expr()->isNull('node.'.$config['parent']));
+            }
+        }
+        if (!$sortByField) {
+            $qb->orderBy('node.'.$config['left'], 'ASC');
+        } elseif (is_array($sortByField)) {
+            $fields = '';
+            foreach ($sortByField as $field) {
+                $fields .= 'node.'.$field.',';
+            }
+            $fields = rtrim($fields, ',');
+            $qb->orderBy($fields, $direction);
+        } else {
+            if ($meta->hasField($sortByField) && in_array(strtolower($direction), array('asc', 'desc'))) {
+                $qb->orderBy('node.'.$sortByField, $direction);
+            } else {
+                throw new InvalidArgumentException("Invalid sort options specified: field - {$sortByField}, direction - {$direction}");
+            }
+        }
+
+        return $this->setTranslatableHint($qb->getQuery(), $locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRootNodes($locale = null, $childrenLevel = false, $sortByField = null, $direction = 'asc')
+    {
+        $meta = $this->getClassMetadata();
+        $config = $this->listener->getConfiguration($this->_em, $meta->name);
+        $qb = $this->getQueryBuilder();
+        $qb
+            ->select('node', 't', 'c')
+            ->from($config['useObjectClass'], 'node')
+            ->leftJoin('node.translations', 't')
+            ->leftJoin('node.children', 'c');
+
+        if (!$childrenLevel) {
+            $qb->where($qb->expr()->isNull('node.'.$config['parent']));
+        } else {
+            $qb->where($qb->expr()->isNull('node.'.$config['parent']));
+        }
+
+        if ($sortByField !== null) {
+            $qb->orderBy('node.'.$sortByField, strtolower($direction) === 'asc' ? 'asc' : 'desc');
+        } else {
+            $qb->orderBy('node.'.$config['left'], 'ASC');
+        }
+
+        return $this->setTranslatableHint($qb->getQuery(), $locale);
     }
 }

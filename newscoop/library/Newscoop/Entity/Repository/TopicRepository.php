@@ -7,7 +7,6 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime;
 use Newscoop\Datatable\Source as DatatableSource;
 
 /**
@@ -37,10 +36,10 @@ class TopicRepository extends DatatableSource
     /**
      * Gets a list of topics matching the parameter name
      *
-     * @param  string $name  Name to search for
-     * @param  mixed  $limit Limit results
+     * @param string $name  Name to search for
+     * @param mixed  $limit Limit results
      *
-     * @return mixed       Returns array with topics or null
+     * @return mixed Returns array with topics or null
      */
     public function getTopicsByName($name, $limit = null)
     {
@@ -71,7 +70,6 @@ class TopicRepository extends DatatableSource
             ->select('t.id, t.name')
             ->orderBy('t.name')
             ->getQuery();
-
 
         $options = array();
         foreach ($query->getResult() as $row) {

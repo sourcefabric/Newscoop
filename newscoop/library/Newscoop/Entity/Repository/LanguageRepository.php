@@ -20,8 +20,8 @@ class LanguageRepository extends EntityRepository
     /**
      * Save language
      *
-     * @param Newscoop\Entity\Language $language
-     * @param array $values
+     * @param  Newscoop\Entity\Language $language
+     * @param  array                    $values
      * @return void
      */
     public function save(Language $language, array $values)
@@ -79,7 +79,7 @@ class LanguageRepository extends EntityRepository
     /**
      * Delete language
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function delete($id)
@@ -105,9 +105,22 @@ class LanguageRepository extends EntityRepository
     }
 
     /**
+     * Get languages query
+     *
+     * @return array
+     */
+    public function getAllLanguages($order = 'asc')
+    {
+        $qb = $this->createQueryBuilder('l');
+
+        return $qb->orderBy('l.name', $order)
+            ->getQuery();
+    }
+
+    /**
      * Check if in use
      *
-     * @param Language $language
+     * @param  Language $language
      * @return bool
      */
     public function isUsed(Language $language)
@@ -155,8 +168,8 @@ class LanguageRepository extends EntityRepository
     /**
      * Tries to find Language entity by string. String should be in correct RFC3066bis standard.
      *
-     * @param  string $languageString   Language string
-     * @param  string $firstResultOnly  Return first result
+     * @param string $languageString  Language string
+     * @param string $firstResultOnly Return first result
      *
      * @return \Newscoop\Entity\Language|null Returns found entity or null
      */

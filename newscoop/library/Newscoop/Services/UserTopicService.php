@@ -9,7 +9,7 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\EventDispatcher;
-use Newscoop\Entity\Topic;
+use Newscoop\NewscoopBundle\Entity\Topic;
 use Newscoop\Entity\User;
 use Newscoop\Entity\UserTopic;
 use Newscoop\Topic\SaveUserTopicsCommand;
@@ -27,7 +27,7 @@ class UserTopicService
     protected $dispatcher;
 
     /**
-     * @param Doctrine\ORM\EntityManager $em
+     * @param Doctrine\ORM\EntityManager               $em
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
      */
     public function __construct(EntityManager $em, $dispatcher = null)
@@ -39,8 +39,8 @@ class UserTopicService
     /**
      * Follow topic by user
      *
-     * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param  Newscoop\Entity\User                 $user
+     * @param  Newscoop\NewscoopBundle\Entity\Topic $topic
      * @return void
      */
     public function followTopic(User $user, Topic $topic)
@@ -56,8 +56,8 @@ class UserTopicService
     /**
      * Unfollow topic
      *
-     * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param  Newscoop\Entity\User                 $user
+     * @param  Newscoop\NewscoopBundle\Entity\Topic $topic
      * @return void
      */
     public function unfollowTopic(User $user, Topic $topic)
@@ -84,14 +84,16 @@ class UserTopicService
     /**
      * Get user topics
      *
-     * @param mixed $user
+     * @param mixed  $user   User id or object
+     * @param string $locale Current locale
+     *
      * @return array
      */
-    public function getTopics($user)
+    public function getTopics($user, $locale = null)
     {
         $userId = is_int($user) ? $user : $user->getId();
         $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
-            ->findByUser($userId);
+            ->findByUser($userId, $locale);
 
         $topics = array();
         foreach ($userTopics as $userTopic) {
@@ -104,35 +106,26 @@ class UserTopicService
     /**
      * Find topic
      *
-     * @param int $id
-     * @return Newscoop\Entity\Topic
+     * @param  int                                  $id
+     * @return Newscoop\NewscoopBundle\Entity\Topic
      */
     public function findTopic($id)
     {
-        $topics = $this->em->getRepository('Newscoop\Entity\Topic')
-            ->findBy(array(
-                'id' => $id,
-            ));
+        $topic = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
 
-        if (empty($topics)) {
+        if (!$topic) {
             return null;
         }
 
-        $germanTopic = null;
-        foreach ($topics as $topic) {
-            if (5 == $topic->getLanguageId()) { // first go for german
-                $germanTopic = $topic;
-                break;
-            }
-        }
-
-        return empty($germanTopic) ? $topics[0] : $germanTopic;
+        return $topic;
     }
 
     /**
      * Save user topics command
      *
-     * @param Newscoop\Topic\SaveUserTopicsCommand $command
+     * @param  Newscoop\Topic\SaveUserTopicsCommand $command
      * @return void
      */
     public function saveUserTopics(SaveUserTopicsCommand $command)
@@ -153,11 +146,9 @@ class UserTopicService
 
         $user = $this->em->getReference('Newscoop\Entity\User', $command->userId);
         foreach ($command->selected as $topicId) {
-            $topic = $this->em->getReference('Newscoop\Entity\Topic', array(
-                'id' => $topicId,
-                'language' => (int) $command->languageId,
-            ));
-            $this->em->persist(new UserTopic($user, $topic));
+            $language = $this->em->getReference('Newscoop\Entity\Language', $command->languageId);
+            $topic = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->getSingleTopicQuery($topicId, $language->getCode());
+            $this->em->persist(new UserTopic($user, $topic->getOneOrNullResult()));
         }
 
         $this->em->flush();
@@ -176,8 +167,8 @@ class UserTopicService
         $repository = $this->em->getRepository('Newscoop\Entity\UserTopic');
         $userTopics = $repository->findByUser($user);
         $matches = array();
-        foreach($userTopics as $topic){
-            if(array_key_exists($topic->getTopicId(), $topics)) {
+        foreach ($userTopics as $topic) {
+            if (array_key_exists($topic->getTopicId(), $topics)) {
                 $matches[$topic->getTopicId()] = $topic;
             }
         }
@@ -189,7 +180,7 @@ class UserTopicService
                         $this->em->remove($match);
                     }
                 }
-            } else if ($status === 'true' && !array_key_exists($topicId, $matches)) {
+            } elseif ($status === 'true' && !array_key_exists($topicId, $matches)) {
                 $topic = $this->findTopic($topicId);
                 if ($topic) {
                     $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
@@ -203,8 +194,8 @@ class UserTopicService
     /**
      * Dispatch event
      *
-     * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param Newscoop\Entity\User                 $user
+     * @param Newscoop\NewscoopBundle\Entity\Topic $topic
      */
     private function notify(User $user, Topic $topic)
     {

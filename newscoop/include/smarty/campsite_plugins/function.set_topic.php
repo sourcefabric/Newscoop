@@ -23,23 +23,26 @@ function smarty_function_set_topic($p_params, &$p_smarty)
     $campsite = $p_smarty->getTemplateVars('gimme');
 
     if (isset($p_params['identifier'])) {
-    	$attrName = 'identifier';
-    	$attrValue = $p_params['identifier'];
+        $attrName = 'identifier';
+        $attrValue = $p_params['identifier'];
         $topicId = intval($p_params['identifier']);
     } elseif (isset($p_params['name'])) {
-    	$attrName = 'name';
-    	$attrValue = $p_params['name'];
-    	$topic = Topic::GetByFullName($p_params['name']);
-        if (!is_null($topic) && $topic->exists()) {
-            $topicId = $topic->getTopicId();
+        $attrName = 'name';
+        $attrValue = $p_params['name'];
+        $topicService = \Zend_Registry::get('container')->getService('newscoop_newscoop.topic_service');
+        $topic = $topicService->getTopicByFullName($p_params['name']);
+        if (!is_null($topic) && $topic) {
+            $topicId = $topic->getId();
         } else {
-	    	$campsite->topic->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
-        	return false;
+            $campsite->topic->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
+
+            return false;
         }
     } else {
-    	$property = array_shift(array_keys($p_params));
+        $property = array_shift(array_keys($p_params));
         CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_topic");
-    	return false;
+
+        return false;
     }
 
     if ($campsite->topic->defined
@@ -51,8 +54,6 @@ function smarty_function_set_topic($p_params, &$p_smarty)
     if ($topicObj->defined) {
         $campsite->topic = $topicObj;
     } else {
-    	$campsite->topic->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
+        $campsite->topic->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
     }
 } // fn smarty_function_set_topic
-
-?>

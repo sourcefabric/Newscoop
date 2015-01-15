@@ -116,31 +116,6 @@
     color: #FFF !important;
 }
 
-.bs-callout {
-	padding: 20px;
-	margin: 20px 0;
-	border: 1px solid #eee;
-	border-left-width: 5px;
-	border-radius: 3px;
-}
-
-.bs-callout-info {
-	border-left-color: #5bc0de;
-}
-
-.bs-callout-info h4 {
-	color: #5bc0de;
-}
-
-.bs-callout h4 {
-	margin-top: 0;
-	margin-bottom: 5px;
-}
-
-.bs-callout p:last-child {
-	margin-bottom: 0;
-}
-
 .action-buttons a {
 	padding: 0px 2px;
 }
@@ -186,24 +161,15 @@
     box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-.input-group {
-    margin: 0 15px;
+.iframe-view {
+	padding-right: 75px;
 }
 
-.form-group input {
-	width: 390px;
+.topics-top {
+	z-index: 99999;
+	padding: 0 75px;
 }
 
-.list-group-item {
-	padding: 3px 15px;
-}
-
-.list-group-item > .badge {
-	float: left;
-	margin-right: 10px;
-}
-
-.list-group {
-	margin-bottom: 0;
+.with-margin-top {
 	margin-top: 10px;
 }

@@ -1023,7 +1023,7 @@ class Article implements DocumentInterface
      *
      * @return boolean
      */
-    public function addTopic($topic)
+    public function addTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
 
         if (!$this->topics->contains($topic)) {
@@ -1043,7 +1043,7 @@ class Article implements DocumentInterface
      *
      * @return boolean
      */
-    public function removeTopic($topic)
+    public function removeTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
         if ($this->topics->contains($topic)) {
             $this->topics->removeElement($topic);

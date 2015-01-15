@@ -1,31 +1,69 @@
-<a href="#" style="font-size: 12px;" class="show_tooltip"><span class="glyphicon glyphicon-question-sign" ></span> Tell me more about this.</a>
-<div class="ns-tip" style="
-background: #428BCA;
-border: 1px solid #CCC;
-color: #FFF;
-padding: 5px 5px 5px 5px;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
-border-radius: 10px;
-max-width: 600px;
-min-height: 50px;
-display:none;
-margin-top: 7px;
-">
-            <span class="glyphicon glyphicon-question-sign pull-left" style="
-        font-size: 30px;
-        margin: 0px 10px;
-    "></span>
-        <p style="
-    padding: 4px;
-    margin-bottom: 0px;
-">{{ tipMessage }}</p>
-        <div class="clearfix"></div>
-    </div>
+<style type="text/css" media="screen">
+.coverMessageButton {
+    overflow:hidden;
+    text-align:left;
+    text-transform:uppercase;
+    font-size:11px;
+    font-weight:600;
+    padding-left:22px;
+    cursor:pointer;
+    margin-bottom:10px;
+    line-height:16px;
+}
 
+.coverMessageButton:before {
+    content:"";
+    display:inline-block;
+    height:1px;
+    position:relative;
+    vertical-align:middle;
+    width:100%;
+    top:-2px;
+    right:.6em;
+    margin-left:-100%;
+    background-color:#ccc;
+}
+
+.coverMessageButton:after {
+    background-color:#ccc;
+    content:"";
+    display:inline-block;
+    height:1px;
+    position:relative;
+    vertical-align:middle;
+    width:100%;
+    top:-2px;
+    left:.6em;
+    margin-right:-100%;
+}
+
+.coverMessageButton .glyphicon {
+    font-size:12px;
+    margin-right:4px;
+}
+
+.coverMessage {
+    margin-top:-19px;
+    display:none;
+    font-size:13px;
+    line-height:18px;
+    border-color:#ccc;
+    border-style:solid;
+    border-width:0 1px 1px;
+    padding:20px;
+}
+
+.coverMessage.open {
+    display:block;
+}
+</style>
+<div class="coverMessageButton"><span class="glyphicon glyphicon-question-sign"></span>
+    {{ 'importantmessage'|trans }}
+</div>
+<div class="coverMessage">{{ tipMessage }}</div>
 <script type="text/javascript">
-    $('.show_tooltip').click(function(e){
+    $('.coverMessageButton').click(function(e){
         e.preventDefault();
-        $('.ns-tip').toggle();
+        $('.coverMessage').toggle();
     })
 </script>

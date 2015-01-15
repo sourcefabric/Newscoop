@@ -195,7 +195,8 @@ class Builder
         return $current;
     }
 
-    private function decorateMenu($menu) {
+    private function decorateMenu($menu)
+    {
         foreach ($menu as $key => $value) {
             $value->setLinkAttribute('class', 'fg-button fg-button-menu ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
         }
@@ -632,11 +633,8 @@ class Builder
             ));
         }
 
-        $this->addChild($menu, $translator->trans('Topics'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'topics',
-                'action' => 'index.php',
-            ),
+        $this->addChild($menu, $translator->trans('Topics'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_topics_index'),
             'resource' => 'topic',
             'privilege' => 'manage'
         ));
@@ -852,7 +850,6 @@ class Builder
 
             return;
         }
-
 
         if ($this->user->hasPermission('plugin_manager')) {
             $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'),  array('uri' => $this->container->get('router')->generate('newscoop_newscoop_plugins_index')));

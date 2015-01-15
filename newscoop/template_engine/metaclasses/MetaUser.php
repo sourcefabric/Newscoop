@@ -237,9 +237,10 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         }
 
         $service = \Zend_Registry::get('container')->getService('user.topic');
+        $locale = \CampTemplate::singleton()->context()->language->code;
         $topics = array();
-        foreach ($service->getTopics($this->m_dbObject) as $topic) {
-            $topics[$topic->getTopicId()] = $topic->getName();
+        foreach ($service->getTopics($this->m_dbObject, $locale) as $topic) {
+            $topics[$topic->getId()] = $topic->getName();
         }
 
         return $topics;

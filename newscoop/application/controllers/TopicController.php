@@ -20,17 +20,16 @@ class TopicController extends Zend_Controller_Action
 
         $language = $em->getRepository('Newscoop\Entity\Language')
             ->findOneByCode($this->_getParam('language'));
-        $topic = $em->getRepository('Newscoop\Entity\Topic')
-            ->findOneBy(array(
-                'id' => $topicId, 
-                'language' => $language->getId()
-            ));
+        $query = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+            ->getSingleTopicQuery($topicId, $language->getCode());
+
+        $topic = $query->getOneOrNullResult();
 
         if (!$topic) {
             throw new \Exception('We can\'t find that topic');
         }
 
-        $gimme->topic = new \MetaTopic($topic->getTopicId());
+        $gimme->topic = new \MetaTopic($topic->getId());
         $this->view->topic = $gimme->topic;
     }
 }

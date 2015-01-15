@@ -122,6 +122,12 @@ class Topic
      */
     protected $articles;
 
+    /**
+     * Link to topic articles resource
+     * @var string
+     */
+    protected $articlesLink;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -142,6 +148,16 @@ class Topic
     }
 
     /**
+     * Gets the value of id.
+     *
+     * @return mixed
+     */
+    public function getTopicId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Sets the value of id.
      *
      * @param mixed $id the id
@@ -149,6 +165,20 @@ class Topic
      * @return self
      */
     public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of id.
+     *
+     * @param mixed $id the id
+     *
+     * @return self
+     */
+    public function setTopicId($id)
     {
         $this->id = $id;
 
@@ -173,6 +203,30 @@ class Topic
      * @return self
      */
     public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of title.
+     *
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the value of title.
+     *
+     * @param mixed $title the title
+     *
+     * @return self
+     */
+    public function setName($title)
     {
         $this->title = $title;
 
@@ -238,6 +292,18 @@ class Topic
     }
 
     /**
+     * Gets the integer value of parent.
+     *
+     * @return integer
+     */
+    public function getParentAsInteger()
+    {
+        if ($this->parent) {
+            return (int) $this->parent->getId();
+        }
+    }
+
+    /**
      * Sets the value of parent.
      *
      * @param mixed $parent the parent
@@ -249,6 +315,20 @@ class Topic
         $this->parent = $parent;
 
         return $this;
+    }
+
+    /**
+     * Checkes if topic is root
+     *
+     * @return boolean
+     */
+    public function isRoot()
+    {
+        if ($this->root == $this->id) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -554,5 +634,36 @@ class Topic
         $view->value = sprintf('%s:%s', $this->title, $this->locale);
 
         return $view;
+    }
+
+    /**
+     * Gets object
+     *
+     * @return Topic
+     */
+    public function getObject()
+    {
+        return clone $this;
+    }
+
+    /**
+     * Set link to topic articles resource
+     *
+     * @param string $articlesLink Link to topic articles resource
+     */
+    public function setArticlesLink($articlesLink)
+    {
+        $this->articlesLink = $articlesLink;
+
+        return $this;
+    }
+
+    /**
+     * Get link to topic articles resource
+     * @return string Link to topic articles resource
+     */
+    public function getArticlesLink()
+    {
+        return $this->articlesLink;
     }
 }

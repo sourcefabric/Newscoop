@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Article topic entity
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  * @ORM\Table(name="ArticleTopics")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  */
 class ArticleTopic
 {
@@ -55,7 +56,7 @@ class ArticleTopic
     /**
      * Get Topic
      *
-     * @return Newscoop\Entity\TopicNames
+     * @return Newscoop\NewscoopBundle\Entity\Topic
      */
     public function getTopic()
     {

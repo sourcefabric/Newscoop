@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserTopicRepository")
@@ -31,20 +31,19 @@ class UserTopic
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Topic")
+     * @ORM\ManyToOne(targetEntity="Newscoop\NewscoopBundle\Entity\Topic")
      * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="topic_id", referencedColumnName="fk_topic_id"),
-     *      @ORM\JoinColumn(name="topic_language", referencedColumnName="fk_language_id")
+     *      @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
      *  })
-     * @var Topic
+     * @var \Newscoop\NewscoopBundle\Entity\Topic
      */
     protected $topic;
 
     /**
-     * @param User $user
-     * @param Topic $topic
+     * @param User                                  $user
+     * @param \Newscoop\NewscoopBundle\Entity\Topic $topic
      */
-    public function __construct(User $user, Topic $topic)
+    public function __construct(User $user, \Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
         $this->user = $user;
         $this->topic = $topic;
@@ -53,7 +52,7 @@ class UserTopic
     /**
      * Get topic
      *
-     * @return Topic
+     * @return \Newscoop\NewscoopBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -67,6 +66,6 @@ class UserTopic
      */
     public function getTopicId()
     {
-        return $this->topic->getTopicId();
+        return $this->topic->getId();
     }
 }

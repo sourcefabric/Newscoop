@@ -1,92 +1,165 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
+ * @copyright 2014 Sourcefabric z.ú.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 /**
- * Includes
+ * Meta topic class
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Topic.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+class MetaTopic
+{
+    /**
+     * Topic
+     * @var Topic object
+     */
+    private $topic;
 
-/**
- * @package Campsite
- */
-final class MetaTopic extends MetaDbObject {
+    /**
+     * Topic id
+     * @var integer
+     */
+    public $identifier;
 
+    /**
+     * Topic name
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Topic full name e.g. topic:en
+     * @var string
+     */
+    public $value;
+
+    /**
+     * Is topic root
+     * @var boolean
+     */
+    public $is_root;
+
+    /**
+     * Parent topic
+     * @var MetaTopic
+     */
+    public $parent;
+
+    /**
+     * Checks if topic is defined
+     * @var boolean
+     */
+    public $defined;
+
+    /**
+     * Alias to identifier
+     * @var integer
+     */
+    public $id;
+
+    /**
+     * Construct
+     *
+     * @param string $topicIdOrName
+     */
     public function __construct($topicIdOrName = null)
     {
+        if (!$topicIdOrName) {
+            return null;
+        }
+
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('MetaTopic', $topicIdOrName), 'article');
+        $cacheKey = $cacheService->getCacheKey(array('MetaTopic', $topicIdOrName), 'topic');
         if ($cacheService->contains($cacheKey)) {
-            $this->m_dbObject = $cacheService->fetch($cacheKey);
+            $this->topic = $cacheService->fetch($cacheKey);
         } else {
-            $this->m_dbObject = new Topic($topicIdOrName);
-            $cacheService->save($cacheKey, $this->m_dbObject);
+            $em = \Zend_Registry::get('container')->getService('em');
+            $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+            $locale = $this->getLocale();
+            $topic = $repository->getTopicByIdOrName($topicIdOrName, $locale)->getArrayResult();
+
+            if (!empty($topic)) {
+                $this->topic = $topic[0];
+                $this->topic['locale'] = $locale;
+            }
+
+            $cacheService->save($cacheKey, $this->topic);
         }
-        if (!$this->m_dbObject->exists()) {
-            $this->m_dbObject = new Topic();
+
+        if (empty($this->topic)) {
+            return null;
         }
 
-        $this->m_properties['identifier'] = 'id';
-
-        $this->m_customProperties['name'] = 'getName';
-        $this->m_customProperties['value'] =  'getValue';
-        $this->m_customProperties['is_root'] = 'isRoot';
-        $this->m_customProperties['parent'] = 'getParent';
-        $this->m_customProperties['defined'] = 'defined';
-    } // fn __construct
-
-
-    public function getName($p_languageId = null)
-    {
-    	if (is_null($p_languageId)) {
-    		$p_languageId = CampTemplate::singleton()->context()->language->number;
-    	}
-    	return $this->m_dbObject->getName($p_languageId);
+        $this->id = $this->topic['id'];
+        $this->identifier = $this->topic['id'];
+        $this->name = $this->getName();
+        $this->value = $this->getValue();
+        $this->is_root = $this->isRoot();
+        $this->parent = $this->getParent();
+        $this->defined = isset($this->topic);
     }
 
+    protected function getName($languageId = null)
+    {
+        if ($languageId) {
+            $em = \Zend_Registry::get('container')->getService('em');
+            $locale = $em->getReference('Newscoop\Entity\Language', $languageId)->getCode();
+            $titleByLanguage = null;
+            foreach ($this->topic['translations'] as $translation) {
+                if ($translation['locale'] === $locale) {
+                    $titleByLanguage = $translation['content'];
+                }
+            }
+
+            return $titleByLanguage;
+        }
+
+        return $this->topic['title'];
+    }
+
+    protected function getLocale()
+    {
+        return \CampTemplate::singleton()->context()->language->code;
+    }
 
     protected function getValue()
     {
-        if (!isset($this->m_dbObject) || !$this->m_dbObject->exists()) {
+        if (!isset($this->topic) || empty($this->topic)) {
             return null;
         }
 
-        $language = CampTemplate::singleton()->context()->language;
-        $name = $this->m_dbObject->getName($language->number);
+        $name = $this->topic['title'];
         if (empty($name)) {
             return null;
         }
-        return $name.':'.$language->code;
-    }
 
+        return $name.':'.$this->topic['locale'];
+    }
 
     protected function isRoot()
     {
-        return (int)$this->m_dbObject->isRoot();
-    }
+        if (isset($this->topic['id']) && isset($this->topic['root'])) {
+            if ($this->topic['root'] == $this->topic['id']) {
+                return true;
+            }
 
+            return false;
+        }
+    }
 
     protected function getParent()
     {
-        return new MetaTopic($this->m_dbObject->getParentId());
+        if (isset($this->topic['id']) && isset($this->topic['parent'])) {
+            return new MetaTopic($this->topic['parent']['id']);
+        }
+
+        return null;
     }
-
-
-    public function IsValid($p_value)
-    {
-        $topic = Topic::GetByFullName($p_value);
-        return !is_null($topic);
-    }
-
 
     public static function GetTypeName()
     {
         return 'topic';
     }
-} // class MetaTopic
-
-?>
+}
