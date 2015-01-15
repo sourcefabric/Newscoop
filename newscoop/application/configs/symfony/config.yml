@@ -170,6 +170,9 @@ newscoop_gimme:
     allow_origin:
         - "*"
 
+bazinga_js_translation:
+    locale_fallback: en
+
 nelmio_api_doc:
     name:                     Newscoop REST API documentation
     request_listener:
