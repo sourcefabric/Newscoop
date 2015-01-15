@@ -436,7 +436,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
      *
      * @method expandCollapseAll
      */
-    $scope.expandCollapseAll = function(s) {
+    $scope.expandCollapseAll = function() {
       var scope = getRootNodesScope();
       if (!scope.ex) {
         scope.ex = true;
@@ -498,14 +498,15 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
      * Adds a new topic
      *
      * @method addNewTopic
-     * @param topicId {integer} Parent topic's id
+     * @param scope {Object} Current topic scope
      */
-    $scope.addNewTopic = function(topicId) {
+    $scope.addNewTopic = function(scope) {
       var addFormData = {
             topic: {},
             _csrf_token: token
         }
 
+      var topicId = scope.$parent.$nodeScope.$modelValue.id;
       if (topicId !== undefined) {
           addFormData.topic["title"] = $scope.subtopicForm.title;
           addFormData.topic["parent"] = topicId;
@@ -526,7 +527,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
 
           } else {
             updateAfterAddSubtopic($scope.data, topicId, response);
+            scope.$parent.$nodeScope.collapsed = true;
           }
+          $scope.subtopicForm.title = undefined;
           $scope.formData = null;
         } else {
           flashMessage(response.message, 'error');
