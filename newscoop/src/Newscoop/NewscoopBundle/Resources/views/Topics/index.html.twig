@@ -22,10 +22,10 @@
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/highlight.min.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/highlight.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
 {% endblock %}
 {% block admin_page_menu_bar %}
   {% if compactView == false %}
@@ -126,7 +126,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="node-edit-div" data-nodrag ng-if="editing" data-nodrag style="cursor:auto">
+                <div class="node-edit-div" {% if compactView %} style="margin-top: 25px;" {% endif %} data-nodrag ng-if="editing" data-nodrag style="cursor:auto">
                   <div class="form-group">
                     <form name="editTopicForm" class="form-inline" role="form" novalidate>
                       <div class="alert alert-danger" ng-show="editTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
