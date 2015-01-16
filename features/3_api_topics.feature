@@ -97,7 +97,6 @@ Feature: Testing Topics API
 			And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
 		Then the response status code should be 200
         	And the response is JSON
-       		And the response should contain field "items"
 
     Scenario: Getting the list of the topics by given search query
 		Given that I want to find an topic by given title
@@ -114,3 +113,13 @@ Feature: Testing Topics API
 		Then the response status code should be 200
         	And the response is JSON
        		And the response should contain field "items"
+
+    Scenario: Creating a new root topic with the title that already exist
+    	Given that I want to make a new topic
+	        And that i have fake "topic" data:
+	                | title            | roottopic      | 4 |
+
+	        And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
+        When I submit "topic" data to "/topics"
+        Then the response status code should be 409
+            And the response is JSON

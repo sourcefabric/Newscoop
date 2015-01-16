@@ -3,8 +3,8 @@ Feature: Testing linking/unlinking topics to/from the articles
     As a service user
     I want to see if the topics can be linked or unlinked to/from the articles
 
-    Scenario: Create a new article and topic, then link/unlink topic from created article
-               Given that I want to create an new article
+    Scenario: Create a new article and topic, then link/unlink topic from created article.
+        Given that I want to create an new article
             And that i have fake "article" data:
                 | name             | <<sentence>>       | 4 |
                 | language         | 1                  ||
@@ -28,7 +28,7 @@ Feature: Testing linking/unlinking topics to/from the articles
 
         Given that I want to make a new topic
             And that i have fake "topic" data:
-                    | title            | roottopic      | 4 |
+                    | title            | <<sentence>>      | 4 |
 
             And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I submit "topic" data to "/topics"
@@ -39,16 +39,11 @@ Feature: Testing linking/unlinking topics to/from the articles
         Given that I want to link that topic to the article
             And that i have "link" header with "<$$new_topic$$; rel='topic'>" value
         When I request "<<new_article>>"
-            Then the response status code should be 201
+        Then the response status code should be 201
             And the response is JSON
 
         Given that I want to unlink that topic from article
             And that i have "link" header with "<$$new_topic$$; rel='topic'>" value
         When I request "<<new_article>>"
-            Then the response status code should be 204
-            And the response is JSON
-
-        Given that I want to delete an topic
-        When I request "<<new_topic>>"
-            Then the response status code should be 204
+        Then the response status code should be 204
             And the response is JSON
