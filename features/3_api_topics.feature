@@ -5,8 +5,7 @@ Feature: Testing Topics API
 
     Scenario: Checking topics endpoint
         When I request "/topics"
-        Then the response status code should be 200
-        	And the response is JSON
+        Then the response is JSON
 
     Scenario: Creating a new root topic and checking if it has been created successfully
     	Given that I want to make a new topic
