@@ -73,10 +73,10 @@ api:
         title_content: null
         tabs:
             resources: null
-            clients: null
+            clients: Klijenti
         resources:
             info: null
-            add_button: null
+            add_button: 'Dodaj klijenta'
         clients:
             table:
                 name: null
@@ -84,10 +84,10 @@ api:
                 secret: null
                 trusted: null
                 redirect: null
-                publication: null
-                actions: null
+                publication: Publikacija
+                actions: Akcije
                 actions_buttons:
-                    remove: null
+                    remove: Ukloni
             actions:
                 remove:
                     confirm: null
@@ -99,8 +99,8 @@ api:
                 publication: null
                 redirectUris: null
                 trusted: null
-                save: null
+                save: Snimi
         PublicResources:
             label:
                 routes: null
-                save: null
+                save: Snimi

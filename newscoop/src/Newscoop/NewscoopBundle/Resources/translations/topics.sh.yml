@@ -28,31 +28,31 @@ Top: vrh
 topics:
     tip: null
     label:
-        all: null
+        all: Sve
         filterbylang: null
-        search: null
+        search: Traži
         filterplaceholder: null
-        addroot: null
+        addroot: 'Dodaj osnovnu temu'
         topicname: null
         expandcollapse: null
-        changename: null
+        changename: 'Promeni naziv teme'
         for: null
         addsubtopic: null
         subtopicname: null
         addtranslation: null
         topictranslations: null
-        choose: null
+        choose: Izaberi...
         translationstring: null
         tree: null
-    title: null
+    title: Teme
     btn:
-        hide: null
+        hide: Sakrij
         remove: null
         edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
+        close: Zatvori
+        add: Dodaj
+        save: Snimi
+        saveandclose: 'Snimi i zatvori'
         removetrans: null
     alerts:
         languagenotfound: null
@@ -61,7 +61,7 @@ topics:
         beforedelete: null
         wrongparams: null
         ordersaved: null
-        saved: null
+        saved: 'Uspešno snimljeno.'
         beforedeleteinfo: null
     added: null
     failedfind: null
