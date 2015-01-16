@@ -62,6 +62,7 @@ Feature: Testing Topics API
 
 	Scenario: Getting all the topics
 		Given that I want to check if there are any topics
+			And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
 		When I request "/topics"
 		Then the response status code should be 200
         	And the response is JSON
@@ -101,6 +102,7 @@ Feature: Testing Topics API
 
     Scenario: Getting the list of the topics by given search query
 		Given that I want to find an topic by given title
+			And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
 		When I request "/search/topics?query=roottopic"
 		Then the response status code should be 200
         	And the response is JSON
