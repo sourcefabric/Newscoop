@@ -7,18 +7,18 @@ at: u
 Starred: null
 Star: null
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
-'Reply to message': null
+'Reply to message': 'Odgovori na poruku'
 Reply: Odgovori
 Processed: null
 'No records found.': 'Nema zapisa'
 'No entries to show': 'Nema unosa za prikaz'
-'Messages updated.': null
+'Messages updated.': 'Poruka izmenjena.'
 'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
+'Messages deleted.': 'Poruka obrisana.'
+'Message updated.': 'Poruka izmenjena.'
 'Message status change to $1.': null
 'Message deleted.': null
-Message: null
+Message: Poruka
 Last: Poslednji
 'Full article': 'Ceo tekst'
 First: Prvi

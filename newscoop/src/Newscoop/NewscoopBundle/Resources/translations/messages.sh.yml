@@ -259,12 +259,12 @@ Reads: čitanja
 'Invalid security token!': 'Pogrešan sigurnosni simbol'
 Authors: Autori
 Title: Naslov
-'Edit country': null
+'Edit country': 'Uredi državu'
 'Entry $1 prepared for publishing': null
-'Entry deleted': null
+'Entry deleted': 'Unos obrisan'
 'Feed saved': null
 'Item published': null
-'Settings saved': null
+'Settings saved': 'Podešavanja snimljena'
 'Self-delete is not permitted.': null
 'Edit staff member $1': null
 'Delete staff member $1': null
@@ -276,10 +276,11 @@ Title: Naslov
 'Change user account information': null
 'Staff management': null
 Updated: null
-Options: null
+Options: Opcije
 Verified: null
 Confirm: null
 at: u
-published: null
-unpublished: null
+published: objavljen
+unpublished: neobjavljen
 nopermissions: null
+importantmessage: null

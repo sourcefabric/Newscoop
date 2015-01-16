@@ -1,9 +1,9 @@
 dynatable:
-    page: null
+    page: Strana
     perPageText: null
-    pageText: null
+    pageText: 'Strane:'
     recordCountPageBoundTemplate: null
     recordCountPageUnboundedTemplate: null
-    recordCountFilteredTemplate: null
+    recordCountFilteredTemplate: '(izdvojeno među ukupno {recordsTotal}  unosa)'
     recordCountText: null
-    processingText: null
+    processingText: Obrađujem...

@@ -1,52 +1,52 @@
 comments:
     label:
         comments: null
-        menu: null
+        menu: Komentari
         banned: null
         anonymous: null
-        at: null
+        at: u
         noentries: null
         showing: null
         of: null
         to: null
         entries: null
-        fullarticle: null
-        hidden: null
-        approved: null
-        new: null
-        editarticle: null
-        section: null
-        comment: null
-        replyto: null
-        subject: null
+        fullarticle: 'Ceo tekst'
+        hidden: Sakriven
+        approved: Odobren
+        new: Novi
+        editarticle: 'Idi na uređivanje teksta'
+        section: Rubrika
+        comment: Komentar
+        replyto: 'Odgovorite na komentar'
+        subject: Naslov
         ban: null
-        author: null
+        author: Autor
         date: null
-        article: null
-        search: null
-        show: null
-        recommended: null
-        unrecommended: null
+        article: Tekst
+        search: Traži
+        show: Prikaži
+        recommended: Preporučeni
+        unrecommended: Nepreporučen
         editcomment: null
-        actions: null
-        selectstatus: null
-        deleted: null
+        actions: Akcije
+        selectstatus: 'Izaberi status'
+        deleted: Obrisano
         alert: null
         searchholder: null
     btn:
-        cancel: null
-        submit: null
-        unrecommend: null
-        recommend: null
-        delete: null
-        reply: null
-        edit: null
-        close: null
-        okay: null
-        filter: null
+        cancel: Poništi
+        submit: Predaj
+        unrecommend: Nepreporučen
+        recommend: Preporučen
+        delete: Obriši
+        reply: Odgovori
+        edit: 'Brzo uređivanje'
+        close: Zatvori
+        okay: OK
+        filter: Filter
     msg:
-        deleted: null
-        commentinarticle: null
+        deleted: 'Komentar izbrisan'
+        commentinarticle: 'Komentar $4 od $1 u tekstu $2 ($3)'
         status:
             new: null
             approved: null
@@ -54,13 +54,13 @@ comments:
             single: null
             all: null
         error:
-            reach: null
-            deletefromarticle: null
+            reach: 'Newscoop nije dostupan. Proverite svoju interent vezu.'
+            deletefromarticle: 'Komentar obrisan od strane $1 iz teksta $2 ($3)'
             statuschange: null
             delete: null
             update: null
-        sure: null
+        sure: 'Nepovaratno ćete Izbrisati komentar.'
         suremultiple: null
         first: null
-        surequestion: null
-        updated: null
+        surequestion: 'Siguri ste da želite to da uradite?'
+        updated: 'Komentar izmenjen.'

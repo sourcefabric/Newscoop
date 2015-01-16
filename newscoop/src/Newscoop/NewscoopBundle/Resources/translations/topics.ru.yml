@@ -26,21 +26,21 @@ Top: Верх
 'There are $1 articles using the topic.': 'Тема используется в $1 статье(-ях).'
 'Search for topics': null
 topics:
+    tip: null
     label:
         all: null
         filterbylang: null
         search: null
-        filter: null
         filterplaceholder: null
         addroot: null
         topicname: null
-        collapse: null
-        expand: null
+        expandcollapse: null
         changename: null
         for: null
         addsubtopic: null
         subtopicname: null
         addtranslation: null
+        topictranslations: null
         choose: null
         translationstring: null
         tree: null
@@ -52,6 +52,7 @@ topics:
         close: null
         add: null
         save: null
+        saveandclose: null
         removetrans: null
     alerts:
         languagenotfound: null
@@ -60,11 +61,14 @@ topics:
         beforedelete: null
         wrongparams: null
         ordersaved: null
+        saved: null
         beforedeleteinfo: null
     added: null
     failedfind: null
     failedfindTranslation: null
     removed: null
+    exists: null
+    existsname: null
     removedTranslation: null
     failedremoveTranslation: null
     updated: null
@@ -72,3 +76,5 @@ topics:
     csrfinvalid: null
     tooshort: null
     toolong: null
+    attachtopics: null
+    attached: null

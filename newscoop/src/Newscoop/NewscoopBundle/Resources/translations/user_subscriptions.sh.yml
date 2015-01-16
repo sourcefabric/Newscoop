@@ -10,20 +10,20 @@ first: null
 'No records.': null
 'You have subscription for all available publications': null
 'Subscription type:': null
-'Start:': null
+'Start:': Početak
 'Start Date': 'Početni datum'
 'Sections:': null
 'Publication:': null
 'Paid days': null
 'Paid Days:': null
 Paid: null
-'No subscriptions': null
-'Languages:': null
+'No subscriptions': 'Nema pretplata'
+'Languages:': Jezici
 'Edit all sections': 'Uredi sve rubrike'
-'Days:': null
-'Days must be number': null
-Any: null
-'Add section': null
+'Days:': Dani
+'Days must be number': 'Dani moraju biti broj'
+Any: 'Bilo koji'
+'Add section': 'Dodaj rubriku'
 saved: snimljeno
 removed: uklonjeno
 deleted: obrisana

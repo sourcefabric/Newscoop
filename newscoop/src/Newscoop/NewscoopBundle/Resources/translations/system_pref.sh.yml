@@ -1,6 +1,6 @@
 newscoop:
     btn:
-        save: null
+        save: Snimi
     preferences:
         error:
             cache: null
@@ -15,27 +15,27 @@ newscoop:
             jobnotifyerror: null
         success:
             saved: null
-            cacheCleared: null
+            cacheCleared: 'Keš je obrisan'
             jobenabled: null
             jobdisabled: null
             jobnotifyswitched: null
         menu:
-            general: null
-            email: null
-            editor: null
-            geolocation: null
-            fb: null
-            media: null
-            cache: null
-            other: null
-            recaptcha: null
+            general: 'Opšta podešavanja'
+            email: 'Podešavanja e-maila'
+            editor: 'Podešavanja editora'
+            geolocation: 'Podešavanja geo-lokacija'
+            fb: 'Podešavanja Facebooka'
+            media: 'Podešavanja videa'
+            cache: 'Podešavanja keša'
+            other: 'Ostala podešavanja'
+            recaptcha: 'Podešavanja reCAPTCHA'
             cronjob: null
         btn:
             cleardatabasecache: null
             disable: null
             enable: null
         label:
-            title: null
+            title: 'Sistemske postavke'
             header: null
             siteonline: null
             sitetitle: null
@@ -112,21 +112,21 @@ newscoop:
             recaptchaprivatekey: null
             recaptchasecure: null
             disabled: null
-            yesoption: null
-            nooption: null
+            yesoption: Da
+            nooption: Ne
             geosearch: null
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
             cronjob: null
-            enabled: null
-            options: null
+            enabled: Status
+            options: Opcije
             info: null
             infodesc: null
             prevRun: null
             nextRun: null
-            norecords: null
+            norecords: 'Nema zapisa'
             cronJobEmail: null
             cronJobSenderEmail: null
             cronJobSenderName: null

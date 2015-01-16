@@ -1,64 +1,64 @@
-'Password confirmation does not match your password.': null
-'Password Confirmation': null
+'Password confirmation does not match your password.': 'Potvrda lozinke se ne poklapa sa lozinkom.'
+'Password Confirmation': 'Potvrda lozinke'
 Website: 'Veb sajt'
-Twitter: null
-'Save profile': null
-'Profile image': null
-Organisation: null
-'Last Name Public': null
-Google+: null
+Twitter: Tviter
+'Save profile': 'Sačuvaj profil'
+'Profile image': 'Profilna slika'
+Organisation: Organizacija
+'Last Name Public': 'Prezime vidljivo'
+Google+: Google+
 Geolocation: Geolokacija
-Gender: null
-'First Name Public': null
-Facebook: null
-'Date of birth': null
-'Allow sending emails': null
-'About me': null
-'User with email %s is registered already.': null
-'Username is used. Please use another one.': null
-Continue: null
-'Accepting terms of use': null
-'send confirmation email': null
-'edit user': null
-'delete user': null
-'Verified profile': null
+Gender: Pol
+'First Name Public': 'Ime vidljivo'
+Facebook: Fejsbuk
+'Date of birth': 'Datum rođenja'
+'Allow sending emails': 'Dozvoli slanje e-maila'
+'About me': 'O meni'
+'User with email %s is registered already.': 'Korisnik sa emailom %s je već registrovan'
+'Username is used. Please use another one.': 'Korisničko ime je u upotrebi. Izaberite drugo.'
+Continue: Nastavi
+'Accepting terms of use': 'Prihvatam uslove korišćenja'
+'send confirmation email': 'Pošalji e-mail za potvrdu'
+'edit user': 'uredi korisnika'
+'delete user': 'obriši korisnika'
+'Verified profile': 'Proveren profil'
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
-'Send email to user:': null
-'No users found.': null
+'Send email to user:': 'Pošalji e-mail korisniku:'
+'No users found.': 'Nije pronađen ni jedan korisnik.'
 'No records found.': 'Nema zapisa'
 'No entries to show': 'Nema unosa za prikaz'
 'Display _MENU_ records': 'Prikaži _MENU_ zapise'
-'Are you sure you want to {action}?': null
-'Active Logins': null
+'Are you sure you want to {action}?': 'Sigurni ste da želite da {action}?'
+'Active Logins': 'Aktivne prijave'
 ' - filtering from _MAX_ records': '- filtriranje među _MAX_ zapisa'
-'User renamed.': null
-'User attributes': null
-'Rename user $1': null
-'Username is used already': null
-'User with id $1 not found': null
-'User was deleted.': null
-'User saved': null
-'User id not specified': null
-'User $1 created': null
-'Send confirm email': null
-'Profile saved.': null
-Picture: null
-'Password updated': null
+'User renamed.': 'Korisnik preimenovan'
+'User attributes': 'Korisnički atributi'
+'Rename user $1': 'Preimenuj korisnika $1'
+'Username is used already': 'Korisničko ime je već u upotrebi'
+'User with id $1 not found': 'Korisnik sa id-jem $1 nije pronađen'
+'User was deleted.': 'Korisnik je obrisan.'
+'User saved': 'Korisnik snimljen'
+'User id not specified': 'Korisnički id nije preciziran'
+'User $1 created': 'Korisnik $1 napravljen'
+'Send confirm email': 'Pošalji e-mail za potvrdu'
+'Profile saved.': 'Profil snimljen.'
+Picture: Slika
+'Password updated': 'Lozinka izmenjena'
 None: Nijedan
-'New confirmation email was sent to user.': null
-'Email is used already': null
+'New confirmation email was sent to user.': 'Novi e-mail za potvrdu je poslat korisniku.'
+'Email is used already': 'E-mail je već u upotrebi'
 'Edit your password': 'Uredi svoju lozinku'
-'Edit user $1': null
+'Edit user $1': 'Uredi korisnika $1'
 'Edit subscriptions': 'Uredi pretplate'
-'Edit profile': null
+'Edit profile': 'Uredi profil'
 'Edit permissions': 'Uredi korisnička prava'
 'Create new account': 'Napravi novi nalog'
 'Comment ban settings': null
 'Ban for user $1 saved.': null
-'User account is active': null
+'User account is active': 'Korisnički nalog je aktivan'
 'Allow users profile to be publicly displayed': null
 'Allow user access to login to site backend': null
-Templates: null
+Templates: Šabloni
 Username: 'Korisničko ime'
 'Last Name': Prezime
 'First Name': Ime
@@ -189,34 +189,34 @@ users:
     label:
         title: null
     menu:
-        manage: null
-    created: null
+        manage: 'Upravljanje korisnicima'
+    created: Napravljeno
     updated: null
     status:
-        status: null
-        registered: null
+        status: Status
+        registered: Registrovan
         pending: null
-        deleted: null
-        active: null
+        deleted: Obrisano
+        active: Aktivna
     table:
         actions:
-            actions: null
-            edit: null
+            actions: Akcije
+            edit: Uredi
             resend_email: null
-            rename: null
-            remove: null
+            rename: Preimenuj
+            remove: Ukloni
         confirm_remove: null
         table_messages:
-            page: null
+            page: Strana
             perPageText: null
-            pageText: null
+            pageText: 'Strane:'
             recordCountPageBoundTemplate: null
             recordCountPageUnboundedTemplate: null
-            recordCountTotalTemplate: null
-            recordCountFilteredTemplate: null
+            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
+            recordCountFilteredTemplate: '(izdvojeno među ukupno {recordsTotal}  unosa)'
             recordCountText: null
-            recordCountTextTemplate: null
+            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
             recordCountTemplate: null
-            processingText: null
+            processingText: Obrađujem...
     chart:
-        title: null
+        title: 'Aktivne prijave'

@@ -79,10 +79,10 @@ publications:
     title:
         list: null
         edit: null
-        add: null
+        add: 'Dodaj novu publikaciju'
         remove: null
-    no_publications: null
-    general_settings: null
+    no_publications: 'Nema publikacija'
+    general_settings: 'Opšta podešavanja'
     comments_settings: null
     seo_settings: null
     publication_removed: null
@@ -98,18 +98,18 @@ publications:
         you_sure: null
         remove: null
     buttons:
-        addNew: null
+        addNew: 'Dodaj novu publikaciju'
         listPublications: null
         listIssues: null
     table:
-        number: null
-        name: null
+        number: Broj
+        name: Naslov
         default_alias: null
-        default_language: null
+        default_language: 'Osnovni jezik'
         comments_status: null
         url_type: null
-        configure: null
-        remove: null
+        configure: Podešavanja
+        remove: Ukloni
     form_type:
         label:
             name: null
@@ -118,11 +118,11 @@ publications:
             alias: null
             url_type: null
             seo: null
-            seo_article_title: null
-            seo_article_keywords: null
-            seo_article_topics: null
-            edit_aliases: null
-            edit_languages: null
+            seo_article_title: 'Naslov teksta'
+            seo_article_keywords: 'Ključne reči'
+            seo_article_topics: Teme
+            edit_aliases: 'Uredi aliase'
+            edit_languages: 'Uredi jezike'
             moderator_to: null
             moderator_from: null
             comments_enabled: null
