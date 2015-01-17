@@ -314,6 +314,7 @@ class ImageService
             'updated' => new \DateTime(),
             'status' => 'unapproved',
             'source' => 'local',
+            'description' => ''
         ), $attributes);
 
         if (isset($attributes['description'])) { $image->setDescription($attributes['description']); }
