@@ -147,6 +147,7 @@ class PublicationService
             $qb->select(
                     'a.id as aliasId',
                     'p.id as publicationId',
+                    'a.name as alias',
                     'p.name as publicationName',
                     'l.id as languageId',
                     'l.code as languageCode'
@@ -165,7 +166,7 @@ class PublicationService
         }
 
         $this->publicationMetadata['alias'] = array(
-            'name' => $alias[0]['publicationName'],
+            'name' => $alias[0]['alias'],
             'publication_id' => $alias[0]['publicationId']
         );
 
