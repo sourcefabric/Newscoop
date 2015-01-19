@@ -85,12 +85,10 @@ if ($publication_id > 0) {
             exit;
         }
 
-        if ($section_number > 0) {
-            $sectionObj = new Section($publication_id, $issue_number, $f_article_language, $section_number);
-            if (!$sectionObj->exists()) {
-                camp_html_display_error($translator->trans('Section does not exist.'));
-                exit;
-            }
+        $sectionObj = new Section($publication_id, $issue_number, $f_article_language, $section_number);
+        if (!$sectionObj->exists()) {
+            camp_html_display_error($translator->trans('Section does not exist.'));
+            exit;
         }
     }
 }
