@@ -299,13 +299,13 @@ class Article extends DatabaseObject
             && ($p_publicationId > 0)
             && ($p_issueNumber > 0)
             && ($p_sectionNumber > 0) ) {
-            $values['IdPublication'] = (int) $p_publicationId;
             $values['NrIssue'] = (int) $p_issueNumber;
             $values['NrSection'] = (int) $p_sectionNumber;
         }
         $values['ShortName'] = $this->m_data['Number'];
         $values['Type'] = $p_articleType;
         $values['Public'] = 'Y';
+        $values['IdPublication'] = (int) $p_publicationId;
 
         if (!is_null($p_publicationId) && $p_publicationId > 0) {
             $where = " WHERE IdPublication = $p_publicationId AND NrIssue = $p_issueNumber"
