@@ -292,8 +292,22 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 $articleTypeField = new ArticleTypeField($articleObj->getType(),
                                                          substr($dbColumn->getName(), 1));
                 $rootTopicId = $articleTypeField->getTopicTypeRootElement();
-                $rootTopic = new Topic($rootTopicId);
-                $subtopics = Topic::GetTree($rootTopicId);
+                $em = \Zend_Registry::get('container')->getService('em');
+                $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+                $topicService = \Zend_Registry::get('container')->getService('newscoop_newscoop.topic_service');
+                $cacheKey = $cacheService->getCacheKey(array('topics_editor_article_type', $rootTopicId), 'topic');
+                $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+                if ($cacheService->contains($cacheKey)) {
+                    $subtopics = $cacheService->fetch($cacheKey);
+                } else {
+                    $topic = $repository->getTopicByIdOrName($rootTopicId, camp_session_get('TOL_Language', 'en'))->getOneOrNullResult();
+                    if ($topic && count($topic->getChildren()) > 0) {
+                        $subtopics = $topic->getChildren();
+                    }
+
+                    $cacheService->save($cacheKey, $subtopics);
+                }
+
                 $articleTopicId = $articleData->getProperty($dbColumn->getName());
         ?>
           <li>
@@ -304,24 +318,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                     <select class="input_select" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
                     <option value="0"></option>
                     <?php
-                    $TOL_Language = camp_session_get('TOL_Language', 'en');
-                    $currentLanguage = new Language($TOL_Language);
-                    $currentLanguageId = $currentLanguage->getLanguageId();
-                    foreach ($subtopics as $topicPath) {
-                        $printTopic = array();
-                        foreach ($topicPath as $topicId => $topic) {
-                            $translations = $topic->getTranslations();
-                            if (array_key_exists($currentLanguageId, $translations)) {
-                                $currentTopic = $translations[$currentLanguageId];
-                            } elseif ( ($currentLanguageId != 1) && array_key_exists(1, $translations)) {
-                                $currentTopic = $translations[1];
-                            } else {
-                                $currentTopic = end($translations);
-                            }
-                            $printTopic[] = $currentTopic;
-                        }
-                        camp_html_select_option($topicId, $articleTopicId, implode(" / ", $printTopic));
-                    }
+                      foreach ($subtopics as $topic) {
+                          echo '<option value="' . $topic->getTopicId() . '">'
+                              . htmlspecialchars($topicService->getReadablePath($topic)) . "</option>\n";
+                      }
                     ?>
                     </select>
         <?php
