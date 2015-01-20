@@ -11,7 +11,6 @@
 require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
 $translator = \Zend_Registry::get('container')->getService('translator');

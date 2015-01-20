@@ -42,15 +42,12 @@ try {
     $serverRequest->allow('ContextList::getFilterSections');
     $serverRequest->allow('ContextList::doOrder', 'Publish');
 
-
     $serverRequest->allow('WidgetManager::AddWidget');
     $serverRequest->allow('WidgetManagerDecorator::delete');
     $serverRequest->allow('WidgetRendererDecorator::render');
     $serverRequest->allow('WidgetManagerDecorator::getSetting');
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
-    $serverRequest->allow('Topic::UpdateOrder');
-    $serverRequest->allow('Topic::add');
     $serverRequest->allow('Geo_Names::FindCitiesByPosition');
     $serverRequest->allow('Geo_Names::FindCitiesByName');
     $serverRequest->allow('Geo_Map::LoadMapData');

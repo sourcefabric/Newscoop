@@ -39,7 +39,7 @@ class TopicsController extends Controller
 
         $topics = $this->container->get('em')
             ->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->searchTopicsQuery($term, array('title' => 'asc'), $limit)
+            ->searchTopics($term, array('title' => 'asc'), $limit)
             ->getArrayResult();
 
         return new JsonResponse($topics);
