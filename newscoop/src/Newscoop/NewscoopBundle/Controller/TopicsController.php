@@ -29,7 +29,6 @@ class TopicsController extends Controller
      */
     public function getTopicsAction(Request $request)
     {
-
         $term = $request->query->get('term', '');
         $limit = $request->query->get('limit', null);
 
@@ -37,9 +36,10 @@ class TopicsController extends Controller
             return new JsonResponse(array());
         }
 
+        $locale = $request->get('_code', $request->getLocale());
         $topics = $this->container->get('em')
             ->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->searchTopics($term, array('title' => 'asc'), $limit)
+            ->searchTopics($term, array('title' => 'asc'), $limit, $locale)
             ->getArrayResult();
 
         return new JsonResponse($topics);

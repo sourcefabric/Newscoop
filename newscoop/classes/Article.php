@@ -2574,22 +2574,19 @@ class Article extends DatabaseObject
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
                 $matchAllTopics = true;
-            } elseif ($leftOperand == 'topic') {
+            } elseif ($leftOperand == 'topic' || $leftOperand == 'topic_strict') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
-                $topic = new Topic($comparisonOperation['right']);
-                if ($topic->exists()) {
-                    $topicIds = $topic->getSubtopics(true, 0);
-                    $topicIds[] = $comparisonOperation['right'];
-                    if ($comparisonOperation['symbol'] == '=') {
-                        $hasTopics[] = $topicIds;
-                    } else {
-                        $hasNotTopics[] = $topicIds;
+                $em = Zend_Registry::get('container')->getService('em');
+                $request = Zend_Registry::get('container')->getService('request');
+                $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                if ($topic) {
+                    $topicIds = array();
+                    foreach($topic->getChildren() as $child) {
+                        $topicIds[] = $child->getId();
                     }
-                }
-            } elseif ($leftOperand == 'topic_strict') {
-                $topic = new Topic($comparisonOperation['right']);
-                if ($topic->exists()) {
+
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;

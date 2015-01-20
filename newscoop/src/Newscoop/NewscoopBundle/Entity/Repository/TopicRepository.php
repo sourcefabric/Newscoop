@@ -218,7 +218,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return Query
      */
-    public function searchTopics($query, $sort = array(), $limit = null)
+    public function searchTopics($query, $sort = array(), $limit = null, $locale = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
@@ -244,7 +244,7 @@ class TopicRepository extends NestedTreeRepository
             $qb->setMaxResults($limit);
         }
 
-        return $this->setTranslatableHint($qb->getQuery());
+        return $this->setTranslatableHint($qb->getQuery(), $locale);
     }
 
     /**
