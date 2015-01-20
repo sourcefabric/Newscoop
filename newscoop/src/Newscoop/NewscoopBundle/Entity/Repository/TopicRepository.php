@@ -362,7 +362,7 @@ class TopicRepository extends NestedTreeRepository
      * Gets topic by given id or name
      *
      * @param string|integer $topicIdOrName Topicid or name
-     * @param string         $locale        Current locale
+     * @param string|integer $locale        Current locale, language code or id
      *
      * @return Query
      */
@@ -383,6 +383,11 @@ class TopicRepository extends NestedTreeRepository
             $qb
                 ->andWhere("t.title = :title")
                 ->setParameter("title", $topicIdOrName);
+        }
+
+        if (is_numeric($locale)) {
+            $language = $this->_em->getReference('Newscoop\Entity\Language', $locale);
+            $locale = $language->getCode();
         }
 
         $topic = $this->setTranslatableHint($qb->getQuery(), $locale);

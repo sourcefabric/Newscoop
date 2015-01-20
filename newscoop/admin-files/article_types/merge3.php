@@ -391,8 +391,12 @@ if ($ok) {
         			</td>
         			<td>
                         <?php
-                        $topic = new Topic((int)$text);
-                        echo $topic->getName(camp_session_get('LoginLanguageId', 1));
+                        $em = Zend_Registry::get('container')->getService('em');
+                        $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+                        $topic = $repository->getTopicByIdOrName((int)$text, camp_session_get('LoginLanguageId', 1))->getOneOrNullResult();
+                        if ($topic) {
+                            echo $topic->getTitle();
+                        }
                         ?>
         			</td>
         			</tr>
