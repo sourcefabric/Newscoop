@@ -100,13 +100,12 @@
               </div>
                 <div class="drag-bar" {% if compactView %}style="display: none;"{% endif %}></div>
                 <a data-nodrag ng-click="toggleTopic(this, node)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed, 'glyphicon-chevron-down': collapsed || node.hasAttachedSubtopic || showExpanded}"></span></a>
-                {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin-right: 4px;position: absolute;top: 8px;" />{% endif %}
 
-                <div class="default-wrap" ng-if="!editing">
+                <div class="default-wrap" {% if not compactView %}ng-if="!editing"{% endif %}>
+                  {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin-right: 4px;position: absolute;top: 8px;" />{% endif %}
                   <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding" {% if compactView %}style="margin-left: 20px;"{% endif %}></span>
-                  <ul class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
+                  <ul ng-if="!editing" class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
                       <li class="list-group-item" ng-class="{'active': node.activeLabel, 'fallback': languageCode != node.locale && !node.activeLabel && node.fallback}" ng-repeat="node in node.translations">
-
                           <span class="badge ng-binding">{[{ node.locale }]}</span>
                       </li>
                   </ul>
@@ -126,7 +125,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="node-edit-div" {% if compactView %} style="margin-top: 25px;" {% endif %} data-nodrag ng-if="editing" data-nodrag style="cursor:auto">
+                <div class="node-edit-div" data-nodrag ng-if="editing" data-nodrag style="cursor:auto">
                   <div class="form-group">
                     <form name="editTopicForm" class="form-inline" role="form" novalidate>
                       <div class="alert alert-danger" ng-show="editTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
