@@ -2538,6 +2538,10 @@ class Article extends DatabaseObject
 
         $languageId = null;
 
+        $em = Zend_Registry::get('container')->getService('em');
+        $request = Zend_Registry::get('container')->getService('request');
+        $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
 
@@ -2574,12 +2578,9 @@ class Article extends DatabaseObject
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
                 $matchAllTopics = true;
-            } elseif ($leftOperand == 'topic' || $leftOperand == 'topic_strict') {
+            } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
-                $em = Zend_Registry::get('container')->getService('em');
-                $request = Zend_Registry::get('container')->getService('request');
-                $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
                 $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
                 if ($topic) {
                     $topicIds = array();
@@ -2587,6 +2588,16 @@ class Article extends DatabaseObject
                         $topicIds[] = $child->getId();
                     }
 
+                    $topicIds[] = $comparisonOperation['right'];
+                    if ($comparisonOperation['symbol'] == '=') {
+                        $hasTopics[] = $topicIds;
+                    } else {
+                        $hasNotTopics[] = $topicIds;
+                    }
+                }
+            } elseif ($leftOperand == 'topic_strict') {
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                if ($topic) {
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;
