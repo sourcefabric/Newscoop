@@ -14,21 +14,27 @@ use Newscoop\Entity\Article;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Exception\ResourcesConflictException;
 use Doctrine\ORM\Query;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * Topcis service
  */
 class TopicService
 {
-    /** @var Doctrine\ORM\EntityManager */
+    /** @var EntityManager */
     protected $em;
+
+    /** @var EventDispatcher */
+    protected $dispatcher;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, EventDispatcher $dispatcher)
     {
         $this->em = $em;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -84,6 +90,8 @@ class TopicService
         $result = $article->addTopic($topic);
         if ($result) {
             $this->em->flush();
+
+            $this->dispatcher->dispatch("article-topic.attach", new GenericEvent($this, $this->getLogArray($topic, $article)));
         }
 
         return $result;
@@ -102,9 +110,27 @@ class TopicService
         $result = $article->removeTopic($topic);
         if ($result) {
             $this->em->flush();
+
+            $this->dispatcher->dispatch("article-topic.detach", new GenericEvent($this, $this->getLogArray($topic, $article)));
         }
 
         return $result;
+    }
+
+    private function getLogArray(Topic $topic, Article $article)
+    {
+        return array(
+            'title' => $topic->getTitle(),
+            'id' => array(
+                'Title' => $article->getName(),
+                'Number' => $article->getNumber(),
+                'IdLanguage' => $article->getLanguageId()
+            ),
+            'diff' => array(
+                'id' => $topic->getId(),
+                'title' => $topic->getTitle()
+            )
+        );
     }
 
     /**
@@ -278,6 +304,12 @@ class TopicService
         $metadata = $this->em->getClassMetaData(get_class($node));
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
         $this->em->flush();
+
+        $this->dispatcher->dispatch("topic.create", new GenericEvent($this, array(
+            'title' => $node->getTitle(),
+            'id' => array('id' => $node->getId()),
+            'diff' => (array) $node
+        )));
 
         return true;
     }

@@ -18,6 +18,7 @@ use Newscoop\NewscoopBundle\Form\Type\TopicType;
 use Newscoop\NewscoopBundle\Form\Type\TopicTranslationType;
 use Newscoop\NewscoopBundle\Entity\TopicTranslation;
 use Doctrine\ORM\Query;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * Topic controller.
@@ -348,6 +349,17 @@ class TopicsController extends Controller
 
         $em->remove($node);
         $em->flush();
+
+        $this->get('dispatcher')->dispatch("topic.delete", new GenericEvent($this, array(
+            'title' => $node->getTitle(),
+            'id' => array(
+                'id' => $id
+            ),
+            'diff' => array(
+                'id' => $id,
+                'title' => $node->getTitle()
+            )
+        )));
 
         return new JsonResponse(array(
             'status' => true,

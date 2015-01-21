@@ -30,6 +30,7 @@ use Newscoop\NewscoopBundle\Services\TopicService;
 use Newscoop\Entity\Article;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Services\CacheService;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -68,7 +69,8 @@ class TopicsControllerSpec extends ObjectBehavior
         TopicService $topicService,
         Article $article,
         QueryBuilder $queryBuilder,
-        CacheService $cacheService
+        CacheService $cacheService,
+        EventDispatcher $dispatcher
     )
     {
         $container->get('em')->willReturn($entityManager);
@@ -79,6 +81,7 @@ class TopicsControllerSpec extends ObjectBehavior
         $container->get('form.csrf_provider')->willReturn($csrfTokenManagerAdapter);
         $container->get('newscoop.cache')->willReturn($cacheService);
         $container->get('user')->willReturn($userService);
+        $container->get('dispatcher')->willReturn($dispatcher);
         $userService->getCurrentUser()->willReturn($user);
         $container->get('newscoop_newscoop.topic_service')->willReturn($topicService);
 
