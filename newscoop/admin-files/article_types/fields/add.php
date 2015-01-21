@@ -1,7 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
-require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 // Check permissions

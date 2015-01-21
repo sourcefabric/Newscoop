@@ -72,65 +72,70 @@ class ContextList extends BaseList
 
     /**
      * Set publication.
-     * @param int $publication
+     * @param  int         $publication
      * @return ArticleList
      */
     public function setPublication($publication)
     {
         $this->publication = empty($publication) ? NULL : (int) $publication;
+
         return $this;
     }
 
     /**
      * Set issue.
-     * @param int $issue
+     * @param  int         $issue
      * @return ArticleList
      */
     public function setIssue($issue)
     {
         $this->issue = empty($issue) ? NULL : (int) $issue;
+
         return $this;
     }
 
     /**
      * Set section.
-     * @param int $section
+     * @param  int         $section
      * @return ArticleList
      */
     public function setSection($section)
     {
         $this->section = empty($section) ? NULL : (int) $section;
+
         return $this;
     }
 
     /**
      * Set language.
-     * @param int $language
+     * @param  int         $language
      * @return ArticleList
      */
     public function setLanguage($language)
     {
         $this->language = empty($language) ? 1 : (int) $language;
+
         return $this;
     }
 
     /**
      * Set filter.
-     * @param string $name
-     * @param mixed $value
+     * @param  string      $name
+     * @param  mixed       $value
      * @return ArticleList
      */
     public function setFilter($name, $value)
     {
         $this->filters[$name] = $value;
+
         return $this;
     }
 
     /**
      * Set column to order by.
      *
-     * @param string $column
-     * @param string $direction
+     * @param  string      $column
+     * @param  string      $direction
      * @return ArticleList
      */
     public function setOrderBy($column, $direction = 'asc')
@@ -155,6 +160,7 @@ class ContextList extends BaseList
 
         include dirname(__FILE__) . '/filters.php';
         self::$renderFilters = TRUE;
+
         return $this;
     }
 
@@ -168,6 +174,7 @@ class ContextList extends BaseList
 
         include dirname(__FILE__) . '/actions.php';
         self::$renderActions = TRUE;
+
         return $this;
     }
 
@@ -182,18 +189,20 @@ class ContextList extends BaseList
         include dirname(__FILE__) . '/table.php';
         self::$renderTable = TRUE;
         echo '</div><!-- /#list-' . $this->id . ' -->';
+
         return $this;
     }
 
     /**
      * Process item
-     * @param Article $article
+     * @param  Article $article
      * @return array
      */
     public function processItem(Article $article)
     {
         global $g_user, $Campsite;
         $translator = \Zend_Registry::get('container')->getService('translator');
+
         return array(
             $article->getArticleNumber(),
             $article->getLanguageId(),
@@ -223,10 +232,8 @@ class ContextList extends BaseList
             $_REQUEST[$arg['name']] = $arg['value'];
         }
 
-
         return require_once dirname(__FILE__) . '/do_data.php';
     }
-
 
     public function getFilterIssues()
     {
@@ -235,7 +242,6 @@ class ContextList extends BaseList
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
         $translator = \Zend_Registry::get('container')->getService('translator');
@@ -244,13 +250,13 @@ class ContextList extends BaseList
             $_REQUEST[$arg['name']] = $arg['value'];
         }
 
-        if($_REQUEST['publication'] > 0) {
+        if ($_REQUEST['publication'] > 0) {
             $publication = $_REQUEST['publication'];
         } else {
             $publication = NULL;
         }
 
-        if($_REQUEST['language'] > 0) {
+        if ($_REQUEST['language'] > 0) {
             $language = $_REQUEST['language'];
         } else {
             $language = NULL;
@@ -260,7 +266,7 @@ class ContextList extends BaseList
         $issues = Issue::GetIssues($publication, $language);
         $issuesNo = is_array($issues) ? sizeof($issues) : 0;
         $menuIssueTitle = $issuesNo > 0 ? $translator->trans('All Issues', array(), 'library') : $translator->trans('No issues found', array(), 'library');
-        foreach($issues as $issue) {
+        foreach ($issues as $issue) {
             $newIssues[] = array('val' => $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId() , 'name' => $issue->getName());
         }
         $returns = array();
@@ -278,23 +284,22 @@ class ContextList extends BaseList
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
         $translator = \Zend_Registry::get('container')->getService('translator');
-        
+
         foreach ($_REQUEST['args'] as $arg) {
             $_REQUEST[$arg['name']] = $arg['value'];
         }
 
-        if($_REQUEST['publication'] > 0) {
+        if ($_REQUEST['publication'] > 0) {
             $publication = $_REQUEST['publication'];
         } else {
             $publication = NULL;
         }
 
-        $language = NULL;       
-        if($_REQUEST['issue'] > 0) {
+        $language = NULL;
+        if ($_REQUEST['issue'] > 0) {
             $issueArray = explode("_",$_REQUEST['issue']);
             $issue = $issueArray[1];
             if (isset($issueArray[2])) {
@@ -303,8 +308,8 @@ class ContextList extends BaseList
         } else {
             $issue = NULL;
         }
-        
-        if($_REQUEST['language'] > 0) {
+
+        if ($_REQUEST['language'] > 0) {
             $language = $_REQUEST['language'];
         }
 
@@ -317,7 +322,7 @@ class ContextList extends BaseList
             }
         }
         $newSections = array();
-        foreach($sections as $section) {
+        foreach ($sections as $section) {
             $newSections[] = array('val' => $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(), 'name' => $section->getName());
         }
         $sectionsNo = is_array($newSections) ? sizeof($newSections) : 0;
@@ -334,9 +339,9 @@ class ContextList extends BaseList
 
     /**
      * Handle action
-     * @param string $f_action
-     * @param array $f_items
-     * @param array $f_params
+     * @param  string $f_action
+     * @param  array  $f_items
+     * @param  array  $f_params
      * @return void
      */
     public static function doAction($f_action, $f_items, $f_params = array())
@@ -347,22 +352,24 @@ class ContextList extends BaseList
         if (empty($f_target)) {
             $f_target = '';
         }
+
         return require_once dirname(__FILE__) . '/do_action.php';
     }
 
     /**
      * Handle order
-     * @param array $f_order
-     * @param int $f_language
+     * @param  array $f_order
+     * @param  int   $f_language
      * @return void
      */
     public static function doOrder($f_order, $f_language)
     {
         global $ADMIN_DIR;
+
         return require_once dirname(__FILE__) . '/do_order.php';
     }
 
-    public function doPreview($f_language_id = 0, $_article_no = 0) {
-
+    public function doPreview($f_language_id = 0, $_article_no = 0)
+    {
     }
 }

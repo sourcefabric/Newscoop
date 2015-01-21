@@ -47,7 +47,7 @@ class AuthorService
     {
         $qb = $this->em->createQueryBuilder();
 
-        $qb->select("trim(concat(aa.first_name, concat(' ', aa.last_name))) as name")
+        $qb->select("trim(concat(aa.first_name, concat(' ', aa.last_name))) as title")
             ->from('Newscoop\Entity\Author', 'aa');
 
         if ($term !== null && trim($term) !== '') {

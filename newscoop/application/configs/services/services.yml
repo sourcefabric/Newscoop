@@ -160,8 +160,7 @@ services:
         class:      Newscoop\Services\NotificationService
         arguments:  ["@em"]
     topic:
-        class: Newscoop\Topic\TopicService
-        arguments: ["@em"]
+        alias: newscoop_newscoop.topic_service
     index_client.default:
         class: Newscoop\Search\DefaultIndexClient
         arguments: ["@service_container"]

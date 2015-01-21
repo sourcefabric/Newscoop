@@ -2538,6 +2538,10 @@ class Article extends DatabaseObject
 
         $languageId = null;
 
+        $em = Zend_Registry::get('container')->getService('em');
+        $request = Zend_Registry::get('container')->getService('request');
+        $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
 
@@ -2577,9 +2581,13 @@ class Article extends DatabaseObject
             } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
-                $topic = new Topic($comparisonOperation['right']);
-                if ($topic->exists()) {
-                    $topicIds = $topic->getSubtopics(true, 0);
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                if ($topic) {
+                    $topicIds = array();
+                    foreach($topic->getChildren() as $child) {
+                        $topicIds[] = $child->getId();
+                    }
+
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;
@@ -2588,8 +2596,8 @@ class Article extends DatabaseObject
                     }
                 }
             } elseif ($leftOperand == 'topic_strict') {
-                $topic = new Topic($comparisonOperation['right']);
-                if ($topic->exists()) {
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                if ($topic) {
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;

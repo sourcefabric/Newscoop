@@ -1,14 +1,13 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
-require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error($translator->trans("You do not have the right to reassign a field type.", array(), 'article_type_fields'));
-	exit;
+    camp_html_display_error($translator->trans("You do not have the right to reassign a field type.", array(), 'article_type_fields'));
+    exit;
 }
 
 $articleTypeName = Input::Get('f_article_type');
@@ -32,22 +31,22 @@ $languageObj = new Language($lang);
 $options = array();
 $convertibleFromTypes = $articleField->getConvertibleToTypes();
 foreach ($convertibleFromTypes as $type) {
-	$options[$type] = ArticleTypeField::VerboseTypeName($type, $languageObj->getLanguageId());
+    $options[$type] = ArticleTypeField::VerboseTypeName($type, $languageObj->getLanguageId());
 }
 ?>
 <script>
-function UpdateArticleFieldContext() {
-	var my_form = document.forms["add_field_form"]
-	var field_type = my_form.elements["f_article_field_type"].value
-	var is_topic = my_form.elements["is_topic"].value
-	if ((is_topic == "false" && field_type == "topic")
-			|| (is_topic == "true" && field_type != "topic")) {
-		ToggleRowVisibility('topic_list')
-		ToggleBoolValue('is_topic')
-	}
+function UpdateArticleFieldContext()
+{
+    var my_form = document.forms["add_field_form"]
+    var field_type = my_form.elements["f_article_field_type"].value
+    var is_topic = my_form.elements["is_topic"].value
+    if ((is_topic == "false" && field_type == "topic")
+            || (is_topic == "true" && field_type != "topic")) {
+        ToggleRowVisibility('topic_list')
+        ToggleBoolValue('is_topic')
+    }
 }
 </script>
-
 
 <?php if (count($options) < 1) { ?>
 <P>
@@ -56,7 +55,6 @@ You cannot reassign this type.
 <?php camp_html_copyright_notice(); ?>
 <?php } else { ?>
 
-
 <P>
 <FORM NAME="add_field_form" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/article_types/fields/do_retype.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
@@ -64,21 +62,20 @@ You cannot reassign this type.
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <TABLE BORDER="" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
-	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Type"); ?>:</TD>
-	<TD>
-	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
+    <TD ALIGN="RIGHT" ><?php  echo $translator->trans("Type"); ?>:</TD>
+    <TD>
+    <SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
         <?php foreach ($options as $k => $v) { ?>
-        	<OPTION VALUE="<?php print $k; ?>"><?php echo $v; ?></OPTION>
+            <OPTION VALUE="<?php print $k; ?>"><?php echo $v; ?></OPTION>
         <?php } ?>
     </SELECT>
 
-
-	</TD>
+    </TD>
 </TR>
 <tr style="display: none;" id="topic_list">
-	<td align="right"><?php echo $translator->trans("Top element", array(), 'article_type_fields'); ?>:</td>
-	<td>
-		<select name="f_root_topic_id" class="input_select">
+    <td align="right"><?php echo $translator->trans("Top element", array(), 'article_type_fields'); ?>:</td>
+    <td>
+        <select name="f_root_topic_id" class="input_select">
 <?php
 $TOL_Language = camp_session_get('LoginLanguageId', 1);
 $lang = new Language($TOL_Language);
@@ -87,32 +84,32 @@ $currentLanguageId = $lang->getLanguageId();
 //$currentLanguageId = $currentLanguages[0]->getLanguageId();
 $topics = Topic::GetTree();
 foreach ($topics as $topicPath) {
-	$printTopic = array();
-	foreach ($topicPath as $topicId => $topic) {
-		$translations = $topic->getTranslations();
-		if (array_key_exists($currentLanguageId, $translations)) {
-			$currentTopic = $translations[$currentLanguageId];
-		} elseif ($currentLanguageId != 1 && array_key_exists(1, $translations)) {
-			$currentTopic = $translations[1];
-		} else {
-			$currentTopic = end($translations);
-		}
-		$printTopic[] = $currentTopic;
-	}
-	echo '<option value="' . $topic->getTopicId() . '">'
-		. htmlspecialchars(implode(" / ", $printTopic)) . "</option>\n";
+    $printTopic = array();
+    foreach ($topicPath as $topicId => $topic) {
+        $translations = $topic->getTranslations();
+        if (array_key_exists($currentLanguageId, $translations)) {
+            $currentTopic = $translations[$currentLanguageId];
+        } elseif ($currentLanguageId != 1 && array_key_exists(1, $translations)) {
+            $currentTopic = $translations[1];
+        } else {
+            $currentTopic = end($translations);
+        }
+        $printTopic[] = $currentTopic;
+    }
+    echo '<option value="' . $topic->getTopicId() . '">'
+        . htmlspecialchars(implode(" / ", $printTopic)) . "</option>\n";
 }
 ?>
-		</select>
-	</td>
+        </select>
+    </td>
 </tr>
 <TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
-	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php echo $translator->trans('Save'); ?>">
-	</DIV>
-	</TD>
+    <TD COLSPAN="2">
+    <DIV ALIGN="CENTER">
+    <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
+    <INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php echo $translator->trans('Save'); ?>">
+    </DIV>
+    </TD>
 </TR>
 </TABLE>
 </FORM>

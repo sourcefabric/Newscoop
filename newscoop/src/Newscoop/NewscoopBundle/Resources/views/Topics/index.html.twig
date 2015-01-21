@@ -22,10 +22,10 @@
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/highlight.min.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
-<script type="text/javascript" src="{{asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/highlight.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
 {% endblock %}
 {% block admin_page_menu_bar %}
   {% if compactView == false %}
@@ -100,13 +100,12 @@
               </div>
                 <div class="drag-bar" {% if compactView %}style="display: none;"{% endif %}></div>
                 <a data-nodrag ng-click="toggleTopic(this, node)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed, 'glyphicon-chevron-down': collapsed || node.hasAttachedSubtopic || showExpanded}"></span></a>
-                {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin-right: 4px;position: absolute;top: 8px;" />{% endif %}
 
-                <div class="default-wrap" ng-if="!editing">
+                <div class="default-wrap" {% if not compactView %}ng-if="!editing"{% endif %}>
+                  {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin-right: 4px;position: absolute;top: 8px;" />{% endif %}
                   <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding" {% if compactView %}style="margin-left: 20px;"{% endif %}></span>
-                  <ul class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
+                  <ul ng-if="!editing" class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
                       <li class="list-group-item" ng-class="{'active': node.activeLabel, 'fallback': languageCode != node.locale && !node.activeLabel && node.fallback}" ng-repeat="node in node.translations">
-
                           <span class="badge ng-binding">{[{ node.locale }]}</span>
                       </li>
                   </ul>
@@ -120,7 +119,7 @@
                           <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                           <div class="form-group">
                             <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="{{ 'topics.label.subtopicname'|trans }}">
-                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(node.id)">{{ 'topics.btn.add'|trans }}</button>
+                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(this)">{{ 'topics.btn.add'|trans }}</button>
                           </div>
                         </form>
                     </div>
