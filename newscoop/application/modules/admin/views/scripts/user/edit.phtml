@@ -2,19 +2,7 @@
 $translator = \Zend_Registry::get('container')->getService('translator');
 $this->placeholder('title')->set($translator->trans("Edit user $1", array('$1' => $this->user->getUsername()), 'users')); ?>
 
-<style type="text/css" media="screen">
-    .form-div {
-        float: left;
-    }
-    .form-div.left-box {
-        width: 48%;
-        margin-right: 1%;
-    }
-    .form-div.right-box {
-        width: 51%;
-    }
-</style>
-<div style="width: 100%;">
+<div class="form-div-container">
 <form id="edit-form" enctype="application/x-www-form-urlencoded" action="" method="post">
 <dl class="zend_form" style="width: 99%;">
  <div class="form-div left-box"><?php echo $this->form->getDisplayGroup('adminSettings'); ?></div>
