@@ -3,4 +3,15 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 $this->placeholder('title')->set($translator->trans('Create new account', array(), 'users')); 
 ?>
 
-<?php echo $this->form; ?>
+<div class="form-div-container">
+<form id="edit-form" enctype="application/x-www-form-urlencoded" action="" method="post">
+<dl class="zend_form" style="width: 99%;">
+ <div class="form-div left-box"><?php echo $this->form->getDisplayGroup('adminSettings'); ?></div>
+ <div class="form-div right-box">
+    <?php echo $this->form->getSubForm('attributes'); ?>
+    <?php echo $this->form->submit->setAttrib('style', 'float:right;'); ?>
+    </div>
+ <br style="clear: left;" />
+</dl>
+</form>
+</div>

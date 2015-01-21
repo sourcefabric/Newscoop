@@ -240,3 +240,20 @@ h1 .inline #name {
 h1 .inline #submit {
 
 }
+
+.form-div-container {
+    width: 100%;
+}
+
+.form-div {
+    float: left;
+}
+
+.form-div.left-box {
+    width: 48%;
+    margin-right: 1%;
+}
+
+.form-div.right-box {
+        width: 51%;
+}
