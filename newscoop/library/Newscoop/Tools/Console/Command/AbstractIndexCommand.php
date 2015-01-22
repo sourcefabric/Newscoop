@@ -28,7 +28,10 @@ abstract class AbstractIndexCommand extends Console\Command\Command
         $indexingServices = array();
 
         foreach ($servicIds AS $serviceId) {
-            if (strpos($serviceId, 'indexer.') === false) continue;
+
+            if (strpos($serviceId, 'indexer.') === false) {
+                continue;
+            }
 
             $indexingServices[$serviceId] = $container->get($serviceId);
         }

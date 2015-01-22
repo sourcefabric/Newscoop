@@ -24,10 +24,10 @@ class UpdateIndexCommand extends AbstractIndexCommand
     {
         $this
         ->setName('index:update')
-        ->setDescription('Update Search Index.')
+        ->setDescription('Update search index.')
         ->addArgument('type', InputArgument::OPTIONAL, 'Types to index', 'all')
-        ->addArgument('limit', InputArgument::OPTIONAL, 'Articles batch size limit', 50)
-        ->setHelp("");
+        ->addArgument('limit', InputArgument::OPTIONAL, 'Items batch limit', 50)
+        ->setHelp('');
     }
 
     /**
@@ -47,21 +47,25 @@ class UpdateIndexCommand extends AbstractIndexCommand
 
         if ($type !== 'all' && !array_key_exists($type, $indexers)) {
 
-            $output->writeln('<error>Invalid value for parameter type specified.</error> Valid values are: all, '
-                . implode(', ', array_keys($indexers)));
+            $output->writeln(
+                sprintf(
+                    '<error>Invalid value for parameter type specified.</error> Valid values are: all, %s',
+                    implode(', ', array_keys($indexers))
+                )
+            );
         } else {
+
+            $output->writeln('Indexing started.');
 
             if ($type === 'all') {
                 foreach ($indexers as $name => $indexer) {
-                    $output->writeln('Running indexer on '.$name.'.');
                     $indexer->update($input->getArgument('limit'));
                 }
             } else {
-                $output->writeln('Running indexer on '.$type.'.');
                 $indexers[$type]->update($input->getArgument('limit'));
             }
 
-            $output->writeln('Search Index updated.');
+            $output->writeln('Indexer is done.');
         }
     }
 }

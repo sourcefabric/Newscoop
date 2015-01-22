@@ -11,15 +11,9 @@ use Symfony\Component\DependencyInjection\Container;
 use Newscoop\Search\IndexClientInterface;
 use Newscoop\Search\ServiceInterface;
 use Newscoop\Search\DocumentInterface;
-use Newscoop\Search\QueryInterface;
 
 class DefaultIndexClient implements IndexClientInterface
 {
-    /**
-     *
-     */
-    const TEXT_FILE = 'temp/';
-
     /**
      * Indexable item
      *
@@ -159,15 +153,19 @@ class DefaultIndexClient implements IndexClientInterface
     }
 
     /**
-     *
+     * {@inheritdoc}
      */
-    public function find(QueryInterface $query)
+    public function isEnabled($clientName)
     {
-        $debug = $this->container->get('kernel')->isDebug();
+        return true;
+    }
 
-        if ($debug) {
-            $logger->info(''. __CLASS__ .': find command not implemented.');
-        }
+    /**
+     * {@inheritdoc}
+     */
+    public function isTypeIndexable($serviceName, $subType)
+    {
+        return true;
     }
 
     /**

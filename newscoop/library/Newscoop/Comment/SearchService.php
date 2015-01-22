@@ -24,6 +24,7 @@ class SearchService implements ServiceInterface
 
     /**
      * @param Newscoop\Article\LinkService $articleLinkService
+     * @param array $config
      */
     public function __construct(LinkService $articleLinkService)
     {
@@ -36,6 +37,16 @@ class SearchService implements ServiceInterface
      * @return string identifier
      */
     public function getType()
+    {
+        return 'comment';
+    }
+
+    /**
+     * Return type for this search service
+     *
+     * @return string identifier
+     */
+    public function getSubType(DocumentInterface $comment)
     {
         return 'comment';
     }
@@ -72,6 +83,7 @@ class SearchService implements ServiceInterface
     {
         return array(
             'id' => $this->getDocumentId($comment),
+            'number' => $comment->getId(),
             'type' => 'comment',
             'subject' => $comment->getSubject(),
             'message' => $comment->getMessage(),

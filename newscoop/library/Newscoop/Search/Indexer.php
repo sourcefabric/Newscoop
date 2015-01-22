@@ -1,7 +1,8 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2012 Sourcefabric o.p.s.
+ * @author Mischa Gorinskat <mischa.gorinskat@sourcefabric.org>
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -18,6 +19,8 @@ use Exception;
  */
 class Indexer
 {
+    const CRON_NAME = 'Indexer';
+
     const BATCH_MAX = 200;
 
     /**
@@ -36,6 +39,13 @@ class Indexer
     protected $repository;
 
     /**
+     * Name of the indexer
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Array containing object of Newscoop\Search\IndexClientInterface
      *
      * @var Array
@@ -46,16 +56,19 @@ class Indexer
      * @param Newscoop\Search\IndexClientInterface $index
      * @param Newscoop\Search\ServiceInterface $service
      * @param Newscoop\Search\RepositoryInterface $repository
+     * @param bool $enabled
      */
     public function __construct(
         Container $container,
         ServiceInterface $service,
-        RepositoryInterface $repository = null
+        RepositoryInterface $repository = null,
+        $indexerName
     )
     {
         $this->container = $container;
         $this->service = $service;
         $this->repository = $repository;
+        $this->name = $indexerName;
         $this->indexClients = $this->getIndexClients();
     }
 
@@ -83,31 +96,37 @@ class Indexer
 
             foreach ($this->indexClients as $client) {
 
-                $client->setService($this->service);
+                if ($client->isEnabled($this->name)) {
 
-                foreach ($items as $item) {
+                    $client->setService($this->service);
 
-                    $client->setItem($item);
+                    foreach ($items as $item) {
 
-                    if ($this->service->isIndexable($item)) {
+                        $client->setItem($item);
 
-                        try {
-                            $client->add($this->service->getDocument($item));
-                        } catch(Exception $e) {
-                            $itemData = $this->service->getDocument($item);
-                            $logger->error('Could not (completely) add item ('.$itemData['id'].') to indexing client. ('.__CLASS__ .' - '. $e->getMessage() .')');
-                        }
-                    } else if ($this->service->isIndexed($item)) {
+                        if ($client->isTypeIndexable($this->name, $this->service->getSubType($item))) {
 
-                        try {
-                            $client->delete($this->service->getDocumentId($item));
-                        } catch(Exception $e) {
-                            $logger->error('Could not (completely) delete item to indexing client. ('.__CLASS__ .' - '. $e->getMessage() .')');
+                            if ($this->service->isIndexable($item)) {
+
+                                try {
+                                    $client->add($this->service->getDocument($item));
+                                } catch(Exception $e) {
+                                    $itemData = $this->service->getDocument($item);
+                                    $logger->error('Could not (completely) add item ('.$itemData['id'].') to indexing client. ('.__CLASS__ .' - '. $e->getMessage() .')');
+                                }
+                            } elseif ($this->service->isIndexed($item)) {
+
+                                try {
+                                    $client->delete($this->service->getDocumentId($item));
+                                } catch(Exception $e) {
+                                    $logger->error('Could not (completely) delete item to indexing client. ('.__CLASS__ .' - '. $e->getMessage() .')');
+                                }
+                            }
                         }
                     }
-                }
 
-                $client->flush();
+                    $client->flush();
+                }
             }
 
             $this->repository->setIndexedNow($items);
@@ -117,10 +136,9 @@ class Indexer
     /**
      * Delete event listener
      *
-     * @param sfEvent $event
      * @return void
      */
-    public function delete(\sfEvent $event)
+    public function delete($event)
     {
         if ($this->service->isIndexed($event['entity'])) {
             foreach ($this->indexClients as $client) {
@@ -162,8 +180,6 @@ class Indexer
     {
         $servicIds = $this->container->getServiceIds();
         $indexingServices = array();
-
-        // TODO: Build in check to check if single indexing client has been set
 
         foreach ($servicIds as $serviceId) {
 
