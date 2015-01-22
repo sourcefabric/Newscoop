@@ -220,22 +220,23 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $zendRouter = \Zend_Registry::get('container')->getService('zend_router');
         $imageService = \Zend_Registry::get('container')->getService('image');
         $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
-        $num = $this->m_dbObject->getId() % 6;
         $themePath = 'themes/' . $themesService->getThemePath();
-        $imagePath = is_null($imagePath) ? "_img/user_placeholder_{$num}.png" : $imagePath;
 
-        if (!file_exists(APPLICATION_PATH . '/../' . $themePath . $imagePath)) {
+        if (!$this->m_dbObject->getImage() && is_null($imagePath)) {
             return '';
         }
 
-        if (!$this->m_dbObject->getImage()) {
-            return $zendRouter->assemble(array(
-                'src' => $imageService->getSrc($themePath . $imagePath, $width, $height, $specs),
-            ), 'image', false, false);
+        $src = null;
+        if ($this->m_dbObject->getImage()) {
+            $src = $imageService->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs);
+        }
+
+        if ($imagePath && file_exists(APPLICATION_PATH . '/../' . $themePath . $imagePath)) {
+            $src = $imageService->getSrc($themePath . $imagePath, $width, $height, $specs);
         }
 
         return $zendRouter->assemble(array(
-            'src' => $imageService->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs),
+            'src' => $src,
         ), 'image', false, false);
     }
 
