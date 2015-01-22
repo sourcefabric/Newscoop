@@ -506,7 +506,11 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
             _csrf_token: token
         }
 
-      var topicId = scope.$parent.$nodeScope.$modelValue.id;
+      var topicId;
+      if (scope !== undefined) {
+        topicId = scope.$parent.$nodeScope.$modelValue.id;
+      }
+
       if (topicId !== undefined) {
           addFormData.topic["title"] = $scope.subtopicForm.title;
           addFormData.topic["parent"] = topicId;
