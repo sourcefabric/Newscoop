@@ -26,7 +26,7 @@ class RegisterController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Application_Form_Register();
         $form->setMethod('POST');
@@ -55,21 +55,21 @@ class RegisterController extends Zend_Controller_Action
 
         $this->view->form = $form;
     }
-    
+
     public function createUserAction()
     {
         $parameters = $this->getRequest()->getParams();
-        
+
         $user = $this->_helper->service('user')->findBy(array(
             'email' => $parameters['email'],
         ));
-        
+
         if ($user) {
             echo '0';
             exit;
         } else {
             $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name'], $parameters['subscriber_id']);
-            
+
             $this->_helper->service('email')->sendConfirmationToken($user);
             echo '1';
             exit;
@@ -107,8 +107,6 @@ class RegisterController extends Zend_Controller_Action
                 if (!empty($values['image'])) {
                     $imageInfo = array_pop($form->image->getFileInfo());
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
-                } else {
-                    $values['image'] = $this->getUserImageFilename($user);
                 }
 
                 $this->_helper->service('user')->savePending($values, $user);
@@ -137,37 +135,8 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
-        $this->view->img = $this->getUserImageSrc($user);
         $this->view->user = new \MetaUser($user);
         $this->view->social = $social ?: false;
-    }
-
-  /**
-     * Get user image filename
-     *
-     * @param Newscoop\Entity\User $user
-     *
-     * @return string
-     */
-    private function getUserImageFilename(User $user)
-    {
-        $num = $user->getId() % 6;
-
-        return "user_placeholder_{$num}.png";
-    }
-
-    /**
-     * Get user image src
-     *
-     * @param Newscoop\Entity\User $user
-     *
-     * @return string
-     */
-    private function getUserImageSrc(User $user)
-    {
-        return $this->view->url(array(
-            'src' => $this->getHelper('service')->getService('image')->getSrc('images/' . $this->getUserImageFilename($user), 125, 125, 'fit'),
-        ), 'image', false, false);
     }
 
     public function generateUsernameAction()
@@ -198,6 +167,7 @@ class RegisterController extends Zend_Controller_Action
             $user = array_pop($users);
             if (!$user->isPending()) {
                 $this->view->status = false;
+
                 return;
             }
         }
@@ -209,11 +179,10 @@ class RegisterController extends Zend_Controller_Action
     {
         if ($this->_getParam('email')) {
             $user = $this->_helper->service('user')->findBy(array('email' => $this->_getParam('email')));
-            
+
             if ($user) {
                 $this->view->result = '0';
-            }
-            else {
+            } else {
                 $user = $this->_helper->service('user')->createPending($this->_getParam('email'));
                 $this->_helper->service('email')->sendConfirmationToken($user);
                 $this->view->result = '1';
