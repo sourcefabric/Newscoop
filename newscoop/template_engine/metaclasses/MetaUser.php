@@ -221,10 +221,16 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $imageService = \Zend_Registry::get('container')->getService('image');
         $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $num = $this->m_dbObject->getId() % 6;
+        $themePath = 'themes/' . $themesService->getThemePath();
         $imagePath = is_null($imagePath) ? "_img/user_placeholder_{$num}.png" : $imagePath;
+
+        if (!file_exists(APPLICATION_PATH . '/../' . $themePath . $imagePath)) {
+            return '';
+        }
+
         if (!$this->m_dbObject->getImage()) {
             return $zendRouter->assemble(array(
-                'src' => $imageService->getSrc('themes/' . $themesService->getThemePath() . $imagePath, $width, $height, $specs),
+                'src' => $imageService->getSrc($themePath . $imagePath, $width, $height, $specs),
             ), 'image', false, false);
         }
 
