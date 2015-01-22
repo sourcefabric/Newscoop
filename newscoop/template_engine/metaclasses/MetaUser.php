@@ -210,18 +210,33 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      *
      * @param  int    $width
      * @param  int    $height
+     * @param  string $specs
+     * @param  string $imagePath
+     *
      * @return string
      */
-    public function image($width = 80, $height = 80, $specs = 'fit')
+    public function image($width = 80, $height = 80, $specs = 'fit', $imagePath = null)
     {
-        if (!$this->m_dbObject->getImage()) {
+        $zendRouter = \Zend_Registry::get('container')->getService('zend_router');
+        $imageService = \Zend_Registry::get('container')->getService('image');
+        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
+        $themePath = 'themes/' . $themesService->getThemePath();
+
+        if (!$this->m_dbObject->getImage() && is_null($imagePath)) {
             return '';
         }
 
-        $container = \Zend_Registry::get('container');
+        $src = null;
+        if ($this->m_dbObject->getImage()) {
+            $src = $imageService->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs);
+        }
 
-        return $container->get('zend_router')->assemble(array(
-            'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs),
+        if ($imagePath && file_exists(APPLICATION_PATH . '/../' . $themePath . $imagePath)) {
+            $src = $imageService->getSrc($themePath . $imagePath, $width, $height, $specs);
+        }
+
+        return $zendRouter->assemble(array(
+            'src' => $src,
         ), 'image', false, false);
     }
 
