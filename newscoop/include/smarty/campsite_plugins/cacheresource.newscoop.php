@@ -31,8 +31,8 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
     protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime, $cacheLifetime = 0)
     {
         $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
-        $handler = $this->cacheClass;
-        $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
+        $handler = new $this->cacheClass;
+        $expired = $handler->handler('read', $cache_content, $tpl_name, null, null, null);
         if ($cacheLifetime == 0) {
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
             $cacheKey = $cacheService->getCacheKey(array('template', $themesService->getThemePath(), $tpl_name), 'template');
@@ -65,9 +65,9 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function save($id, $tpl_name, $cache_id, $compile_id, $exp_time, $content, $campsiteVector = array())
     {
-        $handler = $this->cacheClass;
+        $handler = new $this->cacheClass;
 
-        return $handler::handler('write', $content, $tpl_name, null, null, $exp_time);
+        return $handler->handler('write', $content, $tpl_name, null, null, $exp_time);
     }
 
     /**
@@ -81,9 +81,9 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function delete($tpl_name, $cache_id, $compile_id, $exp_time)
     {
-        $handler = $this->cacheClass;
+        $handler = new $this->cacheClass;
 
-        return $handler::handler('clean', null, $tpl_name, null, null, null);
+        return $handler->handler('clean', null, $tpl_name, null, null, null);
     }
 
     /**

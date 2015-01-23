@@ -18,8 +18,7 @@ abstract class TemplateCacheHandler
      * Smarty template cache handler implementation.
      * @return boolean
      */
-    abstract static function handler($action, &$cache_content, $tpl_file = null, $cache_id = null,
-        $compile_id = null, $exp_time = null);
+    abstract public function handler($action, &$cache_content, $tpl_file = null, $cache_id = null, $compile_id = null, $exp_time = null);
 
     /**
      * Clears template cache storage.
@@ -34,5 +33,3 @@ abstract class TemplateCacheHandler
      */
     abstract public function update($camspiteVector);
 }
-
-?>
