@@ -36,8 +36,6 @@ class Admin_LegacyController extends Zend_Controller_Action
             '/imagearchive/do_add.php',
             '/users/authors_ajax/detail.php',
             '/users/authors_ajax/grid.php',
-            $prefix . 'password_recovery.php',
-            $prefix . 'password_check_token.php',
             '/articles/locations/popup.php',
             '/articles/locations/preview.php',
             '/articles/locations/search.php',

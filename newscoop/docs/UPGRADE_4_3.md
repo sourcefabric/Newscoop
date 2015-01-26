@@ -1,9 +1,9 @@
-## Upgrading Newscoop version 4.2.3/4.2.4 to 4.3
+## Upgrading Newscoop version 4.2.3/4.2.4/4.3.x to 4.3.x
 
 **Important!** Remember to backup all your data before performing upgrade.
 
 1. Remove `newscoop/vendor` directory and its content from your current Newscoop instance (`sudo rm -rf newscoop/vendor`).
-2. Copy Newscoop 4.3 files over the 4.2.3/4.2.4 files (e.g. `sudo cp -r /home/user/Newscoop43/newscoop/ /var/www/newscoop/`).
+2. Copy Newscoop 4.3.x files over the 4.2.3/4.2.4/4.3.x files (e.g. `sudo cp -r /home/user/Newscoop43/newscoop/ /var/www/newscoop/`).
 3. Run `upgrade.php` script. (Go to `http://www.example.com/upgrade.php`)
 4. Check if there are any instructions to follow in the output of upgrade script. If so, then follow the steps.
 5. When it is done, clear the cache folder: `sudo rm -rf cache/*`.
@@ -13,11 +13,11 @@
 9. Clear the cache folder for the last time: `sudo rm -rf cache/*`.
 10. You are done!
 
-Above steps are required to upgrade Newscoop 4.2.3/4.2.4 to 4.3.
+Above steps are required to upgrade Newscoop 4.2.3/4.2.4/4.3.x to 4.3.x.
 
 We also recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha`, because they will not be compatible with Newscoop 4.3 anymore.
 
-How to do this?:
+How to do this?: (only when upgrading from 4.2.3/4.2.4 to 4.3.x)
 
 * Make a backup of `newscoop/plugins/` directory.
 * Remove the whole `newscoop/plugins/` content(Linux command: `sudo rm -rf newscoop/plugins/*`).
