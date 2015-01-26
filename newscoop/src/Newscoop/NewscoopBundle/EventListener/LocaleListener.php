@@ -20,7 +20,6 @@ use Newscoop\Services\CacheService;
  */
 class LocaleListener
 {
-
     protected $cacheService;
 
     protected $em;
@@ -56,9 +55,17 @@ class LocaleListener
         }
 
         if ($pos === false) {
+            $issueMetadata = $request->attributes->get('_newscoop_issue_metadata');
+            $issueLanguageCode = $issueMetadata['code_default_language'];
+            if ($issueLanguageCode) {
+                $request->setLocale($issueLanguageCode);
+
+                return;
+            }
+
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $languageCode = $publicationMetadata['publication']['code_default_language'];
-            $locale = $this->assertValidLocale($request->getRequestUri());
+            $locale = $this->extractLocaleFromUri($request->getRequestUri());
             if (is_null($locale)) {
                 $request->setLocale($languageCode);
 
@@ -80,9 +87,8 @@ class LocaleListener
         }
     }
 
-    private function assertValidLocale($requestUri)
+    private function extractLocaleFromUri($requestUri)
     {
-
         if ($requestUri !== "/") {
             $requestUri = str_replace("?", "", $requestUri);
             $extractedUri = array_filter(explode("/", $requestUri));
