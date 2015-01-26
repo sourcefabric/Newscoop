@@ -12,12 +12,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Services\CacheService;
 
 /**
  * Save locale cookie.
  */
 class LocaleListener
 {
+
+    protected $cacheService;
+
+    protected $em;
+
+    public function __construct(CacheService $cacheService, EntityManager $em)
+    {
+        $this->cacheService = $cacheService;
+        $this->em = $em;
+    }
+
     public function onResponse(FilterResponseEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
@@ -45,9 +58,38 @@ class LocaleListener
         if ($pos === false) {
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $languageCode = $publicationMetadata['publication']['code_default_language'];
-            if ($languageCode) {
+            $locale = $this->assertValidLocale($request->getRequestUri());
+            if (is_null($locale)) {
                 $request->setLocale($languageCode);
+
+                return;
             }
+
+            $cacheKey = $this->cacheService->getCacheKey(array('resolver', $locale), 'language');
+            if ($this->cacheService->contains($cacheKey)) {
+                $language = $this->cacheService->fetch($cacheKey);
+            } else {
+                $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneBy(array(
+                    'code' => $locale
+                ));
+
+                $this->cacheService->save($cacheKey, $language);
+            }
+
+            $request->setLocale(!is_null($language) ? $language->getCode() : $languageCode);
         }
+    }
+
+    private function assertValidLocale($requestUri)
+    {
+
+        if ($requestUri !== "/") {
+            $requestUri = str_replace("?", "", $requestUri);
+            $extractedUri = array_filter(explode("/", $requestUri));
+
+            return $extractedUri[1];
+        }
+
+        return null;
     }
 }
