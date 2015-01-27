@@ -92,18 +92,16 @@ class LinkRequestListener
             }
 
             $stubRequest->attributes->replace($route);
+            $stubRequest->server = $event->getRequest()->server;
 
             if (false === $controller = $this->resolver->getController($stubRequest)) {
                 continue;
             }
 
             // Make sure @ParamConverter is handled
-            $subEvent = new FilterControllerEvent(
-                $event->getKernel(),
-                $controller,
-                $stubRequest,
-                HttpKernelInterface::MASTER_REQUEST
-            );
+            $subEvent = new FilterControllerEvent($event->getKernel(), $controller, $stubRequest, HttpKernelInterface::MASTER_REQUEST);
+            $kernelSubEvent = new GetResponseEvent($event->getKernel(), $stubRequest, HttpKernelInterface::MASTER_REQUEST);
+            $event->getDispatcher()->dispatch(KernelEvents::REQUEST, $kernelSubEvent);
             $event->getDispatcher()->dispatch(KernelEvents::CONTROLLER, $subEvent);
             $controller = $subEvent->getController();
 

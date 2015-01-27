@@ -13,6 +13,7 @@ use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Search\RepositoryInterface;
 use Newscoop\NewscoopException\IndexException;
 use Newscoop\Entity\Article;
+use Newscoop\Entity\Language;
 use Newscoop\Entity\User;
 use Newscoop\NewscoopBundle\Entity\Topic;
 
@@ -80,6 +81,102 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
+
+        return $query;
+    }
+
+    /**
+     * Search fo articles by keyword and filters
+     *
+     * @param  Language  $language
+     * @param  array     $keywords
+     * @param  integer   $publication   Publication Id
+     * @param  integer   $issue         Issue Number
+     * @param  integer   $section       Section Number
+     * @param  boolean   $onlyPublished
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function searchArticles($language, $keywords = array(), $publication = false, $issue = false, $section = false, $onlyPublished = true)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
+            ->select('DISTINCT(a.article) as number')
+            ->leftJoin('a.keyword', 'k')
+            ->leftJoin('a.article', 'aa');
+
+        $orX = $queryBuilder->expr()->orx();
+
+        foreach ($keywords as $keyword) {
+            $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
+        }
+
+        if (count($keywords) > 0) {
+            $queryBuilder->andWhere($orX);
+        }
+
+        if ($publication) {
+            $queryBuilder->andWhere('a.publication = :publication')
+                ->setParameter('publication', $publication);
+        }
+
+        if ($section) {
+            $queryBuilder->andWhere('a.sectionNumber = :section')
+                ->setParameter('section', $section);
+        }
+
+        if ($issue) {
+            $queryBuilder->andWhere('a.issueNumber = :issue')
+                ->setParameter('issue', $issue);
+        }
+
+        $queryBuilder->setMaxResults(90);
+
+        $articleNumbers = $queryBuilder->getQuery()->getResult();
+        $tmpNumbers = array();
+        foreach ($articleNumbers as $key => $value) {
+            $tmpNumbers[] = $value['number'];
+        }
+        $articleNumbers = $tmpNumbers;
+
+        $query = $this->getArticlesByIds($language, $articleNumbers, $onlyPublished);
+
+        return $query;
+    }
+
+    public function getArticlesByIds($language, $ids = array(), $onlyPublished = true)
+    {
+        $em = $this->getEntityManager();
+
+        $languageId = $em->getRepository('Newscoop\Entity\Language')
+            ->findOneByCode($language);
+        if (!$languageId) {
+            throw new NotFoundHttpException('Results with language "'.$language.'" was not found.');
+        }
+        $language = $languageId;
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a, FIELD(a.number, :ids) as HIDDEN field')
+            ->andWhere('a.number IN (:ids)')
+            ->andWhere('a.language = :language')
+            ->leftJoin('a.publication', 'p')
+            ->leftJoin('a.issue', 'i')
+            ->leftJoin('a.section', 's')
+            ->orderBy('field')
+            ->setParameters(array(
+                'ids' => $ids,
+                'language' => $language
+            ));
+
+        if ($onlyPublished) {
+            $queryBuilder->andWhere('a.workflowStatus  = :workflowStatus')
+                ->setParameter('workflowStatus', Article::STATUS_PUBLISHED);
+        }
+
+        $countQueryBuilder = clone $queryBuilder;
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $countQueryBuilder->select('COUNT(a)')->orderBy('a.number')->getQuery()->getSingleScalarResult());
 
         return $query;
     }

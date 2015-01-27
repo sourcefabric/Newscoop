@@ -180,7 +180,7 @@ class ArticleService
         $article->setUploaded(new \Datetime());
         $article->setLockUser();
         $article->setPublic(true);
-        $article->setIsIndexed(false);
+        $article->setIsIndexed('N');
 
         $this->em->persist($article);
         $this->em->flush();
@@ -201,13 +201,6 @@ class ArticleService
      */
     public function updateArticle($article, $attributes)
     {
-        $this->checkForArticleConflicts(
-            $attributes['name'],
-            $article->getPublication(),
-            $article->getIssue(),
-            $article->getSection()
-        );
-
         $this->updateArticleMeta($article, $attributes);
         $article->setUpdated(new \DateTime());
         $article->setIsIndexed(false);
@@ -235,6 +228,7 @@ class ArticleService
     {
         $article->setName($attributes['name']);
         $article->setCommentsEnabled($attributes['comments_enabled']);
+        $article->setCommentsLocked($attributes['comments_locked']);
         $article->setOnFrontPage($attributes['onFrontPage']);
         $article->setOnSection($attributes['onSection']);
         $article->setKeywords($attributes['keywords']);

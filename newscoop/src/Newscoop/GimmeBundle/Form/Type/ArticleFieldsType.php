@@ -38,7 +38,7 @@ class ArticleFieldsType extends AbstractType
             function (FormEvent $event) use ($articleData) {
                 $form = $event->getForm();
 
-                foreach ($articleData->getUserDefinedColumns() as $articleTypeField) {
+                foreach ($articleData->getUserDefinedColumns(true) as $articleTypeField) {
                     switch ($articleTypeField->getType()) {
                         case ArticleTypeField::TYPE_TEXT:
                         case ArticleTypeField::TYPE_COMPLEX_DATE:
@@ -62,7 +62,7 @@ class ArticleFieldsType extends AbstractType
                             break;
 
                         case ArticleTypeField::TYPE_SWITCH:
-                            $form->add(substr($articleTypeField->getName(), 1), 'checkbox', array(
+                            $form->add(substr($articleTypeField->getName(), 1), 'integer', array(
                                 'required' => false,
                             ));
                             break;

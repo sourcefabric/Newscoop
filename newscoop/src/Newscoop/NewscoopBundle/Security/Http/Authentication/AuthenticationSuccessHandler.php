@@ -60,7 +60,7 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         $session = $request->getSession();
         $session->set('_security_oauth_authorize', serialize($OAuthtoken));
 
-        \Article::UnlockByUser($zendAuth->getIdentity());
+        \Article::UnlockByUser($user->getId());
 
         $request->setLocale($request->request->get('login_language'));
         setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));

@@ -1620,7 +1620,7 @@ class Article implements DocumentInterface
      */
     public function setOnFrontPage($onFrontPage = false)
     {
-        if (is_bool($onFrontPage)) {
+        if (is_bool($onFrontPage) || is_int($onFrontPage)) {
             if ($onFrontPage) {
                 $this->onFrontPage = 'Y';
             } else {
@@ -1654,7 +1654,7 @@ class Article implements DocumentInterface
      */
     public function setOnSection($onSection = false)
     {
-        if (is_bool($onSection)) {
+        if (is_bool($onSection) || is_int($onSection)) {
             if ($onSection) {
                 $this->onSection = 'Y';
             } else {

@@ -69,6 +69,15 @@ class RouterFactory
         );
 
         $router->addRoute(
+            'author',
+            new \Zend_Controller_Router_Route('author/:author', array(
+                'module' => 'default',
+                'controller' => 'author',
+                'action' => 'profile',
+            ))
+        );
+
+        $router->addRoute(
             'user',
             new \Zend_Controller_Router_Route('user/profile/:username/:action', array(
                 'module' => 'default',
