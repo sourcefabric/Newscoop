@@ -14,6 +14,7 @@ use Newscoop\Entity\Repository\IssueRepository;
 use Newscoop\Entity\Publication;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\AbstractQuery;
 
 class IssueServiceSpec extends ObjectBehavior
 {
@@ -29,6 +30,7 @@ class IssueServiceSpec extends ObjectBehavior
         IssueRepository $repository,
         Issue $issue,
         Publication $publication,
+        AbstractQuery $query,
         CacheService $cacheService)
     {
         $em
@@ -42,7 +44,8 @@ class IssueServiceSpec extends ObjectBehavior
             'shortName' => 'may2014'
         ))->willReturn($issue);
 
-        $repository->getOneOrNullIssue('en', $publication, 'may2014')->willReturn($issue);
+        $repository->getIssue('en', $publication, 'may2014')->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($issue);
 
         $this->beConstructedWith($em, $publicationService, $cacheService);
     }

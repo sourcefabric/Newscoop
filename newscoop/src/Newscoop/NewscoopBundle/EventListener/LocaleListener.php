@@ -66,7 +66,7 @@ class LocaleListener
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $languageCode = $publicationMetadata['publication']['code_default_language'];
             $locale = $this->extractLocaleFromUri($request->getRequestUri());
-            if (is_null($locale)) {
+            if (!$locale) {
                 $request->setLocale($languageCode);
 
                 return;
@@ -95,7 +95,5 @@ class LocaleListener
 
             return $extractedUri[1];
         }
-
-        return null;
     }
 }

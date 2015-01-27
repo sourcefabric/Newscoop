@@ -109,7 +109,10 @@ class IssueService implements IssueServiceInterface
             if ($this->cacheService->contains($cacheKey)) {
                 $issue = $this->cacheService->fetch($cacheKey);
             } else {
-                $issue = $this->em->getRepository('Newscoop\Entity\Issue')->getOneOrNullIssue($uriParts[1], $publication, $uriParts[2]);
+                $issue = $this->em->getRepository('Newscoop\Entity\Issue')
+                    ->getIssue($uriParts[1], $publication, $uriParts[2])
+                    ->getOneOrNullResult();
+
                 $this->cacheService->save($cacheKey, $issue);
             }
 

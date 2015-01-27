@@ -56,7 +56,7 @@ class IssueRepository extends EntityRepository
         return $query;
     }
 
-    public function getOneOrNullIssue($languageCode, $publicationId, $shortName = null)
+    public function getIssue($languageCode, $publication, $shortName = null)
     {
         $qb = $this->createQueryBuilder('i')
             ->select('i', 'l')
@@ -65,7 +65,7 @@ class IssueRepository extends EntityRepository
             ->andWhere('i.publication = :publicationId')
             ->setParameters(array(
                 'language' => $languageCode,
-                'publicationId' => $publicationId
+                'publicationId' => $publication
             ));
 
         if (!is_null($shortName)) {
@@ -73,6 +73,6 @@ class IssueRepository extends EntityRepository
                 ->setParameter('shortName', $shortName);
         }
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery();
     }
 }
