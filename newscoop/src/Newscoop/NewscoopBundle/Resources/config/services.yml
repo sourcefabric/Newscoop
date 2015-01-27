@@ -89,8 +89,22 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
+    newscoop.publication_service:
+        alias: newscoop_newscoop.publication_service
+
+    newscoop_newscoop.issue_service:
+        class: Newscoop\Services\IssueService
+        arguments:  ["@em", "@newscoop_newscoop.publication_service", "@newscoop.cache"]
+
+    newscoop_newscoop.listener.issue:
+        class: Newscoop\NewscoopBundle\EventListener\IssueListener
+        arguments:  ["@newscoop_newscoop.issue_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.listener.locale_listener:
         class: Newscoop\NewscoopBundle\EventListener\LocaleListener
+        arguments: ["@newscoop.cache", "@em"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
@@ -133,13 +147,6 @@ services:
         tags:
           - { name: kernel.event_listener, event: newscoop.listobjects.register, method: registerObjects }
 
-    newscoop.publication_service:
-        alias: newscoop_newscoop.publication_service
-
-    newscoop_newscoop.issue_service:
-        class: Newscoop\Services\IssueService
-        arguments:  ["@em", "@newscoop_newscoop.publication_service", "@newscoop.cache"]
-
     newscoop_newscoop.themes_service:
         class: Newscoop\Services\ThemesService
         arguments:  ["@newscoop_newscoop.issue_service", "@newscoop.cache", "@newscoop_newscoop.publication_service", "@em"]
@@ -165,12 +172,6 @@ services:
         arguments:  ["@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
-    newscoop_newscoop.listener.issue:
-        class: Newscoop\NewscoopBundle\EventListener\IssueListener
-        arguments:  ["@newscoop_newscoop.issue_service"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"

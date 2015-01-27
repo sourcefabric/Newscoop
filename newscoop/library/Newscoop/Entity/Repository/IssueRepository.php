@@ -55,4 +55,24 @@ class IssueRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getIssue($languageCode, $publication, $shortName = null)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->select('i', 'l')
+            ->leftJoin('i.language' , 'l')
+            ->where('l.code = :language')
+            ->andWhere('i.publication = :publicationId')
+            ->setParameters(array(
+                'language' => $languageCode,
+                'publicationId' => $publication
+            ));
+
+        if (!is_null($shortName)) {
+            $qb->andWhere('i.shortName = :shortName')
+                ->setParameter('shortName', $shortName);
+        }
+
+        return $qb->getQuery();
+    }
 }
