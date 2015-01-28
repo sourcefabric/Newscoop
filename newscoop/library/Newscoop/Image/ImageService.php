@@ -74,7 +74,7 @@ class ImageService
      *
      * @return LocalImage
      */
-    public function upload(UploadedFile $file, array $attributes, ImageInterface $image = null)
+    public function upload(UploadedFile $file, array $attributes, ImageInterface $image = null, $keepRatio = true)
     {
         $filesystem = new Filesystem();
         $imagine = new Imagine();
@@ -128,8 +128,23 @@ class ImageService
             $file->move($this->config['image_path'], $this->generateImagePath($image->getId(), $file->getClientOriginalExtension(), true));
             $filesystem->chmod($imagePath, 0644);
 
+            if ($keepRatio) {
+                $ratioOrig = $width / $height;
+                $ratioNew = $this->config['thumbnail_max_size'] / $this->config['thumbnail_max_size'];
+                if ($ratioNew > $ratioOrig) {
+                    $newImageWidth = $this->config['thumbnail_max_size'] * $ratioOrig;
+                    $newImageHeight = $this->config['thumbnail_max_size'];
+                } else {
+                    $newImageWidth = $this->config['thumbnail_max_size'];
+                    $newImageHeight = $this->config['thumbnail_max_size'] / $ratioOrig;
+                }
+            } else {
+                $newImageWidth = $this->config['thumbnail_max_size'];
+                $newImageHeight = $this->config['thumbnail_max_size'];
+            }
+
             $imagine->open($imagePath)
-                ->resize(new Box($this->config['thumbnail_max_size'], $this->config['thumbnail_max_size']))
+                ->resize(new Box($newImageWidth, $newImageHeight))
                 ->save($thumbnailPath, array());
             $filesystem->chmod($thumbnailPath, 0644);
         } catch (\Exceptiom $e) {
@@ -249,13 +264,8 @@ class ImageService
         }
 
         $rendition = new Rendition($width, $height, $specs);
-        try {
-            $image = $rendition->generateImage($this->decodePath($imagePath));
-        } catch (\Exception $e) {
-            ladybug_dump_die($e);
-        }
         
-        
+        $image = $rendition->generateImage($this->decodePath($imagePath));
         $image->save($destFolder . '/' . $imagePath);
 
         return $image;

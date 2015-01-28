@@ -23,7 +23,7 @@ monolog:
     handlers:
         sentry:
             type:  raven
-            dsn:   'http://6948f4720ffe4956b25df0fe720da09e:085cd9f5324c4e65abdd55482ca7c5cc@sentry.sourcefabric.org/5'
+            dsn:   'http://9cd083992bcc4dbba05b6a0253b30b3b:57ae69b9ea7347c1bca8583ab1e3da5f@sentry.sourcefabric.org/5'
             level: notice
             channels: ['sentry']
 

@@ -35,4 +35,28 @@ class ArticleImage
      * @var int
      */
     protected $number;
+
+    /**
+     * Gets the value of number.
+     *
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Sets the value of number.
+     *
+     * @param int $number the number
+     *
+     * @return self
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
 }

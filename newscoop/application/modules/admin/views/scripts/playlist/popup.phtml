@@ -4,36 +4,36 @@ $this->headLink()->appendStylesheet( $this->baseUrl('admin-style/admin_styleshee
 
 $t = array
 (
-	'view-article' => $translator->trans('View article', array(), 'articles'),
-	'drag-here' => $translator->trans('Drag here to add to list', array(), 'articles'),
-	'playlist-updated' => $translator->trans('List updated.', array(), 'articles'),
+    'view-article' => $translator->trans('View article', array(), 'articles'),
+    'drag-here' => $translator->trans('Drag here to add to list', array(), 'articles'),
+    'playlist-updated' => $translator->trans('List updated.', array(), 'articles'),
     'list-saved' => $translator->trans('List saved', array(), 'articles'),
-	'list-save-failed' => $translator->trans('Could not save the list', array(), 'articles'),
+    'list-save-failed' => $translator->trans('Could not save the list', array(), 'articles'),
     'delete' => $translator->trans('Delete'),
     'cancel' => $translator->trans('Cancel'),
     'duplicate-entry' => $translator->trans('Duplicate article entry found', array(), 'articles')
 );
 $dataUrl = $this->url( array
 (
-	'action' => 'list-data',
-	'controller' => 'playlist',
-	'module' => 'admin',
+    'action' => 'list-data',
+    'controller' => 'playlist',
+    'module' => 'admin',
     'id' => $this->playlistId,
-	'format' => 'json'
+    'format' => 'json'
 ), null, null, false);
 $saveUrl = $this->url( array
 (
-	'action' => 'save-data',
-	'controller' => 'playlist',
-	'module' => 'admin',
-	'format' => 'json'
+    'action' => 'save-data',
+    'controller' => 'playlist',
+    'module' => 'admin',
+    'format' => 'json'
 ), null, null, false);
 $deleteUrl = $this->url( array
 (
-	'action' => 'delete',
-	'controller' => 'playlist',
-	'module' => 'admin',
-	'format' => 'json'
+    'action' => 'delete',
+    'controller' => 'playlist',
+    'module' => 'admin',
+    'format' => 'json'
 ), null, null, false);
 $articlePreviewUrl = $this->url( array
 (
@@ -47,27 +47,27 @@ $js = <<<JS
 
 function toggleDragZonePlaceHolder()
 {
-	if($('#context_list').find('.context-item').html() != null) {
-	    $('#drag-here-to-add-to-list').css('display', 'none');
-	} else {
-		$('#drag-here-to-add-to-list').css('display', 'block');
-	}
+    if($('#context_list').find('.context-item').html() != null) {
+        $('#drag-here-to-add-to-list').css('display', 'none');
+    } else {
+        $('#drag-here-to-add-to-list').css('display', 'block');
+    }
 }
 function fnLoadContextList(data)
 {
-	if(data.code == 200) {
-	    var items = data.items;
-	    for(i = 0; i < items.length; i++) {
-	        var item = items[i];
+    if(data.code == 200) {
+        var items = data.items;
+        for(i = 0; i < items.length; i++) {
+            var item = items[i];
             console.log(item);
-	        appendItemToContextList(item.articleId, item.date.date, item.title, item.workflowStatus);
-	    }
-	}
-	toggleDragZonePlaceHolder();
+            appendItemToContextList(item.articleId, item.date.date, item.title, item.workflowStatus);
+        }
+    }
+    toggleDragZonePlaceHolder();
 }
 function loadContextList()
 {
-	var relatedArticles = $('#context_list').sortable( "serialize");
+    var relatedArticles = $('#context_list').sortable( "serialize");
     var aoData = new Array();
     var items = new Array('1_1','0_0');
     aoData.push("context_box_load_list");
@@ -85,26 +85,26 @@ function appendItemToContextList(article_id, article_date, article_title, status
 
     $("#context_list").append
     (
-		'<li class="item" id="'+article_id+'">'+
-		'<input type="hidden" name="article-id[]" value="'+article_id+'" />'+
-    	'<div class="context-item">'+
+        '<li class="item" id="'+article_id+'">'+
+        '<input type="hidden" name="article-id[]" value="'+article_id+'" />'+
+        '<div class="context-item">'+
         '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
         '<div class="context-item-header">'+
         '<div class="context-item-date">'+ article_date + articleStatus +'</div>'+
         '<a href="#" class="view-article" style="display: none" ' +
-        	'onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'li.item\').attr(\'id\'));">{$t['view-article']}</a>'+
+            'onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'li.item\').attr(\'id\'));">{$t['view-article']}</a>'+
         '</div>'+
         '<a href="#" class="corner-button" style="display: block" '+
-        	'onClick="$(this).parent(\'div\').parent(\'li.item\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
+            'onClick="$(this).parent(\'div\').parent(\'li.item\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
         '<div class="context-item-summary"></div>'+
         '</div>'+
-    	'</li>'
-	).find('#' + article_id + ' .context-item-summary').text(article_title);
+        '</li>'
+    ).find('#' + article_id + ' .context-item-summary').text(article_title);
     closeArticle();
 }
 function deleteContextList()
 {
-	$("#context_list").html('<div id="drag-here-to-add-to-list" style="">{$t['drag-here']}</div>');
+    $("#context_list").html('<div id="drag-here-to-add-to-list" style="">{$t['drag-here']}</div>');
 }
 function removeFromContext(param)
 {
@@ -113,9 +113,9 @@ function removeFromContext(param)
 
 function fnPreviewArticle(data)
 {
-	$("#preview-article-date").val(data.date);
-	$("#preview-article-title").html(data.title);
-	var bodyHtml = '';
+    $("#preview-article-date").val(data.date);
+    $("#preview-article-title").html(data.title);
+    var bodyHtml = '';
     bodyHtml += '<h4>'+data.authorsLabel+'</h4>';
     if (!data['authors'].length == 0) {
         for (author in data['authors']) {
@@ -131,25 +131,25 @@ function fnPreviewArticle(data)
         bodyHtml += '<p>'+data[i]+'</p>';
     };
 
-	$("#preview-article-body").html(bodyHtml);
-	$(".context-block.context-list").css("display","none");
+    $("#preview-article-body").html(bodyHtml);
+    $(".context-block.context-list").css("display","none");
     $(".context-block.context-article").css("display","block");
 }
 
 function clearActiveArticles() {
-	$('.item-active').each( function () {
-		$(this).removeClass('item-active');
-	});
+    $('.item-active').each( function () {
+        $(this).removeClass('item-active');
+    });
 }
 
 function viewArticle(param, lang)
 {
-	clearActiveArticles();
-	$("#"+param).addClass('item-active');
-	param = param.substring( param.lastIndexOf('_')+1 );
-	$("#preview-article-id").val(param);
-	callServer('{$articlePreviewUrl}', { 'id' : param, 'lang' : lang }, fnPreviewArticle, true);
-	return;
+    clearActiveArticles();
+    $("#"+param).addClass('item-active');
+    param = param.substring( param.lastIndexOf('_')+1 );
+    $("#preview-article-id").val(param);
+    callServer('{$articlePreviewUrl}', { 'id' : param, 'lang' : lang }, fnPreviewArticle, true);
+    return;
 }
 
 function closeArticle()
@@ -160,8 +160,8 @@ function closeArticle()
 
 function popup_close()
 {
-	try
-	{
+    try
+    {
         if (parent.$.fancybox.reload) {
             parent.$.fancybox.message = '{$t['list-saved']}';
         }
@@ -170,28 +170,28 @@ function popup_close()
     catch (e) {window.close();}
     try
     {
-    	var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
-		$(parent.document.body).find('#playlist-display').replaceWith(iframe);
-	}
-	catch(e){}
+        var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
+        $(parent.document.body).find('#playlist-display').replaceWith(iframe);
+    }
+    catch(e){}
 }
 
 function popup_save()
 {
-	var articles = [];
-	var cancelSave = false;
-	$('#context-list-form').find('input[type=hidden]').each(function()
-	{
-		var artId = $(this).val();
-		if( $.inArray(artId, articles) != -1 ) {
-			flashMessage('{$t['duplicate-entry']}', 'error', false);
-			cancelSave = true;
-			return false;
-		}
-		articles.push(artId);
-	});
+    var articles = [];
+    var cancelSave = false;
+    $('#context-list-form').find('input[type=hidden]').each(function()
+    {
+        var artId = $(this).val();
+        if( $.inArray(artId, articles) != -1 ) {
+            flashMessage('{$t['duplicate-entry']}', 'error', false);
+            cancelSave = true;
+            return false;
+        }
+        articles.push(artId);
+    });
 
-	if( cancelSave ) return false;
+    if( cancelSave ) return false;
 
     var aoData =
     {
@@ -204,51 +204,51 @@ function popup_save()
 
 function fnSaveCallback(data)
 {
-	if (typeof data['error'] != 'undefined' && data['error'])
-	{
-		var flash = flashMessage('{$t['list-save-failed']}', 'error', false);
-		return false;
-	}
-	var pl = $(parent.document.body).find('#playlists option[value='+data.playlistId+']');
-	if (pl.length == 0) {
-		var opt = $('<option />').val(data.playlistId).text(data.playlistName);
-		var sel = $(parent.document.body).find('#playlists');
-		sel.append( opt );
-		sel.val(data.playlistId)
-		parent.triggerSelectClick();
-	}
-	else {
-		pl.val(data.playlistId).text(data.playlistName).trigger('click');
-	}
-	var flash = flashMessage('{$t['list-saved']}', null, false);
+    if (typeof data['error'] != 'undefined' && data['error'])
+    {
+        var flash = flashMessage('{$t['list-save-failed']}', 'error', false);
+        return false;
+    }
+    var pl = $(parent.document.body).find('#playlists option[value='+data.playlistId+']');
+    if (pl.length == 0) {
+        var opt = $('<option />').val(data.playlistId).text(data.playlistName);
+        var sel = $(parent.document.body).find('#playlists');
+        sel.append( opt );
+        sel.val(data.playlistId)
+        parent.triggerSelectClick();
+    }
+    else {
+        pl.val(data.playlistId).text(data.playlistName).trigger('click');
+    }
+    var flash = flashMessage('{$t['list-saved']}', null, false);
 }
 
 $(function()
 {
-	$( "#dialog-confirm" ).dialog
-	({
-		resizable: false,
-		height:140,
-		modal: true,
-		autoOpen : false,
-		position : 'top',
-		buttons:
-		{
-			"{$t['delete']}" : function() {
-				callServer('{$deleteUrl}', {id:$('#playlists').val()}, function()
-				{
-					$(parent.document.body).find('#playlists option[value={$this->playlistId}]').remove();
-					var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
-					$(parent.document.body).find('#playlist-display').replaceWith(iframe);
-				}, true );
-				$( this ).dialog( "close" );
-			},
-			"{$t['cancel']}" : function() {
-				$( this ).dialog( "close" );
-			}
-		}
-	});
-	$('#remove-ctrl').click(function(){ $( "#dialog-confirm" ).dialog('open') });
+    $( "#dialog-confirm" ).dialog
+    ({
+        resizable: false,
+        height:140,
+        modal: true,
+        autoOpen : false,
+        position : 'top',
+        buttons:
+        {
+            "{$t['delete']}" : function() {
+                callServer('{$deleteUrl}', {id:$('#playlists').val()}, function()
+                {
+                    $(parent.document.body).find('#playlists option[value={$this->playlistId}]').remove();
+                    var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
+                    $(parent.document.body).find('#playlist-display').replaceWith(iframe);
+                }, true );
+                $( this ).dialog( "close" );
+            },
+            "{$t['cancel']}" : function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+    $('#remove-ctrl').click(function(){ $( "#dialog-confirm" ).dialog('open') });
 });
 
 JS;
@@ -258,38 +258,38 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 ?>
 
 <div class="content">
-	<div id="context-box" class="block-shadow">
-		<div class="toolbar">
-			<div class="save-button-bar">
-				<?php if (isset($this->playlistId)) : ?>
-				<input type="button" class="default-button" id="remove-ctrl" value="<?php echo $translator->trans('Remove'); ?>" />
-				<?php endif; ?>
-				<input type="submit" name="cancel"
-					value="<?php echo $translator->trans('Close'); ?>" class="default-button" onclick="popup_close();"
-					id="context_button_close"> <input type="submit" name="save"
-					value="<?php echo $translator->trans('Save'); ?>" class="save-button-small" onclick="popup_save();"
-					id="context_button_save">
-			</div>
+    <div id="context-box" class="block-shadow">
+        <div class="toolbar">
+            <h2 style="max-width:420px; float:left">
+                <?php echo $translator->trans('Featured Article List', array(), 'articles'); ?>
+            </h2>
+            <span style="float:left">
+                <label for="playlist-name"><?php echo $translator->trans('List Name', array(), 'articles') ?>:</label>
+                <input name="playlist-name" id="playlist-name" value="<?php echo $this->escape($this->playlistName) ?>"
+                    style="font-size: 12px; width: 250px" />
+                <?php if(isset($this->playlistId)) : ?>
+                <label for="playlist-id"><?php echo $translator->trans('List ID', array(), 'articles')?>:</label>
+                <input id="playlist-id" style="font-size:12px; width:50px"
+                    readonly="readonly" value="<?php echo $this->playlistId ?>">
+                <?php endif; ?>
+            </span>
+            <div class="save-button-bar">
+                <?php if (isset($this->playlistId)) : ?>
+                <input type="button" class="default-button" id="remove-ctrl" value="<?php echo $translator->trans('Remove'); ?>" />
+                <?php endif; ?>
+                <input type="submit" name="cancel"
+                    value="<?php echo $translator->trans('Close'); ?>" class="default-button" onclick="popup_close();"
+                    id="context_button_close"> <input type="submit" name="save"
+                    value="<?php echo $translator->trans('Save'); ?>" class="save-button-small" onclick="popup_save();"
+                    id="context_button_save">
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div class="context-content">
+            <div class="context-block context-search">
+                <h3><?php echo $translator->trans('Available Articles', array(), 'articles'); ?></h3>
 
-			<h2 style="width:700px">
-			    <?php echo $translator->trans('Featured Article List', array(), 'articles'); ?>
-				<span style="float:right">
-					<label for="playlist-name"><?php echo $translator->trans('List Name', array(), 'articles') ?>:</label>
-					<input name="playlist-name" id="playlist-name" value="<?php echo $this->escape($this->playlistName) ?>"
-						style="font-size: 12px; width: 250px" />
-					<?php if(isset($this->playlistId)) : ?>
-					<label for="playlist-id"><?php echo $translator->trans('List ID', array(), 'articles')?>:</label>
-					<input id="playlist-id" style="font-size:12px; width:50px"
-						readonly="readonly"	value="<?php echo $this->playlistId ?>">
-					<?php endif; ?>
-				</span>
-			</h2>
-		</div>
-		<div class="context-content">
-			<div class="context-block context-search">
-				<h3><?php echo $translator->trans('Available Articles', array(), 'articles'); ?></h3>
-
-	            <?php
+                <?php
                 require_once CS_PATH_SITE.'/admin-files/libs/ContextList/ContextList.php';
                 $contextlist = new ContextList();
                 $contextlist->setSearch(TRUE);
@@ -299,12 +299,12 @@ $this->headScript()->appendScript( $js, "text/javascript" );
                 $contextlist->render();
                 ?>
 
-			</div>
+            </div>
 
-			<script>
+            <script>
                  $(function()
                  {
-                 	$(".dataTables_filter input").attr("placeholder", "Search").addClass("context-search search");
+                    $(".dataTables_filter input").attr("placeholder", "Search").addClass("context-search search");
                     $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-tl .ui-corner-tr .ui-helper-clearfix").css("border","none");
                     $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-bl .ui-corner-br .ui-helper-clearfix").css("background-color","#CCCCCC");
                     $(".datatable").css("position","static");
@@ -342,9 +342,9 @@ $this->headScript()->appendScript( $js, "text/javascript" );
                             var articleId = $(ui.item).attr('id').replace('article_', '');
                             var newItem = $('<li />').addClass('item').attr('id', articleId);
                             newItem.append( $('<input />')
-                            	.attr('type', 'hidden')
-                            	.attr('name', 'article-id[]')
-                            	.val(articleId) );
+                                .attr('type', 'hidden')
+                                .attr('name', 'article-id[]')
+                                .val(articleId) );
                             newItem.append($(ui.item).find('td > *'));
                             $(ui.item).replaceWith(newItem);
 
@@ -356,49 +356,49 @@ $this->headScript()->appendScript( $js, "text/javascript" );
                      loadContextList();
                  });
 
-			</script>
+            </script>
 
-    		<div class="context-block context-list">
-    			<h3><?php echo $translator->trans('Featured Articles', array(), 'articles'); ?></h3>
-    			<div class="context-list-results">
-    				<div class="save-button-bar" style="display: block;"><input
-    					type="submit" name="delete-all" value="Delete all"
-    					class="default-button" onclick="deleteContextList()" id="context_button_delete_all">
-    				</div>
-    				<div style="display: block; float: left">
-    					<form id="context-list-form">
-        					<ul id="context_list" style="display:block; height: 433px; width: 506px; overflow-y:auto; overflow-x:hidden; padding: 36px 0px 0px 0px;">
-            					<div id="drag-here-to-add-to-list" style="display:none">
-                					<?php echo $translator->trans('Drag here to add to list', array(), 'articles') ?>
-            					</div>
-        					</ul>
-    					</form>
-    				</div>
-    			</div>
-    		</div>
+            <div class="context-block context-list">
+                <h3><?php echo $translator->trans('Featured Articles', array(), 'articles'); ?></h3>
+                <div class="context-list-results">
+                    <div class="save-button-bar" style="display: block;"><input
+                        type="submit" name="delete-all" value="Delete all"
+                        class="default-button" onclick="deleteContextList()" id="context_button_delete_all">
+                    </div>
+                    <div style="display: block; float: left">
+                        <form id="context-list-form">
+                            <ul id="context_list" style="display:block; height: 433px; width: 506px; overflow-y:auto; overflow-x:hidden; padding: 36px 0px 0px 0px;">
+                                <div id="drag-here-to-add-to-list" style="display:none">
+                                    <?php echo $translator->trans('Drag here to add to list', array(), 'articles') ?>
+                                </div>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-    		<div class="context-block context-article" style="display: none">
-    			<div class="save-button-bar"><input type="submit"
-    				name="add-this-article" value="Add this article"
-    				class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles();" id="context_button_add"> <input
-    				type="submit" name="close" value="Close" class="default-button"
-    				onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article">
-    			</div>
+            <div class="context-block context-article" style="display: none">
+                <div class="save-button-bar"><input type="submit"
+                    name="add-this-article" value="Add this article"
+                    class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles();" id="context_button_add"> <input
+                    type="submit" name="close" value="Close" class="default-button"
+                    onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article">
+                </div>
 
-    			<div class="context-article-preview" style="overflow-y:auto; height:500px;">
+                <div class="context-article-preview" style="overflow-y:auto; height:500px;">
 
-    				<input id="preview-article-date" type="hidden" />
-    				<input id="preview-article-id" type="hidden" />
-    				<h3 id="preview-article-title"></h3>
-    				<div id="preview-article-body" style="color: #444444"></div>
-    			</div>
-    		</div>
-    	</div>
-	</div>
+                    <input id="preview-article-date" type="hidden" />
+                    <input id="preview-article-id" type="hidden" />
+                    <h3 id="preview-article-title"></h3>
+                    <div id="preview-article-body" style="color: #444444"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="dialog-confirm" style="display:none" title="<?php echo $translator->trans('Remove list', array(), 'articles') ?>">
-	<p><?php echo $translator->trans('Are you sure you want to delete this list?', array(), 'articles') ?></p>
+    <p><?php echo $translator->trans('Are you sure you want to delete this list?', array(), 'articles') ?></p>
 </div>
 
 

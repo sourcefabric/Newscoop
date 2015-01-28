@@ -39,10 +39,10 @@ class ArticleType extends AbstractType
         ->add('section', 'number', array(
             'required' => false,
         ))
-        ->add('comments_enabled', 'checkbox', array(
+        ->add('comments_enabled', 'integer', array(
             'required' => false,
         ))
-        ->add('comments_locked', 'checkbox', array(
+        ->add('comments_locked', 'integer', array(
             'required' => false,
         ))
         ->add('type', 'text', array(
