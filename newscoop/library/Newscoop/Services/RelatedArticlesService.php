@@ -62,13 +62,11 @@ class RelatedArticlesService
             ->getRelatedArticle($relatedArticles, $articleToRemove->getNumber())
             ->getOneOrNullResult();
 
-        $removedRelatedArticlePosition = $relatedArticle->getOrder();
-
         if ($relatedArticle) {
             $this->em->remove($relatedArticle);
             $this->em->flush();
 
-            $this->reorderAfterRemove($relatedArticles, $removedRelatedArticlePosition);
+            $this->reorderAfterRemove($relatedArticles, $relatedArticle->getOrder());
         }
 
         return true;

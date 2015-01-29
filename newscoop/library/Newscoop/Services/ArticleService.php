@@ -175,8 +175,8 @@ class ArticleService
         $article->setCommentsLocked(false); //TODO - add this to type
         $article->setWorkflowStatus('N');
         $article->setShortName($article->getNumber());
-        $article->setLockTime(new \DateTime('0000:00:00 00:00:00'));
-        $article->setPublished(new \Datetime('0000:00:00 00:00:00'));
+        $article->setLockTime(null);
+        $article->setPublished(new \Datetime());
         $article->setUploaded(new \Datetime());
         $article->setLockUser();
         $article->setPublic(true);
@@ -203,7 +203,7 @@ class ArticleService
     {
         $this->updateArticleMeta($article, $attributes);
         $article->setUpdated(new \DateTime());
-        $article->setIsIndexed(false);
+        $article->setIsIndexed('N');
 
         if (array_key_exists('fields', $attributes)) {
             foreach ($attributes['fields'] as $field => $value) {

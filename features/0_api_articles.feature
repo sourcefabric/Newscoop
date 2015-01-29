@@ -1,4 +1,4 @@
-Feature: Endpoints
+Feature: Articles
     I need to be able to create and update articles
 
     Scenario: Check if route is correct
@@ -44,7 +44,6 @@ Feature: Endpoints
                 | fields[content] | <<sentence>>       | 35 |
 
         When I submit "article" data to "<<new_article>>"
-            Then echo last response
             Then the response status code should be 200
             And the response is JSON
             And field "keywords" in the response should be "test keywords"

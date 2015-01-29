@@ -404,7 +404,7 @@ class ArticlesController extends FOSRestController
      * **related articles headers**:
      *
      *     header name: "link"
-     *     header value: "</api/article/1; rel="topic">"
+     *     header value: "</api/article/1; rel="article">"
      * or with specific language
      *
      *     header value: "</api/article/1?language=en; rel="article">"

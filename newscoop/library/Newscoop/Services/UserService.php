@@ -367,7 +367,7 @@ class UserService
      * @param string  $lastName
      * @param integer $publication
      */
-    public function createUser($email, $password, $username, $firstName = null, $lastName = null, $publication = null, $public = true, $userTypes = array())
+    public function createUser($email, $password, $username, $firstName = null, $lastName = null, $publication = 0, $public = true, $userTypes = array())
     {
         $users = $this->findBy(array('email' => $email));
         if (!empty($users)) {
