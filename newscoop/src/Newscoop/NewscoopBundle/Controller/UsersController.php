@@ -65,7 +65,7 @@ class UsersController extends Controller
         $userService = $this->get('user');
         $cacheService = $this->get('newscoop.cache');
 
-        $criteria = $this->processRequest($request);
+        $criteria = $userService->extractCriteriaFromRequest($request);
         $criteria->is_public = null;
         $registered = $userService->countBy(array('status' => User::STATUS_ACTIVE));
         $pending = $userService->countBy(array('status' => User::STATUS_INACTIVE));
@@ -92,60 +92,6 @@ class UsersController extends Controller
         }
 
         return new JsonResponse($responseArray);
-    }
-
-    private function processRequest($request)
-    {
-        $criteria = new \Newscoop\User\UserCriteria();
-
-        if ($request->query->has('sorts')) {
-            foreach ($request->get('sorts') as $key => $value) {
-                $criteria->orderBy[$key] = $value == '-1' ? 'desc' : 'asc';
-            }
-        }
-
-        if ($request->query->has('queries')) {
-            $queries = $request->query->get('queries');
-
-            if (array_key_exists('search', $queries)) {
-                $criteria->query = $queries['search'];
-            }
-
-            if (array_key_exists('search_name', $queries)) {
-                $criteria->query_name = $queries['search_name'];
-            }
-
-            if (array_key_exists('filter', $queries)) {
-                if ($queries['filter'] == 'active') {
-                    $criteria->lastLoginDays = 30;
-                }
-
-                if ($queries['filter'] == 'registered') {
-                    $criteria->status = User::STATUS_ACTIVE;
-                }
-
-                if ($queries['filter'] == 'pending') {
-                    $criteria->status = User::STATUS_INACTIVE;
-                }
-
-                if ($queries['filter'] == 'deleted') {
-                    $criteria->status = User::STATUS_DELETED;
-                }
-            }
-
-            if (array_key_exists('user-group', $queries)) {
-                foreach ($queries['user-group'] as $key => $value) {
-                    $criteria->groups[$key] = $value;
-                }
-            }
-        }
-
-        $criteria->maxResults = $request->query->get('perPage', 10);
-        if ($request->query->has('offset')) {
-            $criteria->firstResult = $request->query->get('offset');
-        }
-
-        return $criteria;
     }
 
     private function processUser($user, $zendRouter)

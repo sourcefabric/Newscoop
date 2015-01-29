@@ -31,5 +31,5 @@ interface EditorInterface
      *
      * @return string
      */
-    public function getLinkParameters($article)
+    public function getLinkParameters($article);
 }

@@ -9,7 +9,7 @@
 namespace Newscoop\Services;
 
 use Newscoop\EditorInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Article;
 
 /**
@@ -53,27 +53,27 @@ class EditorService implements EditorInterface
      */
     public function getLinkParameters($article)
     {
-    	$article = $this->getArticleDetails($article);
+        $article = $this->getArticleDetails($article);
 
-    	return '?f_publication_id=' . $article['publicationId']
-	        . '&amp;f_issue_number=' . $article['issueNumber'] . '&amp;f_section_number=' . $article['sectionNumber']
-	        . '&amp;f_article_number=' . $article['number'] . '&amp;f_language_id=' . $article['languageId']
-	        . '&amp;f_language_selected=' . $article['languageId'];
+        return '?f_publication_id=' . $article['publicationId']
+            . '&f_issue_number=' . $article['issueId'] . '&f_section_number=' . $article['sectionId']
+            . '&f_article_number=' . $article['number'] . '&f_language_id=' . $article['languageId']
+            . '&f_language_selected=' . $article['languageId'];
     }
 
     private function getArticleDetails($article)
     {
-    	$articleInfo = array(
-    		'publicationId' => $article->getPublicationId(),
-    		'languageId' => $article->getLanguageId(),
-    	);
+        $articleInfo = array(
+            'publicationId' => $article->getPublicationId(),
+            'languageId' => $article->getLanguageId(),
+        );
 
         if ($article instanceof Article) {
-        	$articleInfo['issueId'] = $article->getIssueId();
-        	$articleInfo['sectionId'] = $article->getSectionId();
-        	$articleInfo['number'] = $article->getNumber();
+            $articleInfo['issueId'] = $article->getIssueId();
+            $articleInfo['sectionId'] = $article->getSectionId();
+            $articleInfo['number'] = $article->getNumber();
 
-        	return $articleInfo;
+            return $articleInfo;
         }
 
         $articleInfo['issueId'] = $article->getIssueNumber();
