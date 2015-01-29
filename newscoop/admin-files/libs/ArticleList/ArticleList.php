@@ -254,24 +254,11 @@ class ArticleList extends BaseList
     {
         global $g_user, $Campsite;
         $translator = \Zend_Registry::get('container')->getService('translator');
-
-        $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
-        . '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
-        . '&amp;f_article_number=' . $article->getArticleNumber() . '&amp;f_language_id=' . $article->getLanguageId()
-        . '&amp;f_language_selected=' . $article->getLanguageId();
+        $editorService = \Zend_Registry::get('container')->getService('newscoop.editor');
+        $articleLink = $editorService->getLink($article);
         $articleLinkParamsTranslate = $articleLinkParams.'&amp;f_action=translate&amp;f_action_workflow=' . $article->getWorkflowStatus()
         . '&amp;f_article_code=' . $article->getArticleNumber() . '_' . $article->getLanguageId();
-
-        $pluginService = \Zend_Registry::get('container')->getService('newscoop.plugins.service');
-
-        if ($pluginService->isEnabled('newscoop/article-edit-screen')) {
-            $router = \Zend_Registry::get('container')->getService('router');
-            $language = new Language($article->getLanguageId());
-            $articleLink = $router->generate('newscoop_admin_aes', array('language' => $language->getCode(), 'articleNumber' => $article->getArticleNumber()));
-        } else {
-            $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
-        }
-        $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
+        $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $editorService->getLinkParameters($article);
         $htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.$translator->trans('Preview').'">'.$translator->trans('Preview').'</a>';
         $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php' . $articleLinkParamsTranslate;
         $htmlTranslateLink = '<a href="'.$translateLink.'" target="_blank" title="'.$translator->trans('Translate').'">'.$translator->trans('Translate').'</a>';
