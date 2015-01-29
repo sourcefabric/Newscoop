@@ -383,7 +383,7 @@ class UserService
         $user->setLastName($lastName);
         $user->setPublication($publication);
 
-        foreach($userTypes as $type) {
+        foreach ($userTypes as $type) {
             $user->addUserType($this->em->getReference('Newscoop\Entity\User\Group', $type));
         }
 
@@ -595,5 +595,59 @@ class UserService
         if ($user || $authorId) {
             $this->getRepository()->setUserPoints($user, $authorId);
         }
+    }
+
+    public function extractCriteriaFromRequest($request)
+    {
+        $criteria = new \Newscoop\User\UserCriteria();
+
+        if ($request->query->has('sorts')) {
+            foreach ($request->get('sorts') as $key => $value) {
+                $criteria->orderBy[$key] = $value == '-1' ? 'desc' : 'asc';
+            }
+        }
+
+        if ($request->query->has('queries')) {
+            $queries = $request->query->get('queries');
+
+            if (array_key_exists('search', $queries)) {
+                $criteria->query = $queries['search'];
+            }
+
+            if (array_key_exists('search_name', $queries)) {
+                $criteria->query_name = $queries['search_name'];
+            }
+
+            if (array_key_exists('filter', $queries)) {
+                if ($queries['filter'] == 'active') {
+                    $criteria->lastLoginDays = 30;
+                }
+
+                if ($queries['filter'] == 'registered') {
+                    $criteria->status = User::STATUS_ACTIVE;
+                }
+
+                if ($queries['filter'] == 'pending') {
+                    $criteria->status = User::STATUS_INACTIVE;
+                }
+
+                if ($queries['filter'] == 'deleted') {
+                    $criteria->status = User::STATUS_DELETED;
+                }
+            }
+
+            if (array_key_exists('user-group', $queries)) {
+                foreach ($queries['user-group'] as $key => $value) {
+                    $criteria->groups[$key] = $value;
+                }
+            }
+        }
+
+        $criteria->maxResults = $request->query->get('perPage', 10);
+        if ($request->query->has('offset')) {
+            $criteria->firstResult = $request->query->get('offset');
+        }
+
+        return $criteria;
     }
 }
