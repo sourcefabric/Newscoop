@@ -10,7 +10,6 @@ namespace Newscoop\Search;
 use Symfony\Component\DependencyInjection\Container;
 use Newscoop\Search\ServiceInterface;
 use Newscoop\Search\DocumentInterface;
-use Newscoop\Search\QueryInterface;
 
 /**
  * Index Interface
@@ -66,15 +65,24 @@ interface IndexClientInterface
     public function deleteAll();
 
     /**
-     * Find article numbers for given query
+     * Checks whether the index client is enabled for the current service
      *
-     * @param Newscoop\Search\QueryInterface $query
-     * @return object
+     * @return boolean
      */
-    public function find(QueryInterface $query);
+    public function isEnabled($clientName);
 
     /**
-     * Set service for
+     * Checks whether the subtype is indexable.
+     *
+     * @param  string $serviceName Name of the service
+     * @param  string $item        Subtype of item to check
+     *
+     * @return boolean
+     */
+    public function isTypeIndexable($serviceName, $itemSubType);
+
+    /**
+     * Set service for the current client
      *
      * @param ServiceInterface $service
      */
@@ -82,7 +90,7 @@ interface IndexClientInterface
 
     /**
      * Set item. This method gives the possibility for the indexing client
-     * to access extra data in regards to the default indexable content;
+     * to access extra data in regards to the default indexable content.
      *
      * @param DocumentInterface $item
      */

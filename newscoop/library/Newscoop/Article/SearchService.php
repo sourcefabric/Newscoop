@@ -39,7 +39,8 @@ class SearchService implements ServiceInterface
      * @var array
      */
     protected $config = array(
-        'rendition' => null
+        'rendition' => null,
+        'type' => array('all')
     );
 
     /**
@@ -88,6 +89,16 @@ class SearchService implements ServiceInterface
     }
 
     /**
+     * Return sub type for the document
+     *
+     * @return string identifier
+     */
+    public function getSubType(DocumentInterface $article)
+    {
+        return $article->getType();
+    }
+
+    /**
      * Test if article is indexed
      *
      * @param Newscoop\Entity\Article $article
@@ -129,23 +140,36 @@ class SearchService implements ServiceInterface
 
         $doc = array(
             'id' => $this->getDocumentId($article),
-            'title' => $article->getTitle(),
+            'number' => $article->getNumber(),
             'type' => $article->getType(),
-            'published' => gmdate(self::DATE_FORMAT, $article->getPublishDate()->getTimestamp()),
-            'updated' => gmdate(self::DATE_FORMAT, $article->getDate()->getTimestamp()),
-            'author' => array_map(function($author) {
-                return $author->getFullName();
-            }, (is_array($article->getArticleAuthors())) ? $article->getArticleAuthors() : array()),
             'webcode' => $webcode,
+            'title' => $article->getTitle(),
+            'updated' => gmdate(self::DATE_FORMAT, $article->getDate()->getTimestamp()),
+            'published' => gmdate(self::DATE_FORMAT, $article->getPublishDate()->getTimestamp()),
             'image' => $image ? $image['src'] : null,
             'link' => $this->linkService->getLink($article),
+
+            'language' => $article->getLanguageCode(),
+            'language_id' => $article->getLanguageId(),
+
+            'publication_number' => $article->getPublication() ? $article->getPublication()->getId() : null,
+            'issue_number' => $article->getIssue() ? $article->getIssue()->getNumber() : null,
+            // TODO: check if we can remove one
+            'section_number' => $article->getSection() ? $article->getSection()->getNumber() : null,
+            'section_id' => $article->getSection() ? $article->getSection()->getNumber() : null,
+
             'section' => $this->linkService->getSectionShortName($article),
-            'section_name' => ($article->getSection()) ? $article->getSection()->getName() : null,
-            'section_id' => $article->getSectionId(),
-            'keyword' => explode(',', $article->getKeywords()),
-            'topic' => array_values($article->getTopicNames()),
+            'section_name' => $article->getSection() ? $article->getSection()->getName() : null,
+
+            'authors' => array_map(function($author) {
+                return $author->getFullName();
+            }, (is_array($article->getArticleAuthors())) ? $article->getArticleAuthors() : array()),
+            'keywords' => explode(',', $article->getKeywords()),
+            'topics' => array_values($article->getTopicNames()),
             'switches' => $this->getArticleSwitches($article),
         );
+
+        $this->addDataFields($doc, $article);
 
         return array_filter($doc);
     }
@@ -194,5 +218,27 @@ class SearchService implements ServiceInterface
                 // @noop
             }
         }
+    }
+
+    /**
+     * Add field properties to document
+     *
+     * @param  array $doc
+     *
+     * @return array
+     */
+    private function addDataFields(array $doc, $article)
+    {
+        $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
+        if (count($articleData->getUserDefinedColumns()) == 0) {
+            return $doc;
+        }
+
+        $fields = array();
+        foreach ($articleData->getUserDefinedColumns() as $column) {
+            $doc[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
+        }
+
+        return $doc;
     }
 }

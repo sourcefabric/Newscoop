@@ -25,6 +25,7 @@ class SearchService implements ServiceInterface
 
     /**
      * @param Newscoop\Image\ImageService $imageService
+     * @param array $config
      */
     public function __construct(ImageService $imageService)
     {
@@ -37,6 +38,16 @@ class SearchService implements ServiceInterface
      * @return string identifier
      */
     public function getType()
+    {
+        return 'user';
+    }
+
+    /**
+     * Return sub type for the document
+     *
+     * @return string identifier
+     */
+    public function getSubType(DocumentInterface $user)
     {
         return 'user';
     }
@@ -73,6 +84,7 @@ class SearchService implements ServiceInterface
     {
         return array(
             'id' => $this->getDocumentId($user),
+            'number' => $user->getId(),
             'type' => 'user',
             'user' => $user->getUsername(),
             'bio' => $user->getAttribute('bio'),
