@@ -120,7 +120,8 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
         $i = 0;
         foreach ($f_article_author as $author) {
             $authorObj = new Author($author);
-            if (!$authorObj->exists() && strlen(trim($author)) > 0) {
+            $author = trim($author);
+            if (!$authorObj->exists() && isset($author[0])) {
                 if ($blogService->isBlogger($g_user)) { // blogger can't create authors
                     continue;
                 }

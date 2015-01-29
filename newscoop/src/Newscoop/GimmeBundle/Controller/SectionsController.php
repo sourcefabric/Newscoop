@@ -27,6 +27,10 @@ class SectionsController extends FOSRestController
      *         404={
      *           "Returned when sections are not found",
      *         }
+     *     },
+     *     parameters={
+     *         {"name"="publication", "dataType"="integer", "required"=true, "description"="Publication id"},
+     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"}
      *     }
      * )
      *
@@ -39,12 +43,22 @@ class SectionsController extends FOSRestController
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
-        $sections = $em->getRepository('Newscoop\Entity\Section')
-            ->getSections($publication);
+        $issueNumber = $em->getRepository('Newscoop\Entity\Issue')
+            ->getByPublicationAndNumber(
+                $request->query->get('publication', $publication),
+                $request->query->get('issue')
+            )
+            ->getOneOrNullResult();
 
-        if (!$sections) {
-            throw new NotFoundHttpException('Result was not found.');
+        if (!$issueNumber & $request->query->has('issue')) {
+            throw new NotFoundHttpException('Issue was not found.');
         }
+
+        $sections = $em->getRepository('Newscoop\Entity\Section')
+            ->getSections(
+                $request->query->get('publication', $publication),
+                $issueNumber
+            )->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $sections = $paginator->paginate($sections, array(

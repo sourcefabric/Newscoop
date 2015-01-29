@@ -11,6 +11,7 @@ namespace Newscoop\NewscoopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,8 +27,13 @@ class PluginsController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $user = $this->container->get('user')->getCurrentUser();
+        $translator = $this->container->get('translator');
+        if (!$user->hasPermission('plugin_manager')) {
+            throw new AccessDeniedException($translator->trans("You do not have the right to manage plugins.", array(), 'plugins'));
+        }
+
         $pluginService = $this->container->get('newscoop.plugins.service');
-        $translator = $this->get('translator');
         $allAvailablePlugins = array();
 
         // show only modern plugins

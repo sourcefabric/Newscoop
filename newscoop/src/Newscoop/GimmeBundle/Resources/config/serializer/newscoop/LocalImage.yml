@@ -8,6 +8,13 @@ Newscoop\Image\LocalImage:
             groups: ["list", "details"]
             serialized_name: id
             since_version: 1.1
+        articleImageId:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: articleImageId
+            since_version: 1.1    
         location:
             expose: true
             read_only: true

@@ -20,7 +20,7 @@
     ],
     "require":{
         "php":">=5.3.3",
-        "symfony\/symfony":"2.5.x-dev",
+        "symfony\/symfony":"2.5.*@dev",
         "silex/silex": "1.2.*@dev",
         "doctrine/orm": "2.4.6",
         "doctrine/common": "2.4.1",
@@ -43,7 +43,7 @@
         "smarty/smarty":"3.1.19",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
         "knplabs\/knp-menu":"2.0.*@dev",
-        "raulfraile\/ladybug-bundle":"0.*@dev",
+        "raulfraile\/ladybug-bundle":"v1.0.6",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
         "willdurand\/js-translation-bundle": "2.2.0",
         "recaptcha\/php5":"v1.0.0",
@@ -76,7 +76,6 @@
                 "library"
             ],
             "Resource":"library",
-            "Nette":"library",
             "Proxy":"library"
         },
         "classmap":[

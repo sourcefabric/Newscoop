@@ -3,6 +3,7 @@
  * @package Campsite
  *
  * @author Petr Jasek <petr.jasek@sourcefabric.org>
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2010 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
@@ -40,27 +41,30 @@ if (empty($f_image_url) && empty($nrOfFiles)) {
 
 $images = array();
 
-// process image url
-if (!empty($f_image_url)) {
-    $attributes = array(
-        'Description' => '',
-        'Photographer' => '',
-        'Place' => '',
-        'Date' => '',
-    );
-
-	if (camp_is_valid_url($f_image_url)) {
-		$result = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
-        $images[] = $result;
-	} else {
-		camp_html_add_msg($translator->trans("The URL you entered is invalid: $1", array('$1' => htmlspecialchars($f_image_url))), 'media_archive');
-	}
-}
-
 $user = $container->get('security.context')->getToken()->getUser();
 $em = $container->get('em');
 $language = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($request->getLocale());
 $imageService = $container->get('image');
+
+// load image from url
+if (!empty($f_image_url)) {
+    $newFileName = md5(uniqid()).'__'.basename($f_image_url);
+    $fileLocation = $imageService->getImagePath() . $newFileName;
+    file_put_contents($fileLocation, file_get_contents($f_image_url));
+
+    // Check if it is really an image file
+    $imageInfo = getimagesize($fileLocation);
+    if ($imageInfo === false) {
+        unlink($fileLocation);
+        return new PEAR_Error($translator->trans('URL $1 is not an image.', array('$1' => $f_image_url), 'api'));
+    }
+
+    $mime = getimagesize($fileLocation);
+    $file = new UploadedFile($fileLocation, $newFileName, $mime['mime'], filesize($fileLocation), null, true);
+    $result = $imageService->upload($file, array('user' => $user));
+    $result->setDate('0000-00-00');
+    $images[] = $result;
+}
 
 // process uploaded images
 for ($i = 0; $i < $nrOfFiles; $i++) {
@@ -89,14 +93,10 @@ if (!empty($images)) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 
-        //$imageIdList = array();
         foreach ($images as $image) {
             $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
             ArticleImage::AddImageToArticle($image->getId(), $f_article_number, $ImageTemplateId);
-            //$imageIdList[] = $image->getImageId();
         }
-        //$imageIdList = implode(',',$imageIdList);
-        //camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data/images/'.$imageIdList);
         camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data/article_number/'.$f_article_number.'/language_id/'.$f_language_id);
     }
     else {

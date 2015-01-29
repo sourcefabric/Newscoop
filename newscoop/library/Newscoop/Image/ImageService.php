@@ -23,6 +23,15 @@ use Doctrine\ORM\NoResultException;
  */
 class ImageService
 {
+    /** allows enlarging image (it only shrinks images by default) */
+    const ENLARGE = 1;
+    /** will ignore aspect ratio */
+    const STRETCH = 2;
+    /** fits in given area */
+    const FIT = 0;
+    /** fills (and even overflows) given area */
+    const FILL = 4;
+
     /**
      * @var array
      */
@@ -65,7 +74,7 @@ class ImageService
      *
      * @return LocalImage
      */
-    public function upload(UploadedFile $file, array $attributes, ImageInterface $image = null)
+    public function upload(UploadedFile $file, array $attributes, ImageInterface $image = null, $keepRatio = true)
     {
         $filesystem = new Filesystem();
         $imagine = new Imagine();
@@ -119,8 +128,23 @@ class ImageService
             $file->move($this->config['image_path'], $this->generateImagePath($image->getId(), $file->getClientOriginalExtension(), true));
             $filesystem->chmod($imagePath, 0644);
 
+            if ($keepRatio) {
+                $ratioOrig = $width / $height;
+                $ratioNew = $this->config['thumbnail_max_size'] / $this->config['thumbnail_max_size'];
+                if ($ratioNew > $ratioOrig) {
+                    $newImageWidth = $this->config['thumbnail_max_size'] * $ratioOrig;
+                    $newImageHeight = $this->config['thumbnail_max_size'];
+                } else {
+                    $newImageWidth = $this->config['thumbnail_max_size'];
+                    $newImageHeight = $this->config['thumbnail_max_size'] / $ratioOrig;
+                }
+            } else {
+                $newImageWidth = $this->config['thumbnail_max_size'];
+                $newImageHeight = $this->config['thumbnail_max_size'];
+            }
+
             $imagine->open($imagePath)
-                ->resize(new Box($this->config['thumbnail_max_size'], $this->config['thumbnail_max_size']))
+                ->resize(new Box($newImageWidth, $newImageHeight))
                 ->save($thumbnailPath, array());
             $filesystem->chmod($thumbnailPath, 0644);
         } catch (\Exceptiom $e) {
@@ -240,6 +264,7 @@ class ImageService
         }
 
         $rendition = new Rendition($width, $height, $specs);
+        
         $image = $rendition->generateImage($this->decodePath($imagePath));
         $image->save($destFolder . '/' . $imagePath);
 
@@ -734,5 +759,96 @@ class ImageService
         try {
             return $query->getSingleScalarResult();
         } catch (NoResultException $e) {}
+    }
+
+    /**
+     * Calculates dimensions of resized image.
+     * @param  mixed  source width
+     * @param  mixed  source height
+     * @param  mixed  width in pixels or percent
+     * @param  mixed  height in pixels or percent
+     * @param  int    flags
+     * @return array
+     */
+    public static function calculateSize($srcWidth, $srcHeight, $newWidth, $newHeight, $flags = self::FIT)
+    {
+        if (substr($newWidth, -1) === '%') {
+            $newWidth = round($srcWidth / 100 * abs($newWidth));
+            $flags |= self::ENLARGE;
+            $percents = TRUE;
+        } else {
+            $newWidth = (int) abs($newWidth);
+        }
+        if (substr($newHeight, -1) === '%') {
+            $newHeight = round($srcHeight / 100 * abs($newHeight));
+            $flags |= empty($percents) ? self::ENLARGE : self::STRETCH;
+        } else {
+            $newHeight = (int) abs($newHeight);
+        }
+        if ($flags & self::STRETCH) { // non-proportional
+            if (empty($newWidth) || empty($newHeight)) {
+                throw new \InvalidArgumentException('For stretching must be both width and height specified.');
+            }
+            if (($flags & self::ENLARGE) === 0) {
+                $newWidth = round($srcWidth * min(1, $newWidth / $srcWidth));
+                $newHeight = round($srcHeight * min(1, $newHeight / $srcHeight));
+            }
+        } else {  // proportional
+            if (empty($newWidth) && empty($newHeight)) {
+                throw new \InvalidArgumentException('At least width or height must be specified.');
+            }
+            $scale = array();
+            if ($newWidth > 0) { // fit width
+                $scale[] = $newWidth / $srcWidth;
+            }
+            if ($newHeight > 0) { // fit height
+                $scale[] = $newHeight / $srcHeight;
+            }
+            if ($flags & self::FILL) {
+                $scale = array(max($scale));
+            }
+            if (($flags & self::ENLARGE) === 0) {
+                $scale[] = 1;
+            }
+            $scale = min($scale);
+            $newWidth = round($srcWidth * $scale);
+            $newHeight = round($srcHeight * $scale);
+        }
+        return array(max((int) $newWidth, 1), max((int) $newHeight, 1));
+    }
+
+    /**
+     * Calculates dimensions of cutout in image.
+     * @param  mixed  source width
+     * @param  mixed  source height
+     * @param  mixed  x-offset in pixels or percent
+     * @param  mixed  y-offset in pixels or percent
+     * @param  mixed  width in pixels or percent
+     * @param  mixed  height in pixels or percent
+     * @return array
+     */
+    public static function calculateCutout($srcWidth, $srcHeight, $left, $top, $newWidth, $newHeight)
+    {
+        if (substr($newWidth, -1) === '%') {
+            $newWidth = round($srcWidth / 100 * $newWidth);
+        }
+        if (substr($newHeight, -1) === '%') {
+            $newHeight = round($srcHeight / 100 * $newHeight);
+        }
+        if (substr($left, -1) === '%') {
+            $left = round(($srcWidth - $newWidth) / 100 * $left);
+        }
+        if (substr($top, -1) === '%') {
+            $top = round(($srcHeight - $newHeight) / 100 * $top);
+        }
+        if ($left < 0) {
+            $newWidth += $left; $left = 0;
+        }
+        if ($top < 0) {
+            $newHeight += $top; $top = 0;
+        }
+        $newWidth = min((int) $newWidth, $srcWidth - $left);
+        $newHeight = min((int) $newHeight, $srcHeight - $top);
+        return array($left, $top, $newWidth, $newHeight);
     }
 }

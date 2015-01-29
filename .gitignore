@@ -15,3 +15,4 @@ newscoop/install/cron_jobs/all_at_once
 newscoop/application/configs/application.ini
 newscoop/application/configs/parameters/custom_parameters.yml
 newscoop/composer.phar
+.DS_Store

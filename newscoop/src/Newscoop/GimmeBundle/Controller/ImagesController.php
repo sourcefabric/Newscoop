@@ -181,7 +181,9 @@ class ImagesController extends FOSRestController
 
         $images = array();
         foreach ($articleImages['items'] as $articleImage) {
-            $images[] = $articleImage->getImage();
+            $image = $articleImage->getImage();
+            $image->setArticleImageId($articleImage->getNumber());
+            $images[] = $image;
         }
 
         $images = $paginator->paginate($images);

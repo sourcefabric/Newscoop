@@ -66,7 +66,7 @@
             <tr>
                 <td>{{ publication.id }}</td>
                 <td><a href="/admin/issues/?Pub={{ publication.id }}" style="font-weight: bold;">{{ publication.name }}</a></td>
-                <td>{{ publication.defaultAlias.name}}</td>
+                <td>{% if publication.defaultAlias.name is defined %}{{ publication.defaultAlias.name}}{% endif %}</td>
                 <td>{{ publication.language.name}}</td>
                 <td><span class="glyphicon glyphicon-{% if publication.commentsEnabled %}ok{% else %}minus{% endif %}"></span></td>
                 <td>{% if publication.urlTypeId == 1%}{{ 'template path'|trans({}, 'api')}}{% else %}{{ 'short names'|trans({}, 'api')}}{% endif %}</td>

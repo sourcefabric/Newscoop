@@ -175,12 +175,12 @@ class ArticleService
         $article->setCommentsLocked(false); //TODO - add this to type
         $article->setWorkflowStatus('N');
         $article->setShortName($article->getNumber());
-        $article->setLockTime(new \DateTime('0000:00:00 00:00:00'));
-        $article->setPublished(new \Datetime('0000:00:00 00:00:00'));
+        $article->setLockTime(null);
+        $article->setPublished(new \Datetime());
         $article->setUploaded(new \Datetime());
         $article->setLockUser();
         $article->setPublic(true);
-        $article->setIsIndexed(false);
+        $article->setIsIndexed('N');
 
         $this->em->persist($article);
         $this->em->flush();
@@ -201,16 +201,9 @@ class ArticleService
      */
     public function updateArticle($article, $attributes)
     {
-        $this->checkForArticleConflicts(
-            $attributes['name'],
-            $article->getPublication(),
-            $article->getIssue(),
-            $article->getSection()
-        );
-
         $this->updateArticleMeta($article, $attributes);
         $article->setUpdated(new \DateTime());
-        $article->setIsIndexed(false);
+        $article->setIsIndexed('N');
 
         if (array_key_exists('fields', $attributes)) {
             foreach ($attributes['fields'] as $field => $value) {
@@ -235,6 +228,7 @@ class ArticleService
     {
         $article->setName($attributes['name']);
         $article->setCommentsEnabled($attributes['comments_enabled']);
+        $article->setCommentsLocked($attributes['comments_locked']);
         $article->setOnFrontPage($attributes['onFrontPage']);
         $article->setOnSection($attributes['onSection']);
         $article->setKeywords($attributes['keywords']);

@@ -2172,13 +2172,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `context_articles`;
 
--- Tables for context box
-CREATE TABLE IF NOT EXISTS `context_articles` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT,
-  `fk_context_id` int(10) NOT NULL,
-  `fk_article_no` int(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE context_articles (
+  Id INT AUTO_INCREMENT NOT NULL,
+  fk_context_id INT NOT NULL,
+  fk_article_no INT NOT NULL,
+  `order_number` INT NOT NULL,
+  INDEX article_number (fk_article_no),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `context_boxes`;
 
@@ -2186,7 +2187,7 @@ CREATE TABLE IF NOT EXISTS `context_boxes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `fk_article_no` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 
 --
