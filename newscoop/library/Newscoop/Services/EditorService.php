@@ -40,9 +40,8 @@ class EditorService implements EditorInterface
             'articleLanguage' => $language->getCode()
         )));
 
-        $editorLink = $arguments->getArgument('link');
-        if ($editorLink) {
-            return $editorLink;
+        if ($arguments->hasArgument('link') && $arguments->getArgument('link')) {
+            return $arguments->getArgument('link');
         }
 
         return self::DEFAULT_EDITOR_LINK . $this->getLinkParameters($article);
