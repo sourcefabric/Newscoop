@@ -147,9 +147,6 @@ parameters:
         file_num_dirs_level_1: 1000
         file_num_dirs_level_2: 1000
     subscriptions.service.class: "Newscoop\Services\SubscriptionService"
-    search.article:
-        type: ["news"]
-        rendition: ''
     plugins:
         internal_memory_limit: ''
     scheduler:

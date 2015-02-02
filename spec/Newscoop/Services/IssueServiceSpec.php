@@ -5,6 +5,7 @@ namespace spec\Newscoop\Services;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
 use Newscoop\Entity\Issue;
+use Newscoop\Entity\Language;
 use Newscoop\Services\IssueService;
 use Newscoop\Services\CacheService;
 use Newscoop\Services\PublicationService;
@@ -13,6 +14,7 @@ use Newscoop\Entity\Repository\IssueRepository;
 use Newscoop\Entity\Publication;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\AbstractQuery;
 
 class IssueServiceSpec extends ObjectBehavior
 {
@@ -28,6 +30,7 @@ class IssueServiceSpec extends ObjectBehavior
         IssueRepository $repository,
         Issue $issue,
         Publication $publication,
+        AbstractQuery $query,
         CacheService $cacheService)
     {
         $em
@@ -41,6 +44,9 @@ class IssueServiceSpec extends ObjectBehavior
             'shortName' => 'may2014'
         ))->willReturn($issue);
 
+        $repository->getIssue('en', $publication, 'may2014')->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($issue);
+
         $this->beConstructedWith($em, $publicationService, $cacheService);
     }
 
@@ -51,9 +57,21 @@ class IssueServiceSpec extends ObjectBehavior
         $issue->getNumber()->willReturn(10);
         $issue->getName()->willReturn("May 2014");
         $issue->getShortName()->willReturn("may2014");
+        $language = new Language();
+        $language->setId(1);
+        $language->setCode("en");
+        $issue->getLanguage()->willReturn($language);
+        $issue->getLanguageId()->willReturn("1");
         $request->attributes = $attributes;
         $this->issueResolver($request)->shouldReturn($issue);
-        $this->getIssueMetadata()->shouldBeLike(array("id" => 1, "number" => 10, "name" => "May 2014", "shortName" => "may2014"));
+        $this->getIssueMetadata()->shouldBeLike(array(
+            "id" => 1,
+            "number" => 10,
+            "name" => "May 2014",
+            "shortName" => "may2014",
+            "code_default_language" => "en",
+            "id_default_language" => "1"
+        ));
     }
 
     public function it_gets_the_latest_issue_for_current_publication(Issue $issue, Publication $publication)

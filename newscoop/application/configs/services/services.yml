@@ -169,16 +169,16 @@ services:
         arguments: ["@service_container"]
     indexer.article:
         class: Newscoop\Search\Indexer
-        arguments: ["@service_container", "@search.article", "@article.repository"]
+        arguments: ["@service_container", "@search.article", "@article.repository", "indexer.article"]
     indexer.comment:
         class: Newscoop\Search\Indexer
-        arguments: ["@service_container", "@search.comment", "@comment.repository"]
+        arguments: ["@service_container", "@search.comment", "@comment.repository", "indexer.comment"]
     indexer.user:
         class: Newscoop\Search\Indexer
-        arguments: ["@service_container", "@search.user", "@user.repository"]
+        arguments: ["@service_container", "@search.user", "@user.repository", "indexer.user"]
     search.article:
         class: Newscoop\Article\SearchService
-        arguments: ["@webcode", "@image.rendition", "@article.link", "@em", "%search.article%"]
+        arguments: ["@webcode", "@image.rendition", "@article.link", "@em"]
     search.comment:
         class: Newscoop\Comment\SearchService
         arguments: ["@article.link"]

@@ -23,9 +23,9 @@ class ClearIndexCommand extends AbstractIndexCommand
     {
         $this
         ->setName('index:clear')
-        ->setDescription('Clear search index.')
-        ->addArgument('type', InputArgument::OPTIONAL, 'Types to clear index for', 'all')
-        ->setHelp("");
+        ->setDescription('Clear index timestamps.')
+        ->addArgument('type', InputArgument::OPTIONAL, 'Types to clear index timestamp for', 'all')
+        ->setHelp('');
     }
 
     /**
@@ -48,15 +48,15 @@ class ClearIndexCommand extends AbstractIndexCommand
 
             if ($type === 'all') {
                 foreach ($indexers as $name => $indexer) {
-                    $output->writeln('Clearing index on '.$name.'.');
+                    $output->writeln('Clearing index timestamp on '.$name.'.');
                     $indexer->clearAll();
                 }
             } else {
-                $output->writeln('Clearing index on '.$type.'.');
+                $output->writeln('Clearing index timestamp on '.$type.'.');
                 $indexers[$type]->clearAll();
             }
 
-            $output->writeln('Search index cleared.');
+            $output->writeln('Index timestamps cleared.');
         }
     }
 }

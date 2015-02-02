@@ -17,7 +17,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
     /** @var Newscoop\Entity\Repository\LanguageRepository */
     private $repository= NULL;
 
-    /** 
+    /**
      * Init
      *
      * @return void
@@ -28,7 +28,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $this->view->languages = $this->repository->getLanguages();
 
@@ -45,8 +45,9 @@ class Admin_LanguagesController extends Zend_Controller_Action
     }
 
     public function addAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $this->_helper->acl->check('language', 'manage');
 
         $form = new Admin_Form_Language;
@@ -56,6 +57,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
             try {
                 $language = new Language;
                 $this->repository->save($language, $form->getValues());
+                $cacheService->clearNamespace('language');
                 $this->_helper->flashMessenger->addMessage($translator->trans('Language added.', array(), 'languages'));
                 $this->_helper->redirector('index');
             } catch (Exception $e) {
@@ -67,8 +69,9 @@ class Admin_LanguagesController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $language = $this->getLanguage();
 
         $form = new Admin_Form_Language;
@@ -80,6 +83,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
             try {
                 $this->repository->save($language, $form->getValues());
 
+                $cacheService->clearNamespace('language');
                 $this->_helper->flashMessenger->addMessage($translator->trans('Language saved.', array(), 'languages'));
                 $this->_helper->redirector('edit', 'languages', 'admin', array('language' => $language->getId()));
             } catch (InvalidArgumentException $e) {
@@ -95,8 +99,9 @@ class Admin_LanguagesController extends Zend_Controller_Action
      * @Acl(action="delete")
      */
     public function deleteAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $this->_helper->acl->check('language', 'delete');
 
         $language = $this->getLanguage();
@@ -111,6 +116,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
         }
 
         $this->repository->delete($language->getId());
+        $cacheService->clearNamespace('language');
         $this->_helper->flashMessenger->addMessage($translator->trans('Language removed.', array(), 'languages'));
         $this->_helper->redirector('index', 'languages', 'admin');
     }
@@ -121,7 +127,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
      * @return Newscoop\Entity\Language
      */
     private function getLanguage()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $id = (int) $this->getRequest()->getParam('language');
         if (!$id) {

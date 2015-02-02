@@ -26,6 +26,13 @@ interface ServiceInterface
     public function getType();
 
     /**
+     * Get the subtype of the item
+     *
+     * @return string identifier for subtype
+     */
+    public function getSubType(DocumentInterface $item);
+
+    /**
      * Test if item is indexed
      *
      * @param mixed $item

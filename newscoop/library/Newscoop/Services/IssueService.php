@@ -109,10 +109,9 @@ class IssueService implements IssueServiceInterface
             if ($this->cacheService->contains($cacheKey)) {
                 $issue = $this->cacheService->fetch($cacheKey);
             } else {
-                $issue = $this->em->getRepository('Newscoop\Entity\Issue')->findOneBy(array(
-                    'publication' => $publication,
-                    'shortName' => $uriParts[2]
-                ));
+                $issue = $this->em->getRepository('Newscoop\Entity\Issue')
+                    ->getIssue($uriParts[1], $publication, $uriParts[2])
+                    ->getOneOrNullResult();
 
                 $this->cacheService->save($cacheKey, $issue);
             }
@@ -122,7 +121,9 @@ class IssueService implements IssueServiceInterface
                     'id' => $issue->getId(),
                     'number' => $issue->getNumber(),
                     'name' => $issue->getName(),
-                    'shortName' => $issue->getShortName()
+                    'shortName' => $issue->getShortName(),
+                    'code_default_language' => $issue->getLanguage()->getCode(),
+                    'id_default_language' => $issue->getLanguageId()
                 );
 
                 $request->attributes->set('_newscoop_issue_metadata', $this->issueMetadata);
