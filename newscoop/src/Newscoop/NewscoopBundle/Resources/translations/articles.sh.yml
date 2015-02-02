@@ -7,10 +7,10 @@ Rating: null
 'Remove list': null
 'Please select a list': null
 Playlist: null
-'List updated.': null
-'List saved': null
-'List Name': null
-'List ID': null
+'List updated.': 'Lista izmenjena.'
+'List saved': 'Lista snimljena.'
+'List Name': 'Naziv liste.'
+'List ID': 'ID liste'
 'Item already exists in the list': null
 'Featured Articles': null
 'Featured Article Lists': null
@@ -188,19 +188,19 @@ articles:
     images:
         edit:
             edit_image_metadata: null
-            save: null
+            save: Snimi
             form:
                 use: null
-                number: null
+                number: Broj
                 caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
+                status_approved: Odobren
+                status_unapproved: Neodobren
+                status: Status
+                description: Opis
+                photographer: Fotograf
                 photographer_url: null
-                place: null
-                date: null
+                place: Mesto
+                date: Datum
                 article_specific: null
-                global: null
+                global: Globalno
                 other_captions: null

@@ -17,18 +17,17 @@ class UserType extends DatabaseObject
 {
     const TABLE = 'liveuser_groups';
 
-    var $m_dbTableName = self::TABLE;
-    var $m_keyColumnNames = array('group_id');
-    var $m_keyIsAutoIncrement = false;
-    var $m_config = array();
-    var $m_columnNames = array(
+    public $m_dbTableName = self::TABLE;
+    public $m_keyColumnNames = array('group_id');
+    public $m_keyIsAutoIncrement = false;
+    public $m_config = array();
+    public $m_columnNames = array(
         'group_id',
         'group_type',
         'group_define_name',
         'role_id',
     );
-    var $m_exists = false;
-
+    public $m_exists = false;
 
     /**
      * Constructor
@@ -49,20 +48,18 @@ class UserType extends DatabaseObject
         }
     } // constructor
 
-    
     /**
      * Whether the user type exists or not
      *
      * @return bool
-     *    $this->m_exists TRUE on success, FALSE on failure
+     *              $this->m_exists TRUE on success, FALSE on failure
      */
     public function exists()
     {
         return $this->m_exists;
     } // fn exists
 
-
-	/**
+    /**
      * Create the new UserType with the config variables given.
      * If a config variable is not set, the default value will be used.
      *
@@ -70,9 +67,9 @@ class UserType extends DatabaseObject
      *    $p_configVars The privileges list to be granted
      *
      * @return bool
-     *    TRUE on success, FALSE on failure
+     *              TRUE on success, FALSE on failure
      */
-    public function create($p_name, $p_configVars = array())
+    public function create($p_name = null, $p_configVars = array())
     {
         global $LiveUserAdmin;
 
@@ -104,15 +101,15 @@ class UserType extends DatabaseObject
         }
         // fetch user type data if it was successfully created
         $this->fetch();
+
         return $success;
     } // fn create
 
-
-	/**
+    /**
      * Delete the user type.
      *
      * @return bool
-     *    TRUE on success, FALSE on failure
+     *              TRUE on success, FALSE on failure
      */
     public function delete()
     {
@@ -121,11 +118,12 @@ class UserType extends DatabaseObject
         $filter = array('group_id' => $this->m_data['group_id']);
         if ($LiveUserAdmin->perm->removeGroup($filter)) {
             $this->m_exists = false;
+
             return true;
         }
+
         return false;
     } // fn delete
-
 
     /**
      * Get the id of this user type.
@@ -137,8 +135,7 @@ class UserType extends DatabaseObject
         return $this->m_data['group_id'];
     } // gn getId
 
-
-	/**
+    /**
      * Get the name of this user type.
      * @return string
      */
@@ -147,12 +144,11 @@ class UserType extends DatabaseObject
         return $this->m_data['group_define_name'];
     } // fn getName
 
-
-	/**
+    /**
      * Return the value of the given variable name.
      * If the variable name does not exist, return null.
      *
-     * @param string $p_varName
+     * @param  string $p_varName
      * @return mixed
      */
     public function getValue($p_varName)
@@ -164,13 +160,12 @@ class UserType extends DatabaseObject
         }
     } // fn getValue
 
-
-	/**
+    /**
      * Set the default config value for the given variable.
      * This creates the new config variable if it didn't exist.
      *
      * @param string $p_varName
-     * @param mixed $p_value
+     * @param mixed  $p_value
      *
      * @return void
      */
@@ -201,7 +196,7 @@ class UserType extends DatabaseObject
     } // fn setValue
 
 
-	/**
+    /**
      * Return an array of config values in the form array("varname" => "value");
      *
      * @return array
@@ -225,7 +220,7 @@ class UserType extends DatabaseObject
     } // fn hasPermission
 
 
-	/**
+    /**
      * Set the specified permission.
      *
      * @param string
@@ -234,7 +229,7 @@ class UserType extends DatabaseObject
      *    $p_permissionValue
      *
      */
-	public function setPermission($p_permissionString, $p_permissionValue)
+    public function setPermission($p_permissionString, $p_permissionValue)
     {
         $this->setValue($p_permissionString, $p_permissionValue);
     } // fn setPermission
@@ -247,8 +242,8 @@ class UserType extends DatabaseObject
      *    $p_name The name of the user type
      *
      * @return mixed
-     *    null If the user type does not exists or any error
-     *    UserType object
+     *               null If the user type does not exists or any error
+     *               UserType object
      */
     public static function GetByName($p_name)
     {
@@ -267,6 +262,7 @@ class UserType extends DatabaseObject
             $uTypeId = $data[0]['group_id'];
         }
         $userType = new UserType($uTypeId);
+
         return $userType;
     } // fn GetByName
 
@@ -278,8 +274,8 @@ class UserType extends DatabaseObject
      *    $p_configVars An array of permissions variables
      *
      * @return mixed
-     *    bool False The config passed does not match any user type
-     *    object $userType The user type object matching
+     *               bool False The config passed does not match any user type
+     *               object $userType The user type object matching
      */
     public static function GetUserTypeFromConfig($p_configVars)
     {
@@ -302,6 +298,7 @@ class UserType extends DatabaseObject
                 return $userType;
             }
         }
+
         return false;
     } // fn GetUserTypeFromConfig
 
@@ -311,7 +308,7 @@ class UserType extends DatabaseObject
      * the Reader permission.
      *
      * @return array
-     *    An array of UserType objects.
+     *               An array of UserType objects.
      */
     public static function GetUserTypes()
     {
@@ -323,9 +320,8 @@ class UserType extends DatabaseObject
             $tmpUserType = new UserType($userType['group_id']);
             $userTypes[] = $tmpUserType;
         }
+
         return $userTypes;
     } // fn GetUserTypes
 
 } // class UserType
-
-?>

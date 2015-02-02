@@ -35,7 +35,7 @@ starts: null
 before: null
 after: null
 on: null
-status: null
+status: 状态
 active: null
 inactive: null
 Subscribers: null
@@ -84,7 +84,7 @@ Date/Time: '&#26085;&#26399;/&#26102;&#38388;'
 'Show on section page': null
 'Remove from section page': null
 Actions: null
-Publishing: null
+Publishing: 出版物
 Show: null
 Remove: null
 'Article Types': 文章类型
@@ -258,7 +258,7 @@ Reads: null
 'Universal List': null
 'Invalid security token!': null
 Authors: null
-Title: null
+Title: 标题
 'Edit country': null
 'Entry $1 prepared for publishing': null
 'Entry deleted': null
@@ -283,3 +283,4 @@ at: null
 published: null
 unpublished: null
 nopermissions: null
+importantmessage: null

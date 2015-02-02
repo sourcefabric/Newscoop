@@ -25,3 +25,56 @@ Top: Góra
 'Change topic name': 'Zmień nazwę tematu'
 'There are $1 articles using the topic.': 'Artykuły w temacie: $1'
 'Search for topics': 'Szukaj dla tematu'
+topics:
+    tip: null
+    label:
+        all: null
+        filterbylang: null
+        search: null
+        filterplaceholder: null
+        addroot: null
+        topicname: null
+        expandcollapse: null
+        changename: null
+        for: null
+        addsubtopic: null
+        subtopicname: null
+        addtranslation: null
+        topictranslations: null
+        choose: null
+        translationstring: null
+        tree: null
+    title: null
+    btn:
+        hide: null
+        remove: null
+        edit: null
+        close: null
+        add: null
+        save: null
+        saveandclose: null
+        removetrans: null
+    alerts:
+        languagenotfound: null
+        translationadded: null
+        translationexists: null
+        beforedelete: null
+        wrongparams: null
+        ordersaved: null
+        saved: null
+        beforedeleteinfo: null
+    added: null
+    failedfind: null
+    failedfindTranslation: null
+    removed: null
+    exists: null
+    existsname: null
+    removedTranslation: null
+    failedremoveTranslation: null
+    updated: null
+    error: null
+    csrfinvalid: null
+    tooshort: null
+    toolong: null
+    attachtopics: null
+    attached: null

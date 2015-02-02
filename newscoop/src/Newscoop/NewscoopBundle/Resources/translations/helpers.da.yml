@@ -1,0 +1,9 @@
+dynatable:
+    page: Side
+    perPageText: 'Vis:'
+    pageText: 'Sider:'
+    recordCountPageBoundTemplate: '{pageLowerBound} til {pageUpperBound} af'
+    recordCountPageUnboundedTemplate: '{recordsShown} af'
+    recordCountFilteredTemplate: ' ({recordsTotal} i alt)'
+    recordCountText: Viser
+    processingText: Arbejder...

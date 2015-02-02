@@ -1270,7 +1270,7 @@ final class CampContext
 
     private function setTopicHandler(MetaTopic $p_oldTopic, MetaTopic $p_newTopic)
     {
-        if (!$p_oldTopic->same_as($p_newTopic)) {
+        if ($p_oldTopic !== $p_newTopic) {
             $this->m_readonlyProperties['url']->set_parameter('tpid', $p_newTopic->identifier);
             $this->m_objects['topic'] = $p_newTopic;
         }
@@ -1345,6 +1345,7 @@ final class CampContext
     public function getSystemPreference($preferenceName, $default = null)
     {
         $preferencesService = \Zend_Registry::get('container')->get('preferences');
+
         return $preferencesService->get($preferenceName, $default);
     }
 }

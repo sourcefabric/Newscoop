@@ -10,7 +10,7 @@ Feedback: null
 'Disapprove selected': null
 'Are you sure you want to update selected items?': null
 'Approve selected': null
-'Image files': null
+'Image files': 图像文件
 'Fix all thumbnails': null
 'You do not have the right to add files.': null
 'Should this file only be available for this translation of the article, or for all translations?': null
@@ -40,7 +40,7 @@ Charset: null
 'Attachment updated.': null
 'Are you sure you want to delete selected items?': null
 'Add new file': null
-'You do not have the right to add images.': null
+'You do not have the right to add images.': 您没有权限添加图片。
 'Use for all': null
 'Specify image url if you want to load it.': null
 Size: null
@@ -48,7 +48,7 @@ Size: null
 'Images updated.': null
 'Edit images': null
 '$1 files uploaded.': null
-'Unable to add new image.': null
+'Unable to add new image.': 无法添加新图片。
 'Image updated.': null
 'Image $1 deleted.': null
 'Image is in use, it cannot be deleted.': null

@@ -43,12 +43,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         require_once CS_PATH_SITE .'/admin-files/camp_html.php';
         require_once CS_PATH_CLASSES . DIR_SEP . 'SecurityToken.php';
 
-        // load if possible before setting camp_report_bug error handler
-        // to prevent error messages
-        include_once 'HTML/QuickForm.php';
-        include_once 'HTML/QuickForm/RuleRegistry.php';
-        include_once 'HTML/QuickForm/group.php';
-
         if (php_sapi_name() !== 'cli') {
             set_error_handler(function ($p_number, $p_string, $p_file, $p_line) {
                 error_log(sprintf('Newscoop error: %s in %s:%d', $p_string, $p_file, $p_line));

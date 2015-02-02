@@ -8,7 +8,6 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\DBAL\SQLParserUtils,
-    Nette\InvalidArgumentException,
     Newscoop\Utils\Exception,
     Doctrine\ORM\Query,
     Doctrine\ORM\Configuration,

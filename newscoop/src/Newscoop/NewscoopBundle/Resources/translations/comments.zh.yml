@@ -19,9 +19,9 @@ Processed: null
 'Message status change to $1.': null
 'Message deleted.': null
 Message: null
-Last: null
+Last: 最后
 'Full article': null
-First: null
+First: '最初 '
 'Feedback Messages': null
 'Display _MENU_ records': null
 Deleted: null
@@ -34,7 +34,7 @@ Anonymous: null
 'You are about to permanently delete multiple messages.': null
 'You are about to permanently delete a message.': null
 User: '&#29992;&#25143;'
-None: null
+None: 没有
 'Coming from': null
 'Ban/Unban user': null
 Ip: null

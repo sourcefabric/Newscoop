@@ -1,0 +1,11 @@
+suites:
+    src:
+        namespace: Newscoop
+        src_path: 'newscoop/src'
+        spec_path: .
+    gimme_library:
+        namespace: Newscoop/Gimme
+        src_path: 'newscoop/library'
+        spec_path: .
+
+formatter.name: pretty

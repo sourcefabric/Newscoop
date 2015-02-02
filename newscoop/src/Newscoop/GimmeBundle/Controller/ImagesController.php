@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\View as FOSView;
 use Newscoop\Entity\LocalImage;
 use Newscoop\Entity\User;
 use Newscoop\GimmeBundle\Form\Type\ImageType;
@@ -180,7 +181,9 @@ class ImagesController extends FOSRestController
 
         $images = array();
         foreach ($articleImages['items'] as $articleImage) {
-            $images[] = $articleImage->getImage();
+            $image = $articleImage->getImage();
+            $image->setArticleImageId($articleImage->getNumber());
+            $images[] = $image;
         }
 
         $images = $paginator->paginate($images);
@@ -304,7 +307,7 @@ class ImagesController extends FOSRestController
             }
         }
 
-        $form = $this->createForm(new ImageType(), array());
+        $form = $this->createForm(new ImageType(), array(), array('image' => $image));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -316,19 +319,18 @@ class ImagesController extends FOSRestController
                 $attributes['user'] = $user;
             }
 
-            $image = $imageService->upload($file, $attributes, $image);
+            if ($file) {
+                $image = $imageService->upload($file, $attributes, $image);
+            } else {
+                $imageService->fillImage($image, $attributes);
+                $em->flush();
+            }
 
-            $response = new Response();
-            $response->setStatusCode($statusCode);
-
-            $response->headers->set(
-                'X-Location',
-                $this->generateUrl('newscoop_gimme_images_getimage', array(
+            return new FOSView\View($image, $statusCode, array(
+                'X-Location' => $this->generateUrl('newscoop_gimme_images_getimage', array(
                     'number' => $image->getId(),
-                ), true)
+                ), true))
             );
-
-            return $response;
         }
 
         return $form;

@@ -59,7 +59,7 @@ E-Mail: E-mail
 '%value% must be greater than %min%': 'A/z %value% értéknek nagyobbnak kell lennie, mint %min%'
 '%value% is not a valid IP Address': 'A/z %value% nem érvényes IP-cím'
 'Regardless of the language': 'A nyelvtől függetlenül'
-'Individual languages': null
+'Individual languages': Nyelvek
 'Add sections now': 'Rovatok hozzáadása most'
 'Add sections later': 'Rovatok hozzáadása később'
 'Subscription Type': 'Előfizetés típusa'

@@ -34,6 +34,15 @@ class AllowOriginListener
         $response = $event->getResponse();
         $request = $event->getRequest();
 
+        // HACK: revert exception status code to main request (i have no idea why it's chnaged to 500)
+        if (is_array($content = json_decode($response->getContent(), true))) {
+            if (array_key_exists('errors', $content)) {
+                if (isset($content['errors'][0]['code'])) {
+                    $response->setStatusCode($content['errors'][0]['code'], $content['errors'][0]['message']);
+                }
+            }
+        }
+
         if (!$this->container->hasParameter('newscoop.gimme.allow_origin')) {
             return false;
         }

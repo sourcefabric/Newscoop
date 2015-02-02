@@ -25,3 +25,56 @@ Top: vrh
 'Change topic name': 'Promeni naziv teme'
 'There are $1 articles using the topic.': 'Preostalo je $1 tekstova koji koriste ovu temu.'
 'Search for topics': null
+topics:
+    tip: null
+    label:
+        all: Sve
+        filterbylang: null
+        search: Traži
+        filterplaceholder: null
+        addroot: 'Dodaj osnovnu temu'
+        topicname: null
+        expandcollapse: null
+        changename: 'Promeni naziv teme'
+        for: null
+        addsubtopic: null
+        subtopicname: null
+        addtranslation: null
+        topictranslations: null
+        choose: Izaberi...
+        translationstring: null
+        tree: null
+    title: Teme
+    btn:
+        hide: Sakrij
+        remove: null
+        edit: null
+        close: Zatvori
+        add: Dodaj
+        save: Snimi
+        saveandclose: 'Snimi i zatvori'
+        removetrans: null
+    alerts:
+        languagenotfound: null
+        translationadded: null
+        translationexists: null
+        beforedelete: null
+        wrongparams: null
+        ordersaved: null
+        saved: 'Uspešno snimljeno.'
+        beforedeleteinfo: null
+    added: null
+    failedfind: null
+    failedfindTranslation: null
+    removed: null
+    exists: null
+    existsname: null
+    removedTranslation: null
+    failedremoveTranslation: null
+    updated: null
+    error: null
+    csrfinvalid: null
+    tooshort: null
+    toolong: null
+    attachtopics: null
+    attached: null

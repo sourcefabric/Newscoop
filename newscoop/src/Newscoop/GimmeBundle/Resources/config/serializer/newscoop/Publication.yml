@@ -1,4 +1,17 @@
 Newscoop\Entity\Publication:
     exclusion_policy: ALL
-    exclude: true
-    access_type: public_method
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: id
+            since_version: 1.2
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: name
+            since_version: 1.2

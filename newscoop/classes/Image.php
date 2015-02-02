@@ -8,6 +8,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+use Imagine\Image\Box;
+
 /**
  * @package Campsite
  */
@@ -406,15 +408,9 @@ class Image extends DatabaseObject
             }
 
             $imageHandler = $createMethodName($target);
-            $thumbnailImage = Image::ResizeImage($imageHandler,
-                $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
-            if (PEAR::isError($thumbnailImage)) {
-                throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
-            }
-            $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
-            if (PEAR::isError($result)) {
-                throw new Exception($result->getMessage(), $result->getCode());
-            }
+            $thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
+            $thumbnailImage->save($thumbnail, array('format' => $extension));
+
             self::chmod($thumbnail, 0644);
         } catch (Exception $ex) {
             if (file_exists($thumbnail)) {
@@ -624,16 +620,8 @@ class Image extends DatabaseObject
                 throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
             }
 
-            $thumbnailImage = Image::ResizeImage($imageHandler,
-                $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
-            if (PEAR::isError($thumbnailImage)) {
-                throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
-            }
-
-            $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
-            if (PEAR::isError($result)) {
-                throw new Exception($result->getMessage(), $result->getCode());
-            }
+            $thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
+            $thumbnailImage->save($thumbnail, array('format' => $extension));
 
             self::chmod($thumbnail, 0644);
         } catch (Exception $ex) {
@@ -718,22 +706,20 @@ class Image extends DatabaseObject
     public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
                                        $p_keepRatio = true, $type = IMAGETYPE_JPEG)
     {
-        $translator = \Zend_Registry::get('container')->getService('translator');
         if (!isset($p_image) || empty($p_image)) {
             return new PEAR_Error('The image resource handler is not available.');
         }
-        require_once APPLICATION_PATH . '/../library/Nette/Image.php';
 
         $origImageWidth = imagesx($p_image);
         $origImageHeight = imagesy($p_image);
         if ($origImageWidth <= 0 || $origImageHeight <= 0) {
-            return new PEAR_Error($translator->trans("The file uploaded is not an image.", array(), 'api'));
+            return new PEAR_Error("The file uploaded is not an image.");
         }
 
         $p_maxWidth = is_numeric($p_maxWidth) ? (int) $p_maxWidth : 0;
         $p_maxHeight = is_numeric($p_maxHeight) ? (int) $p_maxHeight : 0;
         if ($p_maxWidth <= 0 || $p_maxHeight <= 0) {
-            return new PEAR_Error($translator->trans("Invalid resize width/height.", array(), 'api'));
+            return new PEAR_Error("Invalid resize width/height.");
         }
         if ($p_keepRatio) {
             $ratioOrig = $origImageWidth / $origImageHeight;
@@ -750,177 +736,11 @@ class Image extends DatabaseObject
             $newImageHeight = $p_maxHeight;
         }
 
-        $newImage = \Nette\Image::fromBlank($newImageWidth, $newImageHeight);
-        $newImage->alphaBlending(false);
-        $newImage->saveAlpha(true);
-
-        imagecopyresampled($newImage->getImageResource(), $p_image, 0, 0, 0, 0, $newImageWidth, $newImageHeight,
-                           $origImageWidth, $origImageHeight);
-
-        return $newImage->getImageResource();
-    }
-
-    /**
-     * Download the remote file and save it to disk, create a thumbnail for it,
-     * and create a database entry for the file.
-     *
-     * @param string $p_url
-     *                      The remote location of the file. ("http://...");
-     *
-     * @param array $p_attributes
-     *                            Optional attributes which are stored in the database.
-     *                            Indexes can be the following: 'Description', 'Photographer', 'Place', 'Date'
-     *
-     * @param int $p_userId
-     *                      The user ID of the user who uploaded the image.
-     *
-     * @param int $p_id
-     *                  If you are updating an image, specify its ID here.
-     *
-     * @return mixed
-     *               Return an Image object on success, return a PEAR_Error otherwise.
-     */
-    public static function OnAddRemoteImage($p_url, $p_attributes,
-                                            $p_userId = null, $p_id = null)
-    {
-        global $Campsite;
-
-        $translator = \Zend_Registry::get('container')->getService('translator');
-        // Check if thumbnail directory is writable.
-        $imageDir = $Campsite['IMAGE_DIRECTORY'];
-        $thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
-        if (!file_exists($imageDir) || !is_writable($imageDir)) {
-            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $imageDir), CAMP_ERROR_WRITE_DIR);
-        }
-        if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
-            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir), CAMP_ERROR_WRITE_DIR);
-        }
-
-        // fetch headers
-        $headers = get_headers($p_url, TRUE);
-        if (strpos($headers[0], '200 OK') === FALSE) {
-            return new PEAR_Error($translator->trans("Unable to fetch image from remote server.", array(), 'api'));
-        }
-
-        // get type
-        $ContentType = $headers['Content-Type'];
-
-        // Check content type
-        if (strpos($ContentType, 'image') === FALSE) { // wrong URL
-
-            return new PEAR_Error($translator->trans('URL $1 is invalid or is not an image.', array('$1' => $p_url), 'api'));
-        }
-
-        // check path
-        if (!is_writable($Campsite['TMP_DIRECTORY'])) {
-            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $tmpname), CAMP_ERROR_CREATE_FILE);
-        }
-
-        // save image
-        $tmpname = $Campsite['TMP_DIRECTORY'].'img'.md5(uniqid());
-        file_put_contents($tmpname, file_get_contents($p_url));
-
-        // Check if it is really an image file
-        $imageInfo = getimagesize($tmpname);
-        if ($imageInfo === false) {
-            unlink($tmpname);
-
-            return new PEAR_Error($translator->trans('URL $1 is not an image.', array('$1' => $cURL), 'api'));
-        }
-
-        // content-type = image
-        if (!is_null($p_id)) {
-            // Updating the image
-            $image = new Image($p_id);
-            $image->update($p_attributes);
-            // Remove the old image & thumbnail because
-            // the new file might have a different file extension.
-            if (file_exists($image->getImageStorageLocation())) {
-                if (is_writable(dirname($image->getImageStorageLocation()))) {
-                    unlink($image->getImageStorageLocation());
-                } else {
-                    return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $image->getImageStorageLocation()), CAMP_ERROR_DELETE_FILE);
-                }
-            }
-            if (file_exists($image->getThumbnailStorageLocation())) {
-                if (is_writable(dirname($image->getThumbnailStorageLocation()))) {
-                    unlink($image->getThumbnailStorageLocation());
-                } else {
-                    return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $image->getThumbnailStorageLocation()), CAMP_ERROR_DELETE_FILE);
-                }
-            }
-        } else {
-            $image = new Image();
-            if (empty($p_attributes['Date'])) {
-                $p_attributes['Date'] = date("Y-m-d");
-            }
-
-            $image->create($p_attributes);
-            $image->setProperty('TimeCreated', 'NOW()', true, true);
-            $image->setProperty('LastModified', 'NULL', true, true);
-            $image->setProperty('Source', 'remote', false);
-            $image->setProperty('Status', 'unapproved', false);
-            $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
-            if ($user && $user->isAdmin()) {
-                $image->setProperty('Status', 'approved', false);
-            }
-        }
-
-        if (!isset($p_attributes['Date'])) {
-            $image->setProperty('Date', 'NOW()', true, true);
-        }
-
-        $image->setProperty('Location', 'remote', false);
-        $image->setProperty('URL', $p_url, false);
-        if (isset($imageInfo['mime'])) {
-            $image->setProperty('ContentType', $imageInfo['mime'], false);
-        }
-
-        // Remember who uploaded the image
-        if (!is_null($p_userId)) {
-            $image->setProperty('UploadedByUser', $p_userId, false);
-        }
-
-        // create thumbnail
-        $extension = Image::__ImageTypeToExtension($imageInfo[2]);
-        $thumbnail = $image->generateThumbnailStorageLocation($extension);
-        $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
-
-        if (!is_writable(dirname($thumbnail))) {
-            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $image->getThumbnailStorageLocation()), CAMP_ERROR_CREATE_FILE);
-        }
-
-        $createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
-        if (!isset($createMethodName)) {
-            throw new Exception($translator->trans("Image type $1 is not supported.", array(
-                                '$1' => image_type_to_mime_type($ContentType)), 'api'));
-        }
-
-        $imageHandler = $createMethodName($tmpname);
-        if (!$imageHandler) {
-            throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
-        }
-
-        $thumbnailImage = Image::ResizeImage($imageHandler,
-            $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
-        if (PEAR::isError($thumbnailImage)) {
-            throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
-        }
-
-        $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
-        if (PEAR::isError($result)) {
-            throw new Exception($result->getMessage(), $result->getCode());
-        }
-
-        if (file_exists($thumbnail)) {
-            self::chmod($thumbnail, 0644);
-        }
-
-        unlink($tmpname);
-        $image->commit();
+        $image = new \Imagine\Gd\Image($p_image);
+        $image->resize(new Box($newImageWidth, $newImageHeight));
 
         return $image;
-    } // fn OnAddRemoteImage
+    }
 
     /**
      * Get an array of Images uploaded by the user with $user_id.

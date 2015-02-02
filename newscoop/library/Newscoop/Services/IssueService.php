@@ -94,8 +94,8 @@ class IssueService implements IssueServiceInterface
      */
     public function issueResolver(Request $request)
     {
-        $uriParts = array_filter(explode('/', $request->getRequestUri()));
-        $uriPartsCount = count($uriParts);
+        $uriParts = explode('/', $request->getRequestUri());
+        $uriPartsCount = count(array_filter($uriParts));
         $issue = null;
         if ($uriPartsCount >= 2 && $uriPartsCount <= 5) {
             $publication = $this->publicationService->getPublication();

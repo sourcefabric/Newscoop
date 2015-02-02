@@ -1,7 +1,7 @@
 'Duplicate assignment': null
 Templates: null
 'Import theme': null
-'Import succeded!': null
+'Import succeeded!': null
 'Import failed!': null
 'Edit template: $1': null
 'Set new name to': null
@@ -58,7 +58,7 @@ Replace: null
 'Failed unassigning theme': null
 Export: null
 'Error page template': null
-'Edit $1': null
+'Edit $1': '编辑 $1'
 'Done uploading': null
 'Do you want to override $1?': null
 'Directory is empty': null

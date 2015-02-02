@@ -89,4 +89,9 @@ class UserCriteria extends Criteria
      * @var integer
      */
     public $publication;
+
+    /**
+     * @var bool
+     */
+    public $is_author = false;
 }

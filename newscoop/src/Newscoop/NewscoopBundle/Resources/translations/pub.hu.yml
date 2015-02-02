@@ -7,7 +7,7 @@
 'Enable spam blocking?': 'A szemét letiltásának engedélyezése?'
 'The subscription settings for $1 could not be added.': 'Nem lehet hozzáadni az előfizetési beállításokat a/z $1 számára.'
 'The publication name you specified conflicts with publication $1.': 'Az általad megadott kiadványnév ütközik a/z $1 kiadvánnyal.'
-'The publication alias you specified conflicts with publication $1.': 'A kiadvány Ön által megadott aliasa ütközik a/z $1 kiadvánnyal.'
+'The publication alias you specified conflicts with publication $1.': 'A kiadvány általad megadott aliasa ütközik a/z $1 kiadvánnyal.'
 'Subscription defaults': 'Előfizetés alapértelmezései'
 'Subscription Settings by Country': 'Előfizetés ország szerinti beállításai'
 'Set subscription settings for a country': 'Egy ország előfizetési beállításainak megadása'
@@ -20,9 +20,9 @@
 'Publication updated': 'A kiadvány frissítése megtörtént'
 'Subscriber comments moderated?': 'Az előfizetői hozzászólások moderáltak?'
 'Public comments moderated?': 'A nyilvános hozzászólások moderáltak?'
-'Comments enabled?': 'Engedélyezett a hozzászólás?'
-'Comments enabled': 'A hozzászólások engedélyezése megtörtént'
-'Article comments default to enabled?': 'A hozzászólások a cikkhez alapértelmezetten engedélyezettek?'
+'Comments enabled?': 'A hozzászólás engedélyezése'
+'Comments enabled': 'Hozzászólás engedélyezve'
+'Article comments default to enabled?': 'A hozzászólás alapértelmezetten engedélyezett a cikkhez?'
 'trial subscription': próbaelőfizetés
 'paid subscription': 'fizetett előfizetés'
 'time units': időegységek
@@ -75,3 +75,64 @@ Currency: Pénznem
 'Article title': 'Cikk címe'
 'Article keywords': 'Cikk kulcsszavai'
 'Article topics': Cikktémák
+publications:
+    title:
+        list: Kiadványlista
+        edit: 'Kiadvány szerkesztése'
+        add: 'Új kiadvány hozzáadása'
+        remove: 'Kiadvány eltávolítása'
+    no_publications: 'Nincsenek kiadványok.'
+    general_settings: 'Általános beállítások'
+    comments_settings: 'Hozzászólások beállításai'
+    seo_settings: 'Keresőoptimalizálási beállítások'
+    publication_removed: 'A kiadvány eltávolításra került.'
+    publication_saved: 'A kiadvány módosításainak mentése sikerült.'
+    remove:
+        cant_be_removed: 'Ez a kiadvány nem üres - és nem távolítható el.'
+        can_be_removed: 'Ez a kiadvány üres, és el lehet távolítani.'
+        left_issues: 'Maradt számok'
+        left_sections: 'Maradt rovatok'
+        left_articles: 'Maradt cikkek'
+        show_issues: 'számok megjelenítése'
+        before_removing: 'A kiadvány eltávolítása előtt el kell távolítanod/át kell helyezned az összes megmaradt elemet.'
+        you_sure: 'Biztosan el akarod távolítani a kiadványt'
+        remove: 'Kiadvány eltávolítása'
+    buttons:
+        addNew: 'Új kiadvány hozzáadása'
+        listPublications: 'Kiadványok listázása'
+        listIssues: 'Kiadvány számainak listázása'
+    table:
+        number: Szám
+        name: Név
+        default_alias: 'Alapértelmezett alias'
+        default_language: 'Alapértelmezett nyelv'
+        comments_status: 'Hozzászólások állapota'
+        url_type: 'URL-cím típusa'
+        configure: Konfigurálás
+        remove: Eltávolítás
+    form_type:
+        label:
+            name: 'Kiadvány neve'
+            template_path: 'Sablon elérési útja'
+            short_names: 'Rövid név'
+            alias: 'Alapértelmezett alias'
+            url_type: 'URL-cím típusa'
+            seo: 'Cikk URL-címének részei'
+            seo_article_title: 'Cikk címe'
+            seo_article_keywords: 'Cikk kulcsszavai'
+            seo_article_topics: Cikktémák
+            edit_aliases: 'Aliasok szerkesztése'
+            edit_languages: 'Nyelvek szerkesztése'
+            moderator_to: 'Moderátor címe'
+            moderator_from: 'A moderálási e-mailek feladójának címe'
+            comments_enabled: 'A hozzászólások engedélyezése?'
+            public_comments_enabled: 'A nyilvános (névtelen) hozzászólások engedélyezése?'
+            comments_article_default_enabled: 'A hozzászólás a cikkekhez engedélyezése alapértelmezésként?'
+            comments_subscribers_moderated: 'A hozzászólások moderálása?'
+            comments_public_moderated: 'A nyilvános (névtelen) hozzászólások moderálása?'
+            comments_captcha_enabled: 'A CAPTCHA engedélyezése?'
+            comments_spam_blocking_enabled: 'A szemét hozzászólások (belső rendszer) tiltásának engedélyezése?'
+            meta_title: 'Kiadvány címe'
+            meta_keywords: 'Kiadvány kulcsszavai'
+            meta_description: 'Kiadvány leírása'
+    tip1: 'A Newscoop tartalma hierarchikus struktúrába szervezett, ami megfelel a hírlapok és a magazinok hagyományának: kiadványok, számok, rovatok és cikkek. A kiadványokat számok alkotják, a számok pedig cikkeket tartalmazó rovatokból épülnek fel.'

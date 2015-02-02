@@ -21,6 +21,7 @@ function smarty_block_list_user_topics($params, $content, $smarty, &$repeat)
     $gimme = $smarty->getTemplateVars('gimme');
     if (!$gimme->user->defined) {
         $repeat = false;
+
         return;
     }
 
@@ -31,7 +32,7 @@ function smarty_block_list_user_topics($params, $content, $smarty, &$repeat)
 
     if (!isset($content)) {
         $service = Zend_Registry::get('container')->getService('user.topic');
-        $lists->push(new ViewCollection($service->getTopics($gimme->user->identifier)));
+        $lists->push(new ViewCollection($service->getTopics($gimme->user->identifier, $gimme->language->code)));
     }
 
     $list = $lists->pop();

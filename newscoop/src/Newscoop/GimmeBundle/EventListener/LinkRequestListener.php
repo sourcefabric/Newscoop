@@ -61,15 +61,17 @@ class LinkRequestListener
             $links[] = $header;
         }
 
+
         $requestMethod = $this->urlMatcher->getContext()->getMethod();
-        // Force the GET method to avoid the use of the
-        // previous method (LINK/UNLINK)
-        $this->urlMatcher->getContext()->setMethod('GET');
 
         // The controller resolver needs a request to resolve the controller.
         $stubRequest = new Request();
 
         foreach ($links as $idx => $link) {
+            // Force the GET method to avoid the use of the
+            // previous method (LINK/UNLINK)
+            $this->urlMatcher->getContext()->setMethod('GET');
+
             $linkParams = explode(';', trim($link));
             $resourceType = null;
             if (count($linkParams) > 1) {
@@ -92,18 +94,15 @@ class LinkRequestListener
             }
 
             $stubRequest->attributes->replace($route);
-
+            $stubRequest->server = $event->getRequest()->server;
             if (false === $controller = $this->resolver->getController($stubRequest)) {
                 continue;
             }
 
             // Make sure @ParamConverter is handled
-            $subEvent = new FilterControllerEvent(
-                $event->getKernel(),
-                $controller,
-                $stubRequest,
-                HttpKernelInterface::MASTER_REQUEST
-            );
+            $subEvent = new FilterControllerEvent($event->getKernel(), $controller, $stubRequest, HttpKernelInterface::MASTER_REQUEST);
+            $kernelSubEvent = new GetResponseEvent($event->getKernel(), $stubRequest, HttpKernelInterface::MASTER_REQUEST);
+            $event->getDispatcher()->dispatch(KernelEvents::REQUEST, $kernelSubEvent);
             $event->getDispatcher()->dispatch(KernelEvents::CONTROLLER, $subEvent);
             $controller = $subEvent->getController();
 
@@ -115,7 +114,6 @@ class LinkRequestListener
                 if (!is_object($result)) {
                     continue;
                 }
-
                 $links[$idx] = array(
                     'object' => $result,
                     'resourceType' => $resourceType

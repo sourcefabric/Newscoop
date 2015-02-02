@@ -9,20 +9,21 @@ framework:
     form:            ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    templating:      { engines: ['twig', 'smarty', 'php'] }
+    templating:      { engines: ['twig', 'php'] }
     trusted_proxies: ~
     session:
         storage_id: newscoop_newscoop.session.storage
         handler_id: ~
     fragments: ~
     translator: { fallback: en }
+    http_method_override: true
 
 monolog:
     channels: ["sentry"]
     handlers:
         sentry:
             type:  raven
-            dsn:   'http://6948f4720ffe4956b25df0fe720da09e:085cd9f5324c4e65abdd55482ca7c5cc@sentry.sourcefabric.org/5'
+            dsn:   'http://9cd083992bcc4dbba05b6a0253b30b3b:57ae69b9ea7347c1bca8583ab1e3da5f@sentry.sourcefabric.org/5'
             level: notice
             channels: ['sentry']
 
@@ -33,6 +34,13 @@ doctrine:
             point: Newscoop\NewscoopBundle\ORM\PointType
     orm:
         auto_mapping: true
+        mappings:
+            gedmo_translatable:
+                type: annotation
+                prefix: Gedmo\Translatable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity/MappedSuperclass"
+                alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+                is_bundle: false
 
 # FOSRestBundle Configuration
 fos_rest:
@@ -41,13 +49,12 @@ fos_rest:
         default_format: ~
     view:
         default_engine: twig
-        view_response_listener: force
+        view_response_listener: true
         failed_validation: HTTP_BAD_REQUEST
         formats:
             json: true
-            xml: true
         mime_types:
-            json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
+            json: ['application/json', 'application/x-json', 'application/vnd.sourcefabric-org.newscoop+json']
     body_listener:
         decoders:
             json: fos_rest.decoder.json
@@ -61,12 +68,15 @@ fos_rest:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
             'Newscoop\Exception\InvalidParametersException': 422
-            'Newscoop\Exception\ResourceIsEmptyException': 404
+            'Newscoop\Exception\ResourceIsEmptyException': 200
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
+            'Newscoop\Exception\ResourceNotModifiedException': 304
+            'Newscoop\NewscoopException': 500
+            'OAuth2\OAuth2AuthenticateException': 401
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
             'Newscoop\Exception\InvalidParametersException': true
@@ -76,11 +86,15 @@ fos_rest:
             'Symfony\Component\Form\Exception\InvalidArgumentException' : true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
+            'Newscoop\Exception\ResourceNotModifiedException': false
+            'OAuth2\OAuth2AuthenticateException': true
+            'Newscoop\NewscoopException': true
 
 fos_oauth_server:
     service:
         options:
             supported_scopes: standard_access
+        user_provider: user.manager
     db_driver: orm
     client_class:        Newscoop\GimmeBundle\Entity\Client
     access_token_class:  Newscoop\GimmeBundle\Entity\AccessToken
@@ -94,6 +108,9 @@ jms_serializer:
             Newscoop:
                 namespace_prefix: Newscoop\Entity
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            NewscoopBundle:
+                namespace_prefix: Newscoop\NewscoopBundle\Entity
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Comment:
                 namespace_prefix: Newscoop\Entity\Comment
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
@@ -102,6 +119,15 @@ jms_serializer:
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Image:
                 namespace_prefix: Newscoop\Image
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Snippet:
+                namespace_prefix: Newscoop\Entity\Snippet
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_SnippetTemplate:
+                namespace_prefix: Newscoop\Entity\Snippet\SnippetTemplate
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Articles:
+                namespace_prefix: Newscoop\ArticlesBundle\Entity
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
@@ -144,14 +170,8 @@ newscoop_gimme:
     allow_origin:
         - "*"
 
-smarty:
-    options:
-        left_delimiter: "{{"
-        right_delimiter: "}}"
-        caching: false
-
-bazinga_expose_translation:
-    locale_fallback: "en"
+bazinga_js_translation:
+    locale_fallback: en
 
 nelmio_api_doc:
     name:                     Newscoop REST API documentation
@@ -164,12 +184,12 @@ ewz_recaptcha:
     enabled: true
     locale_key: kernel.default_locale
 
-parameters:
-    smarty.class: "CampTemplate"
-    templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
-
-ewz_recaptcha:
-    public_key:   6LeVFuASAAAAAJvc6hlYEHZnlEIBakblsE54bTwA
-    private_key:  6LeVFuASAAAAAGhz6dWgsO6WVGY_pcg_7wAt61eQ
-    secure:       false
-    locale_key:   kernel.default_locale
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
+            sluggable: false
+            translatable: true
+            sortable: false
+            loggable: false

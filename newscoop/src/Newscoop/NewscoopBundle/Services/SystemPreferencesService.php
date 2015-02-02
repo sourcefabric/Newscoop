@@ -156,6 +156,7 @@ class SystemPreferencesService
             return $this->preferences;
         }
 
+        // TODO: replace it with dql and measure performance
         return $this->preferences = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')->findAll();
     }
 

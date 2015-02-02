@@ -2,9 +2,9 @@
 'Total articles': 'Összes cikk'
 Skype: Skype
 'Save All': 'Az összes mentése'
-Reset: Alaphelyzet
-'Please enter the last name': 'Adja meg vezetéknevét'
-'Please enter the first name': 'Adja meg keresztnevét'
+Reset: Törlés
+'Please enter the last name': 'Add meg a vezetéknevedet'
+'Please enter the first name': 'Add meg a keresztnevedet'
 'No records found': 'Nem találhatók rekordok.'
 'Last name': Vezetéknév
 Jabber: Jabber
@@ -12,7 +12,7 @@ General: Általános
 'First name': Keresztnév
 Email: E-mail
 'Delete author': 'Szerző törlése'
-Contacts: null
+Contacts: Elérhetőségek
 Biography: Életrajz
 Aliases: Aliasok
 AIM: AIM

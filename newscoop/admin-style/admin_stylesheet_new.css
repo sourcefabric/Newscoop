@@ -786,4 +786,72 @@ td.name .ui-icon {
 }
 .admin-font-size {
     font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ns_container {
+    background-color: #fff;
+    border: 1px solid #9d9d9d;
+    float: none;
+    margin: 10px 30px 30px 30px;
+    padding: 20px 20px 30px 20px;
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    box-shadow: 0 2px 2px rgba(0,0,0,.10);
+}
+.ns_container h3 {
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 8px 0;
+}
+.ns_container input {
+    float:none !important;
+    background: #f0f0f0;
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+.ns_container input:focus {
+    background-color: #fff;
+}
+.ns_container input[type=radio] {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    margin-left: 4px;
+}
+
+.action-button {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 120%;
+    list-style: none;
+    margin: 0 6px 0 0;
+    position: relative;
+    text-decoration: none;
+    border: 1px solid #9D9D9D;
+    background-color: #f6f6f6;
+    display: block;
+    background: -moz-linear-gradient(top, #fafafa 0, #f6f6f6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafafa), color-stop(100%, #f6f6f6));
+    overflow: hidden;
+    padding: 3px 10px 4px 10px;
+    color: #3B3B3B;
+}
+
+.action-button:hover {
+    text-decoration: none;
+    border: 1px solid #007fb3;
+    color: #fff;
+    background-color: #007fb3;
+    background: -moz-linear-gradient(top, #409fc6 0, #007fb3 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #409fc6), color-stop(100%, #007fb3));
+}
+
+.action-button .glyphicon {
+    color: #007fb3;
+}
+
+.action-button .glyphicon:hover, .action-button:hover .glyphicon  {
+    color: white;
 }

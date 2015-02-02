@@ -61,7 +61,7 @@ $issueLanguage = new Language($sLanguage);
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php echo $translator->trans("Publications");  ?></A>
+				<A HREF="<?php \Zend_Registry::get('container')->get('router')->generate('newscoop_newscoop_publications_index'); ?>" class="breadcrumb"><?php echo $translator->trans("Publications");  ?></A>
 			</TD>
 		</TR>
 		</TABLE>

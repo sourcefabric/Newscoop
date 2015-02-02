@@ -1,0 +1,3 @@
+type_publications:
+    name:
+        min: 'A kiadvány címének hosszabbnak kell lennie {{ limit }} karakternél.'

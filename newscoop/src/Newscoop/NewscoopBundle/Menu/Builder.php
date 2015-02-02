@@ -88,9 +88,11 @@ class Builder
             return $menu;
         }
 
-        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
-
         if ($modern) {
+            $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => '#'))
+                ->setAttribute('dropdown', true)
+                ->setLinkAttribute('data-toggle', 'dropdown');
+
             $menu->addChild($translator->trans('Content'), array('uri' => '#'))
                 ->setAttribute('dropdown', true)
                 ->setLinkAttribute('data-toggle', 'dropdown');
@@ -117,6 +119,8 @@ class Builder
                 $this->prepareUsersMenu($menu[$translator->trans('Users')]);
             }
         } else {
+            $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => '#'));
+
             $menu->addChild($translator->trans('Content'), array('uri' => '#'));
             $this->prepareContentMenu($menu[$translator->trans('Content')], $modern);
 
@@ -133,6 +137,17 @@ class Builder
                 $this->prepareUsersMenu($menu[$translator->trans('Users')]);
             }
         }
+
+        $this->addChild(
+            $menu[$translator->trans('Dashboard', array(), 'home')],
+            'General Dashboard',
+            array('uri' => $this->generateZendRoute('admin'))
+        );
+        $this->addChild(
+            $menu[$translator->trans('Dashboard', array(), 'home')],
+            'Journalist Dashboard',
+            array('uri' => $this->container->get('router')->generate('newscoop_newscoop_dashboard_journalist'))
+        );
 
         $this->preparePluginsMenu($menu);
 
@@ -180,7 +195,8 @@ class Builder
         return $current;
     }
 
-    private function decorateMenu($menu) {
+    private function decorateMenu($menu)
+    {
         foreach ($menu as $key => $value) {
             $value->setLinkAttribute('class', 'fg-button fg-button-menu ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
         }
@@ -192,14 +208,30 @@ class Builder
     {
         $translator = $this->container->get('translator');
 
-        $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'pub',
-                'action' => 'index.php',
-            ),
+        $this->addChild($menu, $translator->trans('Publications'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_publications_index'),
             'resource' => 'publication',
             'privilege' => 'manage',
         ));
+
+        $publicationId = $this->container->get('request')->get('id', 1);
+        if (!is_numeric($publicationId)) {
+            $publicationId = 1;
+        }
+
+        $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.edit', array(), 'pub'), array(
+            'route' => 'newscoop_newscoop_publications_edit',
+            'routeParameters' => array('id' => $publicationId),
+            'resource' => 'publication',
+            'privilege' => 'manage',
+        ))->setDisplay(false);
+
+        $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.remove', array(), 'pub'), array(
+            'route' => 'newscoop_newscoop_publications_remove',
+            'routeParameters' => array('id' => $publicationId),
+            'resource' => 'publication',
+            'privilege' => 'manage',
+        ))->setDisplay(false);
 
         $this->addChild(
             $menu,
@@ -257,6 +289,7 @@ class Builder
             $query = $this->container->get('em')
                 ->getRepository('Newscoop\Entity\Issue')
                 ->getLatestByPublication($pubId, 11);
+
             if ($query) {
                 $issues = $query->getArrayResult();
             } else {
@@ -357,11 +390,8 @@ class Builder
             'privilege' => 'add',
         ));
 
-        $this->addChild($menu, $translator->trans('Add new publication'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'pub',
-                'action' => 'add.php',
-            ),
+        $this->addChild($menu, $translator->trans('publications.title.add', array(), 'pub'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_publications_add'),
             'resource' => 'publication',
             'privilege' => 'manage',
         ));
@@ -608,11 +638,8 @@ class Builder
             ));
         }
 
-        $this->addChild($menu, $translator->trans('Topics'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'topics',
-                'action' => 'index.php',
-            ),
+        $this->addChild($menu, $translator->trans('Topics'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_topics_index'),
             'resource' => 'topic',
             'privilege' => 'manage'
         ));
@@ -828,7 +855,6 @@ class Builder
 
             return;
         }
-
 
         if ($this->user->hasPermission('plugin_manager')) {
             $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'),  array('uri' => $this->container->get('router')->generate('newscoop_newscoop_plugins_index')));

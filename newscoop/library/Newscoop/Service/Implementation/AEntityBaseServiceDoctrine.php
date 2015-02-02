@@ -62,7 +62,7 @@ abstract class AEntityBaseServiceDoctrine
         Validation::notEmpty($id, 'id');
         $entity = $this->findById($id);
         if ($entity === NULL) {
-            throw \Exception("Cannot locate '$this->entityClassName' for id '$id'.");
+            throw new \Exception("Cannot locate '$this->entityClassName' for id '$id'.");
         }
         return $entity;
     }

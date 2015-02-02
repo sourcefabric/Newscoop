@@ -44,11 +44,17 @@ class NewscoopExtension extends \Twig_Extension
             $localeFromCookie = $this->request->cookies->has('TOL_Language') == true ? $this->request->cookies->get('TOL_Language') : 'en';
         }
 
+        try {
+            $currentUser = $this->container->getService('user')->getCurrentUser();
+        } catch (\Newscoop\NewscoopException $e) {
+            $currentUser = null;
+        }
+
         return array(
             'Newscoop' => $Campsite,
             'NewscoopVersion' => new \CampVersion(),
             'SecurityToken' => \SecurityToken::GetToken(),
-            'NewscoopUser' => $this->container->getService('user')->getCurrentUser(),
+            'NewscoopUser' => $currentUser,
             'localeFromCookie' => $localeFromCookie
         );
     }
@@ -63,6 +69,8 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
             new \Twig_SimpleFunction('generateZendUrl', array($this, 'generateZendUrl')),
             new \Twig_SimpleFunction('hasPermission', array($this, 'hasPermission')),
+            new \Twig_SimpleFunction('default_csrf_token', array($this, 'getCsrfToken')),
+            new \Twig_SimpleFunction('renderTip', array($this, 'renderTip'), array('is_safe' => array( 'html' ))),
         );
     }
 
@@ -119,6 +127,25 @@ class NewscoopExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    /**
+     * Generates default CRSF token for forms using AJAX
+     *
+     * @return string CSRF token
+     */
+    public function getCsrfToken()
+    {
+        $csrfProvider = $this->container->get('form.csrf_provider');
+
+        return $csrfProvider->generateCsrfToken('default');
+    }
+
+    public function renderTip($tipMessage)
+    {
+        return $this->container->get('templating')->render('NewscoopNewscoopBundle::tooltip.html.twig', array(
+            'tipMessage' => $tipMessage
+        ));
     }
 
     public function getName()

@@ -1,13 +1,13 @@
 'Rename user': null
-Campsite: null
+Campsite: Newscoop
 'Image Rendering': null
 'Featured Article Lists': null
 'You have tried to upload an invalid backup file.': null
 'You do not have the right to manage backups.': null
-'Make a new backup': null
+'Make a new backup': 'Napravi novi bekap.'
 'Are you sure you want to make a new backup?': null
 'Security token expired. Please resubmit the form.': null
-Templates: null
+Templates: Šabloni
 'Create slideshow': null
 Create: Napravi
 Attach/Detach: Prikači/Otkači
@@ -152,12 +152,12 @@ Help: Pomoć
 'Please make sure that you typed the correct user name and password.': 'Proverite da li ste ispravno upisali korisničko ime i lozinku'
 'If your problem persists please contact the site administrator $1': 'Ako se problem ponovi kontaktirajte administratora sajta $1'
 Backup/Restore: Bekap/Vraćanje
-'Step 2': null
-'Step 3': null
-'Add new user': null
+'Step 2': 'Korak 2'
+'Step 3': 'Korak 3'
+'Add new user': 'Dodaj novog korisnika'
 'Bad credentials': null
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
+'Active users': 'Aktivni korisnici'
+'New comments': 'Novi komentari'
+'Published articles': 'Objavljenih tekstova'
+'Last 7 days statistics': 'Statistika za poslednjih 7 dana'
 'Change password': null

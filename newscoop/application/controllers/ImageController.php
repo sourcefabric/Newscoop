@@ -34,7 +34,7 @@ class ImageController extends Zend_Controller_Action
         $this->getResponse()->setHeader('Expires', gmdate(self::DATE_FORMAT, date_create('+30 days')->getTimestamp()), true);
 
         try {
-            $image = $this->_helper->service('image')->generateFromSrc($this->_getParam('src'));
+            $this->_helper->service('image')->generateFromSrc($this->_getParam('src'));
             $this->getResponse()->setHeader('Content-Type', $this->getContentType($this->getPath()), true);
             $this->getResponse()->sendHeaders();
             $this->getResponse()->setBody(file_get_contents($this->getPath()));

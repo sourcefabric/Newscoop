@@ -5,7 +5,7 @@
  * Type:       block
  * Name:       assetic
  * Purpose:    smarty plugin for Assetic
- * Author:     Pierre-Jean Parra
+ * Author:     Pierre-Jean Parra, Paweł Mikołajczuk
  * Version:    1.0
  *
  * ------------------------------------------------------------
@@ -32,6 +32,10 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
 
     $realpath = realpath( __DIR__.'/../../../'.$params['config_path']);
     $root = realpath($realpath.'/../').'/';
+    $base_path = null;
+    $bundles = null;
+    $dependencies = null;
+
 
     $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
     $themePath = $themesService->getThemePath();

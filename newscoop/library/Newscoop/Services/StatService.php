@@ -185,9 +185,9 @@ class StatService
 
     public function getTopics()
     {
-        $topics = \Topic::GetTopics(null, null, null, null, 5, null, null, true, false);
+        $topicsCount = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->countBy();
 
-        return($topics['count']);
+        return $topicsCount;
     }
 
     public function getComments()

@@ -17,8 +17,8 @@ services:
             -  { name: kernel.event_listener, event: article-publish.create, method: update }
             -  { name: kernel.event_listener, event: article.create, method: update }
             -  { name: kernel.event_listener, event: article.delete, method: update }
-            -  { name: kernel.event_listener, event: article-topic.create, method: update }
-            -  { name: kernel.event_listener, event: article-topic.delete, method: update }
+            -  { name: kernel.event_listener, event: article-topic.attach, method: update }
+            -  { name: kernel.event_listener, event: article-topic.detach, method: update }
             -  { name: kernel.event_listener, event: article-metadata.create, method: update }
             -  { name: kernel.event_listener, event: article-metadata.delete, method: update }
             -  { name: kernel.event_listener, event: attachment.create, method: update }

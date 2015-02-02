@@ -35,7 +35,6 @@ class LocaleListener
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        $pos = strpos($request->server->get('REQUEST_URI'), '/admin');
         $cookies = $request->cookies;
 
         if ($cookies->has('TOL_Language')) {

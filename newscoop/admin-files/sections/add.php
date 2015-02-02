@@ -65,18 +65,6 @@ editor_load_tinymce('f_description', $g_user, 0, $editorLanguage, 'section');
     <input type="text" class="input_text" name="f_url_name" SIZE="32" value="<?php p($newSectionNumber); ?>" alt="alnum|1|A|true|false|_" emsg="<?php echo $translator->trans('The $1 field may only contain letters, digits and underscore (_) character.', array('$1' => "'" . $translator->trans('URL Name', array(), 'sections') . "'")); ?>">
   </td>
 </tr>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
-?>
-<tr>
-  <td align="right"><?php echo $translator->trans("Subscriptions"); ?>:</td>
-  <td>
-    <input type="checkbox" name="f_add_subscriptions" class="input_checkbox"> <?php  echo $translator->trans("Add section to all subscriptions.", array(), 'sections'); ?>
-  </td>
-</tr>
-<?php
-	}
-?>
 <tr>
   <td colspan="2">
     <div align="center">

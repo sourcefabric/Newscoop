@@ -4,9 +4,9 @@ at: null
 'With image attachment': Képmelléklettel
 'With document attachment': Dokumentummelléklettel
 'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
-Starred: Csillagozott
+Starred: Csillagozva
 Star: Csillagozás
-'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ - _END_. bejegyzés / _TOTAL_ megjelenítése'
 'Reply to message': 'Válasz az üzenetre'
 Reply: Válasz
 Processed: Feldolgozva
@@ -22,8 +22,8 @@ Message: Üzenet
 Last: Utolsó
 'Full article': 'Teljes cikk'
 First: Első
-'Feedback Messages': 'Visszajelzés üzenetek'
-'Display _MENU_ records': '_MENU_ rekordok megjelenítése'
+'Feedback Messages': 'Visszajelző üzenetek'
+'Display _MENU_ records': '_MENU_ rekord megjelenítése'
 Deleted: Törölve
 'Change selected messages status': 'A kijelölt üzenetek állapotának módosítása'
 Attachment: Csatolmány
@@ -34,7 +34,7 @@ Anonymous: Névtelen
 'You are about to permanently delete multiple messages.': 'Több üzenet végleges törlésére készülsz.'
 'You are about to permanently delete a message.': 'Egy üzenet végleges törlésére készülsz.'
 User: Felhasználó
-None: null
+None: Nincs
 'Coming from': null
 'Ban/Unban user': 'Felhasználó kitiltása/kitiltásának megszüntetése'
 Ip: IP-cím
@@ -64,7 +64,7 @@ Recommended: Ajánlott
 Recommend: Ajánlás
 'Quick edit': Gyorsszerkesztés
 Parent: Szülő
-ID: null
+ID: Azonosító
 'Go to edit article': 'Ugrás a cikk szerkesztésére'
 Forum: Fórum
 'For Column': null
@@ -93,7 +93,7 @@ Column: Oszlop
 Ban: Kitiltás
 'Are you sure you want to do it?': 'Biztosan ezt akarod tenni?'
 'Add rating': 'Értékelés hozzáadása'
-'Add new comment commenter': null
+'Add new comment commenter': 'Hozzászólás új hozzászólójának hozzáadása'
 'Add new comment': 'Új hozzászólás hozzáadása'
 'Add new acceptance criteria': 'Új átvételi feltételek hozzáadása'
 'Acceptance $1 saved.': 'A/z $1 átvételi feltétel mentése megtörtént.'

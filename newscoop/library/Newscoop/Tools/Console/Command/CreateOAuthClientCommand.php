@@ -48,7 +48,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
         $redirectUris = $input->getArgument('redirectUris');
 
         $client = $clientManager->createClient();
-        $client->setAllowedGrantTypes(array('token', 'authorization_code', 'client_credentials'));
+        $client->setAllowedGrantTypes(array('token', 'authorization_code', 'client_credentials', 'password'));
         $client->setRedirectUris(array($redirectUris));
         $client->setName($name);
         $client->setPublication($publication);

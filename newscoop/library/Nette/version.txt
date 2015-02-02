@@ -1,1 +1,0 @@
-Nette Framework 2.0-beta (revision f38d86f released on 2011-08-24)

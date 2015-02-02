@@ -3,21 +3,21 @@ Rating: Értékelés
 'Enable Rating': 'Értékelés engedélyezése'
 'Blog management': 'Blog kezelése'
 'View article': 'Cikk megtekintése'
-'Select a list': 'Válasszon egy listát'
+'Select a list': 'Válassz listát'
 'Remove list': 'Lista eltávolítása'
-'Please select a list': 'Válasszon egy listát'
+'Please select a list': 'Válassz egy listát'
 Playlist: 'Lejátszási lista'
-'List updated.': 'A lista frissítése megtörtánt.'
+'List updated.': 'A lista frissítése megtörtént.'
 'List saved': 'A lista mentése megtörtént.'
 'List Name': 'Lista neve'
 'List ID': Listaazonosító
 'Item already exists in the list': 'Az elem már szerepel a listán'
 'Featured Articles': 'Kiemelt cikkek'
-'Featured Article Lists': 'Kiemelt cikkek listái'
+'Featured Article Lists': 'Kiemelt cikklisták'
 'Featured Article List': 'Kiemelt cikkek listája'
 'Duplicate list': 'Lista megkettőzése'
-'Duplicate article entry found': 'Ismétlődő cikkbejegyzésl található'
-'Drag here to add to list': 'Húzd ide a listához adáshoz'
+'Duplicate article entry found': 'Ismétlődő cikkbejegyzés található'
+'Drag here to add to list': 'Húzz ide fájlokat a listára vételhez'
 'Could not save the list': 'Nem sikerült menteni a listát'
 'Available Articles': 'Elérhető cikkek'
 'Are you sure you want to delete this list?': 'Biztosan törölni akarod ezt a listát?'
@@ -40,7 +40,7 @@ Unapproved: 'Nem jóváhagyott'
 On: null
 Off: null
 'You do not have the right to moderate comments.': 'Nincs jogod a hozzászólások moderálásához.'
-'You can not schedule opposing events at the same time': 'Nem ütemezhetsz be egy időben ütköző eseményeket'
+'You can not schedule opposing events at the same time': 'Nem ütemezhetsz be egyidejűleg ütköző eseményeket'
 'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
 Title: Cím
 'There already is an article with the same name. Please change the name and try again.': 'Már van ugyanilyen nevű cikk. Változtasd meg a nevét, és próbálkozz újra.'
@@ -50,13 +50,13 @@ Newscoop: Newscoop
 'Overwrite articles with matching names': 'Az egyező nevű cikkek felülírása'
 'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Már létezik <i>$1</i> nevű cikk, és nem került felülírásra.<br />'
 Files: Fájlok
-'Select section:': 'Válassz számot:'
-'Add another author': null
+'Select section:': 'Válassz rovatot:'
+'Add another author': 'További szerző hozzáadása'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
 'Switches saved.': 'A kapcsolók mentése megtörtént.'
 'Keywords saved.': 'A kulcsszavak mentése megtörtént.'
-'Comment settings': 'Hozzászóás beállításai'
+'Comment settings': 'Hozzászólás beállításai'
 Authors: Szerzők
 'Attach Topic To Article': 'Téma csatolása cikkhez'
 'Article saved.': 'A cikk mentése megtörtént.'
@@ -75,7 +75,7 @@ Created: Létrehozva
 'Are you sure you want to remove the map from the article?': 'Biztosan el akarod távolítani a térképet a cikkből?'
 'Scheduled action added': 'A beütemezett művelet hozzáadása megtörtént'
 'Content edited': 'A tartalom szerkesztése megtörtént'
-'You must select an article language.': 'Ki kell választanod a cikk -nyelvét.'
+'You must select an article language.': 'Ki kell választanod a cikk nyelvét.'
 'You must select a publication.': 'Ki kell választanod egy kiadványt.'
 'You must select a file to upload.': 'Ki kell választanod egy feltöltendő fájlt.'
 'You must select a XML input file.': 'Ki kell választanod egy bemeneti XML-fájlt.'
@@ -83,7 +83,7 @@ Created: Létrehozva
 'There was a problem uploading the file.': 'Probléma merült fel a fájl feltöltése során.'
 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'A feltöltött fájl csak részben került feltöltésre. Ez gyakran előfordul, ha rövid a maximális fájlfeltöltési idő a bevinni próbált fájl méretével szemben. A maximális feltöltési időt a php.ini fájlban adják meg.'
 'The file exceeds the allowed max file size.': 'A fájl mérete meghaladja a megengedett maximális fájlméretet.'
-Optional: Választható
+Optional: Elhagyható
 'Input File': 'Bemeneti fájl'
 'Import XML': 'XML importálása'
 'File is not a valid XML file.': 'A fájl nem érvényes XML-fájl.'
@@ -100,7 +100,7 @@ Saved: 'A mentés megtörtént'
 'Online Server: On': 'Online kiszolgáló: be'
 'Online Server: Off': 'Online kiszolgáló: ki'
 Download: Letöltés
-'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Nem lehet két azonos nevű cikk ugyanabban a rovatban. A/z  $1 cikk már használja az általad megadott cikknevet.'
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Nem lehet két azonos nevű cikk ugyanabban a rovatban. A/z $1 cikk már az általad megadott cikknevet használja.'
 'Visible to non-subscribers': 'Látható a nem-előfizetők számára'
 'The article could not be published.': 'Nem lehet közzétenni a cikket.'
 'Scheduled action deleted.': 'A beütemezett művelet törlése megtörtént.'
@@ -152,7 +152,7 @@ Comments: Hozzászólások
 'New issue name': 'Új szám neve'
 'New issue URL name': 'Az új szám URL-neve'
 'New article name': 'Új cikk neve'
-'Issue URL Name': 'Szám URL neve'
+'Issue URL Name': 'Szám URL-neve'
 'Issue Name': 'Szám neve'
 'Duplicate?': 'Megkettőzés?'
 'Duplicate articles': 'Cikkek duplikálása'
@@ -164,15 +164,15 @@ Comments: Hozzászólások
 'Are you sure you want to delete this article?': 'Biztosan törölni akarod ezt a cikket?'
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Létre kell hozni egy számot a választott nyelvhez. Add meg a szám nevét és URL-nevét.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Létre kell hozni egy rovatot a választott nyelvhez. Add meg a rovat nevét és URL-nevét.'
-'Article Type': 'Cikk típusa'
+'Article Type': Cikktípus
 'Show article on front page': 'A cikk megjelenítése a címlapon'
-'Show article on section page': 'A cikk megjelenítése a rovat oldalán'
+'Show article on section page': 'A cikk megjelenítése a rovatlapon'
 'Translate article': 'Cikk fordítása'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek a cikknek a módosításához. Csak a saját cikkeidet szerkesztheted, beküldés után csak a jogosult felhasználók módosíthatják.'
 'Duplicate article': 'Cikk megkettőzése'
 'The destination section is the same as the source section.': 'A célrovat azonos a forrásrovattal.'
 'The article is new; it is not possible to schedule it for automatic publishing.': 'A cikk új; nem lehet automatikus közzétételre beütemezni.'
-'No article types were defined. You must create an article type first.': 'Nem, voltak cikktípusok meghatározva. Először létre kell hoznod egy cikktípust.'
+'No article types were defined. You must create an article type first.': 'Nem voltak cikktípusok meghatározva. Először létre kell hoznod egy cikktípust.'
 'Edit article types': 'Cikktípusok szerkesztése'
 'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Nem menthetői a cikk. $1 zárolta $2 órája és $3 perce.'
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek ennek a cikknek az állapotát módosítani. Cikk beküldése után csak a jogosult felhasználók módosíthatják.'
@@ -197,8 +197,8 @@ articles:
                 status_unapproved: 'Nem jóváhagyott'
                 status: Állapot
                 description: Leírás
-                photographer: Fényképész
-                photographer_url: 'Fényképész URL-címe'
+                photographer: Fotós
+                photographer_url: 'Fotós URL-címe'
                 place: Hely
                 date: Dátum
                 article_specific: Cikkspecifikus

@@ -76,7 +76,7 @@ if (empty($this->events)) { // no logs
             }
             echo('</table>');
         ?></td>
-        <td><?php if ($event->getUser()){ $event->getUser()->getUserName(); } ?></td>
+        <td><?php if ($event->getUser()){ echo $event->getUser()->getUsername(); } ?></td>
     </tr>
     <?php $item_count = $item_count + 1; ?>
     <?php } ?>

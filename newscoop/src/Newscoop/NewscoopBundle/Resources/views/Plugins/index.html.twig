@@ -148,59 +148,6 @@ li:after {content: none;}
 </div>
 
 <script type="text/javascript">
-    function pluginFormat(item) { 
-        var markup = "<div><h5>"+item.name+"</h5><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p></div>";
-        return markup;
-    };
-    function pluginFormatSelection(item) { return item.name; }
-    var initData = null;
-    $(".search-for-plugins").select2({
-        placeholder: '{{ 'newscoop.plugins_manager.search_for_plugins'|trans }}',
-        minimumInputLength: null,
-        id: function(item){return {id: item.name};},
-        cache: true,
-        ajax: {
-            url: "/admin/plugins/getPackagesFromPackagist",
-            dataType: 'json',
-            data: function (term, page) {
-                return {
-                    q: term,
-                };
-            },
-            results: function (data, page) {
-                return {results: data.results};
-            }
-        },
-        initSelection: function(element, callback) {
-            var value = $(element).val();
-            var initData = null;
-            callServer('ping', [], function(json) {
-                $.ajax("/admin/plugins/getPackagesFromPackagist", {
-                    data: {},
-                    dataType: "json"
-                }).done(function(data) { initData = data; callback(data.results); });
-            }); // /ping
-        },
-        formatResult: pluginFormat, 
-        formatSelection: pluginFormatSelection,
-        dropdownCssClass: "bigdrop", 
-        escapeMarkup: function (m) { return m; } 
-    })
-    .on("select2-selecting", function(e) {
-        var item = e.object;
-        $('.choosen-plugin-info').html("<div><h2>"+item.name+"</h2><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p><a class=\"get-stream iframe\" data-href=\"/admin/plugins/getStream/install/"+item.name+"\" data-plugin-name=\""+item.name+"\" href=\"/admin/plugins/getStream/install/"+item.name+"\">Install this plugin</a></div>");
-
-        $('a.iframe').each(function() {
-            $(this).fancybox({
-                hideOnContentClick: false,
-                width: 800,
-                height: 500,
-                onStart: function() {},
-                onClosed: function(url, params) {}
-            });
-        });
-    });
-
     $('.change-status').change(function(){
         var checked = $(this).attr('checked');
         var pluginId = $(this).data('pluginId');

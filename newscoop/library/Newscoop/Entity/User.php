@@ -331,7 +331,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     }
 
     /**
-     * Get password salt for authentication (symfony)
+     * Get password salt for authentication
      * @return string
      */
     public function getSalt()
@@ -342,7 +342,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     }
 
     /**
-     * Get password for authentication (symfony)
+     * Get password for authentication
      * @return [type] [description]
      */
     public function getPassword()
@@ -698,7 +698,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     }
 
     /**
-     * Get user roles for authentication (symfony)
+     * Get user roles for authentication
      * @return array array with roles
      */
     public function getRoles()
@@ -1010,6 +1010,16 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     public function getAuthorId()
     {
         return $this->author ? $this->author->getId() : null;
+    }
+
+    /**
+     * Get author
+     *
+     * @return int
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 
     /**
@@ -1529,5 +1539,10 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
         }
 
         return false;
+    }
+
+    public function getObject()
+    {
+        return clone $this;
     }
 }

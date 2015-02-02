@@ -1,6 +1,18 @@
 default:
+    paths:
+        features:  %behat.paths.base%/features
+        bootstrap: %behat.paths.features%/bootstrap
+    filters:
     context:
         parameters:
-            api_prefix: api
-            base_url:   http://newscoop.dev/api/
+            base_url: http://newscoop.dev/api
+            oauth_url: http://newscoop.dev/oauth
             publication: newscoop.dev
+            api_prefix: api
+            paths:
+                base:      %behat.paths.base%
+                bootstrap: features/bootstrap
+                steps:     features/steps
+                hooks:     features/support
+            subContexts:
+            associative: true

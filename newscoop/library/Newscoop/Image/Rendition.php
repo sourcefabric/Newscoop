@@ -7,10 +7,10 @@
 
 namespace Newscoop\Image;
 
-use Nette\Image as NetteImage;
+use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Newscoop\Image\ImageService;
 use Doctrine\ORM\Mapping AS ORM;
-
-require_once __DIR__ . '/../../Nette/exceptions.php';
 
 /**
  * Rendition
@@ -180,7 +180,7 @@ class Rendition
      */
     public function getPreview($width, $height)
     {
-        list($width, $height) = NetteImage::calculateSize($this->width, $this->height, $width, $height);
+        list($width, $height) = \Newscoop\Image\ImageService::calculateSize($this->width, $this->height, $width, $height);
         return new Rendition($width, $height, $this->getSpecs());
     }
 
@@ -197,7 +197,7 @@ class Rendition
             throw new \InvalidArgumentException("Image is too small.");
         }
 
-        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
+        list($width, $height) = \Newscoop\Image\ImageService::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
         if ($this->isCrop()) {
             $width = min($width, $this->width);
             $height = min($height, $this->height);
@@ -210,41 +210,36 @@ class Rendition
      * Generate image
      *
      * @param string $imagePath
-     * @return Nette\Image
+     * @return Imagine\Gd\Image
      */
     public function generateImage($imagePath)
     {
         $path = is_file(APPLICATION_PATH . '/../' . $imagePath) ? APPLICATION_PATH . '/../' . $imagePath : $imagePath;
-        $image = NetteImage::fromFile($path);
-        $image->alphaBlending(false);
-        $image->saveAlpha(true);
+
+        $imagine = new \Imagine\Gd\Imagine();
+        $image = $imagine->open($path);
+        $imageSize = $image->getSize();
+
 
         if ($this->isCrop()) {
-            $cropSpecs = explode('_', $this->getSpecs());
-            if (count($cropSpecs) === 1) {
-                $image->resize($this->width, $this->height, $this->getFlags());
-                $image->crop('50%', '50%', $this->width, $this->height);
-            } else {
+             $cropSpecs = explode('_', $this->getSpecs());
+             if (count($cropSpecs) === 1) {
+                list($width, $height) = ImageService::calculateSize($imageSize->getWidth(), $imageSize->getHeight(), $this->width, $this->height, $this->getFlags());
+                $image->resize(new Box($width, $height));
+                list($left, $top, $width, $height) = ImageService::calculateCutout($width, $height, '50%', '50%', $width, $height);
+                $image->crop(new Point($left, $top), new Box($width, $height));
+             } else {
                 list(, $x0, $y0, $x1, $y1) = $cropSpecs;
-                $image->crop($x0, $y0, $x1 - $x0, $y1 - $y0);
-                $image->resize($this->width, $this->height, $this->getFlags());
-            }
+                $image->crop(new Point($x0, $y0), new Box($x1 - $x0, $y1 - $y0));
+                list($width, $height) = ImageService::calculateSize($imageSize->getWidth(), $imageSize->getHeight(), $this->width, $this->height, $this->getFlags());
+                $image->resize(new Box($width, $height));
+             }
         } else {
-            $image->resize($this->width, $this->height, $this->getFlags());
+                list($width, $height) = ImageService::calculateSize($imageSize->getWidth(), $imageSize->getHeight(), $this->width, $this->height, $this->getFlags());
+                $image->resize(new Box($width, $height));
         }
 
         return $image;
-    }
-
-    /**
-     * Generate image
-     *
-     * @param Newscoop\Image\ImageInterface $image
-     * @return Nette\Image
-     */
-    public function generate(ImageInterface $image)
-    {
-        return $this->generateImage($image->getPath());
     }
 
     /**
@@ -289,7 +284,7 @@ class Rendition
      */
     public function getMinSize(ImageInterface $image)
     {
-        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
+        list($width, $height) = \Newscoop\Image\ImageService::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
         $ratio = max($width / (float) $image->getWidth(), $height / (float) $image->getHeight());
         return array($this->width, $this->height);
     }
@@ -301,16 +296,17 @@ class Rendition
      */
     private function getFlags()
     {
-        $specs = array_shift(explode('_', $this->getSpecs(), 2));
+        $originalSpecs = explode('_', $this->getSpecs(), 2);
+        $specs = array_shift($originalSpecs);
         switch ($specs) {
             case 'fill':
             case 'crop':
-                $flags = NetteImage::FILL;
+                $flags = \Newscoop\Image\ImageService::FILL;
                 break;
 
             case 'fit':
             default:
-                $flags = NetteImage::FIT;
+                $flags = \Newscoop\Image\ImageService::FIT;
                 break;
         }
 
