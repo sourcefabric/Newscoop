@@ -30,16 +30,17 @@ require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_t
                 $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
                 $editorOptions  = array(
                     'max_chars' => $preferencesService->MediaCaptionLength,
-                    'toolbar_length' => 45,
+                    'toolbar_length' => 33,
                 );
+                $fieldID = 'caption_'.$this->item->getId();
 
-                editor_load_tinymce('caption', $this->currentUser, $editorLanguage, $editorOptions);
+                editor_load_tinymce($fieldID, $this->currentUser, $editorLanguage, $editorOptions);
                 ?>
-                    <textarea name="caption" rows="5" class="image-description"><?php echo $this->form->caption->getValue(); ?></textarea>
+                    <textarea id="<?php echo $fieldID; ?>" name="caption" rows="5" class="image-description"><?php echo $this->form->caption->getValue(); ?></textarea>
                 <?php
             } else {
                 ?>
-                    <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php echo $translator->trans('Add caption', array(), 'article_images'); ?>" maxlength="<?php $preferencesService->MediaCaptionLength; ?>" /><br />
+                    <input type="text" name="caption" value="<?php echo $this->escape(strip_tags($this->form->caption->getValue())); ?>" placeholder="<?php echo $translator->trans('Add caption', array(), 'article_images'); ?>" maxlength="<?php $preferencesService->MediaCaptionLength; ?>" /><br />
                 <?php
             }
         ?>

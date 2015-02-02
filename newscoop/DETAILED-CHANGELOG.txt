@@ -2,6 +2,11 @@
 VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
+   Version 4.3 - Tag Newscoop 4.3 stable release
+      23/01/2015 11:35  4.3.2  Newscoop 4.3.2 minor release (bugfixes)
+      28/11/2014 14:46  4.3.1  "Newscoop 4.3.1 minor release"
+      06/11/2014 09:21  4.3.0  initial release
+
    Version 4.3 - Newscoop 4.3 release candidate
       17/09/2014 13:53  4.3.0-rc  initial release
          6d600e6 update rmt version in composer.json

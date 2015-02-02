@@ -85,6 +85,7 @@
     </div>
     {% endif %}
     <div class="table-responsive">
+        {% if pagination.getTotalItemCount > 0 %}
         <table class="table" id="commentsTable">
             <thead>
                 <tr>
@@ -95,7 +96,6 @@
               </tr>
             </thead>
             <tbody>
-                {% if pagination.getTotalItemCount > 0 %}
                 {% for row in commentsArray %}
                 <tr id="use-hover">
                     <td style="width: 3%; ">
@@ -229,11 +229,11 @@
                     </td>
                 </tr>
                 {% endfor %}
-                {% else %}
-                <tr><td colspan="7">{{ 'comments.label.noentries'|trans }}</td></tr>
-                {% endif %}
             </tbody>
         </table>
+        {% else %}
+        {{ 'comments.label.noentries'|trans }}
+        {% endif %}
         {% if pagination.getTotalItemCount > 0 %}
         <div class="row">
             <div class="col-xs-3 col-sm-4 col-md-5">

@@ -347,7 +347,7 @@
 					//--------]
 				}
 			}
-			// an exception shouldn't occured but if replaceData failed at least it won't break everything
+			// an exception shouldn't have occurred, but if replaceData failed at least it won't break everything
 			catch( e )
 			{
 		//		throw e;

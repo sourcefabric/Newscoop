@@ -181,7 +181,7 @@ fvalidate.i18n =
 	boxToolTip:	"Click to target field",
 
 	//	Message displayed at top of alert error in group mode
-	groupAlert:	"The following errors occured:\n\n- ",
+	groupAlert:	"The following errors occurred:\n\n- ",
 
 	//	Literal translation of the English 'or', include padding spaces.
 	or:			" or "

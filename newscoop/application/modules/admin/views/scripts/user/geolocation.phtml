@@ -1,0 +1,103 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
+<style type="text/css" media="screen">
+    #location-search {
+        margin-top: 5px;
+    }
+</style>
+<script src="/js/jquery/jquery-1.7.1.min.js"></script>
+<form id="edit-form" enctype="application/x-www-form-urlencoded" action="" method="post">
+<dl class="zend_form" style="width: 99%;">
+<dd id="attributes-element">
+        <center>
+        <fieldset id="fieldset-attributes">
+        <dl><?php echo $this->form->geolocation; ?>
+            <input type="text" id="address" value="" placeholder="<?php echo $translator->trans('Search for place or coordinate', array(), 'geolocation'); ?>" class="search" />
+            <button type="button" id="location-search" class="button"> <?php echo $translator->trans('Search'); ?></button>
+            <button type="button" id="remove-geolocation" class="button"> <?php echo $translator->trans('Deselect', array(), 'geolocation'); ?></button>
+            <p id="geolocation-message"><p>
+
+            <div id="map_canvas" class="map-holder" style="width:690px; height:395px"></div>
+        </dl>
+        </fieldset>
+        <?php echo $this->form->submit; ?>
+        </center>
+    </dd>
+</dl></form>
+<?php if (!empty($this->close)) { ?>
+<script>
+parent.$.fancybox.close();
+parent.flashMessage(<?php echo json_encode($translator->trans("Profile saved.", array(), 'users')); ?>);
+</script>
+<?php } ?>
+<script src="//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize" type="text/javascript" charset="utf-8"></script>
+<script>
+var geocoder;
+var map;
+var marker;
+
+function initialize() {
+    var latLng = new google.maps.LatLng(50.0833, 14.4167);
+    var myOptions = {
+        zoom: 12,
+        center: latLng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        streetViewControl: false,
+        mapTypeControl: false
+    }
+
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    geocoder = new google.maps.Geocoder();
+
+    var geolocation = document.getElementById('geolocation').value;
+    var markerPosition = map.getCenter();
+    if (geolocation) {
+        var lat = geolocation.split(",")[0];
+        var lng = geolocation.split(",")[1];
+        var latLng = new google.maps.LatLng(lat, lng);
+
+        markerPosition = latLng;
+        map.panTo(latLng);
+    }
+
+    marker = new google.maps.Marker({
+        position: markerPosition,
+        map: map,
+        draggable: true,
+        visible: document.getElementById('geolocation').value.length > 0
+    });
+
+    google.maps.event.addListener(marker, 'position_changed', function() {
+        marker.setVisible(true);
+        var latLng = marker.getPosition();
+        document.getElementById("geolocation").value = latLng.lat() + ', ' + latLng.lng();
+    });
+}
+
+$(document).ready(function() {
+    $('#location-search').click(function() {
+        var address = $('#address').attr('value');
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                marker.setPosition(results[0].geometry.location);
+            } else {
+                $("#geolocation-message").css({'background': '#EB5C5C', 'color': '#343434', 'width': '388px', 'padding': '5px 12px', 'margin': '5px 26px'});
+                $("#geolocation-message").html("<?php echo $translator->trans('Sorry, that place was not found. Check your spelling or search again.', array(), 'geolocation') ?>");
+                $("#geolocation-message").slideDown(200);
+                setTimeout(function(){$("#geolocation-message").slideUp();}, 5000);
+            }
+        });
+
+        return false;
+    });
+
+    $('#geolocation').hide();
+
+    $('#remove-geolocation').click(function() {
+        $('#geolocation').val('');
+        marker.setVisible(false);
+    });
+});
+</script>

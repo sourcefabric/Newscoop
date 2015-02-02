@@ -181,7 +181,7 @@ class File extends PEAR
      * @access  public
      * @param   string  $filename Name of file to read from
      * @param   mixed   $lock Type of lock to use
-     * @return  mixed   PEAR_Error if an error has occured or a string with the contents of the the file
+     * @return  mixed   PEAR_Error if an error has occurred, or a string with the contents of the file
      */
     function readAll($filename, $lock = false)
     {

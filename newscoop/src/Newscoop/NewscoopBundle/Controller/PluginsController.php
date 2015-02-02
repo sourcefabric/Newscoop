@@ -15,12 +15,21 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Process\Process;
 use Newscoop\NewscoopBundle\Form\Type\PrivatePluginUploadType;
+use Symfony\Component\Filesystem\Filesystem;
 
 class PluginsController extends Controller
 {
+
+    /**
+     * Private plugins directory, this directory is configured in composer.json
+     * under: "repositories"
+     */
+    const PRIVATE_PLUGINS_DIR = '/private_plugins';
+
+    const PRIVATE_PLUGINS_CACHE_DIR = '/cache';
+
     /**
      * @Route("/admin/plugins")
      * @Template()
@@ -46,6 +55,8 @@ class PluginsController extends Controller
         $form = $this->container->get('form.factory')
             ->create(new PrivatePluginUploadType(), array());
 
+        $this->createFolderStructure($pluginService);
+
         // handle private plugin upload
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -59,7 +70,7 @@ class PluginsController extends Controller
 
                     return $this->redirect($this->generateUrl('newscoop_newscoop_plugins_index'));
                 }
-                $file->move($pluginService->getPluginsDir().'/private_plugins', $file->getClientOriginalName());
+                $file->move($pluginService->getPluginsDir().self::PRIVATE_PLUGINS_DIR, $file->getClientOriginalName());
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_plugins_index'));
             }
@@ -120,6 +131,8 @@ class PluginsController extends Controller
         @apache_setenv('no-gzip', 1);
         @ini_set('implicit_flush', 1);
 
+        ob_start();
+
         $response = new Response();
         $response->sendHeaders();
 
@@ -132,18 +145,32 @@ class PluginsController extends Controller
         $process = new Process('php '.$newscoopDir.'application/console plugins:'. $action .' '. $name);
         $process->setTimeout(3600);
         $CI = $this;
-        $process->run(function ($type, $buffer) use($CI) {
+        $process->run(function ($type, $buffer) use ($CI) {
             $CI->dump_chunk($buffer);
         });
         $this->dump_chunk('</pre>');
         die();
     }
 
+    private function createFolderStructure($pluginService)
+    {
+        $filesystem = new Filesystem();
+        $privatePluginsPath = $pluginService->getPluginsDir() . self::PRIVATE_PLUGINS_DIR;
+        $privatePluginsCachePath = $pluginService->getPluginsDir() . self::PRIVATE_PLUGINS_CACHE_DIR;
+        if (!$filesystem->exists($privatePluginsPath)) {
+            $filesystem->mkdir($privatePluginsPath);
+        }
+
+        if (!$filesystem->exists($privatePluginsCachePath)) {
+            $filesystem->mkdir($privatePluginsCachePath);
+        }
+    }
+
     private function searchForPrivatePlugins($pluginService)
     {
         $packages = array();
 
-        foreach (new \RecursiveDirectoryIterator($pluginService->getPluginsDir().'/private_plugins') as $file) {
+        foreach (new \RecursiveDirectoryIterator($pluginService->getPluginsDir().self::PRIVATE_PLUGINS_DIR) as $file) {
             /* @var $file \SplFileInfo */
             if (!$file->isFile()) {
                 continue;
@@ -184,14 +211,16 @@ class PluginsController extends Controller
         return $packages;
     }
 
-    public function dump_chunk($chunk) {
+    public function dump_chunk($chunk)
+    {
        echo $chunk;
        echo "\r\n";
        flush();
        ob_flush();
     }
 
-    private function aasort (&$array, $key) {
+    private function aasort(&$array, $key)
+    {
         $sorter=array();$ret=array();reset($array);
 
         foreach ($array as $ii => $va) {

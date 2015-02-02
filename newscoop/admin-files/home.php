@@ -9,6 +9,11 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 $em = \Zend_Registry::get('container')->getService('em');
 
+$auth = \Zend_Auth::getInstance();
+if (!$auth->hasIdentity()) {
+    camp_html_goto_page('/admin');
+}
+
 // install default widgets for admin
 WidgetManager::SetDefaultWidgetsAll();
 

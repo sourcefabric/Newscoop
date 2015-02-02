@@ -36,6 +36,7 @@ function smarty_block_assetic($params, $content, $template, &$repeat)
     $bundles = null;
     $dependencies = null;
 
+
     $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
     $themePath = $themesService->getThemePath();
     $viewBildPath = '/themes/'.$themePath.$params['build_path'];

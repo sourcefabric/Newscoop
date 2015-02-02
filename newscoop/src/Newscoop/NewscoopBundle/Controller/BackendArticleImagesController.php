@@ -30,12 +30,26 @@ class BackendArticleImagesController extends Controller
         $articleImage = $imageService->getArticleImage($articleNumber, $imageId);
         $preferencesService = $this->container->get('preferences');
 
+        $description = $articleImage->getImage()->getDescription();
+        $caption = $articleImage->getCaption($language);
+        $captions = $articleImage->getImage()->getCaptions();
+
+        if ($preferencesService->MediaRichTextCaptions == 'N') {
+            $description = strip_tags($description);
+            $caption = strip_tags($caption);
+            if (is_array($captions) && count($captions) > 0) {
+                array_walk($captions, function(&$value) {
+                    $value = strip_tags($value);
+                });
+            }
+        }
+
         $form = $this->container->get('form.factory')->create(new ArticleImageType(), array(
             'number' => $articleImage->getNumber(),
-            'caption' => $articleImage->getCaption($language),
+            'caption' => $caption,
             'language' => $language,
             'status' => $articleImage->getImage()->getStatus(),
-            'description' => $articleImage->getImage()->getDescription(),
+            'description' => $description,
             'photographer' => $articleImage->getImage()->getPhotographer(),
             'photographer_url' => $articleImage->getImage()->getPhotographerUrl(),
             'place' => $articleImage->getImage()->getPlace(),
@@ -72,14 +86,14 @@ class BackendArticleImagesController extends Controller
             $editorLanguage = $request->getLocale();
             $editorOptions  = array(
                 'max_chars' => $preferencesService->MediaCaptionLength,
-                'toolbar_length' => 10,
+                'toolbar_length' => 11,
             );
 
             $userService = $this->container->get('user');
 
             ob_start();
             require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
-            editor_load_tinymce('article_image_caption, article_image_description', $userService->getCurrentUser(), $editorLanguage, $editorOptions);
+            editor_load_tinymce(array('article_image_caption', 'article_image_description'), $userService->getCurrentUser(), $editorLanguage, $editorOptions);
             $editor = ob_get_contents();
             ob_end_clean();
         }
@@ -89,8 +103,8 @@ class BackendArticleImagesController extends Controller
             'imageService' => $imageService,
             'articleImage' => $articleImage,
             'image' => $articleImage->getImage(),
-            'caption' => $articleImage->getCaption($language),
-            'captions' => $articleImage->getImage()->getCaptions(),
+            'caption' => $caption,
+            'captions' => $captions,
             'editor' => $editor,
             'rich_text_caption' => $preferencesService->MediaRichTextCaptions,
         );

@@ -41,6 +41,9 @@ class IssueListener
      */
     public function onRequest(GetResponseEvent $event)
     {
-        $this->issueService->issueResolver($event->getRequest());
+        $onAdminInterface = strpos($event->getRequest()->getRequestUri(), '/admin');
+        if ($onAdminInterface === false) {
+            $this->issueService->issueResolver($event->getRequest());
+        }
     }
 }

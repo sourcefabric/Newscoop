@@ -124,7 +124,7 @@ final class CampSite extends CampSystem
             if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
                 $error_message = $errors->exception;
             } else {
-                $error_message = 'Error occured.';
+                $error_message = 'Error occurred.';
             }
         } else {
             $template = $uri->getTemplate(CampRequest::GetVar(CampRequest::TEMPLATE_ID));
@@ -247,10 +247,10 @@ final class CampSite extends CampSystem
         // instanciates the corresponding URI object
         switch ($urlType) {
             case 1:
-                $uriInstance = new CampURITemplatePath();
+                $uriInstance = new \CampURITemplatePath();
                 break;
             case 2:
-                $uriInstance = new CampURIShortNames();
+                $uriInstance = new \CampURIShortNames();
                 break;
         }
 

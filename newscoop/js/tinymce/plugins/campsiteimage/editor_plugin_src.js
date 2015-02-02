@@ -11,7 +11,7 @@
     tinymce.create('tinymce.plugins.campsiteimage', {
         init : function(ed, url) {
             this.editor = ed;
-            editorId = typeof ed.settings.fullscreen_editor_id != 'undefined' ? 
+            editorId = typeof ed.settings.fullscreen_editor_id != 'undefined' ?
         			ed.settings.fullscreen_editor_id : ed.editorId;
             articleNo = editorId.substring(editorId.lastIndexOf('_')+1);
 
@@ -49,7 +49,7 @@
                 }
 
                 ed.windowManager.open({
-                    file : url + '/popup.php?article_id=' + articleNo + url_params,
+                    file : url + '/popup.php?time='+(new Date().getTime())+'&article_id=' + articleNo + url_params,
                     width : 580,
                     height : 430,
                     inline : 1

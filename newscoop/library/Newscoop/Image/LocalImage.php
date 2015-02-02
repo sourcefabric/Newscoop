@@ -86,8 +86,8 @@ class LocalImage implements ImageInterface
     protected $url;
 
     /**
-     * @ORM\Column(nullable=True, name="Description")
-     * @var string
+     * @ORM\Column(type="text", nullable=True, name="Description")
+     * @var text
      */
     protected $description;
 

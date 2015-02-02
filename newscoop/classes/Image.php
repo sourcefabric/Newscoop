@@ -411,7 +411,6 @@ class Image extends DatabaseObject
             $thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
             $thumbnailImage->save($thumbnail, array('format' => $extension));
 
-
             self::chmod($thumbnail, 0644);
         } catch (Exception $ex) {
             if (file_exists($thumbnail)) {

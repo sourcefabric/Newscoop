@@ -264,6 +264,15 @@ final class MetaSubtitle
 
         $imageOptions = '';
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
+        if (array_key_exists('sub', $detailsArray)) {
+            if ($preferencesService->MediaRichTextCaptions == 'Y') {
+                $detailsArray['sub'] = html_entity_decode($detailsArray['sub'], ENT_QUOTES, 'UTF-8');
+            } else {
+                $detailsArray['sub'] = strip_tags(html_entity_decode($detailsArray['sub'], ENT_QUOTES, 'UTF-8'));
+            }
+        }
+
         $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
         'height'=>'EditorImageResizeHeight');
         foreach (array('ratio', 'width', 'height') as $imageOption) {
@@ -288,6 +297,7 @@ final class MetaSubtitle
             $smarty = $templatesService->getSmarty();
             $uri->uri_parameter = "image $imageOptions";
             $smarty->assign('imageDetails', $detailsArray);
+            $smarty->assign('MediaRichTextCaptions', $preferencesService->MediaRichTextCaptions);
             $smarty->assign('uri', $uri);
             $smarty->assign('imgZoomLink', $imgZoomLink);
 

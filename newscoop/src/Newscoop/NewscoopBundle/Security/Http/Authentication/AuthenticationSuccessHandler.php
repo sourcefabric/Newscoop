@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * Custom authentication success handler
@@ -44,9 +46,10 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
     {
         $user = $token->getUser();
 
+        // This should actually be handle by the AuthenticationFailedHandler
         if (!$user->isAdmin()) { // can't go into admin
-            $redirector = \Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-            $redirector->direct('index', 'index', 'default');
+            $request->getSession()->set(SecurityContextInterface::AUTHENTICATION_ERROR, new AuthenticationException('User is not an admin.'));
+            return $this->httpUtils->createRedirectResponse($request, 'admin_login');
         }
 
         \LoginAttempts::DeleteOldLoginAttempts();

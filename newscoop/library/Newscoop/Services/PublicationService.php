@@ -144,7 +144,14 @@ class PublicationService
             $qb = $this->em->getRepository('Newscoop\Entity\Aliases')
                 ->createQueryBuilder('a');
 
-            $qb->select('a.id as aliasId', 'p.id as publicationId', 'p.name as publicationName', 'l.id as languageId')
+            $qb->select(
+                    'a.id as aliasId',
+                    'p.id as publicationId',
+                    'a.name as alias',
+                    'p.name as publicationName',
+                    'l.id as languageId',
+                    'l.code as languageCode'
+                )
                 ->leftJoin('a.publication', 'p')
                 ->leftJoin('p.language', 'l')
                 ->where('a.name = :name')
@@ -159,13 +166,14 @@ class PublicationService
         }
 
         $this->publicationMetadata['alias'] = array(
-            'name' => $alias[0]['publicationName'],
+            'name' => $alias[0]['alias'],
             'publication_id' => $alias[0]['publicationId']
         );
 
         $this->publicationMetadata['publication'] = array(
             'name' => $alias[0]['publicationName'],
-            'id_default_language' => $alias[0]['languageId']
+            'id_default_language' => $alias[0]['languageId'],
+            'code_default_language' => $alias[0]['languageCode']
         );
 
         /**
