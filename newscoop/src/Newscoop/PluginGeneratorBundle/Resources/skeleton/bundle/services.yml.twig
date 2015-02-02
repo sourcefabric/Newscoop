@@ -1,0 +1,19 @@
+services:
+{% block services %}
+    {{ vendor | lower }}_{{ pluginName | lower }}_plugin.lifecyclesubscriber:
+        class: {{ namespace }}\EventListener\LifecycleSubscriber
+        arguments:
+            - @service_container
+        tags:
+            - { name: kernel.event_subscriber}
+
+{% if admin == true %}
+    {{ vendor | lower }}_{{ pluginName | lower }}_plugin.configure_menu_listener:
+        class: {{ namespace }}\EventListener\ConfigureMenuListener
+        tags:
+          - { name: kernel.event_listener, event: newscoop_newscoop.menu_configure, method: onMenuConfigure }
+        arguments:
+            - @translator
+{% endif %}
+
+{% endblock services %}

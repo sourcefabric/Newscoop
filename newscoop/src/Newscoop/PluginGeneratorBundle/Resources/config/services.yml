@@ -1,0 +1,4 @@
+services:
+#    newscoop_plugin_generator.example:
+#        class: Newscoop\PluginGeneratorBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

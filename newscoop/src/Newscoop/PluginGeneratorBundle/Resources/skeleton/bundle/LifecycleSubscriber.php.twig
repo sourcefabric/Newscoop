@@ -1,0 +1,102 @@
+<?php
+
+namespace {{ namespace }}\EventListener;
+
+{% block use_statements %}
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Newscoop\EventDispatcher\Events\GenericEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+{% endblock use_statements %}
+
+/**
+ * Event lifecycle management
+ */
+
+{% block class_definition %}
+class LifecycleSubscriber implements EventSubscriberInterface
+{% endblock class_definition %}
+{
+{% block class_body %}
+    private $container;
+   
+    protected $em;
+ 
+    protected $scheduler;
+
+    protected $cronjobs;
+
+    protected $preferences;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $appDirectory = realpath(__DIR__.'/../../../../application/console');
+        $this->container = $container;
+        $this->em = $this->container->get('em');
+        $this->scheduler = $this->container->get('newscoop.scheduler');
+        $this->preferences = $this->container->get('system_preferences_service');
+        $this->cronjobs = array();
+    }
+
+    public function install(GenericEvent $event)
+    {
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
+        $tool->updateSchema($this->getClasses(), true);
+        
+        // Set default preferences here
+
+        // Generate proxies for entities
+        $this->em->getProxyFactory()->generateProxyClasses($this->getClasses(), __DIR__ . '/../../../../library/Proxy');
+        $this->addJobs();
+    }
+
+    public function update(GenericEvent $event)
+    {
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
+        $tool->updateSchema($this->getClasses(), true);
+
+        // Generate proxies for entities
+        $this->em->getProxyFactory()->generateProxyClasses($this->getClasses(), __DIR__ . '/../../../../library/Proxy');
+    }
+
+    public function remove(GenericEvent $event)
+    {
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
+        $tool->dropSchema($this->getClasses(), true);
+        $this->removeJobs();
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'plugin.install.newscoop_{{ pluginName | lower }}_plugin_bundle' => array('install', 1),
+            'plugin.update.newscoop_{{ pluginName | lower }}_plugin_bundle' => array('update', 1),
+            'plugin.remove.newscoop_{{ pluginName | lower }}_plugin_bundle' => array('remove', 1),
+        );
+    }
+
+    /**
+     * Add plugin cron jobs
+     */
+    private function addJobs()
+    {
+        foreach ($this->cronjobs as $jobName => $jobConfig) {
+            $this->scheduler->registerJob($jobName, $jobConfig);
+        }
+    }
+
+    /**
+     * Remove plugin cron jobs
+     */
+    private function removeJobs()
+    {
+        foreach ($this->cronjobs as $jobName => $jobConfig) {
+            $this->scheduler->removeJob($jobName, $jobConfig);
+        }
+    }
+
+    private function getClasses()
+    {
+        return array();
+    }
+{% endblock class_body %}
+}

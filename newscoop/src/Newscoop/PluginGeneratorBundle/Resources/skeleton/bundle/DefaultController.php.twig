@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }}\Controller;
+
+{% block use_statements %}
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response; 
+{% endblock use_statements %}
+
+/**
+ * Route("/{{ pluginName | lower }}")
+ */ 
+{% block class_definition %}
+class {{ pluginName }}Controller extends Controller
+{% endblock class_definition %}
+{
+{% block class_body %}
+    /**
+     * @Route("/{{ pluginName | lower }}/{name}")
+     * @Template()
+     */
+    public function indexAction($name)
+    {
+        return array('name' => $name);
+    }
+{% endblock class_body %}
+}

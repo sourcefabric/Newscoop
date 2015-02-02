@@ -1,0 +1,3 @@
+newscoop_plugin_generator_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: NewscoopPluginGeneratorBundle:Default:index }

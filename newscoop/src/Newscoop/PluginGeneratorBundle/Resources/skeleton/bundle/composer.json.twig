@@ -1,0 +1,23 @@
+{
+    "name": "{{ vendor | lower }}/{{ pluginName | lower }}-plugin-bundle",
+    "description": "{{ pluginName }} plugin for Newscoop",
+    "keywords": ["{{ vendor }}", "{{ pluginName | lower }}"],
+    "version": "0.0.1",
+    "type": "newscoop-plugin",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Your Name",
+            "email": "your.name@domain.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "newscoop/plugins-installer": ">=v0.2"
+    },
+    "autoload": {
+        "psr-0": { "{{ vendor | capitalize }}\\{{ pluginName }}PluginBundle\\{{ pluginName }}PluginBundle": "" }
+    },
+    "target-dir": "{{ vendor | capitalize }}/{{ pluginName }}PluginBundle",
+    "minimum-stability": "dev"
+}
