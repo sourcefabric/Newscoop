@@ -156,7 +156,7 @@
 
 {% block admin_page_footer_box %}
 <div class="footer row">
-    <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ NewscoopVersion.getPackage() }}</a>, the open content management system for professional journalists. 
+    <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ NewscoopVersion.getPackage() }}</a>, the open content management system for professional journalists. Version: {{ NewscoopVersion.getRelease() }}
     <br />
     &copy; {{ NewscoopVersion.getCopyrightYear() }} 
     <a href="{{ NewscoopVersion.getWebURL() }}" target="_blank">{{ NewscoopVersion.getOrganization() }}</a> {{ NewscoopVersion.getPackage() }} is distributed under {{ NewscoopVersion.getLicense() }}   
