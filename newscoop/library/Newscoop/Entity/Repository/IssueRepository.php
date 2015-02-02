@@ -81,6 +81,7 @@ class IssueRepository extends EntityRepository
             ->getQuery();
 
         return $issuesCount;
+    }
 
     public function getIssue($languageCode, $publication, $shortName = null)
     {
