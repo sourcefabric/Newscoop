@@ -37,7 +37,9 @@ class AppKernel extends Kernel
             new Newscoop\NewscoopBundle\NewscoopNewscoopBundle(),
             new Newscoop\CommunityTickerBundle\NewscoopCommunityTickerBundle(),
             new Newscoop\ArticlesBundle\NewscoopArticlesBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
+            new Newscoop\PluginGeneratorBundle\NewscoopPluginGeneratorBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
