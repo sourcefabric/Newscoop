@@ -2,8 +2,7 @@
   'use strict';
 
 var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight', 'checklist-model'])
-  .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, $locationProvider, uiTreeFilterSettingsProvider) {
-      $locationProvider.html5Mode(true);
+  .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, uiTreeFilterSettingsProvider) {
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
       uiTreeFilterSettingsProvider.descendantCollection = "__children";
   });

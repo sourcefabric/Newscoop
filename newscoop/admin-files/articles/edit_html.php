@@ -384,7 +384,11 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 
   <!-- START Side bar //-->
   <div class="sidebar">
-      <!-- editorial comment hook -->
+      <!-- BEGIN Scheduled Publishing table -->
+      <?php require('edit_main_box.php'); ?>
+      <!-- END Scheduled Publishing table -->
+
+      <!-- editorial comments hook -->
       <?php
       echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
         ->renderPluginHooks('newscoop_admin.interface.article.edit.sidebar.editorialComments', null, array(
@@ -392,9 +396,6 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             'edit_mode' => $f_edit_mode
         ));
       ?>
-      <!-- BEGIN Scheduled Publishing table -->
-      <?php require('edit_main_box.php'); ?>
-      <!-- END Scheduled Publishing table -->
 
       <!-- BEGIN Geo-locations table -->
       <?php require('edit_locations_box.php'); ?>

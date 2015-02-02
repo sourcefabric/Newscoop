@@ -1,9 +1,14 @@
 services:
     articles.hooks.listener:
         class: "Newscoop\ArticlesBundle\EventListener\HookListener"
-        arguments: ["@em", "@templating"]
+        arguments:
+            - @em
+            - @templating
+            - @fos_oauth_server.client_manager.default
+            - @system_preferences_service
+            - @newscoop_newscoop.publication_service
         tags:
-          - { name: kernel.event_listener, event: newscoop_admin.interface.article.edit.sidebar.editorialComments, method: listEditorialComments }
+          - { name: kernel.event_listener, event: newscoop_admin.interface.article.edit.sidebar.editorialComments, method: renderEditorialCommentsTemplate }
 
     newscoop.editorial_comments:
         class: Newscoop\ArticlesBundle\Services\EditorialCommentsService

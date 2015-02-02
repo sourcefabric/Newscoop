@@ -52,7 +52,7 @@ Newscoop\ArticlesBundle\Entity\EditorialComment:
         user:
             expose: true
             read_only: true
-            groups: ["details"]
+            groups: ["list", "details"]
             serialized_name: user
             since_version: 1.2
         created:

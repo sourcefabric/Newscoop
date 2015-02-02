@@ -24,22 +24,41 @@ class EditorialCommentsApiController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/editorial_comments.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_get_editorial_comments")
+     * @Route("/articles/{number}/{language}/editorial_comments/order/{order}.{_format}", defaults={"_format"="json", "order"="chrono"}, options={"expose"=true}, name="newscoop_gimme_articles_get_editorial_comments")
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
-    public function getCommentsAction(Request $request, $number, $language)
+    public function getCommentsAction(Request $request, $number, $language, $order)
     {
         $em = $this->container->get('em');
 
         $editorialComments = $em->getRepository('Newscoop\ArticlesBundle\Entity\EditorialComment')
-            ->getAllByArticleNumber($number);
+            ->getAllByArticleNumber($number)->getResult();
+
+        if ($order == 'nested' && $editorialComments) {
+            $root = new \Node(0,0,'');
+            $reSortedComments = array();
+            foreach ($editorialComments as $comment) {
+                $reSortedComments[$comment->getId()] = $comment;
+            }
+
+            ksort($reSortedComments);
+
+            foreach ($reSortedComments as $comment) {
+                if ($comment->getParent() instanceof EditorialComment) {
+                    $node = new \Node($comment->getId(), $comment->getParent()->getId(), $comment);
+                } else {
+                    $node = new \Node($comment->getId(), 0, $comment);
+                }
+                $root->insertNode($node);
+            }
+
+            $editorialComments = $root->flatten(false);
+        }
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $paginator->setUsedRouteParams(array('number' => $number, 'language' => $language));
-        $editorialComments = $paginator->paginate($editorialComments, array(
-            'distinct' => false
-        ));
+        $editorialComments = $paginator->paginate($editorialComments);
 
         return $editorialComments;
     }
