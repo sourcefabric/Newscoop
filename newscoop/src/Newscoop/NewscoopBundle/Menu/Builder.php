@@ -214,16 +214,21 @@ class Builder
             'privilege' => 'manage',
         ));
 
+        $publicationId = $this->container->get('request')->get('id', 1);
+        if (!is_numeric($publicationId)) {
+            $publicationId = 1;
+        }
+
         $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.edit', array(), 'pub'), array(
             'route' => 'newscoop_newscoop_publications_edit',
-            'routeParameters' => array('id' => $this->container->get('request')->get('id', 1)),
+            'routeParameters' => array('id' => $publicationId),
             'resource' => 'publication',
             'privilege' => 'manage',
         ))->setDisplay(false);
 
         $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.remove', array(), 'pub'), array(
             'route' => 'newscoop_newscoop_publications_remove',
-            'routeParameters' => array('id' => $this->container->get('request')->get('id', 1)),
+            'routeParameters' => array('id' => $publicationId),
             'resource' => 'publication',
             'privilege' => 'manage',
         ))->setDisplay(false);
