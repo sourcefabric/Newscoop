@@ -185,6 +185,8 @@ Miscellaneous: Diverse
 'Editor Miscellaneous Settings': 'Caracteristicile diverse ale uneltei de editare'
 'No such user account.': 'Contul de utilizator nu există.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

@@ -126,7 +126,7 @@ Download: حمل
 'Clear system cache': 'إنقشع الذاكرة الخبيئة للنظام'
 'The system was unable to upload the file $1. ': 'كان النظام غير قادر على رفع الملف $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'يرجى التحقق الملف الذي تحاول ترفعه، فقد يكون تالف.'
-'An error occurred in session management. Please reload the login page.': 'حدث خطأ في إدارة الدورة. يرجى إعادة تحميل الصفحة لتسجيل الدخول.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'يتم تخزين هذا الملف على القرص باسم $1.'
 'The system is unable to write to the directory $1.': 'النظام غير قادر على الكتابة على الدليل باسم $1.'
 'The system was unable to read the file $1.': 'كان النظام غير قادر على قراءة الملف $1.'

@@ -185,6 +185,8 @@ Miscellaneous: Blandat
 'Editor Miscellaneous Settings': 'Textredigerare blandade inställningar'
 'No such user account.': 'Användarkontot finns inte.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

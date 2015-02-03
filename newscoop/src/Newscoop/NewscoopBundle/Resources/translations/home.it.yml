@@ -126,7 +126,7 @@ Download: Scarica
 'Clear system cache': 'Svuota la cache di sistema'
 'The system was unable to upload the file $1. ': 'Il sistema non è riuscito a caricare il file $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Per favore verifica il file che stai cercando di caricare, potrebbe essere corrotto.'
-'An error occurred in session management. Please reload the login page.': 'Si è verificato un errore nella gestione della sessione. Ricarica la pagina di login.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'Il file è stato salvato come $1.'
 'The system is unable to write to the directory $1.': 'Il sistema non è in grado di scrivere nella cartella $1.'
 'The system was unable to read the file $1.': 'Il sistema non è stato in grado di leggere il file $1.'

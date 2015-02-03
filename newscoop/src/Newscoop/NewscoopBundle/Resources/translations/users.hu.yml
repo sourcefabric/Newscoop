@@ -185,6 +185,8 @@ Miscellaneous: Egyebek
 'Editor Miscellaneous Settings': 'Szerkesztő egyéb beállításai'
 'No such user account.': 'Nincs ilyen felhasználói fiók.'
 'User image (full-size)': 'Felhasználó képe (teljes méretű)'
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: 'Felhasználók keresése'

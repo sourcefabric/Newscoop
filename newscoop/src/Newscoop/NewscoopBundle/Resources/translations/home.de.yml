@@ -126,7 +126,7 @@ Download: Herunterladen
 'Clear system cache': 'System-Cache leeren'
 'The system was unable to upload the file $1. ': 'Das System konnte die Datei $1 nicht hochladen.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Die Datei, die Sie hochladen möchten, könnte beschädigt sein.'
-'An error occurred in session management. Please reload the login page.': 'Fehler im Sitzungsmanagement. Bitte aktualisieren Sie die Login-Seite.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'Diese Datei ist als $1 gespeichert.'
 'The system is unable to write to the directory $1.': 'Das System konnte nicht auf das Verzeichnis $1 zugreifen.'
 'The system was unable to read the file $1.': 'Das System konnte die Datei $1 nicht lesen.'

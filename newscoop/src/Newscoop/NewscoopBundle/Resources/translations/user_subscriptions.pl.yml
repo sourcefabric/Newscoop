@@ -55,7 +55,7 @@ E-Mail: 'Adres email'
 'Change subscriber information': 'Zmień informacje subskrybenta'
 'Add new IP address': 'Dodaj nowy adres IP'
 'Add new IP Address': 'Dodaj nowy adres IP'
-'Account Name': 'Nazwa konta'
+'Account Name': null
 '%value% must be greater than %min%': '%value% musi mieć więcej znaków niż %max%'
 '%value% is not a valid IP Address': '%value% nie jest prawidłowym adresem IP'
 'Regardless of the language': 'Niezależnie od języka'

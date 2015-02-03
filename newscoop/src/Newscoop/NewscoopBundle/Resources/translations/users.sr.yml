@@ -185,6 +185,8 @@ Miscellaneous: Разно
 'Editor Miscellaneous Settings': 'Подешавање разних особина у едитору'
 'No such user account.': 'Нема таквог корисничког налога'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

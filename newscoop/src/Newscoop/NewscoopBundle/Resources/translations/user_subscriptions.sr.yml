@@ -55,7 +55,7 @@ E-Mail: Имејл
 'Change subscriber information': 'Промени информације о претплатнику'
 'Add new IP address': 'додај нову ИП адресу'
 'Add new IP Address': 'Додај нову ИП адресу'
-'Account Name': 'Име налога'
+'Account Name': null
 '%value% must be greater than %min%': '%value% мора бити веће од %min%'
 '%value% is not a valid IP Address': '%value% није валидна ИП адреса'
 'Regardless of the language': 'Независно од језика'

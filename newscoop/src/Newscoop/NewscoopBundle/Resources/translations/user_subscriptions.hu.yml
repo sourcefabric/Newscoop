@@ -55,7 +55,7 @@ E-Mail: E-mail
 'Change subscriber information': 'Előfizetői adatok módosítása'
 'Add new IP address': 'Új IP-cím hozzáadása'
 'Add new IP Address': 'Új IP-cím hozzáadása'
-'Account Name': Fióknév
+'Account Name': null
 '%value% must be greater than %min%': 'A/z %value% értéknek nagyobbnak kell lennie, mint %min%'
 '%value% is not a valid IP Address': 'A/z %value% nem érvényes IP-cím'
 'Regardless of the language': 'A nyelvtől függetlenül'

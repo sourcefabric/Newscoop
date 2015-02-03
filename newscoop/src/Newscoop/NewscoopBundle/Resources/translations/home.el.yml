@@ -126,7 +126,7 @@ Download: Download
 'Clear system cache': 'Εκκαθάριση προσωρινής μνήμης'
 'The system was unable to upload the file $1. ': 'Το σύστημα δεν μπόρεσε να ανεβάσει το αρχείο $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Παρακαλούμε ελέγξτε το αρχείο που προσπαθείτε να ανεβάσετε, γιατί μπορεί να είναι κατεστραμένο.'
-'An error occurred in session management. Please reload the login page.': 'Παρουσιάστηκε σφάλμα στην διαχείρηση συνόδου. Παρακαλούμε επαναφορτώστε την σελίδα εισόδου.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'Το αρχείο είναι αποθηκευμένο στον δίσκο ως $1.'
 'The system is unable to write to the directory $1.': 'Το σύστημα δεν μπορεί να γράψει στον κατάλογο $1.'
 'The system was unable to read the file $1.': 'Το σύστημα δεν μπόρεσε να διαβάσει το αρχείο $1.'

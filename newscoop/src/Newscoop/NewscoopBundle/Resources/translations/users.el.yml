@@ -185,6 +185,8 @@ Miscellaneous: Διάφορα
 'Editor Miscellaneous Settings': 'Διάφορες Ρυθμίσεις Προγράμματος Επεξεργασίας Κειμένου'
 'No such user account.': 'Δεν υπάρχει τέτοιος λογαριασμός χρήστη.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

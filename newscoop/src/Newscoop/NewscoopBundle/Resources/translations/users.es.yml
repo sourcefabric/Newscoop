@@ -185,6 +185,8 @@ Miscellaneous: Misceláneo
 'Editor Miscellaneous Settings': 'Preferencias misceláneas del editor'
 'No such user account.': 'No existe cuenta de usuario'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: 'Búsqueda de usuarios'
