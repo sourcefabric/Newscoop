@@ -45,6 +45,19 @@ $articlePreviewUrl = $this->url( array
 
 $js = <<<JS
 
+function getWorkflowDisplayString(string)
+{
+    if (string === 'Y') {
+        return "{$translator->trans("Published")}";
+    } else if (string === 'M') {
+        return "{$translator->trans("Publish with issue")}";
+    } else if (string === 'S') {
+        return "{$translator->trans("Submitted")}";
+    } else if (string === 'N') {
+        return "{$translator->trans("New")}";
+    }
+}
+
 function toggleDragZonePlaceHolder()
 {
     if($('#context_list').find('.context-item').html() != null) {
@@ -58,9 +71,10 @@ function fnLoadContextList(data)
     if(data.code == 200) {
         var items = data.items;
         for(i = 0; i < items.length; i++) {
-            var item = items[i];
-            console.log(item);
-            appendItemToContextList(item.articleId, item.date.date, item.title, item.workflowStatus);
+            var item = items[i];   
+            var dateObject = new Date(item.date.date);
+            var res = dateObject.toISOString().slice(0,19).replace("T", " ");
+            appendItemToContextList(item.articleId, res, item.title, item.workflowStatus, item.type);
         }
     }
     toggleDragZonePlaceHolder();
@@ -75,10 +89,10 @@ function loadContextList()
     aoData.push({ 'playlistId': '{$this->playlistId}' });
     callServer('{$dataUrl}', aoData, fnLoadContextList, true);
 }
-function appendItemToContextList(article_id, article_date, article_title, status)
+function appendItemToContextList(article_id, article_date, article_title, status, type)
 {
     if (typeof status != 'undefined') {
-       var articleStatus = ' ('+status+')';
+       var articleStatus = ' ('+getWorkflowDisplayString(status)+')';
     } else {
         var articleStatus = '';
     };
@@ -90,7 +104,7 @@ function appendItemToContextList(article_id, article_date, article_title, status
         '<div class="context-item">'+
         '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
         '<div class="context-item-header">'+
-        '<div class="context-item-date">'+ article_date + articleStatus +'</div>'+
+        '<div class="context-item-date">'+ article_date + articleStatus +' ('+type+')</div>'+
         '<a href="#" class="view-article" style="display: none" ' +
             'onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'li.item\').attr(\'id\'));">{$t['view-article']}</a>'+
         '</div>'+

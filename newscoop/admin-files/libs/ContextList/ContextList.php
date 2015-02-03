@@ -210,13 +210,13 @@ class ContextList extends BaseList
                 <div class="context-item" langid="%s">
                     <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
                     <div class="context-item-header">
-                        <div class="context-item-date">%s (%s)</div>
+                        <div class="context-item-date">%s (%s) (%s)</div>
                         <a href="#" class="view-article" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'), $(this).parents(\'.context-item:eq(0)\').attr(\'langid\'));">%s</a>
                     </div>
                     <a href="javascript:void(0)" class="corner-button" style="display: none" onClick="removeFromContext($(this).parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));removeFromContext($(this).parents(\'.item:eq(0)\').attr(\'id\'));toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>
                     <div class="context-item-summary">%s</div>
                     </div>
-            ', $article->getLanguageId(), $article->getCreationDate(), $article->getWorkflowDisplayString(), $translator->trans('View article', array(), 'library'), $article->getName()),
+            ', $article->getLanguageId(), $article->getLastModified(), $article->getWorkflowDisplayString(), $article->getType(), $translator->trans('View article', array(), 'library'), $article->getName()),
         );
     }
 
