@@ -18,8 +18,8 @@ class EditorialCommentRepository extends EntityRepository
     /**
      * Get all editorial comments for article
      *
-     * @param integer   $articleNumber
-     * @param boolean   $fetchReplies
+     * @param integer $articleNumber
+     * @param boolean $fetchReplies
      *
      * @return Doctrine\ORM\Query
      */
@@ -31,6 +31,7 @@ class EditorialCommentRepository extends EntityRepository
             ->join('ec.user', 'u')
             ->where('ec.articleNumber = :articleNumber')
             ->andWhere('ec.is_active = :is_active')
+            ->andWhere('ec.resolved = false')
             ->setParameters(array(
                 'articleNumber' => $articleNumber,
                 'is_active' => true,
@@ -46,10 +47,10 @@ class EditorialCommentRepository extends EntityRepository
     /**
      * Get one editorial comment by article and comment id
      *
-     * @param integer   $articleNumber
-     * @param integer   $languageId
-     * @param integer   $commentId
-     * @param boolean   $fetchReplies
+     * @param integer $articleNumber
+     * @param integer $languageId
+     * @param integer $commentId
+     * @param boolean $fetchReplies
      *
      * @return Doctrine\ORM\Query
      */
@@ -80,7 +81,7 @@ class EditorialCommentRepository extends EntityRepository
     /**
      * Get all editorial comments
      *
-     * @param  boolean $fetchReplies
+     * @param boolean $fetchReplies
      *
      * @return Doctrine\ORM\Query
      */
