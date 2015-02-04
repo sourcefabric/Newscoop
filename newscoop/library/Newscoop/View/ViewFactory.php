@@ -17,7 +17,7 @@ class ViewFactory
      * Get view from Zend Registry
      * @return object Zend_View
      */
-    public function getView() 
+    public static function getView() 
     {
         if (\Zend_Registry::isRegistered('view') ){
             return \Zend_Registry::get('view');

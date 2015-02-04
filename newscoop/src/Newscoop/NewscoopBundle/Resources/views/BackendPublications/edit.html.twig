@@ -80,10 +80,9 @@
                 <div class="col-sm-12">
                     <div class="checkbox checkbox-group">
                         <div class="checkbox">{{ form_widget(form.commentsEnabled, {'attr': {'class': 'public-comments'}}) }}</div>
-                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.public_enabled) }}</div>
-                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsArticleDefaultEnabled) }}</div>
+                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.public_enabled, {'attr': {'class': 'moderated-comments-public'}}) }}</div>
+                        <div class="checkbox child moderated-public" style="padding-left: 60px;">{{ form_widget(form.commentsPublicModerated) }}</div>
                         <div class="checkbox child " style="padding-left: 40px;">{{ form_widget(form.commentsSubscribersModerated, {'attr': {'class': 'moderated-comments'}}) }}</div>
-                        <div class="checkbox child moderated" style="padding-left: 60px;">{{ form_widget(form.commentsPublicModerated) }}</div>
                         <div class="checkbox child moderated" style="padding-left: 50px;">
                             <div class="form-group">
                                 {{ form_label(form.moderator_to, label|default(null), {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
@@ -98,6 +97,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsArticleDefaultEnabled) }}</div>
                         <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsCaptchaEnabled) }}</div>
                         <div class="checkbox child" style="padding-left: 40px;">{{ form_widget(form.commentsSpamBlockingEnabled) }}</div>
                     </div>
@@ -153,25 +153,36 @@
             if (!$('.moderated-comments').is(':checked')) {
                 $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
             }
+
+            if (!$('.moderated-comments-public').is(':checked')) {
+                $('.checkbox-group .checkbox.child.moderated-public input').attr('disabled', true);
+            }
         } else {
             $('.checkbox-group .checkbox.child input').attr('disabled', true);
         }
     });
 
-    if (!$('.public-comments').is(':checked')) {
-        $('.checkbox-group .checkbox.child input').attr('disabled', true);
-    }
-
     $('.moderated-comments').click(function(){
-        if($(this).is(':checked')) {
+        if($(this).is(':checked') || $('.moderated-comments-public').is(':checked')) {
             $('.checkbox-group .checkbox.child.moderated input').attr('disabled', false);
         } else {
             $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
         }
     });
 
-    if (!$('.moderated-comments').is(':checked')) {
-        $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
-    }
+    $('.moderated-comments-public').click(function(){
+        if($(this).is(':checked')) {
+            $('.checkbox-group .checkbox.child.moderated input').attr('disabled', false);
+            $('.checkbox-group .checkbox.child.moderated-public input').attr('disabled', false);
+        } else {
+            $('.checkbox-group .checkbox.child.moderated input').attr('disabled', true);
+            $('.checkbox-group .checkbox.child.moderated-public input').attr('disabled', true);
+        }
+
+        if ($('.moderated-comments').is(':checked')) {
+            $('.checkbox-group .checkbox.child.moderated input').attr('disabled', false);
+        }
+    });
+
 </script>
 {% endblock %}
