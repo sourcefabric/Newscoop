@@ -51,7 +51,33 @@ class TopicsControllerSpec extends ObjectBehavior
             $topic
         ));
 
-        $topicRepository->getTopics()->willReturn($query);
+        $topicRepository->getTopics(null)->willReturn($query);
+
+        $paginator->paginate($query, array(
+            'distinct' => false
+        ))->willReturn($topics);
+
+        $this->getTopicsAction($request)->shouldReturn($topics);
+    }
+
+    public function its_getTopicsAction_should_return_list_of_all_topics_by_language(
+        $request,
+        $topicRepository,
+        $query,
+        $topic,
+        $paginator
+    )
+    {
+        $topic->getId()->willReturn(2);
+        $topic->getTitle()->willReturn('test topic de');
+        $topic->getRoot()->willReturn(2);
+        $topic->getParent()->willReturn(null);
+        $topics = array('items' => array(
+            $topic
+        ));
+
+        $locale = $request->get('language')->willReturn('de');
+        $topicRepository->getTopics("de")->willReturn($query);
 
         $paginator->paginate($query, array(
             'distinct' => false
@@ -62,7 +88,7 @@ class TopicsControllerSpec extends ObjectBehavior
 
     public function its_getTopicsAction_should_throw_NotFoundHttpException_when_no_result($request, $topicRepository)
     {
-        $topicRepository->getTopics()->willReturn(null);
+        $topicRepository->getTopics(null)->willReturn(null);
 
         $this
             ->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
