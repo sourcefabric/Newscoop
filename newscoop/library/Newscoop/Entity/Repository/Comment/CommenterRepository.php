@@ -53,13 +53,10 @@ class CommenterRepository extends DatatableSource
                     $p_values['email'] = $p_values['user']->getEmail();
            }
         }
-        $commenters = $this->findBy(array( 'email' => $p_values['email'], 'name' => $p_values['name']));
-        if(count($commenters)==1)
-            $p_entity = $commenters[0];
-        /*
-        $acceptanceRepository = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
-        $acceptanceRepository->isBanned($p_entity);
-        */
+        $commenter = $this->findOneBy(array( 'email' => $p_values['email'], 'name' => $p_values['name']));
+        if ($commenter)
+            $p_entity = $commenter;
+
         if(!isset($p_values['url']))
             $p_values['url'] = '';
         $p_entity->setName($p_values['name'])
