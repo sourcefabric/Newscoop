@@ -43,7 +43,7 @@ class TopicsController extends FOSRestController
         $em = $this->container->get('em');
 
         $topics = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
-            ->getTopics();
+            ->getTopics($request->get('language'));
 
         if (!$topics) {
             throw new NotFoundHttpException('Result was not found.');
