@@ -87,7 +87,6 @@ class EmailService
      */
     public function send($placeholder, $message, $to, $from = null, $attachmentDir = null)
     {
-        ladybug_dump_die($placeholder, $message, $to, $from);
         $publicationService = $this->container->get('newscoop_newscoop.publication_service');
         $mailer = $this->container->get('mailer');
         if (empty($from)) {
