@@ -94,7 +94,7 @@ class IPAccess extends DatabaseObject {
 		}
 	}
 
-	public function create($p_userId, $p_startIP, $p_addresses = 1)
+	public function create($p_userId = null, $p_startIP = null, $p_addresses = 1)
 	{
 		$startIP = null;
 		$startIPstring = '';
