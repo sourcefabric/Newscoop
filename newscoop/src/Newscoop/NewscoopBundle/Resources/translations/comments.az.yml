@@ -98,3 +98,22 @@ Ban: Kilid
 'Add new acceptance criteria': 'Yeni qəbul kriteriyası əlavə et'
 'Acceptance $1 saved.': '$1 təhvili saxlandı.'
 'Acceptance $1 deleted.': '$1 təhvili silindi.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

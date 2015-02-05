@@ -98,3 +98,22 @@ Ban: Blokada
 'Add new acceptance criteria': 'Dodaj nowe kryteria akceptacji'
 'Acceptance $1 saved.': 'Kryterium akceptacji $1 zostało zapisane.'
 'Acceptance $1 deleted.': 'Kryterium akceptacji $1 zostało usuniete.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null
