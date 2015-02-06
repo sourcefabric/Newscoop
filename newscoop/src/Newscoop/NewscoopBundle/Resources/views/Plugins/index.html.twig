@@ -60,11 +60,30 @@ li:after {content: none;}
                 <fieldset class="filters">
                     <legend>{{ 'newscoop.plugins_manager.install.public'|trans }}</legend>
 
-                    <div class="plugins-search" style="width: 600px;margin-right: 20px;float: left;">
+                    <div class="plugins-search" style="width: 100%;margin-right: 20px;float: left;">
                         <div style="width: 600px;" class="search-for-plugins"></div>
                     </div>
 
-                    <div class="choosen-plugin-info" style="float:left; margin-bottom: 50px;"></div>
+                    <div class="choosen-plugin-info" style="margin-top: 40px; margin-bottom: 25px;"></div>
+                    <div id="instructions" style="display: none">
+                        <ul class="list-group">
+                        <h5>{{ 'newscoop.plugins_manager.install'|trans }}</h5>
+                        <li class="list-group-item">
+                            <strong>1.</strong> {{ 'newscoop.plugins_manager.openterminal'|trans }}: <strong>cd {{ newscoopPath }}</strong> <button type="button" class="btn btn-default btn-xs" title="{{'newscoop.plugins_manager.copy'|trans}}" onclick="copyToClipboard('cd {{ newscoopPath }}')"><span class="glyphicon glyphicon-share"></span></button>
+                        </li>
+                        <li class="list-group-item">
+                              <strong>2.</strong> {{ 'newscoop.plugins_manager.runcommand'|trans }}: <strong><span id="plugin-command"></span></strong>
+                              <button type="button" class="btn btn-default btn-xs" title="{{'newscoop.plugins_manager.copy'|trans}}" onclick="copyToClipboard('plugin-command')"><span class="glyphicon glyphicon-share"></span></button>
+                        </li>
+                        <li class="list-group-item">
+                              <strong>3.</strong> {{ 'newscoop.plugins_manager.installassets'|trans }}: <strong>php application/console assets:install public/</strong>
+                              <button type="button" class="btn btn-default btn-xs" title="{{'newscoop.plugins_manager.copy'|trans}}" onclick="copyToClipboard('php application/console assets:install public/')"><span class="glyphicon glyphicon-share"></span></button>
+                        </li>
+                        <li class="list-group-item">
+                              <strong>4.</strong> {{'newscoop.plugins_manager.installed'|trans}}</strong>
+                        </li>
+                        </ul>
+                    </div>
                 </fieldset>
                 <div class="clear:both;"></div>
 
@@ -93,7 +112,11 @@ li:after {content: none;}
                                 <td>{{ plugin.license }}</td>
                                 <td style="width: 14%;">{{ plugin.installedAt|date('Y-m-d H:i:s') }}</td>
                                 <td style="width: 14%;">{% if plugin.updatedAt %}{{ plugin.updatedAt|date('Y-m-d H:i:s') }}{% else %} {% endif %}</td>
-                                <td style="width: 12%; text-align: center;"><a href="/admin/plugins/getStream/update/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.update_plugin'|trans }}</a> | <a href="/admin/plugins/getStream/remove/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/remove/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.remove_plugin'|trans }}</a></td>
+                                <td style="width: 12%; text-align: center;">
+                                    <button data-toggle="modal" data-target="#popupModal" data-type="update" data-command="php application/console plugins:update" type="button" class="btn btn-default btn-xs" title="{{ 'newscoop.plugins_manager.installed_table.update_plugin'|trans }}"><span class="glyphicon glyphicon-repeat"></span></button>
+
+                                    <button type="button" data-type="remove" data-toggle="modal" data-target="#popupModal" data-command="php application/console plugins:remove" class="btn btn-default btn-xs" title="{{ 'newscoop.plugins_manager.installed_table.remove_plugin'|trans }}"><span class="glyphicon glyphicon-remove"></span></button>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -111,7 +134,7 @@ li:after {content: none;}
                         </div>
                         <div class="form-group">
                             {{ form_label(form.upload) }}
-                            {{ form_widget(form.upload) }}
+                            {{ form_widget(form.upload, {'attr': {'class': 'btn btn-xs btn-default'}}) }}
                         </div>
                         {{ form_widget(form) }}
                     </form>
@@ -136,7 +159,8 @@ li:after {content: none;}
                                 <td style="width: 35%;">{{ plugin.description }}</td>
                                 <td>{{ plugin.version }}</td>
                                 <td>{{ plugin.license }}</td>
-                                <td style="text-align: center;">{% if not plugin.installed %}<a href="/admin/plugins/getStream/install/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.install_plugin'|trans }}</a>{% else %}{{ 'newscoop.plugins_manager.installed_table.plugin_installed'|trans }}{% endif %}</td>
+                                <td style="text-align: center;">{% if not plugin.installed %}<button type="button" data-type="install" data-toggle="modal" data-target="#popupModal" data-command="php application/console plugins:install" class="btn btn-default btn-xs" title="{{ 'newscoop.plugins_manager.installed_table.install_plugin'|trans }}"><span class="glyphicon glyphicon-ok-circle"></span></button>{% else %}{{ 'newscoop.plugins_manager.installed_table.plugin_installed'|trans }}{% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -147,7 +171,103 @@ li:after {content: none;}
     </div>
 </div>
 
+<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'newscoop.plugins_manager.close'|trans }}"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="popupModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group" style="font-size: 12px">
+            <li class="list-group-item">
+                <strong>1.</strong> {{ 'newscoop.plugins_manager.openterminal'|trans }}: <br><strong>cd {{ newscoopPath }}</strong> <button type="button" class="btn btn-default btn-xs" title="{{'newscoop.plugins_manager.copy'|trans}}" onclick="copyToClipboard('cd {{ newscoopPath }}')"><span class="glyphicon glyphicon-share"></span></button>
+            </li>
+            <li class="list-group-item">
+                <strong>2.</strong> {{ 'newscoop.plugins_manager.runcommand'|trans }}: <br><strong><span id="popup-plugin-command"></span></strong>
+                <button type="button" class="btn btn-default btn-xs" title="{{'newscoop.plugins_manager.copy'|trans}}" onclick="copyToClipboard('popup-plugin-command')"><span class="glyphicon glyphicon-share"></span></button>
+            </li>
+            <li class="list-group-item">
+                <strong>3.</strong> {{ 'newscoop.plugins_manager.installassets'|trans }}: <br><strong>php application/console assets:install public/</strong>
+                <button type="button" class="btn btn-default btn-xs" title="{{'newscoop.plugins_manager.copy'|trans}}" onclick="copyToClipboard('php application/console assets:install public/')"><span class="glyphicon glyphicon-share"></span></button>
+            </li>
+            <li class="list-group-item">
+                    <strong>4.</strong> {{ 'newscoop.plugins_manager.done'|trans }}</strong>
+            </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'newscoop.plugins_manager.close'|trans }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
+    $('#popupModal').on('show.bs.modal', function(e) {
+        var command = $(e.relatedTarget).data('command');
+        var type = $(e.relatedTarget).data('type');
+        var pluginName = $(e.relatedTarget).parent().parent().find('td:first').text();
+        $(e.currentTarget).find('#popup-plugin-command').text(command+' "'+pluginName+'"');
+        switch(type) {
+            case 'update':
+                $(e.currentTarget).find('#popupModalLabel').text("{{ 'newscoop.plugins_manager.update'|trans }}");
+                break;
+            case 'remove':
+                $(e.currentTarget).find('#popupModalLabel').text("{{ 'newscoop.plugins_manager.remove'|trans }}");
+                break;
+            case 'install':
+                $(e.currentTarget).find('#popupModalLabel').text("{{ 'newscoop.plugins_manager.install'|trans }}");
+                break;
+            default:
+        }
+    });
+    function pluginFormat(item) {
+        var markup = "<div><h5>"+item.name+"</h5><p>"+item.description+"</p><p>{{ 'newscoop.plugins_manager.downloads'|trans}}:<span class=\"badge\">"+item.downloads+"</span>, {{ 'newscoop.plugins_manager.favers'|trans}}: <span class=\"badge\">"+item.favers+"</span></p></div>";
+        return markup;
+    };
+    function pluginFormatSelection(item) { return item.name; }
+    var initData = null;
+    $(".search-for-plugins").select2({
+        placeholder: '{{ 'newscoop.plugins_manager.search_for_plugins'|trans }}',
+        minimumInputLength: null,
+        id: function(item){return {id: item.name};},
+        cache: true,
+        ajax: {
+            url: "/admin/plugins/getPackagesFromPackagist",
+            dataType: 'json',
+            data: function (term, page) {
+                return {
+                    q: term,
+                };
+            },
+            results: function (data, page) {
+                return {results: data.results};
+            }
+        },
+        initSelection: function(element, callback) {
+            var value = $(element).val();
+            var initData = null;
+            callServer('ping', [], function(json) {
+                $.ajax("/admin/plugins/getPackagesFromPackagist", {
+                    data: {},
+                    dataType: "json"
+                }).done(function(data) { initData = data; callback(data.results); });
+            }); // /ping
+        },
+        formatResult: pluginFormat, 
+        formatSelection: pluginFormatSelection,
+        dropdownCssClass: "bigdrop", 
+       escapeMarkup: function (m) { return m; } 
+   })
+    .on("select2-selecting", function(e) {
+        var item = e.object;
+       $('.choosen-plugin-info').html("<div><h3>"+item.name+"</h3><p>"+item.description+"</p><p>{{ 'newscoop.plugins_manager.downloads'|trans}}:<span class=\"badge\">"+item.downloads+"</span>, {{ 'newscoop.plugins_manager.favers'|trans}}: <span class=\"badge\">"+item.favers+"</span></p></div>");
+
+        $('span#plugin-command').html('');
+        $('span#plugin-command').append('php application/console install:plugins "' + item.name +'"');
+        $('#instructions').show();
+    });
     $('.change-status').change(function(){
         var checked = $(this).attr('checked');
         var pluginId = $(this).data('pluginId');
@@ -234,15 +354,16 @@ li:after {content: none;}
         length_sel.addClass('form-control input-sm');
     });
 
-    $('a.iframe').each(function() {
-        $(this).fancybox({
-            hideOnContentClick: false,
-            width: 800,
-            height: 500,
-            onStart: function() {},
-            onClosed: function(url, params) {}
-        });
-    });
+    function copyToClipboard(text) {
+        if (text == "plugin-command") {
+            text = $('#'+text).text();
+        }
+
+        if (text == "popup-plugin-command") {
+            text = $('#'+text).text();
+        }
+      window.prompt("{{'newscoop.plugins_manager.clipboard'|trans}}", text);
+    }
 
 </script>
 
