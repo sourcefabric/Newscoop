@@ -98,3 +98,22 @@ Ban: Απαγόρευση
 'Add new acceptance criteria': 'Προσθήκη νέων κριτηρίων αποδοχής'
 'Acceptance $1 saved.': 'Η αποδοχή $1 αποθηκεύτηκε.'
 'Acceptance $1 deleted.': 'Η αποδοχή $1 διαγράφηκε.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

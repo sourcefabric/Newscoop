@@ -98,3 +98,22 @@ Ban: Bloker
 'Add new acceptance criteria': 'Tilføj godkendelseskriterie'
 'Acceptance $1 saved.': 'Godkendelse $1 gemt.'
 'Acceptance $1 deleted.': 'Godkendelse $1 slettet.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

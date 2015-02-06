@@ -98,3 +98,22 @@ Ban: Заборона
 'Add new acceptance criteria': 'Додати новий крітерій прийняття'
 'Acceptance $1 saved.': 'Крітерій $1 збережено.'
 'Acceptance $1 deleted.': 'Прийняття $1 видалено.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null
