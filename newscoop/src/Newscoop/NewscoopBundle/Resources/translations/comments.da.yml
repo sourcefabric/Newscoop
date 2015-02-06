@@ -106,13 +106,13 @@ editorial:
         resolved: null
         deleted: null
     btn:
-        send: null
-        cancel: null
+        send: Send
+        cancel: Annullér
         resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        save: Gem
+        edit: Rediger
+        delete: Slet
+        reply: Svar
     label:
         post: null
         reply: null
