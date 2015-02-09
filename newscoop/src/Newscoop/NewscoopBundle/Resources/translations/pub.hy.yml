@@ -128,7 +128,7 @@ publications:
             comments_enabled: 'Comments are enabled?'
             public_comments_enabled: 'Public (anonymous) comments are enabled?'
             comments_article_default_enabled: 'Comments for article are enabled by default?'
-            comments_subscribers_moderated: 'Comments are moderated?'
+            comments_subscribers_moderated: 'Registered users'' comments are moderated?'
             comments_public_moderated: 'Public (anonymous) comments are moderated?'
             comments_captcha_enabled: 'Captcha is enabled?'
             comments_spam_blocking_enabled: 'Comments spam (internal system) blocking is enabled?'

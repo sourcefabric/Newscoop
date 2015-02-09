@@ -28,31 +28,31 @@ Top: Top
 topics:
     tip: null
     label:
-        all: null
+        all: Alle
         filterbylang: null
-        search: null
+        search: Søg
         filterplaceholder: null
-        addroot: null
+        addroot: 'Tilføj rod emne'
         topicname: null
         expandcollapse: null
-        changename: null
+        changename: 'Omdøb emne'
         for: null
         addsubtopic: null
         subtopicname: null
         addtranslation: null
         topictranslations: null
-        choose: null
+        choose: Vælg...
         translationstring: null
         tree: null
-    title: null
+    title: Emner
     btn:
-        hide: null
+        hide: Skjul
         remove: null
         edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
+        close: Luk
+        add: Tilføj
+        save: Gem
+        saveandclose: 'Gem og luk'
         removetrans: null
     alerts:
         languagenotfound: null
@@ -60,21 +60,21 @@ topics:
         translationexists: null
         beforedelete: null
         wrongparams: null
-        ordersaved: null
-        saved: null
+        ordersaved: 'Ordren er gemt.'
+        saved: Gemt.
         beforedeleteinfo: null
-    added: null
+    added: 'Emnet blev tilføjet'
     failedfind: null
     failedfindTranslation: null
-    removed: null
+    removed: 'Emnet %title% blev slettet'
     exists: null
     existsname: null
-    removedTranslation: null
+    removedTranslation: 'Emnets oversættelse blev slettet'
     failedremoveTranslation: null
-    updated: null
+    updated: 'Emnet blev opdateret'
     error: null
     csrfinvalid: null
-    tooshort: null
-    toolong: null
+    tooshort: 'Emnets navn er for kort!'
+    toolong: 'Emnets navn er for langt!'
     attachtopics: null
     attached: null

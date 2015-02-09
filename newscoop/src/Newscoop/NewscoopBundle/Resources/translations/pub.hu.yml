@@ -128,7 +128,7 @@ publications:
             comments_enabled: 'A hozzászólások engedélyezése?'
             public_comments_enabled: 'A nyilvános (névtelen) hozzászólások engedélyezése?'
             comments_article_default_enabled: 'A hozzászólás a cikkekhez engedélyezése alapértelmezésként?'
-            comments_subscribers_moderated: 'A hozzászólások moderálása?'
+            comments_subscribers_moderated: null
             comments_public_moderated: 'A nyilvános (névtelen) hozzászólások moderálása?'
             comments_captcha_enabled: 'A CAPTCHA engedélyezése?'
             comments_spam_blocking_enabled: 'A szemét hozzászólások (belső rendszer) tiltásának engedélyezése?'
