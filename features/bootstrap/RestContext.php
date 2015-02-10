@@ -248,7 +248,6 @@ class RestContext extends BehatContext
             if (strpos($value[1], '<<') !== false) {
                 $functionName = str_replace('>>', '', str_replace('<<', '', $value[1]));
                 $fakeValue = call_user_func_array(array($faker, $functionName), explode(',', $value[2]));
-
                 if ($functionName == 'file' || $functionName == 'image') {
                     $fakeValue = new FormUpload($fakeValue);
                 }
@@ -264,6 +263,15 @@ class RestContext extends BehatContext
             } else {
                 if (strpos($value[0], '[') !== false) {
                     parse_str($value[0].'='.$fakeValue, $temp);
+                    $temp = array($dataKey => $temp);
+                    $this->collectedData = array_merge_recursive($this->collectedData, $temp);
+                    continue;
+                }
+
+                if (strpos($value[1], '(') !== false) {
+                    $locationIndex = str_replace(')', '', str_replace('(', '', $value[1]));
+                    $locationValue = $this->locations[$locationIndex];
+                    parse_str($value[0].'='.$locationValue, $temp);
                     $temp = array($dataKey => $temp);
                     $this->collectedData = array_merge_recursive($this->collectedData, $temp);
                     continue;
@@ -286,6 +294,38 @@ class RestContext extends BehatContext
     {
         $this->response = $this->client->getLastResponse();
         $this->locations[$locationIndex] = $this->response->getHeader('X-Location');
+    }
+
+    /**
+     * @Then /^save "([^"]+)" field under location "([^"]*)"$/
+     * @param string $fieldName
+     * @param string $locationIndex
+     * @return Step|void
+     * @throws Exception
+     */
+    public function saveFieldValueUnderLocation($fieldName, $locationIndex)
+    {
+        $this->response = $this->client->getLastResponse();
+        $fieldValue = null;
+        if ($this->responseIsJson) {
+            if ($this->associative) {
+                if (!(is_array($this->responseData)) || !array_key_exists($fieldName, $this->responseData)) {
+                    throw new \Exception('Field "' . $fieldName . '" is not set!');
+                }
+
+                $fieldValue = $this->responseData[$fieldName];
+            } else {
+                if (!($this->responseData instanceof stdClass) || !property_exists($this->responseData, $name)) {
+                    throw new \Exception('Field "' . $fieldName . '" is not set!');
+                }
+
+                $fieldValue = $this->responseData->$fieldName;
+            }
+
+            $this->locations[$locationIndex] = $fieldValue;
+        } else {
+            return new Step\Then('the response is JSON');
+        }
     }
 
     /**
@@ -474,6 +514,7 @@ class RestContext extends BehatContext
     {
         if ($this->responseIsJson) {
             if (new Step\Given("the response should contain field \"{$fieldName}\"")) {
+                $fieldValue = $this->extractValueByGivenLocation($fieldValue) ?: $fieldValue;
                 if ($this->associative) {
                     if ($this->responseData[$fieldName] != $fieldValue) {
                         throw new \Exception(
@@ -498,6 +539,15 @@ class RestContext extends BehatContext
             }
         } else {
             return new Step\Then('the response is JSON');
+        }
+    }
+
+    private function extractValueByGivenLocation($fieldValue)
+    {
+        if (strpos($fieldValue, '(') !== false) {
+            $locationIndex = str_replace(')', '', str_replace('(', '', $fieldValue));
+
+            return $this->locations[$locationIndex];
         }
     }
 
