@@ -300,7 +300,7 @@ class RestContext extends BehatContext
      * @Then /^save "([^"]+)" field under location "([^"]*)"$/
      * @param string $fieldName
      * @param string $locationIndex
-     * @return Step|void
+     * @return Step\Then|void
      * @throws Exception
      */
     public function saveFieldValueUnderLocation($fieldName, $locationIndex)
