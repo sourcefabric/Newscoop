@@ -207,8 +207,8 @@ final class MetaSubtitle
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
 
-        // snippet tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
-        $snippetPattern = '<!\-\-\sSnippet\s([\d]+)\s(align="([^"]+)")*[^\s]*[\s]*\-\->';
+        // snippet tag format: <-- Snippet 1 -->
+        $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
         $content = preg_replace_callback("/$snippetPattern/i",
                                      array('MetaSubtitle', 'ProcessSnippet'),
                                      $content);

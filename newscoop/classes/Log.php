@@ -93,7 +93,6 @@ class Log extends DatabaseObject {
             echo ")\n";
         }
 
-ladybug_dump_die($article);
         // generate url
         $url = ShortURL::GetURL($p_article->getPublicationId(),
             $p_article->getLanguageId(),

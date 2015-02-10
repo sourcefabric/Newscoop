@@ -254,7 +254,6 @@ class LocalImage implements ImageInterface
     private function getInfo()
     {
         $filename = $this->isLocal() ? APPLICATION_PATH . '/../' . $this->getPath() : $this->url;
-        ladybug_dump_die($filename);
         if ($this->isLocal() && !file_exists($filename)) {
             $this->setBroken();
 
