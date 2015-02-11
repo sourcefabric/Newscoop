@@ -24,6 +24,17 @@ Just run the composer:
     curl -s https://getcomposer.org/installer | php
     php composer.phar create-project sourcefabric/newscoop path/to/install dev-master
 
+## Docker
+
+If you have a docker client already installed you can create a local docker image directly from the source with the following command:
+    
+    docker build -t sourcefabric/newscoop .
+
+Start the instance with the following command:
+
+    docker run -d -p 80:80 sourcefabric/newscoop
+
+
 ## REST API documentation
 
 REST API documentation will be available under the link: `http://www.domain.com/documentation/rest-api/` after Newscoop installation is done.
