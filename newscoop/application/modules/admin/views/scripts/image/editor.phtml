@@ -20,6 +20,7 @@ $(function() {
         aspectRatio: <?php echo $this->rendition->getAspectRatio(); ?>,
         minSize: <?php echo json_encode($this->rendition->getMinSize($this->image)); ?>,
         trueSize: <?php echo json_encode(array($this->image->getWidth(), $this->image->getHeight())); ?>,
+        boxWidth: 650,
         onChange: function(c) {
             $('#image-editor-coords').val([c.x, c.y, c.x2, c.y2].join('_'));
         }
