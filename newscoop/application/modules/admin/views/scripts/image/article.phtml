@@ -1,6 +1,8 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); 
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/renditions.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/modal-custom.css'));
 ?>
 <?php $this->placeholder('bodyId')->set('next'); ?>
 
@@ -10,12 +12,11 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
     <h1>
         <?php echo $translator->trans('Place Images', array(), 'article_images'); ?>
         <span style="float: right;">
-        <input type="button" value="<?php echo $translator->trans('Finish', array(), 'article_images'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
+        <input type="button" style="display: none;" id="modal-close-btn" value="<?php echo $translator->trans('Finish', array(), 'article_images'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
         </span>
     </h1>
     </div>
 </div>
-<div style="margin-top:40px;">&nbsp;</div>
 
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>
@@ -31,30 +32,33 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
     'controller' => 'image',
     'action' => 'set-default-image',
 )); ?>" method="POST">
-
+<?php } ?>
 <ul id="attached-thumbnails" class="thumbnails">
-    <?php foreach ($this->images as $image) { ?>
+    <?php if (!empty($this->images)) { foreach ($this->images as $image) ?>
     <li id="image-<?php echo $image->getId(); ?>">
         <figure>
-            <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
+            <div><?php echo $this->thumbnail($image, 120, 90, 'fit')->getImg($this); ?></div>
             <input type="radio" id="default-<?php echo $image->getId(); ?>" name="default-image" value="<?php echo $image->getId(); ?>" <?php if ($image->isDefault()) { echo 'checked="checked"'; } ?> title="<?php echo $translator->trans('Set as default', array(), 'article_images'); ?>" />
             <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
         </figure>
     </li>
+    <?php } else { ?>
+        <p style="color: #fff; margin-top: 5%"><?php echo $translator->trans('No images attached to article.', array(), 'article_images'); ?></p>
     <?php } ?>
 </ul>
 
 <div class="inline">
     <button id="set-default"><?php echo $translator->trans('Set selected as default image', array(), 'article_images'); ?></button>
 </div>
-
+<?php if (!empty($this->images)) { ?>
 </form>
-<?php } else { ?>
-<p style="margin-left: 8px"><?php echo $translator->trans('No images attached to article.', array(), 'article_images'); ?></p>
-<?php } ?>
+<?php }?>
 
 <script>
 $(function() {
+    if (parent.$('div.renditionsModal').length == 0) {
+        $('#modal-close-btn').show();
+    }
     $('.renditions li').droppable({
         hoverClass: 'state-active',
         drop: function(event, ui) {
