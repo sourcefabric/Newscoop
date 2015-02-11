@@ -19,6 +19,18 @@ newscoop.plugins_manager.upload.private: null
 newscoop.plugins_manager.search_for_plugins: null
 newscoop.plugins_manager.form.package: null
 newscoop.plugins_manager.form.submit: Upload
+newscoop.plugins_manager.runcommand: null
+newscoop.plugins_manager.openterminal: null
+newscoop.plugins_manager.installassets: null
+newscoop.plugins_manager.done: null
+newscoop.plugins_manager.close: null
+newscoop.plugins_manager.update: null
+newscoop.plugins_manager.install: null
+newscoop.plugins_manager.remove: null
+newscoop.plugins_manager.installed: null
+newscoop.plugins_manager.clipboard: null
+newscoop.plugins_manager.downloads: null
+newscoop.plugins_manager.favers: null
 newscoop:
     datatable:
         table:

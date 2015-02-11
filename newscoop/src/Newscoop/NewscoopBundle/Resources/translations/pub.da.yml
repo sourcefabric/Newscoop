@@ -128,7 +128,7 @@ publications:
             comments_enabled: 'Tillad kommentarer?'
             public_comments_enabled: 'Tillad offentlige (anonyme) kommentarer?'
             comments_article_default_enabled: 'Tillad kommentarer på artikler som standard?'
-            comments_subscribers_moderated: 'Skal kommentarer godkendes?'
+            comments_subscribers_moderated: null
             comments_public_moderated: 'Skal offentlige (anonyme) kommentarer godkendes?'
             comments_captcha_enabled: 'Brug captcha?'
             comments_spam_blocking_enabled: null

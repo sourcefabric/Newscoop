@@ -1,8 +1,10 @@
-<?php 
+<?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); 
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/renditions.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/modal-custom.css'));
 ?>
-<?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
+<?php $this->placeholder('bodyId')->set('next'); ?>
 
 <div id="modal-top">
     <div class="toolbar fixed-top">
@@ -18,7 +20,8 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
     </h1>
     </div>
 </div>
-<div style="margin-top:40px;">&nbsp;</div>
+
+<div class="editor-wrapper">
 
 <form method="POST">
 
@@ -26,7 +29,7 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
     <div>
         <?php echo $this->imageEditor($this->rendition, $this->image); ?>
         <?php if ($this->rendition->isCrop()) { ?>
-        <button id="save-jcrop" class="save-button">Save</button>
+        <button id="save-jcrop" class="save-button"><?php echo $translator->trans('Save'); ?></button>
         <?php } ?>
     </div>
 
@@ -40,3 +43,4 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
     <li<?php echo $rendition->getName() === $this->currentRendition->getName() ? ' class="active"' : ''; ?>><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
     <?php } ?>
 </ul>
+</div>

@@ -23,25 +23,31 @@ class TopicRepository extends NestedTreeRepository
     /**
      * Get all topics
      *
+     * @param $languageCode Language code
+     *
      * @return Doctrine\ORM\Query
      */
-    public function getTopics()
+    public function getTopics($languageCode = null)
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
 
         $queryBuilder = $this
             ->getQueryBuilder('t')
-            ->select('t')
             ->from($config['useObjectClass'], 't');
 
-        $countQueryBuilder = $this
-            ->getQueryBuilder('t')
-            ->select('count(t)')
-            ->from($config['useObjectClass'], 't');
+        if ($languageCode) {
+            $queryBuilder->leftJoin('t.translations', 'tt')
+                ->where('tt.locale = :locale')
+                ->setParameter('locale', $languageCode);
+        }
 
+        $countQueryBuilder = clone($queryBuilder);
+        $countQueryBuilder->select('count(t)');
+
+        $queryBuilder->select('t');
         $topicsCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
-        $query = $this->setTranslatableHint($queryBuilder->getQuery());
+        $query = $this->setTranslatableHint($queryBuilder->getQuery(), $languageCode);
         $query->setHint('knp_paginator.count', $topicsCount);
 
         return $query;
@@ -277,10 +283,15 @@ class TopicRepository extends NestedTreeRepository
     public function getReadablePath(Topic $topic, $locale = null)
     {
         $pathQuery = $this->getPathQuery($topic);
-        if ($locale) {
-            $this->setTranslatableHint($pathQuery, $locale);
+        if (!$locale) {
+            foreach ($topic->getTranslations()->toArray() as $translation) {
+                if ($translation->getField() == 'title' && $topic->getTitle() == $translation->getContent()) {
+                    $locale = $translation->getLocale();
+                }
+            }
         }
 
+        $this->setTranslatableHint($pathQuery, $locale);
         $path = $pathQuery->getArrayResult();
         $pathStr = '';
         foreach ($path as $element) {

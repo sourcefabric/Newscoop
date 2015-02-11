@@ -65,7 +65,7 @@ class Issue extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	public function create($p_shortName, $p_values = null)
+	public function create($p_shortName = null, $p_values = null)
 	{
 		$tmpValues = array('ShortName' => $p_shortName);
 		if (!is_null($p_values)) {

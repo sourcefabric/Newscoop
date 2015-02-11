@@ -126,7 +126,7 @@ Download: Download
 'Clear system cache': 'Clear system cache'
 'The system was unable to upload the file $1. ': 'The system was unable to upload the file $1. '
 'Please check the file you are trying to upload, it might be corrupted.': 'Please check the file you are trying to upload, it might be corrupted.'
-'An error occurred in session management. Please reload the login page.': null
+'An error occurred in session management. Please reload the login page.': 'An error occurred in session management. Please reload the login page.'
 'This file is stored on disk as $1.': 'This file is stored on disk as $1.'
 'The system is unable to write to the directory $1.': 'The system is unable to write to the directory $1.'
 'The system was unable to read the file $1.': 'The system was unable to read the file $1.'

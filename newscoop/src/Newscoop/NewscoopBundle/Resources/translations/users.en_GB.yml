@@ -185,8 +185,8 @@ Miscellaneous: Miscellaneous
 'Editor Miscellaneous Settings': 'Editor Miscellaneous Settings'
 'No such user account.': 'No such user account.'
 'User image (full-size)': 'User image (full-size)'
-'User account is highlighted as "featured account"': null
-'Custom attribute...': null
+'User account is highlighted as "featured account"': 'User account is highlighted as "featured account"'
+'Custom attribute...': 'Custom attribute...'
 users:
     label:
         title: 'Users search'

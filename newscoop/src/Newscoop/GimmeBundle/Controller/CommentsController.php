@@ -141,7 +141,7 @@ class CommentsController extends FOSRestController
             ->getArticleComments($number, $language, $recommended, false)
             ->getResult();
 
-        if ($order == 'nested') {
+        if ($order == 'nested' && $articleComments) {
             $root = new \Node(0,0,''); // create a new Node, we remove this one later, but we need a Root Node.
 
             foreach ($articleComments as $comment) {

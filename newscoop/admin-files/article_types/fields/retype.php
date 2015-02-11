@@ -79,25 +79,23 @@ You cannot reassign this type.
 <?php
 $TOL_Language = camp_session_get('LoginLanguageId', 1);
 $lang = new Language($TOL_Language);
-$currentLanguageId = $lang->getLanguageId();
-//$currentLanguages = Language::GetLanguages(null, $TOL_Language);
-//$currentLanguageId = $currentLanguages[0]->getLanguageId();
-$topics = Topic::GetTree();
-foreach ($topics as $topicPath) {
-    $printTopic = array();
-    foreach ($topicPath as $topicId => $topic) {
-        $translations = $topic->getTranslations();
-        if (array_key_exists($currentLanguageId, $translations)) {
-            $currentTopic = $translations[$currentLanguageId];
-        } elseif ($currentLanguageId != 1 && array_key_exists(1, $translations)) {
-            $currentTopic = $translations[1];
-        } else {
-            $currentTopic = end($translations);
-        }
-        $printTopic[] = $currentTopic;
-    }
+$em = \Zend_Registry::get('container')->getService('em');
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$topicService = \Zend_Registry::get('container')->getService('newscoop_newscoop.topic_service');
+$topicsCount = $topicService->countBy();
+$cacheKey = $cacheService->getCacheKey(array('topics_add_article_type', $topicsCount), 'topic');
+$repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+if ($cacheService->contains($cacheKey)) {
+    $topics = $cacheService->fetch($cacheKey);
+} else {
+    $topicsQuery = $repository->getTranslatableTopics($lang->getCode());
+    $topics = $topicsQuery->getResult();
+    $cacheService->save($cacheKey, $topics);
+}
+
+foreach ($topics as $topic) {
     echo '<option value="' . $topic->getTopicId() . '">'
-        . htmlspecialchars(implode(" / ", $printTopic)) . "</option>\n";
+        . htmlspecialchars($topicService->getReadablePath($topic)) . "</option>\n";
 }
 ?>
         </select>

@@ -93,9 +93,50 @@ class PluginsController extends Controller
         return array(
             'allAvailablePlugins' => $allAvailablePlugins,
             'privatePackages' => $privatePackages,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'newscoopPath' => realpath($pluginService->getPluginsDir() .'/../')
         );
     }
+
+    /**
+     * @Route("/admin/plugins/getPackagesFromPackagist")
+     */
+    public function searchOnPackagistAction(Request $request)
+    {
+        $response = new JsonResponse();
+        $query = $request->get('q', '');
+
+        $client = new \Buzz\Client\Curl();
+        $client->setTimeout(3600);
+        $browser = new \Buzz\Browser($client);
+        $packagistResponse =  $browser->get('https://packagist.org/search.json?type=newscoop-plugin&q='.$query);
+        $packages = json_decode($packagistResponse->getContent(), true);
+        $results = $packages['results'];
+        $this->aasort($results, 'downloads');
+
+        // hide already installed plugins
+        $cleanResults = array();
+        $pluginService = $this->container->get('newscoop.plugins.service');
+        foreach ($results as $resultKey => $package) {
+            $installed = false;
+            foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
+                if ($package['name'] == $plugin->getName()) {
+                    $installed = true;
+                    $packages['total'] = $packages['total']-1;
+                }
+            }
+
+            if (!$installed) {
+                $cleanResults[] = $package;
+            }
+        }
+
+        $packages['results'] = $cleanResults;
+
+        return $response->setData($packages);
+    }
+
+
 
     /**
      * @Route("/admin/plugins/chnageStatus/{action}/{pluginId}", requirements={"action" = "enable|disable"})
@@ -121,35 +162,6 @@ class PluginsController extends Controller
         return new Response(json_encode(array(
             $pluginId => $plugin->getEnabled()
         )));
-    }
-
-    /**
-     * @Route("/admin/plugins/getStream/{action}/{name}", requirements={"name" = ".+"})
-     */
-    public function getStreamAction($action, $name)
-    {
-        @apache_setenv('no-gzip', 1);
-        @ini_set('implicit_flush', 1);
-
-        ob_start();
-
-        $response = new Response();
-        $response->sendHeaders();
-
-        flush();
-        ob_flush();
-        $this->dump_chunk('<pre>');
-
-        $newscoopDir = __DIR__ . '/../../../../';
-        putenv("COMPOSER_HOME=".$newscoopDir);
-        $process = new Process('php '.$newscoopDir.'application/console plugins:'. $action .' '. $name);
-        $process->setTimeout(3600);
-        $CI = $this;
-        $process->run(function ($type, $buffer) use ($CI) {
-            $CI->dump_chunk($buffer);
-        });
-        $this->dump_chunk('</pre>');
-        die();
     }
 
     private function createFolderStructure($pluginService)

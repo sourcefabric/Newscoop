@@ -98,3 +98,22 @@ Ban: Restricción
 'Add new acceptance criteria': 'Añadir nuevo criterio de aceptación'
 'Acceptance $1 saved.': 'Aceptación $1 guardada'
 'Acceptance $1 deleted.': 'Aceptación $1 eliminada'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

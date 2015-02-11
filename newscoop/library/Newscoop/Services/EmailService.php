@@ -115,7 +115,7 @@ class EmailService
 
             $mailer->send($messageToSend);
         } catch (\Exception $exception) {
-            throw new \Exception("Error sending email.", 1);
+            throw $exception;
         }
     }
 
@@ -135,9 +135,15 @@ class EmailService
         $templatesService = $this->container->get('newscoop.templates.service');
         $placeholdersService = $this->container->get('newscoop.placeholders.service');
         $preferencesService = $this->container->get('preferences');
+        $translator = $this->container->get('translator');
         $emails = array_unique(array_filter(array_map(function ($author) {
             return $author->getEmail();
         }, $authors)));
+
+        $publication = $publicationService->getPublication();
+        $moderatorTo = $this->getModeratorEmailIfModerationEnabled($publication, $user);
+        $moderatorTo ? $emails['moderator'] = $moderatorTo : null;
+        $moderatorFrom = $publication->getModeratorFrom();
 
         if (empty($emails)) {
             return;
@@ -148,22 +154,32 @@ class EmailService
         if ($user) {
             $smarty->assign('username', $user->getUsername());
         } else {
-            $smarty->assign('username', 'Unbekannt');
+            $smarty->assign('username', $translator->trans('anonymous'));
         }
 
         $smarty->assign('comment', $comment);
         $smarty->assign('article', new \MetaArticle($article->getLanguageId(), $article->getNumber()));
         $smarty->assign('publication', $uri->getBase());
         $smarty->assign('articleLink', \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueId(), $article->getSectionId(), $article->getNumber()));
-        $moderatorFrom = $publicationService->getPublication()->getModeratorFrom();
-
-        if ($publicationService->getPublication()->getCommentsPublicModerated()) {
-            $moderatorTo = $publicationService->getPublication()->getModeratorTo();
-            $moderatorTo ? $emails['moderator'] = $moderatorTo : null;
-        }
 
         $message = $templatesService->fetchTemplate("email_comment-notify.tpl");
         $this->send($placeholdersService->get('subject'), $message, $emails, $moderatorFrom ?: $preferencesService->EmailFromAddress);
+    }
+
+    private function getModeratorEmailIfModerationEnabled($publication, $user)
+    {
+        if ($publication->getCommentsEnabled()) {
+            if ($publication->getCommentsSubscribersModerated() &&
+                ($publication->getPublicCommentsEnabled() && $publication->getCommentsPublicModerated())) {
+                return $publication->getModeratorTo();
+            }
+
+            if (($publication->getPublicCommentsEnabled() && $publication->getCommentsPublicModerated() &&
+                !$publication->getCommentsSubscribersModerated() && !$user) || $publication->getCommentsSubscribersModerated() &&
+                !($publication->getPublicCommentsEnabled() && $publication->getCommentsPublicModerated()) && $user) {
+                return $publication->getModeratorTo();
+            }
+        }
     }
 
     /**

@@ -279,8 +279,8 @@ $(".aauthor").live('focus', function() {
           success: function (data) {
             response($.map(data, function(item) {
               return {
-                label: item.name,
-                value: item.name
+                label: item.title,
+                value: item.title
               }
             }));
           }

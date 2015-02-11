@@ -1,0 +1,57 @@
+/* Modal Bootstrap custom classes */
+.modal.renditionsModal {
+    position: fixed;
+    width: auto;
+    height: auto;
+    margin: 0 10px 10px;
+    left: 0!important;
+    top: 0!important;
+    right: 0!important;
+    bottom: 0!important;
+    padding: 0!important;
+    overflow: hidden!important;
+    border-radius: 0 0 6px 6px;
+    }
+    .modal.renditionsModal .modal-dialog {
+        width: auto;
+        height: 100%;
+        margin: 0;
+        padding-top: 10px;
+        }
+        .modal.renditionsModal .modal-dialog .modal-content {
+            height:100%;
+            border: 1px solid #222;
+        }
+        .modal.renditionsModal .modal-dialog .modal-content .modal-body {
+            position: initial;
+            height: 100%;
+        }
+        .modal.renditionsModal .modal-dialog .modal-content .modal-header {
+            min-height: 1px;
+            background: none;
+            padding: 0;
+            border-bottom: none;
+        }
+        .modal.renditionsModal .modal-dialog .close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10000;
+            opacity: .4;
+            padding: 5px;
+            width: 30px;
+            height: 30px;
+        }
+.modal.renditionsModal iframe {
+    border: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 6px;
+}
+
+.modal-backdrop.in { 
+    opacity: 0.8;
+}
