@@ -24,17 +24,22 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/modal-custom.cs
     <?php } ?>
 </ul>
 
-<h2><?php echo $translator->trans("Attached images", array(), 'article_images'); ?></h2>
+<h2><?php echo $translator->trans("Attached images", array(), 'article_images'); ?>
+    <div class="inline">
+        <button id="set-default"><?php echo $translator->trans('Set selected as default image', array(), 'article_images'); ?></button>
+    </div>
+</h2>
 
 <?php if (!empty($this->images)) { ?>
-<form action="<?php echo $this->url(array(
+<form id="renditions-form" action="<?php echo $this->url(array(
     'module' => 'admin',
     'controller' => 'image',
     'action' => 'set-default-image',
 )); ?>" method="POST">
 <?php } ?>
 <ul id="attached-thumbnails" class="thumbnails">
-    <?php if (!empty($this->images)) { foreach ($this->images as $image) ?>
+    <?php if (!empty($this->images)) {  ?>
+    <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
         <figure>
             <div><?php echo $this->thumbnail($image, 120, 90, 'fit')->getImg($this); ?></div>
@@ -42,14 +47,11 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/modal-custom.cs
             <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
         </figure>
     </li>
+    <?php } ?>
     <?php } else { ?>
         <p style="color: #fff; margin-top: 5%"><?php echo $translator->trans('No images attached to article.', array(), 'article_images'); ?></p>
     <?php } ?>
 </ul>
-
-<div class="inline">
-    <button id="set-default"><?php echo $translator->trans('Set selected as default image', array(), 'article_images'); ?></button>
-</div>
 <?php if (!empty($this->images)) { ?>
 </form>
 <?php }?>
@@ -59,6 +61,11 @@ $(function() {
     if (parent.$('div.renditionsModal').length == 0) {
         $('#modal-close-btn').show();
     }
+
+    $('#set-default').click(function() {
+        $('form#renditions-form').submit();
+    })
+
     $('.renditions li').droppable({
         hoverClass: 'state-active',
         drop: function(event, ui) {
