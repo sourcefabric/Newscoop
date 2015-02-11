@@ -35,8 +35,8 @@ class Admin_ImageController extends Zend_Controller_Action
             ->addActionContext('edit-image-data', 'json')
             ->initContext();
 
-        $this->view->previewWidth = 150;
-        $this->view->previewHeight = 150;
+        $this->view->previewWidth = 120;
+        $this->view->previewHeight = 120;
     }
 
     public function articleAction()
