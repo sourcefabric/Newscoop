@@ -16,6 +16,7 @@ use Newscoop\Exception\ResourcesConflictException;
 use Doctrine\ORM\Query;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 use Newscoop\EventDispatcher\Events\GenericEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Topcis service
@@ -447,6 +448,26 @@ class TopicService
         }
 
         return false;
+    }
+
+    /**
+     * Deletes the topic. If topic is attached to any article
+     * it is first detached and deleted.
+     *
+     * @param  Topic $topic Topic
+     *
+     * @return void
+     */
+    public function deleteTopic(Topic $topic)
+    {
+        if ($this->isAttached($topic->getId())) {
+            $this->removeTopicFromAllArticles($topic->getId());
+        }
+
+        $this->em->remove($topic);
+        $this->em->flush();
+
+        return true;
     }
 
     /**
