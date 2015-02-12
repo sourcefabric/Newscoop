@@ -284,11 +284,7 @@ class TopicRepository extends NestedTreeRepository
     {
         $pathQuery = $this->getPathQuery($topic);
         if (!$locale) {
-            foreach ($topic->getTranslations()->toArray() as $translation) {
-                if ($translation->getField() == 'title' && $topic->getTitle() == $translation->getContent()) {
-                    $locale = $translation->getLocale();
-                }
-            }
+            $locale = $this->getTranslatableTopicLocale($topic);
         }
 
         $this->setTranslatableHint($pathQuery, $locale);
@@ -299,6 +295,15 @@ class TopicRepository extends NestedTreeRepository
         }
 
         return $pathStr;
+    }
+
+    public function getTranslatableTopicLocale(Topic $topic)
+    {
+        foreach ($topic->getTranslations()->toArray() as $translation) {
+            if ($translation->getField() == 'title' && $topic->getTitle() == $translation->getContent()) {
+                return $translation->getLocale();
+            }
+        }
     }
 
     /**

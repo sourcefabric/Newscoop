@@ -59,6 +59,12 @@ Feature: Testing Topics API
 				And field "parent" in the response should be "1"
 				And field "level" in the response should be "1"
 
+		Given that I want to delete an previously created subtopic
+            And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
+        When I request "<<sub_topic>>"
+            Then the response status code should be 204
+            And the response is JSON
+
 	Scenario: Getting all the topics
 		Given that I want to check if there are any topics
 			And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
@@ -90,6 +96,12 @@ Feature: Testing Topics API
 	            And the response should contain field "level"
 	            And the response should contain field "translations"
 				And field "level" in the response should be "0"
+
+		Given that I want to delete an previously created topic
+            And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
+        When I request "<<new_topic>>"
+            Then the response status code should be 204
+            And the response is JSON
 
     Scenario: Getting all the topics attached to a given article
 		Given that I want to check if there are topics attached to the article
@@ -123,3 +135,4 @@ Feature: Testing Topics API
         When I submit "topic" data to "/topics"
         Then the response status code should be 409
             And the response is JSON
+        Then save new item location as "root_topic"

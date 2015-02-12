@@ -1,0 +1,22 @@
+Newscoop\Entity\UserTopic:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: id
+            since_version: 1.2
+        user:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: user
+            since_version: 1.2
+        topic:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: topic
+            since_version: 1.2

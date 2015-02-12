@@ -6,7 +6,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Services;
 
 use Newscoop\NewscoopBundle\Entity\Topic;
@@ -16,7 +15,6 @@ use Newscoop\Exception\ResourcesConflictException;
 use Doctrine\ORM\Query;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 use Newscoop\EventDispatcher\Events\GenericEvent;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Topcis service
@@ -125,12 +123,12 @@ class TopicService
             'id' => array(
                 'Title' => $article->getName(),
                 'Number' => $article->getNumber(),
-                'IdLanguage' => $article->getLanguageId()
+                'IdLanguage' => $article->getLanguageId(),
             ),
             'diff' => array(
                 'id' => $topic->getId(),
-                'title' => $topic->getTitle()
-            )
+                'title' => $topic->getTitle(),
+            ),
         );
     }
 
@@ -167,10 +165,8 @@ class TopicService
     /**
      * Saves topic position when it was dragged and dropped
      *
-     * @param Topic   $node     Dragged topic object
-     * @param int     $parentId Parent of dragged topic
-     * @param boolean $asRoot   If topic is dragged from children to root level
-     * @param array   $params   Parameters with positions
+     * @param Topic $node   Dragged topic object
+     * @param array $params Parameters with positions
      *
      * @return boolean
      */
@@ -287,7 +283,7 @@ class TopicService
             ->getOneOrNullResult();
 
         if ($topicTranslation) {
-             throw new ResourcesConflictException("Topic already exists", 409);
+            throw new ResourcesConflictException("Topic already exists", 409);
         }
 
         if (!$node->getParent()) {
@@ -309,7 +305,7 @@ class TopicService
         $this->dispatcher->dispatch("topic.create", new GenericEvent($this, array(
             'title' => $node->getTitle(),
             'id' => array('id' => $node->getId()),
-            'diff' => (array) $node
+            'diff' => (array) $node,
         )));
 
         return true;
@@ -361,7 +357,7 @@ class TopicService
         $fullName = trim($fullName);
         $lastColon = strrpos($fullName, ':');
         if (!$lastColon) {
-            return null;
+            return;
         }
 
         $name = substr($fullName, 0, $lastColon);
@@ -370,11 +366,11 @@ class TopicService
         $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')->findOneBy(array(
             'content' => $name,
             'locale' => $languageCode,
-            'field' => 'title'
+            'field' => 'title',
         ));
 
         if (!$topicTranslation) {
-            return null;
+            return;
         }
 
         return $topicTranslation->getObject();
@@ -454,9 +450,9 @@ class TopicService
      * Deletes the topic. If topic is attached to any article
      * it is first detached and deleted.
      *
-     * @param  Topic $topic Topic
+     * @param Topic $topic Topic
      *
-     * @return void
+     * @return boolean
      */
     public function deleteTopic(Topic $topic)
     {
@@ -464,10 +460,56 @@ class TopicService
             $this->removeTopicFromAllArticles($topic->getId());
         }
 
+        $this->removeTopicFromAllUsers($topic->getId());
         $this->em->remove($topic);
         $this->em->flush();
 
         return true;
+    }
+
+    /**
+     * Removes topic from all users it is followed by
+     *
+     * @param string|int $topicId Topic id
+     *
+     * @return boolean
+     */
+    public function removeTopicFromAllUsers($topicId)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $topicsQuery = $qb->delete('Newscoop\Entity\UserTopic', 'ut')
+            ->where('ut.topic = :topicId')
+            ->setParameter('topicId', $topicId)
+            ->getQuery();
+
+        $topicsQuery->execute();
+
+        return true;
+    }
+
+    /**
+     * Checks if topic is attached to any article
+     *
+     * If $attachedCount is set to yes, returns an array with the number of topics attached to articles,
+     * else returns boolean. By default set to false.
+     *
+     * @param string|int $topicId       Topic id
+     * @param boolean    $attachedCount Switch to include/exclude number of topics
+     *
+     * @return boolean|array
+     */
+    public function isFollowed($topicId)
+    {
+        $topic = $this->em->getRepository('Newscoop\Entity\UserTopic')
+            ->getTheOccurrenceOfTheUserTopic($topicId)
+            ->getSingleScalarResult();
+
+        $count = (int) $topic;
+        if ($count > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

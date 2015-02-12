@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -37,7 +36,7 @@ class UserTopicRepository extends EntityRepository
             ->leftJoin('ut.topic', 't')
             ->where('u.id = :user_id')
             ->setParameters(array(
-                'user_id' => $userId
+                'user_id' => $userId,
             ));
 
         $query = $em->getRepository("Newscoop\NewscoopBundle\Entity\Topic")->setTranslatableHint($qb->getQuery(), $locale);
@@ -55,7 +54,10 @@ class UserTopicRepository extends EntityRepository
      */
     public function findByTopicAndUser(User $user, Topic $topic)
     {
-        $qb = $this->getEntityManager()
+        $em = $this->getEntityManager();
+        $locale = $em->getRepository("Newscoop\NewscoopBundle\Entity\Topic")->getTranslatableTopicLocale($topic);
+
+        $qb = $em
             ->createQueryBuilder()
             ->select(array('ut'))
             ->from('Newscoop\Entity\UserTopic', 'ut')
@@ -68,9 +70,27 @@ class UserTopicRepository extends EntityRepository
             ->setParameters(array(
                 'user_id' => $user->getId(),
                 'topic_id' => $topic->getId(),
-                'topic_language_id' => $topic->getTranslatableLocale(),
+                'topic_language_id' => $locale,
             ));
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Gets the occurence of the user's topic
+     *
+     * @param string|int $topicId Topic id
+     *
+     * @return Doctrine\ORM\Query
+     */
+    public function getTheOccurrenceOfTheUserTopic($topicId)
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('count(t)')
+            ->where('t.topic = :topicId')
+            ->setParameter('topicId', $topicId)
+            ->getQuery();
+
+        return $query;
     }
 }
