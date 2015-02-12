@@ -306,6 +306,7 @@ $('a.iframe').each(function() {
             hideOnContentClick: false,
             width: 800,
             height: 500,
+            centerOnScroll: true,
             onStart: function() { // check if there are any changes
                 return checkChanged();
             },
@@ -336,7 +337,8 @@ $('#place-images').fancybox({
     hideOnContentClick: false,
     width: 1300,
     height: 800,
-    type: 'iframe'
+    type: 'iframe',
+    centerOnScroll: true
 });
 
 $('#attach-images').fancybox({
@@ -344,6 +346,7 @@ $('#attach-images').fancybox({
     width: 1300,
     height: 800,
     type: 'iframe',
+    centerOnScroll: true,
     onStart: function() { // check if there are any changes
         return checkChanged();
     },
@@ -357,6 +360,7 @@ $('#edit-images').fancybox({
     width: 1300,
     height: 800,
     type: 'iframe',
+    centerOnScroll: true,
     onStart: function() { // check if there are any changes
         return checkChanged();
     },
@@ -374,6 +378,7 @@ $("#context_box a.iframe").fancybox({
     'width': 1150,
     'height'     : 700,
     'scrolling' : 'auto',
+    'centerOnScroll': true,
     'onClosed'      : function() {
        loadContextBoxActileList();
     }
@@ -384,6 +389,7 @@ $("#multidate_box a.iframe").fancybox({
     'width': 1000,
     'height'     : 710,
     'scrolling' : 'auto',
+    'centerOnScroll': true,
     'onClosed'      : function() {
        //loadContextBoxActileList();
        loadMultiDateEvents();
@@ -397,7 +403,8 @@ $("#playlist a.iframe").fancybox
     'width' : 700,
     'height' : 700,
     'scrolling' : 'auto',
-    'autoDimensions' : true
+    'autoDimensions' : true,
+    'centerOnScroll': true
 });
 
 // comments form check for changes
