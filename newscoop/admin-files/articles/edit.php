@@ -224,7 +224,7 @@ function parseTextBody($text, $articleNumber)
 
     // snippet tag format: <-- Snippet 1 -->
     $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
-    $text = preg_replace("/$snippetPattern/i", '<div data-snippet-id="$1" class="camp_snippet">Snippet $1</div>', $text);
+    $text = preg_replace("/$snippetPattern/i", '<div data-snippet-id="$1" class="camp_snippet">'.$translator->trans('Snippet', array(), 'articles').' $1</div>', $text);
 
     if (isset($imageMatches[1][0])) {
         if (isset($titles) && sizeof($titles) > 0) {
