@@ -184,6 +184,7 @@ Comments: Комментарии
 'No such article.': 'Нет такой статьи.'
 'No such section.': 'Нет такой рубрики.'
 Characters: null
+Snippet: null
 articles:
     images:
         edit:
