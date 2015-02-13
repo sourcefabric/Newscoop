@@ -109,6 +109,12 @@ class ArticleData extends DatabaseObject {
             $otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
             $pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$widthAttr|$heightAttr|$otherAttr)\s*)*\/>/i";
             $p_value = preg_replace_callback($pattern, array($this, "transformImageTags"), $text);
+
+            // Replace snippets div holder with snippets tag
+            // Replace <div data-snippet-id="$1" class="camp_snippet">Snippet $1</div>
+            // with <-- Snippet 1 -->
+            $pattern = "/<div\s*class=\"camp_snippet\"\s*(?:data-snippet-id=\"([\d*])\")>([\w*]+)* ([\d*]+)<\/div>/i";
+            $p_value = preg_replace($pattern, "<-- Snippet $1 -->", $text);
         }
         if ($articleField->getType() == ArticleTypeField::TYPE_SWITCH) {
             if (is_string($p_value)) {
@@ -119,7 +125,6 @@ class ArticleData extends DatabaseObject {
         }
         return parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
     }
-
 
     /**
      * Copy the row in the database.

@@ -1,5 +1,4 @@
 INSERT INTO `SystemPreferences` (`varname`, `value`, `last_modified`) VALUES ('SmartyUseProtocol', 'Y', NULL);
---- Start of Embed.ly Snippet Template
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES 
 	(1, 'Embed.ly', 'Newscoop\\NewscoopBundle\\Controller\\EmbedlyController', '<a class=\"embedly-card\" href=\"{{ URL }}\">{{ title }}</a><script>!function(a){var b=\"embedly-platform\",c=\"script\";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b,d.src=(\"https:\"===document.location.protocol?\"https\":\"http\")+\"://cdn.embedly.com/widgets/platform.js\";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}}(document);</script>', 0, 1, NULL, NULL, '2014-05-12 13:19:43', '2014-05-12 13:19:43');
@@ -23,9 +22,6 @@ VALUES
 	(15, 'thumbnail_url', 'url', 'backend', 0, 1),
 	(16, 'thumbnail_height', 'integer', 'backend', 0, 1),
 	(17, 'author_url', 'url', 'backend', 0, 1);
---- End of Embed.ly Snippet Template
-
---- Start of Youtube Snippet Template
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES
 	(2, 'Youtube', NULL, '<iframe width=\"{{ width }}\" height=\"{{ height }}\" src=\"//www.youtube.com/embed/{{ ID }}\" frameborder=\"0\" allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
@@ -35,9 +31,6 @@ VALUES
 	(18, 'ID', 'text', 'frontend', 2, 1),
 	(19, 'width', 'integer', 'frontend', 2, 0),
 	(20, 'height', 'integer', 'frontend', 2, 0);
---- End of Youtube Snippet Template
-
---- Start of Vimeo Snippet Template
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES
 	(3, 'Vimeo', NULL, '<iframe src=\"//player.vimeo.com/video/{{ ID }}\" width=\"{{ width }}\" height=\"{{ height }}\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
@@ -47,9 +40,6 @@ VALUES
 	(21, 'ID', 'text', 'frontend', 3, 1),
 	(22, 'width', 'integer', 'frontend', 3, 0),
 	(23, 'height', 'integer', 'frontend', 3, 0);
---- Start of Vimeo Snippet Template
-
---- Start of Generic Snippet Template
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES
 	(4, 'Generic', NULL, '{{Generic | raw}}', 0, 1, NULL, NULL, '2014-06-10 14:15:49', '2014-06-10 14:15:49');
@@ -57,9 +47,6 @@ VALUES
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
 VALUES
 	(24, 'Generic', 'textarea', 'frontend', 4, 1);
---- End of Generic Snippet Template
-
---- Start of Embed.ly Snippet sample
 INSERT INTO `Snippets` (`Id`, `Name`, `Enabled`, `Created`, `Modified`, `TemplateId`)
 VALUES
 	(1, 'Youtube Sourcefabric Booktype Video', 1, '2014-06-10 13:15:10', '2014-06-10 13:15:12', 1);
@@ -83,4 +70,3 @@ VALUES
 	(15, 'http://i1.ytimg.com/vi/AYVUPem_jaM/hqdefault.jpg', 1, 15, 'thumbnail_url'),
 	(16, '360', 1, 16, 'thumbnail_height'),
 	(17, 'http://www.youtube.com/user/Sourcefabric', 1, 17, 'author_url');
---- End of Embed.ly Snippet sample

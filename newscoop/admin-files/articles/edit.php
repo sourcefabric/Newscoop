@@ -222,6 +222,10 @@ function parseTextBody($text, $articleNumber)
 
     preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
 
+    // snippet tag format: <-- Snippet 1 -->
+    $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
+    $text = preg_replace("/$snippetPattern/i", '<div data-snippet-id="$1" class="camp_snippet">'.$translator->trans('Snippet', array(), 'articles').' $1</div>', $text);
+
     if (isset($imageMatches[1][0])) {
         if (isset($titles) && sizeof($titles) > 0) {
             for ($x = 0; $x < sizeof($titles[0]); $x++) {
