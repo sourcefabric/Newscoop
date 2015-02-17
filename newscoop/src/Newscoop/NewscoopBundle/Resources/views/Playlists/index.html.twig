@@ -1,0 +1,169 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "article" %}
+{% block admin_title %}{{ parent() }} - {{ 'topics.title'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'Featured Article Lists'|trans }}{% endblock %}
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/playlists.css') }}">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/bootstrap-custom.css') }}">
+{% endblock %}
+{% block admin_scripts %}
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+<ul class="list-inline first-menu">
+    <li><button type="button" class="btn btn-default btn-sm" id="add-external-btn" onclick="openExternalModal()" name="add-external"><span class="glyphicon glyphicon-plus-sign"></span> {{ 'plugin.lists.btn.addexternal'|trans }}</button></li>
+    <li><a class="add btn btn-success btn-sm" href="#">{{ 'plugin.lists.btn.add'|trans }}</a></li>
+    <li><input type="hidden" id="playlists" style="width:325px"></li>
+</ul>
+<div class="content">
+    <div id="context-box" class="block-shadow">
+        <ul class="list-inline second-menu">
+            <li>
+                <label id="playlist-name-label">{{ 'plugin.lists.label.name'|trans }}:</label>
+            </li>
+            <li>
+                <span id="list_name">
+                    <input name="playlist-name" class="form-control" style="float: left;" id="playlist-name">
+                </span>
+            </li>
+            <li>
+                <label id="playlist-id-label">{{ 'plugin.lists.label.listid'|trans }}:</label>
+            </li>
+            <li>
+                <span id="list_id" style="float: left;">
+                    <input id="playlist-id" class="form-control" type="text" readonly="readonly">
+                </span>
+            </li>
+            <li>
+                <div class="save-button-bar" style="display: none">
+                    <button type="button" id="remove-ctrl" class="btn btn-default">{{ 'plugin.lists.btn.remove'|trans }}</button>
+                    <button type="button" name="save" class="btn btn-success" onclick="popup_save();" id="context_button_save">{{ 'plugin.lists.btn.save'|trans }}</button>
+                </div>
+            </li>
+        </ul>
+        <div class="context-content">
+            <div class="context-block context-search plugin-context-block">
+                <h3>{{ 'plugin.lists.label.available'|trans }}</h3>
+                <div id="smartlist-" class="smartlist">
+                    <div class="filters">
+                        <dl>
+                          <dd>
+
+                            <fieldset class="toggle filters closed" style="display:block">
+                                <legend><span class="ui-icon ui-icon-triangle-2-n-s"></span>{{ 'plugin.lists.label.filter'|trans }}</legend>
+                                <dl style="display: none;">
+                                    <div class="table">
+                                        <div class="tr">
+                                            <div class="td">
+                                                <select name="publication" id="publication_filter" class="selectBig form-control input-sm">
+                                                </select> 
+                                            </div>
+                                        </div>
+                                        <div class="tr">
+                                            <div class="td">   
+                                                <select name="issue" id="issue_filter" class="selectBig form-control input-sm">
+                                                    <option></option>
+                                                </select> 
+                                            </div>
+                                        </div>
+                                        <div class="tr">
+                                            <div class="td">   
+                                                <select name="section" id="section_filter" class="selectBig form-control input-sm">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="tr">
+                                            <div class="td">
+                                                <input style="width: 257px" type="hidden" id="article_filter" name="article"/>
+                                            </div>
+                                        </div>
+                                        <div class="extra">
+                                            <dl>
+                                                <dt><label for="filter_date">{{ 'plugin.lists.label.date'|trans }}</label></dt>
+                                                <dd>
+                                                    <input id="filter_date" type="text" name="publish_date"
+                                                    class="date" /></dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt><label for="filter_author">{{ 'plugin.lists.label.commenter'|trans }}</label></dt>
+                                                    <dd>
+                                                        <select name="author" class="form-control input-sm" style="display: initial;">
+                                                            <option value="0">{{ 'plugin.lists.label.all'|trans }}</option>
+                                                        </select>
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt><label for="filter_language">{{ 'plugin.lists.label.language'|trans }}</label></dt>
+                                                    <dd>
+                                                        <select id="filter_name" name="language" class="form-control input-sm" style="display: initial;">
+                                                            <option value="0">{{ 'plugin.lists.label.all'|trans }}</option>
+                                                        </select>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </dl>
+                                    </fieldset>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="context-block context-list plugin-context-block">
+                    <h3>{{ 'plugin.lists.label.featured'|trans }}</h3>
+                    <div class="context-list-results">
+                        <div class="save-button-bar" style="display: block;">
+                            <button type="button" class="btn btn-danger" id="delete-all-btn" name="delete-all">{{ 'plugin.lists.btn.deleteall'|trans }}</button>
+                        </div>
+                        <div style="display: block; float: left">
+                            <form id="context-list-form">
+                                <ul id="context_list">
+                                    <div id="drag-here-to-add-to-list" style="display:block">
+                                        {{ 'plugin.lists.label.drag'|trans }}
+                                    </div>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog-confirm" style="display:none;" title="{{ 'plugin.lists.label.remove'|trans }}">
+        <p>{{ 'plugin.lists.label.delete'|trans }}</p>
+    </div>
+    <div id="dialog-confirm-delete-all" style="display:none;" title="{{ 'plugin.lists.label.removeallcomments'|trans }}">
+        <p>{{ 'plugin.lists.label.deleteallcomments'|trans }}</p>
+    </div>
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="modalEditLabel">{{ 'plugin.lists.label.quickedit'|trans }}</h4>
+        </div>
+        <form id="editForm" action="">
+          <div class="modal-body">
+            <input type="hidden" name="commentId"/>
+            <input type="hidden" name="listId"/>
+            <label>{{ 'plugin.lists.label.externalsubject'|trans }}</label>
+            <input name="subject" type="text" class="form-control input-sm"><br>
+            <label>{{ 'plugin.lists.label.externalmessage'|trans }}</label>
+            <textarea style="min-height:200px;" name="message" class="form-control input-sm"></textarea><br>
+            <h4>{{ 'plugin.lists.label.originalcomment'|trans }}</h4>
+            <input name="originalSubject" type="text" disabled class="form-control input-sm"><br>
+            <textarea style="min-height:150px;" disabled name="originalMessage" class="form-control input-sm"></textarea>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">{{ 'plugin.lists.btn.cancel'|trans }}</button>
+            <input type="submit" value="{{ 'plugin.lists.btn.submit'|trans }}" class="btn btn-success btn-sm">
+        </div>
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}

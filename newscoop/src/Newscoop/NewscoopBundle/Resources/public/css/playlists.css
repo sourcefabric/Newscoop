@@ -1,0 +1,119 @@
+.font-fix {
+    font-size: 12px;
+}
+.toggle.filters legend {
+    cursor: pointer;
+}
+
+#playlist-name {
+    width: 325px;
+}
+
+#playlist-id {
+    font-size:12px;
+    display:none;
+    width:50px
+}
+
+.toolbar h2 {
+    width:700px;
+}
+
+#list_name {
+    display: none;
+}
+
+.select2-chosen {
+    font-size: 12px;
+}
+
+.selectBig {
+    width: 250px;
+}
+
+#drag-here-to-add-to-list {
+    border: 2px #CCCCCC dashed;
+    height: 45px;
+    width: 439px;
+    margin: 4px 9px;
+    padding: 20px 5px 0px 26px;
+    color: #CCCCCC;
+    font-size: 20px;
+}
+
+.content .actions {
+    margin: 0 auto;
+    width: 500px;
+}
+
+.plugin-toolbar {
+    height: 50px;
+}
+
+#playlist-name-label, #playlist-id-label {
+    float: left;
+    display: none;
+    padding: 0 10px;
+    line-height: 25px;
+}
+
+.plugin-context-block {
+    height: 565px;
+    width: 46.9%;
+}
+#context-box {
+    padding: 10px;
+    height: 680px;
+    width: 1100px;
+    background: #FFF;
+    margin: 0 auto;
+}
+#drag-here-to-add-to-list {
+    border: 2px #CCCCCC dashed;
+    height: 70px;
+    width: 463px;
+    margin: 4px 9px;
+    padding: 20px 5px 0px 26px;
+    color: #CCCCCC;
+    font-size: 20px;
+}
+.context-item-subject {
+    color: #343434;
+    padding-top: 5px;
+}
+.menu-options {
+    float: right;
+    display: inline;
+    margin-right: 44px;
+}
+.context-item-summary {
+    color: #007fb3;
+}
+ul#context_list {
+    display:block;
+    height: 433px;
+    width: 495px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding: 36px 0px 0px 0px;
+}
+.fade-featured {
+    opacity: 0;
+    -webkit-transition: opacity .2s linear;
+    transition: opacity .2s linear;
+}
+.second-menu {
+    height: 40px;
+    float: right;
+    margin-right: 20px;
+}
+
+.first-menu {
+    margin: 0 auto;
+    width: 1100px;
+    padding-left: 30px;
+}
+
+.context-content {
+    float: left;
+}
