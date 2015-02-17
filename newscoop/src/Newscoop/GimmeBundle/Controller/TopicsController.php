@@ -222,6 +222,43 @@ class TopicsController extends FOSRestController
     }
 
     /**
+     * Delete topic
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when topic removed succesfully",
+     *         404={
+     *           "Returned when topic is not found",
+     *         }
+     *     },
+     *     requirements={
+     *         {"name"="id", "dataType"="integer", "required"=true, "description"="Topic id"}
+     *     }
+     * )
+     *
+     * @Route("/topics/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("DELETE")
+     */
+    public function deleteTopicAction(Request $request, $id)
+    {
+        $topicService = $this->get('newscoop_newscoop.topic_service');
+        $em = $this->container->get('em');
+        $topic = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->findOneBy(array(
+            'id' => $id,
+        ));
+
+        if (!$topic) {
+            throw new NotFoundHttpException('Topic was not found');
+        }
+
+        $topicService->deleteTopic($topic);
+        $response = new Response();
+        $response->setStatusCode(204);
+
+        return $response;
+    }
+
+    /**
      * Process Topic form
      *
      * @param Request $request

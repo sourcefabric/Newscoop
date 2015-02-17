@@ -2085,9 +2085,8 @@ CREATE TABLE `user_topic` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `topic_id` int(11) unsigned NOT NULL,
-  `topic_language` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_topic` (`user_id`,`topic_id`,`topic_language`)
+  UNIQUE KEY `user_topic` (`user_id`,`topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -3425,11 +3424,11 @@ CREATE TABLE IF NOT EXISTS `editorial_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_article_number` int(11) NOT NULL,
   `fk_language_id` int(11) NOT NULL,
-  `comment` text NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
   `resolved` int(1) NOT NULL DEFAULT '0',
   `fk_parent_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `is_active` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

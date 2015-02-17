@@ -13,6 +13,9 @@ use Newscoop\NewscoopBundle\Entity\Topic;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\Paginator;
+use Newscoop\NewscoopBundle\Services\TopicService;
+use Doctrine\ORM\EntityRepository;
+use Prophecy\Argument;
 
 class TopicsControllerSpec extends ObjectBehavior
 {
@@ -24,11 +27,13 @@ class TopicsControllerSpec extends ObjectBehavior
         TopicRepository $topicRepository,
         PaginatorService $paginator,
         Topic $topic,
-        Paginator $knpPaginator
+        Paginator $knpPaginator,
+        TopicService $topicService
     ) {
         $container->get('em')->willReturn($entityManager);
         $container->get('request')->willReturn($request);
         $container->get('newscoop.paginator.paginator_service')->willReturn($paginator);
+        $container->get("newscoop_newscoop.topic_service")->willReturn($topicService);
 
         $this->setContainer($container);
 
@@ -174,5 +179,26 @@ class TopicsControllerSpec extends ObjectBehavior
         $paginator->paginate($query)->willReturn($topics);
 
         $this->getArticlesTopicsAction(64, 'en')->shouldReturn($topics);
+    }
+
+    public function its_deleteTopicAction_should_delete_topic($topicService, $request, $topic, EntityRepository $repository, $entityManager)
+    {
+        $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->willReturn($repository);
+        $topic->getId()->willReturn(1);
+        $repository->findOneBy(array(
+            'id' => 1,
+        ))->willReturn($topic);
+
+        $topicService->deleteTopic($topic)->willReturn(true);
+        $response = $this->deleteTopicAction($request, 1);
+        $response->shouldHaveType('Symfony\Component\HttpFoundation\Response');
+        $response->getStatusCode()->shouldReturn(204);
+    }
+
+    public function its_deleteTopicAction_should_throw_not_found_exception($request)
+    {
+        $this
+            ->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
+            ->during('deleteTopicAction', array($request, 1));
     }
 }

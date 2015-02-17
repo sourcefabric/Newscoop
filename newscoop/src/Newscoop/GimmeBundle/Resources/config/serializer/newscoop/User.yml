@@ -38,6 +38,13 @@ Newscoop\Entity\User:
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: attributes
+        topics:
+            expose: true
+            read_only: true
+            type: array
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: topics
     virtual_properties:
         getObject:
             type: image_uri

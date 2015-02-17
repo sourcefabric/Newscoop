@@ -4,7 +4,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
@@ -16,7 +15,7 @@ use Newscoop\Topic\SaveUserTopicsCommand;
 use Exception;
 
 /**
- * User service
+ * UserTopic service
  */
 class UserTopicService
 {
@@ -68,7 +67,7 @@ class UserTopicService
 
             if ($userTopics) {
                 if (is_array($userTopics)) {
-                    foreach ($userTopics AS $userTopic) {
+                    foreach ($userTopics as $userTopic) {
                         $this->em->remove($userTopic);
                     }
                 } else {
@@ -116,7 +115,7 @@ class UserTopicService
         ));
 
         if (!$topic) {
-            return null;
+            return;
         }
 
         return $topic;

@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -67,5 +66,25 @@ class UserTopic
     public function getTopicId()
     {
         return $this->topic->getId();
+    }
+
+    /**
+     * Gets the value of user.
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Gets the value of id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
