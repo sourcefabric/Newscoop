@@ -78,3 +78,8 @@ NewscoopIssuesController:
     resource: "@NewscoopGimmeBundle/Controller/IssuesController.php"
     prefix:   /
     type:     annotation
+
+NewscoopGimmeBundleUserTopics:
+    resource: "@NewscoopGimmeBundle/Controller/UserTopicsController.php"
+    prefix:   /
+    type:     annotation

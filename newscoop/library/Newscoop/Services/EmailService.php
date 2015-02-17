@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Newscoop\Entity\User;
@@ -91,11 +90,10 @@ class EmailService
         $publicationService = $this->container->get('newscoop_newscoop.publication_service');
         $mailer = $this->container->get('mailer');
         if (empty($from)) {
-            $from = 'no-reply@' . $publicationService->getPublicationAlias()->getName();
+            $from = 'no-reply@'.$publicationService->getPublicationAlias()->getName();
         }
 
         try {
-
             $messageToSend = \Swift_Message::newInstance();
 
             if (is_array($to)) {
