@@ -9,6 +9,7 @@ namespace Newscoop\Services;
 
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Doctrine\ORM\EntityManager;
+use Newscoop\NewscoopException;
 
 /**
  */
@@ -54,7 +55,13 @@ class CommentNotificationService
             ->getArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId())
             ->getSingleResult();
 
+        try {
+            $user = $this->userService->getCurrentUser();
+        } catch (NewscoopException $e) {
+            $user = null;
+        }
+
         $authors = \ArticleAuthor::GetAuthorsByArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId());
-        $this->emailService->sendCommentNotification($comment, $article, $authors, $this->userService->getCurrentUser());
+        $this->emailService->sendCommentNotification($comment, $article, $authors, $user);
     }
 }
