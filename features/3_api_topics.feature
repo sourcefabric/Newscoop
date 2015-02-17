@@ -7,7 +7,7 @@ Feature: Testing Topics API
         When I request "/topics"
         Then the response is JSON
 
-    Scenario: Creating a new root topic and checking if it has been created successfully
+    Scenario: Creating a new root topic and subtopic, checking if topics have been created successfully
     	Given that I want to make a new topic
 	        And that i have fake "topic" data:
 	                | title            | roottopic      | 4 |
@@ -31,12 +31,12 @@ Feature: Testing Topics API
 	            And the response should contain field "translations"
 				And field "level" in the response should be "0"
 				And field "title" in the response should be "roottopic"
+				And save "id" field under location "topic_id"
 
-    Scenario: Creating a new subtopic and checking if it has been created successfully
     	Given that I want to make a new subtopic
 	        And that i have fake "topic" data:
 	                | title            | <<sentence>>       | 4 |
-	                | parent           | 1                  ||
+	                | parent           | (topic_id)         ||
 
 	        And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I submit "topic" data to "/topics"
@@ -56,7 +56,7 @@ Feature: Testing Topics API
 	            And the response should contain field "root"
 	            And the response should contain field "level"
 	            And the response should contain field "translations"
-				And field "parent" in the response should be "1"
+				And field "parent" in the response should be "(topic_id)"
 				And field "level" in the response should be "1"
 
 		Given that I want to delete an previously created subtopic

@@ -2,7 +2,6 @@ ALTER TABLE  `Images` DROP  `Caption` ;
 DROP INDEX is_updated_storage ON Images;
 ALTER TABLE
     Images CHANGE Id Id INT AUTO_INCREMENT NOT NULL,
-    CHANGE Description Description VARCHAR(255) DEFAULT NULL,
     CHANGE Photographer Photographer VARCHAR(255) DEFAULT NULL,
     CHANGE Place Place VARCHAR(255) DEFAULT NULL,
     CHANGE Date Date VARCHAR(255) DEFAULT NULL,
