@@ -1,5 +1,5 @@
 Feature: Testing linking/unlinking topics to/from the articles
-    In order to link/ublink topics through the API
+    In order to link/unlink topics through the API
     As a service user
     I want to see if the topics can be linked or unlinked to/from the articles
 
