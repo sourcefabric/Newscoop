@@ -222,6 +222,7 @@ function parseTextBody($text, $articleNumber)
 
     preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
 
+    $translator = \Zend_Registry::get('container')->getService('translator');
     // snippet tag format: <-- Snippet 1 -->
     $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
     $text = preg_replace("/$snippetPattern/i", '<div data-snippet-id="$1" class="camp_snippet">'.$translator->trans('Snippet', array(), 'articles').' $1</div>', $text);
