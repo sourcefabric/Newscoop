@@ -11,6 +11,7 @@ namespace Newscoop\Services;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Comment;
 use Newscoop\Entity\Article;
+use Newscoop\Entity\Publication;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -166,7 +167,7 @@ class EmailService
         $this->send($placeholdersService->get('subject'), $message, $emails, $moderatorFrom ?: $preferencesService->EmailFromAddress);
     }
 
-    private function getModeratorEmailIfModerationEnabled($publication, $user)
+    private function getModeratorEmailIfModerationEnabled(Publication $publication, $user = null)
     {
         if ($publication->getCommentsEnabled()) {
             if ($publication->getCommentsSubscribersModerated() &&
