@@ -1,4 +1,5 @@
-<?php                                                                                                   
+<?php
+
 namespace Newscoop\NewscoopBundle\Security\User;
 
 use Newscoop\Entity\User;
