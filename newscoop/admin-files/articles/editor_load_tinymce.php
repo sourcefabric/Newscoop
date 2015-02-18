@@ -270,7 +270,7 @@ $().ready(function() {
         file_browser_callback : "campsitemedia",
         relative_urls : false,
         onchange_callback : function() { $('form#article-main').change(); },
-        extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
+        extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth|style|id|class]",
 
         // Theme options
         theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
