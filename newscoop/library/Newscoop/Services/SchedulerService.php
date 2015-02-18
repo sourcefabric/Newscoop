@@ -69,19 +69,15 @@ class SchedulerService implements SchedulerServiceInterface
      */
     public function removeJob($jobName, array $config)
     {
-        foreach (array("command", "schedule") as $field) {
-            if (empty($config[$field])) {
-                throw new \Exception("'$field' is required for '$jobName' job");
-            }
+        if (empty($config["command"])) {
+            throw new \Exception("'command' is required for '$jobName' job");
         }
 
-        $job = $this->em->getRepository('Newscoop\Entity\CronJob')->findOneBy(array(
-            'command' => $config['command'],
-            'schedule' => $config['schedule'],
-            'name' => $jobName,
-        ));
+        $config['name'] = $jobName;
 
-        if ($job) {
+        $jobs = $this->em->getRepository('Newscoop\Entity\CronJob')->findBy($config);
+
+        foreach($jobs as $job) {
             $this->em->remove($job);
             $this->em->flush();
         }
