@@ -20,6 +20,13 @@ class PlaylistsController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('NewscoopNewscoopBundle:Playlists:index.html.twig', array());
+        $preferencesService = $this->get('preferences');
+        $em = $this->get('em');
+        $clientName = 'newscoop_'.$preferencesService->SiteSecretKey;
+        $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($clientName);
+
+        return $this->render('NewscoopNewscoopBundle:Playlists:index.html.twig', array(
+            'clientId' => $client ? $client->getPublicId() : '',
+        ));
     }
 }

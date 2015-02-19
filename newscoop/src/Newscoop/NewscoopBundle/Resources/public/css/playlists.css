@@ -11,7 +11,6 @@
 
 #playlist-id {
     font-size:12px;
-    display:none;
     width:50px
 }
 
@@ -27,20 +26,6 @@
     font-size: 12px;
 }
 
-.selectBig {
-    width: 250px;
-}
-
-#drag-here-to-add-to-list {
-    border: 2px #CCCCCC dashed;
-    height: 45px;
-    width: 439px;
-    margin: 4px 9px;
-    padding: 20px 5px 0px 26px;
-    color: #CCCCCC;
-    font-size: 20px;
-}
-
 .content .actions {
     margin: 0 auto;
     width: 500px;
@@ -52,7 +37,6 @@
 
 #playlist-name-label, #playlist-id-label {
     float: left;
-    display: none;
     padding: 0 10px;
     line-height: 25px;
 }
@@ -61,17 +45,10 @@
     height: 565px;
     width: 46.9%;
 }
-#context-box {
-    padding: 10px;
-    height: 680px;
-    width: 1100px;
-    background: #FFF;
-    margin: 0 auto;
-}
 #drag-here-to-add-to-list {
     border: 2px #CCCCCC dashed;
     height: 70px;
-    width: 463px;
+    width: 96%;
     margin: 4px 9px;
     padding: 20px 5px 0px 26px;
     color: #CCCCCC;
@@ -89,10 +66,13 @@
 .context-item-summary {
     color: #007fb3;
 }
+.context-search .context-item {
+    border-bottom: none;
+}
 ul#context_list {
     display:block;
     height: 433px;
-    width: 495px;
+    width: 100%;
     overflow-y:auto;
     overflow-x:hidden;
     padding: 36px 0px 0px 0px;
@@ -102,18 +82,31 @@ ul#context_list {
     -webkit-transition: opacity .2s linear;
     transition: opacity .2s linear;
 }
-.second-menu {
-    height: 40px;
-    float: right;
-    margin-right: 20px;
-}
-
 .first-menu {
     margin: 0 auto;
     width: 1100px;
     padding-left: 30px;
 }
-
-.context-content {
-    float: left;
+.system_pref h3 {
+    border: none;
+}
+.loading-container {
+    position: relative;
+}
+.loading-container .loading:before, .loading-container .loading:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 50px;
+    min-width: 50px;
+}
+.loading-container .loading:before {
+    background-color: white;
+    opacity: 0.5;
+}
+.context-item-header {
+    margin-bottom: 5px;
 }
