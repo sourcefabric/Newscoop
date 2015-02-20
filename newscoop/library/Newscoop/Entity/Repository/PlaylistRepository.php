@@ -29,17 +29,29 @@ class PlaylistRepository extends EntityRepository
         return $query;
     }
 
+    public function getPlaylist($id)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Playlist')
+            ->createQueryBuilder('p')
+            ->where('p.id = :id')
+            ->setParameter('id', $id);
+
+        $query = $queryBuilder->getQuery();
+        
+        return $query;
+    }
+
     /**
      * Returns articles for a given playlist
      * @param Newscoop\Entity\Playlist $playlist
-     * @param Language $lang
+     * @param Newscoop\Entity\Language $lang
      * @param bool $fullArticle
      * @param int $limit
      * @param int $offset
      * @param bool $publishedOnly
      */
-    public function articles(Playlist $playlist, Language $lang = null,
-    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false)
+    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
@@ -149,7 +161,7 @@ class PlaylistRepository extends EntityRepository
                     if (($a = current($ar->findBy(array("number" => $articleId)))) instanceof \Newscoop\Entity\Article) {
                         $article->setArticle($a);
                     }
-                    //$em->getConnection()->executeUpdate("INSERT INTO playlist_article(id_playlist, article_no) VALUES(?, ?)", array( $playlist->getId(), $a->getId()));
+
                     $em->persist($article);
                 }
             }

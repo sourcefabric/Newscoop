@@ -160,7 +160,6 @@ class ArticlesController extends FOSRestController
             $articleService = $this->container->get('newscoop_newscoop.article_service');
 
             $attributes = $form->getData();
-
             $article = $articleService->updateArticle($article, $attributes);
 
             $this->postAddUpdate($article);
@@ -194,6 +193,11 @@ class ArticlesController extends FOSRestController
      *         404={
      *           "Returned when articles are not found",
      *         }
+     *     },
+     *     parameters={
+     *         {"name"="type", "dataType"="integer", "required"=true, "description"="Article type"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Language code"},
+     *         {"name"="issue", "dataType"="string", "required"=false, "description"="Issue number"}
      *     }
      * )
      *
@@ -209,7 +213,7 @@ class ArticlesController extends FOSRestController
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticles($publication, $request->get('type', null), $request->get('language', null));
+            ->getArticles($publication, $request->get('type', null), $request->get('language', null), $request->get('issue', null));
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
@@ -357,12 +361,13 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle")
+     * @Route("/articles/{number}/{langauge}.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language") 
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return Form
      */
-    public function getArticleAction(Request $request, $number)
+    public function getArticleAction(Request $request, $number, $langauge = null)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication();
@@ -566,10 +571,10 @@ class ArticlesController extends FOSRestController
      * **related articles headers**:
      *
      *     header name: "link"
-     *     header value: "</api/article/1; rel="topic">"
+     *     header value: "</api/articles/1; rel="topic">"
      * or with specific language
      *
-     *     header value: "</api/article/1?language=en; rel="article">"
+     *     header value: "</api/articles/1?language=en; rel="article">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -708,12 +713,13 @@ class ArticlesController extends FOSRestController
      */
     public function changeArticleStatus(Request $request, $number, $language, $status)
     {
+        $user = $this->container->get('user')->getCurrentUser();
         $statuses = array('N','S','M','Y');
         if (!in_array($status, $statuses)) {
             throw new InvalidParametersException('The provided Status is not valid, available: N, S, M, Y.');
         }
 
-        $articleObj = $this->getArticle($number, $language);
+        $articleObj = $this->getArticle($number, $language, $user);
         $success = $articleObj->setWorkflowStatus($status);
         $response = new Response();
         if ($success) {

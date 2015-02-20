@@ -31,7 +31,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getArticles($publication, $type = null, $language = null)
+    public function getArticles($publication, $type = null, $language = null, $issue = null)
     {
         $em = $this->getEntityManager();
 
@@ -61,6 +61,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $queryBuilder->andWhere('a.type = :type')
                 ->setParameter('type', $type);
         }
+
+        if ($issue) {
+            $countQueryBuilder->andWhere('a.issueId = :issue')
+                ->setParameter('issue', $issue);
+
+            $queryBuilder->andWhere('a.issueId = :issue')
+                ->setParameter('issue', $issue);
+        }        
 
         if ($language) {
             $languageId = $em->getRepository('Newscoop\Entity\Language')

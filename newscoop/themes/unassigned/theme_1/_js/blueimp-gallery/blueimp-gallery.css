@@ -1,0 +1,414 @@
+@charset 'UTF-8';
+/*
+ * blueimp Gallery CSS 2.10.0
+ * https://github.com/blueimp/Gallery
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+ .blueimp-gallery,
+ .blueimp-gallery > .slides > .slide > .slide-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* Prevent artifacts in Mozilla Firefox: */
+  -moz-backface-visibility: hidden;
+}
+.blueimp-gallery > .slides > .slide > .slide-content {
+  margin: auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  opacity: 1;
+}
+.blueimp-gallery {
+  position: fixed;
+  z-index: 9999;
+  overflow: hidden;
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  display: none;
+  direction: ltr;
+  -ms-touch-action: none;
+}
+.blueimp-gallery-carousel {
+  position: relative;
+  z-index: auto;
+  margin: auto;
+  /* Set the carousel width/height ratio to fit tageswoche slide size */
+  padding-bottom: 66%;
+
+}
+
+.blueimp-gallery-display {
+  display: block;
+  opacity: 1;
+}
+.blueimp-gallery > .slides {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.blueimp-gallery-carousel > .slides {
+  position: absolute;
+}
+.blueimp-gallery > .slides > .slide {
+  position: relative;
+  float: left;
+  height: 100%;
+  text-align: center;
+  -webkit-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  -moz-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  -ms-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  -o-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+.blueimp-gallery,
+.blueimp-gallery > .slides > .slide > .slide-content {
+  -webkit-transition: opacity 0.5s linear;
+  -moz-transition: opacity 0.5s linear;
+  -ms-transition: opacity 0.5s linear;
+  -o-transition: opacity 0.5s linear;
+  transition: opacity 0.5s linear;
+}
+.blueimp-gallery > .slides > .slide-loading {
+  background: url(img/loading.gif) center no-repeat;
+  background-size: 64px 64px;
+}
+.blueimp-gallery > .slides > .slide-loading > .slide-content {
+  opacity: 0;
+}
+.blueimp-gallery > .slides > .slide-error {
+  background: url(img/error.png) center no-repeat;
+}
+.blueimp-gallery > .slides > .slide-error > .slide-content {
+  display: none;
+}
+
+/*
+
+.blueimp-gallery > .prev,
+.blueimp-gallery > .next {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  margin-top: -23px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 60px;
+  font-weight: 100;
+  line-height: 30px;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 0 2px #000;
+  text-align: center;
+  background: #222;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: 3px solid #fff;
+  -webkit-border-radius: 23px;
+  -moz-border-radius: 23px;
+  border-radius: 23px;
+  opacity: 0.5;
+  cursor: pointer;
+  display: none;
+}
+
+*/
+
+.blueimp-gallery > .prev {
+  right: auto;
+  left: 15px;
+}
+
+.blueimp-gallery > .next {
+  left: auto;
+  right: 15px;
+}
+.blueimp-gallery > .close,
+.blueimp-gallery > .title {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  margin: 0 40px 0 0;
+  font-size: 20px;
+  line-height: 30px;
+  color: #fff;
+  text-shadow: 0 0 2px #000;
+  opacity: 0.8;
+  display: none;
+}
+.blueimp-gallery > .close {
+  padding: 10px;
+  right: 15px;
+  left: auto;
+  margin: -10px;
+  font-size: 30px;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 20;
+}
+.blueimp-gallery > .play-pause {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  width: 15px;
+  height: 15px;
+  background: url(img/play-pause.png) 0 0 no-repeat;
+  cursor: pointer;
+  opacity: 0.5;
+  display: none;
+}
+.blueimp-gallery-playing > .play-pause {
+  background-position: -15px 0;
+}
+.blueimp-gallery-controls > .prev,
+.blueimp-gallery-controls > .next,
+.blueimp-gallery-controls > .close,
+.blueimp-gallery-controls > .title,
+.blueimp-gallery-controls > .play-pause {
+  display: block;
+  /* Fix z-index issues (controls behind slide element) on Android: */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.blueimp-gallery-single > .prev,
+.blueimp-gallery-left > .prev,
+.blueimp-gallery-single > .next,
+.blueimp-gallery-right > .next,
+.blueimp-gallery-single > .play-pause {
+  display: none;
+}
+.blueimp-gallery > .slides > .slide > .slide-content,
+.blueimp-gallery > .prev,
+.blueimp-gallery > .next,
+.blueimp-gallery > .close,
+.blueimp-gallery > .play-pause {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Replace PNGs with SVGs for capable browsers (excluding IE<9) */
+body:last-child .blueimp-gallery > .slides > .slide-error {
+  background-image: url(img/error.svg);
+}
+body:last-child .blueimp-gallery > .play-pause {
+  width: 20px;
+  height: 20px;
+  background-size: 40px 20px;
+  background-image: url(img/play-pause.svg);
+}
+body:last-child .blueimp-gallery-playing > .play-pause {
+  background-position: -20px 0;
+}
+
+/* IE7 fixes */
+*+html .blueimp-gallery > .slides > .slide {
+  min-height: 300px;
+}
+
+*+html .blueimp-gallery > .slides > .slide > .slide-content {
+  position: relative;
+}
+
+
+/* new slideshows code - october 2013. Tomek */
+
+.blueimp-gallery > .slides > .slide > .slide-content {
+  width:100%;
+}
+#blueimp_fullscreen > .slides > .slide > .slide-content {
+  width:auto;
+}
+
+.slide-caption{
+  margin:10px auto;
+  min-height:32px;
+}
+
+.slideshow-nav a{
+  cursor:pointer;
+}
+
+.slideshow-nav a.active img{
+  opacity:0.6;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: alpha(opacity=60);
+}
+
+.image-slideshow .fullscreenButton {
+  display:block; width:57px; height:57px;
+  position:absolute; top:23px; right:23px; z-index:2;
+  background-image:url(img/open-slideshow.png);
+  background-repeat: no-repeat;
+  background-position: 15px 15px;
+  cursor:pointer;
+}
+.image-slideshow .fullscreenButton:hover {
+  background-color:rgba(255, 255, 255, .4);
+}
+
+#blueimp_fullscreen .caption{
+  display:none;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  position:absolute;
+  top:auto;
+  bottom:0;
+  right:0;
+  left:0;
+  background-color:#fff;
+  background-color:rgba(255,255,255,0.7);
+  font-size:1em;
+  padding:15px 30px;
+
+}
+
+#blueimp_fullscreen.blueimp-gallery-controls .caption{
+  display:block;
+}
+
+#blueimp_fullscreen > .slides > .slide > .video-content > iframe {
+  max-width: 800px;
+  max-height: 600px;
+  border: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+#blueimp_fullscreen > .slides > .slide > .video-playing > iframe {
+  top: 50%;
+  left:50%;
+  margin-left:-400px;
+  margin-top:-300px;
+}
+
+
+/* desktop - big screens
+*/
+
+@media only screen and (min-width : 1025px) {
+  .image-slideshow .blueimp-gallery > .indicator {
+   display: none;
+ }
+
+}
+
+/* "mobile" - small screens
+*/
+
+@media only screen and (max-width : 1024px) {
+  .image-slideshow .jcarousel-skin-img-slider{
+    display:none;
+  }
+  .image-slideshow{
+    padding-top:3px;
+    padding-bottom: 0px;
+  }
+  .image-slideshow .blueimp-gallery{
+    padding-top:18px;
+    background:#f8f8f8;
+  }
+
+  .image-slideshow .blueimp-gallery > .indicator {
+
+    top: 0px;
+
+    bottom: auto;
+
+    display: block;
+  }
+
+  .blueimp-gallery > .indicator > li {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    margin: 6px 3px 0 3px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border: 1px solid transparent;
+    background: #333;
+
+    box-shadow: none;
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .image-slideshow .blueimp-gallery > .indicator > .active {
+    background-color: #fff;
+    border-color: #333;
+    opacity: 0.5;
+  }
+
+
+  .blueimp-gallery > .prev, .blueimp-gallery > .next {
+
+    margin-top: -13px;
+
+  }
+
+  .image-slideshow .fullscreenButton {
+    display: block;
+    width: 27px;
+    height: 27px;
+    position: absolute;
+    top: 23px;
+
+    z-index: 2;
+    background-image: url(img/open-slideshow.png);
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+    cursor: pointer;
+    background-size: 17px 17px;
+  }
+
+}
+
+@media only screen and (max-width : 799px) {
+
+  .image-slideshow{
+    padding:0;
+    background:none;
+    border:none;
+  }
+
+  .image-slideshow .blueimp-gallery{
+
+    background:transparent;
+  }
+  .image-slideshow .fullscreenButton {
+    right: 5px;
+  }
+
+
+}
+
+@media only screen and (max-width : 768px) {
+
+  .image-slideshow .fullscreenButton {
+    display: none;
+  }
+
+}
+

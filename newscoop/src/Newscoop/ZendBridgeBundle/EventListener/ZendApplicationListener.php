@@ -9,6 +9,7 @@
 namespace Newscoop\ZendBridgeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernel;
 
 /**
  * Run zend legacy code (zend router, acl etc...)
@@ -25,6 +26,11 @@ class ZendApplicationListener
 
     public function onRequest(GetResponseEvent $event)
     {
+        if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
+            // don't do anything if it's not the master request
+            return;
+        }
+
         $request = $event->getRequest();
         $pos = strpos($request->server->get('REQUEST_URI'), '_profiler');
 

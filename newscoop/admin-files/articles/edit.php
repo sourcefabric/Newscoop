@@ -197,6 +197,8 @@ if ($f_publication_id > 0 && $f_issue_number && $f_section_number) {
 
 function parseTextBody($text, $articleNumber)
 {
+    $translator = \Zend_Registry::get('container')->getService('translator');
+    
     // Subheads
     $text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
     $text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
@@ -222,7 +224,6 @@ function parseTextBody($text, $articleNumber)
 
     preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
 
-    $translator = \Zend_Registry::get('container')->getService('translator');
     // snippet tag format: <-- Snippet 1 -->
     $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
     $text = preg_replace("/$snippetPattern/i", '<div data-snippet-id="$1" class="camp_snippet">'.$translator->trans('Snippet', array(), 'articles').' $1</div>', $text);
