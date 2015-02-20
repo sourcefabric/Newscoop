@@ -7,6 +7,9 @@ angular.module('playlistsApp').factory('Playlist', [
     function ($http, $q, $timeout) {
         var Playlist = function () {};  // topic constructor
 
+        var listId = undefined,
+			playlistArticles = [];
+
         /**
         * Retrieves a list of all existing playlists.
         *
@@ -25,7 +28,7 @@ angular.module('playlistsApp').factory('Playlist', [
             playlists.$promise = deferredGet.promise;
 
             url = Routing.generate(
-                'playlists url', // TODO
+                'newscoop_gimme_articleslist_getarticleslists',
                 {items_per_page: 9999},
                 true
             );
@@ -44,6 +47,43 @@ angular.module('playlistsApp').factory('Playlist', [
         };
 
         /**
+        * Retrieves a list of all articles by given list id.
+        *
+        * Initially, an empty array is returned, which is later filled with
+        * data on successful server response. At that point the given promise
+        * is resolved (exposed as a $promise property of the returned array).
+        *
+        * @method getArticlesByListId
+        * @return {Object} array of playlists
+        */
+        Playlist.getArticlesByListId = function (playlistId) {
+            var articles = [],
+                deferredGet = $q.defer(),
+                url;
+
+            articles.$promise = deferredGet.promise;
+
+            url = Routing.generate(
+                'newscoop_gimme_articleslist_getplaylistsarticles',
+                {id: playlistId, items_per_page: 10},
+                true
+            );
+
+            $http.get(url)
+            .success(function (response) {
+                response.items.forEach(function (item) {
+                    articles.push(item);
+                });
+                playlistArticles = articles;
+                deferredGet.resolve();
+            }).error(function (responseBody) {
+                deferredGet.reject(responseBody);
+            });
+
+            return articles;
+        };
+
+        /**
         * Retrieves a list of all available articles.
         *
         * At the begining we check for valid ngTable parameters
@@ -57,7 +97,7 @@ angular.module('playlistsApp').factory('Playlist', [
             var url,
             	requestParams;
 
-           	requestParams = {items_per_page: 5}
+           	requestParams = {items_per_page: 10}
 
            	if(params.$params.query !== undefined) {
            		requestParams.query = params.$params.query;
@@ -84,6 +124,84 @@ angular.module('playlistsApp').factory('Playlist', [
             }).error(function (responseBody) {
                 $defer.reject(responseBody);
             });
+        };
+
+        /**
+        * Unassignes article from playlist.
+        *
+        * @method unlinkSingleArticle
+        * @param number {Number} article ID
+        * @param language {String} article language code (e.g. 'de')
+        * @return {Object} promise object that is resolved on successful server
+        *   response and rejected on server error response
+        */
+        Playlist.unlinkSingleArticle = function(number, language) {
+            var deferred = $q.defer(),
+                linkHeader;
+
+            linkHeader = [
+                '<',
+                Routing.generate(
+                    'newscoop_gimme_articles_getarticle',
+                    {number: number, language:language},
+                    false
+                ),
+                '; rel="article">'
+            ].join('');
+
+            $http({
+                url: Routing.generate(
+                    'unlink article from playlist url', //TODO
+                    {id: listId},
+                    true
+                ),
+                method: 'UNLINK',
+                headers: {link: linkHeader}
+            })
+            .success(function () {
+                deferred.resolve();
+            })
+            .error(function (responseBody) {
+                deferred.reject(responseBody);
+            });
+
+            return deferred.promise;
+        };
+
+        /**
+         * Gets list identifier
+         *
+         * @return {Integer|null} List id
+         */
+        Playlist.getListId = function () {
+            return listId;
+        };
+
+        /**
+         * Sets list identifier
+         *
+         * @param {Integer} value List id
+         */
+        Playlist.setListId = function(value) {
+            listId = value;
+        };
+
+        /**
+         * Gets list identifier
+         *
+         * @return {Integer|null} List id
+         */
+        Playlist.getCurrentPlaylistArticles = function () {
+            return playlistArticles;
+        };
+
+        /**
+         * Gets list identifier
+         *
+         * @return {Integer|null} List id
+         */
+        Playlist.setCurrentPlaylistArticles = function (list) {
+            playlistArticles = list;
         };
 
         return Playlist;

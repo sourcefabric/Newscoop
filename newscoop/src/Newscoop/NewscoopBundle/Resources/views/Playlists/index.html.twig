@@ -14,217 +14,244 @@
 {% endblock %}
 
 {% block admin_content %}
-<div ng-app="playlistsApp">
-<div class="system_pref">
-    	<ul class="list-inline first-menu">
-		    <li><a class="add btn btn-primary btn-sm" href="#">{{ 'Add list'|trans }}</a></li>
-		    <li>
-		    	<ui-select ng-model="playlist.selected" theme="select2" ng-disabled="disabled" style="min-width: 300px;">
-				    <ui-select-match placeholder="Select list or search by name..."></ui-select-match>
-				    <ui-select-choices repeat="playlist in playlists | listsFilter: {name: $select.search}">
-				      <div ng-bind-html="playlist.name | highlight: $select.search"></div>
-				    </ui-select-choices>
-			    </ui-select>
-		    </li>
-		    <li>
-                <label id="playlist-name-label">{{ 'List Name'|trans }}:</label>
-            </li>
-            <li>
-                <span id="list_name">
-                    <input name="playlist-name" class="form-control" style="float: left;" id="playlist-name">
-                </span>
-            </li>
-            <li>
-                <label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
-            </li>
-            <li>
-                <span id="list_id" style="float: left;">
-                    
-                </span>
-            </li>
-            <li style="float: right">
-                <div class="save-button-bar">
-                    <button type="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button>
-                    <button type="button" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span></button>
-                </div>
-            </li>
-		</ul>
-        <div class="context-content">
-            <div class="context-block context-search plugin-context-block">
-                <h3>{{ 'Available Articles'|trans }}</h3>
-                <div id="smartlist-" class="smartlist" ng-controller="PlaylistCtrl">
-                    <div class="filters">
-                        <dl>
-                          <dd>
-                            <fieldset class="toggle filters closed" style="display:block">
-                                <legend><span class="ui-icon ui-icon-triangle-2-n-s"></span>{{ 'Filter'|trans }}</legend>
-                                <dl style="display: none;">
-                                    <div class="table">
-                                        <div class="tr">
-                                            <div class="td">
-                                                <select name="publication" id="publication_filter" class="selectBig form-control input-sm">
-                                                </select> 
-                                            </div>
-                                        </div>
-                                        <div class="tr">
-                                            <div class="td">   
-                                                <select name="issue" id="issue_filter" class="selectBig form-control input-sm">
-                                                    <option></option>
-                                                </select> 
-                                            </div>
-                                        </div>
-                                        <div class="tr">
-                                            <div class="td">   
-                                                <select name="section" id="section_filter" class="selectBig form-control input-sm">
-                                                    <option></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="tr">
-                                            <div class="td">
-                                                <input style="width: 257px" type="hidden" id="article_filter" name="article"/>
-                                            </div>
-                                        </div>
-                                        <div class="extra">
-                                            <dl>
-                                                <dt><label for="filter_date">{{ 'plugin.lists.label.date'|trans }}</label></dt>
-                                                <dd>
-                                                    <input id="filter_date" type="text" name="publish_date"
-                                                    class="date" /></dd>
-                                                </dl>
-                                                <dl>
-                                                    <dt><label for="filter_author">{{ 'plugin.lists.label.commenter'|trans }}</label></dt>
-                                                    <dd>
-                                                        <select name="author" class="form-control input-sm" style="display: initial;">
-                                                            <option value="0">{{ 'plugin.lists.label.all'|trans }}</option>
-                                                        </select>
-                                                    </dd>
-                                                </dl>
-                                                <dl>
-                                                    <dt><label for="filter_language">{{ 'plugin.lists.label.language'|trans }}</label></dt>
-                                                    <dd>
-                                                        <select id="filter_name" name="language" class="form-control input-sm" style="display: initial;">
-                                                            <option value="0">{{ 'plugin.lists.label.all'|trans }}</option>
-                                                        </select>
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                        </dl>
-                                    </fieldset>
-                                </dd>
-                            </dl>
-                        </div>
-                        <div loading-container="tableParams.settings().$loading">
-					      <table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
-					        <tbody ng-sortable="sortableConfig">
-					          <tr ng-repeat="article in $data">
-					            <td class="query" filter="{ 'query': 'text' }" sortable="query">
-					            	<div class="context-item">
-					            	<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
-					            	<div class="context-item-header">
-				                        <div class="context-item-date">{[{ ::article.created | niceDate}]}
-				                        <span class="label label-default" style="margin-right: 5px">
-				                        <span ng-switch on="article.status">
-										   <span ng-switch-when="Y">Published</span>
-										   <span ng-switch-when="N">New</span>
-										   <span ng-switch-when="S">Submitted</span>
-										   <span ng-switch-default>Unknown</span>
-										</span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+<div ng-app="playlistsApp" ng-controller="PlaylistsController">
+	<div class="system_pref">
+		<ul class="list-inline first-menu" ng-form="playlistForm">
+			<li><button class="add btn btn-primary btn-sm" ng-click="addNewPlaylist()">{{ 'Add list'|trans }}</button></li>
+			<li>
+				<ui-select ng-model="playlist.selected" theme="select2" on-select="setPlaylistInfoOnChange($item)" ng-disabled="disabled" style="min-width: 300px;">
+				<ui-select-match placeholder="Select list or search by name...">{[{$select.selected.title}]}</ui-select-match>
+				<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
+				<div ng-bind-html="playlist.title | highlight: $select.search"></div>
+			</ui-select-choices>
+		</ui-select>
+	</li>
+	<li ng-if="playlistInfo">
+		<label id="playlist-name-label">{{ 'List Name'|trans }}:</label>
+	</li>
+	<li ng-if="playlistInfo">
+		<span id="list_name">
+			<input name="playlist-name" ng-model="formData.title" required ng-minlength="1" ng-maxlength="40" value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name">
+		</span>
+	</li>
+	<li ng-if="playlistInfo.id">
+		<label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
+	</li>
+	<li ng-if="playlistInfo.id">
+		<span style="float: left;">
+			<input name="playlist-id" id="playlistId" value="{[{ playlistInfo.id }]}" class="form-control" ng-disabled="true">
+		</span>
+	</li>
+	<li style="float: right">
+		<div class="save-button-bar">
+			<button type="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+			<button type="button" ng-click="updateOrCreatePlaylist(this)" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span></button>
+		</div>
+	</li>
+</ul>
+<div class="context-content">
+	<div class="context-block context-search plugin-context-block">
+		<h3>{{ 'Available Articles'|trans }}</h3>
+		<div class="smartlist">
+			<div class="filters">
+				<dl>
+					<dd>
+						<fieldset class="toggle filters closed" style="display:block">
+							<legend><span class="ui-icon ui-icon-triangle-2-n-s"></span>{{ 'Filter'|trans }}</legend>
+							<dl style="display: none;">
+								<div class="table">
+									<div class="tr">
+										<div class="td">
+											<select name="publication" id="publication_filter" class="selectBig form-control input-sm">
+											</select> 
 										</div>
-				                        <a href="#" style="text-decoration: none;" class="view-article">View article</a>
-				                    </div>
-				                    <div class="context-item-summary">
-					                	{[{ ::article.title}]}
-					                </div>
-					                </div>
-					            </td>
-					          </tr>
-					        </tbody>
-					      </table>
-                    </div>
-                    </div>
-                </div>
-                <div class="context-block context-list plugin-context-block" ng-controller="FeaturedController">
-                    <h3>{{ 'Featured Articles'|trans }}</h3>
-                    <div class="context-list-results">
-                        <div style="display: block">
-                        	<div class="save-button-bar" style="display: block;">
-                            	<button type="button" class="btn btn-xs btn-default" title="{{ 'Delete all'|trans }}" id="delete-all-btn" name="delete-all"><span class="glyphicon glyphicon-remove-sign"></span></button>
-                        	</div>
-                            <form id="context-list-form">
-                                <ul id="context_list" ng-sortable="sortableConfig">
-                                	<div ng-if="articles.length == 0" id="drag-here-to-add-to-list" style="display:block">
-                                        {{ 'Drag here to add to list'|trans }}
-                                    </div>
-									<li class="item" ng-repeat="article in articles">
-			                            <div class="context-item">
-							            	<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
-							            	<div class="context-item-header">
-						                        <div class="context-item-date">{[{ ::article.created | niceDate}]}
+									</div>
+									<div class="tr">
+										<div class="td">   
+											<select name="issue" id="issue_filter" class="selectBig form-control input-sm">
+												<option></option>
+											</select> 
+										</div>
+									</div>
+									<div class="tr">
+										<div class="td">   
+											<select name="section" id="section_filter" class="selectBig form-control input-sm">
+												<option></option>
+											</select>
+										</div>
+									</div>
+									<div class="tr">
+										<div class="td">
+											<input style="width: 257px" type="hidden" id="article_filter" name="article"/>
+										</div>
+									</div>
+									<div class="extra">
+										<dl>
+											<dt><label for="filter_date">{{ 'plugin.lists.label.date'|trans }}</label></dt>
+											<dd>
+												<input id="filter_date" type="text" name="publish_date"
+												class="date" /></dd>
+											</dl>
+											<dl>
+												<dt><label for="filter_author">{{ 'plugin.lists.label.commenter'|trans }}</label></dt>
+												<dd>
+													<select name="author" class="form-control input-sm" style="display: initial;">
+														<option value="0">{{ 'plugin.lists.label.all'|trans }}</option>
+													</select>
+												</dd>
+											</dl>
+											<dl>
+												<dt><label for="filter_language">{{ 'plugin.lists.label.language'|trans }}</label></dt>
+												<dd>
+													<select id="filter_name" name="language" class="form-control input-sm" style="display: initial;">
+														<option value="0">{{ 'plugin.lists.label.all'|trans }}</option>
+													</select>
+												</dd>
+											</dl>
+										</div>
+									</dl>
+								</fieldset>
+							</dd>
+						</dl>
+					</div>
+					<div loading-container="tableParams.settings().$loading">
+						<table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
+							<tbody ng-sortable="sortableConfig">
+								<tr ng-repeat="article in $data">
+									<td class="query" filter="{ 'query': 'text' }" sortable="query">
+										<div class="context-item">
+											<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
+											<div class="context-item-header">
+												<div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
+													<span class="label label-default" style="margin-right: 5px">
+														<span ng-switch on="article.status">
+															<span ng-switch-when="Y">Published</span>
+															<span ng-switch-when="N">New</span>
+															<span ng-switch-when="S">Submitted</span>
+															<span ng-switch-default>Unknown</span>
+														</span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+													</div>
+													<a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">View article</a>
 												</div>
-							                    <a href="#" class="corner-button" style="display: block; padding-right: 19px;">
-				                            		<span class="ui-icon ui-icon-closethick"></span>
-				                            	</a>
-						                    </div>
-						                    <div class="context-item-summary">
-							                	{[{ ::article.title}]}
-							                </div>
-						                </div>
-			                        </li>
-                                </ul>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-    <div id="dialog-confirm" style="display:none;" title="{{ 'plugin.lists.label.remove'|trans }}">
-        <p>{{ 'plugin.lists.label.delete'|trans }}</p>
-    </div>
-    <div id="dialog-confirm-delete-all" style="display:none;" title="{{ 'plugin.lists.label.removeallcomments'|trans }}">
-        <p>{{ 'plugin.lists.label.deleteallcomments'|trans }}</p>
-    </div>
-    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="modalEditLabel">{{ 'plugin.lists.label.quickedit'|trans }}</h4>
-        </div>
-        <form id="editForm" action="">
-          <div class="modal-body">
-            <input type="hidden" name="commentId"/>
-            <input type="hidden" name="listId"/>
-            <label>{{ 'plugin.lists.label.externalsubject'|trans }}</label>
-            <input name="subject" type="text" class="form-control input-sm"><br>
-            <label>{{ 'plugin.lists.label.externalmessage'|trans }}</label>
-            <textarea style="min-height:200px;" name="message" class="form-control input-sm"></textarea><br>
-            <h4>{{ 'plugin.lists.label.originalcomment'|trans }}</h4>
-            <input name="originalSubject" type="text" disabled class="form-control input-sm"><br>
-            <textarea style="min-height:150px;" disabled name="originalMessage" class="form-control input-sm"></textarea>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">{{ 'plugin.lists.btn.cancel'|trans }}</button>
-            <input type="submit" value="{{ 'plugin.lists.btn.submit'|trans }}" class="btn btn-success btn-sm">
-        </div>
-    </form>
-</div>
-</div>
-</div>
-</div>
-<script type="text/javascript">
-    var clientId = '{{ clientId }}';
-</script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-sortable.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/app.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/current-time.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/nice-date.js') }}"></script>
-<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
+												<div class="context-item-summary">
+													{[{ ::article.title}]}
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div ng-controller="FeaturedController">
+					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" >
+						<h3>{{ 'Featured Articles'|trans }}</h3>
+						<div class="context-list-results">
+							<div style="display: block">
+								<form id="context-list-form">
+									<ul id="context_list" ng-sortable="sortableConfig">
+										<div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
+											{{ 'Drag here to add to list'|trans }}
+										</div>
+										<li class="item" ng-repeat="article in $parent.featuredArticles">
+											<div class="context-item">
+												<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
+												<div class="context-item-header">
+													<div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
+														<span class="label label-default" style="margin-right: 5px">
+															<span ng-switch on="article.status">
+																<span ng-switch-when="Y">Published</span>
+																<span ng-switch-when="N">New</span>
+																<span ng-switch-when="S">Submitted</span>
+																<span ng-switch-default>Unknown</span>
+															</span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+														</div>
+														<a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
+															<span class="ui-icon ui-icon-closethick"></span>
+														</a>
+													</div>
+													<div class="context-item-summary">
+														{[{ ::article.title}]}
+													</div>
+												</div>
+											</li>
+										</ul>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="context-block plugin-context-block context-preview" ng-if="isViewing">
+						<div class="save-button-bar">
+						<button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add this article'|trans }}</button>
+						<button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+						</div>
 
-{% endblock %}
+						<div class="context-article-preview" style="overflow-y:auto; height:500px;">
+							<h3 id="preview-article-title">{[{ articlePreview.title }]}</h3>
+							<div id="preview-article-body" style="color: #444444">
+								<h5>{{ 'Authors'|trans }}</h5>
+								<span ng-repeat="author in articlePreview.authors">
+									<p>- {[{ ::author.name }]}</p>
+								</span>
+								<span ng-repeat="(key, value) in articlePreview.fields">
+									<h5>{[{ ::key}]}</h5>
+									<p ng-bind-html="value"></p>
+								</span>
+								<h5>{{ 'Date'|trans }}</h5>
+								<p>{[{ ::articlePreview.created | date:"yyyy-MM.dd H:mm:ss"}]}</p>
+			                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="dialog-confirm" style="display:none;" title="{{ 'plugin.lists.label.remove'|trans }}">
+					<p>{{ 'plugin.lists.label.delete'|trans }}</p>
+				</div>
+				<div id="dialog-confirm-delete-all" style="display:none;" title="{{ 'plugin.lists.label.removeallcomments'|trans }}">
+					<p>{{ 'plugin.lists.label.deleteallcomments'|trans }}</p>
+				</div>
+				<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="modalEditLabel">{{ 'plugin.lists.label.quickedit'|trans }}</h4>
+							</div>
+							<form id="editForm" action="">
+								<div class="modal-body">
+									<input type="hidden" name="commentId"/>
+									<input type="hidden" name="listId"/>
+									<label>{{ 'plugin.lists.label.externalsubject'|trans }}</label>
+									<input name="subject" type="text" class="form-control input-sm"><br>
+									<label>{{ 'plugin.lists.label.externalmessage'|trans }}</label>
+									<textarea style="min-height:200px;" name="message" class="form-control input-sm"></textarea><br>
+									<h4>{{ 'plugin.lists.label.originalcomment'|trans }}</h4>
+									<input name="originalSubject" type="text" disabled class="form-control input-sm"><br>
+									<textarea style="min-height:150px;" disabled name="originalMessage" class="form-control input-sm"></textarea>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">{{ 'plugin.lists.btn.cancel'|trans }}</button>
+									<input type="submit" value="{{ 'plugin.lists.btn.submit'|trans }}" class="btn btn-success btn-sm">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				var clientId = '{{ clientId }}';
+			</script>
+			<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.min.js"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-sortable.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/app.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
+
+			{% endblock %}

@@ -19,8 +19,7 @@ angular.module('playlistsApp').factory('authInterceptor', [
 
         return {
             request: function (config) {
-                var endpoint,
-                    token,
+                var token,
                     userAuth = $injector.get('userAuth');
 
                 config.headers = config.headers || {};
@@ -33,7 +32,8 @@ angular.module('playlistsApp').factory('authInterceptor', [
             },
 
             // If we receive an error response because authentication token
-            // is invalid/expired, we handle it by displaying a login modal.
+            // is invalid/expired, we handle it by removing current token from
+            // the session and getting the new one.
             //
             // If login succeeds and a new token is obtained, the failed http
             // request is transparently repeated with a correct token. If even
@@ -69,7 +69,7 @@ angular.module('playlistsApp').factory('authInterceptor', [
                     // obtain a new token and then repeat the failed request.
                     failedRequestConfig = response.config;
                     retryDeferred = $q.defer();
-
+                    $window.sessionStorage.setItem('token', '');
                     userAuth.newToken()
                     .then(function () {
                         // new token successfully obtained, repeat the request

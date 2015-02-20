@@ -58,16 +58,77 @@ app.filter('listsFilter', function() {
   }
 });
 
-/**
- * @ngdoc function
- * @name playlistsApp.controller:PlaylistCtrl
- * @description
- * # PlaylistCtrl
- * Controller of the playlistsApp
- */
-app.controller('PlaylistCtrl', function ($scope, Playlist, ngTableParams, $timeout, $http) {
+app.controller('FeaturedController', [
+    '$scope',
+    'Playlist',
+    function (
+        $scope,
+        Playlist
+    ) {
+
+    $scope.sortableConfig = {
+        group: 'articles',
+        animation: 150,
+        onAdd: function (evt/**Event*/){
+            var item = evt.model; // the current dragged article
+            var number = item.number;
+
+            // TODO dont add article if its already in the playlist
+            var result = _.some($scope.$parent.featuredArticles, {'number': number.toString()});
+
+        }
+    };
+
+
+
+    /**
+     * Deletes single article from the currently loaded playlist
+     *
+     * @param  {Object} article Article object
+     */
+    $scope.deleteSingleArticle = function (article) {
+        Playlist.removeSingleArticle(article.number, article.language)
+        .then(function () {
+            _.remove(
+                $scope.$parent.featuredArticles,
+                {number: article.number}
+            );
+            flashMessage(Translator.trans('List updated.'));
+            Playlist.setCurrentPlaylistArticles($scope.$parent.featuredArticles);
+        });
+    };
+
+    /**
+     * Removes article from the playlist
+     *
+     * @param  {Object} article Article object
+     */
+    $scope.removeArticle = function (article) {
+        _.remove(
+            $scope.$parent.featuredArticles,
+            {number: article.number}
+        );
+
+        Playlist.setCurrentPlaylistArticles($scope.$parent.featuredArticles);
+    }
+}]);
+
+app.controller('PlaylistsController', [
+    '$scope',
+    'Playlist',
+    'ngTableParams',
+    function (
+        $scope,
+        Playlist,
+        ngTableParams
+    ) {
+
+    $scope.isViewing = false;
     $scope.playlist = {};
-    $scope.playlists = []; //Playlist.getAll();
+    $scope.playlists = Playlist.getAll();
+    $scope.playlistInfo = undefined;
+    $scope.featuredArticles = [];
+    $scope.formData = {};
 
     $scope.sortableConfig = {
         group: 'articles',
@@ -76,8 +137,7 @@ app.controller('PlaylistCtrl', function ($scope, Playlist, ngTableParams, $timeo
 
     $scope.tableParams = new ngTableParams({
         page: 1, // show first page
-        count: 5, // count per page
-        itemsPerPage: 5
+        count: 5 // count per page
     }, {
         total: 0,// length of data
         counts: [], // disable page sizes
@@ -87,13 +147,79 @@ app.controller('PlaylistCtrl', function ($scope, Playlist, ngTableParams, $timeo
             Playlist.getAllArticles($defer, params);
         }
     });
-}).controller('FeaturedController', ['$scope', function ($scope) {
-    // TODO - this array should be filled with data taken from the Playlists API
-    $scope.articles = [
-        {title: 'learn angular', status: "Y", type: "news", created: "2014-02-19T15:48:13+0100"},
-        {title: 'build an angular app', status: "Y", type: "news", created: "2010-12-23T15:48:13+0100"}
-    ];
-    $scope.sortableConfig = { group: 'articles', animation: 150 };
 
-    }]);
+    /**
+     * Opens selected article's preview
+     *
+     * @param  {Object} article Seected article
+     */
+    $scope.viewArticle = function (article) {
+        $scope.isViewing = true;
+        $scope.articlePreview = article;
+    };
+
+    /**
+     * Closes article's preview window
+     */
+    $scope.closeViewArticle = function () {
+        $scope.isViewing = false;
+    };
+
+    /**
+     * Adds article to the playlist, which is currently in preview mode
+     */
+    $scope.addArticleToListFromPreview = function () {
+        $scope.featuredArticles.unshift($scope.articlePreview);
+        $scope.isViewing = false;
+    };
+
+    /**
+     * Sets playlist details to the current scope.
+     *
+     * It loads playlist details on select2 change.
+     *
+     * @param  {Object} list  Playlist
+     */
+    $scope.setPlaylistInfoOnChange = function (list) {
+        $scope.featuredArticles = Playlist.getArticlesByListId(list.id);
+        Playlist.setListId(list.id);
+        $scope.playlistInfo = list;
+        $scope.formData = {title: list.title}
+    };
+
+    /**
+     * Saves playlist with all articles in it.
+     * It makes batch link or unlink of the articles. It also
+     * saves a proper order of the articles. All list's changes are saved
+     * by clicking Save button.
+     *
+     * @param  {Object} scope Current scope
+     */
+    $scope.savePlaylist = function (scope) {
+        var listname = scope.formData.title;
+        $scope.playlists.push({title: listname});
+        $scope.playlist.selected = $scope.playlists[$scope.playlists.length - 1];
+
+    }
+
+    /**
+     * Adds new playlist. Sets default list name to current date.
+     */
+    $scope.addNewPlaylist = function () {
+        var defaultListName,
+            currentDate = new Date();
+
+        defaultListName = currentDate.toString();
+        Playlist.setCurrentPlaylistArticles([]);
+        $scope.featuredArticles = Playlist.getCurrentPlaylistArticles();
+        $scope.formData.title = defaultListName;
+
+        if ($scope.playlist.selected !== undefined) {
+            $scope.playlistInfo.id = undefined;
+            $scope.playlist.selected = undefined;
+        } else {
+            $scope.playlistInfo = {title: defaultListName, id: undefined};
+        }
+    }
+}]);
 })();
