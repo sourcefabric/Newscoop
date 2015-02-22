@@ -125,8 +125,16 @@ class ArticlesListController extends FOSRestController
             throw new NotFoundHttpException('Result was not found.');
         }
 
+        $onlyPublished = true;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $onlyPublished = false;
+            }
+        } catch (\Newscoop\NewscoopException $e) {}
+
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, null, true, null, null, true, true)->getResult();
+            ->articles($playlist, null, true, null, null, true, $onlyPublished)->getResult();
 
         $articles = array();
         foreach ($playlistArticles as $playlistArticle) {

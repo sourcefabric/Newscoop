@@ -219,9 +219,9 @@ class SearchService implements ServiceInterface
         }
     }
 
-    public function searchArticles($language, $query = null, $publication = false, $issue = false, $section = false, $onlyPublished = true)
+    public function searchArticles($articleSearchCriteria, $onlyPublished = true)
     {
-        $keywords = array_diff(explode(',', $query), array(''));
+        $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
 
         $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
         if (count($webcodeMatches)) {
@@ -235,11 +235,7 @@ class SearchService implements ServiceInterface
 
         $articles = $this->em->getRepository('Newscoop\Entity\Article')
             ->searchArticles(
-                $language,
-                $keywords,
-                $publication,
-                $issue,
-                $section,
+                $articleSearchCriteria,
                 $onlyPublished
             )
             ->getResult();

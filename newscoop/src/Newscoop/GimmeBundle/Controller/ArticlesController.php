@@ -23,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Criteria\ArticleSearchCriteria;
 
 /**
  * Articles controller
@@ -239,7 +240,16 @@ class ArticlesController extends FOSRestController
      *         {"name"="query", "dataType"="string", "required"=true, "description"="article serach query"},
      *         {"name"="publication", "dataType"="string", "required"=false, "description"="Filter by publication"},
      *         {"name"="issue", "dataType"="string", "required"=false, "description"="Filter by issue"},
-     *         {"name"="section", "dataType"="string", "required"=false, "description"="Filter by section"}
+     *         {"name"="section", "dataType"="string", "required"=false, "description"="Filter by section"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Filter by language"},
+     *         {"name"="article_type", "dataType"="string", "required"=false, "description"="Filter by article type"},
+     *         {"name"="publish_date", "dataType"="string", "required"=false, "description"="Filter by publish date"},
+     *         {"name"="published_after", "dataType"="string", "required"=false, "description"="Filter by published after date"},
+     *         {"name"="published_before", "dataType"="string", "required"=false, "description"="Filter by published before date"},
+     *         {"name"="author", "dataType"="integer", "required"=false, "description"="Filter by author"},
+     *         {"name"="creator", "dataType"="integer", "required"=false, "description"="Filter by creator"},
+     *         {"name"="status", "dataType"="string", "required"=false, "description"="Filter by status"},
+     *         {"name"="topic", "dataType"="integer", "required"=false, "description"="Filter by topic"}
      *     }
      * )
      *
@@ -262,12 +272,15 @@ class ArticlesController extends FOSRestController
             }
         } catch (\Newscoop\NewscoopException $e) {}
 
+        $articleSearchCriteria = new ArticleSearchCriteria();
+        $articleSearchCriteria->fillFromRequest($request);
+
+        if (!$articleSearchCriteria->language) {
+            $articleSearchCriteria->language = $publication->getLanguage()->getCode();
+        }
+
         $articles = $articleSearch->searchArticles(
-            $request->get('language', $publication->getLanguage()->getCode()),
-            $request->query->get('query', null),
-            $request->get('publication', false),
-            $request->get('issue', false),
-            $request->get('section', false),
+            $articleSearchCriteria,
             $onlyPublished
         );
 

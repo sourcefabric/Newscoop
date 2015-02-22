@@ -105,7 +105,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    public function searchArticles($language, $keywords = array(), $publication = false, $issue = false, $section = false, $onlyPublished = true)
+    //public function searchArticles($language, $keywords = array(), $publication = false, $issue = false, $section = false, $onlyPublished = true)
+    public function searchArticles($articleSearchCriteria, $onlyPublished = true)
     {
         $em = $this->getEntityManager();
         $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
@@ -115,6 +116,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $orX = $queryBuilder->expr()->orx();
 
+        $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
         foreach ($keywords as $keyword) {
             $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
         }
@@ -123,22 +125,22 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $queryBuilder->andWhere($orX);
         }
 
-        if ($publication) {
+        if ($articleSearchCriteria->publication) {
             $queryBuilder->andWhere('a.publication = :publication')
-                ->setParameter('publication', $publication);
+                ->setParameter('publication', $articleSearchCriteria->publication);
         }
 
-        if ($section) {
+        if ($articleSearchCriteria->section) {
             $queryBuilder->andWhere('a.sectionNumber = :section')
-                ->setParameter('section', $section);
+                ->setParameter('section', $articleSearchCriteria->section);
         }
 
-        if ($issue) {
+        if ($articleSearchCriteria->issue) {
             $queryBuilder->andWhere('a.issueNumber = :issue')
-                ->setParameter('issue', $issue);
+                ->setParameter('issue', $articleSearchCriteria->issue);
         }
 
-        $queryBuilder->setMaxResults(90);
+        $queryBuilder->setMaxResults(100);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
         $tmpNumbers = array();
@@ -147,21 +149,20 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
         $articleNumbers = $tmpNumbers;
 
-        $query = $this->getArticlesByIds($language, $articleNumbers, $onlyPublished);
+        $query = $this->getArticlesByIds($articleSearchCriteria, $articleNumbers, $onlyPublished);
 
         return $query;
     }
 
-    public function getArticlesByIds($language, $ids = array(), $onlyPublished = true)
+    public function getArticlesByIds($articleSearchCriteria, $ids = array(), $onlyPublished = true)
     {
         $em = $this->getEntityManager();
 
         $languageId = $em->getRepository('Newscoop\Entity\Language')
-            ->findOneByCode($language);
+            ->findOneByCode($articleSearchCriteria->language);
         if (!$languageId) {
             throw new NotFoundHttpException('Results with language "'.$language.'" was not found.');
         }
-        $language = $languageId;
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
@@ -174,8 +175,50 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->orderBy('field')
             ->setParameters(array(
                 'ids' => $ids,
-                'language' => $language
+                'language' => $languageId
             ));
+
+        if ($articleSearchCriteria->article_type) {
+            $queryBuilder->andWhere('a.type = :article_type')
+                ->setParameter('article_type', $articleSearchCriteria->article_type);
+        }
+
+        if ($articleSearchCriteria->publish_date) {
+            $queryBuilder->andWhere('a.published = :publish_date')
+                ->setParameter('publish_date', $articleSearchCriteria->publish_date);
+        }
+
+        if ($articleSearchCriteria->published_after) {
+            $queryBuilder->andWhere('a.published > :published_after')
+                ->setParameter('published_after', $articleSearchCriteria->published_after);
+        }
+
+        if ($articleSearchCriteria->published_before) {
+            $queryBuilder->andWhere('a.published < :published_before')
+                ->setParameter('published_before', $articleSearchCriteria->published_before);
+        }
+
+        if ($articleSearchCriteria->author) {
+            $queryBuilder->join('a.authors', 'au');
+            $queryBuilder->andWhere('au.id = :author')
+                ->setParameter('author', $articleSearchCriteria->author);
+        }
+
+        if ($articleSearchCriteria->creator) {
+            $queryBuilder->andWhere('a.creator = :creator')
+                ->setParameter('creator', $articleSearchCriteria->creator);
+        }
+
+        if ($articleSearchCriteria->status) {
+            $queryBuilder->andWhere('a.workflowStatus = :status')
+                ->setParameter('status', $articleSearchCriteria->status);
+        }
+
+        if ($articleSearchCriteria->topic) {
+            $queryBuilder->join('a.topics', 'att');
+            $queryBuilder->andWhere('att.id = :topic')
+                ->setParameter('topic', $articleSearchCriteria->topic);
+        }
 
         if ($onlyPublished) {
             $queryBuilder->andWhere('a.workflowStatus  = :workflowStatus')

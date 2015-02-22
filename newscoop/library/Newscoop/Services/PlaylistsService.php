@@ -174,6 +174,7 @@ class PlaylistsService
             $oldOrder = $playlistArticle->getOrder();
             $playlistArticle->setOrder(0);
             $this->em->flush();
+            // it's not new element and we need to pull down bigger elements on it place
             if ($oldOrder > 0) {
                 // move all bigger than old position up (-1)
                 $this->em
