@@ -8,7 +8,8 @@ angular.module('playlistsApp').factory('Playlist', [
         var Playlist = function () {};  // topic constructor
 
         var listId = undefined,
-			playlistArticles = [];
+			playlistArticles = [],
+			logList = [];
 
         /**
         * Retrieves a list of all existing playlists.
@@ -169,6 +170,55 @@ angular.module('playlistsApp').factory('Playlist', [
         };
 
         /**
+        * Unassignes article from playlist.
+        *
+        * @method unlinkSingleArticle
+        * @param number {Number} article ID
+        * @param language {String} article language code (e.g. 'de')
+        * @return {Object} promise object that is resolved on successful server
+        *   response and rejected on server error response
+        */
+        Playlist.batchUpdate = function(logList) {
+            var deferred = $q.defer(),
+                postParams;
+
+            angular.forEach(logList, function(article, key) {
+            	var link = [
+            		'<',
+	                Routing.generate(
+	                    'newscoop_gimme_articles_getarticle',
+	                    {number: article.number, language: article.language},
+	                    false
+	                ),
+	                '; rel="article">'].join('');
+            	postParams = [link, article._method];
+            });
+
+            console.log(postParams);
+            /*linkHeader = [
+                
+            ].join('');*/
+
+            /*$http({
+                url: Routing.generate(
+                    'unlink article from playlist url', //TODO
+                    {id: listId},
+                    true
+                ),
+                method: 'UNLINK',
+                headers: {link: linkHeader}
+            })
+            .success(function () {
+                deferred.resolve();
+            })
+            .error(function (responseBody) {
+                deferred.reject(responseBody);
+            });
+
+            return deferred.promise;*/
+        };
+
+        /**
          * Gets list identifier
          *
          * @return {Integer|null} List id
@@ -202,6 +252,24 @@ angular.module('playlistsApp').factory('Playlist', [
          */
         Playlist.setCurrentPlaylistArticles = function (list) {
             playlistArticles = list;
+        };
+
+        /**
+         * Gets list identifier
+         *
+         * @return {Integer|null} List id
+         */
+        Playlist.getLogList = function () {
+            return logList;
+        };
+
+        /**
+         * Gets list identifier
+         *
+         * @return {Integer|null} List id
+         */
+        Playlist.addItemToLogList = function (article) {
+            logList.push(article);
         };
 
         return Playlist;

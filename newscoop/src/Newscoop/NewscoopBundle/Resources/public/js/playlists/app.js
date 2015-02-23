@@ -91,17 +91,49 @@ app.controller('FeaturedController', [
     };
 
     /**
-     * Removes article from the playlist
+     * Removes article from the playlist.
+     * Checks if article exist in the list of available articles (on the current page)
+     * if it doesn't exist put it at the first position, else don't add it -
+     * purpose of it is that this article can be reused again after it will be removed
+     * from the list of Featured comments, so no need to search for it again etc.
      *
      * @param  {Object} article Article object
      */
     $scope.removeArticle = function (article) {
-        _.remove(
-            $scope.$parent.featuredArticles,
+        var availablArticles = [],
+            featuredArticles = [],
+            exists = false,
+            isInFeaturedList = false;
+
+        availablArticles = $scope.$parent.tableParams.data;
+        featuredArticles = $scope.$parent.featuredArticles;
+        exists = _.some(
+            availablArticles,
             {number: article.number}
         );
 
-        Playlist.setCurrentPlaylistArticles($scope.$parent.featuredArticles);
+        if (!exists) {
+            availablArticles.unshift(article);
+        }
+
+        _.remove(
+            featuredArticles,
+            {number: article.number}
+        );
+
+        // set method for the removed object so we can pass it to
+        // the API endpoint and remove item using batch remove feature
+        article._method = "unlink";
+        Playlist.addItemToLogList(article);
+
+        /*isInFeaturedList = _.some(
+            featuredArticles,
+            {number: article.number}
+        );*/
+
+        //if (isInFeaturedList &&)
+        // if article exists in list of featured articles and we are linking dont do anything
+        Playlist.setCurrentPlaylistArticles(featuredArticles);
     }
 }]);
 
@@ -122,15 +154,21 @@ app.controller('PlaylistsController', [
     $scope.featuredArticles = [];
     $scope.formData = {};
 
+    // array of the articles,
+    // that will be removed or added to the list
+    $scope.logList = [];
+
     $scope.sortableConfig = {
         group: 'articles',
         animation: 150,
         onEnd: function (evt/**Event*/){
-            console.log(evt);
-            var item = evt.model; // the current dragged article
-            var number = item.number;
+            var item,
+                number,
+                occurences;
 
-            var occurences = 0;
+            item = evt.model; // the current dragged article
+            number = item.number;
+            occurences = 0;
             angular.forEach($scope.featuredArticles, function(value, key) {
                 if (value.number == number) {
                     occurences++;
@@ -140,7 +178,13 @@ app.controller('PlaylistsController', [
             if (occurences != 1) {
                 $scope.featuredArticles.splice(evt.newIndex, 1);
                 flashMessage(Translator.trans('Item already exists in the list'), 'error');
+
+                return true;
             }
+
+            // add article to log list, so we can save it later using batch save
+            item._method = "link";
+            Playlist.addItemToLogList(item);
         }
     };
 
@@ -214,10 +258,24 @@ app.controller('PlaylistsController', [
      * @param  {Object} scope Current scope
      */
     $scope.savePlaylist = function (scope) {
-        var listname = scope.formData.title;
-        $scope.playlists.push({title: listname});
-        $scope.playlist.selected = $scope.playlists[$scope.playlists.length - 1];
+        var listname = scope.formData.title,
+            logList = [];
+        var playlistExists = _.some(
+            $scope.playlists,
+            {title: listname}
+        );
 
+        if (!playlistExists) {
+            $scope.playlists.push({title: listname});
+            $scope.playlist.selected = $scope.playlists[$scope.playlists.length - 1];
+        }
+
+        logList = Playlist.getLogList();
+        if (logList.length == 0) {
+            flashMessage('Nothing to update');
+        }
+
+        Playlist.batchUpdate(logList);
     }
 
     /**
