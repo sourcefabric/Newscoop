@@ -114,7 +114,7 @@ class ArticleData extends DatabaseObject {
             // Replace <div data-snippet-id="$1" class="camp_snippet">Snippet $1</div>
             // with <-- Snippet 1 -->
             $pattern = "/<div\s*class=\"camp_snippet\"\s*(?:data-snippet-id=\"([\d*])\")>([\w*]+)* ([\d*]+)<\/div>/i";
-            $p_value = preg_replace($pattern, "<-- Snippet $1 -->", $text);
+            $p_value = preg_replace($pattern, "<-- Snippet $1 -->", $p_value);
         }
         if ($articleField->getType() == ArticleTypeField::TYPE_SWITCH) {
             if (is_string($p_value)) {

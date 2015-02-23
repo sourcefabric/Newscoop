@@ -23,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Criteria\ArticleSearchCriteria;
 
 /**
  * Articles controller
@@ -160,7 +161,6 @@ class ArticlesController extends FOSRestController
             $articleService = $this->container->get('newscoop_newscoop.article_service');
 
             $attributes = $form->getData();
-
             $article = $articleService->updateArticle($article, $attributes);
 
             $this->postAddUpdate($article);
@@ -194,6 +194,11 @@ class ArticlesController extends FOSRestController
      *         404={
      *           "Returned when articles are not found",
      *         }
+     *     },
+     *     parameters={
+     *         {"name"="type", "dataType"="integer", "required"=true, "description"="Article type"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Language code"},
+     *         {"name"="issue", "dataType"="string", "required"=false, "description"="Issue number"}
      *     }
      * )
      *
@@ -209,7 +214,7 @@ class ArticlesController extends FOSRestController
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticles($publication, $request->get('type', null), $request->get('language', null));
+            ->getArticles($publication, $request->get('type', null), $request->get('language', null), $request->get('issue', null));
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
@@ -235,7 +240,16 @@ class ArticlesController extends FOSRestController
      *         {"name"="query", "dataType"="string", "required"=true, "description"="article serach query"},
      *         {"name"="publication", "dataType"="string", "required"=false, "description"="Filter by publication"},
      *         {"name"="issue", "dataType"="string", "required"=false, "description"="Filter by issue"},
-     *         {"name"="section", "dataType"="string", "required"=false, "description"="Filter by section"}
+     *         {"name"="section", "dataType"="string", "required"=false, "description"="Filter by section"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Filter by language"},
+     *         {"name"="article_type", "dataType"="string", "required"=false, "description"="Filter by article type"},
+     *         {"name"="publish_date", "dataType"="string", "required"=false, "description"="Filter by publish date"},
+     *         {"name"="published_after", "dataType"="string", "required"=false, "description"="Filter by published after date"},
+     *         {"name"="published_before", "dataType"="string", "required"=false, "description"="Filter by published before date"},
+     *         {"name"="author", "dataType"="integer", "required"=false, "description"="Filter by author"},
+     *         {"name"="creator", "dataType"="integer", "required"=false, "description"="Filter by creator"},
+     *         {"name"="status", "dataType"="string", "required"=false, "description"="Filter by status"},
+     *         {"name"="topic", "dataType"="integer", "required"=false, "description"="Filter by topic"}
      *     }
      * )
      *
@@ -258,12 +272,15 @@ class ArticlesController extends FOSRestController
             }
         } catch (\Newscoop\NewscoopException $e) {}
 
+        $articleSearchCriteria = new ArticleSearchCriteria();
+        $articleSearchCriteria->fillFromRequest($request);
+
+        if (!$articleSearchCriteria->language) {
+            $articleSearchCriteria->language = $publication->getLanguage()->getCode();
+        }
+
         $articles = $articleSearch->searchArticles(
-            $request->get('language', $publication->getLanguage()->getCode()),
-            $request->query->get('query', null),
-            $request->get('publication', false),
-            $request->get('issue', false),
-            $request->get('section', false),
+            $articleSearchCriteria,
             $onlyPublished
         );
 
@@ -357,12 +374,13 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle")
+     * @Route("/articles/{number}/{langauge}.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language") 
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return Form
      */
-    public function getArticleAction(Request $request, $number)
+    public function getArticleAction(Request $request, $number, $langauge = null)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication();
@@ -566,10 +584,10 @@ class ArticlesController extends FOSRestController
      * **related articles headers**:
      *
      *     header name: "link"
-     *     header value: "</api/article/1; rel="topic">"
+     *     header value: "</api/articles/1; rel="topic">"
      * or with specific language
      *
-     *     header value: "</api/article/1?language=en; rel="article">"
+     *     header value: "</api/articles/1?language=en; rel="article">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -708,12 +726,13 @@ class ArticlesController extends FOSRestController
      */
     public function changeArticleStatus(Request $request, $number, $language, $status)
     {
+        $user = $this->container->get('user')->getCurrentUser();
         $statuses = array('N','S','M','Y');
         if (!in_array($status, $statuses)) {
             throw new InvalidParametersException('The provided Status is not valid, available: N, S, M, Y.');
         }
 
-        $articleObj = $this->getArticle($number, $language);
+        $articleObj = $this->getArticle($number, $language, $user);
         $success = $articleObj->setWorkflowStatus($status);
         $response = new Response();
         if ($success) {

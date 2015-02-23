@@ -61,7 +61,6 @@ class LinkRequestListener
             $links[] = $header;
         }
 
-
         $requestMethod = $this->urlMatcher->getContext()->getMethod();
 
         // The controller resolver needs a request to resolve the controller.
@@ -99,9 +98,8 @@ class LinkRequestListener
                 continue;
             }
 
-            // Make sure @ParamConverter is handled
-            $subEvent = new FilterControllerEvent($event->getKernel(), $controller, $stubRequest, HttpKernelInterface::MASTER_REQUEST);
-            $kernelSubEvent = new GetResponseEvent($event->getKernel(), $stubRequest, HttpKernelInterface::MASTER_REQUEST);
+            $subEvent = new FilterControllerEvent($event->getKernel(), $controller, $stubRequest, HttpKernelInterface::SUB_REQUEST);
+            $kernelSubEvent = new GetResponseEvent($event->getKernel(), $stubRequest, HttpKernelInterface::SUB_REQUEST);
             $event->getDispatcher()->dispatch(KernelEvents::REQUEST, $kernelSubEvent);
             $event->getDispatcher()->dispatch(KernelEvents::CONTROLLER, $subEvent);
             $controller = $subEvent->getController();
