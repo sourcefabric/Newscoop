@@ -103,7 +103,7 @@ app.controller('FeaturedController', [
         var availablArticles = [],
             featuredArticles = [],
             exists = false,
-            isInFeaturedList = false;
+            isInLogList = false;
 
         availablArticles = $scope.$parent.tableParams.data;
         featuredArticles = $scope.$parent.featuredArticles;
@@ -121,18 +121,26 @@ app.controller('FeaturedController', [
             {number: article.number}
         );
 
-        // set method for the removed object so we can pass it to
-        // the API endpoint and remove item using batch remove feature
-        article._method = "unlink";
-        Playlist.addItemToLogList(article);
+        // check if the article exists in the logList,
+        // if user will drag article to the playlist, it will add new field called "_method"
+        // set to "link" value. Then if user will remove article from the featured articles' list
+        // it should remove it from the logList to not pass fake data to the server, else it will add
+        // article to the logList with field "_method": "unlink" so the article can be unlinked from
+        // the playlist.
+        isInLogList = _.some(
+            Playlist.getLogList(),
+            {number: article.number, _method: 'link'}
+        );
 
-        /*isInFeaturedList = _.some(
-            featuredArticles,
-            {number: article.number}
-        );*/
+        if (!isInLogList) {
+            // set method for the removed object so we can pass it to
+            // the API endpoint and remove item using batch remove feature
+            item._method = "unlink";
+            Playlist.addItemToLogList(item);
+        } else {
+            Playlist.removeItemFromLogList(article.number, 'link');
+        }
 
-        //if (isInFeaturedList &&)
-        // if article exists in list of featured articles and we are linking dont do anything
         Playlist.setCurrentPlaylistArticles(featuredArticles);
     }
 }]);
@@ -164,7 +172,8 @@ app.controller('PlaylistsController', [
         onEnd: function (evt/**Event*/){
             var item,
                 number,
-                occurences;
+                occurences,
+                isInLogList = false;
 
             item = evt.model; // the current dragged article
             number = item.number;
@@ -182,9 +191,18 @@ app.controller('PlaylistsController', [
                 return true;
             }
 
-            // add article to log list, so we can save it later using batch save
-            item._method = "link";
-            Playlist.addItemToLogList(item);
+            isInLogList = _.some(
+                Playlist.getLogList(),
+                {number: number, _method: 'unlink'}
+            );
+
+            if (!isInLogList) {
+                // add article to log list, so we can save it later using batch save
+                item._method = "link";
+                Playlist.addItemToLogList(item);
+            } else {
+                Playlist.removeItemFromLogList(number, 'unlink');
+            }
         }
     };
 
@@ -272,10 +290,18 @@ app.controller('PlaylistsController', [
 
         logList = Playlist.getLogList();
         if (logList.length == 0) {
-            flashMessage('Nothing to update');
+            flashMessage(Translator.trans('Nothing to save'));
+
+            return true;
         }
 
-        Playlist.batchUpdate(logList);
+        Playlist.batchUpdate(logList)
+        .then(function () {
+            flashMessage(Translator.trans('List saved'));
+            logList = [];
+        }, function() {
+            flashMessage(Translator.trans('Could not save the list'), 'error');
+        });
     }
 
     /**

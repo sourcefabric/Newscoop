@@ -128,59 +128,16 @@ angular.module('playlistsApp').factory('Playlist', [
         };
 
         /**
-        * Unassignes article from playlist.
+        * Saves playlist items and order.
         *
-        * @method unlinkSingleArticle
-        * @param number {Number} article ID
-        * @param language {String} article language code (e.g. 'de')
-        * @return {Object} promise object that is resolved on successful server
-        *   response and rejected on server error response
-        */
-        Playlist.unlinkSingleArticle = function(number, language) {
-            var deferred = $q.defer(),
-                linkHeader;
-
-            linkHeader = [
-                '<',
-                Routing.generate(
-                    'newscoop_gimme_articles_getarticle',
-                    {number: number, language:language},
-                    false
-                ),
-                '; rel="article">'
-            ].join('');
-
-            $http({
-                url: Routing.generate(
-                    'unlink article from playlist url', //TODO
-                    {id: listId},
-                    true
-                ),
-                method: 'UNLINK',
-                headers: {link: linkHeader}
-            })
-            .success(function () {
-                deferred.resolve();
-            })
-            .error(function (responseBody) {
-                deferred.reject(responseBody);
-            });
-
-            return deferred.promise;
-        };
-
-        /**
-        * Unassignes article from playlist.
-        *
-        * @method unlinkSingleArticle
-        * @param number {Number} article ID
-        * @param language {String} article language code (e.g. 'de')
+        * @method batchUpdate
+        * @param number {Array} array which keeps modified articles for given playlist
         * @return {Object} promise object that is resolved on successful server
         *   response and rejected on server error response
         */
         Playlist.batchUpdate = function(logList) {
             var deferred = $q.defer(),
-                postParams;
+                postParams = [];
 
             angular.forEach(logList, function(article, key) {
             	var link = [
@@ -191,22 +148,28 @@ angular.module('playlistsApp').factory('Playlist', [
 	                    false
 	                ),
 	                '; rel="article">'].join('');
-            	postParams = [link, article._method];
+            	postParams.push({link: link, method: article._method});
             });
 
-            console.log(postParams);
-            /*linkHeader = [
-                
-            ].join('');*/
-
-            /*$http({
+            $http({
                 url: Routing.generate(
-                    'unlink article from playlist url', //TODO
+                    'newscoop_gimme_articleslist_getarticleslist',
                     {id: listId},
                     true
                 ),
-                method: 'UNLINK',
-                headers: {link: linkHeader}
+                method: 'POST',
+                headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded'
+	            },
+	            transformRequest: function (data) {
+	                var str = [];
+			        angular.forEach(data, function(param, key){
+			        	str.push("actions[]["+param.method+"]=" + encodeURIComponent(param.link));
+			    	});
+
+			        return str.join("&");
+	            },
+	            data: postParams
             })
             .success(function () {
                 deferred.resolve();
@@ -215,7 +178,7 @@ angular.module('playlistsApp').factory('Playlist', [
                 deferred.reject(responseBody);
             });
 
-            return deferred.promise;*/
+            return deferred.promise;
         };
 
         /**
@@ -237,40 +200,52 @@ angular.module('playlistsApp').factory('Playlist', [
         };
 
         /**
-         * Gets list identifier
+         * Gets playlist's articles array
          *
-         * @return {Integer|null} List id
+         * @return {Array} Playlist's articles
          */
         Playlist.getCurrentPlaylistArticles = function () {
             return playlistArticles;
         };
 
         /**
-         * Gets list identifier
+         * Sets current playlist articles
          *
-         * @return {Integer|null} List id
+         * @param {Array} list Playlist's articles
          */
         Playlist.setCurrentPlaylistArticles = function (list) {
             playlistArticles = list;
         };
 
         /**
-         * Gets list identifier
+         * Gets log list
          *
-         * @return {Integer|null} List id
+         * @return {Array} Log list
          */
         Playlist.getLogList = function () {
             return logList;
         };
 
         /**
-         * Gets list identifier
-         *
-         * @return {Integer|null} List id
+         * Adds new item to the logList
+         * @param {Object} article Article object
          */
         Playlist.addItemToLogList = function (article) {
             logList.push(article);
         };
+
+        /**
+         * Removes article from logList by number and method
+         *
+         * @param  {Integer} articleNumber Article's number
+         * @param  {String} method         method type (e.g. "unlink" or "link")
+         */
+        Playlist.removeItemFromLogList = function (articleNumber, method) {
+        	_.remove(
+                logList,
+                {number: articleNumber, _method: method}
+            );
+        }
 
         return Playlist;
     }

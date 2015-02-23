@@ -185,6 +185,7 @@ Comments: Comments
 'No such section.': 'No such section.'
 'Characters': 'Characters'
 'Snippet': 'Snippet'
+'Nothing to save': 'Nothing to save'
 articles:
     images:
         edit:
