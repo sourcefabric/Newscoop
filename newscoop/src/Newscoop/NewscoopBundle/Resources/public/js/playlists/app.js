@@ -126,17 +126,21 @@ app.controller('PlaylistsController', [
         group: 'articles',
         animation: 150,
         onEnd: function (evt/**Event*/){
+            console.log(evt);
             var item = evt.model; // the current dragged article
             var number = item.number;
-//console.log(evt);
-            // TODO dont add article if its already in the playlist
-            console.log($scope.featuredArticles, number);
-            var result = _.some($scope.featuredArticles, function(article) {
-                console.log(number);
-                return article.number == number;
-            });
-            console.log(result);
 
+            var occurences = 0;
+            angular.forEach($scope.featuredArticles, function(value, key) {
+                if (value.number == number) {
+                    occurences++;
+                }
+            });
+
+            if (occurences != 1) {
+                $scope.featuredArticles.splice(evt.newIndex, 1);
+                flashMessage(Translator.trans('Item already exists in the list'), 'error');
+            }
         }
     };
 
@@ -174,8 +178,17 @@ app.controller('PlaylistsController', [
      * Adds article to the playlist, which is currently in preview mode
      */
     $scope.addArticleToListFromPreview = function () {
-        $scope.featuredArticles.unshift($scope.articlePreview);
-        $scope.isViewing = false;
+        var exists = _.some(
+            $scope.featuredArticles,
+            {number: $scope.articlePreview.number}
+        );
+
+        if (!exists) {
+            $scope.featuredArticles.unshift($scope.articlePreview);
+            $scope.isViewing = false;
+        } else {
+            flashMessage(Translator.trans('Item already exists in the list'), 'error');
+        }
     };
 
     /**
