@@ -144,7 +144,7 @@ class PlaylistsService
         $this->initOrderOnPlaylist($playlist);
 
         if ($position == false) {
-            $position = 'max';
+            $position = 1;
         } else {
             $position = (int) $position;
         }
@@ -158,16 +158,8 @@ class PlaylistsService
                 ->setParameter('playlistId', $playlist->getId())
                 ->getSingleScalarResult();
 
-            if (is_string($position) && $position == 'max') {
-                if ($playlistArticle->getOrder() == 0) {
-                    $position = (int)$maxPosition+1;
-                } else {
-                    $position = (int)$maxPosition;
-                }
-            } else {
-                if ($position > ((int)$maxPosition) ) {
-                    $position = (int)$maxPosition;
-                }
+            if ($position > ((int)$maxPosition) ) {
+                $position = (int)$maxPosition;
             }
 
             // get article - move to position 0
@@ -194,6 +186,14 @@ class PlaylistsService
             // move changed element from position 0 to new position
             $playlistArticle->setOrder($position);
             $this->em->flush();
+
+            if ($oldOrder == 0 && $playlist->getMaxPosition() !== null && (int)$maxPosition+1 >= $playlist->getMaxPosition()) {
+                $this->em
+                    ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.order > :maxPosition AND pa.idPlaylist = :playlistId')
+                    ->setParameter('maxPosition', $playlist->getMaxPosition())
+                    ->setParameter('playlistId', $playlist->getId())
+                    ->execute();
+            }
 
             $this->em->getConnection()->exec('UNLOCK TABLES;');
         } catch (\Exception $e) {

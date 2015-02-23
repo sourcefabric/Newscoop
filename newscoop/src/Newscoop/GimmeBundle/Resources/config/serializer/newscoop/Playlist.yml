@@ -13,6 +13,18 @@ Newscoop\Entity\Playlist:
             type: string
             groups: ["list", "details"]
             serialized_name: title
+        notes:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: notes
+        maxItems:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: maxItems
         articlesLink:
             expose: true
             read_only: true

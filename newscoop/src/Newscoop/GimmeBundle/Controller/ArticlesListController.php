@@ -134,7 +134,7 @@ class ArticlesListController extends FOSRestController
         } catch (\Newscoop\NewscoopException $e) {}
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, null, true, null, null, true, $onlyPublished)->getResult();
+            ->articles($playlist, null, true, null, null, $onlyPublished, true)->getResult();
 
         $articles = array();
         foreach ($playlistArticles as $playlistArticle) {
@@ -149,6 +149,8 @@ class ArticlesListController extends FOSRestController
         $allItems = array_merge(array(
             'id' => $playlist->getId(),
             'title' => $playlist->getName(),
+            'notes' => $playlist->getNotes(),
+            'maxItems' => $playlist->getMaxItems()
         ), $articles);
 
         return $allItems;
@@ -289,7 +291,7 @@ class ArticlesListController extends FOSRestController
             throw new NotFoundHttpException('Result was not found.');
         }
         
-        $actions = $request->request->get('actions');
+        $actions = $request->request->get('actions', array());
 
         // The controller resolver needs a request to resolve the controller.
         $stubRequest = new Request();
