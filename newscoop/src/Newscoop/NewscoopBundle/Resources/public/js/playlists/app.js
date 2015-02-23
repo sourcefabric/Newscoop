@@ -68,16 +68,7 @@ app.controller('FeaturedController', [
 
     $scope.sortableConfig = {
         group: 'articles',
-        animation: 150,
-        onEnd: function (evt/**Event*/){
-            /*var item = evt.model; // the current dragged article
-            var number = item.number;
-
-            // TODO dont add article if its already in the playlist
-            var result = _.some($scope.$parent.featuredArticles, {'number': number.toString()});*/
-            console.log(evt);
-
-        }
+        animation: 150
     };
 
 
@@ -133,7 +124,20 @@ app.controller('PlaylistsController', [
 
     $scope.sortableConfig = {
         group: 'articles',
-        animation: 150
+        animation: 150,
+        onEnd: function (evt/**Event*/){
+            var item = evt.model; // the current dragged article
+            var number = item.number;
+//console.log(evt);
+            // TODO dont add article if its already in the playlist
+            console.log($scope.featuredArticles, number);
+            var result = _.some($scope.featuredArticles, function(article) {
+                console.log(number);
+                return article.number == number;
+            });
+            console.log(result);
+
+        }
     };
 
     $scope.tableParams = new ngTableParams({
