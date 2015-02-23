@@ -69,12 +69,13 @@ app.controller('FeaturedController', [
     $scope.sortableConfig = {
         group: 'articles',
         animation: 150,
-        onAdd: function (evt/**Event*/){
-            var item = evt.model; // the current dragged article
+        onEnd: function (evt/**Event*/){
+            /*var item = evt.model; // the current dragged article
             var number = item.number;
 
             // TODO dont add article if its already in the playlist
-            var result = _.some($scope.$parent.featuredArticles, {'number': number.toString()});
+            var result = _.some($scope.$parent.featuredArticles, {'number': number.toString()});*/
+            console.log(evt);
 
         }
     };
