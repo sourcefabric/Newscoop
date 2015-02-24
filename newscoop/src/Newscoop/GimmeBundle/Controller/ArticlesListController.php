@@ -283,7 +283,7 @@ class ArticlesListController extends FOSRestController
      *     }
      * )
      *
-     * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("articles-lists/{id}/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View(statusCode=200)
      */
@@ -390,7 +390,6 @@ class ArticlesListController extends FOSRestController
      *
      * @Route("articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
-     * @View(statusCode=200)
      */
     public function createPlaylistAction(Request $request)
     {
@@ -399,15 +398,69 @@ class ArticlesListController extends FOSRestController
             throw new AccessDeniedException("You do not have the right to manage playlists.");
         }
 
+        $em = $this->container->get('em');
         $playlist = new Playlist();
 
         $form = $this->createForm(new PlaylistType(), $playlist);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $em->persist($playlist);
+            $em->flush();
 
-            //create playlist
-            
+            $view = FOSView\View::create($playlist, 200);
+            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_lists_getlist', array(
+                'id' => $playlist->getId(),
+            ), true));
+
+            return $view;
+        }
+
+        return $form;
+    }
+
+    /**
+     * Update playlist
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when successful",
+     *         404="Returned when resource not found"
+     *     },
+     *     parameters={
+     *         {"name"="id", "dataType"="integer", "required"=true, "description"="Playlist id"},
+     *         {"name"="access_token", "dataType"="string", "required"=false, "description"="Access token"}
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\PlaylistType"
+     * )
+     *
+     * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("PATCH|POST")
+     */
+    public function updatePlaylistAction(Request $request, $id)
+    {
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException("You do not have the right to manage playlists.");
+        }
+
+        $em = $this->container->get('em');
+        $playlist = $em->getRepository('Newscoop\Entity\Playlist')
+            ->getPlaylist($id)
+            ->getOneOrNullResult();
+
+        if (!$playlist) {
+            throw new NotFoundHttpException('Result was not found.');
+        }
+
+        $form = $this->createForm(new PlaylistType(), $playlist, array(
+            'method' => $request->getMethod()
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($playlist);
+            $em->flush();
 
             $view = FOSView\View::create($playlist, 201);
             $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_lists_getlist', array(
@@ -418,6 +471,47 @@ class ArticlesListController extends FOSRestController
         }
 
         return $form;
+    }
+
+    /**
+     * Delete playlist
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when playlist removed succesfuly",
+     *         404={
+     *           "Returned when the playlist is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="id", "dataType"="integer", "required"=true, "description"="{laylist id"}
+     *     }
+     * )
+     *
+     * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("DELETE")
+     * @View(statusCode=204)
+     *
+     * @return Form
+     */
+    public function deletePlaylistAction(Request $request, $id)
+    {
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException("You do not have the right to manage playlists.");
+        }
+
+        $em = $this->container->get('em');
+        $playlist = $em->getRepository('Newscoop\Entity\Playlist')
+            ->getPlaylist($id)
+            ->getOneOrNullResult();
+
+        if (!$playlist) {
+            throw new NotFoundHttpException('Result was not found.');
+        }
+
+        $em->remove($playlist);
+        $em->flush();
     }
 
     private function linkOrUnlinkResources($playlist, $request, $action = 'link')
