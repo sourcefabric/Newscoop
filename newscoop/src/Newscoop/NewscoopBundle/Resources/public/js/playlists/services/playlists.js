@@ -147,7 +147,15 @@ angular.module('playlistsApp').factory('Playlist', [
 	                    {number: article.number, language: article.language},
 	                    false
 	                ),
-	                '; rel="article">'].join('');
+	                '; rel="article">'].join('');;
+
+	            if (article._method == 'link') {
+	            	var position = [',<',
+	                article._order,
+	                '; rel="article-position">'].join('');
+	                link = link.concat(position);
+	            }
+
             	postParams.push({link: link, method: article._method});
             });
 
@@ -223,6 +231,17 @@ angular.module('playlistsApp').factory('Playlist', [
          * @return {Array} Log list
          */
         Playlist.getLogList = function () {
+            return logList;
+        };
+
+        /**
+         * Clears log list
+         *
+         * @return {Array} Log list
+         */
+        Playlist.clearLogList = function () {
+        	logList = [];
+
             return logList;
         };
 

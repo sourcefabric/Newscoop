@@ -5,7 +5,6 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -53,7 +52,7 @@ class ArticlesListController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $playlists = $paginator->paginate($playlists, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $playlists;
@@ -118,7 +117,7 @@ class ArticlesListController extends FOSRestController
 
         $playlist = $em->getRepository('Newscoop\Entity\Playlist')
             ->findOneBy(array(
-                'id' => $id
+                'id' => $id,
             ));
 
         if (!$playlist) {
@@ -131,7 +130,8 @@ class ArticlesListController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {}
+        } catch (\Newscoop\NewscoopException $e) {
+        }
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
             ->articles($playlist, null, true, null, null, $onlyPublished, true)->getResult();
@@ -143,14 +143,14 @@ class ArticlesListController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         $allItems = array_merge(array(
             'id' => $playlist->getId(),
             'title' => $playlist->getName(),
             'notes' => $playlist->getNotes(),
-            'maxItems' => $playlist->getMaxItems()
+            'maxItems' => $playlist->getMaxItems(),
         ), $articles);
 
         return $allItems;
@@ -196,7 +196,7 @@ class ArticlesListController extends FOSRestController
         if (!$playlist) {
             throw new NotFoundHttpException('Result was not found.');
         }
-        
+
         $this->linkOrUnlinkResources($playlist, $request, 'link');
 
         return $playlist;
@@ -290,7 +290,7 @@ class ArticlesListController extends FOSRestController
         if (!$playlist) {
             throw new NotFoundHttpException('Result was not found.');
         }
-        
+
         $actions = $request->request->get('actions', array());
 
         // The controller resolver needs a request to resolve the controller.
@@ -334,20 +334,20 @@ class ArticlesListController extends FOSRestController
 
                 try {
                     $result = call_user_func_array($controller, $arguments);
-                    
+
                     if (!is_object($result)) {
                         continue;
                     }
                     $actionsResults[$actionKey] = array(
                         'object' => $result,
                         'method' => $method,
-                        'header' => $header
+                        'header' => $header,
                     );
                 } catch (\Exception $e) {
                     $actionsResults[$actionKey] = array(
                         'object' => $e,
                         'method' => $method,
-                        'header' => $header
+                        'header' => $header,
                     );
 
                     continue;
@@ -384,7 +384,7 @@ class ArticlesListController extends FOSRestController
                     }
                     $playlistService = $this->get('playlists');
                     $playlistService->addArticle($playlist, $object, $position);
-                } else if ($action == 'unlink') {
+                } elseif ($action == 'unlink') {
                     $playlistService = $this->get('playlists');
                     $playlistService->removePlaylistArticle($playlist, $object);
                 }
@@ -416,7 +416,7 @@ class ArticlesListController extends FOSRestController
 
                 $links[] = array(
                     'resource' => $resource,
-                    'resourceType' => $resourceType
+                    'resourceType' => $resourceType,
                 );
             }
         }

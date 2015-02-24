@@ -68,7 +68,23 @@ app.controller('FeaturedController', [
 
     $scope.sortableConfig = {
         group: 'articles',
-        animation: 150
+        animation: 150,
+        onSort: function (evt/**Event*/){
+            var article = evt.model;
+            var isInLogList = false;
+            isInLogList = _.some(
+                Playlist.getLogList(),
+                {number: article.number}
+            );
+
+            // only when sorting list of featured articles (playlist)
+            var logList = Playlist.getLogList();
+            article._order = evt.newIndex + 1;
+            article._method = "link";
+            if (!isInLogList) {
+                Playlist.addItemToLogList(article);
+            }
+        }
     };
 
 
@@ -135,8 +151,8 @@ app.controller('FeaturedController', [
         if (!isInLogList) {
             // set method for the removed object so we can pass it to
             // the API endpoint and remove item using batch remove feature
-            item._method = "unlink";
-            Playlist.addItemToLogList(item);
+            article._method = "unlink";
+            Playlist.addItemToLogList(article);
         } else {
             Playlist.removeItemFromLogList(article.number, 'link');
         }
@@ -184,7 +200,7 @@ app.controller('PlaylistsController', [
                 }
             });
 
-            if (occurences != 1) {
+            if (occurences > 1) {
                 $scope.featuredArticles.splice(evt.newIndex, 1);
                 flashMessage(Translator.trans('Item already exists in the list'), 'error');
 
@@ -199,10 +215,13 @@ app.controller('PlaylistsController', [
             if (!isInLogList) {
                 // add article to log list, so we can save it later using batch save
                 item._method = "link";
+                item._order = evt.newIndex + 1;
                 Playlist.addItemToLogList(item);
             } else {
                 Playlist.removeItemFromLogList(number, 'unlink');
             }
+
+            console.log(Playlist.getLogList());
         }
     };
 
@@ -298,7 +317,7 @@ app.controller('PlaylistsController', [
         Playlist.batchUpdate(logList)
         .then(function () {
             flashMessage(Translator.trans('List saved'));
-            logList = [];
+            Playlist.clearLogList();
         }, function() {
             flashMessage(Translator.trans('Could not save the list'), 'error');
         });

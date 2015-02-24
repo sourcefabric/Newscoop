@@ -5,7 +5,6 @@
  * @copyright 2015 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Newscoop\Entity\Article;
@@ -158,8 +157,8 @@ class PlaylistsService
                 ->setParameter('playlistId', $playlist->getId())
                 ->getSingleScalarResult();
 
-            if ($position > ((int)$maxPosition) ) {
-                $position = (int)$maxPosition;
+            if ($position > ((int) $maxPosition)) {
+                $position = (int) $maxPosition;
             }
 
             // get article - move to position 0
@@ -187,10 +186,10 @@ class PlaylistsService
             $playlistArticle->setOrder($position);
             $this->em->flush();
 
-            if ($oldOrder == 0 && $playlist->getMaxPosition() !== null && (int)$maxPosition+1 >= $playlist->getMaxPosition()) {
+            if ($oldOrder == 0 && $playlist->getMaxItems() !== null && (int) $maxPosition+1 >= $playlist->getMaxItems()) {
                 $this->em
                     ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.order > :maxPosition AND pa.idPlaylist = :playlistId')
-                    ->setParameter('maxPosition', $playlist->getMaxPosition())
+                    ->setParameter('maxPosition', $playlist->getMaxItems())
                     ->setParameter('playlistId', $playlist->getId())
                     ->execute();
             }
