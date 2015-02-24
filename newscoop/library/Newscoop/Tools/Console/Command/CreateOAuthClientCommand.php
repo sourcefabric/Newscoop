@@ -29,8 +29,8 @@ class CreateOAuthClientCommand extends Console\Command\Command
             ->addArgument('name', InputArgument::REQUIRED, 'Client name')
             ->addArgument('publication', InputArgument::REQUIRED, 'Publication alias')
             ->addArgument('redirectUris', InputArgument::REQUIRED, 'Redirect uris')
-            ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefnied data (for automatic tests)')
-            ->addOption('default', null, InputOption::VALUE_NONE, 'If set it will create default client with predefnied name');
+            ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefined data (for automatic tests)')
+            ->addOption('default', null, InputOption::VALUE_NONE, 'If set it will create default client with predefined name');
     }
 
     /**
@@ -49,6 +49,15 @@ class CreateOAuthClientCommand extends Console\Command\Command
             ->getPublication();
         $redirectUris = $input->getArgument('redirectUris');
 
+        if ($input->getOption('default')) {
+            $preferencesService = $container->get('preferences');
+            $defaultClientName = 'newscoop_'.$preferencesService->SiteSecretKey;
+            $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($defaultClientName);
+            if ($client) {
+                return;
+            }
+        }
+
         $client = $clientManager->createClient();
         $client->setAllowedGrantTypes(array('token', 'authorization_code', 'client_credentials', 'password'));
         $client->setRedirectUris(array($redirectUris));
@@ -62,9 +71,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
         }
 
         if ($input->getOption('default')) {
-            $preferencesService = $container->get('preferences');
-            $clientName = 'newscoop_'.$preferencesService->SiteSecretKey;
-            $client->setName($clientName);
+            $client->setName($defaultClientName);
             $client->setTrusted(true);
         } 
 

@@ -60,9 +60,9 @@ class FinishService
     }
 
     /**
-     * Reload themes reditions in datbase
+     * Create default oauth client
      */
-    public function createDefaultOauthCleint()
+    public function createDefaultOauthClient()
     {
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
