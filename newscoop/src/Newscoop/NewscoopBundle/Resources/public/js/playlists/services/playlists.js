@@ -5,7 +5,7 @@ angular.module('playlistsApp').factory('Playlist', [
     '$q',
     '$timeout',
     function ($http, $q, $timeout) {
-        var Playlist = function () {};  // topic constructor
+        var Playlist = function () {};  // Playlist constructor
 
         var listId = undefined,
 			playlistArticles = [],
@@ -161,7 +161,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
             $http({
                 url: Routing.generate(
-                    'newscoop_gimme_articleslist_getarticleslist',
+                    'newscoop_gimme_articles_lists_getlist',
                     {id: listId},
                     true
                 ),

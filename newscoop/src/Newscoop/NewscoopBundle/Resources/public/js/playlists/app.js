@@ -81,7 +81,9 @@ app.controller('FeaturedController', [
             var logList = Playlist.getLogList();
             article._order = evt.newIndex + 1;
             article._method = "link";
+            console.log(isInLogList, 'onsort');
             if (!isInLogList) {
+
                 Playlist.addItemToLogList(article);
             }
         }
@@ -213,10 +215,21 @@ app.controller('PlaylistsController', [
             );
 
             if (!isInLogList) {
-                // add article to log list, so we can save it later using batch save
-                item._method = "link";
-                item._order = evt.newIndex + 1;
-                Playlist.addItemToLogList(item);
+                // this check prevents inserting duplicate article
+                // when it's drag from the available articles list.
+                // onSort event is executed before onEnd so in both of them it will
+                // insert the same value to the log list
+                isInLogList = _.some(
+                    Playlist.getLogList(),
+                    {number: number}
+                );
+
+                if (!isInLogList) {
+                    // add article to log list, so we can save it later using batch save
+                    item._method = "link";
+                    item._order = evt.newIndex + 1;
+                    Playlist.addItemToLogList(item);
+                }
             } else {
                 Playlist.removeItemFromLogList(number, 'unlink');
             }
@@ -313,6 +326,22 @@ app.controller('PlaylistsController', [
 
             return true;
         }
+
+        // update order of the articles before the save in log list,
+        // if it changed while sorting
+        angular.forEach(logList, function(value, key){
+            // update order only for articles that are/were dragged to the
+            // list of featured comments, since articles that are being removed
+            // (with _method: "unlink"), don't have the position specified
+            if (value._method == "link") {
+                angular.forEach($scope.featuredArticles, function(v, k){
+                    var index = $scope.featuredArticles.indexOf(v) + 1;
+                    if (v.number == value.number && index != value._order) {
+                        value._order = index;
+                    }
+                });
+            }
+        });
 
         Playlist.batchUpdate(logList)
         .then(function () {

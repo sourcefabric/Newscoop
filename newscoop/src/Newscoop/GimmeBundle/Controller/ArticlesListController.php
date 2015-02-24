@@ -13,8 +13,12 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\View as FOSView;
+use Newscoop\GimmeBundle\Form\Type\PlaylistType;
+use Newscoop\Entity\Playlist;
 use Newscoop\Entity\Article;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Newscoop\Exception\InvalidParametersException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -71,7 +75,7 @@ class ArticlesListController extends FOSRestController
      *     output="\Newscoop\Entity\Playlist"
      * )
      *
-     * @Route("/articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_lists_getlist")
      * @Method("GET")
      * @View(serializerGroups={"details"})
      */
@@ -188,6 +192,10 @@ class ArticlesListController extends FOSRestController
     public function linkToPlaylistAction(Request $request, $id)
     {
         $em = $this->container->get('em');
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException("You do not have the right to manage playlists.");
+        }
 
         $playlist = $em->getRepository('Newscoop\Entity\Playlist')
             ->getPlaylist($id)
@@ -230,6 +238,10 @@ class ArticlesListController extends FOSRestController
     public function unlinkFromPlaylistAction(Request $request, $id)
     {
         $em = $this->container->get('em');
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException("You do not have the right to manage playlists.");
+        }
 
         $playlist = $em->getRepository('Newscoop\Entity\Playlist')
             ->getPlaylist($id)
@@ -277,6 +289,11 @@ class ArticlesListController extends FOSRestController
      */
     public function saveBatchActionsAction(Request $request, $id)
     {
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException("You do not have the right to manage playlists.");
+        }
+
         $em = $this->container->get('em');
         $urlMatcher = $this->container->get('router');
         $controllerResolver = $this->container->get('controller_resolver');
@@ -356,6 +373,51 @@ class ArticlesListController extends FOSRestController
         }
 
         return $actionsResults;
+    }
+
+    /**
+     * Create new playlist
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when successful",
+     *         404="Returned when resource not found"
+     *     },
+     *     parameters={
+     *         {"name"="access_token", "dataType"="string", "required"=false, "description"="Access token"}
+     *     }
+     * )
+     *
+     * @Route("articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("POST")
+     * @View(statusCode=200)
+     */
+    public function createPlaylistAction(Request $request)
+    {
+        $user = $this->container->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException("You do not have the right to manage playlists.");
+        }
+
+        $playlist = new Playlist();
+
+        $form = $this->createForm(new PlaylistType(), $playlist);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            //create playlist
+            
+
+            $view = FOSView\View::create($playlist, 201);
+            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_lists_getlist', array(
+                'id' => $playlist->getId(),
+            ), true));
+
+            return $view;
+        }
+
+        return $form;
     }
 
     private function linkOrUnlinkResources($playlist, $request, $action = 'link')

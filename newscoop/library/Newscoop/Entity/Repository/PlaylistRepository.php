@@ -61,7 +61,7 @@ class PlaylistRepository extends EntityRepository
             WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
-        .       " ORDER BY pa.id "
+        .       " ORDER BY pa.order "
         );
 
         $query->setParameter(1, $playlist);
