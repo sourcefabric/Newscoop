@@ -45,11 +45,8 @@ class HookListener
     public function renderEditorialCommentsTemplate(PluginHooksEvent $event)
     {
         $article = $event->getArgument('article');
-        $client = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName('editorial_comments_'.$this->preferencesService->SiteSecretKey);
-
-        if (!$client) {
-            $client = $this->createAPIClient();
-        }
+        $clientName = 'newscoop_'.$this->preferencesService->SiteSecretKey;
+        $client = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($clientName);
 
         $response = $this->templating->renderResponse('NewscoopArticlesBundle:Hook:editorialComments.html.twig', array(
             'article' => $article,
@@ -60,19 +57,5 @@ class HookListener
         $event->addHookResponse($response);
 
         return true;
-    }
-
-    private function createAPIClient()
-    {
-        $publication = $this->publicationService->getPublication();
-        $client = $this->clientManager->createClient();
-        $client->setName('editorial_comments_'.$this->preferencesService->SiteSecretKey);
-        $client->setPublication($publication);
-        $client->setRedirectUris(array($publication->getDefaultAlias()->getName()));
-        $client->setAllowedGrantTypes(array('authorization_code'));
-        $client->setTrusted(true);
-        $this->clientManager->updateClient($client);
-
-        return $client;
     }
 }
