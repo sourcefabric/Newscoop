@@ -187,10 +187,10 @@ class PlaylistsService
             $playlistArticle->setOrder($position);
             $this->em->flush();
 
-            if ($oldOrder == 0 && $playlist->getMaxPosition() !== null && (int)$maxPosition+1 >= $playlist->getMaxPosition()) {
+            if ($oldOrder == 0 && $playlist->getMaxItems() !== null && (int)$maxPosition+1 >= $playlist->getMaxItems()) {
                 $this->em
                     ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.order > :maxPosition AND pa.idPlaylist = :playlistId')
-                    ->setParameter('maxPosition', $playlist->getMaxPosition())
+                    ->setParameter('maxPosition', $playlist->getMaxItems())
                     ->setParameter('playlistId', $playlist->getId())
                     ->execute();
             }

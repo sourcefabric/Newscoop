@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener as SymfonyExceptionListener;
+use Symfony\Component\HttpKernel\Exception\FlattenException;
 
 /**
  * ExceptionListener.
@@ -37,7 +38,7 @@ class ExceptionListener extends SymfonyExceptionListener
 
         $attributes = array(
             '_controller' => $this->controller,
-            'exception'   => $exception,
+            'exception'   => FlattenException::create($exception),
             'logger'      => $this->logger instanceof DebugLoggerInterface ? $this->logger : null,
             // keep for BC -- as $format can be an argument of the controller callable
             // see src/Symfony/Bundle/TwigBundle/Controller/ExceptionController.php
