@@ -11,6 +11,7 @@ use Newscoop\Entity\Article;
 use Newscoop\Entity\Playlist;
 use Newscoop\Entity\PlaylistArticle;
 use Doctrine\ORM\EntityManager;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * Manage playlists
@@ -25,9 +26,11 @@ class PlaylistsService
     /**
      * @param EntityManager $em
      */
-    public function __construct($em)
+    public function __construct($em, $dispatcher, $cacheService)
     {
         $this->em = $em;
+        $this->dispatcher = $dispatcher;
+        $this->cacheService = $cacheService;
     }
 
     /**
@@ -198,5 +201,10 @@ class PlaylistsService
         } catch (\Exception $e) {
             $this->em->getConnection()->exec('UNLOCK TABLES;');
         }
+
+        $this->dispatcher->dispatch('playlist.save', new GenericEvent($this, array(
+            'id' => $playlist->getId()
+        )));
+        $this->cacheService->clearNamespace('boxarticles');
     }
 }
