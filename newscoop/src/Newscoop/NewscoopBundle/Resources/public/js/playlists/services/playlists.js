@@ -161,7 +161,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
             $http({
                 url: Routing.generate(
-                    'newscoop_gimme_articles_lists_getlist',
+                    'newscoop_gimme_articleslist_savebatchactions',
                     {id: listId},
                     true
                 ),

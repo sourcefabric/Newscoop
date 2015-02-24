@@ -320,6 +320,7 @@ app.controller('PlaylistsController', [
             $scope.playlist.selected = $scope.playlists[$scope.playlists.length - 1];
         }
 
+        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
         logList = Playlist.getLogList();
         if (logList.length == 0) {
             flashMessage(Translator.trans('Nothing to save'));
@@ -327,26 +328,11 @@ app.controller('PlaylistsController', [
             return true;
         }
 
-        // update order of the articles before the save in log list,
-        // if it changed while sorting
-        angular.forEach(logList, function(value, key){
-            // update order only for articles that are/were dragged to the
-            // list of featured comments, since articles that are being removed
-            // (with _method: "unlink"), don't have the position specified
-            if (value._method == "link") {
-                angular.forEach($scope.featuredArticles, function(v, k){
-                    var index = $scope.featuredArticles.indexOf(v) + 1;
-                    if (v.number == value.number && index != value._order) {
-                        value._order = index;
-                    }
-                });
-            }
-        });
-
         Playlist.batchUpdate(logList)
         .then(function () {
             flashMessage(Translator.trans('List saved'));
             Playlist.clearLogList();
+            flash.fadeOut();
         }, function() {
             flashMessage(Translator.trans('Could not save the list'), 'error');
         });
