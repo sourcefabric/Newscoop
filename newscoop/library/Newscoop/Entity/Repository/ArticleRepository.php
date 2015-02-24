@@ -184,8 +184,14 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->publish_date) {
-            $queryBuilder->andWhere('a.published = :publish_date')
-                ->setParameter('publish_date', $articleSearchCriteria->publish_date);
+            $startDate = new \DateTime($articleSearchCriteria->publish_date);
+            $endDate = new \DateTime($articleSearchCriteria->publish_date);
+            $endDate->modify('+ 1 day');
+
+            $queryBuilder->andWhere('a.published >= :publish_date_start')
+                ->setParameter('publish_date_start', $startDate);
+            $queryBuilder->andWhere('a.published < :publish_date_end')
+                ->setParameter('publish_date_end', $endDate);
         }
 
         if ($articleSearchCriteria->published_after) {
