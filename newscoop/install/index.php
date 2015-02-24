@@ -344,6 +344,7 @@ $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->generateProxies();
     $app['finish_service']->installAssets();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
+    $app['finish_service']->createDefaultOauthCleint();
 
     return $app['twig']->render('post-process.twig', array('NewscoopVersion' => new \CampVersion(),));
 })

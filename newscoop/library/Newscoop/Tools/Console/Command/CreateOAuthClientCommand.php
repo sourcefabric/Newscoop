@@ -29,7 +29,8 @@ class CreateOAuthClientCommand extends Console\Command\Command
             ->addArgument('name', InputArgument::REQUIRED, 'Client name')
             ->addArgument('publication', InputArgument::REQUIRED, 'Publication alias')
             ->addArgument('redirectUris', InputArgument::REQUIRED, 'Redirect uris')
-            ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefnied data (for automatic tests)');
+            ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefnied data (for automatic tests)')
+            ->addOption('default', null, InputOption::VALUE_NONE, 'If set it will create default client with predefnied name');
     }
 
     /**
@@ -39,6 +40,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
     {
         $container = $this->getApplication()->getKernel()->getContainer();
         $em = $container->getService('em');
+        $clientManager = $container->get('fos_oauth_server.client_manager.default');
         $clientManager = $container->get('fos_oauth_server.client_manager.default');
 
         $name = $input->getArgument('name');
@@ -58,6 +60,13 @@ class CreateOAuthClientCommand extends Console\Command\Command
             $client->setSecret('h48fgsmv0due4nexjsy40jdf3sswwr');
             $client->setTrusted(true);
         }
+
+        if ($input->getOption('default')) {
+            $preferencesService = $container->get('preferences');
+            $clientName = 'newscoop_'.$preferencesService->SiteSecretKey;
+            $client->setName($clientName);
+            $client->setTrusted(true);
+        } 
 
         $clientManager->updateClient($client);
     }

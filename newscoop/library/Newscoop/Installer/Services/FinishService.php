@@ -62,6 +62,26 @@ class FinishService
     /**
      * Reload themes reditions in datbase
      */
+    public function createDefaultOauthCleint()
+    {
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+
+        $php = escapeshellarg($phpPath);
+        $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
+        $reloadRenditions = new Process("$php $newscoopConsole  oauth:create-client newscoop newscoop.dev newscoop.dev --default", null, null, null, 300);
+        $reloadRenditions->run();
+        if (!$reloadRenditions->isSuccessful()) {
+            throw new \RuntimeException('An error occurred when executing the create default oauth client command.');
+        }
+    }
+
+    /**
+     * Reload themes reditions in datbase
+     */
     public function reloadRenditions()
     {
         $phpFinder = new PhpExecutableFinder();
