@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends Controller
 {
     /**
-     * TODO:
-     * * demo login
-     * 
      * @Template()
      */
     public function loginAction(Request $request)
