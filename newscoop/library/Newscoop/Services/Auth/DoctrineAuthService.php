@@ -29,10 +29,10 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
     protected $password;
 
     /** @var bool */
-    protected $is_admin = FALSE;
+    protected $is_admin = false;
 
     /** @var bool */
-    protected $is_external = FALSE;
+    protected $is_external = false;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -110,7 +110,7 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
      * @param bool $admin
      * @return Newscoop\Services\AuthService
      */
-    public function setAdmin($admin = TRUE)
+    public function setAdmin($admin = true)
     {
         $this->is_admin = (bool) $admin;
         return $this;
@@ -122,7 +122,7 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
      * @param bool $external
      * @return Newscoop\Services\AuthService
      */
-    public function setExternal($external = TRUE)
+    public function setExternal($external = true)
     {
         $this->is_external = (bool) $external;
         return $this;
