@@ -2143,36 +2143,27 @@ CREATE TABLE `package_item` (
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `playlist`
---
-
 DROP TABLE IF EXISTS `playlist`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `playlist` (
-  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `notes` varchar(1024) DEFAULT NULL,
-  PRIMARY KEY (`id_playlist`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE playlist (
+  id_playlist INT AUTO_INCREMENT NOT NULL, 
+  name VARCHAR(256) NOT NULL, 
+  notes VARCHAR(1024) NOT NULL, 
+  max_items INT NOT NULL, 
+  PRIMARY KEY(id_playlist)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
---
--- Table structure for table `playlist_article`
---
 
 DROP TABLE IF EXISTS `playlist_article`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `playlist_article` (
-  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_playlist` int(10) unsigned NOT NULL,
-  `article_no` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id_playlist_article`),
-  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE playlist_article (
+  id_playlist_article INT AUTO_INCREMENT NOT NULL, 
+  id_playlist INT NOT NULL, 
+  article_no INT NOT NULL, 
+  order_number INT NOT NULL, 
+  INDEX IDX_BD05197C8759FDB8 (id_playlist), 
+  INDEX IDX_BD05197CAA07C9D3 (article_no), 
+  UNIQUE INDEX playlist_article (id_playlist, article_no), 
+  PRIMARY KEY(id_playlist_article)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Table structure for table `plugin_blog_blog`
