@@ -320,6 +320,9 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
             }
         }
 
+        // TODO: remove this dirty hack - replace this with registering custom Acl annotation in symfony controllers.
+        $resources['playlist'] = array('manage');
+
         $this->resources = $resources;
         $this->access = $access;
 
