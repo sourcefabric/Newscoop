@@ -61,6 +61,50 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Search for users
+     *
+     * Get list of users for search query
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful"
+     *     },
+     *     filters={
+     *          {"name"="query", "dataType"="string", "description"="search query"}
+     *     },
+     * )
+     *
+     * @Route("/search/users.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     */
+    public function searchUsersAction(Request $request)
+    {
+        $em = $this->container->get('em');
+
+        $onlyPublic = true;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $onlyPublic = null;
+            }
+        } catch (\Newscoop\NewscoopException $e) {}
+
+        $criteria = new \Newscoop\User\UserCriteria();
+        $criteria->is_public = $onlyPublic;
+        $criteria->query_name = $request->query->get('query', '');
+
+        $results = $em->getRepository('Newscoop\Entity\User')
+            ->getListByCriteria($criteria, false);
+        $users = $results[0]->getQuery();
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $users = $paginator->paginate($users, array('distinct' => false));
+
+        return $users;
+    }
+
+    /**
      * Get user by given id
      *
      * @ApiDoc(

@@ -38,7 +38,7 @@ class Client extends BaseClient
     protected $publication;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User", mappedBy="clients", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User", mappedBy="clients")
      * @var array
      */
     protected $users;
