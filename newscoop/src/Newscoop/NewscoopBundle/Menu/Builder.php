@@ -268,11 +268,8 @@ class Builder
             ),
         ));
 
-        $this->addChild($menu, $translator->trans('Featured Article Lists', array(), 'home'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'playlist',
-                'action' => 'index',
-            ),
+        $this->addChild($menu, $translator->trans('Featured Article Lists', array(), 'home'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_playlists_index'),
             'resource' => 'playlist',
             'privilege' => 'manage',
         ));
