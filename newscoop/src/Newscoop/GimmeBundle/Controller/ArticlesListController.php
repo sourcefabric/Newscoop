@@ -19,6 +19,7 @@ use Newscoop\Entity\Playlist;
 use Newscoop\Entity\Article;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Exception\ResourcesConflictException;
 use Newscoop\Exception\InvalidParametersException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -384,7 +385,8 @@ class ArticlesListController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="access_token", "dataType"="string", "required"=false, "description"="Access token"}
-     *     }
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\PlaylistType"
      * )
      *
      * @Route("articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
@@ -404,6 +406,14 @@ class ArticlesListController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $existingPlaylist = $em->getRepository('Newscoop\Entity\Playlist')
+                ->getPlaylistByTitle($playlist->getName())
+                ->getOneOrNullResult();
+
+            if ($existingPlaylist) {
+                throw new ResourcesConflictException("Playlist with that name already exists", 409);
+            }
+
             $em->persist($playlist);
             $em->flush();
 
@@ -451,15 +461,20 @@ class ArticlesListController extends FOSRestController
         if (!$playlist) {
             throw new NotFoundHttpException('Result was not found.');
         }
+        $oldMaxItems = $playlist->getMaxItems();
 
         $form = $this->createForm(new PlaylistType(), $playlist, array(
             'method' => $request->getMethod()
         ));
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $em->persist($playlist);
             $em->flush();
+
+            if ($oldMaxItems != $playlist->getMaxItems()) {
+                $playlistService = $this->get('playlists');
+                $playlistService->removeLeftItems($playlist);
+            }
 
             $view = FOSView\View::create($playlist, 201);
             $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_lists_getlist', array(
