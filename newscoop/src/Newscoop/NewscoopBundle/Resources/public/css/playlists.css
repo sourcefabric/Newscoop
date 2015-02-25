@@ -123,7 +123,7 @@ ul#context_list {
 .system_pref input {
     float: left !important;
 }
-.input-filter {
+.input-filter-date {
     width: 200px;
     float: left !important;
 }
@@ -162,4 +162,10 @@ ul#context_list {
 }
 .ui-datepicker-trigger {
     margin-top: 5px;
+}
+.limit-input {
+    float: right !important;
+}
+.modal-body {
+    font-size: 14px;
 }

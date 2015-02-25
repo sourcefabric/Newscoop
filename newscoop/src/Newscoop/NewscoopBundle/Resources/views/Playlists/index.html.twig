@@ -26,26 +26,26 @@
 			</ui-select-choices>
 		</ui-select>
 	</li>
-	<li ng-if="playlistInfo">
+	<li ng-if="playlist.selected">
 		<label id="playlist-name-label">{{ 'List Name'|trans }}:</label>
 	</li>
-	<li ng-if="playlistInfo">
+	<li ng-if="playlist.selected">
 		<span id="list_name">
 			<input name="playlist-name" ng-model="formData.title" required ng-minlength="1" ng-maxlength="40" value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name">
 		</span>
 	</li>
-	<li ng-if="playlistInfo.id">
+	<li ng-if="playlist.selected.id">
 		<label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
 	</li>
-	<li ng-if="playlistInfo.id">
+	<li ng-if="playlist.selected.id">
 		<span style="float: left;">
-			<input name="playlist-id" id="playlistId" value="{[{ playlistInfo.id }]}" class="form-control" ng-disabled="true">
+			<input name="playlist-id" id="playlistId" value="{[{ playlist.selected.id }]}" class="form-control" ng-disabled="true">
 		</span>
 	</li>
-	<li style="float: right" ng-if="playlistInfo.title">
-		<div class="save-button-bar">
-			<button type="button" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
-			<button type="button" ng-disabled="processing" ng-click="savePlaylist(this)" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+	<li style="float: right" ng-if="playlist.selected">
+		<div class="save-button-bar" ng-controller="ModalCtrl">
+			<button type="button" ng-click="openRemoveListModal()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
+			<button type="button" ng-disabled="processing" ng-click="openLimitModal()" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
 		</div>
 	</li>
 </ul>
@@ -123,13 +123,13 @@
 				        <div class="col-xs-7">
 				            <ul class="list-group">
 							  <li class="list-group-item">
-							  		<input type="text" ng-change="loadByDateOnChange(this)" placeholder="{{ 'Publish date'|trans({}, 'library') }}..." ng-model="filterDate" class="form-control input-sm input-filter date"/>
+							  		<input type="text" ng-change="loadByDateOnChange(this)" placeholder="{{ 'Publish date'|trans({}, 'library') }}..." ng-model="filterDate" class="form-control input-sm input-filter-date date"/>
 							  </li>
 							  <li class="list-group-item">
-							  		<input type="text" ng-change="loadByPublishedBeforeOnChange(this)" placeholder="{{ 'Published before'|trans({}, 'library') }}..." ng-model="filterPublishedBefore" class="form-control input-sm input-filter date"/>
+							  		<input type="text" ng-change="loadByPublishedBeforeOnChange(this)" placeholder="{{ 'Published before'|trans({}, 'library') }}..." ng-model="filterPublishedBefore" class="form-control input-sm input-filter-date date"/>
 							  </li>
 							  <li class="list-group-item">
-							  		<input type="text" ng-change="loadByPublishedAfterOnChange(this)" placeholder="{{ 'Published after'|trans({}, 'library') }}..." ng-model="filterPublishedAfter" class="form-control input-sm input-filter date"/>
+							  		<input type="text" ng-change="loadByPublishedAfterOnChange(this)" placeholder="{{ 'Published after'|trans({}, 'library') }}..." ng-model="filterPublishedAfter" class="form-control input-sm input-filter-date date"/>
 							  </li>
 							  <li class="list-group-item">
 							  		<ui-select ng-model="status.selected" theme="select2" on-select="loadByStatusOnSelect($item)" style="min-width: 200px;">
@@ -191,7 +191,15 @@
 				</div>
 				<div ng-controller="FeaturedController">
 					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" >
-						<h3>{{ 'Featured Articles'|trans }}</h3>
+						<div class="row">
+							<div class="col-xs-6"><h3 style="display:inline">{{ 'Featured Articles'|trans }}</h3></div>
+							<div class="col-xs-6" ng-if="playlist.selected">
+								<div class="limit-input">
+								<label id="playlist-id-label">List limit:</label>
+								<input type="text" ng-model="playlist.selected.maxItems" class="form-control input-sm" id="playlistId"/>
+								</div>
+							</div>
+						</div>
 						<div class="context-list-results">
 							<div style="display: block">
 								<form id="context-list-form">
@@ -251,7 +259,36 @@
 						</div>
 					</div>
 				</div>
+				<div ng-controller="ModalCtrl">
+				<script type="text/ng-template" id="removeListModal.html">
+			        <div class="modal-header">
+			            <h3 class="modal-title">{{ 'Remove list'|trans }}</h3>
+			        </div>
+			        <div class="modal-body">
+			           {{ 'Are you sure you want to delete this list?'|trans}}
+
+			        </div>
+			        <div class="modal-footer">
+			            <button class="btn btn-danger" ng-click="ok()">{{ 'OK'|trans({}, 'messages') }}</button>
+			            <button class="btn btn-default" ng-click="cancel()">{{ 'Cancel'|trans({}, 'messages') }}</button>
+			        </div>
+			    </script>
+			    <script type="text/ng-template" id="limitModal.html">
+			        <div class="modal-header">
+			            <h3 class="modal-title">{{ 'Info'|trans }}</h3>
+			        </div>
+			        <div class="modal-body">
+			        {{ 'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.'|trans}}
+
+			        </div>
+			        <div class="modal-footer">
+			            <button class="btn btn-primary" ng-click="ok()">{{ 'OK'|trans({}, 'messages') }}</button>
+			            <button class="btn btn-default" ng-click="cancel()">{{ 'Cancel'|trans({}, 'messages') }}</button>
+			        </div>
+			    </script>
 			</div>
+			</div>
+
 			<script type="text/javascript">
 				var clientId = '{{ clientId }}';
 				$(document).ready(function() {
@@ -259,16 +296,18 @@
 				});
 
 			</script>
-			<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.min.js"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/lodash.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/ui-bootstrap-modal.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-sortable.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/app.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/modal.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/filters-service.js') }}"></script>
 
-			{% endblock %}
+{% endblock %}

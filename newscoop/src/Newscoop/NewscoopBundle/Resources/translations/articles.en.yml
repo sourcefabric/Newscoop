@@ -185,7 +185,7 @@ Comments: Comments
 'No such section.': 'No such section.'
 'Characters': 'Characters'
 'Snippet': 'Snippet'
-'Nothing to save': 'Nothing to save'
+'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.': 'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.'
 articles:
     images:
         edit:

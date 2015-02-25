@@ -1,6 +1,6 @@
 (function() {
 'use strict';
-var app = angular.module('playlistsApp', ['ngSanitize', 'ui.select', 'ngTable', 'ng-sortable'])
+var app = angular.module('playlistsApp', ['ngSanitize', 'ui.select', 'ngTable', 'ng-sortable', 'ui.bootstrap'])
   .config(function($interpolateProvider, $httpProvider) {
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
       $httpProvider.interceptors.push('authInterceptor');
@@ -301,52 +301,14 @@ app.controller('PlaylistsController', [
      * @param  {Object} list  Playlist
      */
     $scope.setPlaylistInfoOnChange = function (list) {
-        $scope.featuredArticles = Playlist.getArticlesByListId(list.id);
+        $scope.featuredArticles = Playlist.getArticlesByListId(list);
         Playlist.setListId(list.id);
         $scope.playlistInfo = list;
+        $scope.playlist.selected.oldLimit = list.maxItems;
         $scope.formData = {title: list.title}
     };
 
-    /**
-     * Saves playlist with all articles in it.
-     * It makes batch link or unlink of the articles. It also
-     * saves a proper order of the articles. All list's changes are saved
-     * by clicking Save button.
-     *
-     * @param  {Object} scope Current scope
-     */
-    $scope.savePlaylist = function (scope) {
-        var listname = scope.formData.title,
-            logList = [];
-        var playlistExists = _.some(
-            $scope.playlists,
-            {title: listname}
-        );
-
-        if (!playlistExists) {
-            $scope.playlists.push({title: listname});
-            $scope.playlist.selected = $scope.playlists[$scope.playlists.length - 1];
-        }
-
-        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
-        $scope.processing = true;
-        logList = Playlist.getLogList();
-        if (logList.length == 0) {
-            flashMessage(Translator.trans('Nothing to save'));
-
-            return true;
-        }
-
-        Playlist.batchUpdate(logList)
-        .then(function () {
-            flashMessage(Translator.trans('List saved'));
-            Playlist.clearLogList();
-            flash.fadeOut();
-            $scope.processing = false;
-        }, function() {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
-        });
-    }
+    $scope.playlist.selected = undefined;
 
     /**
      * Adds new playlist. Sets default list name to current date.
@@ -355,17 +317,13 @@ app.controller('PlaylistsController', [
         var defaultListName,
             currentDate = new Date();
 
+        $scope.playlist.selected = {};
         defaultListName = currentDate.toString();
         Playlist.setCurrentPlaylistArticles([]);
         $scope.featuredArticles = Playlist.getCurrentPlaylistArticles();
+        Playlist.clearLogList();
         $scope.formData.title = defaultListName;
-
-        if ($scope.playlist.selected !== undefined) {
-            $scope.playlistInfo.id = undefined;
-            $scope.playlist.selected = undefined;
-        } else {
-            $scope.playlistInfo = {title: defaultListName, id: undefined};
-        }
+        $scope.playlist.selected = {title: defaultListName, id: undefined};
     }
 
     $scope.publication = {}
