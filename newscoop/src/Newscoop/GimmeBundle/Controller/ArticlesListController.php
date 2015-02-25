@@ -19,6 +19,7 @@ use Newscoop\Entity\Playlist;
 use Newscoop\Entity\Article;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Exception\ResourcesConflictException;
 use Newscoop\Exception\InvalidParametersException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -404,6 +405,14 @@ class ArticlesListController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $existingPlaylist = $em->getRepository('Newscoop\Entity\Playlist')
+                ->getPlaylistByTitle($playlist->getName())
+                ->getOneOrNullResult();
+
+            if ($existingPlaylist) {
+                throw new ResourcesConflictException("Playlist with that name already exists", 409);
+            }
+
             $em->persist($playlist);
             $em->flush();
 

@@ -42,6 +42,19 @@ class PlaylistRepository extends EntityRepository
         return $query;
     }
 
+    public function getPlaylistByTitle($title)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Playlist')
+            ->createQueryBuilder('p')
+            ->where('p.name = :title')
+            ->setParameter('title', $title);
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
     /**
      * Returns articles for a given playlist
      * @param Newscoop\Entity\Playlist $playlist
