@@ -64,14 +64,9 @@ angular.module('playlistsApp').factory('Playlist', [
 
             articles.$promise = deferredGet.promise;
 
-            var params = {id: playlist.id}
-            if (playlist.maxItems !== undefined) {
-            	params.items_per_page = playlist.maxItems;
-            }
-
             url = Routing.generate(
                 'newscoop_gimme_articleslist_getplaylistsarticles',
-                params,
+                {id: playlist.id},
                 true
             );
 
@@ -110,7 +105,6 @@ angular.module('playlistsApp').factory('Playlist', [
            	}
 
            	if (!_.isEmpty(params.filter())) {
-           		console.log(params.filter());
             	requestParams = _.merge(requestParams, params.filter());
         	}
 

@@ -105,8 +105,10 @@ angular.module('playlistsApp').controller('ModalCtrl', [
        modalInstance.result.then(function () {
         saveList();
         $scope.$parent.playlist.selected.oldLimit = $scope.$parent.playlist.selected.maxItems;
+        $scope.$parent.featuredArticles = Playlist.getArticlesByListId($scope.$parent.playlist.selected);
       }, function () {
           flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
+          return false;
       });
     } else {
        saveList();

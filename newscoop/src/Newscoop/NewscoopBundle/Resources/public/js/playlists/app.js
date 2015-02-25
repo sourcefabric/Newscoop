@@ -81,7 +81,6 @@ app.controller('FeaturedController', [
             var logList = Playlist.getLogList();
             article._order = evt.newIndex + 1;
             article._method = "link";
-            console.log(isInLogList, 'onsort');
             if (!isInLogList) {
 
                 Playlist.addItemToLogList(article);
@@ -243,8 +242,6 @@ app.controller('PlaylistsController', [
             } else {
                 Playlist.removeItemFromLogList(number, 'unlink');
             }
-
-            console.log(Playlist.getLogList());
         }
     };
 
@@ -449,19 +446,29 @@ app.controller('PlaylistsController', [
     }
 
     $scope.loadByPublishedBeforeOnChange = function (scope) {
-        var filters = {
-            published_before: scope.filterPublishedBefore + ' 00:00:00'
-        };
+        if (scope.filterPublishedBefore) {
+            var dateTime = scope.filterPublishedBefore + ' 00:00:00';
+            var filters = {
+                published_before: dateTime
+            };
 
-        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+            $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+        } else {
+            $scope.tableParams.$params.filter.published_before = undefined;
+        }
     }
 
     $scope.loadByPublishedAfterOnChange = function (scope) {
-        var filters = {
-            published_after: scope.filterPublishedAfter + ' 00:00:00'
-        };
+        if (scope.filterPublishedAfter) {
+            var dateTime = scope.filterPublishedAfter + ' 00:00:00';
+            var filters = {
+                published_after: dateTime
+            };
 
-        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+            $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+        } else {
+            $scope.tableParams.$params.filter.published_after = undefined;
+        }
     }
 
     /**
