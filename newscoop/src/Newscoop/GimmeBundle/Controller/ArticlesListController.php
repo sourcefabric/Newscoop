@@ -385,7 +385,8 @@ class ArticlesListController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="access_token", "dataType"="string", "required"=false, "description"="Access token"}
-     *     }
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\PlaylistType"
      * )
      *
      * @Route("articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
