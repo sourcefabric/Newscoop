@@ -164,8 +164,9 @@ angular.module('playlistsApp').factory('Filter', [
             items.$promise = deferredGet.promise;
 
             url = Routing.generate(
-                'newscoop_gimme_users_getusers',
+                'newscoop_gimme_users_searchusers',
                 {
+                    query: term,
                     items_per_page: 25
                 },
                 true
