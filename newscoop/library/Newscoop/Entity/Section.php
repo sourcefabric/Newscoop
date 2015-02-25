@@ -4,10 +4,9 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Section entity
@@ -133,8 +132,8 @@ class Section
     }
 
     /**
-     * @param int $number
-     * @param string $name
+     * @param int                   $number
+     * @param string                $name
      * @param Newscoop\Entity\Issue $issue
      */
     public function __construct($number, $name, $issue = null)
@@ -178,6 +177,16 @@ class Section
     public function getLanguageName()
     {
         return $this->language->getName();
+    }
+
+    /**
+     * Get language code
+     *
+     * @return string
+     */
+    public function getLanguageCode()
+    {
+        return $this->language !== null ? $this->language->getCode() : null;
     }
 
     /**
@@ -269,7 +278,7 @@ class Section
      */
     public function getNameAndLanguage()
     {
-        return $this->getName() .' ('.$this->getLanguageName().')';
+        return $this->getName().' ('.$this->getLanguageName().')';
     }
 
     /**

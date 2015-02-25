@@ -5,7 +5,6 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -62,7 +61,7 @@ class SectionsController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $sections = $paginator->paginate($sections, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $sections;
@@ -101,7 +100,7 @@ class SectionsController extends FOSRestController
             ->findOneBy(array(
                 'number' => $number,
                 'language' => $language,
-                'publication' => $publication
+                'publication' => $publication,
             ));
 
         if (!$section) {
@@ -113,7 +112,7 @@ class SectionsController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         $allItems = array_merge(array(

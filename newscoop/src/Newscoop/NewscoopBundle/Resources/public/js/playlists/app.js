@@ -167,10 +167,12 @@ app.controller('PlaylistsController', [
     '$scope',
     'Playlist',
     'ngTableParams',
+    'Filter',
     function (
         $scope,
         Playlist,
-        ngTableParams
+        ngTableParams,
+        Filter
     ) {
 
     $scope.isViewing = false;
@@ -179,14 +181,22 @@ app.controller('PlaylistsController', [
     $scope.playlistInfo = undefined;
     $scope.featuredArticles = [];
     $scope.formData = {};
+    $scope.processing = false;
 
     // array of the articles,
     // that will be removed or added to the list
     $scope.logList = [];
 
     $scope.sortableConfig = {
-        group: 'articles',
+        group: {
+            name: 'articles',
+            pull: 'clone',
+            put: false
+        },
+        sort: false,
         animation: 150,
+        handle: ".move-elements",
+        filter: ".ignore-elements",
         onEnd: function (evt/**Event*/){
             var item,
                 number,
@@ -245,8 +255,6 @@ app.controller('PlaylistsController', [
         total: 0,// length of data
         counts: [], // disable page sizes
         getData: function($defer, params) {
-            var filters = params.filter();
-            params.$params.query = filters.query;
             Playlist.getAllArticles($defer, params);
         }
     });
@@ -321,6 +329,7 @@ app.controller('PlaylistsController', [
         }
 
         var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
+        $scope.processing = true;
         logList = Playlist.getLogList();
         if (logList.length == 0) {
             flashMessage(Translator.trans('Nothing to save'));
@@ -333,6 +342,7 @@ app.controller('PlaylistsController', [
             flashMessage(Translator.trans('List saved'));
             Playlist.clearLogList();
             flash.fadeOut();
+            $scope.processing = false;
         }, function() {
             flashMessage(Translator.trans('Could not save the list'), 'error');
         });
@@ -356,6 +366,216 @@ app.controller('PlaylistsController', [
         } else {
             $scope.playlistInfo = {title: defaultListName, id: undefined};
         }
+    }
+
+    $scope.publication = {}
+    $scope.issue = {};
+    $scope.section = {};
+
+    /**
+     * Loads all publications to filter articles by
+     */
+    $scope.loadPublications = function () {
+        if (_.isEmpty($scope.publications)) {
+            $scope.publications = Filter.getAllPublications();
+        }
+    }
+
+    /**
+     * Loads all issues and articles by publication id
+     *
+     * @param  {Object} item Publication object
+     */
+    $scope.loadIssues = function (item) {
+        $scope.issues = [];
+        $scope.issue.selected = undefined;
+        $scope.sections = [];
+        $scope.section.selected = undefined;
+        $scope.tableParams.$params.filter.issue = undefined;
+        $scope.tableParams.$params.filter.section = undefined;
+        $scope.issues = Filter.getAllIssues(item.id);
+        //load by publication id
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, {publication: item.id});
+    };
+
+    /**
+     * Loads all sections and articles by publication id and issue number
+     *
+     * @param  {Object} item Issue object
+     */
+    $scope.loadSections = function (item) {
+        var publicationId = $scope.publication.selected.id;
+        $scope.sections = [];
+        $scope.section.selected = undefined;
+        $scope.tableParams.$params.filter.section = undefined;
+        $scope.sections = Filter.getAllSections(publicationId, item.number);
+        // load by publication id and issue number
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, {
+            publication: publicationId,
+            issue: item.number
+        });
+    };
+
+    /**
+     * Loads all articles by publication id, issue number
+     * and section number
+     *
+     * @param  {Object} item Section object
+     */
+    $scope.loadByMainFilters = function (item) {
+        var publicationId = $scope.publication.selected.id;
+        var issue = $scope.issue.selected.number;
+
+        // load by publication id and issue number
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, {
+            publication: publicationId,
+            issue: issue,
+            section: item.number
+        });
+    };
+
+    /**
+     * Loads all articles' types
+     */
+    $scope.loadArticleTypes = function () {
+        if (_.isEmpty($scope.articleTypes)) {
+            $scope.articleTypes = Filter.getArticleTypes();
+        }
+    }
+
+    /**
+     * Loads all articles' types
+     *
+     * @param {Object} type Article type
+     */
+    $scope.loadByArticleTypesOnSelect = function (type) {
+        var filters = {
+            article_type: type.name
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    $scope.author = {};
+    $scope.user = {};
+    $scope.topic = {};
+
+
+    $scope.loadAuthors = function (term) {
+        $scope.authors = [];
+        $scope.author.selected = undefined;
+        if (term) {
+            $scope.authors = Filter.getAuthors(term);
+        }
+    }
+
+    /**
+     * Loads all authors
+     *
+     * @param {Object} type Author object
+     */
+    $scope.loadByAuthorsOnSelect = function (item) {
+        var filters = {
+            author: item.id
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    $scope.loadByDateOnChange = function (scope) {
+        var filters = {
+            publish_date: scope.filterDate
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    $scope.loadByPublishedBeforeOnChange = function (scope) {
+        var filters = {
+            published_before: scope.filterPublishedBefore + ' 00:00:00'
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    $scope.loadByPublishedAfterOnChange = function (scope) {
+        var filters = {
+            published_after: scope.filterPublishedAfter + ' 00:00:00'
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    /**
+     * Loads all users
+     *
+     * @param {Object} item User object
+     */
+    $scope.loadUsers = function (term) {
+        $scope.users = [];
+        $scope.user.selected = undefined;
+        if (term) {
+            $scope.users = Filter.getUsers(term);
+        }
+    }
+
+    /**
+     * Loads all articles by user
+     *
+     * @param {Object} item User object
+     */
+    $scope.loadByUsersOnSelect = function (item) {
+        var filters = {
+            creator: item.id
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    // article statuses
+    $scope.statuses = [
+        {code: 'Y', name: Translator.trans("Published", {}, 'messages')},
+        {code: 'S', name: Translator.trans("Submitted", {}, 'messages')},
+        {code: 'N', name: Translator.trans("New", {}, 'messages')}
+    ];
+
+    /**
+     * Loads articles by status
+     *
+     * @param {Object} item User object
+     */
+    $scope.loadByStatusOnSelect = function (item) {
+        var filters = {
+            status: item.code
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
+    }
+
+    /**
+     * Loads all topics
+     *
+     * @param {Object} item Topic object
+     */
+    $scope.loadTopics = function (term) {
+        $scope.topics = [];
+        $scope.topic.selected = undefined;
+        if (term) {
+            $scope.topics = Filter.getTopics(term);
+        }
+    }
+
+    /**
+     * Loads all articles by topic
+     *
+     * @param {Object} item Topic object
+     */
+    $scope.loadByTopicOnSelect = function (item) {
+        var filters = {
+            topic: item.id
+        };
+
+        $scope.tableParams.$params.filter = _.merge($scope.tableParams.$params.filter, filters);
     }
 }]);
 })();

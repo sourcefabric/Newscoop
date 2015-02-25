@@ -98,15 +98,16 @@ angular.module('playlistsApp').factory('Playlist', [
             var url,
             	requestParams;
 
-           	requestParams = {items_per_page: 10}
-
-           	if(params.$params.query !== undefined) {
-           		requestParams.query = params.$params.query;
-           	}
+           	requestParams = {items_per_page: 10};
 
            	if(params.$params.page !== undefined) {
            		requestParams.page = params.$params.page;
            	}
+
+           	if (!_.isEmpty(params.filter())) {
+           		console.log(params.filter());
+            	requestParams = _.merge(requestParams, params.filter());
+        	}
 
             url = Routing.generate(
                 'newscoop_gimme_articles_searcharticles',

@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Entity\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
@@ -291,7 +290,7 @@ class TopicRepository extends NestedTreeRepository
         $path = $pathQuery->getArrayResult();
         $pathStr = '';
         foreach ($path as $element) {
-            $pathStr = $pathStr . ' / ' . $element['title'];
+            $pathStr = $pathStr.' / '.$element['title'];
         }
 
         return $pathStr;

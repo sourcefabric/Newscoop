@@ -6,7 +6,7 @@
 }
 
 #playlist-name {
-    width: 325px;
+    width: 200px;
 }
 
 #playlist-id {
@@ -114,4 +114,52 @@ ul#context_list {
 .context-preview {
     margin-top: 22px;
     margin-left: 11px;
+}
+.list-group-item {
+    padding: 3px 15px;
+    border: none;
+    background: transparent;
+}
+.system_pref input {
+    float: left !important;
+}
+.input-filter {
+    width: 200px;
+    float: left !important;
+}
+.container {
+    margin: 0;
+    padding: 0 10px;
+}
+
+.heading button {
+    line-height: 1em;
+    box-shadow: none !important;
+    padding: 8px 8px 10px;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    outline:none !important;
+
+}
+.btn-sf-invisible {
+    background: #F5F5F5;
+    border: 0;
+    padding: 0;
+}
+
+.filters {
+    background: #F1F1F1;
+    margin: 20px 0px;
+}
+.add-text {
+    text-transform: uppercase;
+}
+.ng-table-pager {
+    margin: 0 auto;
+    width: 65%;
+    margin-top: -20px;
+}
+.ui-datepicker-trigger {
+    margin-top: 5px;
 }

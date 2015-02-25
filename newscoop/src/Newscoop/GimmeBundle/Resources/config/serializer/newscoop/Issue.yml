@@ -17,11 +17,20 @@ Newscoop\Entity\Issue:
             expose: true
             read_only: true
             type: string
-            groups: ["details"]
+            groups: ["list", "details"]
             serialized_name: workflowStatus
         shortName:
             expose: true
             read_only: true
             type: string
-            groups: ["details"]
+            groups: ["list", "details"]
             serialized_name: shortName
+        language:
+            expose: true
+            read_only: true
+            type: string
+            accessor:
+                getter: getLanguageCode
+            groups: ["list", "details"]
+            serialized_name: language
+            since_version: 1.2
