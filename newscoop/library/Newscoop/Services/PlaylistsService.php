@@ -189,9 +189,7 @@ class PlaylistsService
             $playlistArticle->setOrder($position);
             $this->em->flush();
 
-            if ($oldOrder == 0 && $playlist->getMaxItems() !== null && (int) $maxPosition+1 >= $playlist->getMaxItems()) {
-                $this->removeLeftItems($playlist);
-            }
+            $this->removeLeftItems($playlist);
 
             $this->em->getConnection()->exec('UNLOCK TABLES;');
         } catch (\Exception $e) {
@@ -206,10 +204,12 @@ class PlaylistsService
 
     public function removeLeftItems($playlist)
     {
-        $this->em
-            ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.order > :maxPosition AND pa.idPlaylist = :playlistId')
-            ->setParameter('maxPosition', $playlist->getMaxItems())
-            ->setParameter('playlistId', $playlist->getId())
-            ->execute();
+        if ($playlist->getMaxItems() != null) {
+            $this->em
+                ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.order > :maxPosition AND pa.idPlaylist = :playlistId')
+                ->setParameter('maxPosition', $playlist->getMaxItems())
+                ->setParameter('playlistId', $playlist->getId())
+                ->execute();
+        }
     }
 }
