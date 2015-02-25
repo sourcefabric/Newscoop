@@ -27,11 +27,6 @@ class Application_Form_Login extends Zend_Form
             ),
         ));
 
-        $this->addElement('checkbox', 'remember_me', array(
-            'label' => 'Remember Me',
-            'required' => false,
-        ));
-
         $this->addElement('submit', 'submit', array(
             'label' => 'Sign In',
             'ignore' => true,

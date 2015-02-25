@@ -42,6 +42,11 @@ security:
                 use_forward: true
                 login_path: /oauth/v2/auth_login
                 check_path: /oauth/v2/auth_login_check
+            remember_me:
+                key: "changeme"
+                lifetime: 31536000
+                path: / 
+                domain: ~ 
 
         api:
             pattern:    ^/(api|content\-api)
@@ -57,6 +62,11 @@ security:
                 login_path:  admin_login
                 check_path:  admin_login_check
                 success_handler: newscoop_newscoop.security.authentication.success_handler
+            remember_me:
+                key: "changeme"
+                lifetime: 31536000
+                path: / 
+                domain: ~ 
             logout:
                 path: admin_logout
                 target: /admin
@@ -72,6 +82,11 @@ security:
                 username_parameter: email
                 password_parameter: password
                 success_handler: newscoop_newscoop.security.authentication.frontend.success_handler
+            remember_me:
+                key: "changeme"
+                lifetime: 31536000
+                path: / 
+                domain: ~ 
             logout:
                 path: /auth/logout
                 target: /
