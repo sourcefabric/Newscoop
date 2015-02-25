@@ -134,8 +134,7 @@ class ArticlesListController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {
-        }
+        } catch (\Newscoop\NewscoopException $e) {}
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
             ->articles($playlist, null, true, null, null, $onlyPublished, true)->getResult();
