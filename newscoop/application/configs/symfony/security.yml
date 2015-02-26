@@ -9,6 +9,11 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        chain_provider:
+            chain:
+                providers: [backend_db, simple]
+        simple:
+            id: newscoop_newscoop.simple_user_provider
         backend_db:
             entity: { class: Newscoop\Entity\User, property: username }
         frontend_db:
@@ -56,7 +61,7 @@ security:
 
         admin_area:
             pattern:    ^/admin
-            provider: backend_db
+            provider: chain_provider
             form_login:
                 use_forward: true
                 login_path:  admin_login
