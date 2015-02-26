@@ -67,7 +67,7 @@
 }
 ul#context_list {
     display:block;
-    height: 433px;
+    height: 500px;
     width: 100%;
     overflow-y:auto;
     overflow-x:hidden;

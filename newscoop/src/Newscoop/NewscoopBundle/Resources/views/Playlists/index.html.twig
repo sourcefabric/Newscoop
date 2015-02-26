@@ -235,10 +235,11 @@
 							</div>
 							{% endif %}
 						</div>
-						<div class="context-list-results">
+						<div class="context-list-results" >
 							<div style="display: block">
-								<form id="context-list-form">
+								<form>
 									<ul id="context_list" ng-sortable="sortableConfig">
+										<div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
 										{% if editorView == false %}
 										<div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
 											{{ 'Drag here to add to list'|trans }}
@@ -266,6 +267,7 @@
 													</div>
 												</div>
 											</li>
+											</div>
 										</ul>
 									</form>
 								</div>
@@ -336,6 +338,7 @@
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/lodash.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/ui-bootstrap-modal.js') }}"></script>
+			<script src="{{ asset('/bundles/newscooparticles/app/ng-infinite-scroll.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>

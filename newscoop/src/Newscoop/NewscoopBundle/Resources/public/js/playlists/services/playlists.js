@@ -57,16 +57,22 @@ angular.module('playlistsApp').factory('Playlist', [
         * @method getArticlesByListId
         * @return {Object} array of playlists
         */
-        Playlist.getArticlesByListId = function (playlist) {
+        Playlist.getArticlesByListId = function (playlist, page) {
             var articles = [],
                 deferredGet = $q.defer(),
                 url;
 
             articles.$promise = deferredGet.promise;
 
+            var params = {id: playlist.id};
+
+            if (page !== undefined) {
+            	params.page = page;
+            }
+
             url = Routing.generate(
                 'newscoop_gimme_articleslist_getplaylistsarticles',
-                {id: playlist.id},
+                params,
                 true
             );
 
@@ -76,7 +82,7 @@ angular.module('playlistsApp').factory('Playlist', [
                     articles.push(item);
                 });
                 playlistArticles = articles;
-                deferredGet.resolve();
+                deferredGet.resolve(articles);
             }).error(function (responseBody) {
                 deferredGet.reject(responseBody);
             });

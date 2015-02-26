@@ -1,6 +1,6 @@
 (function() {
 'use strict';
-var app = angular.module('playlistsApp', ['ngSanitize', 'ui.select', 'ngTable', 'ng-sortable', 'ui.bootstrap'])
+var app = angular.module('playlistsApp', ['ngSanitize', 'ui.select', 'ngTable', 'ng-sortable', 'ui.bootstrap', 'infinite-scroll'])
   .config(function($interpolateProvider, $httpProvider) {
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
       $httpProvider.interceptors.push('authInterceptor');
@@ -258,7 +258,7 @@ app.controller('PlaylistsController', [
 
     $scope.tableParams = new ngTableParams({
         page: 1, // show first page
-        count: 5 // count per page
+        count: 10 // count per page
     }, {
         total: 0,// length of data
         counts: [], // disable page sizes
@@ -366,6 +366,10 @@ app.controller('PlaylistsController', [
         });
     }
 
+    var page = 2,
+        isRunning = false,
+        isEmpty = false;
+
     /**
      * Sets playlist details to the current scope.
      *
@@ -379,7 +383,36 @@ app.controller('PlaylistsController', [
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
         $scope.formData = {title: list.title}
+        page = 2;
+        isRunning = false;
     };
+
+    /**
+     * Loads more playlist's articles on scroll
+     */
+    $scope.loadArticlesOnScrollDown = function () {
+        if ($scope.playlist.selected) {
+            if (!isEmpty && !isRunning) {
+                isRunning = true;
+                Playlist.getArticlesByListId($scope.playlist.selected, page).$promise
+                .then(function (response) {
+                    if (response.length == 0) {
+                        isEmpty = true;
+                    } else {
+                        page++;
+                        isEmpty = false;
+                        angular.forEach(response, function(value, key) {
+                            if (value.number !== undefined) {
+                                $scope.featuredArticles.push(value);
+                            }
+                        });
+                    }
+
+                    isRunning = false;
+                });
+            }
+        }
+    }
 
     $scope.playlist.selected = undefined;
 
