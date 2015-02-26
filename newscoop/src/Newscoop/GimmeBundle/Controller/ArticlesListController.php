@@ -474,6 +474,9 @@ class ArticlesListController extends FOSRestController
             if ($oldMaxItems != $playlist->getMaxItems()) {
                 $playlistService = $this->get('playlists');
                 $playlistService->removeLeftItems($playlist);
+                $playlist = $em->getRepository('Newscoop\Entity\Playlist')
+                    ->getPlaylist($playlist->getId())
+                    ->getOneOrNullResult();
             }
 
             $view = FOSView\View::create($playlist, 201);
