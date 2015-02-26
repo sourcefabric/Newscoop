@@ -18,23 +18,28 @@ class PlaylistsController extends Controller
 {
     /**
      * @Route("/admin/playlists/")
-     * @Route("/admin/playlists/related/", options={"expose"=true}, name="newscoop_newscoop_playlists_related")
+     * @Route("/admin/playlists/{articleNumber}/{language}/editor-view/",
+     * 		options={"expose"=true},
+     * 		name="newscoop_newscoop_playlists_editor"
+     * )
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $articleNumber = null, $language = null)
     {
         $preferencesService = $this->get('preferences');
         $em = $this->get('em');
         $clientName = 'newscoop_'.$preferencesService->SiteSecretKey;
         $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($clientName);
 
-        $relatedView = false;
-        if ($request->get('_route') === "newscoop_newscoop_playlists_related") {
-            $relatedView = true;
+        $editorView = false;
+        if ($request->get('_route') === "newscoop_newscoop_playlists_editor") {
+            $editorView = true;
         }
 
         return $this->render('NewscoopNewscoopBundle:Playlists:index.html.twig', array(
             'clientId' => $client ? $client->getPublicId() : '',
-            'relatedView' => $relatedView,
+            'editorView' => $editorView,
+            'articleNumber' => $articleNumber,
+            'language' => $language,
         ));
     }
 }

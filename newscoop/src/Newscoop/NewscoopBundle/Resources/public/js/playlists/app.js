@@ -283,12 +283,78 @@ app.controller('PlaylistsController', [
         );
 
         if (!exists) {
+            var isInLogList = _.some(
+                Playlist.getLogList(),
+                {number: $scope.articlePreview.number}
+            );
+
+            $scope.articlePreview._method = "link";
+            $scope.articlePreview._order = 1;
+            Playlist.addItemToLogList($scope.articlePreview);
             $scope.featuredArticles.unshift($scope.articlePreview);
             $scope.isViewing = false;
         } else {
             flashMessage(Translator.trans('Item already exists in the list'), 'error');
         }
     };
+
+    /**
+     * Adds article to the playlist from the editor mode
+     */
+    $scope.addArticleToListFromEditor = function (number, language) {
+        var exists = _.some(
+            $scope.featuredArticles,
+            {number: number}
+        );
+
+        if (!exists) {
+            var article = undefined,
+                isInLogList;
+            $scope.processing = true;
+            isInLogList = _.some(
+                Playlist.getLogList(),
+                {number: number}
+            );
+
+            if (!isInLogList) {
+                Playlist.getArticle(number, language).then(function (article) {
+                    article._method = "link";
+                    article._order = 1;
+                    Playlist.addItemToLogList(article);
+                    $scope.featuredArticles.unshift(article);
+                    $scope.processing = false;
+                }, function() {
+                    flashMessage(Translator.trans('Error List'), 'error');
+                });
+
+                return true;
+            }
+        }
+
+        flashMessage(Translator.trans('Item already exists in the list'), 'error');
+    };
+
+    $scope.savePlaylistInEditorMode = function () {
+        var logList = [];
+        $scope.processing = true;
+        logList = Playlist.getLogList();
+        console.log(logList);
+        if (logList.length == 0) {
+            flashMessage(Translator.trans('List saved'));
+            $scope.processing = false;
+
+            return true;
+        }
+
+        Playlist.batchUpdate(logList)
+        .then(function () {
+            flashMessage(Translator.trans('List saved'));
+            Playlist.clearLogList();
+            $scope.processing = false;
+        }, function() {
+            flashMessage(Translator.trans('Could not save the list'), 'error');
+        });
+    }
 
     /**
      * Sets playlist details to the current scope.

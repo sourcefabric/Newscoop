@@ -84,6 +84,26 @@ angular.module('playlistsApp').factory('Playlist', [
             return articles;
         };
 
+        Playlist.getArticle = function (number, language) {
+            var deferredGet = $q.defer(),
+                url;
+
+            url = Routing.generate(
+                'newscoop_gimme_articles_getarticle_language',
+                {number: number, language: language},
+                true
+            );
+
+            $http.get(url)
+            .success(function (response) {
+                deferredGet.resolve(response);
+            }).error(function (responseBody) {
+                deferredGet.reject(responseBody);
+            });
+
+            return deferredGet.promise;
+        };
+
         /**
         * Retrieves a list of all available articles.
         *
@@ -273,10 +293,13 @@ angular.module('playlistsApp').factory('Playlist', [
 
             var formData = {
             	playlist: {
-            		name: playlist.title,
-            		maxItems: playlist.maxItems,
+            		name: playlist.title
             	}
             };
+
+            if (playlist.maxItems !== undefined) {
+            	formData.playlist.maxItems = playlist.maxItems;
+            }
 
             $http({
 	            method: "POST",

@@ -2,6 +2,13 @@
 {% trans_default_domain "article" %}
 {% block admin_title %}{{ parent() }} - {{ 'topics.title'|trans }}{% endblock %}
 {% block admin_page_title_content %}{{ 'Featured Article Lists'|trans }}{% endblock %}
+{% block admin_page_title_box %}
+  {% if editorView == false %}
+      <div class="toolbar row"><span class="article-title">
+    {{ 'Featured Article Lists'|trans }}
+  </span></div>
+  {% endif %}
+{% endblock %}
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/playlists.css') }}">
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/bootstrap-custom.css') }}">
@@ -12,14 +19,41 @@
 {% block admin_scripts %}
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
 {% endblock %}
-
+{% block admin_page_menu_bar %}
+  {% if editorView == false %}
+    {{ parent() }}
+  {% endif %}
+{% endblock %}
 {% block admin_content %}
 <div ng-app="playlistsApp" ng-controller="PlaylistsController">
-	<div class="system_pref">
+	<div class="system_pref" {% if editorView %}style="margin: 0; margin: -20px -40px;"{% endif %}>
+		{% if editorView %}
+		<div class="toolbar" style="background: #fff;box-shadow: none;margin-bottom: 13px;border: none;padding: 0;">
+			<div class="select-playlist-bar" style="float: left;">
+				<form autocomplete="off">
+    				<ui-select ng-model="playlist.selected" theme="select2" on-select="setPlaylistInfoOnChange($item)" ng-disabled="disabled" style="min-width: 200px;">
+							<ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
+							<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
+							<div ng-bind-html="playlist.title | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+        		</form>
+			</div>
+
+			<div class="save-button-bar">
+				<button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
+				<button onclick="parent.$.fancybox.close(); return false;" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+				<button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+			</div>
+		</div>
+		{% endif %}
+		{% if editorView == false %}
 		<ul class="list-inline first-menu" ng-form="playlistForm">
+			{% if editorView == false %}
 			<li><button class="add btn btn-primary btn-sm" ng-click="addNewPlaylist()"><span class="glyphicon glyphicon-plus"></span> {{ 'Add list'|trans }}</button></li>
 			<li>
-		<ui-select ng-model="playlist.selected" theme="select2" on-select="setPlaylistInfoOnChange($item)" ng-disabled="disabled" style="min-width: 300px;">
+			{% endif %}
+		<ui-select ng-model="playlist.selected" theme="select2" on-select="setPlaylistInfoOnChange($item)" ng-disabled="disabled" style="min-width: 200px;">
 				<ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
 				<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
 				<div ng-bind-html="playlist.title | highlight: $select.search"></div>
@@ -49,10 +83,9 @@
 		</div>
 	</li>
 </ul>
-<script type="text/ng-template" id="filter.html">
-	
-</script>
+{% endif %}
 <div class="context-content">
+{% if editorView == false %}
 	<div class="context-block context-search plugin-context-block">
 		<h3>{{ 'Available Articles'|trans }}</h3>
 		<div class="smartlist">
@@ -189,26 +222,30 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 				<div ng-controller="FeaturedController">
-					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" >
+					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 620px;"{% endif %}>
 						<div class="row">
 							<div class="col-xs-6"><h3 style="display:inline">{{ 'Featured Articles'|trans }}</h3></div>
-							<div class="col-xs-6" ng-if="playlist.selected">
+							{% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
 								<div class="limit-input">
 								<label id="playlist-id-label">List limit:</label>
 								<input type="text" ng-model="playlist.selected.maxItems" class="form-control input-sm" id="playlistId"/>
 								</div>
 							</div>
+							{% endif %}
 						</div>
 						<div class="context-list-results">
 							<div style="display: block">
 								<form id="context-list-form">
 									<ul id="context_list" ng-sortable="sortableConfig">
+										{% if editorView == false %}
 										<div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
 											{{ 'Drag here to add to list'|trans }}
 										</div>
+										{% endif %}
 										<li class="item" ng-repeat="article in $parent.featuredArticles">
-											<div class="context-item">
+											<div class="context-item" {% if editorView %}style="width: 580px"{% endif %} >
 												<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
 												<div class="context-item-header">
 													<div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
@@ -310,4 +347,9 @@
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/filters-service.js') }}"></script>
 
+{% endblock %}
+{% block admin_page_footer_box %}
+{% if editorView == false %}
+    {{ parent() }}
+{% endif %}
 {% endblock %}
