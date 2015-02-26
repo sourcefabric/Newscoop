@@ -200,7 +200,8 @@ app.controller('PlaylistsController', [
             var item,
                 number,
                 occurences,
-                isInLogList = false;
+                isInLogList = false,
+                limit;
 
             item = evt.model; // the current dragged article
             number = item.number;
@@ -214,6 +215,16 @@ app.controller('PlaylistsController', [
             if (occurences > 1) {
                 $scope.featuredArticles.splice(evt.newIndex, 1);
                 flashMessage(Translator.trans('Item already exists in the list'), 'error');
+
+                return true;
+            }
+
+            limit = $scope.playlist.selected.maxItems;
+            if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
+                $scope.featuredArticles.splice(evt.newIndex, 1);
+                flashMessage(Translator.trans(
+                    'List limit reached! Remove some articles from the list before adding new ones.'
+                ), 'error');
 
                 return true;
             }

@@ -42,7 +42,7 @@
 
 			<div class="save-button-bar">
 				<button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
-				<button onclick="parent.$.fancybox.close(); return false;" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+				<button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
 				<button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
 			</div>
 		</div>
@@ -226,7 +226,7 @@
 				<div ng-controller="FeaturedController">
 					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 620px;"{% endif %}>
 						<div class="row">
-							<div class="col-xs-6"><h3 style="display:inline">{{ 'Featured Articles'|trans }}</h3></div>
+							<div class="col-xs-6"><h3 style="display:inline">{[{ ::playlist.selected.title}]}</h3></div>
 							{% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
 								<div class="limit-input">
 								<label id="playlist-id-label">List limit:</label>

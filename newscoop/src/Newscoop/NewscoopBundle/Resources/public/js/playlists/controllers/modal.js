@@ -39,7 +39,7 @@ angular.module('playlistsApp').controller('ModalCtrl', [
 
         if ($scope.$parent.playlist.selected !== undefined) {
             Playlist.updatePlaylist($scope.playlist.selected).then(function () {
-                $scope.$parent.featuredArticles = Playlist.getArticlesByListId($scope.$parent.playlist.selected);
+                //$scope.$parent.featuredArticles = Playlist.getArticlesByListId($scope.$parent.playlist.selected);
                 flash.fadeOut();
                 $scope.$parent.processing = false;
             }, function() {
@@ -70,6 +70,10 @@ angular.module('playlistsApp').controller('ModalCtrl', [
         });
     }
 
+  var reloadArticles = function () {
+    $scope.$parent.featuredArticles = Playlist.getArticlesByListId($scope.$parent.playlist.selected);
+  }
+
   $scope.openRemoveListModal = function () {
     var modalInstance = $modal.open({
       templateUrl: 'removeListModal.html',
@@ -96,7 +100,10 @@ angular.module('playlistsApp').controller('ModalCtrl', [
   };
 
   $scope.openLimitModal = function () {
-    if ($scope.$parent.playlist.selected.maxItems != $scope.$parent.playlist.selected.oldLimit) {
+    var newLimit = $scope.$parent.playlist.selected.maxItems,
+        oldLimit = $scope.$parent.playlist.selected.oldLimit;
+
+    if (newLimit && newLimit != 0 && newLimit != oldLimit) {
       var modalInstance = $modal.open({
         templateUrl: 'limitModal.html',
         controller: 'ModalInstanceCtrl'
@@ -105,13 +112,13 @@ angular.module('playlistsApp').controller('ModalCtrl', [
        modalInstance.result.then(function () {
         saveList();
         $scope.$parent.playlist.selected.oldLimit = $scope.$parent.playlist.selected.maxItems;
-        $scope.$parent.featuredArticles = Playlist.getArticlesByListId($scope.$parent.playlist.selected);
+        reloadArticles();
       }, function () {
-          flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
           return false;
       });
     } else {
        saveList();
+       reloadArticles();
     }
   };
 }]);
