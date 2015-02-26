@@ -1628,9 +1628,11 @@ class Article implements DocumentInterface
             }
 
             return $this;
+        } else if (is_string($onFrontPage)) {
+            $this->onFrontPage = $onFrontPage;
+        } else {
+            $this->onFrontPage = "N";
         }
-
-        $this->onFrontPage = $onFrontPage;
 
         return $this;
     }
@@ -1662,9 +1664,12 @@ class Article implements DocumentInterface
             }
 
             return $this;
+        } else if (is_string($onSection)) {
+            $this->onSection = $onFrontPage;
+        } else {
+            $this->onSection = "N";
         }
 
-        $this->onSection = $onSection;
 
         return $this;
     }

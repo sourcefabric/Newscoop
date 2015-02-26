@@ -63,4 +63,22 @@ class PlaylistArticleRepository extends EntityRepository
         $rows = $query->getResult();
         return $rows;
     }
+
+    public function getPlaylistArticle($playlist, $article)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\PlaylistArticle')
+            ->createQueryBuilder('pa');
+
+        $queryBuilder->where('pa.playlist = :playlist')
+            ->andWhere('pa.articleNumber = :articleNumber')
+            ->setParameters(array(
+                'playlist' => $playlist,
+                'articleNumber' => $article->getNumber()
+            ));
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
 }

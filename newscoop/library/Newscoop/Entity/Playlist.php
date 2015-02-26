@@ -30,6 +30,18 @@ class Playlist extends AbstractEntity
     protected $name;
 
     /**
+     * @ORM\Column(length=1024, name="notes")
+     * @var string
+     */
+    protected $notes;
+
+    /**
+     * @ORM\Column(type="integer", name="max_items")
+     * @var int
+     */
+    protected $maxItems;
+
+    /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
      */
     protected $articles;
@@ -77,4 +89,52 @@ class Playlist extends AbstractEntity
 	    $this->name = $name;
 		return $this;
 	}
+
+    /**
+     * Gets the value of notes.
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Sets the value of notes.
+     *
+     * @param string $notes the notes
+     *
+     * @return self
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of maxItems.
+     *
+     * @return int
+     */
+    public function getMaxItems()
+    {
+        return $this->maxItems;
+    }
+
+    /**
+     * Sets the value of maxItems.
+     *
+     * @param int $maxItems the max items
+     *
+     * @return self
+     */
+    public function setMaxItems($maxItems)
+    {
+        $this->maxItems = $maxItems;
+
+        return $this;
+    }
 }

@@ -7,13 +7,14 @@
 use Behat\Behat\Context\ClosuredContextInterface;
 use Behat\Behat\Context\BehatContext;
 use Symfony\Component\Finder\Finder;
+use Behat\MinkExtension\Context\MinkContext;
 
 require_once __DIR__ . '/RestContext.php';
 
 /**
  * Features context.
  */
-class FeatureContext extends BehatContext implements ClosuredContextInterface
+class FeatureContext extends MinkContext implements ClosuredContextInterface
 {
 
     /**

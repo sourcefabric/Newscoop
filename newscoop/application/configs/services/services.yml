@@ -64,6 +64,9 @@ services:
     related_articles:
         class:      Newscoop\Services\RelatedArticlesService
         arguments:  ["@em"]
+    playlists:
+        class:      Newscoop\Services\PlaylistsService
+        arguments:  ["@em"]
     article.repository:
         class:      Doctrine\Common\Persistence\ObjectRepository
         factory_service: doctrine

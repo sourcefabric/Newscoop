@@ -17,41 +17,6 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 class ExceptionController extends FOSExceptionController
 {
-   /**
-     * Newscoop REST API exceptions Controller.
-     * Converts an Exception to a Response.
-     *
-     * TODO: change exceptions handling in listener - this controller should deal only with REST API exceptions.
-     *
-     * @param Request              $request   Request
-     * @param Exception            $exception A Exception instance
-     * @param DebugLoggerInterface $logger    A DebugLoggerInterface instance
-     * @param string               $format    The format to use for rendering (html, xml, ...)
-     *
-     * @return Response Response instance
-     */
-    public function showAction(Request $request, \Exception $exception, DebugLoggerInterface $logger = null, $format = 'html')
-    {
-        $urlMatcher = $this->container->get('router');
-        try {
-            $context = new \Symfony\Component\Routing\RequestContext($request->getPathInfo(), $request->getMethod());
-            $urlMatcher->setContext($context);
-            $match = $urlMatcher->match($context->getBaseUrl());
-        } catch (\Exception $e) {
-            return;
-        }
-
-        if (strpos($match['_route'], 'newscoop_gimme_') === false) {
-            // Skip newscoop rest api exceptions
-            $logger = $this->container->get('monolog.logger.sentry');
-            $logger->log(\Psr\Log\LogLevel::CRITICAL, 'Uncaught exception', array('exception' => $exception));
-
-            return;
-        }
-
-        return parent::showAction($request, FlattenException::create($exception), $logger, $format);
-    }
-
     protected function createExceptionWrapper(array $parameters)
     {
         return $parameters;

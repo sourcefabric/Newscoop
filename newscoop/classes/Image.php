@@ -134,7 +134,7 @@ class Image extends DatabaseObject
      * @return boolean
      *                 Return TRUE if the database was updated, false otherwise.
      */
-    public function commit()
+    public function commit($p_ignoreColumns = NULL)
     {
         return parent::commit(array("TimeCreated", "LastModified"));
     } // fn commit

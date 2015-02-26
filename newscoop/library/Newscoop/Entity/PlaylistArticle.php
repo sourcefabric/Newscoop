@@ -44,6 +44,24 @@ class PlaylistArticle extends AbstractEntity
     protected $article;
 
     /**
+     * @ORM\Column(type="integer", name="article_no")
+     * @var int
+     */
+    protected $articleNumber;
+
+    /**
+     * @ORM\Column(type="integer", name="order_number")
+     * @var integer
+     */
+    protected $order;
+
+    public function __construct($playlist, $article){
+        $this->setPlaylist($playlist);
+        $this->setArticle($article);
+        $this->setOrder(0);
+    }
+
+    /**
      * set playlist
      * @return Newscoop\Entity\PlaylistArticle
      */
@@ -79,6 +97,30 @@ class PlaylistArticle extends AbstractEntity
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Gets the value of order.
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Sets the value of order.
+     *
+     * @param integer $order the order
+     *
+     * @return self
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
     }
 
     public function __toString(){ return 'playlist_article'; }

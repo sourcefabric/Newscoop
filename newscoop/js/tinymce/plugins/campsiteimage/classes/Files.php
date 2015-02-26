@@ -157,7 +157,7 @@ class Files
 	 * @param string $path the path
 	 * @return string path with trailing /
 	 */
-	function fixPath($path) 
+	static function fixPath($path) 
 	{
 		//append a slash to the path if it doesn't exists.
 		if(!(substr($path,-1) == '/'))
@@ -171,7 +171,7 @@ class Files
 	 * @param string $pathB path two
 	 * @return string a trailing slash combinded path.
 	 */
-	function makePath($pathA, $pathB) 
+	static function makePath($pathA, $pathB) 
 	{
 		$pathA = Files::fixPath($pathA);
 		if(substr($pathB,0,1)=='/')
