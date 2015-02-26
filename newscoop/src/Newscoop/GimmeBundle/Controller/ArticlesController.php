@@ -275,10 +275,6 @@ class ArticlesController extends FOSRestController
         $articleSearchCriteria = new ArticleSearchCriteria();
         $articleSearchCriteria->fillFromRequest($request);
 
-        if (!$articleSearchCriteria->language) {
-            $articleSearchCriteria->language = $publication->getLanguage()->getCode();
-        }
-
         $articles = $articleSearch->searchArticles(
             $articleSearchCriteria,
             $onlyPublished
