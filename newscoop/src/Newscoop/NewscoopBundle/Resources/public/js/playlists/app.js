@@ -338,7 +338,6 @@ app.controller('PlaylistsController', [
         var logList = [];
         $scope.processing = true;
         logList = Playlist.getLogList();
-        console.log(logList);
         if (logList.length == 0) {
             flashMessage(Translator.trans('List saved'));
             $scope.processing = false;
