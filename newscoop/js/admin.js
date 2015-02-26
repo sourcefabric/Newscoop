@@ -6,13 +6,15 @@ $(function() {
     $('.main-menu-bar ul.navigation > li > a').each(function(i) {
         var menu = $(this);
 
-        $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s').prependTo(menu);
+        if (i > 0 && !(menu.parent().data('menu') == 'not-menu')) {
+            $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s').prependTo(menu);
 
-        menu.topmenu({
-            content: '<ul>' + menu.next('ul').html() + '</ul>',
-            flyOut: true,
-            showSpeed: 150
-        });
+            menu.topmenu({
+                content: '<ul>' + menu.next('ul').html() + '</ul>',
+                flyOut: true,
+                showSpeed: 150
+            });
+        }
 
         // add css/attributes to main links
         menu.attr('tabindex', i)
