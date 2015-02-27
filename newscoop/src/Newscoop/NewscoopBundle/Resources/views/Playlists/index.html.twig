@@ -77,9 +77,9 @@
 		</span>
 	</li>
 	<li style="float: right" ng-if="playlist.selected">
-		<div class="save-button-bar" ng-controller="ModalCtrl">
-			<button type="button" ng-click="openRemoveListModal()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
-			<button type="button" ng-disabled="processing" ng-click="openLimitModal()" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+		<div class="save-button-bar">
+			<button type="button" ng-click="removePlaylist()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
+			<button type="button" ng-disabled="processing" ng-click="savePlaylist()" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
 		</div>
 	</li>
 </ul>
@@ -298,33 +298,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-controller="ModalCtrl">
-				<script type="text/ng-template" id="removeListModal.html">
-			        <div class="modal-header">
-			            <h3 class="modal-title">{{ 'Remove list'|trans }}</h3>
-			        </div>
-			        <div class="modal-body">
-			           {{ 'Are you sure you want to delete this list?'|trans}}
-
-			        </div>
-			        <div class="modal-footer">
-			            <button class="btn btn-danger" ng-click="ok()">{{ 'OK'|trans({}, 'messages') }}</button>
-			            <button class="btn btn-default" ng-click="cancel()">{{ 'Cancel'|trans({}, 'messages') }}</button>
-			        </div>
-			    </script>
-			    <script type="text/ng-template" id="limitModal.html">
-			        <div class="modal-header">
-			            <h3 class="modal-title">{{ 'Info'|trans }}</h3>
-			        </div>
-			        <div class="modal-body">
-			        {{ 'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.'|trans}}
-
-			        </div>
-			        <div class="modal-footer">
-			            <button class="btn btn-primary" ng-click="ok()">{{ 'OK'|trans({}, 'messages') }}</button>
-			            <button class="btn btn-default" ng-click="cancel()">{{ 'Cancel'|trans({}, 'messages') }}</button>
-			        </div>
-			    </script>
+				<div>
 			</div>
 			</div>
 
@@ -347,9 +321,9 @@
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/playlists.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/featured-articles.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/articles-filters.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/modal.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/loading-container.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/lists-search.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/modal-factory.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
