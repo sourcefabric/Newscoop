@@ -197,6 +197,8 @@ angular.module('playlistsApp').controller('FiltersController', [
         $scope.user.selected = undefined;
         if (term) {
             $scope.users = Filter.getUsers(term);
+        } else {
+            tableParams.$params.filter.creator = undefined;
         }
     }
 
