@@ -98,7 +98,7 @@
                 <span class="add-text">{{ 'Filter'|trans({}, 'library') }}</span>
                 </button>
             </div>
-				    <div class="row" ng-show="showAddFilter">
+				    <div class="row" ng-show="showAddFilter" ng-controller="FiltersController">
 				        <div class="col-xs-5">
 				            <ul class="list-group">
 				            	<li class="list-group-item">
@@ -226,7 +226,7 @@
 				<div ng-controller="FeaturedController">
 					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 620px;"{% endif %}>
 						<div class="row">
-							<div class="col-xs-6"><h3 style="display:inline">{[{ ::playlist.selected.title}]}</h3></div>
+							<div class="col-xs-6"><h3 style="display:inline">{[{ ::$parent.playlist.selected.title}]}</h3></div>
 							{% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
 								<div class="limit-input">
 								<label id="playlist-id-label">List limit:</label>
@@ -238,8 +238,8 @@
 						<div class="context-list-results" >
 							<div style="display: block">
 								<form>
+								<div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
 									<ul id="context_list" ng-sortable="sortableConfig">
-										<div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
 										{% if editorView == false %}
 										<div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
 											{{ 'Drag here to add to list'|trans }}
@@ -267,8 +267,8 @@
 													</div>
 												</div>
 											</li>
-											</div>
 										</ul>
+										</div>
 									</form>
 								</div>
 							</div>
@@ -344,7 +344,12 @@
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-sortable.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/app.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/playlists.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/featured-articles.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/articles-filters.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/modal.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/loading-container.js') }}"></script>
+			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/lists-search.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
 			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
