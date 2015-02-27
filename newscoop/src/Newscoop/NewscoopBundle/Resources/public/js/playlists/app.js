@@ -257,7 +257,7 @@ app.controller('PlaylistsController', [
     };
 
     $scope.tableParams = new ngTableParams({
-        page: 1, // show first page
+        //page: 1, // show first page
         count: 10 // count per page
     }, {
         total: 0,// length of data

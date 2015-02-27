@@ -10,6 +10,7 @@ namespace Newscoop\NewscoopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Playlists controller.
@@ -27,6 +28,11 @@ class PlaylistsController extends Controller
     {
         $preferencesService = $this->get('preferences');
         $em = $this->get('em');
+        $user = $this->get('user')->getCurrentUser();
+        if (!$user->hasPermission('ManagePlaylist')) {
+            throw new AccessDeniedException();
+        }
+
         $clientName = 'newscoop_'.$preferencesService->SiteSecretKey;
         $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($clientName);
 
