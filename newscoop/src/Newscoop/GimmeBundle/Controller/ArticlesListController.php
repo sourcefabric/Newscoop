@@ -315,7 +315,7 @@ class ArticlesListController extends FOSRestController
         $lastArtclesModificationTime = $request->request->get('articlesModificationTime');
         if (!$lastArtclesModificationTime && $playlist->getArticlesModificationTime() != null) {
             throw new InvalidParametersException('articlesModificationTime date is requred');
-        } else if ($lastArtclesModificationTime == $playlist->getArticlesModificationTime() && $playlist->getArticlesModificationTime() != null) {
+        } else if ($lastArtclesModificationTime != $playlist->getArticlesModificationTime() && $playlist->getArticlesModificationTime() != null) {
             throw new ResourcesConflictException("This playlist is already in different state than fetched by you.", 409);
         }
 
