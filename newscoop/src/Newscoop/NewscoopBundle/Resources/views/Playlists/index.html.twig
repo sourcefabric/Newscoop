@@ -30,14 +30,12 @@
 		{% if editorView %}
 		<div class="toolbar" style="background: #fff;box-shadow: none;margin-bottom: 13px;border: none;padding: 0;">
 			<div class="select-playlist-bar" style="float: left;">
-				<form autocomplete="off">
-    				<ui-select ng-model="playlist.selected" theme="select2" on-select="setPlaylistInfoOnChange($item)" ng-disabled="disabled" style="min-width: 200px;">
+    				<ui-select ng-model="playlist.selected" theme="select2" ng-click="loadAllPlaylists()" on-select="setPlaylistInfoOnChange($item)" style="min-width: 200px;">
 							<ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
 							<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
 							<div ng-bind-html="playlist.title | highlight: $select.search"></div>
 						</ui-select-choices>
 					</ui-select>
-        		</form>
 			</div>
 
 			<div class="save-button-bar">
@@ -53,7 +51,7 @@
 			<li><button class="add btn btn-primary btn-sm" ng-click="addNewPlaylist()"><span class="glyphicon glyphicon-plus"></span> {{ 'Add list'|trans }}</button></li>
 			<li>
 			{% endif %}
-		<ui-select ng-model="playlist.selected" theme="select2" on-select="setPlaylistInfoOnChange($item)" ng-disabled="disabled" style="min-width: 200px;">
+		<ui-select ng-model="playlist.selected" theme="select2" ng-click="loadAllPlaylists()" on-select="setPlaylistInfoOnChange($item)" style="min-width: 200px;">
 				<ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
 				<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
 				<div ng-bind-html="playlist.title | highlight: $select.search"></div>

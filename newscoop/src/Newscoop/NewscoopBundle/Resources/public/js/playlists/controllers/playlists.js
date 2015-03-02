@@ -3,7 +3,7 @@
 /**
 * AngularJS controller for managing playlists
 *
-* @class PalylistsController
+* @class PlaylistsController
 */
 angular.module('playlistsApp').controller('PlaylistsController', [
     '$scope',
@@ -21,7 +21,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         $scope.isViewing = false;
         $scope.playlist = {};
-        $scope.playlists = Playlist.getAll();
+        $scope.playlists = [];
         $scope.playlistInfo = undefined;
         $scope.featuredArticles = [];
         $scope.formData = {};
@@ -111,6 +111,16 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.getAllArticles($defer, params);
         }
     });
+
+    /**
+     * Loads available playlists on select box click (lazy load)
+     */
+    $scope.loadAllPlaylists = function () {
+        console.log('sasdasd');
+        if (_.isEmpty($scope.playlists)) {
+            $scope.playlists = Playlist.getAll();
+        }
+    }
 
     /**
      * Opens selected article's preview
