@@ -213,7 +213,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             return true;
         }
 
-        Playlist.batchUpdate(logList)
+        Playlist.batchUpdate(logList, $scope.playlist.selected)
         .then(function () {
             flashMessage(Translator.trans('List saved'));
             Playlist.clearLogList();
@@ -376,8 +376,16 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             flashMessage(Translator.trans('List saved'));
             $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
             $scope.playlist.selected.id = Playlist.getListId();
-        }, function() {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
+        }, function(response) {
+            if (response.errors[0].code === 409) {
+                flashMessage(Translator.trans(
+                    'This list is already in a different state than the one in which it was loaded.'
+                ), 'error');
+                // automatically refresh playlist
+                $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
+            } else {
+                flashMessage(Translator.trans('Could not save the list'), 'error');
+            }
             flash.fadeOut();
             $scope.processing = false;
         });
@@ -412,7 +420,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         list = deferred;
         $scope.playlist.selected.title = listname;
 
-        if (!playlistExists && !update) {
+        if (!playlistExists && !update && $scope.playlist.selected.id === undefined) {
             return Playlist.createPlaylist($scope.playlist.selected);
         }
 
@@ -426,6 +434,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             return list;
         }
 
-        return Playlist.batchUpdate(logList);
+        return Playlist.batchUpdate(logList, $scope.playlist.selected);
     }
 }]);

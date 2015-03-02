@@ -135,7 +135,8 @@ class ArticlesListController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {}
+        } catch (\Newscoop\NewscoopException $e) {
+        }
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
             ->articles($playlist, null, true, null, null, $onlyPublished, true)->getResult();
@@ -155,7 +156,7 @@ class ArticlesListController extends FOSRestController
             'title' => $playlist->getName(),
             'notes' => $playlist->getNotes(),
             'maxItems' => $playlist->getMaxItems(),
-            'articlesModificationTime' => $playlist->getArticlesModificationTime()
+            'articlesModificationTime' => $playlist->getArticlesModificationTime(),
         ), $articles);
 
         return $allItems;
@@ -315,9 +316,9 @@ class ArticlesListController extends FOSRestController
         $actions = $request->request->get('actions', array());
         $lastArtclesModificationTime = $request->request->get('articlesModificationTime');
         if (!$lastArtclesModificationTime && $playlist->getArticlesModificationTime() != null) {
-            throw new InvalidParametersException('articlesModificationTime date is requred');
-        } else if ($lastArtclesModificationTime != $playlist->getArticlesModificationTime() && $playlist->getArticlesModificationTime() != null) {
-            throw new ResourcesConflictException("This playlist is already in different state than fetched by you.", 409);
+            throw new InvalidParametersException('articlesModificationTime parameter is required');
+        } elseif (new \DateTime($lastArtclesModificationTime) != $playlist->getArticlesModificationTime() && $playlist->getArticlesModificationTime() != null) {
+            throw new ResourcesConflictException("This list is already in a different state than the one in which it was loaded.", 409);
         }
 
         $playlist->setArticlesModificationTime(new \DateTime('now'));
@@ -477,7 +478,7 @@ class ArticlesListController extends FOSRestController
         $oldMaxItems = $playlist->getMaxItems();
 
         $form = $this->createForm(new PlaylistType(), $playlist, array(
-            'method' => $request->getMethod()
+            'method' => $request->getMethod(),
         ));
         $form->handleRequest($request);
         if ($form->isValid()) {

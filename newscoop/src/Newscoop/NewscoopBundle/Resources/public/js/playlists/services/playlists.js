@@ -161,13 +161,18 @@ angular.module('playlistsApp').factory('Playlist', [
         * @return {Object} promise object that is resolved on successful server
         *   response and rejected on server error response
         */
-        Playlist.batchUpdate = function(logList) {
+        Playlist.batchUpdate = function(logList, playlist) {
             var deferred = $q.defer(),
                 postParams,
-                now;
+                now,
+                playlistDateTime = undefined;
 
             now = new Date();
             postParams = parseAndBuildParams(logList);
+
+            if (playlist.articlesModificationTime !== undefined) {
+            	playlistDateTime = new Date(playlist.articlesModificationTime);
+            }
 
             $http({
                 url: Routing.generate(
@@ -185,10 +190,16 @@ angular.module('playlistsApp').factory('Playlist', [
 			        	str.push("actions[]["+param.method+"]=" + encodeURIComponent(param.link));
 			    	});
 
+			        // send also datetime to see if playlist is locked by diffrent user
+			        if (playlistDateTime !== undefined) {
+			    		str.push("articlesModificationTime=" + playlistDateTime.toLocaleString());
+			    	} else {
+			    		str.push("articlesModificationTime=" + now.toLocaleString());
+			    	}
+
 			        return str.join("&");
 	            },
-	            data: postParams,
-	            params: {articlesModificationTime: now.toLocaleString()}
+	            data: postParams
             })
             .success(function () {
                 deferred.resolve();
