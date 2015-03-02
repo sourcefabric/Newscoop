@@ -53,7 +53,7 @@ class SectionsController extends FOSRestController
         }
 
         $issue = $em->getRepository('Newscoop\Entity\Issue')
-            ->getByPublicationAndNumber(
+            ->getByPublicationAndNumberAndLanguage(
                 $request->query->get('publication', $publication),
                 $request->query->get('issue'),
                 $language

@@ -60,7 +60,7 @@ class IssueRepository extends EntityRepository
         return $query;
     }
 
-    public function getByPublicationAndNumber($publication, $number, $language)
+    public function getByPublicationAndNumberAndLanguage($publication, $number, $language)
     {
         $issue = $this->createQueryBuilder('i')
             ->andWhere('i.publication = :publication')
