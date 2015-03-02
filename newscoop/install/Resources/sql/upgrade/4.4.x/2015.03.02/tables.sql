@@ -1,0 +1,1 @@
+ALTER TABLE playlist ADD modification_time DATETIME DEFAULT NULL;

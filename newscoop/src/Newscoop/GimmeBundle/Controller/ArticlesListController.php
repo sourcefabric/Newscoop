@@ -155,6 +155,7 @@ class ArticlesListController extends FOSRestController
             'title' => $playlist->getName(),
             'notes' => $playlist->getNotes(),
             'maxItems' => $playlist->getMaxItems(),
+            'articlesModificationTime' => $playlist->getArticlesModificationTime()
         ), $articles);
 
         return $allItems;
@@ -260,7 +261,7 @@ class ArticlesListController extends FOSRestController
      * Save many changes for playlist items
      *
      * example post data:
-     *
+     *```
      * 'actions' => array [
      *   0 => array [
      *     "link" => "</api/articles/67/en; rel="article">,<3; rel="article-position">"
@@ -272,7 +273,7 @@ class ArticlesListController extends FOSRestController
      *     "link" => "</api/articles/64/en; rel="article">,<1; rel="article-position">"
      *   ]
      * ]
-     *
+     *```
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when successful",
@@ -280,6 +281,9 @@ class ArticlesListController extends FOSRestController
      *     },
      *     requirements={
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="Playlist Id"}
+     *     },
+     *     parameters={
+     *         {"name"="articlesModificationTime", "dataType"="datetime", "required"=true, "description"="Playlist articles list last modification time"}
      *     }
      * )
      *
@@ -309,6 +313,15 @@ class ArticlesListController extends FOSRestController
         }
 
         $actions = $request->request->get('actions', array());
+        $lastArtclesModificationTime = $request->request->get('articlesModificationTime');
+        if (!$lastArtclesModificationTime && $playlist->getArticlesModificationTime() != null) {
+            throw new InvalidParametersException('articlesModificationTime date is requred');
+        } else if ($lastArtclesModificationTime != $playlist->getArticlesModificationTime() && $playlist->getArticlesModificationTime() != null) {
+            throw new ResourcesConflictException("This playlist is already in different state than fetched by you.", 409);
+        }
+
+        $playlist->setArticlesModificationTime(new \DateTime('now'));
+        $em->flush();
 
         // The controller resolver needs a request to resolve the controller.
         $stubRequest = new Request();

@@ -2149,6 +2149,7 @@ CREATE TABLE playlist (
   name VARCHAR(256) NOT NULL, 
   notes VARCHAR(1024) NOT NULL, 
   max_items INT NOT NULL, 
+  modification_time DATETIME DEFAULT NULL, 
   PRIMARY KEY(id_playlist)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
