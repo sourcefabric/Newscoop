@@ -155,6 +155,7 @@ class ArticlesListController extends FOSRestController
             'title' => $playlist->getName(),
             'notes' => $playlist->getNotes(),
             'maxItems' => $playlist->getMaxItems(),
+            'articlesModificationTime' => $playlist->getArticlesModificationTime()
         ), $articles);
 
         return $allItems;
