@@ -151,3 +151,5 @@ parameters:
         internal_memory_limit: ''
     scheduler:
         environment: 'prod'
+    simple_security:
+        users_file: "%application_path%/configs/security/users.json"  

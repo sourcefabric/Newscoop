@@ -5,7 +5,6 @@
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Newscoop\IssueServiceInterface;
@@ -97,13 +96,13 @@ class IssueService implements IssueServiceInterface
         $uriParts = explode('/', $request->getRequestUri());
         $uriPartsCount = count(array_filter($uriParts));
         $issue = null;
-        if ($uriPartsCount >= 2 && $uriPartsCount <= 5) {
-            $publication = $this->publicationService->getPublication();
+        $publication = $this->publicationService->getPublication();
+        if ($publication && $uriPartsCount >= 2 && $uriPartsCount <= 5) {
             $cacheKey = $this->cacheService->getCacheKey(array(
                 'resolver',
                 $publication->getId(),
                 $uriParts[1],
-                $uriParts[2]
+                $uriParts[2],
             ), 'issue');
 
             if ($this->cacheService->contains($cacheKey)) {
@@ -123,7 +122,7 @@ class IssueService implements IssueServiceInterface
                     'name' => $issue->getName(),
                     'shortName' => $issue->getShortName(),
                     'code_default_language' => $issue->getLanguage()->getCode(),
-                    'id_default_language' => $issue->getLanguageId()
+                    'id_default_language' => $issue->getLanguageId(),
                 );
 
                 $request->attributes->set('_newscoop_issue_metadata', $this->issueMetadata);
