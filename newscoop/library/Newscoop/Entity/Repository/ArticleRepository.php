@@ -105,7 +105,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    //public function searchArticles($language, $keywords = array(), $publication = false, $issue = false, $section = false, $onlyPublished = true)
     public function searchArticles($articleSearchCriteria, $onlyPublished = true)
     {
         $em = $this->getEntityManager();
@@ -140,6 +139,15 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->setParameter('issue', $articleSearchCriteria->issue);
         }
 
+        if ($articleSearchCriteria->language) {
+            $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($articleSearchCriteria->language);
+            if ($languageId) {
+                $queryBuilder->andWhere('a.language = :language')
+                    ->setParameter('language', $languageId);
+            }
+        }
+
         $queryBuilder->setMaxResults(100);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
@@ -170,11 +178,13 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 'ids' => $ids
             ));
 
-        $languageId = $em->getRepository('Newscoop\Entity\Language')
-            ->findOneByCode($articleSearchCriteria->language);
-        if ($languageId) {
-            $queryBuilder->andWhere('a.language = :language')
-                ->setParameter('language', $languageId);
+        if ($articleSearchCriteria->language) {
+            $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($articleSearchCriteria->language);
+            if ($languageId) {
+                $queryBuilder->andWhere('a.language = :language')
+                    ->setParameter('language', $languageId);
+            }
         }
 
         if ($articleSearchCriteria->article_type) {

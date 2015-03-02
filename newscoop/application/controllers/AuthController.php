@@ -36,7 +36,12 @@ class AuthController extends Zend_Controller_Action
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-                setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+                $expire = NULL;
+                if (!empty($values['remember_me'])) {
+                    // set expire to 10 years in the future
+                    $expire = time() + (10 * 365 * 24 * 60 * 60);
+                }
+                setcookie('NO_CACHE', '1', $expire, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
                 $this->_helper->redirector('index', 'dashboard');
             } else {
                 $form->addError($translator->trans("Invalid credentials"));
