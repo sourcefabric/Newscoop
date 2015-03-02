@@ -163,27 +163,11 @@ angular.module('playlistsApp').factory('Playlist', [
         */
         Playlist.batchUpdate = function(logList) {
             var deferred = $q.defer(),
-                postParams = [];
+                postParams,
+                now;
 
-            angular.forEach(logList, function(article, key) {
-            	var link = [
-            		'<',
-	                Routing.generate(
-	                    'newscoop_gimme_articles_getarticle',
-	                    {number: article.number, language: article.language},
-	                    false
-	                ),
-	                '; rel="article">'].join('');;
-
-	            if (article._method == 'link') {
-	            	var position = [',<',
-	                article._order,
-	                '; rel="article-position">'].join('');
-	                link = link.concat(position);
-	            }
-
-            	postParams.push({link: link, method: article._method});
-            });
+            now = new Date();
+            postParams = parseAndBuildParams(logList);
 
             $http({
                 url: Routing.generate(
@@ -203,7 +187,8 @@ angular.module('playlistsApp').factory('Playlist', [
 
 			        return str.join("&");
 	            },
-	            data: postParams
+	            data: postParams,
+	            params: {articlesModificationTime: now.toLocaleString()}
             })
             .success(function () {
                 deferred.resolve();
@@ -214,6 +199,37 @@ angular.module('playlistsApp').factory('Playlist', [
 
             return deferred.promise;
         };
+
+        /**
+         * It parses and builds params that need to be submitted in the POSt request,
+         * based on log list, which keeps articles to modify.
+         * @param  {Array} logList Log list
+         * @return {Array}         Array with parameters
+         */
+        var parseAndBuildParams = function (logList) {
+        	var postParams = [];
+        	angular.forEach(logList, function(article, key) {
+            	var link = [
+            		'<',
+	                Routing.generate(
+	                    'newscoop_gimme_articles_getarticle',
+	                    {number: article.number, language: article.language},
+	                    false
+	                ),
+	                '; rel="article">'].join('');;
+
+	            if (article._method == 'link') {
+	            	var position = [',<',
+	                article._order,
+	                '; rel="article-position">'].join('');
+	                link = link.concat(position);
+	            }
+
+            	postParams.push({link: link, method: article._method});
+            });
+
+            return postParams;
+        }
 
         /**
         * Creates new playlist
@@ -291,6 +307,7 @@ angular.module('playlistsApp').factory('Playlist', [
         Playlist.updatePlaylist = function (playlist) {
             var url,
             	deferred = $q.defer();
+
 
             url = Routing.generate(
                 'newscoop_gimme_articleslist_updateplaylist',

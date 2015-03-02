@@ -116,7 +116,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * Loads available playlists on select box click (lazy load)
      */
     $scope.loadAllPlaylists = function () {
-        console.log('sasdasd');
         if (_.isEmpty($scope.playlists)) {
             $scope.playlists = Playlist.getAll();
         }
@@ -292,6 +291,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.playlist.selected = {title: defaultListName, id: undefined};
     }
 
+    /**
+     * Removes playlist
+     */
     $scope.removePlaylist = function () {
         var modal,
         title,
