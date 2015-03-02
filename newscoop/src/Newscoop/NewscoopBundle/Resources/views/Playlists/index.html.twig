@@ -26,306 +26,306 @@
 {% endblock %}
 {% block admin_content %}
 <div ng-app="playlistsApp" ng-controller="PlaylistsController">
-	<div class="system_pref" {% if editorView %}style="margin: 0; margin: -20px -40px;"{% endif %}>
-		{% if editorView %}
-		<div class="toolbar" style="background: #fff;box-shadow: none;margin-bottom: 13px;border: none;padding: 0;">
-			<div class="select-playlist-bar" style="float: left;">
-    				<ui-select ng-model="playlist.selected" theme="select2" ng-click="loadAllPlaylists()" on-select="setPlaylistInfoOnChange($item)" style="min-width: 200px;">
-							<ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
-							<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
-							<div ng-bind-html="playlist.title | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
-			</div>
+    <div class="system_pref" {% if editorView %}style="margin: 0; margin: -20px -40px;"{% endif %}>
+        {% if editorView %}
+        <div class="toolbar" style="background: #fff;box-shadow: none;margin-bottom: 13px;border: none;padding: 0;">
+            <div class="select-playlist-bar" style="float: left;">
+                    <ui-select ng-model="playlist.selected" theme="select2" ng-click="loadAllPlaylists()" on-select="setPlaylistInfoOnChange($item)" style="min-width: 200px;">
+                            <ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
+                            <ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
+                            <div ng-bind-html="playlist.title | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+            </div>
 
-			<div class="save-button-bar">
-				<button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
-				<button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
-				<button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
-			</div>
-		</div>
-		{% endif %}
-		{% if editorView == false %}
-		<ul class="list-inline first-menu" ng-form="playlistForm">
-			{% if editorView == false %}
-			<li><button class="add btn btn-primary btn-sm" ng-click="addNewPlaylist()"><span class="glyphicon glyphicon-plus"></span> {{ 'Add list'|trans }}</button></li>
-			<li>
-			{% endif %}
-		<ui-select ng-model="playlist.selected" theme="select2" ng-click="loadAllPlaylists()" on-select="setPlaylistInfoOnChange($item)" style="min-width: 200px;">
-				<ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
-				<ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
-				<div ng-bind-html="playlist.title | highlight: $select.search"></div>
-			</ui-select-choices>
-		</ui-select>
-	</li>
-	<li ng-if="playlist.selected">
-		<label id="playlist-name-label">{{ 'List Name'|trans }}:</label>
-	</li>
-	<li ng-if="playlist.selected">
-		<span id="list_name">
-			<input name="playlist-name" ng-model="formData.title" required ng-minlength="1" ng-maxlength="40" value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name">
-		</span>
-	</li>
-	<li ng-if="playlist.selected.id">
-		<label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
-	</li>
-	<li ng-if="playlist.selected.id">
-		<span style="float: left;">
-			<input name="playlist-id" id="playlistId" value="{[{ playlist.selected.id }]}" class="form-control" ng-disabled="true">
-		</span>
-	</li>
-	<li style="float: right" ng-if="playlist.selected">
-		<div class="save-button-bar">
-			<button type="button" ng-click="removePlaylist()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
-			<button type="button" ng-disabled="processing" ng-click="savePlaylist()" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
-		</div>
-	</li>
+            <div class="save-button-bar">
+                <button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
+                <button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+                <button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+            </div>
+        </div>
+        {% endif %}
+        {% if editorView == false %}
+        <ul class="list-inline first-menu" ng-form="playlistForm">
+            {% if editorView == false %}
+            <li><button class="add btn btn-primary btn-sm" ng-click="addNewPlaylist()"><span class="glyphicon glyphicon-plus"></span> {{ 'Add list'|trans }}</button></li>
+            <li>
+            {% endif %}
+        <ui-select ng-model="playlist.selected" theme="select2" ng-click="loadAllPlaylists()" on-select="setPlaylistInfoOnChange($item)" style="min-width: 200px;">
+                <ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
+                <ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
+                <div ng-bind-html="playlist.title | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </li>
+    <li ng-if="playlist.selected">
+        <label id="playlist-name-label">{{ 'List Name'|trans }}:</label>
+    </li>
+    <li ng-if="playlist.selected">
+        <span id="list_name">
+            <input name="playlist-name" ng-model="formData.title" required ng-minlength="1" ng-maxlength="40" value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name">
+        </span>
+    </li>
+    <li ng-if="playlist.selected.id">
+        <label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
+    </li>
+    <li ng-if="playlist.selected.id">
+        <span style="float: left;">
+            <input name="playlist-id" id="playlistId" value="{[{ playlist.selected.id }]}" class="form-control" ng-disabled="true">
+        </span>
+    </li>
+    <li style="float: right" ng-if="playlist.selected">
+        <div class="save-button-bar">
+            <button type="button" ng-click="removePlaylist()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
+            <button type="button" ng-disabled="processing" ng-click="savePlaylist()" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+        </div>
+    </li>
 </ul>
 {% endif %}
 <div class="context-content">
 {% if editorView == false %}
-	<div class="context-block context-search plugin-context-block">
-		<h3>{{ 'Available Articles'|trans }}</h3>
-		<div class="smartlist">
-			<div class="filters">
-				<div class="container">
-				<div class="heading">
+    <div class="context-block context-search plugin-context-block">
+        <h3>{{ 'Available Articles'|trans }}</h3>
+        <div class="smartlist">
+            <div class="filters">
+                <div class="container">
+                <div class="heading">
                 <button class="btn btn-sf-invisible" ng-click="showAddFilter = !showAddFilter">
                 <span class="glyphicon glyphicon-plus" ng-class="{'glyphicon-plus': !showAddFilter,
                              'glyphicon-minus': showAddFilter}"></span>
                 <span class="add-text">{{ 'Filter'|trans({}, 'library') }}</span>
                 </button>
             </div>
-				    <div class="row" ng-show="showAddFilter" ng-controller="FiltersController">
-				        <div class="col-xs-5">
-				            <ul class="list-group">
-				            	<li class="list-group-item">
-							  		<ui-select ng-model="publication.selected" theme="select2" ng-click="loadPublications()" on-select="loadIssues($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Publication'|trans({}, 'messages') }}...">{[{$select.selected.name}]}</ui-select-match>
-										<ui-select-choices repeat="publication in publications">
-											<div ng-bind-html="publication.name | highlight: $select.search"></div>
-										</ui-select-choices>
-									</ui-select>
-								</li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="issue.selected" ng-disabled="!publication.selected" theme="select2" on-select="loadSections($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Issue'|trans({}, 'messages') }}...">{[{$select.selected.title}]}</ui-select-match>
-										<ui-select-choices repeat="issue in issues">
-											<div ng-bind-html="issue.title | highlight: $select.search"></div>
-											<small>number: {[{ ::issue.number}]}, language: {[{ ::issue.language}]}</small>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="section.selected" ng-disabled="!issue.selected" theme="select2" on-select="loadByMainFilters($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Section'|trans({}, 'messages') }}...">{[{$select.selected.title}]}</ui-select-match>
-										<ui-select-choices repeat="section in sections">
-											<div ng-bind-html="section.title | highlight: $select.search"></div>
-											<small>number: {[{ ::section.number}]}, language: {[{ ::section.language}]}</small>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="articleType.selected" theme="select2" ng-click="loadArticleTypes()" on-select="loadByArticleTypesOnSelect($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Select type'|trans({}, 'library') }}...">{[{$select.selected.name}]}</ui-select-match>
-										<ui-select-choices repeat="articleType in articleTypes">
-											<div ng-bind-html="articleType.name | highlight: $select.search"></div>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="author.selected" theme="select2" on-select="loadByAuthorsOnSelect($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Author'|trans({}, 'messages') }}...">{[{$select.selected.firstName + ' ' + $select.selected.lastName}]}</ui-select-match>
-										<ui-select-choices repeat="author in authors" refresh="loadAuthors($select.search)" refresh-delay="500">
-											<div ng-bind-html="author.firstName + ' ' + author.lastName | highlight: $select.search"></div>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="user.selected" theme="select2" ng-disabled="disabled" reset-search-input="false" on-select="loadByUsersOnSelect($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Users'|trans({}, 'messages') }}...">{[{$select.selected.firstName + ' ' + $select.selected.lastName}]}</ui-select-match>
-										<ui-select-choices repeat="user in users" refresh="loadUsers($select.search)" refresh-delay="500">
-											<div ng-bind-html="user.firstName + ' ' + user.lastName | highlight: $select.search"></div>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-				            </ul>
-				        </div>
-				        <div class="col-xs-7">
-				            <ul class="list-group">
-							  <li class="list-group-item">
-							  		<input type="text" ng-change="loadByDateOnChange(this)" placeholder="{{ 'Publish date'|trans({}, 'library') }}..." ng-model="filterDate" class="form-control input-sm input-filter-date date"/>
-							  </li>
-							  <li class="list-group-item">
-							  		<input type="text" ng-change="loadByPublishedBeforeOnChange(this)" placeholder="{{ 'Published before'|trans({}, 'library') }}..." ng-model="filterPublishedBefore" class="form-control input-sm input-filter-date date"/>
-							  </li>
-							  <li class="list-group-item">
-							  		<input type="text" ng-change="loadByPublishedAfterOnChange(this)" placeholder="{{ 'Published after'|trans({}, 'library') }}..." ng-model="filterPublishedAfter" class="form-control input-sm input-filter-date date"/>
-							  </li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="status.selected" theme="select2" on-select="loadByStatusOnSelect($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Status'|trans({}, 'messages') }}...">{[{$select.selected.name}]}</ui-select-match>
-										<ui-select-choices repeat="status in statuses">
-											<div ng-bind-html="status.name | highlight: $select.search"></div>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-							  <li class="list-group-item">
-							  		<ui-select ng-model="topic.selected" theme="select2" on-select="loadByTopicOnSelect($item)" style="min-width: 200px;">
-										<ui-select-match placeholder="{{ 'Topic'|trans({}, 'messages') }}...">{[{$select.selected.title}]}</ui-select-match>
-										<ui-select-choices repeat="topic in topics" refresh="loadTopics($select.search)" refresh-delay="500">
-											<div ng-bind-html="topic.title | highlight: $select.search"></div>
-										</ui-select-choices>
-									</ui-select>
-							  </li>
-							</ul>
-				        </div>
-				    </div>
-				</div>
-					</div>
-					<div loading-container="tableParams.settings().$loading">
-						<table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
-							<tbody ng-sortable="sortableConfig">
-								<tr ng-repeat="article in $data" class="move-elements">
-									<td class="query" filter="{ 'query': 'text' }" sortable="query">
-										<div class="context-item">
-											<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
-											<div class="context-item-header">
-												<div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
-													<span class="label label-default" style="margin-right: 5px">
-															<span ng-switch on="article.status">
-																<span ng-switch-when="Y">{{ 'Published'|trans({}, 'messages') }}</span>
-																<span ng-switch-when="N">{{ 'New'|trans({}, 'messages') }}</span>
-																<span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
-																<span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
-															</span></span><span class="label label-primary">{[{ ::article.type}]}</span>
-													</div>
-													<a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">{{ 'View article'|trans }}</a>
-												</div>
-												<div class="context-item-summary">
-													{[{ ::article.title}]}
-												</div>
-											</div>
-										</td>
-									</tr>
-								<tr ng-if="!$data.length" class="ignore-elements">
-									<td>
-										<div class="context-item">
-											{{ 'No records found.'|trans({}, 'library')}}
-										</div>
-									</td>
-								</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				{% endif %}
-				<div ng-controller="FeaturedController">
-					<div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 620px;"{% endif %}>
-						<div class="row">
-							<div class="col-xs-6"><h3 style="display:inline">{[{ playlist.selected.title}]}</h3></div>
-							{% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
-								<div class="limit-input">
-								<label id="playlist-id-label">List limit:</label>
-								<input type="text" ng-model="playlist.selected.maxItems" class="form-control input-sm" id="playlistId"/>
-								</div>
-							</div>
-							{% endif %}
-						</div>
-						<div class="context-list-results" >
-							<div style="display: block">
-								<form>
-								<div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
-									<ul id="context_list" ng-sortable="sortableConfig">
-										{% if editorView == false %}
-										<div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
-											{{ 'Drag here to add to list'|trans }}
-										</div>
-										{% endif %}
-										<li class="item" ng-repeat="article in $parent.featuredArticles">
-											<div class="context-item" {% if editorView %}style="width: 580px"{% endif %} >
-												<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
-												<div class="context-item-header">
-													<div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
-														<span class="label label-default" style="margin-right: 5px">
-															<span ng-switch on="article.status">
-																<span ng-switch-when="Y">{{ 'Published'|trans({}, 'messages') }}</span>
-																<span ng-switch-when="N">{{ 'New'|trans({}, 'messages') }}</span>
-																<span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
-																<span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
-															</span></span><span class="label label-primary">{[{ ::article.type}]}</span>
-														</div>
-														<a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
-															<span class="ui-icon ui-icon-closethick"></span>
-														</a>
-													</div>
-													<div class="context-item-summary">
-														{[{ ::article.title}]}
-													</div>
-												</div>
-											</li>
-										</ul>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="context-block plugin-context-block context-preview" ng-if="isViewing">
-						<div class="save-button-bar">
-						<button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add this article'|trans }}</button>
-						<button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
-						</div>
+                    <div ng-show="showAddFilter" ng-controller="FiltersController">
+                        <div class="filters-left">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <ui-select ng-model="publication.selected" theme="select2" ng-click="loadPublications()" on-select="loadIssues($item)">
+                                        <ui-select-match placeholder="{{ 'Publication'|trans({}, 'messages') }}...">{[{$select.selected.name}]}</ui-select-match>
+                                        <ui-select-choices repeat="publication in publications">
+                                            <div ng-bind-html="publication.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="issue.selected" ng-disabled="!publication.selected" theme="select2" on-select="loadSections($item)">
+                                        <ui-select-match placeholder="{{ 'Issue'|trans({}, 'messages') }}...">{[{$select.selected.title}]}</ui-select-match>
+                                        <ui-select-choices repeat="issue in issues">
+                                            <div ng-bind-html="issue.title | highlight: $select.search"></div>
+                                            <small>number: {[{ ::issue.number}]}, language: {[{ ::issue.language}]}</small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="section.selected" ng-disabled="!issue.selected" theme="select2" on-select="loadByMainFilters($item)">
+                                        <ui-select-match placeholder="{{ 'Section'|trans({}, 'messages') }}...">{[{$select.selected.title}]}</ui-select-match>
+                                        <ui-select-choices repeat="section in sections">
+                                            <div ng-bind-html="section.title | highlight: $select.search"></div>
+                                            <small>number: {[{ ::section.number}]}, language: {[{ ::section.language}]}</small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="articleType.selected" theme="select2" ng-click="loadArticleTypes()" on-select="loadByArticleTypesOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Select type'|trans({}, 'library') }}...">{[{$select.selected.name}]}</ui-select-match>
+                                        <ui-select-choices repeat="articleType in articleTypes">
+                                            <div ng-bind-html="articleType.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="author.selected" theme="select2" on-select="loadByAuthorsOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Author'|trans({}, 'messages') }}...">{[{$select.selected.firstName + ' ' + $select.selected.lastName}]}</ui-select-match>
+                                        <ui-select-choices repeat="author in authors" refresh="loadAuthors($select.search)" refresh-delay="500">
+                                            <div ng-bind-html="author.firstName + ' ' + author.lastName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="user.selected" theme="select2" ng-disabled="disabled" reset-search-input="false" on-select="loadByUsersOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Users'|trans({}, 'messages') }}...">{[{$select.selected.firstName + ' ' + $select.selected.lastName}]}</ui-select-match>
+                                        <ui-select-choices repeat="user in users" refresh="loadUsers($select.search)" refresh-delay="500">
+                                            <div ng-bind-html="user.firstName + ' ' + user.lastName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                            </ul>
+                        </div>
+                        <div class="filters-right">
+                            <ul class="list-group">
+                              <li class="list-group-item">
+                                    <input type="text" ng-change="loadByDateOnChange(this)" placeholder="{{ 'Publish date'|trans({}, 'library') }}..." ng-model="filterDate" class="form-control input-sm input-filter-date date"/>
+                              </li>
+                              <li class="list-group-item">
+                                    <input type="text" ng-change="loadByPublishedBeforeOnChange(this)" placeholder="{{ 'Published before'|trans({}, 'library') }}..." ng-model="filterPublishedBefore" class="form-control input-sm input-filter-date date"/>
+                              </li>
+                              <li class="list-group-item">
+                                    <input type="text" ng-change="loadByPublishedAfterOnChange(this)" placeholder="{{ 'Published after'|trans({}, 'library') }}..." ng-model="filterPublishedAfter" class="form-control input-sm input-filter-date date"/>
+                              </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="status.selected" theme="select2" on-select="loadByStatusOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Status'|trans({}, 'messages') }}...">{[{$select.selected.name}]}</ui-select-match>
+                                        <ui-select-choices repeat="status in statuses">
+                                            <div ng-bind-html="status.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="topic.selected" theme="select2" on-select="loadByTopicOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Topic'|trans({}, 'messages') }}...">{[{$select.selected.title}]}</ui-select-match>
+                                        <ui-select-choices repeat="topic in topics" refresh="loadTopics($select.search)" refresh-delay="500">
+                                            <div ng-bind-html="topic.title | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                    <div loading-container="tableParams.settings().$loading">
+                        <table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
+                            <tbody ng-sortable="sortableConfig">
+                                <tr ng-repeat="article in $data" class="move-elements">
+                                    <td class="query" filter="{ 'query': 'text' }" sortable="query">
+                                        <div class="context-item">
+                                            <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
+                                            <div class="context-item-header">
+                                                <div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
+                                                    <span class="label label-default" style="margin-right: 5px">
+                                                            <span ng-switch on="article.status">
+                                                                <span ng-switch-when="Y">{{ 'Published'|trans({}, 'messages') }}</span>
+                                                                <span ng-switch-when="N">{{ 'New'|trans({}, 'messages') }}</span>
+                                                                <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
+                                                                <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
+                                                            </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                    </div>
+                                                    <a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">{{ 'View article'|trans }}</a>
+                                                </div>
+                                                <div class="context-item-summary">
+                                                    {[{ ::article.title}]}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <tr ng-if="!$data.length" class="ignore-elements">
+                                    <td>
+                                        <div class="context-item">
+                                            {{ 'No records found.'|trans({}, 'library')}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div ng-controller="FeaturedController">
+                    <div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 620px;"{% endif %}>
+                        <div class="row">
+                            <div class="col-xs-6"><h3 style="display:inline">{[{ playlist.selected.title}]}</h3></div>
+                            {% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
+                                <div class="limit-input">
+                                <label id="playlist-id-label">List limit:</label>
+                                <input type="text" ng-model="playlist.selected.maxItems" class="form-control input-sm" id="playlistId"/>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="context-list-results" >
+                            <div style="display: block">
+                                <form>
+                                <div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
+                                    <ul id="context_list" ng-sortable="sortableConfig">
+                                        {% if editorView == false %}
+                                        <div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
+                                            {{ 'Drag here to add to list'|trans }}
+                                        </div>
+                                        {% endif %}
+                                        <li class="item" ng-repeat="article in $parent.featuredArticles">
+                                            <div class="context-item" {% if editorView %}style="width: 580px"{% endif %} >
+                                                <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
+                                                <div class="context-item-header">
+                                                    <div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
+                                                        <span class="label label-default" style="margin-right: 5px">
+                                                            <span ng-switch on="article.status">
+                                                                <span ng-switch-when="Y">{{ 'Published'|trans({}, 'messages') }}</span>
+                                                                <span ng-switch-when="N">{{ 'New'|trans({}, 'messages') }}</span>
+                                                                <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
+                                                                <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
+                                                            </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                        </div>
+                                                        <a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
+                                                            <span class="ui-icon ui-icon-closethick"></span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="context-item-summary">
+                                                        {[{ ::article.title}]}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="context-block plugin-context-block context-preview" ng-if="isViewing">
+                        <div class="save-button-bar">
+                        <button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add this article'|trans }}</button>
+                        <button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+                        </div>
 
-						<div class="context-article-preview" style="overflow-y:auto; height:500px;">
-							<h3 id="preview-article-title">{[{ articlePreview.title }]}</h3>
-							<div id="preview-article-body" style="color: #444444">
-								<h5>{{ 'Authors'|trans }}</h5>
-								<span ng-repeat="author in articlePreview.authors">
-									<p>- {[{ ::author.name }]}</p>
-								</span>
-								<span ng-repeat="(key, value) in articlePreview.fields">
-									<h5>{[{ ::key}]}</h5>
-									<p ng-bind-html="value"></p>
-								</span>
-								<h5>{{ 'Date'|trans }}</h5>
-								<p>{[{ ::articlePreview.created | date:"dd.MM.yyyy H:mm:ss"}]}</p>
-			                </div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div>
-			</div>
-			</div>
+                        <div class="context-article-preview" style="overflow-y:auto; height:500px;">
+                            <h3 id="preview-article-title">{[{ articlePreview.title }]}</h3>
+                            <div id="preview-article-body" style="color: #444444">
+                                <h5>{{ 'Authors'|trans }}</h5>
+                                <span ng-repeat="author in articlePreview.authors">
+                                    <p>- {[{ ::author.name }]}</p>
+                                </span>
+                                <span ng-repeat="(key, value) in articlePreview.fields">
+                                    <h5>{[{ ::key}]}</h5>
+                                    <p ng-bind-html="value"></p>
+                                </span>
+                                <h5>{{ 'Date'|trans }}</h5>
+                                <p>{[{ ::articlePreview.created | date:"dd.MM.yyyy H:mm:ss"}]}</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+            </div>
+            </div>
 
-			<script type="text/javascript">
-				var clientId = '{{ clientId }}';
-				$(document).ready(function() {
-				    $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
-				});
+            <script type="text/javascript">
+                var clientId = '{{ clientId }}';
+                $(document).ready(function() {
+                    $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
+                });
 
-			</script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/lodash.min.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/ui-bootstrap-modal.js') }}"></script>
-			<script src="{{ asset('/bundles/newscooparticles/app/ng-infinite-scroll.min.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/ng-sortable.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/app.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/playlists.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/featured-articles.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/articles-filters.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/loading-container.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/lists-search.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/modal-factory.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
-			<script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/filters-service.js') }}"></script>
+            </script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/lodash.min.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/ui-bootstrap-modal.js') }}"></script>
+            <script src="{{ asset('/bundles/newscooparticles/app/ng-infinite-scroll.min.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/ng-sortable.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/app.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/playlists.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/featured-articles.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/articles-filters.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/loading-container.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/lists-search.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/modal-factory.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/filters-service.js') }}"></script>
 
 {% endblock %}
 {% block admin_page_footer_box %}

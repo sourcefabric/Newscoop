@@ -5,10 +5,6 @@
     cursor: pointer;
 }
 
-#playlist-name {
-    width: 200px;
-}
-
 #playlist-id {
     font-size:12px;
     width:50px
@@ -33,20 +29,36 @@
 
 #playlist-name-label, #playlist-id-label {
     float: left;
-    padding: 0 10px;
-    line-height: 25px;
+    padding: 0 0 0 12px;
+    line-height: 18px;
 }
 
 .plugin-context-block {
     height: 565px;
-    width: 47.2%;
-}
+    width: calc(50% - 10px);
+    margin: 0;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    padding: 0;
+    }
+    .context-content > .plugin-context-block {
+        margin: 0 20px 0 0;
+        width: calc(50% - 10px);
+        padding: 10px;
+    }
+    .context-content > .plugin-context-block:nth-child(3) {
+        margin: 0;
+    }
+    .plugin-context-block .row {
+        margin: 10px -5px;
+    }
 #drag-here-to-add-to-list {
     border: 2px #CCCCCC dashed;
-    height: 70px;
-    width: 96%;
-    margin: 10px 9px 20px 9px;
-    padding: 20px 5px 0px 26px;
+    margin: 0px 10px 10px 10px;
+    padding: 20px;
     color: #CCCCCC;
     font-size: 20px;
 }
@@ -67,11 +79,11 @@
 }
 ul#context_list {
     display:block;
-    height: 500px;
+    height: 509px;
     width: 100%;
     overflow-y:auto;
     overflow-x:hidden;
-    padding: 5px 0px 0px 0px;
+    padding: 10px 0px 0px 0px;
 }
 .fade-featured {
     opacity: 0;
@@ -79,8 +91,8 @@ ul#context_list {
     transition: opacity .2s linear;
 }
 .first-menu {
-    margin: 0 auto;
-    width: 1100px;
+    margin: 0 0 10px 0;
+    padding: 0;
 }
 .system_pref h3 {
     border: none;
@@ -109,19 +121,30 @@ ul#context_list {
     width: 70px;
 }
 .context-list .context-item {
-    width: 517px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    float: none;
+    clear: both;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0 8px 10px 10px;
+    border: 1px solid #E2E2E2;
 }
 .context-preview {
     margin-top: 22px;
     margin-left: 11px;
 }
 .list-group-item {
-    padding: 3px 15px;
+    padding: 3px 0 3px 15px;
     border: none;
     background: transparent;
 }
 .system_pref input {
     float: left !important;
+    padding: 4px 10px;
+    height: auto;
 }
 .input-filter-date {
     width: 200px;
@@ -130,6 +153,7 @@ ul#context_list {
 .container {
     margin: 0;
     padding: 0 10px;
+    overflow-x: hidden;
 }
 
 .heading button {
@@ -143,14 +167,44 @@ ul#context_list {
 
 }
 .btn-sf-invisible {
-    background: #F5F5F5;
+    background: #e6e6e6;
     border: 0;
     padding: 0;
 }
 
 .filters {
-    background: #F1F1F1;
+    background: #e6e6e6;
     margin: 20px 0px;
+    padding-right: 14px;
+}
+.filters .container {
+    background: transparent;
+    padding:0;
+    overflow-x: visible; 
+}
+.filters .row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.filters-left {
+    width: 50%;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.filters-right {
+    width: 50%;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.filters input {
+    width: 100%;
+    background: #FFF;
+    border: 1px solid #aaa;
+}
+.filters .glyphicon {
+    font-size: 12px;
 }
 .add-text {
     text-transform: uppercase;
@@ -162,10 +216,79 @@ ul#context_list {
 }
 .ui-datepicker-trigger {
     margin-top: 5px;
+    position: absolute;
+    top: 4px;
+    right: 6px;
 }
 .limit-input {
     float: right !important;
-}
+    }
+    .limit-input label {
+        padding: 5px 6px 0 6px !important;
+    }
 .modal-body {
     font-size: 14px;
+}
+
+.context-content {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    height: auto;
+    clear: both;
+}
+.context-list-results {
+    height: auto;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-top: 1px solid #DDD;
+    border-right: 1px solid transparent;
+}
+.smartlist .table {
+    background: white;
+    border-style: none;
+    }
+    .smartlist .table tr td,
+    .smartlist .table tr th {
+        border-width: 1px !important;
+        border-color: #E2E2E2;
+    }
+    .smartlist .table>thead:first-child>tr:first-child>th {
+        border-top: 1px solid #E2E2E2 !important;
+    }
+.select2-container {
+    width: 100%;
+}
+.select2-container .select2-choice {
+    border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    height: auto !important;
+    padding: 0px 8px 1px 8px !important;
+}
+.select2-container .select2-choice > .select2-chosen {
+    max-width: 200px;
+}
+.save-button-bar {
+    margin-left: 0 !important;
+}
+.list-inline>li {
+    padding: 0 2px;    
+}
+.list-inline>li:first-child,
+.list-inline>li:nth-child(6) {
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+    margin-right: 14px;
+}
+
+
+/* Media query */
+@media only screen and (max-width: 1091px) {
+    .first-menu {
+        min-height: 75px;
+    }
 }
