@@ -25,6 +25,12 @@ Newscoop\Entity\Playlist:
             type: integer
             groups: ["list", "details"]
             serialized_name: maxItems
+        articlesModificationTime:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["list", "details"]
+            serialized_name: articlesModificationTime
         articlesLink:
             expose: true
             read_only: true

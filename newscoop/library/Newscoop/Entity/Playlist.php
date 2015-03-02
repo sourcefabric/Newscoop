@@ -42,6 +42,12 @@ class Playlist extends AbstractEntity
     protected $maxItems;
 
     /**
+     * @ORM\Column(type="datetime", name="modification_time", nullable=true)
+     * @var datetime
+     */
+    protected $articlesModificationTime;
+
+    /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
      */
     protected $articles;
@@ -134,6 +140,30 @@ class Playlist extends AbstractEntity
     public function setMaxItems($maxItems)
     {
         $this->maxItems = $maxItems;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of articlesModificationTime.
+     *
+     * @return int
+     */
+    public function getArticlesModificationTime()
+    {
+        return $this->articlesModificationTime;
+    }
+
+    /**
+     * Sets the value of articlesModificationTime.
+     *
+     * @param int $articlesModificationTime the articles modification time
+     *
+     * @return self
+     */
+    public function setArticlesModificationTime(\DateTime $articlesModificationTime)
+    {
+        $this->articlesModificationTime = $articlesModificationTime;
 
         return $this;
     }
