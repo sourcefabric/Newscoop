@@ -4,7 +4,8 @@ angular.module('playlistsApp').factory('Playlist', [
     '$http',
     '$q',
     '$timeout',
-    function ($http, $q, $timeout) {
+    '$filter',
+    function ($http, $q, $timeout, $filter) {
         var Playlist = function () {};  // Playlist constructor
 
         var listId = undefined,
@@ -192,17 +193,17 @@ angular.module('playlistsApp').factory('Playlist', [
 
 			        // send also datetime to see if playlist is locked by diffrent user
 			        if (playlistDateTime !== undefined) {
-			    		str.push("articlesModificationTime=" + playlistDateTime.toLocaleString());
+			    		str.push("articlesModificationTime=" + $filter('date')(playlistDateTime, 'yyyy-MM-ddTHH:mm:ss'));
 			    	} else {
-			    		str.push("articlesModificationTime=" + now.toLocaleString());
+			    		str.push("articlesModificationTime=" + $filter('date')(now, 'yyyy-MM-ddTHH:mm:ss'));
 			    	}
 
 			        return str.join("&");
 	            },
 	            data: postParams
             })
-            .success(function () {
-                deferred.resolve();
+            .success(function (response) {
+                deferred.resolve(response);
             })
             .error(function (responseBody) {
                 deferred.reject(responseBody);

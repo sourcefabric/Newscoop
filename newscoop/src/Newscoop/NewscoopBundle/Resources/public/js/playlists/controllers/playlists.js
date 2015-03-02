@@ -369,13 +369,16 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
         $scope.processing = true;
 
-        doSaveAPICalls().then(function () {
+        doSaveAPICalls().then(function (response) {
             flash.fadeOut();
             $scope.processing = false;
             Playlist.clearLogList();
             flashMessage(Translator.trans('List saved'));
             $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
             $scope.playlist.selected.id = Playlist.getListId();
+            if (response !== undefined && response[0].object.articlesModificationTime !== undefined) {
+                $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
+            }
         }, function(response) {
             if (response.errors[0].code === 409) {
                 flashMessage(Translator.trans(
