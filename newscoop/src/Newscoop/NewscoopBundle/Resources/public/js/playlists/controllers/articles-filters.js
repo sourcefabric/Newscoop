@@ -2,7 +2,6 @@
 
 /**
 * AngularJS controller for loading available articles by given filter.
-* It also loads, data for each filter.
 *
 * @class FiltersController
 */
@@ -122,6 +121,8 @@ angular.module('playlistsApp').controller('FiltersController', [
         $scope.author.selected = undefined;
         if (term) {
             $scope.authors = Filter.getAuthors(term);
+        } else {
+            tableParams.$params.filter.author = undefined;
         }
     }
 

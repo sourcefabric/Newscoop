@@ -10,11 +10,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     'Playlist',
     'ngTableParams',
     'modalFactory',
+    '$q',
     function (
         $scope,
         Playlist,
         ngTableParams,
-        modalFactory
+        modalFactory,
+        $q
         ) {
 
         $scope.isViewing = false;
@@ -188,6 +190,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         flashMessage(Translator.trans('Item already exists in the list'), 'error');
     };
 
+    /**
+     * Saves playlist from the article edit screen view
+     */
     $scope.savePlaylistInEditorMode = function () {
         var logList = [];
         $scope.processing = true;
@@ -209,6 +214,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
     }
 
+    // page variable is needed for fetching articles on scroll in playlist box
+    // (right box), by default it's set to 2 because we start fetching new
+    // articles from page 2, since articles on page 1 are loaded
+    // by default when selecting playlist.
     var page = 2,
     isRunning = false,
     isEmpty = false;
@@ -306,6 +315,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
     }
 
+    /**
+     * It makes a proper API calls (create, update, link, unlink) based on
+     * performed actions. If the list's limit will be change, popup will be displayed.
+     */
     $scope.savePlaylist = function () {
         var newLimit = $scope.playlist.selected.maxItems,
             oldLimit = $scope.playlist.selected.oldLimit,
@@ -328,81 +341,79 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             modal.result.then(function () {
                 saveList();
                 $scope.playlist.selected.oldLimit = $scope.playlist.selected.maxItems;
-                reloadArticles();
             }, function () {
               return false;
           });
         } else {
             saveList();
-            reloadArticles();
         }
     };
 
     /**
-     * Saves playlist with all articles in it.
+     * Saves, updates the list and make post actions on promise resolve, such
+     * clearing log list, showing/hiding flash messages etc.
+     */
+    var saveList = function () {
+        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
+        $scope.processing = true;
+
+        doSaveAPICalls().then(function () {
+            flash.fadeOut();
+            $scope.processing = false;
+            Playlist.clearLogList();
+            flashMessage(Translator.trans('List saved'));
+            $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
+            $scope.playlist.selected.id = Playlist.getListId();
+        }, function() {
+            flashMessage(Translator.trans('Could not save the list'), 'error');
+            flash.fadeOut();
+            $scope.processing = false;
+        });
+    }
+
+    /**
+     * Saves, updates playlist with all articles on server side.
      * It makes batch link or unlink of the articles. It also
      * saves a proper order of the articles. All list's changes are saved
      * by clicking Save button.
      */
-    var saveList = function () {
-            var listname = $scope.formData.title,
-            logList = [];
-        var playlistExists = _.some(
+    var doSaveAPICalls = function () {
+        var deferred,
+            listname,
+            logList = [],
+            playlistExists,
+            list;
+
+        listname = $scope.formData.title
+        playlistExists = _.some(
             $scope.playlists,
             {title: listname}
         );
 
-        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
-        $scope.processing = true;
-        if (!playlistExists) {
-            $scope.playlist.selected.title = listname;
-            Playlist.createPlaylist($scope.playlist.selected).then(function () {
-                flash.fadeOut();
-                flashMessage(Translator.trans('List saved'));
-                $scope.playlist.selected.id = Playlist.getListId();
-                $scope.processing = false;
-            }, function() {
-                flashMessage(Translator.trans('Could not save the list'), 'error');
-                flash.fadeOut();
-            });
+        var update = false;
+        // if we rename the current playlist, update it only
+        if (listname != $scope.playlist.selected.title) {
+            update = true;
+        }
 
-            return true;
+        deferred = $q.defer();
+        list = deferred;
+        $scope.playlist.selected.title = listname;
+
+        if (!playlistExists && !update) {
+            return Playlist.createPlaylist($scope.playlist.selected);
         }
 
         if ($scope.playlist.selected !== undefined) {
-            Playlist.updatePlaylist($scope.playlist.selected).then(function () {
-                //$scope.featuredArticles = Playlist.getArticlesByListId($scope.playlist.selected);
-                flash.fadeOut();
-                $scope.processing = false;
-            }, function() {
-                flashMessage(Translator.trans('Could not save the list'), 'error');
-                flash.fadeOut();
-
-                return false;
-            });
+            list = Playlist.updatePlaylist($scope.playlist.selected);
+            deferred.resolve();
         }
 
         logList = Playlist.getLogList();
         if (logList.length == 0) {
-            $scope.processing = false;
-            flash.fadeOut();
-            flashMessage(Translator.trans('List saved'));
-
-            return true;
+            return list;
         }
 
-        Playlist.batchUpdate(logList)
-        .then(function () {
-            flashMessage(Translator.trans('List saved'));
-            Playlist.clearLogList();
-            flash.fadeOut();
-            $scope.processing = false;
-        }, function() {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
-        });
-    }
-
-    var reloadArticles = function () {
-        $scope.featuredArticles = Playlist.getArticlesByListId($scope.playlist.selected);
+        return Playlist.batchUpdate(logList);
     }
 }]);
