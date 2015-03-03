@@ -211,7 +211,6 @@ ul#context_list {
 }
 .ng-table-pager {
     margin: 0 auto;
-    width: 65%;
     margin-top: -20px;
 }
 .ui-datepicker-trigger {

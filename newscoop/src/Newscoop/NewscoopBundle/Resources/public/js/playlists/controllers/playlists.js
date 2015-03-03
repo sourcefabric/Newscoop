@@ -415,7 +415,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         var update = false;
         // if we rename the current playlist, update it only
-        if (listname != $scope.playlist.selected.title) {
+        if (listname != $scope.playlist.selected.title && $scope.playlist.selected.id !== undefined) {
             update = true;
         }
 
