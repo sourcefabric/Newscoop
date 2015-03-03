@@ -162,6 +162,14 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             {number: $scope.articlePreview.number}
             );
 
+        if (isLimitReached()) {
+            flashMessage(Translator.trans(
+                    'List limit reached! Remove some articles from the list before adding new ones.'
+            ), 'error');
+
+            return true;
+        }
+
         if (!exists) {
             var isInLogList = _.some(
                 Playlist.getLogList(),
@@ -186,6 +194,14 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.featuredArticles,
             {number: number}
             );
+
+        if (isLimitReached()) {
+            flashMessage(Translator.trans(
+                    'List limit reached! Remove some articles from the list before adding new ones.'
+            ), 'error');
+
+            return true;
+        }
 
         if (!exists) {
             var article = undefined,
@@ -213,6 +229,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         flashMessage(Translator.trans('Item already exists in the list'), 'error');
     };
+
+    /**
+     * Checks if playlist's limit is reached.
+     *
+     * @return {Boolean}
+     */
+    var isLimitReached = function () {
+        var limit = $scope.playlist.selected.maxItems;
+
+        return (limit && limit != 0 && $scope.featuredArticles.length >= limit);
+    }
 
     /**
      * Saves playlist from the article edit screen view

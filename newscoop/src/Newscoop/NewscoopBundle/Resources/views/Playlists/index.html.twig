@@ -224,17 +224,20 @@
                 </div>
                 {% endif %}
                 <div ng-controller="FeaturedController">
-                    <div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 620px;"{% endif %}>
+                    <div ng-if="!$parent.isViewing" class="context-block context-list plugin-context-block" {% if editorView %}style="width: 643px;"{% endif %}>
                         <div class="row">
                             <div class="col-xs-6"><h3 style="display:inline">{[{ playlist.selected.title}]}</h3></div>
-                            {% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
-                                <form name="limitForm" class="limit-input">
-                                <label id="playlist-id-label">{{ 'List limit'|trans}}:</label>
+                            <div class="col-xs-6" ng-if="playlist.selected">
+                            <form name="limitForm" class="limit-input">
+                            <label id="playlist-id-label">{{ 'List limit'|trans}}:</label>
+                            {% if editorView == false %}
                                 <input ng-change="updateParentLimit(this)" type="number" name="input" ng-model="playlist.selected.maxItems" min="0" max="99" class="form-control input-sm" id="playlistId">
                                 <span class="error-custom" ng-show="limitForm.input.$error.number">{{ 'Not valid number'|trans}}!</span>
-                                </form>
-                            </div>
+                            {% else %}
+                            	<span style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
                             {% endif %}
+                            </form>
+                            </div>
                         </div>
                         <div class="context-list-results" >
                             <div style="display: block">
@@ -247,7 +250,7 @@
                                         </div>
                                         {% endif %}
                                         <li class="item" ng-repeat="article in $parent.featuredArticles">
-                                            <div class="context-item" {% if editorView %}style="width: 580px"{% endif %} >
+                                            <div class="context-item" {% if editorView %}style="width: 620px"{% endif %} >
                                                 <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
                                                 <div class="context-item-header">
                                                     <div class="context-item-date">{[{::article.created| date:"dd.MM.yyyy 'at' H:mm:ss"}]}
