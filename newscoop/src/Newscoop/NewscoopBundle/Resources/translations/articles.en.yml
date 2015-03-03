@@ -187,6 +187,7 @@ Comments: Comments
 'Snippet': 'Snippet'
 'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.': 'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.'
 'List limit reached! Remove some articles from the list before adding new ones.': 'List limit reached! Remove some articles from the list before adding new ones.'
+'This list is already in a different state than the one in which it was loaded.': 'This list is already in a different state than the one in which it was loaded.'
 articles:
     images:
         edit:

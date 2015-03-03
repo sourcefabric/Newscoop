@@ -4,7 +4,8 @@ angular.module('playlistsApp').factory('Playlist', [
     '$http',
     '$q',
     '$timeout',
-    function ($http, $q, $timeout) {
+    '$filter',
+    function ($http, $q, $timeout, $filter) {
         var Playlist = function () {};  // Playlist constructor
 
         var listId = undefined,
@@ -161,11 +162,65 @@ angular.module('playlistsApp').factory('Playlist', [
         * @return {Object} promise object that is resolved on successful server
         *   response and rejected on server error response
         */
-        Playlist.batchUpdate = function(logList) {
+        Playlist.batchUpdate = function(logList, playlist) {
             var deferred = $q.defer(),
-                postParams = [];
+                postParams,
+                now,
+                playlistDateTime = undefined;
 
-            angular.forEach(logList, function(article, key) {
+            now = new Date();
+            postParams = parseAndBuildParams(logList);
+
+            if (playlist.articlesModificationTime !== undefined) {
+            	playlistDateTime = new Date(playlist.articlesModificationTime);
+            }
+
+            $http({
+                url: Routing.generate(
+                    'newscoop_gimme_articleslist_savebatchactions',
+                    {id: listId},
+                    true
+                ),
+                method: 'POST',
+                headers: {
+	                'Content-Type': 'application/x-www-form-urlencoded'
+	            },
+	            transformRequest: function (data) {
+	                var str = [];
+			        angular.forEach(data, function(param, key){
+			        	str.push("actions[]["+param.method+"]=" + encodeURIComponent(param.link));
+			    	});
+
+			        // send also datetime to see if playlist is locked by diffrent user
+			        if (playlistDateTime !== undefined) {
+			    		str.push("articlesModificationTime=" + $filter('date')(playlistDateTime, 'yyyy-MM-ddTHH:mm:ss'));
+			    	} else {
+			    		str.push("articlesModificationTime=" + $filter('date')(now, 'yyyy-MM-ddTHH:mm:ss'));
+			    	}
+
+			        return str.join("&");
+	            },
+	            data: postParams
+            })
+            .success(function (response) {
+                deferred.resolve(response);
+            })
+            .error(function (responseBody) {
+                deferred.reject(responseBody);
+            });
+
+            return deferred.promise;
+        };
+
+        /**
+         * It parses and builds params that need to be submitted in the POSt request,
+         * based on log list, which keeps articles to modify.
+         * @param  {Array} logList Log list
+         * @return {Array}         Array with parameters
+         */
+        var parseAndBuildParams = function (logList) {
+        	var postParams = [];
+        	angular.forEach(logList, function(article, key) {
             	var link = [
             		'<',
 	                Routing.generate(
@@ -185,35 +240,8 @@ angular.module('playlistsApp').factory('Playlist', [
             	postParams.push({link: link, method: article._method});
             });
 
-            $http({
-                url: Routing.generate(
-                    'newscoop_gimme_articleslist_savebatchactions',
-                    {id: listId},
-                    true
-                ),
-                method: 'POST',
-                headers: {
-	                'Content-Type': 'application/x-www-form-urlencoded'
-	            },
-	            transformRequest: function (data) {
-	                var str = [];
-			        angular.forEach(data, function(param, key){
-			        	str.push("actions[]["+param.method+"]=" + encodeURIComponent(param.link));
-			    	});
-
-			        return str.join("&");
-	            },
-	            data: postParams
-            })
-            .success(function () {
-                deferred.resolve();
-            })
-            .error(function (responseBody) {
-                deferred.reject(responseBody);
-            });
-
-            return deferred.promise;
-        };
+            return postParams;
+        }
 
         /**
         * Creates new playlist
@@ -291,6 +319,7 @@ angular.module('playlistsApp').factory('Playlist', [
         Playlist.updatePlaylist = function (playlist) {
             var url,
             	deferred = $q.defer();
+
 
             url = Routing.generate(
                 'newscoop_gimme_articleslist_updateplaylist',

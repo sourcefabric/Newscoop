@@ -3,7 +3,7 @@
 /**
 * AngularJS controller for managing playlists
 *
-* @class PalylistsController
+* @class PlaylistsController
 */
 angular.module('playlistsApp').controller('PlaylistsController', [
     '$scope',
@@ -21,7 +21,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         $scope.isViewing = false;
         $scope.playlist = {};
-        $scope.playlists = Playlist.getAll();
+        $scope.playlists = [];
         $scope.playlistInfo = undefined;
         $scope.featuredArticles = [];
         $scope.formData = {};
@@ -111,6 +111,15 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.getAllArticles($defer, params);
         }
     });
+
+    /**
+     * Loads available playlists on select box click (lazy load)
+     */
+    $scope.loadAllPlaylists = function () {
+        if (_.isEmpty($scope.playlists)) {
+            $scope.playlists = Playlist.getAll();
+        }
+    }
 
     /**
      * Opens selected article's preview
@@ -204,7 +213,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             return true;
         }
 
-        Playlist.batchUpdate(logList)
+        Playlist.batchUpdate(logList, $scope.playlist.selected)
         .then(function () {
             flashMessage(Translator.trans('List saved'));
             Playlist.clearLogList();
@@ -282,6 +291,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.playlist.selected = {title: defaultListName, id: undefined};
     }
 
+    /**
+     * Removes playlist
+     */
     $scope.removePlaylist = function () {
         var modal,
         title,
@@ -357,15 +369,26 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
         $scope.processing = true;
 
-        doSaveAPICalls().then(function () {
+        doSaveAPICalls().then(function (response) {
             flash.fadeOut();
             $scope.processing = false;
             Playlist.clearLogList();
             flashMessage(Translator.trans('List saved'));
             $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
             $scope.playlist.selected.id = Playlist.getListId();
-        }, function() {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
+            if (response !== undefined && response[0].object.articlesModificationTime !== undefined) {
+                $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
+            }
+        }, function(response) {
+            if (response.errors[0].code === 409) {
+                flashMessage(Translator.trans(
+                    'This list is already in a different state than the one in which it was loaded.'
+                ), 'error');
+                // automatically refresh playlist
+                $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
+            } else {
+                flashMessage(Translator.trans('Could not save the list'), 'error');
+            }
             flash.fadeOut();
             $scope.processing = false;
         });
@@ -400,7 +423,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         list = deferred;
         $scope.playlist.selected.title = listname;
 
-        if (!playlistExists && !update) {
+        if (!playlistExists && !update && $scope.playlist.selected.id === undefined) {
             return Playlist.createPlaylist($scope.playlist.selected);
         }
 
@@ -414,6 +437,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             return list;
         }
 
-        return Playlist.batchUpdate(logList);
+        return Playlist.batchUpdate(logList, $scope.playlist.selected);
     }
 }]);
