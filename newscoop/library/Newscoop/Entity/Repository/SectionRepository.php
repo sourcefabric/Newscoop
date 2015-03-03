@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository,
  */
 class SectionRepository extends EntityRepository
 {
-    public function getSections($publication, $issue = false)
+    public function getSections($publication, $issue = false, $language = false)
     {
         $em = $this->getEntityManager();
         $queryBuilder = $em->getRepository('Newscoop\Entity\Section')

@@ -29,7 +29,8 @@ class SectionsController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="publication", "dataType"="integer", "required"=true, "description"="Publication id"},
-     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"}
+     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Filter by language code"},
      *     }
      * )
      *
@@ -42,21 +43,32 @@ class SectionsController extends FOSRestController
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
-        $issueNumber = $em->getRepository('Newscoop\Entity\Issue')
-            ->getByPublicationAndNumber(
+        if ($request->query->has('language')) {
+            $language = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($request->query->get('language'));
+        }
+
+        if (!$language) {
+            $language = $this->get('newscoop_newscoop.publication_service')->getPublication()->getLanguage();
+        }
+
+        $issue = $em->getRepository('Newscoop\Entity\Issue')
+            ->getByPublicationAndNumberAndLanguage(
                 $request->query->get('publication', $publication),
-                $request->query->get('issue')
+                $request->query->get('issue'),
+                $language
             )
             ->getOneOrNullResult();
 
-        if (!$issueNumber & $request->query->has('issue')) {
+        if (!$issue & $request->query->has('issue')) {
             throw new NotFoundHttpException('Issue was not found.');
         }
 
         $sections = $em->getRepository('Newscoop\Entity\Section')
             ->getSections(
                 $request->query->get('publication', $publication),
-                $issueNumber
+                $issue,
+                $issue->getLanguage()
             )->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
