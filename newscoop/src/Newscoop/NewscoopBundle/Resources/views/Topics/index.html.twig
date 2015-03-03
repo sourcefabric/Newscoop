@@ -93,8 +93,8 @@
               <div ui-tree-handle ng-class="{'active': editing || addingSubtopic}" class="tree-node tree-node-content angular-ui-tree-handle" {% if compactView %}style="cursor:auto" ng-style="{ background: node.attached ? '#E1E9EF' : '#f2f2f2' }"{% endif %}>
               <div class="pull-right btn-group">
                 <a data-nodrag ng-click="startEditing(this)" class="btn btn-default btn-sm" ng-class="{'active': editing}"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
-                {% if compactView == false %}
                 <a data-nodrag ng-click="showNewSubtopicBox(this)" class="btn btn-default btn-sm" ng-class="{'active': addingSubtopic}"><span title="{{ 'topics.label.addsubtopic'|trans }}" class="glyphicon glyphicon-plus"></span></a>
+                {% if compactView == false %}
                 <a data-nodrag ng-click="removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="btn btn-default btn-sm"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
                 {% endif %}
               </div>
