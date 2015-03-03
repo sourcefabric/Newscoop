@@ -63,11 +63,12 @@ angular.module('playlistsApp').controller('FiltersController', [
         $scope.sections = [];
         $scope.section.selected = undefined;
         tableParams.$params.filter.section = undefined;
-        $scope.sections = Filter.getAllSections(publicationId, item.number);
+        $scope.sections = Filter.getAllSections(publicationId, item);
         // load by publication id and issue number
         mergeFilters({
             publication: publicationId,
-            issue: item.number
+            issue: item.number,
+            language: item.language
         });
     };
 
