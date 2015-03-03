@@ -6,8 +6,7 @@ var app = angular.module('playlistsApp', [
     'ngTable',
     'ng-sortable',
     'ui.bootstrap',
-    'infinite-scroll',
-    'angularMoment'
+    'infinite-scroll'
 ]).config(function($interpolateProvider, $httpProvider) {
     $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
     $httpProvider.interceptors.push('authInterceptor');
