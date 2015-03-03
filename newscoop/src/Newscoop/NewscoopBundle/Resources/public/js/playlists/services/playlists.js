@@ -225,7 +225,7 @@ angular.module('playlistsApp').factory('Playlist', [
             	var link = [
             		'<',
 	                Routing.generate(
-	                    'newscoop_gimme_articles_getarticle',
+	                    'newscoop_gimme_articles_getarticle_language',
 	                    {number: article.number, language: article.language},
 	                    false
 	                ),
