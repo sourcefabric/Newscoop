@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -36,7 +35,7 @@ class TopicTranslation extends AbstractPersonalTranslation
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="translations")
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="translations", cascade={"persist"})
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $object;

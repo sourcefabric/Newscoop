@@ -74,6 +74,9 @@
 .context-item-summary {
     color: #007fb3;
 }
+.context-search {
+    overflow-y: scroll;
+}
 .context-search .context-item {
     border-bottom: none;
 }
@@ -282,6 +285,11 @@ ul#context_list {
     border-right: 1px solid #ccc;
     padding-right: 20px;
     margin-right: 14px;
+}
+.error-custom {
+    line-height: 26px;
+    padding-left: 10px;
+    color: #a94442;
 }
 
 

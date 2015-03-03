@@ -185,10 +185,13 @@ Comments: Comments
 'No such section.': 'No such section.'
 'Characters': 'Characters'
 'Snippet': 'Snippet'
-'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.': 'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.'
 'List limit reached! Remove some articles from the list before adding new ones.': 'List limit reached! Remove some articles from the list before adding new ones.'
 'This list is already in a different state than the one in which it was loaded.': 'This list is already in a different state than the one in which it was loaded.'
+'List name should not be longer than 40 chars': 'List name should not be longer than 40 chars'
+'Not valid number': 'Not valid number'
 articles:
+    playlists:
+        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you decrease the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 till 50 will be deleted from the list. Maybe the example is too much'
     images:
         edit:
             edit_image_metadata: Edit image metadata

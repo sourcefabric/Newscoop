@@ -62,9 +62,11 @@
         <label id="playlist-name-label">{{ 'List Name'|trans }}:</label>
     </li>
     <li ng-if="playlist.selected">
+        <form name="listNameForm">
         <span id="list_name">
-            <input name="playlist-name" ng-model="formData.title" required ng-minlength="1" ng-maxlength="40" value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name">
+            <input name="playlistName" ng-minlength="1" ng-maxlength="60" ng-model="formData.title" required value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name" ng-change="validateListName(this)">
         </span>
+        </form>
     </li>
     <li ng-if="playlist.selected.id">
         <label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
@@ -77,7 +79,7 @@
     <li style="float: right" ng-if="playlist.selected">
         <div class="save-button-bar">
             <button type="button" ng-click="removePlaylist()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
-            <button type="button" ng-disabled="processing" ng-click="savePlaylist()" ng-disabled="playlistForm.$invalid" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+            <button type="button" ng-disabled="processing || playlistForm.$invalid || !playlistLimit" ng-click="savePlaylist()" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
         </div>
     </li>
 </ul>
@@ -226,10 +228,11 @@
                         <div class="row">
                             <div class="col-xs-6"><h3 style="display:inline">{[{ playlist.selected.title}]}</h3></div>
                             {% if editorView == false %}<div class="col-xs-6" ng-if="playlist.selected">
-                                <div class="limit-input">
-                                <label id="playlist-id-label">List limit:</label>
-                                <input type="text" ng-model="playlist.selected.maxItems" class="form-control input-sm" id="playlistId"/>
-                                </div>
+                                <form name="limitForm" class="limit-input">
+                                <label id="playlist-id-label">{{ 'List limit'|trans}}:</label>
+                                <input ng-change="updateParentLimit(this)" type="number" name="input" ng-model="playlist.selected.maxItems" min="0" max="99" class="form-control input-sm" id="playlistId">
+                                <span class="error-custom" ng-show="limitForm.input.$error.number">{{ 'Not valid number'|trans}}!</span>
+                                </form>
                             </div>
                             {% endif %}
                         </div>
