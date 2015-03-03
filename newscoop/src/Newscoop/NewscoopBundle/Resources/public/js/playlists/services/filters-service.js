@@ -69,7 +69,7 @@ angular.module('playlistsApp').factory('Filter', [
             return items;
         };
 
-        Filter.getAllSections = function (publicationId, issueNumber) {
+        Filter.getAllSections = function (publicationId, issue) {
             var items = [],
                 deferredGet = $q.defer(),
                 url;
@@ -81,7 +81,8 @@ angular.module('playlistsApp').factory('Filter', [
                 {
                     items_per_page: 9999,
                     publication: publicationId,
-                    issue: issueNumber
+                    issue: issue.number,
+                    language: issue.language
                 },
                 true
             );
