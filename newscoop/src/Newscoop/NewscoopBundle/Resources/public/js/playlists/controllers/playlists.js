@@ -27,6 +27,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.formData = {};
         $scope.processing = false;
         $scope.playlist.selected = undefined;
+        // limit var, which is set to false by FeaturedController
+        // when provided limit is invalid
+        $scope.playlistLimit = true;
 
     // array of the articles,
     // that will be removed or added to the list
@@ -111,6 +114,18 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.getAllArticles($defer, params);
         }
     });
+
+    /**
+     * Checks if list name max length is not exceeded,
+     * if it is, then it will display flash message with error.
+     *
+     * @param  {Object} scope Current scope
+     */
+    $scope.validateListName = function (scope) {
+        if (scope.listNameForm.playlistName.$error.maxlength) {
+            flashMessage(Translator.trans('List name should not be longer than 40 chars', {}, 'articles'), 'error');
+        }
+    }
 
     /**
      * Loads available playlists on select box click (lazy load)
@@ -341,9 +356,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             cancelText;
 
         title = Translator.trans('Info');
-        text = Translator.trans(
-            'Are you sure you want to change the limit ? If you change the limit, all articles below the limit will be removed from the list.'
-        );
+        text = Translator.trans('articles.playlists.alert', {}, 'articles');
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
 

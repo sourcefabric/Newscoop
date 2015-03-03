@@ -159,6 +159,7 @@ angular.module('playlistsApp').factory('Playlist', [
         *
         * @method batchUpdate
         * @param number {Array} array which keeps modified articles for given playlist
+        * @param playlist {Object} selected playlist
         * @return {Object} promise object that is resolved on successful server
         *   response and rejected on server error response
         */
@@ -344,7 +345,7 @@ angular.module('playlistsApp').factory('Playlist', [
 	            },
 	            data: $.param(formData)
         	}).success(function (response) {
-                deferred.resolve();
+                deferred.resolve(response);
             }).error(function (responseBody) {
                 deferred.reject(responseBody);
             });

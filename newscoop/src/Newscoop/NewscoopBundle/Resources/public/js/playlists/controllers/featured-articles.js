@@ -34,8 +34,6 @@ angular.module('playlistsApp').controller('FeaturedController', [
         }
     };
 
-
-
     /**
      * Deletes single article from the currently loaded playlist
      *
@@ -105,5 +103,16 @@ angular.module('playlistsApp').controller('FeaturedController', [
         }
 
         Playlist.setCurrentPlaylistArticles(featuredArticles);
+    }
+
+    /**
+     * Updates parent controller's playlistLimit variable, so it can disable save button
+     * when limit is incorrect, i.e. is string not number
+     *
+     * @param  {Object} scope Current scope
+     */
+    $scope.updateParentLimit = function (scope) {
+        console.log($scope.$parent.playlistLimit, scope.limitForm);
+        $scope.$parent.playlistLimit = scope.limitForm.$valid;
     }
 }]);
