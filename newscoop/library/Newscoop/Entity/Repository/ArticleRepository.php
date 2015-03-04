@@ -345,7 +345,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     public function getArticlesForAuthor($author, \Newscoop\Criteria $criteria)
     {
         $em = $this->getEntityManager();
-
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
             ->select('a')
@@ -410,7 +409,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Articles for choosen section
+     * Get Articles for chosen section
      *
      * @param int           $publication
      * @param int           $sectionNumber
@@ -433,9 +432,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $qbCount = clone $queryBuilder;
         $qbCount->select('count(a)');
-
         $articlesCount = $qbCount->getQuery()->getSingleScalarResult();
-
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
 
