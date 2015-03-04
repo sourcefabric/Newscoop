@@ -42,14 +42,14 @@ class IssuesController extends FOSRestController
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $issues = $em->getRepository('Newscoop\Entity\Issue')
-            ->getLatestByPublication($request->query->get('publication', $publication), false);
+            ->getLatestByPublication($request->query->get('publication', $publication), false, false);
 
         if (!$issues) {
             throw new NotFoundHttpException('Result was not found.');
         }
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $issues = $paginator->paginate($issues->getResult(), array(
+        $issues = $paginator->paginate($issues, array(
             'distinct' => false,
         ));
 
