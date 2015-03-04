@@ -11,6 +11,10 @@ class Application_Form_Login extends Zend_Form
 {
     public function init()
     {
+        $this->addElement('hidden', '_target_path', array(
+            'value' => $_SERVER['REQUEST_URI'],
+        ));
+
         $this->addElement('text', 'email', array(
             'label' => 'Email',
             'required' => true,
