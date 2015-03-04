@@ -120,7 +120,7 @@ class SectionsController extends FOSRestController
         }
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesForSection($publication, $number);
+            ->getArticlesForSection($publication, $number, $language);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
