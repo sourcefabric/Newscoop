@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -50,8 +49,8 @@ class IssuesController extends FOSRestController
         }
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $issues = $paginator->paginate($issues, array(
-            'distinct' => false
+        $issues = $paginator->paginate($issues->getResult(), array(
+            'distinct' => false,
         ));
 
         return $issues;
