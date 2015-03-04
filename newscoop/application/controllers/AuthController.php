@@ -36,12 +36,17 @@ class AuthController extends Zend_Controller_Action
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-                $expire = NULL;
+                $expire = null;
                 if (!empty($values['remember_me'])) {
                     // set expire to 10 years in the future
                     $expire = time() + (10 * 365 * 24 * 60 * 60);
                 }
+
                 setcookie('NO_CACHE', '1', $expire, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+                if (isset($values['_target_path'])) {
+                    $this->_helper->redirector->gotoUrl($values['_target_path']);
+                }
+
                 $this->_helper->redirector('index', 'dashboard');
             } else {
                 $form->addError($translator->trans("Invalid credentials"));
@@ -63,25 +68,25 @@ class AuthController extends Zend_Controller_Action
             $this->_redirect($url);
         }
 
-        $this->_helper->redirector->gotoUrl('?t=' . time());
+        $this->_helper->redirector->gotoUrl('?t='.time());
     }
 
     public function socialAction()
-    {   
+    {
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $userService = \Zend_Registry::get('container')->getService('user');
         $session = \Zend_Registry::get('container')->getService('session');
 
         $config = array(
-		    'base_url' => $this->view->serverUrl($this->view->url(array('action' => 'socialendpoint'))), 
-		    'debug_mode' => false,
-		    'providers' => array(
-			    'Facebook' => array(
-				    'enabled' => true,
+            'base_url' => $this->view->serverUrl($this->view->url(array('action' => 'socialendpoint'))),
+            'debug_mode' => false,
+            'providers' => array(
+                'Facebook' => array(
+                    'enabled' => true,
                     'keys'    => array(
                         'id' => $preferencesService->facebook_appid,
                         'secret' => $preferencesService->facebook_appsecret,
-                    ), 
+                    ),
                 ),
             ),
         );
@@ -112,16 +117,18 @@ class AuthController extends Zend_Controller_Action
                 $OAuthtoken = $userService->loginUser($user, 'oauth_authorize');
                 $session->set('_security_oauth_authorize', serialize($OAuthtoken));
             }
-            setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+
+            setcookie('NO_CACHE', '1', null, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
             if ($user->isPending()) {
                 $this->_forward('confirm', 'register', 'default', array(
                     'social' => true,
                 ));
             } else {
-                $request = \Zend_Registry::get('container')->getService('request');
-                if ($request->query->has('_target_path')) {
-                    $this->_helper->redirector->gotoUrl($request->query->get('_target_path'));
+                $request = $this->getRequest();
+                if ($request->getParam('_target_path')) {
+                    $this->_helper->redirector->gotoUrl($request->getParam('_target_path'));
                 }
+
                 $this->_helper->redirector('index', 'dashboard');
             }
         } catch (\Exception $e) {
@@ -150,7 +157,7 @@ class AuthController extends Zend_Controller_Action
                 $this->_helper->service('email')->sendPasswordRestoreToken($user);
                 $this->_helper->flashMessenger($translator->trans("E-mail with instructions was sent to given email address."));
                 $this->_helper->redirector('password-restore-after', 'auth');
-            } else if (empty($user)) {
+            } elseif (empty($user)) {
                 $form->email->addError($translator->trans("Given email not found."));
             }
         }
@@ -163,7 +170,7 @@ class AuthController extends Zend_Controller_Action
     }
 
     public function passwordRestoreFinishAction()
-    {   
+    {
         $translator = Zend_Registry::get('container')->getService('translator');
         $user = $this->_helper->service('user')->find($this->_getParam('user'));
         if (empty($user)) {
@@ -208,8 +215,7 @@ class AuthController extends Zend_Controller_Action
 
     private function extractDomain($domain)
     {
-        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
-        {
+        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
             return $matches['domain'];
         } else {
             return $domain;
