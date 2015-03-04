@@ -188,7 +188,7 @@ OK: OK
 Save: Gem
 Search: Søg
 'Make a selection': 'Lav en markering'
-'You must input a number greater than 0 into the $1 field.': 'Du skal skrive en værdi højere en 0 i $1 feltet'
+'You must input a number greater than 0 into the $1 field.': 'Du skal skrive en værdi højere end 0 i $1 feltet'
 'You must input a valid date.': 'Du skal skrive en gyldig dato.'
 'Add new field': 'Tilføj nyt felt'
 'Article automatic publishing schedule': 'Automatisk publiceringsplan for artikel'

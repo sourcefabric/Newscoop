@@ -185,7 +185,14 @@ Comments: تعليقات
 'No such section.': 'لا يوجد القسم.'
 Characters: null
 Snippet: null
+'List limit reached! Remove some articles from the list before adding new ones.': null
+'This list is already in a different state than the one in which it was loaded.': null
+'List name should not be longer than 40 chars': null
+'Not valid number': null
+'List limit': null
 articles:
+    playlists:
+        alert: null
     images:
         edit:
             edit_image_metadata: null
