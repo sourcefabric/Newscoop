@@ -2,6 +2,9 @@
 VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
+   Version 4.4 - Newscoop 4.4 Release Candidate 1
+      04/03/2015 12:01  4.4.0-rc  initial release
+
    Version 4.3 - Tag Newscoop 4.3 stable release
       23/01/2015 11:35  4.3.2  Newscoop 4.3.2 minor release (bugfixes)
       28/11/2014 14:46  4.3.1  "Newscoop 4.3.1 minor release"
