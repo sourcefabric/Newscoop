@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\QueryBuilder;
@@ -30,7 +29,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->andWhere('a.publication = :publication')
             ->setParameters(array(
                 'workflowStatus' => 'Y',
-                'publication' => $publication
+                'publication' => $publication,
             ));
 
         $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
@@ -40,7 +39,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->andWhere('a.publication = :publication')
             ->setParameters(array(
                 'workflowStatus' => 'Y',
-                'publication' => $publication
+                'publication' => $publication,
             ));
 
         if ($type) {
@@ -88,7 +87,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->setParameter('number', $number);
 
         if (!is_null($language)) {
-
             if (!is_numeric($language)) {
                 $languageObject = $em->getRepository('Newscoop\Entity\Language')
                     ->findOneByCode($language);
@@ -139,31 +137,37 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         if ($getResultAndCount) {
             return array(
                 'result' => $query->getResult(),
-                'count' => $articlesCount
+                'count' => $articlesCount,
             );
         }
 
         return $query;
     }
 
-    public function getArticlesForSection($publication, $sectionNumber)
+    /**
+     * Get Articles for chosen section
+     *
+     * @param int           $publication
+     * @param int           $sectionNumber
+     * @param Language|null $sectionLanguage
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function getArticlesForSection($publication, $sectionNumber, $sectionLanguage = null)
     {
         $em = $this->getEntityManager();
-
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('a')
             ->where('a.section = :sectionNumber')
-            ->setParameter('sectionNumber', $sectionNumber);
+            ->andWhere('a.language = :sectionLanguage')
+            ->setParameters(array(
+                'sectionNumber' => $sectionNumber,
+                'sectionLanguage' => $sectionLanguage,
+            ));
 
-        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
-            ->createQueryBuilder('a')
-            ->select('count(a)')
-            ->where('a.section = :sectionNumber')
-            ->setParameter('sectionNumber', $sectionNumber);
-
-        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
-
+        $qbCount = clone $queryBuilder;
+        $qbCount->select('count(a)');
+        $articlesCount = $qbCount->getQuery()->getSingleScalarResult();
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
 
@@ -207,7 +211,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->andWhere('a.language <> :language')
             ->setParameters(array(
                 'number' => $articleNumber,
-                'language' => $languageId
+                'language' => $languageId,
             ));
 
         $query = $queryBuilder->getQuery();
@@ -278,7 +282,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         if (!is_null($articles) && count($articles) > 0) {
             $articleNumbers = array();
 
-            foreach ($articles AS $article) {
+            foreach ($articles as $article) {
                 $articleNumbers[] = $article->getNumber();
             }
 
@@ -302,7 +306,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         if (!is_null($articles) && count($articles) > 0) {
             $articleNumbers = array();
 
-            foreach ($articles AS $article) {
+            foreach ($articles as $article) {
                 $articleNumbers[] = $article->getNumber();
             }
 
@@ -334,7 +338,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->andWhere('a.workflowStatus = :status')
             ->setParameters(array(
                 'user' => $user->getId(),
-                'status' => Article::STATUS_PUBLISHED
+                'status' => Article::STATUS_PUBLISHED,
             ));
 
         $count = $qb->getQuery()->getSingleScalarResult();
