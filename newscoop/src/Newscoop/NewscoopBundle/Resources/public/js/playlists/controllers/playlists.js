@@ -291,33 +291,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     };
 
     /**
-     * Loads more playlist's articles on scroll
-     */
-     $scope.loadArticlesOnScrollDown = function () {
-        if ($scope.playlist.selected) {
-            if (!isEmpty && !isRunning) {
-                isRunning = true;
-                Playlist.getArticlesByListId($scope.playlist.selected, page).$promise
-                .then(function (response) {
-                    if (response.length == 0) {
-                        isEmpty = true;
-                    } else {
-                        page++;
-                        isEmpty = false;
-                        angular.forEach(response, function(value, key) {
-                            if (value.number !== undefined) {
-                                $scope.featuredArticles.push(value);
-                            }
-                        });
-                    }
-
-                    isRunning = false;
-                });
-            }
-        }
-    }
-
-    /**
      * Adds new playlist. Sets default list name to current date.
      */
      $scope.addNewPlaylist = function () {
@@ -416,7 +389,8 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             flashMessage(Translator.trans('List saved'));
             $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
             $scope.playlist.selected.id = Playlist.getListId();
-            if (response !== undefined && response[0].object.articlesModificationTime !== undefined) {
+
+            if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
                 $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
             }
         }, function(response) {

@@ -234,7 +234,7 @@
                                 <input ng-change="updateParentLimit(this)" type="number" name="input" ng-model="playlist.selected.maxItems" min="0" max="99" class="form-control input-sm" id="playlistId">
                                 <span class="error-custom" ng-show="limitForm.input.$error.number">{{ 'Not valid number'|trans}}!</span>
                             {% else %}
-                            	<span style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
+                                <span style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
                             {% endif %}
                             </form>
                             </div>
@@ -242,13 +242,9 @@
                         <div class="context-list-results" >
                             <div style="display: block">
                                 <form>
-                                <div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
+                                    <div id="placeholder-wrapper" {% if editorView == false %}ng-class="{'empty-placeholder': $parent.featuredArticles.length == 0}" {% endif %}>
+                                    <p>{{ 'Drag here to add to list'|trans }}</p>
                                     <ul id="context_list" ng-sortable="sortableConfig">
-                                        {% if editorView == false %}
-                                        <div ng-if="$parent.featuredArticles.length == 0" id="drag-here-to-add-to-list" style="display:block">
-                                            {{ 'Drag here to add to list'|trans }}
-                                        </div>
-                                        {% endif %}
                                         <li class="item" ng-repeat="article in $parent.featuredArticles">
                                             <div class="context-item" {% if editorView %}style="width: 620px"{% endif %} >
                                                 <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
@@ -275,6 +271,17 @@
                                         </div>
                                     </form>
                                 </div>
+                                <!-- alert message start
+                                <div class="limit-alert-wrapper">
+                                    <div class="limit-alert">
+                                        <button type="button" class="close"><span aria-hidden="true">×</span></button>
+                                        <div class="limit-alert-content">Last item of the list has been deleted to add this item to the list. Revert?</div>
+                                        <div class="limit-alert-footer">
+                                            <button type="button" ng-click="" name="revert" class="btn btn-sm btn-primary">Revert</button>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <!-- alert message end -->
                             </div>
                         </div>
                     </div>
