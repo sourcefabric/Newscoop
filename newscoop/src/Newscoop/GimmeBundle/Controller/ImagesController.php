@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -20,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Images controller
@@ -54,7 +52,7 @@ class ImagesController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $images = $paginator->paginate($images, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $images;
@@ -96,7 +94,7 @@ class ImagesController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $images = $paginator->paginate($images, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $images;
@@ -307,9 +305,12 @@ class ImagesController extends FOSRestController
             }
         }
 
-        $form = $this->createForm(new ImageType(), array(), array('image' => $image));
-        $form->handleRequest($request);
+        $form = $this->createForm(new ImageType(), array(), array(
+            'image' => $image,
+            'method' => $request->getMethod(),
+        ));
 
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $file = $form['image']->getData();
             $attributes = $form->getData();
@@ -329,7 +330,7 @@ class ImagesController extends FOSRestController
             return new FOSView\View($image, $statusCode, array(
                 'X-Location' => $this->generateUrl('newscoop_gimme_images_getimage', array(
                     'number' => $image->getId(),
-                ), true))
+                ), true), )
             );
         }
 
