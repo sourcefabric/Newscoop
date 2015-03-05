@@ -104,7 +104,6 @@ class ArticlesControllerSpec extends ObjectBehavior
         $userService->getCurrentUser()->willReturn($user);
         $number = 64;
         $language = "en";
-
     }
 
     public function it_is_initializable()
@@ -115,7 +114,6 @@ class ArticlesControllerSpec extends ObjectBehavior
 
     public function its_lockUnlockArticle_should_lock_article($request, $article, $query, $number, $language, $user, $token, $security)
     {
-        $now = new \DateTime();
         $query->getOneOrNullResult()->willReturn($article);
         $request->getMethod()->willReturn('POST');
         $article->isLocked()->willReturn(false);
@@ -124,7 +122,7 @@ class ArticlesControllerSpec extends ObjectBehavior
         $security->getToken()->willReturn($token);
         $token->getUser()->willReturn($user);
         $article->setLockUser($user)->willReturn(null);
-        $article->setLockTime($now)->willReturn(null);
+        $article->setLockTime(Argument::type('\DateTime'))->willReturn(null);
         $response = $this->lockUnlockArticle($request, $number, $language);
         $response->shouldBeAnInstanceOf('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(200);
@@ -216,8 +214,8 @@ class ArticlesControllerSpec extends ObjectBehavior
             'section' => null,
             'fields' => array(
                 'lead' => 'sample lead',
-                'content' => 'sample content'
-            )
+                'content' => 'sample content',
+            ),
         ));
 
         $articleService->updateArticle(Argument::cetera())->willReturn($article);
