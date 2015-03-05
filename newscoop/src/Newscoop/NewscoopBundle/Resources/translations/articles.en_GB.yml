@@ -192,7 +192,7 @@ Snippet: Snippet
 'List limit': 'List limit'
 articles:
     playlists:
-        alert: null
+        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you decrease the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles, all 20 articles from position 31 to 50 will be deleted from the list.'
     images:
         edit:
             edit_image_metadata: 'Edit image metadata'
