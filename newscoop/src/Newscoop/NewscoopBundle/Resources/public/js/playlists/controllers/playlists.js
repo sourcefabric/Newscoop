@@ -11,7 +11,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     'ngTableParams',
     'modalFactory',
     '$q',
-    '$interval',
     '$timeout',
     function (
         $scope,
@@ -19,7 +18,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         ngTableParams,
         modalFactory,
         $q,
-        $interval,
         $timeout
         ) {
 
@@ -76,9 +74,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             // show alert with revert button
             if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
                 $scope.articleOverLimitIndex = evt.newIndex;
+                $scope.articleOverLimitNumber = number;
                 $scope.showLimitAlert = true;
                 $scope.countDown = 6;
-                countDown(number);
+                countDown();
 
                 return true;
             }
@@ -110,64 +109,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         }
     };
 
-    var isCounting = false;
-    var countDown = function(number){
-       if(isCounting) {
-            return;
-       }
-
-       isCounting = true;
-       (function countEvery() {
-            if (isCounting) {
-                $scope.countDown--;
-                $timeout(countEvery, 1000);
-                if ($scope.countDown === 0) {
-                        // remove one before last article from the featured articles list
-                        // when we drag-drop new article, it will be
-                        // automatically added to the list as a last element, thats why we need to remove
-                        // one before last article
-                        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
-                        articleToRemove._method = "unlink";
-                        _.remove(
-                            $scope.featuredArticles,
-                            {number: articleToRemove.number}
-                        );
-
-                        Playlist.addItemToLogList(articleToRemove);
-
-                        var logList = Playlist.getLogList();
-
-                        // find dropped article's in logList by number and decrease order by 1
-                        // because we removed last article from the list, and we need to put dropped
-                        // article to position of the last one, that was removed
-                        angular.forEach(logList, function(value, key){
-                            if (value.number == number) {
-                                value._order = value._order - 1;
-                            }
-                        });
-
-                        Playlist.setLogList(logList);
-                        // we have to now replace last element with one before last in log list
-                        // so it can be save in API in a proper order, actually we first add a
-                        // new article to the featured articles list and then we unlink the last one.
-                        // We need to do it in a reverse way, so we first unlink, and then add a new one.
-                        var lastElement = logList[logList.length - 1];
-                        var beforeLast = logList[logList.length - 2];
-
-                        logList[logList.length - 1] = beforeLast;
-                        logList[logList.length - 2] = lastElement;
-
-                        Playlist.setLogList(logList);
-                        console.log(Playlist.getLogList());
-
-                        $scope.showLimitAlert = false;
-
-                        isCounting = false;
-                    }
-            }
-        }());
-    }
-
     $scope.tableParams = new ngTableParams({
         //page: 1, // show first page
         count: 10 // count per page
@@ -178,6 +119,83 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.getAllArticles($defer, params);
         }
     });
+
+    // stops, starts counter
+    $scope.isCounting = false;
+
+    /**
+     * This function count seconds after which revert popup will be closed
+     * and removes last article from the playlist if the limit is reached,
+     * inserts new article
+     */
+    var countDown = function(){
+       if($scope.isCounting) {
+            return;
+       }
+
+       $scope.isCounting = true;
+       (function countEvery() {
+            if ($scope.isCounting) {
+                $scope.countDown--;
+                $timeout(countEvery, 1000);
+                if ($scope.countDown === 0) {
+                    removeLastArticle();
+                }
+            }
+        }());
+    }
+
+    /**
+     * It removes last article from the playlist if the limit is reached,
+     * inserts new article. It is called from FeaturedController.
+     */
+    $scope.removeLastInsertNew = function () {
+        removeLastArticle();
+    }
+
+    /**
+     * It removes last article from the playlist if the limit is reached,
+     * inserts new article
+     */
+    var removeLastArticle =  function () {
+        // remove one before last article from the featured articles list
+        // when we drag-drop new article, it will be
+        // automatically added to the list as a last element, thats why we need to remove
+        // one before last article
+        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        articleToRemove._method = "unlink";
+        _.remove(
+            $scope.featuredArticles,
+            {number: articleToRemove.number}
+        );
+
+        Playlist.addItemToLogList(articleToRemove);
+        var logList = Playlist.getLogList();
+
+        // find dropped article's in logList by number and decrease order by 1
+        // because we removed last article from the list, and we need to put dropped
+        // article to position of the last one, that was removed
+        angular.forEach(logList, function(value, key){
+            if (value.number == $scope.articleOverLimitNumber) {
+                value._order = value._order - 1;
+            }
+        });
+
+        Playlist.setLogList(logList);
+        // we have to now replace last element with one before last in log list
+        // so it can be save in API in a proper order, actually we first add a
+        // new article to the featured articles list and then we unlink the last one.
+        // We need to do it in a reverse way, so we first unlink, and then add a new one.
+        var lastElement = logList[logList.length - 1];
+        var beforeLast = logList[logList.length - 2];
+
+        logList[logList.length - 1] = beforeLast;
+        logList[logList.length - 2] = lastElement;
+
+        Playlist.setLogList(logList);
+        $scope.showLimitAlert = false;
+        $scope.isCounting = false;
+    }
 
     /**
      * Checks if list name max length is not exceeded,
