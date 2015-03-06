@@ -437,24 +437,38 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             okText,
             cancelText;
 
-        title = Translator.trans('Info');
-        text = Translator.trans('articles.playlists.alert', {}, 'articles');
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
-
-        if (newLimit && newLimit != 0 && newLimit != oldLimit) {
+        if ($scope.playlist.selected.title !== $scope.formData.title) {
+            title = Translator.trans('Info');
+            text = Translator.trans('articles.playlists.namechanged', {}, 'articles');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
 
+            modal.result.then(function () {
+                showLimitPopupAndSave(newLimit, oldLimit, modal, okText, cancelText);
+
+                return true;
+            });
+        } else {
+            showLimitPopupAndSave(newLimit, oldLimit, modal, okText, cancelText);
+        }
+    };
+
+    var showLimitPopupAndSave = function (newLimit, oldLimit, modal, okText, cancelText) {
+        if (newLimit && newLimit != 0 && newLimit != oldLimit) {
+            var title = Translator.trans('Info');
+            var text = Translator.trans('articles.playlists.alert', {}, 'articles');
+            modal = modalFactory.confirmLight(title, text, okText, cancelText);
             modal.result.then(function () {
                 saveList();
                 $scope.playlist.selected.oldLimit = $scope.playlist.selected.maxItems;
             }, function () {
-              return false;
-          });
+                return false;
+            });
         } else {
             saveList();
         }
-    };
+    }
 
     /**
      * Saves, updates the list and make post actions on promise resolve, such
