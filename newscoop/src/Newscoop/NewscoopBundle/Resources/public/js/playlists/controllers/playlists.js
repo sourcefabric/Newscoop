@@ -11,12 +11,16 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     'ngTableParams',
     'modalFactory',
     '$q',
+    '$interval',
+    '$timeout',
     function (
         $scope,
         Playlist,
         ngTableParams,
         modalFactory,
-        $q
+        $q,
+        $interval,
+        $timeout
         ) {
 
         $scope.isViewing = false;
@@ -30,6 +34,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         // limit var, which is set to false by FeaturedController
         // when provided limit is invalid
         $scope.playlistLimit = true;
+        $scope.showLimitAlert = false;
 
     // array of the articles,
     // that will be removed or added to the list
@@ -68,11 +73,12 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             }
 
             limit = $scope.playlist.selected.maxItems;
+            // show alert with revert button
             if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
-                $scope.featuredArticles.splice(evt.newIndex, 1);
-                flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.'
-                    ), 'error');
+                $scope.articleOverLimitIndex = evt.newIndex;
+                $scope.showLimitAlert = true;
+                $scope.countDown = 6;
+                countDown(number);
 
                 return true;
             }
@@ -80,7 +86,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             isInLogList = _.some(
                 Playlist.getLogList(),
                 {number: number, _method: 'unlink'}
-                );
+            );
 
             if (!isInLogList) {
                 // this check prevents inserting duplicate article
@@ -103,6 +109,64 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             }
         }
     };
+
+    var isCounting = false;
+    var countDown = function(number){
+       if(isCounting) {
+            return;
+       }
+
+       isCounting = true;
+       (function countEvery() {
+            if (isCounting) {
+                $scope.countDown--;
+                $timeout(countEvery, 1000);
+                if ($scope.countDown === 0) {
+                        // remove one before last article from the featured articles list
+                        // when we drag-drop new article, it will be
+                        // automatically added to the list as a last element, thats why we need to remove
+                        // one before last article
+                        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+                        articleToRemove._method = "unlink";
+                        _.remove(
+                            $scope.featuredArticles,
+                            {number: articleToRemove.number}
+                        );
+
+                        Playlist.addItemToLogList(articleToRemove);
+
+                        var logList = Playlist.getLogList();
+
+                        // find dropped article's in logList by number and decrease order by 1
+                        // because we removed last article from the list, and we need to put dropped
+                        // article to position of the last one, that was removed
+                        angular.forEach(logList, function(value, key){
+                            if (value.number == number) {
+                                value._order = value._order - 1;
+                            }
+                        });
+
+                        Playlist.setLogList(logList);
+                        // we have to now replace last element with one before last in log list
+                        // so it can be save in API in a proper order, actually we first add a
+                        // new article to the featured articles list and then we unlink the last one.
+                        // We need to do it in a reverse way, so we first unlink, and then add a new one.
+                        var lastElement = logList[logList.length - 1];
+                        var beforeLast = logList[logList.length - 2];
+
+                        logList[logList.length - 1] = beforeLast;
+                        logList[logList.length - 2] = lastElement;
+
+                        Playlist.setLogList(logList);
+                        console.log(Playlist.getLogList());
+
+                        $scope.showLimitAlert = false;
+
+                        isCounting = false;
+                    }
+            }
+        }());
+    }
 
     $scope.tableParams = new ngTableParams({
         //page: 1, // show first page

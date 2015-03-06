@@ -34,6 +34,13 @@ angular.module('playlistsApp').controller('FeaturedController', [
         }
     };
 
+    $scope.revertAction = function () {
+        if ($scope.$parent.articleOverLimitIndex !== undefined) {
+            $scope.$parent.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
+            $scope.$parent.showLimitAlert = false;
+        }
+    }
+
     /**
      * Deletes single article from the currently loaded playlist
      *

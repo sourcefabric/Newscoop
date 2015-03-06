@@ -34,7 +34,7 @@
 }
 
 .plugin-context-block {
-    height: 565px;
+    height: 600px;
     width: calc(50% - 10px);
     margin: 0;
     background: #f9f9f9;
@@ -82,10 +82,17 @@
 }
 ul#context_list {
     display:block;
-    height: 509px;
+    height: 100%;
     overflow-y:auto;
     overflow-x:hidden;
     padding: 10px 0px 0px 0px;
+}
+div#placeholder-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 div#placeholder-wrapper.empty-placeholder {
     border: 2px #CCCCCC dashed;
@@ -93,7 +100,6 @@ div#placeholder-wrapper.empty-placeholder {
     padding: 20px;
     color: #CCCCCC;
     font-size: 20px;
-    height: 490px;
 }
 div#placeholder-wrapper p {
     display: none;
@@ -250,12 +256,11 @@ div#placeholder-wrapper.empty-placeholder p {
     border: none;
     background: transparent;
     box-shadow: none;
-    height: auto;
+    height: 600px;
     clear: both;
 }
 .context-list-results {
     position: relative;
-    height: auto;
     border: none;
     background: transparent;
     box-shadow: none;
@@ -263,6 +268,7 @@ div#placeholder-wrapper.empty-placeholder p {
     -webkit-box-shadow: none;
     border-top: 1px solid #DDD;
     border-right: 1px solid transparent;
+    height: 512px;
 }
 .smartlist .table {
     background: white;

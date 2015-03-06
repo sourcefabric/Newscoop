@@ -271,16 +271,16 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- alert message start
-                                <div class="limit-alert-wrapper">
+                                <!-- alert message start -->
+                                <div class="limit-alert-wrapper" ng-show="showLimitAlert">
                                     <div class="limit-alert">
                                         <button type="button" class="close"><span aria-hidden="true">×</span></button>
-                                        <div class="limit-alert-content">Last item of the list has been deleted to add this item to the list. Revert?</div>
+                                        <div class="limit-alert-content">{{'Last item of the list has been deleted to add this item to the list. Revert?'|trans}} {[{countDown}]}...</div>
                                         <div class="limit-alert-footer">
-                                            <button type="button" ng-click="" name="revert" class="btn btn-sm btn-primary">Revert</button>
+                                            <button type="button" ng-click="revertAction()" name="revert" class="btn btn-sm btn-primary">{{'Revert'|trans}}</button>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
                                 <!-- alert message end -->
                             </div>
                         </div>
