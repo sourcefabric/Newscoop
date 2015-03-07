@@ -35,6 +35,18 @@ angular.module('playlistsApp').controller('FeaturedController', [
     };
 
     /**
+     * It reverts new article insertion over the playlist's limit
+     */
+    $scope.revertAction = function () {
+        if ($scope.$parent.articleOverLimitIndex !== undefined) {
+            $scope.$parent.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
+            $scope.$parent.showLimitAlert = false;
+            $scope.$parent.isCounting = false;
+            Playlist.removeItemFromLogList($scope.$parent.articleOverLimitNumber, 'link');
+        }
+    }
+
+    /**
      * Deletes single article from the currently loaded playlist
      *
      * @param  {Object} article Article object

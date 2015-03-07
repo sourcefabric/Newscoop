@@ -399,6 +399,15 @@ angular.module('playlistsApp').factory('Playlist', [
         };
 
         /**
+         * Sets log list
+         *
+         * @param {Array} Log list
+         */
+        Playlist.setLogList = function (list) {
+            logList = list;
+        };
+
+        /**
          * Clears log list
          *
          * @return {Array} Log list
