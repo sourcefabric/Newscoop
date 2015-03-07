@@ -33,22 +33,22 @@ topics:
         search: Søg
         filterplaceholder: null
         addroot: 'Tilføj rod emne'
-        topicname: null
+        topicname: 'Emnets navn'
         expandcollapse: null
         changename: 'Omdøb emne'
         for: null
-        addsubtopic: null
-        subtopicname: null
-        addtranslation: null
-        topictranslations: null
+        addsubtopic: 'Tilføj underemne'
+        subtopicname: 'Navn på underemne'
+        addtranslation: 'Tilføj oversættelse'
+        topictranslations: 'Emnets oversættelser'
         choose: Vælg...
         translationstring: null
         tree: null
     title: Emner
     btn:
         hide: Skjul
-        remove: null
-        edit: null
+        remove: 'Fjern emne'
+        edit: 'Rediger emne'
         close: Luk
         add: Tilføj
         save: Gem
@@ -56,7 +56,7 @@ topics:
         removetrans: null
     alerts:
         languagenotfound: null
-        translationadded: null
+        translationadded: 'Oversættelsen blev tilføjet'
         translationexists: null
         beforedelete: null
         wrongparams: null
@@ -67,14 +67,14 @@ topics:
     failedfind: null
     failedfindTranslation: null
     removed: 'Emnet %title% blev slettet'
-    exists: null
-    existsname: null
+    exists: 'Emnet findes allerede'
+    existsname: 'Emnenavnet findes allerede!'
     removedTranslation: 'Emnets oversættelse blev slettet'
     failedremoveTranslation: null
     updated: 'Emnet blev opdateret'
     error: null
-    csrfinvalid: null
+    csrfinvalid: 'Ugyldig CSRF token. Prøv at sende formularen igen.'
     tooshort: 'Emnets navn er for kort!'
     toolong: 'Emnets navn er for langt!'
-    attachtopics: null
+    attachtopics: 'Vedhæft emner'
     attached: null

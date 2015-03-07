@@ -283,5 +283,5 @@ at: på
 published: udgivet
 unpublished: 'træk tilbage'
 nopermissions: 'Du har ikke tilladelser til at tilgå denne ressource.'
-importantmessage: null
-anonymous: null
+importantmessage: 'Vigtig information'
+anonymous: Anonym

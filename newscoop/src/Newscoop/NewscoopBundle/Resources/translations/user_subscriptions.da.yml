@@ -55,7 +55,7 @@ E-Mail: E-Mail
 'Change subscriber information': 'Ret abonnent information'
 'Add new IP address': 'Tilføj ny IP adresse'
 'Add new IP Address': 'Tilføj ny IP adresse'
-'Account Name': null
+'Account Name': Kontonavn
 '%value% must be greater than %min%': '%value% skal være større end %min%'
 '%value% is not a valid IP Address': '%value% er ikke en gyldig IP adresse'
 'Regardless of the language': 'Uanset sprog'

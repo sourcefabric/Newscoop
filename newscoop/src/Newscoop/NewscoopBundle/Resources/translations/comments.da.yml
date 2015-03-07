@@ -100,11 +100,11 @@ Ban: Bloker
 'Acceptance $1 deleted.': 'Godkendelse $1 slettet.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
+        toolong: 'Beskedden er for lang.'
+        added: 'Kommentaren blev tilføjet.'
+        edited: 'Kommentaren blev opdateret.'
         resolved: null
-        deleted: null
+        deleted: 'Kommentaren blev slettet.'
     btn:
         send: Send
         cancel: Annullér
@@ -114,6 +114,6 @@ editorial:
         delete: Slet
         reply: Svar
     label:
-        post: null
-        reply: null
-        nocomments: null
+        post: 'Skriv en ny kommentar'
+        reply: Svar...
+        nocomments: 'Ingen kommentarer endnu.'

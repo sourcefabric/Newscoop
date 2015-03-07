@@ -23,7 +23,7 @@ newscoop.plugins_manager.runcommand: null
 newscoop.plugins_manager.openterminal: null
 newscoop.plugins_manager.installassets: null
 newscoop.plugins_manager.done: null
-newscoop.plugins_manager.close: null
+newscoop.plugins_manager.close: Luk
 newscoop.plugins_manager.update: null
 newscoop.plugins_manager.install: null
 newscoop.plugins_manager.remove: null
