@@ -185,13 +185,15 @@ Comments: Şərhlər
 'No such section.': 'Belə bölmə yoxdur.'
 Characters: İşarələr
 Snippet: null
-'List limit reached! Remove some articles from the list before adding new ones.': null
 'This list is already in a different state than the one in which it was loaded.': null
 'List name should not be longer than 40 chars': null
 'Not valid number': null
 'List limit': null
+'Last item of the list has been deleted to add this item to the list. Revert?': null
+Revert: null
 articles:
     playlists:
+        namechanged: null
         alert: null
     images:
         edit:

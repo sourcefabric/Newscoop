@@ -90,9 +90,9 @@ publications:
     remove:
         cant_be_removed: 'Publikationen er ikke tom, så den kan ikke fjernes.'
         can_be_removed: 'Publikationen er tom og kan fjernes.'
-        left_issues: null
-        left_sections: null
-        left_articles: null
+        left_issues: 'Resterende udgivelser'
+        left_sections: 'Resterende sektioner'
+        left_articles: 'Resterende artikler'
         show_issues: 'vis udgivelser'
         before_removing: 'Publikationen skal være tom før du kan fjerne den.'
         you_sure: 'Vil du fjerne publikationen'
@@ -128,7 +128,7 @@ publications:
             comments_enabled: 'Tillad kommentarer?'
             public_comments_enabled: 'Tillad offentlige (anonyme) kommentarer?'
             comments_article_default_enabled: 'Tillad kommentarer på artikler som standard?'
-            comments_subscribers_moderated: null
+            comments_subscribers_moderated: 'Skal registrerede brugeres kommentarer godkendes?'
             comments_public_moderated: 'Skal offentlige (anonyme) kommentarer godkendes?'
             comments_captcha_enabled: 'Brug captcha?'
             comments_spam_blocking_enabled: null

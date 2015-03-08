@@ -184,14 +184,16 @@ Comments: Kommentarer
 'No such article.': 'Artiklen findes ikke.'
 'No such section.': 'Sektionen findes ikke.'
 Characters: Tegn
-Snippet: null
-'List limit reached! Remove some articles from the list before adding new ones.': null
+Snippet: Uddrag
 'This list is already in a different state than the one in which it was loaded.': null
-'List name should not be longer than 40 chars': null
+'List name should not be longer than 40 chars': 'Listens navn må ikke være længere end 40 tegn'
 'Not valid number': 'Ikke et gyldigt tal'
 'List limit': null
+'Last item of the list has been deleted to add this item to the list. Revert?': null
+Revert: null
 articles:
     playlists:
+        namechanged: null
         alert: null
     images:
         edit:

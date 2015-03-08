@@ -19,17 +19,17 @@ newscoop.plugins_manager.upload.private: 'Upload privat plugin'
 newscoop.plugins_manager.search_for_plugins: 'Søg efter plugins'
 newscoop.plugins_manager.form.package: 'Pakken skal være en zip fil.'
 newscoop.plugins_manager.form.submit: Upload
-newscoop.plugins_manager.runcommand: null
-newscoop.plugins_manager.openterminal: null
+newscoop.plugins_manager.runcommand: 'Kør kommando'
+newscoop.plugins_manager.openterminal: 'Åben terminal og kør kommando'
 newscoop.plugins_manager.installassets: null
-newscoop.plugins_manager.done: null
+newscoop.plugins_manager.done: 'Færdig. Luk dette vindue og opdater siden.'
 newscoop.plugins_manager.close: Luk
-newscoop.plugins_manager.update: null
-newscoop.plugins_manager.install: null
-newscoop.plugins_manager.remove: null
-newscoop.plugins_manager.installed: null
+newscoop.plugins_manager.update: 'Hvordan opdateres denne plugin?'
+newscoop.plugins_manager.install: 'Hvordan installeres denne plugin?'
+newscoop.plugins_manager.remove: 'Hvordan fjernes denne plugin?'
+newscoop.plugins_manager.installed: 'Færdig. Opdater denne side for at se pluginet i listen med installerede plugins.'
 newscoop.plugins_manager.clipboard: null
-newscoop.plugins_manager.downloads: null
+newscoop.plugins_manager.downloads: downloads
 newscoop.plugins_manager.favers: null
 newscoop:
     datatable:
