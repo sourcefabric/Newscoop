@@ -193,7 +193,7 @@ Snippet: Uddrag
 Revert: null
 articles:
     playlists:
-        namechanged: null
+        namechanged: 'Er du sikker på du vil ændre lsitens navn? Navnet bruges muligvis i Newscoop skabeloner for at vise listen på hjemmesiden. Spørg hjemmesidens administrator hvis du er i tvivl.'
         alert: null
     images:
         edit:
