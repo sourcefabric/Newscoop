@@ -67,10 +67,10 @@ class PlaylistsController extends Controller
             throw new EntityNotFoundException();
         }
 
-        return new RedirectResponse($this->createArticleLegacyPreviewParams($article));
+        return new RedirectResponse($this->createArticleLegacyPreviewUrl($article));
     }
 
-    private function createArticleLegacyPreviewParams(Article $article)
+    private function createArticleLegacyPreviewUrl(Article $article)
     {
         $params = array(
             'f_publication_id'      => $article->getPublicationId(),
