@@ -189,11 +189,11 @@ Snippet: Snippet
 'List name should not be longer than 40 chars': 'List name should not be longer than 40 characters'
 'Not valid number': 'Not a valid number'
 'List limit': 'List limit'
-'Last item of the list has been deleted to add this item to the list. Revert?': null
-Revert: null
+'Last item of the list has been deleted to add this item to the list. Revert?': 'Last item of the list has been deleted to add this item to the list. Revert?'
+Revert: Revert
 articles:
     playlists:
-        namechanged: null
+        namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the front end. Please check with your site administrator if you have doubts.'
         alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you decrease the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles, all 20 articles from position 31 to 50 will be deleted from the list.'
     images:
         edit:
