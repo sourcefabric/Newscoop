@@ -13,7 +13,6 @@ use Newscoop\Entity\Article;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Exception\ResourcesConflictException;
 use Doctrine\ORM\Query;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
@@ -21,16 +20,14 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
  */
 class TopicService
 {
-    /** @var EntityManager */
     protected $em;
-
-    /** @var EventDispatcher */
     protected $dispatcher;
 
     /**
-     * @param Doctrine\ORM\EntityManager $em
+     * @param EntityManager   $em
+     * @param EventDispatcher $dispatcher
      */
-    public function __construct(EntityManager $em, EventDispatcher $dispatcher)
+    public function __construct(EntityManager $em, $dispatcher)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
