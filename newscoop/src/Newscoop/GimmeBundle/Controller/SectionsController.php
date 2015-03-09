@@ -42,7 +42,8 @@ class SectionsController extends FOSRestController
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
-
+        $issue = null;
+        $language = null;
         if ($request->query->has('language')) {
             $language = $em->getRepository('Newscoop\Entity\Language')
                 ->findOneByCode($request->query->get('language'));
@@ -52,24 +53,19 @@ class SectionsController extends FOSRestController
             $language = $this->get('newscoop_newscoop.publication_service')->getPublication()->getLanguage();
         }
 
-        $issue = $em->getRepository('Newscoop\Entity\Issue')
-            ->getByPublicationAndNumberAndLanguage(
+        if ($request->query->has('issue')) {
+            $issue = $em->getRepository('Newscoop\Entity\Issue')->getByPublicationAndNumberAndLanguage(
                 $request->query->get('publication', $publication),
                 $request->query->get('issue'),
                 $language
-            )
-            ->getOneOrNullResult();
-
-        if (!$issue & $request->query->has('issue')) {
-            throw new NotFoundHttpException('Issue was not found.');
+            )->getOneOrNullResult();
         }
 
-        $sections = $em->getRepository('Newscoop\Entity\Section')
-            ->getSections(
-                $request->query->get('publication', $publication),
-                $issue,
-                $issue->getLanguage()
-            )->getResult();
+        $sections = $em->getRepository('Newscoop\Entity\Section')->getSections(
+            $request->query->get('publication', $publication),
+            $issue,
+            $issue ? $issue->getLanguage() : $language
+        )->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $sections = $paginator->paginate($sections, array(

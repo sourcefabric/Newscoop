@@ -64,18 +64,23 @@ class IssueRepository extends EntityRepository
         return $query->getQuery();
     }
 
-    public function getByPublicationAndNumberAndLanguage($publication, $number, $language)
+    public function getByPublicationAndNumberAndLanguage($publication, $number = null, $language = null)
     {
-        $issue = $this->createQueryBuilder('i')
-            ->andWhere('i.publication = :publication')
-            ->setParameter('publication', $publication)
-            ->andWhere('i.number = :number')
-            ->setParameter('number', $number)
-            ->andWhere('i.language = :language')
-            ->setParameter('language', $language)
-            ->getQuery();
+        $queryBuilder = $this->createQueryBuilder('i')
+            ->where('i.publication = :publication')
+            ->setParameter('publication', $publication);
 
-        return $issue;
+        if ($number) {
+            $queryBuilder->andWhere('i.number = :number')
+                ->setParameter('number', $number);
+        }
+
+        if ($language) {
+            $queryBuilder->andWhere('i.language = :language')
+                ->setParameter('language', $language);
+        }
+
+        return $queryBuilder->getQuery();
     }
 
     public function getIssuesCountForPublication($publicationId)
