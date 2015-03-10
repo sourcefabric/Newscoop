@@ -69,10 +69,16 @@ $app['upgrade_service'] = $app->share(function () use ($app) {
     return new Services\UpgradeService($app['db'], $app['monolog']);
 });
 
-// set default alias so it can be read by upgrade php scripts
-// (e.g. by the script creating oauth default client)
-if (php_sapi_name() == "cli") {
-    $_SERVER['HTTP_HOST'] = $app['upgrade_service']->getDefaultAlias();
+try {
+    // set default alias so it can be read by upgrade php scripts
+    // (e.g. by the script creating oauth default client)
+    if (php_sapi_name() == "cli") {
+        $_SERVER['HTTP_HOST'] = $app['upgrade_service']->getDefaultAlias();
+    }
+} catch (\Exception $e) {
+    echo $e->getMessage()."\n";
+
+    return;
 }
 
 $app->get('/', function (Request $request) use ($app) {

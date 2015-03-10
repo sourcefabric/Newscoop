@@ -176,6 +176,10 @@ class UpgradeService
 
         $result = $this->connection->fetchAll('SELECT Name FROM Aliases WHERE Id = '.$aliasId);
 
+        if (!$result[0]['Name']) {
+            throw new \Exception('Could not find default alias! Aborting...');
+        }
+
         return $result[0]['Name'];
     }
 }
