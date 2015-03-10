@@ -3,7 +3,6 @@
  * @author   Demin Yin <deminy@deminy.net>
  * @license  MIT license
  */
-
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Buzz\Message\Form\FormUpload;
@@ -159,7 +158,7 @@ class RestContext extends BehatContext
 
     /**
      * @Given /^I\'m autheticated with client "([^"]*)" and secret "([^"]*)"$/
-     * @param string $clientId
+     * @param  string     $clientId
      * @return void
      * @throws \Exception
      */
@@ -176,9 +175,9 @@ class RestContext extends BehatContext
 
     /**
      * @Given /^I\'m logged in as "([^"]*)" with "([^"]*)" with client "([^"]*)" and secret "([^"]*)"$/
-     * @param string $username
-     * @param string $password
-     * @param string $client
+     * @param  string     $username
+     * @param  string     $password
+     * @param  string     $client
      * @return void
      * @throws \Exception
      */
@@ -195,7 +194,7 @@ class RestContext extends BehatContext
 
     /**
      * @Given /^that i have folowing "([^"]*)" data:$/
-     * @param string $clientId
+     * @param  string     $clientId
      * @return void
      * @throws \Exception
      */
@@ -208,7 +207,7 @@ class RestContext extends BehatContext
 
     /**
      * @Given /^that i have "([^"]*)" header with "([^"]*)" value$/
-     * @param string $clientId
+     * @param  string     $clientId
      * @return void
      * @throws \Exception
      */
@@ -298,8 +297,8 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^save "([^"]+)" field under location "([^"]*)"$/
-     * @param string $fieldName
-     * @param string $locationIndex
+     * @param  string         $fieldName
+     * @param  string         $locationIndex
      * @return Step\Then|void
      * @throws Exception
      */
@@ -310,13 +309,13 @@ class RestContext extends BehatContext
         if ($this->responseIsJson) {
             if ($this->associative) {
                 if (!(is_array($this->responseData)) || !array_key_exists($fieldName, $this->responseData)) {
-                    throw new \Exception('Field "' . $fieldName . '" is not set!');
+                    throw new \Exception('Field "'.$fieldName.'" is not set!');
                 }
 
                 $fieldValue = $this->responseData[$fieldName];
             } else {
                 if (!($this->responseData instanceof stdClass) || !property_exists($this->responseData, $name)) {
-                    throw new \Exception('Field "' . $fieldName . '" is not set!');
+                    throw new \Exception('Field "'.$fieldName.'" is not set!');
                 }
 
                 $fieldValue = $this->responseData->$fieldName;
@@ -330,7 +329,7 @@ class RestContext extends BehatContext
 
     /**
      * @When /^I request "([^"]*)"$/
-     * @param string $pageUrl
+     * @param  string     $pageUrl
      * @return void
      * @throws \Exception
      */
@@ -353,7 +352,7 @@ class RestContext extends BehatContext
 
     /**
      * @When /^I submit "([^"]*)" data to "([^"]*)"$/
-     * @param string $pageUrl
+     * @param  string     $pageUrl
      * @return void
      * @throws \Exception
      */
@@ -363,7 +362,7 @@ class RestContext extends BehatContext
         $this->responseIsJson = false;
 
         if ($this->access_token) {
-            $this->headers['Authorization'] = 'Bearer ' . $this->access_token;
+            $this->headers['Authorization'] = 'Bearer '.$this->access_token;
         }
 
         $this->client->submit(
@@ -390,8 +389,8 @@ class RestContext extends BehatContext
     /**
      * This public method is also for other context(s) to process REST API call and inject response into this context.
      *
-     * @param \Buzz\Message\Response $response
-     * @param boolean $asJson Process the response as JSON or not.
+     * @param  \Buzz\Message\Response $response
+     * @param  boolean                $asJson   Process the response as JSON or not.
      * @return void
      */
     public function processResponse(\Buzz\Message\Response $response = null, $asJson = true)
@@ -407,8 +406,8 @@ class RestContext extends BehatContext
      * Process response body. This method may also be used by other context(s) to process REST API call and inject
      * response body into this context by using 2nd parameter $asJson.
      *
-     * @param string $jsonData
-     * @param boolean $asJson
+     * @param  string  $jsonData
+     * @param  boolean $asJson
      * @return void
      */
     protected function processResponseBody($jsonData, $asJson = true)
@@ -419,7 +418,7 @@ class RestContext extends BehatContext
                 $this->responseIsJson          = true;
                 $this->responseDecodeException = null;
             } catch (\Exception $e) {
-                 $this->responseData            = $jsonData;
+                $this->responseData            = $jsonData;
                 $this->responseIsJson          = false;
                 $this->responseDecodeException = $e;
             }
@@ -432,7 +431,7 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^the response is( not)? JSON$/
-     * @param string $notJson
+     * @param  string     $notJson
      * @return void
      * @throws \Exception
      */
@@ -447,19 +446,18 @@ class RestContext extends BehatContext
                     $message .= $this->responseDecodeException->getMessage();
                 }
 
-                throw new \Exception($message . "\n" . $this->response);
+                throw new \Exception($message."\n".$this->response);
             }
         } else {
             if ($this->responseIsJson) {
-                throw new \Exception("Response was JSON\n" . $this->response);
+                throw new \Exception("Response was JSON\n".$this->response);
             }
         }
-
     }
 
     /**
      * @Given /^the response should contain field "([^"]*)"$/
-     * @param string $name
+     * @param  string     $name
      * @return void
      * @throws \Exception
      */
@@ -468,11 +466,11 @@ class RestContext extends BehatContext
         if ($this->responseIsJson) {
             if ($this->associative) {
                 if (!(is_array($this->responseData)) || !array_key_exists($name, $this->responseData)) {
-                    throw new \Exception('Field "' . $name . '" is not set!');
+                    throw new \Exception('Field "'.$name.'" is not set!');
                 }
             } else {
                 if (!($this->responseData instanceof stdClass) || !property_exists($this->responseData, $name)) {
-                    throw new \Exception('Field "' . $name . '" is not set!');
+                    throw new \Exception('Field "'.$name.'" is not set!');
                 }
             }
         } else {
@@ -482,7 +480,7 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^in the response there is no field called "([^"]*)"$/
-     * @param string $name
+     * @param  string     $name
      * @return void
      * @throws \Exception
      */
@@ -491,11 +489,11 @@ class RestContext extends BehatContext
         if ($this->responseIsJson) {
             if ($this->associative) {
                 if (is_array($this->responseData) && array_key_exists($name, $this->responseData)) {
-                    throw new \Exception('Field "' . $name . '" should not be there!');
+                    throw new \Exception('Field "'.$name.'" should not be there!');
                 }
             } else {
                 if (($this->responseData instanceof stdClass) && property_exists($this->responseData, $name)) {
-                    throw new \Exception('Field "' . $name . '" should not be there!');
+                    throw new \Exception('Field "'.$name.'" should not be there!');
                 }
             }
         } else {
@@ -505,8 +503,8 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^field "([^"]+)" in the response should be "([^"]*)"$/
-     * @param string $fieldName
-     * @param string $fieldValue
+     * @param  string     $fieldName
+     * @param  string     $fieldValue
      * @return void
      * @throws \Exception
      */
@@ -553,7 +551,7 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^the response should contain "([^"]*)"$/
-     * @param string $str
+     * @param  string     $str
      * @return void
      * @throws \Exception
      */
@@ -570,9 +568,9 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^field "([^"]+)" in the response should be an? (int|integer) "([^"]*)"$/
-     * @param string $fieldName
-     * @param string $type
-     * @param string $fieldValue
+     * @param  string     $fieldName
+     * @param  string     $type
+     * @param  string     $fieldValue
      * @return void
      * @throws \Exception
      * @todo Need to be better designed.
@@ -596,7 +594,7 @@ class RestContext extends BehatContext
                         // TODO: We didn't check if the value is as expected here.
                         break;
                     default:
-                        throw new \Exception('Unsupported data type: ' . $type);
+                        throw new \Exception('Unsupported data type: '.$type);
                         break;
                 }
             }
@@ -607,7 +605,7 @@ class RestContext extends BehatContext
 
     /**
      * @Then /^the response status code should be (\d+)$/
-     * @param int $httpStatus
+     * @param  int        $httpStatus
      * @return void
      * @throws \Exception
      */
@@ -626,7 +624,7 @@ class RestContext extends BehatContext
 
     /**
      * @Given /^the response should be "([^"]*)"$/
-     * @param string $string
+     * @param  string     $string
      * @return void
      * @throws \Exception
      */
@@ -636,7 +634,7 @@ class RestContext extends BehatContext
 
         if ($string != $data) {
             throw new \Exception(
-                sprintf("Unexpected response.\nExpected response:%s\nActual response:\n%s" . $string, $data)
+                sprintf("Unexpected response.\nExpected response:%s\nActual response:\n%s".$string, $data)
             );
         }
     }
@@ -647,7 +645,7 @@ class RestContext extends BehatContext
      */
     public function echoLastResponse()
     {
-        $this->printDebug($this->client->getLastRequest() . "\n\n" . $this->response . "\n\n" . "access_token: " . $this->access_token);
+        $this->printDebug($this->client->getLastRequest()."\n\n".$this->response."\n\n"."access_token: ".$this->access_token);
     }
 
     /**
@@ -677,7 +675,7 @@ class RestContext extends BehatContext
     /**
      * Decode JSON string.
      *
-     * @param string $string A JSON string.
+     * @param  string     $string A JSON string.
      * @return mixed
      * @throws \Exception
      * @see http://www.php.net/json_last_error
@@ -710,6 +708,6 @@ class RestContext extends BehatContext
                 break;
         }
 
-        throw new \Exception('JSON decoding error: ' . $message);
+        throw new \Exception('JSON decoding error: '.$message);
     }
 }

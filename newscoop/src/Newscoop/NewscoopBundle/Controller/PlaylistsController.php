@@ -10,7 +10,10 @@ namespace Newscoop\NewscoopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Entity\Article;
+use Doctrine\ORM\EntityNotFoundException;
 
 /**
  * Playlists controller.
@@ -47,5 +50,37 @@ class PlaylistsController extends Controller
             'articleNumber' => $articleNumber,
             'language' => $language,
         ));
+    }
+
+    /**
+     * @Route("/admin/playlist/article-preview", options={"expose"=true})
+     */
+    public function articlePreviewAction(Request $request)
+    {
+        $em = $this->get('em');
+        $router = $this->get('router');
+        $number = $request->get('id');
+        $language = $request->get('lang');
+        $article = $em->getRepository('Newscoop\Entity\Article')->getArticle($number, $language)->getOneOrNullResult();
+
+        if (!$article) {
+            throw new EntityNotFoundException();
+        }
+
+        return new RedirectResponse($this->createArticleLegacyPreviewUrl($article));
+    }
+
+    private function createArticleLegacyPreviewUrl(Article $article)
+    {
+        $params = array(
+            'f_publication_id'      => $article->getPublicationId(),
+            'f_issue_number'        => $article->getIssueId(),
+            'f_section_number'      => $article->getSectionId(),
+            'f_article_number'      => $article->getNumber(),
+            'f_language_id'         => $article->getLanguageId(),
+            'f_language_selected'   => $article->getLanguageId(),
+        );
+
+        return "/admin/articles/get.php?".http_build_query($params);
     }
 }

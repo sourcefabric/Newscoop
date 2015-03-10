@@ -7,9 +7,8 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
  */
-
-require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
-require_once WWW_DIR . '/classes/GeoMap.php';
+require_once dirname(__FILE__).'/../BaseList/BaseList.php';
+require_once WWW_DIR.'/classes/GeoMap.php';
 
 /**
  * Article list component
@@ -41,18 +40,18 @@ class ArticleList extends BaseList
     protected $orderBy = array();
 
     /** @var bool */
-    protected static $renderFilters = FALSE;
+    protected static $renderFilters = false;
 
     /** @var bool */
-    protected static $renderActions = FALSE;
+    protected static $renderActions = false;
 
     /** @var string */
-    protected static $lastId = NULL;
+    protected static $lastId = null;
 
     /**
      * @param bool $randomId
      */
-    public function __construct($randomId = FALSE)
+    public function __construct($randomId = false)
     {
         parent::__construct();
 
@@ -69,7 +68,7 @@ class ArticleList extends BaseList
 
         // column titles
         $this->cols = array(
-            'Number' => NULL,
+            'Number' => null,
             'Language' => $translator->trans('Language'),
             'Order' => $translator->trans('Order'),
             'Name' => $translator->trans('Title', array(), 'api'),
@@ -91,7 +90,7 @@ class ArticleList extends BaseList
             'PublishDate' => $translator->trans('Publish Date', array(), 'library'),
             'LastModified' => $translator->trans('Last Modified', array(), 'articles'),
             'Preview' => $translator->trans('Preview'),
-            'Translate' => $translator->trans('Translate')
+            'Translate' => $translator->trans('Translate'),
         );
     }
 
@@ -102,7 +101,7 @@ class ArticleList extends BaseList
      */
     public function setPublication($publication)
     {
-        $this->publication = is_null($publication) ? NULL : (int) $publication;
+        $this->publication = is_null($publication) ? null : (int) $publication;
 
         return $this;
     }
@@ -114,7 +113,7 @@ class ArticleList extends BaseList
      */
     public function setIssue($issue)
     {
-        $this->issue = is_null($issue) ? NULL : (int) $issue;
+        $this->issue = is_null($issue) ? null : (int) $issue;
 
         return $this;
     }
@@ -126,7 +125,7 @@ class ArticleList extends BaseList
      */
     public function setSection($section)
     {
-        $this->section = is_null($section) ? NULL : (int) $section;
+        $this->section = is_null($section) ? null : (int) $section;
 
         return $this;
     }
@@ -210,8 +209,8 @@ class ArticleList extends BaseList
     {
         $this->beforeRender();
 
-        include dirname(__FILE__) . '/filters.php';
-        self::$renderFilters = TRUE;
+        include dirname(__FILE__).'/filters.php';
+        self::$renderFilters = true;
 
         return $this;
     }
@@ -224,8 +223,8 @@ class ArticleList extends BaseList
     {
         $this->beforeRender();
 
-        include dirname(__FILE__) . '/actions.php';
-        self::$renderActions = TRUE;
+        include dirname(__FILE__).'/actions.php';
+        self::$renderActions = true;
 
         return $this;
     }
@@ -238,9 +237,9 @@ class ArticleList extends BaseList
     {
         $this->beforeRender();
 
-        include dirname(__FILE__) . '/table.php';
-        self::$renderTable = TRUE;
-        echo '</div><!-- /#list-' . $this->id . ' -->';
+        include dirname(__FILE__).'/table.php';
+        self::$renderTable = true;
+        echo '</div><!-- /#list-'.$this->id.' -->';
 
         return $this;
     }
@@ -256,11 +255,12 @@ class ArticleList extends BaseList
         $translator = \Zend_Registry::get('container')->getService('translator');
         $editorService = \Zend_Registry::get('container')->getService('newscoop.editor');
         $articleLink = $editorService->getLink($article);
-        $articleLinkParamsTranslate = $articleLinkParams.'&amp;f_action=translate&amp;f_action_workflow=' . $article->getWorkflowStatus()
-        . '&amp;f_article_code=' . $article->getArticleNumber() . '_' . $article->getLanguageId();
-        $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $editorService->getLinkParameters($article);
+        $articleLinkParams = $editorService->getLinkParameters($article);
+        $articleLinkParamsTranslate = $articleLinkParams.'&amp;f_action=translate&amp;f_action_workflow='.$article->getWorkflowStatus()
+        .'&amp;f_article_code='.$article->getArticleNumber().'_'.$article->getLanguageId();
+        $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php'.$editorService->getLinkParameters($article);
         $htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.$translator->trans('Preview').'">'.$translator->trans('Preview').'</a>';
-        $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php' . $articleLinkParamsTranslate;
+        $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php'.$articleLinkParamsTranslate;
         $htmlTranslateLink = '<a href="'.$translateLink.'" target="_blank" title="'.$translator->trans('Translate').'">'.$translator->trans('Translate').'</a>';
 
         $lockInfo = '';
@@ -273,12 +273,12 @@ class ArticleList extends BaseList
                 '$1' => htmlspecialchars($lockUser->getRealName()),
                 '$2' => htmlspecialchars($lockUser->getUserName()),
                 '$3' => $timeDiff['hours'],
-                '$4' => $timeDiff['minutes']), 'articles');
+                '$4' => $timeDiff['minutes'], ), 'articles');
             } else {
                 $lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 minute(s) ago.', array(
                 '$1' => htmlspecialchars($lockUser->getRealName()),
                 '$2' => htmlspecialchars($lockUser->getUserName()),
-                '$3' => $timeDiff['minutes']), 'articles');
+                '$3' => $timeDiff['minutes'], ), 'articles');
             }
             if ($article->getLockedByUser() != $g_user->getUserId()) {
                 $lockHighlight = true;
@@ -324,10 +324,10 @@ class ArticleList extends BaseList
             $article->getLanguageId(),
             $article->getOrder(),
             sprintf('%s <a href="%s" title="%s %s">%s</a>',
-            $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
+            $article->isLocked() ? '<span class="ui-icon ui-icon-locked'.(!$lockHighlight ? ' current-user' : '').'" title="'.$lockInfo.'"></span>' : '',
             $articleLink,
-            $translator->trans('Edit'), htmlspecialchars($article->getName() . " ({$article->getLanguageName()})"),
-            htmlspecialchars($article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : ''))), // /sprintf
+            $translator->trans('Edit'), htmlspecialchars($article->getName()." ({$article->getLanguageName()})"),
+            htmlspecialchars($article->getName().(empty($_REQUEST['language']) ? " ({$language->getCode()})" : ''))), // /sprintf
             htmlspecialchars($article->getSection()->getName()),
             $article->getWebcode(),
             htmlspecialchars($tmpArticleType->getDisplayName()),
@@ -340,13 +340,13 @@ class ArticleList extends BaseList
             $topicsNo,
             $commentsNo,
             (int) $article->getReads(),
-            Geo_Map::GetArticleMapId($article) != NULL ? $translator->trans('Yes') : $translator->trans('No'),
+            Geo_Map::GetArticleMapId($article) != null ? $translator->trans('Yes') : $translator->trans('No'),
             (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
             $article->getCreationDate(),
             $article->getPublishDate(),
             $article->getLastModified(),
             $htmlPreviewLink,
-            $htmlTranslateLink
+            $htmlTranslateLink,
         );
     }
 
@@ -360,17 +360,16 @@ class ArticleList extends BaseList
             $_REQUEST[$arg['name']] = $arg['value'];
         }
 
-        return require_once dirname(__FILE__) . '/do_data.php';
+        return require_once dirname(__FILE__).'/do_data.php';
     }
 
     public function getFilterIssues()
     {
-
         global $ADMIN_DIR, $g_user;
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Publication.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Issue.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Section.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Author.php';
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         foreach ($_REQUEST['args'] as $arg) {
@@ -380,13 +379,13 @@ class ArticleList extends BaseList
         if ($_REQUEST['publication'] > 0) {
             $publication = $_REQUEST['publication'];
         } else {
-            $publication = NULL;
+            $publication = null;
         }
 
         if ($_REQUEST['language'] > 0) {
             $language = $_REQUEST['language'];
         } else {
-            $language = NULL;
+            $language = null;
         }
 
         $newIssues = array();
@@ -402,17 +401,16 @@ class ArticleList extends BaseList
         $returns['menuItemTitle'] = $menuIssueTitle;
 
         return json_encode($returns);
-
     }
 
     public function getFilterSections()
     {
         $translator = \Zend_Registry::get('container')->getService('translator');
         global $ADMIN_DIR, $g_user;
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
-        require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Publication.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Issue.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Section.php';
+        require_once $GLOBALS['g_campsiteDir'].'/classes/Author.php';
 
         foreach ($_REQUEST['args'] as $arg) {
             $_REQUEST[$arg['name']] = $arg['value'];
@@ -421,18 +419,18 @@ class ArticleList extends BaseList
         if ($_REQUEST['publication'] > 0) {
             $publication = $_REQUEST['publication'];
         } else {
-            $publication = NULL;
+            $publication = null;
         }
 
-        $language = NULL;
+        $language = null;
         if ($_REQUEST['issue'] > 0) {
-            $issueArray = explode("_",$_REQUEST['issue']);
+            $issueArray = explode("_", $_REQUEST['issue']);
             $issue = $issueArray[1];
             if (isset($issueArray[2])) {
                 $language = $issueArray[2];
             }
         } else {
-            $issue = NULL;
+            $issue = null;
         }
 
         if ($_REQUEST['language'] > 0) {
@@ -480,7 +478,7 @@ class ArticleList extends BaseList
             $f_target = '';
         }
 
-        return require_once dirname(__FILE__) . '/do_action.php';
+        return require_once dirname(__FILE__).'/do_action.php';
     }
 
     /**
@@ -493,7 +491,7 @@ class ArticleList extends BaseList
     {
         global $ADMIN_DIR;
 
-        return require_once dirname(__FILE__) . '/do_order.php';
+        return require_once dirname(__FILE__).'/do_order.php';
     }
 
     /**
