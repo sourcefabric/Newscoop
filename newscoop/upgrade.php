@@ -33,7 +33,6 @@ require_once __DIR__.'/conf/database_conf.php';
 
 use Newscoop\Installer\Services;
 use Monolog\Logger;
-use Symfony\Component\HttpFoundation\Request;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -81,7 +80,7 @@ try {
     return;
 }
 
-$app->get('/', function (Request $request) use ($app) {
+$app->get('/', function (Silex\Application $app) {
     $oldVersions = $app['upgrade_service']->getDBVersion();
     $response = $app['upgrade_service']->upgradeDatabase($oldVersions);
     $newVersions = $app['upgrade_service']->getDBVersion();
