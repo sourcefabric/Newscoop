@@ -1,2 +1,2 @@
 <?php
-exec(__DIR__.'/../../../../../../application/console oauth:create-client newscoop newscoop.dev newscoop.dev --default', $output, $code);
+exec(__DIR__.'/../../../../../../application/console oauth:create-client newscoop '.$_SERVER['HTTP_HOST'].' '.$_SERVER['HTTP_HOST'].' --default', $output, $code);

@@ -5,8 +5,7 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
-if (!file_exists(__DIR__ . '/vendor') && !file_exists(__DIR__.'/vendor/autoload.php')) {
+if (!file_exists(__DIR__.'/vendor') && !file_exists(__DIR__.'/vendor/autoload.php')) {
     echo "Welcome in Newscoop Upgrade.<br/><br/>";
     echo "Looks like you forget about our vendors. Please install all dependencies with Composer.";
     echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install --no-dev</pre>";
@@ -34,12 +33,13 @@ require_once __DIR__.'/conf/database_conf.php';
 
 use Newscoop\Installer\Services;
 use Monolog\Logger;
+use Symfony\Component\HttpFoundation\Request;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/log/upgrade.log',
     'monolog.level' => Logger::NOTICE,
-    'monolog.name' => 'upgrade'
+    'monolog.name' => 'upgrade',
 ));
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -58,16 +58,24 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'password'  => $Campsite['db']['pass'],
         'port'      => $Campsite['db']['port'],
         'charset'   => 'utf8',
-    )
+    ),
 ));
 
 if (defined('APPLICATION_ENV') && (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev')) {
     $app['debug'] = true;
 }
 
-$app['upgrade_service'] = $app->share(function () use ($app) {return new Services\UpgradeService($app['db'], $app['monolog']);});
+$app['upgrade_service'] = $app->share(function () use ($app) {
+    return new Services\UpgradeService($app['db'], $app['monolog']);
+});
 
-$app->get('/', function (Silex\Application $app) {
+// set default alias so it can be read by upgrade php scripts
+// (e.g. by the script creating oauth default client)
+if (php_sapi_name() == "cli") {
+    $_SERVER['HTTP_HOST'] = $app['upgrade_service']->getDefaultAlias();
+}
+
+$app->get('/', function (Request $request) use ($app) {
     $oldVersions = $app['upgrade_service']->getDBVersion();
     $response = $app['upgrade_service']->upgradeDatabase($oldVersions);
     $newVersions = $app['upgrade_service']->getDBVersion();
@@ -75,7 +83,7 @@ $app->get('/', function (Silex\Application $app) {
     if (php_sapi_name() == "cli") {
         if (is_array($response)) {
             foreach ($response as $key => $error) {
-                echo "Error with query: " . $error . "\n";
+                echo "Error with query: ".$error."\n";
             }
 
             echo "Upgrade process ended up with some errors. \n";
@@ -83,7 +91,7 @@ $app->get('/', function (Silex\Application $app) {
             return false;
         }
 
-        echo "Your Newscoop instance is upgraded from " . $oldVersions['dbInfo'] . " to " . $newVersions['dbInfo'] . " without errors. \n";
+        echo "Your Newscoop instance is upgraded from ".$oldVersions['dbInfo']." to ".$newVersions['dbInfo']." without errors. \n";
 
         return false;
     }
