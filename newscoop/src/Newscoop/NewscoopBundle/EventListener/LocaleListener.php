@@ -77,7 +77,7 @@ class LocaleListener
                 $language = $this->cacheService->fetch($cacheKey);
             } else {
                 $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneBy(array(
-                    'code' => $locale
+                    'code' => $locale,
                 ));
 
                 $this->cacheService->save($cacheKey, $language);
@@ -92,8 +92,9 @@ class LocaleListener
         if ($requestUri !== "/") {
             $requestUri = str_replace("?", "", $requestUri);
             $extractedUri = array_filter(explode("/", $requestUri));
-
-            return $extractedUri[1];
+            if (isset($extractedUri[1])) {
+                return $extractedUri[1];
+            }
         }
     }
 }
