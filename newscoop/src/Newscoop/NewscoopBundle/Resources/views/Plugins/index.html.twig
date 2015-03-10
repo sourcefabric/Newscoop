@@ -265,7 +265,7 @@ li:after {content: none;}
        $('.choosen-plugin-info').html("<div><h3>"+item.name+"</h3><p>"+item.description+"</p><p>{{ 'newscoop.plugins_manager.downloads'|trans}}:<span class=\"badge\">"+item.downloads+"</span>, {{ 'newscoop.plugins_manager.favers'|trans}}: <span class=\"badge\">"+item.favers+"</span></p></div>");
 
         $('span#plugin-command').html('');
-        $('span#plugin-command').append('php application/console install:plugins "' + item.name +'"');
+        $('span#plugin-command').append('php application/console plugins:install "' + item.name +'"');
         $('#instructions').show();
     });
     $('.change-status').change(function(){

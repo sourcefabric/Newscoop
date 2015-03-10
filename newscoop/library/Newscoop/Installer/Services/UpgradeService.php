@@ -5,7 +5,6 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Installer\Services;
 
 use Newscoop\Installer\Services;
@@ -25,7 +24,7 @@ class UpgradeService
      */
     public function __construct($connection, $logger)
     {
-        $this->newscoopDir = __DIR__ . '/../../../..';
+        $this->newscoopDir = __DIR__.'/../../../..';
         $this->connection = $connection;
         $this->logger = $logger;
     }
@@ -48,13 +47,13 @@ class UpgradeService
 
         $dbInfo = $version;
         if (!in_array($roll, array('', '.'))) {
-            $dbInfo .= ', roll ' . $roll;
+            $dbInfo .= ', roll '.$roll;
         }
 
         return array(
             'version' => $version,
             'roll' => $roll,
-            'dbInfo' => $dbInfo
+            'dbInfo' => $dbInfo,
         );
     }
 
@@ -89,7 +88,7 @@ class UpgradeService
         $errorsCount = 0;
         $temp = 0;
         $skipped = array();
-        $sqlVersions = array_map('basename', glob($this->newscoopDir . '/install/Resources/sql/upgrade/[2-9].[0-9]*'));
+        $sqlVersions = array_map('basename', glob($this->newscoopDir.'/install/Resources/sql/upgrade/[2-9].[0-9]*'));
         usort($sqlVersions, array($databaseService, 'versionCompare'));
 
         foreach ($sqlVersions as $index => $db_version) {
@@ -110,28 +109,28 @@ class UpgradeService
                         $db_ver_roll_info .= ", roll $last_db_roll";
                     }
 
-                    $this->logger->addNotice('* Upgrading the database from version '. $db_ver_roll_info .'...');
+                    $this->logger->addNotice('* Upgrading the database from version '.$db_ver_roll_info.'...');
                 }
                 $first = false;
             }
             $output = array();
 
-            $upgrade_base_dir = $this->newscoopDir . "/install/Resources/sql/upgrade/$db_version/";
+            $upgrade_base_dir = $this->newscoopDir."/install/Resources/sql/upgrade/$db_version/";
             $rolls = $databaseService->searchDbRolls($upgrade_base_dir, $cur_old_roll);
 
             // run upgrade scripts
             $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql", "tables-post.sql");
 
             foreach ($rolls as $upgrade_dir_roll => $upgrade_dir_path) {
-                $upgrade_dir = $upgrade_dir_path . DIRECTORY_SEPARATOR;
+                $upgrade_dir = $upgrade_dir_path.DIRECTORY_SEPARATOR;
                 $last_db_roll = $upgrade_dir_roll;
 
                 if ($showRolls || (!$silent)) {
-                    $this->logger->addNotice('* importing database roll '. $last_db_version .' / '. $last_db_roll);
+                    $this->logger->addNotice('* importing database roll '.$last_db_version.' / '.$last_db_roll);
                 }
 
                 foreach ($sql_scripts as $index => $script) {
-                    if (!is_file($upgrade_dir . $script)) {
+                    if (!is_file($upgrade_dir.$script)) {
                         continue;
                     }
 
@@ -147,7 +146,7 @@ class UpgradeService
                 $saveResult = $databaseService->saveDatabaseVersion($this->connection, $last_db_version, $last_db_roll);
 
                 if ($saveResult) {
-                    $this->logger->addNotice('* version is updated to '. $last_db_version .'/'. $last_db_roll);
+                    $this->logger->addNotice('* version is updated to '.$last_db_version.'/'.$last_db_roll);
                 }
             }
         }
@@ -163,5 +162,24 @@ class UpgradeService
         }
 
         return true;
+    }
+
+    /**
+     * Gets default alias for the first publication
+     *
+     * @return string alias
+     */
+    public function getDefaultAlias()
+    {
+        $result = $this->connection->fetchAll('SELECT IdDefaultAlias as aliasId FROM Publications LIMIT 1');
+        $aliasId = $result[0]['aliasId'];
+
+        $result = $this->connection->fetchAll('SELECT Name FROM Aliases WHERE Id = '.$aliasId);
+
+        if (!$result[0]['Name']) {
+            throw new \Exception('Could not find default alias! Aborting...');
+        }
+
+        return $result[0]['Name'];
     }
 }
