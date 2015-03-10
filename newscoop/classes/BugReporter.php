@@ -113,9 +113,9 @@ class BugReporter
     }
 
     /**
-     * Gets PHP version
+     * Gets OS info
      *
-     * @return string php version
+     * @return string OS info
      */
     public function getServerOS()
     {
