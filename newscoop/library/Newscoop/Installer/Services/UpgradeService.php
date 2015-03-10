@@ -171,15 +171,14 @@ class UpgradeService
      */
     public function getDefaultAlias()
     {
-        $result = $this->connection->fetchAll('SELECT IdDefaultAlias as aliasId FROM Publications LIMIT 1');
-        $aliasId = $result[0]['aliasId'];
+        try {
+            $result = $this->connection->fetchAll('SELECT IdDefaultAlias as aliasId FROM Publications LIMIT 1');
+            $aliasId = $result[0]['aliasId'];
+            $result = $this->connection->fetchAll('SELECT Name FROM Aliases WHERE Id = '.$aliasId);
 
-        $result = $this->connection->fetchAll('SELECT Name FROM Aliases WHERE Id = '.$aliasId);
-
-        if (!$result[0]['Name']) {
+            return $result[0]['Name'];
+        } catch (\Exception $e) {
             throw new \Exception('Could not find default alias! Aborting...');
         }
-
-        return $result[0]['Name'];
     }
 }
