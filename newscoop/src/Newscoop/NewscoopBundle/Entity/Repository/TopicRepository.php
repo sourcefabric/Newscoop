@@ -413,8 +413,16 @@ class TopicRepository extends NestedTreeRepository
     /**
      * @see getChildrenQueryBuilder
      */
-    public function childrenWithTranslations($node = null, $locale = null, $direct = false, $sortByField = null, $direction = 'ASC', $includeNode = false)
-    {
+    public function childrenWithTranslations(
+        $node = null,
+        $locale = null,
+        $direct = false,
+        $sortByField = null,
+        $direction = 'ASC',
+        $includeNode = false,
+        $start = null,
+        $limit = null
+    ) {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
 
@@ -480,6 +488,14 @@ class TopicRepository extends NestedTreeRepository
             } else {
                 throw new InvalidArgumentException("Invalid sort options specified: field - {$sortByField}, direction - {$direction}");
             }
+        }
+
+        if ($start) {
+            $qb->setFirstResult($start);
+        }
+
+        if ($limit) {
+            $qb->setMaxResults($limit);
         }
 
         return $this->setTranslatableHint($qb->getQuery(), $locale);

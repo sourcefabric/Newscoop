@@ -62,11 +62,20 @@ if (isset($sendWasAttempted) && $sendWasAttempted) {
 	    <td nowrap>&nbsp;</td>
 	    <td>&nbsp;</td>
 	</tr>
-<?php 
+<?php
+
 } ?>
 <tr>
     <td nowrap><?php echo $translator->trans("Error ID:", array(), 'bug_reporting'); ?></td>
     <td><?php echo $reporter->getId(); ?></td>
+</tr>
+<tr>
+    <td nowrap>PHP <?php echo $translator->trans("Version", array(), 'messages'); ?>:</td>
+    <td><?php echo $reporter->getPHPVersion(); ?></td>
+</tr>
+<tr>
+    <td nowrap>OS:</td>
+    <td><?php echo $reporter->getServerOS(); ?></td>
 </tr>
 <tr>
     <td nowrap><?php echo $translator->trans("Error String:", array(), 'bug_reporting'); ?></td>

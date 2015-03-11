@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -59,7 +58,7 @@ class TopicsController extends Controller
         return $this->render('NewscoopNewscoopBundle:Topics:index.html.twig', array(
             'compactView' => $compactView,
             'articleLanguage' => $language,
-            'articleNumber' => $articleNumber
+            'articleNumber' => $articleNumber,
         ));
     }
 
@@ -74,7 +73,7 @@ class TopicsController extends Controller
             ->getArrayResult();
 
         return new JsonResponse(array(
-            'languages' => $languages
+            'languages' => $languages,
         ));
     }
 
@@ -183,6 +182,7 @@ class TopicsController extends Controller
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
         $topicService = $this->get('newscoop_newscoop.topic_service');
         $translator = $this->get('translator');
+        $cacheService = $this->get('newscoop.cache');
         $node = $this->findOr404($id);
         if (is_array($node)) {
             return new JsonResponse($node, 404);
@@ -205,6 +205,8 @@ class TopicsController extends Controller
             $topicService->reorderRootNodes($rootNodes, $order);
         }
 
+        $cacheService->clearNamespace('topic');
+
         return new JsonResponse(array(
             'status' => true,
             'message' => $translator->trans('topics.alerts.ordersaved', array(), 'topics'),
@@ -219,6 +221,7 @@ class TopicsController extends Controller
     {
         $node = new Topic();
         $translator = $this->get('translator');
+        $cacheService = $this->get('newscoop.cache');
         $form = $this->createForm(new TopicType(), $node);
         $form->handleRequest($request);
         $response = array(
@@ -252,8 +255,10 @@ class TopicsController extends Controller
                 'message' => $translator->trans('topics.added', array(), 'topics'),
                 'topicId' => $node->getId(),
                 'topicTitle' => $node->getTitle(),
-                'locale' => $request->getLocale()
+                'locale' => $request->getLocale(),
             );
+
+            $cacheService->clearNamespace('topic');
         } else {
             $response = array(
                 'status' => false,
@@ -272,6 +277,7 @@ class TopicsController extends Controller
     {
         $em = $this->get('em');
         $translator = $this->get('translator');
+        $cacheService = $this->get('newscoop.cache');
         $form = $this->createForm(new TopicTranslationType());
         $form->handleRequest($request);
         $response = array(
@@ -321,8 +327,10 @@ class TopicsController extends Controller
                 'message' => $translator->trans('topics.alerts.translationadded', array(), 'topics'),
                 'topicTranslationId' => $topicTranslation->getId(),
                 'topicTranslationTitle' => $topicTranslation->getContent(),
-                'topicTranslationLocale' => $topicTranslation->getLocale()
+                'topicTranslationLocale' => $topicTranslation->getLocale(),
             );
+
+            $cacheService->clearNamespace('topic');
         }
 
         return new JsonResponse($response);
@@ -335,6 +343,7 @@ class TopicsController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $translator = $this->get('translator');
+        $cacheService = $this->get('newscoop.cache');
         $em = $this->get('em');
         $node = $this->findOr404($id);
         if (is_array($node)) {
@@ -349,21 +358,22 @@ class TopicsController extends Controller
 
         $em->remove($node);
         $em->flush();
+        $cacheService->clearNamespace('topic');
 
         $this->get('dispatcher')->dispatch("topic.delete", new GenericEvent($this, array(
             'title' => $node->getTitle(),
             'id' => array(
-                'id' => $id
+                'id' => $id,
             ),
             'diff' => array(
                 'id' => $id,
-                'title' => $node->getTitle()
-            )
+                'title' => $node->getTitle(),
+            ),
         )));
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => $translator->trans('topics.removed', array('%title%' => $node->getTitle()), 'topics')
+            'message' => $translator->trans('topics.removed', array('%title%' => $node->getTitle()), 'topics'),
         ));
     }
 
@@ -385,7 +395,7 @@ class TopicsController extends Controller
         if ($result[1]) {
             return new JsonResponse(array(
                 'status' => true,
-                'message' => $translator->trans('topics.attached', array('%occurence%' => $result[0]), 'topics')
+                'message' => $translator->trans('topics.attached', array('%occurence%' => $result[0]), 'topics'),
             ));
         }
 
@@ -401,6 +411,7 @@ class TopicsController extends Controller
     public function deleteTranslationAction(Request $request, $id)
     {
         $translator = $this->get('translator');
+        $cacheService = $this->get('newscoop.cache');
         $em = $this->get('em');
         $topicTranslation = $em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')->findOneBy(array(
             'id' => $id,
@@ -409,23 +420,25 @@ class TopicsController extends Controller
         if (!$topicTranslation) {
             return new JsonResponse(array(
                 'status' => false,
-                'message' => $translator->trans('topics.failedfindTranslation', array('%id%' => $id), 'topics')
+                'message' => $translator->trans('topics.failedfindTranslation', array('%id%' => $id), 'topics'),
             ), 404);
         }
 
         if ($topicTranslation->getObject()->getTitle() === $topicTranslation->getContent()) {
             return new JsonResponse(array(
                 'status' => false,
-                'message' => $translator->trans('topics.failedremoveTranslation', array(), 'topics')
+                'message' => $translator->trans('topics.failedremoveTranslation', array(), 'topics'),
             ), 403);
         }
 
         $em->remove($topicTranslation);
         $em->flush();
 
+        $cacheService->clearNamespace('topic');
+
         return new JsonResponse(array(
             'status' => true,
-            'message' => $translator->trans('topics.removedTranslation', array(), 'topics')
+            'message' => $translator->trans('topics.removedTranslation', array(), 'topics'),
         ));
     }
 
@@ -438,6 +451,7 @@ class TopicsController extends Controller
         $em = $this->get('em');
         $translator = $this->get('translator');
         $topicService = $this->get('newscoop_newscoop.topic_service');
+        $cacheService = $this->get('newscoop.cache');
 
         if (!$this->get('form.csrf_provider')->isCsrfTokenValid('default', $request->get('_csrf_token'))) {
             return new JsonResponse(array(
@@ -458,9 +472,9 @@ class TopicsController extends Controller
             $data = $form->getData();
 
             if ($topicService->checkTopicName($locale, $data['title'])) {
-                 return new JsonResponse(array(
+                return new JsonResponse(array(
                     'status' => false,
-                    'message' => $translator->trans('topics.existsname', array(), 'topics')
+                    'message' => $translator->trans('topics.existsname', array(), 'topics'),
                 ));
             }
 
@@ -472,16 +486,17 @@ class TopicsController extends Controller
             }
 
             $em->flush();
+            $cacheService->clearNamespace('topic');
 
             return new JsonResponse(array(
                 'status' => true,
-                'message' => $translator->trans('topics.updated', array(), 'topics')
+                'message' => $translator->trans('topics.updated', array(), 'topics'),
             ));
         }
 
         return new JsonResponse(array(
             'status' => false,
-            'message' => $translator->trans('topics.error', array(), 'topics')
+            'message' => $translator->trans('topics.error', array(), 'topics'),
         ));
     }
 
@@ -508,7 +523,7 @@ class TopicsController extends Controller
         $language = $request->get('language');
         $articleObj = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array(
             'number' => $articleNumber,
-            'language' => $language
+            'language' => $language,
         ));
 
         if (!$articleObj) {
@@ -531,7 +546,7 @@ class TopicsController extends Controller
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => $translator->trans("The topic $1 has been removed from article.", array('$1' => $topicObj->getTitle()), 'article_topics')
+            'message' => $translator->trans("The topic $1 has been removed from article.", array('$1' => $topicObj->getTitle()), 'article_topics'),
         ));
     }
 
@@ -561,7 +576,7 @@ class TopicsController extends Controller
             ->andWhere('l.code = :code')
             ->setParameters(array(
                 'number' => $articleNumber,
-                'code' => $languageCode
+                'code' => $languageCode,
             ));
 
         $articleObj = $qb->getQuery()->getOneOrNullResult();
@@ -588,7 +603,7 @@ class TopicsController extends Controller
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => $translator->trans('topics.alerts.saved', array(), 'topics')
+            'message' => $translator->trans('topics.alerts.saved', array(), 'topics'),
         ));
     }
 

@@ -159,6 +159,7 @@ class EmailService
         $smarty->assign('comment', $comment);
         $smarty->assign('article', new \MetaArticle($article->getLanguageId(), $article->getNumber()));
         $smarty->assign('publication', $uri->getBase());
+        $smarty->assign('site', $uri->getBase());
         $smarty->assign('articleLink', \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueId(), $article->getSectionId(), $article->getNumber()));
 
         $message = $templatesService->fetchTemplate("email_comment-notify.tpl");

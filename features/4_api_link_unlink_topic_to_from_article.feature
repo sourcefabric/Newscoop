@@ -38,12 +38,14 @@ Feature: Testing linking/unlinking topics to/from the articles
 
         Given that I want to link that topic to the article
             And that i have "link" header with "<$$new_topic$$; rel='topic'>" value
+            And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I request "<<new_article>>"
         Then the response status code should be 201
             And the response is JSON
 
         Given that I want to unlink that topic from article
-            And that i have "link" header with "<$$new_topic$$; rel='topic'>" value
+            And that i have "unlink" header with "<$$new_topic$$; rel='topic'>" value
+            And I'm logged in as "testuser" with "testpassword" with client "1_svdg45ew371vtsdgd29fgvwe5v" and secret "h48fgsmv0due4nexjsy40jdf3sswwr"
         When I request "<<new_article>>"
         Then the response status code should be 204
             And the response is JSON
