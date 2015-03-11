@@ -268,8 +268,7 @@ class ArticleIndex extends DatabaseObject
                         $nr_new++;
                     }
 
-                    if (!self::BatchAddArticleWord($articleWordsBatch, $article,
-                    $kwd_id, $wordInsertQueries)) {
+                    if (!self::BatchAddArticleWord($articleWordsBatch, $article, $kwd_id, $wordInsertQueries)) {
                         throw new Exception('Error adding article to index');
                     }
                 }
@@ -305,7 +304,6 @@ class ArticleIndex extends DatabaseObject
         }
 
         flock($lockFile, LOCK_UN); // release the lock
-
         $totalTime = microtime(true) - $startTime;
         $articleTime = $nr_art > 0 ? $totalTime / $nr_art : 0;
 
@@ -313,7 +311,6 @@ class ArticleIndex extends DatabaseObject
         'total articles' => $total_art, 'total time' => $totalTime, 'article time' => $articleTime,
         'word cache hits' => $word_cache_hits, 'word insert queries' => $wordInsertQueries, );
     } // fn RunIndexer
-
 
     private static function BatchAddArticleWord(array &$p_batch, array $p_article,
     $p_keywordId, &$p_queries, $p_force = false)
