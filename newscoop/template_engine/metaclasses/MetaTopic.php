@@ -6,7 +6,7 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-use MetaDbObject;
+require_once __DIR__.'/MetaDbObject.php';
 
 /**
  * Meta topic class
