@@ -1,19 +1,16 @@
 <?php
 
-require_once $newscoopDir.'/conf/database_conf.php';
-$loader = require_once $newscoopDir.'vendor/autoload.php';
+$newscoopDir = realpath(dirname(__FILE__).'/../../../../../../').'/';
+$upgradeErrors = array();
 
-// mainly needed to load @Gedmo annotations, but also load other annotations
-\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+require $newscoopDir.'conf/database_conf.php';
+require_once $newscoopDir.'vendor/autoload.php';
 
 use Monolog\Logger;
 use Newscoop\NewscoopBundle\Entity\Topic;
 use Newscoop\NewscoopBundle\Entity\TopicTranslation;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use Newscoop\Exception\ResourcesConflictException;
-
-$newscoopDir = realpath(dirname(__FILE__).'/../../../../../../').'/';
-$upgradeErrors = array();
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -114,7 +111,7 @@ try {
                 continue;
             }
 
-                //create root Topic object
+            //create root Topic object
             $topic = new Topic();
             $topic->setId($topicDetails[0]['id']);
             $topic->setTitle($topicDetails[0]['name']);
@@ -122,9 +119,8 @@ try {
 
             try {
                 $app['topics_service']->saveNewTopic($topic, $locale, true);
-
-                    // loop for each translations and add not added translations
-                    // if topic has more translations
+                // loop for each translations and add not added translations
+                // if topic has more translations
                 if (count($topicDetails) > 1) {
                     unset($topicDetails[0]);
                     foreach ($topicDetails as $key => $translation) {
@@ -177,8 +173,20 @@ try {
         }
     }
 } catch (\Exception $e) {
-    $logger->addError($e->getMessage());
+    $msg = $e->getMessage();
+    $logger->addError($msg);
     $upgradeErrors[] = $msg;
+}
+
+if (count($upgradeErrors) > 0) {
+    $msg = "Script which converts topics to a new format, failed. \n"
+    ."You can execute this script manually via CLI with root permissions, e.g.: \n"
+    ."sudo php ${newscoopDir}install/Resources/sql/upgrade/4.4.x/2015.03.11/topics.php \n"
+    ."You could also check 'log/upgrade.log' file for more details.";
+    $logger->addError($msg);
+    array_splice($upgradeErrors, 0, 0, array($msg));
+
+    return;
 }
 
 try {
@@ -186,17 +194,8 @@ try {
     $stmt = $connection->prepare("DROP TABLE Topics; DROP TABLE TopicNames; DROP TABLE TopicFields;");
     $stmt->execute();
 } catch (\Exception $e) {
-    $msg = "Script could not drop not used tables. \n"
+    $msg = "Script could not drop old topics tables. \n"
     ."You can execute SQL command manually in your database: \n"
     ."DROP TABLE Topics; DROP TABLE TopicNames; DROP TABLE TopicFields;";
     $logger->addError($msg);
-}
-
-if (count($upgradeErrors) > 0) {
-    $msg = "Script which converts topics to a new format, failed. This is "
-    ."most likely caused by timeout. \n"
-    ."You can execute this script manually via CLI with root permissions, e.g.: \n"
-    ."sudo php ${newscoopDir}install/Resources/sql/upgrade/4.4.x/2015.03.11/topics.php";
-    $logger->addError($msg);
-    array_splice($upgradeErrors, 0, 0, array($msg));
 }
