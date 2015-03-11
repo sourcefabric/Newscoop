@@ -19,10 +19,24 @@ Quick links to our resources are:
 ## Installation
 
 The recommended way to install Newscoop is [through composer](http://getcomposer.org).
+
+**Using Composer**
+
 Just run the composer:
     
     curl -s https://getcomposer.org/installer | php
     php composer.phar create-project sourcefabric/newscoop path/to/install dev-master
+
+**Using console command**
+
+	php application/console newscoop:install --fix --database_name newscoop --database_user root --database_password password
+
+Default Admin Panel account is `admin` with password `password`.
+
+For more details run:
+
+	php application/console newscoop:install --help
+
 
 ## REST API documentation
 
