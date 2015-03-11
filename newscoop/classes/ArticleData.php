@@ -6,18 +6,19 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+require_once $GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php';
+require_once $GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php';
+require_once $GLOBALS['g_campsiteDir'].'/classes/ArticleType.php';
 
 /**
  * @package Campsite
  */
-class ArticleData extends DatabaseObject {
+class ArticleData extends DatabaseObject
+{
     var $m_columnNames = array('NrArticle', 'IdLanguage');
     var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
-    var $m_dbTableName;
-    var $m_articleTypeName;
+    public $m_dbTableName;
+    public $m_articleTypeName;
     private $m_articleTypeObject = null;
 
     /**
@@ -26,8 +27,8 @@ class ArticleData extends DatabaseObject {
      * ways.
      *
      * @param string $p_articleType
-     * @param int $p_articleNumber
-     * @param int $p_languageId
+     * @param int    $p_articleNumber
+     * @param int    $p_languageId
      */
     public function ArticleData($p_articleType, $p_articleNumber, $p_languageId)
     {
@@ -53,9 +54,9 @@ class ArticleData extends DatabaseObject {
     public function getFieldValue($p_property, $p_forceFetchFromDatabase = false)
     {
         $dbColumnName = 'F'.$p_property;
+
         return parent::getProperty($dbColumnName, $p_forceFetchFromDatabase);
     }
-
 
     /**
      * Gets the translation for a given language; default language is the
@@ -75,9 +76,11 @@ class ArticleData extends DatabaseObject {
         }
         $aObj = new ArticleType($this->m_articleTypeName);
         $translations = $aObj->getTranslations();
-        if (!isset($translations[$lang])) return substr($aObj->getTableName(), 1);
-        return $translations[$lang];
+        if (!isset($translations[$lang])) {
+            return substr($aObj->getTableName(), 1);
+        }
 
+        return $translations[$lang];
     } // fn getDisplayName
 
 
@@ -107,7 +110,7 @@ class ArticleData extends DatabaseObject {
             $widthAttr = "(width\s*=\s*\"[^\"]*\")";
             $heightAttr = "(height\s*=\s*\"[^\"]*\")";
             $otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
-            $pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$widthAttr|$heightAttr|$otherAttr)\s*)*\/>/i";
+            $pattern = "/<\s*img\s*$idAttr\s*(($srcAttr|$altAttr|$subAttr|$alignAttr|$widthAttr|$heightAttr|$otherAttr)\s*)*\/>/i";
             $p_value = preg_replace_callback($pattern, array($this, "transformImageTags"), $text);
 
             // Replace snippets div holder with snippets tag
@@ -118,17 +121,18 @@ class ArticleData extends DatabaseObject {
         }
         if ($articleField->getType() == ArticleTypeField::TYPE_SWITCH) {
             if (is_string($p_value)) {
-                return parent::setProperty($p_dbColumnName, (int)($p_value == 'on'), $p_commit);
-            } else if (is_int($p_value)) {
+                return parent::setProperty($p_dbColumnName, (int) ($p_value == 'on'), $p_commit);
+            } elseif (is_int($p_value)) {
                 return parent::setProperty($p_dbColumnName, $p_value, $p_commit);
             }
         }
+
         return parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
     }
 
     /**
      * Copy the row in the database.
-     * @param int $p_destArticleNumber
+     * @param  int  $p_destArticleNumber
      * @return void
      */
     public function copy($p_destArticleNumber)
@@ -148,12 +152,12 @@ class ArticleData extends DatabaseObject {
 
 
     /**
-    * Return an array of ArticleTypeField objects.
-    *
-    * @param p_showAll boolean
-    *
-    * @return array
-    */
+     * Return an array of ArticleTypeField objects.
+     *
+     * @param p_showAll boolean
+     *
+     * @return array
+     */
     public function getUserDefinedColumns($p_showAll = false, $p_skipCache = false)
     {
         if (empty($this->m_articleTypeName)) {
@@ -176,8 +180,8 @@ class ArticleData extends DatabaseObject {
 
     /**
      * Copy the row in the database.
-     * @param int $p_destArticleNumber
-     * @param int $p_destLanguageId
+     * @param  int  $p_destArticleNumber
+     * @param  int  $p_destLanguageId
      * @return void
      */
     public function copyToExistingRecord($p_destArticleNumber, $p_destLanguageId = null)
@@ -201,12 +205,14 @@ class ArticleData extends DatabaseObject {
     } // fn copyToExistingRecord
 
 
-    public static function TransformSubheads($match) {
+    public static function TransformSubheads($match)
+    {
         static $spanCounter = -1;
 
         // This matches '<span class="campsite_subhead">'
         if (preg_match("/<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>/i", $match[0])) {
             $spanCounter = 1;
+
             return "<!** Title>";
         }
         // This matches '<span'
@@ -219,8 +225,10 @@ class ArticleData extends DatabaseObject {
         }
         if ($spanCounter == 0) {
             $spanCounter = -1;
+
             return "<!** EndTitle>";
         }
+
         return $match[0];
     } // fn TransformSubheads
 
@@ -232,7 +240,8 @@ class ArticleData extends DatabaseObject {
      * @param array p_match
      * @return string
      */
-    public static function TransformInternalLinks($p_match) {
+    public static function TransformInternalLinks($p_match)
+    {
         static $internalLinkCounter = 0;
         static $internalLinkStartTag = 0;
 
@@ -259,6 +268,7 @@ class ArticleData extends DatabaseObject {
                     // Replace the HTML tag with a template tag
                     $retval = "<!** EndLink>";
                     $internalLinkStartTag = "";
+
                     return $retval;
                 } else {
                     // The starting link was blank, so we return blank for the
@@ -310,7 +320,8 @@ class ArticleData extends DatabaseObject {
      * @param array p_match
      * @return string
      */
-    public function transformImageTags($p_match) {
+    public function transformImageTags($p_match)
+    {
         array_shift($p_match);
         $attrs = array();
         foreach ($p_match as $attr) {
@@ -320,7 +331,7 @@ class ArticleData extends DatabaseObject {
                 if (isset($attr[1]) && count($attr) > 2) {
                     $attrValue = implode('=', array_slice($attr, 1));
                 } else {
-                   $attrValue = isset($attr[1]) ? $attr[1] : '';
+                    $attrValue = isset($attr[1]) ? $attr[1] : '';
                 }
                 // Strip out the quotes
                 $attrValue = str_replace('"', '', $attrValue);
@@ -364,9 +375,8 @@ class ArticleData extends DatabaseObject {
             $ratioTag = 'ratio="'.$imageRatio.'"';
         }
         $imageTag = "<!** Image $templateId $alignTag $altTag $captionTag $widthTag $heightTag $ratioTag>";
+
         return $imageTag;
     } // fn TransformImageTags
-
 } // class ArticleData
-
-?>
+;
