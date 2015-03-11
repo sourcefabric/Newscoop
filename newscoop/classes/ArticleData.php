@@ -15,8 +15,8 @@ require_once $GLOBALS['g_campsiteDir'].'/classes/ArticleType.php';
  */
 class ArticleData extends DatabaseObject
 {
-    var $m_columnNames = array('NrArticle', 'IdLanguage');
-    var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
+    public $m_columnNames = array('NrArticle', 'IdLanguage');
+    public $m_keyColumnNames = array('NrArticle', 'IdLanguage');
     public $m_dbTableName;
     public $m_articleTypeName;
     private $m_articleTypeObject = null;
