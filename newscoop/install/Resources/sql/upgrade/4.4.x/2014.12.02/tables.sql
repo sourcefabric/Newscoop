@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS `main_topics` (
   `updated` datetime NOT NULL,
   `topicOrder` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_EEAFE2F727ACA70` (`parent_id`)
+  KEY `IDX_EEAFE2F727ACA70` (`parent_id`),
+  CONSTRAINT `FK_EEAFE2F727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `main_topics` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 CREATE TABLE IF NOT EXISTS `topic_translations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -21,5 +22,6 @@ CREATE TABLE IF NOT EXISTS `topic_translations` (
   `content` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `lookup_unique_idx` (`locale`,`object_id`,`field`),
-  KEY `IDX_98B25D13232D562B` (`object_id`)
+  KEY `IDX_98B25D13232D562B` (`object_id`),
+  CONSTRAINT `FK_98B25D13232D562B` FOREIGN KEY (`object_id`) REFERENCES `main_topics` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

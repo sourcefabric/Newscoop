@@ -1964,6 +1964,22 @@ LOCK TABLES `WidgetContext_Widget` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Xnews`
+--
+
+DROP TABLE IF EXISTS `Xnews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Xnews` (
+  `NrArticle` int(11) NOT NULL,
+  `IdLanguage` int(11) NOT NULL,
+  `Flead` mediumblob,
+  `Fcontent` mediumblob,
+  PRIMARY KEY (`NrArticle`,`IdLanguage`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `acl_role`
 --
 
@@ -3356,16 +3372,18 @@ CREATE TABLE Snippets (
 DROP TABLE IF EXISTS `SnippetTemplates`;
 
 CREATE TABLE SnippetTemplates (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Name VARCHAR(255) NOT NULL,
-  Controller VARCHAR(255) NOT NULL,
-  Parameters LONGTEXT NOT NULL,
-  Template LONGTEXT NOT NULL,
-  Favourite TINYINT(1) NOT NULL,
-  IconInactive LONGTEXT NOT NULL,
-  IconActive LONGTEXT NOT NULL,
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Controller` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TemplateCode` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `Favourite` tinyint(1) DEFAULT NULL,
+  `Enabled` tinyint(1) NOT NULL,
+  `IconInactive` longtext COLLATE utf8_unicode_ci,
+  `IconActive` longtext COLLATE utf8_unicode_ci,
+  `Created` datetime NOT NULL,
+  `Modified` datetime NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
 
@@ -3389,7 +3407,9 @@ CREATE TABLE user_oauth_clients (
   PRIMARY KEY(user_id, client_id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `cron_jobs` (
+DROP TABLE IF EXISTS `cron_jobs`;
+
+CREATE TABLE `cron_jobs` (
   `id` int AUTO_INCREMENT NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `command` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -3422,7 +3442,7 @@ CREATE TABLE `community_ticker_event` (
 
 DROP TABLE IF EXISTS `editorial_comments`;
 
-CREATE TABLE IF NOT EXISTS `editorial_comments` (
+CREATE TABLE `editorial_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_article_number` int(11) NOT NULL,
   `fk_language_id` int(11) NOT NULL,
