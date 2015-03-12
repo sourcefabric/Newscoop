@@ -6,7 +6,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -90,7 +89,7 @@ class ArticlesController extends FOSRestController
             }
 
             $authorType = $em->getRepository('Newscoop\Entity\AuthorType')->findOneBy(array(
-                'type' => 'Journalist'
+                'type' => 'Journalist',
             ));
             if (!$authorType) {
                 $authorType = new \Newscoop\Entity\AuthorType('Journalist');
@@ -154,7 +153,7 @@ class ArticlesController extends FOSRestController
         }
 
         $form = $this->createForm(new ArticleType($article->getData(null)), array(), array(
-            'method' => $request->getMethod()
+            'method' => $request->getMethod(),
         ));
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -168,10 +167,10 @@ class ArticlesController extends FOSRestController
             return new FOSView\View($article, 200, array(
                 'X-Location' => $this->generateUrl('newscoop_gimme_articles_getarticle', array(
                     'number' => $article->getId(),
-                ), true))
+                ), true), )
             );
         } else {
-           // TODO add support for global for errors handler
+            // TODO add support for global for errors handler
         }
 
         return new FOSView\View($form, 400);
@@ -218,7 +217,7 @@ class ArticlesController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $articles;
@@ -227,7 +226,7 @@ class ArticlesController extends FOSRestController
     /**
      * Search for articles
      *
-     * Parameter 'query' contains keywords seperated with ",". Example: test,article,keyword3 
+     * Parameter 'query' contains keywords seperated with ",". Example: test,article,keyword3
      *
      * @ApiDoc(
      *     statusCodes={
@@ -270,7 +269,8 @@ class ArticlesController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {}
+        } catch (\Newscoop\NewscoopException $e) {
+        }
 
         $articleSearchCriteria = new ArticleSearchCriteria();
         $articleSearchCriteria->fillFromRequest($request);
@@ -282,7 +282,7 @@ class ArticlesController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $articles;
@@ -327,7 +327,8 @@ class ArticlesController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {}
+        } catch (\Newscoop\NewscoopException $e) {
+        }
 
         $relatedArticles = $relatedArticlesService
             ->getRelatedArticles($article);
@@ -347,7 +348,7 @@ class ArticlesController extends FOSRestController
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $paginator->setUsedRouteParams(array('number' => $number, 'language' => $article->getLanguage()->getCode()));
         $articles = $paginator->paginate($articles, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $articles;
@@ -370,7 +371,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle")
-     * @Route("/articles/{number}/{langauge}.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language") 
+     * @Route("/articles/{number}/{langauge}.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language")
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -809,7 +810,7 @@ class ArticlesController extends FOSRestController
 
                 $links[] = array(
                     'resource' => $resource,
-                    'resourceType' => $resourceType
+                    'resourceType' => $resourceType,
                 );
             }
         }

@@ -1964,6 +1964,22 @@ LOCK TABLES `WidgetContext_Widget` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Xnews`
+--
+
+DROP TABLE IF EXISTS `Xnews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Xnews` (
+  `NrArticle` int(11) NOT NULL,
+  `IdLanguage` int(11) NOT NULL,
+  `Flead` mediumblob,
+  `Fcontent` mediumblob,
+  PRIMARY KEY (`NrArticle`,`IdLanguage`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `acl_role`
 --
 
