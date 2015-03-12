@@ -40,14 +40,14 @@
 class BugReporter
 {
     /**
-     * @param int $p_number The PHP error number.
-     * @param string $p_string The error message.
-     * @param string $p_file The file which encountered the error.
-     * @param int $p_line The line number of the file which encountered the error.
-     * @param string $p_software The name of the software that encountered an error.
-     * @param int $p_version The version of the software that encountered an error.
-     * @param string $p_time The date and time.  If left blank, it is the current date and time.
-     * @param mixed $p_backtrace The stack trace.  This can be an array or string.
+     * @param int    $p_number    The PHP error number.
+     * @param string $p_string    The error message.
+     * @param string $p_file      The file which encountered the error.
+     * @param int    $p_line      The line number of the file which encountered the error.
+     * @param string $p_software  The name of the software that encountered an error.
+     * @param int    $p_version   The version of the software that encountered an error.
+     * @param string $p_time      The date and time.  If left blank, it is the current date and time.
+     * @param mixed  $p_backtrace The stack trace.  This can be an array or string.
      */
     public function __construct($p_number, $p_string, $p_file, $p_line,
                                 $p_software, $p_version, $p_time = "", $p_backtrace = "")
@@ -55,20 +55,24 @@ class BugReporter
         $this->invalidParam = "Invalid parameter value.";
 
         if (!is_string($p_software)) {
-            trigger_error ($this->invalid_param);
+            trigger_error($this->invalid_param);
         }
 
-        if ($p_time == "") $p_time = date("r");
+        if ($p_time == "") {
+            $p_time = date("r");
+        }
 
         if ($p_backtrace == "" || $p_backtrace == array()) {
             $backtrace = debug_backtrace();
 
             // --- We don't need the first 2 lines from the debug_backtrace() ---
-            $newBacktrace = array ();
-            for ($aa=2; $aa< sizeof($backtrace); $aa++) {
+            $newBacktrace = array();
+            for ($aa = 2; $aa< sizeof($backtrace); $aa++) {
                 $newBacktrace[] = $backtrace[$aa];
             }
-            if (sizeof($newBacktrace) > 0) $backtrace = $newBacktrace;
+            if (sizeof($newBacktrace) > 0) {
+                $backtrace = $newBacktrace;
+            }
         } else {
             $backtrace = $p_backtrace;
         }
@@ -79,7 +83,7 @@ class BugReporter
         $this->m_str = $p_string;
         $this->m_file = $p_file;
         $this->m_line = (int) $p_line;
-        $this->m_backtrace = $this->__convertBacktraceArrayToString ($backtrace);
+        $this->m_backtrace = $this->__convertBacktraceArrayToString($backtrace);
         $this->m_time = $p_time;
     } // fn BugReporter
 
@@ -87,7 +91,7 @@ class BugReporter
     /**
      * This changes the developers' default server.
      *
-     * @param string $p_server  The URL of the new server.
+     * @param  string $p_server The URL of the new server.
      * @return void
      */
     public function setServer($p_server)
@@ -98,12 +102,31 @@ class BugReporter
         $this->m_newReport = "$p_server/newreport";
     } // fn setServer
 
+    /**
+     * Gets PHP version
+     *
+     * @return string php version
+     */
+    public function getPHPVersion()
+    {
+        return phpversion();
+    }
+
+    /**
+     * Gets OS info
+     *
+     * @return string OS info
+     */
+    public function getServerOS()
+    {
+        return php_uname();
+    }
 
     /**
      * Returns the current developers' server.
      *
      * @return string
-     *          The current server's URL.
+     *                The current server's URL.
      */
     public function getServer()
     {
@@ -117,12 +140,12 @@ class BugReporter
      *
      * @return void
      */
-    public function setPingStatus ($p_pingingStatus)
+    public function setPingStatus($p_pingingStatus)
     {
         if (!is_bool($p_pingingStatus)) {
-        	trigger_error ($this->invalidParam);
+            trigger_error($this->invalidParam);
         } else {
-        	$this->m_disablePing = !($p_pingingStatus);
+            $this->m_disablePing = !($p_pingingStatus);
         }
     } // fn setPingStatus
 
@@ -140,8 +163,8 @@ class BugReporter
      * Get form token to protect against CSRF attacks.
      *
      * @return mixed
-     *          String The form token
-     *          False If the no token was get.
+     *               String The form token
+     *               False If the no token was get.
      */
     public function getFormToken($p_client)
     {
@@ -162,14 +185,15 @@ class BugReporter
      * Return the name of the error-file, not including the path.
      *
      * @return string
-     *          The name of the file, not including the path.
+     *                The name of the file, not including the path.
      */
     public function getFileWithoutPath()
     {
-        if (preg_match ("/\/$/", $this->m_file)) {
-            trigger_error ($this->invalidParam);
+        if (preg_match("/\/$/", $this->m_file)) {
+            trigger_error($this->invalidParam);
         }
-        return preg_replace ("/.*\/([^\/]*)/", "$1", $this->m_file);
+
+        return preg_replace("/.*\/([^\/]*)/", "$1", $this->m_file);
     } // fn getFileWithoutPath
 
 
@@ -180,10 +204,11 @@ class BugReporter
      */
     public function getId()
     {
-        $id = "$this->m_num:$this->m_software:$this->m_version:" .
-            $this->getFileWithoutPath() . ":$this->m_line";
+        $id = "$this->m_num:$this->m_software:$this->m_version:".
+            $this->getFileWithoutPath().":$this->m_line";
 
-        $id = preg_replace ('/"/', "'", $id);
+        $id = preg_replace('/"/', "'", $id);
+
         return $id;
     } // fn getId
 
@@ -284,8 +309,9 @@ class BugReporter
     public function getEmail()
     {
         if (!isset($this->m_email)) {
-        	$this->m_email = "";
+            $this->m_email = "";
         }
+
         return $this->m_email;
     } // fn getEmail
 
@@ -298,8 +324,9 @@ class BugReporter
     public function getDescription()
     {
         if (!isset($this->m_description)) {
-        	$this->m_description = "";
+            $this->m_description = "";
         }
+
         return $this->m_description;
     } // fn getDescription
 
@@ -426,36 +453,37 @@ class BugReporter
     /**
      * Convert the backtrace array into a backtrace string.
      *
-     * @param array $p_backtrace array The array to be converted.
+     * @param  array  $p_backtrace array The array to be converted.
      * @return string The array as a string.
      */
     public function __convertBacktraceArrayToString($p_backtrace)
     {
         if (is_string($p_backtrace)) {
             return $p_backtrace;
-        } elseif (is_array ($p_backtrace)) {
+        } elseif (is_array($p_backtrace)) {
             $backtrace = "";
 
-            for ($aa=0; $aa < sizeof($p_backtrace); $aa++) {
+            for ($aa = 0; $aa < sizeof($p_backtrace); $aa++) {
                 $backtraceCurrentLine = "";
 
                 // --- Get the Current the Backtrace line $aa (cbt) ---
                 $cbt = $p_backtrace[$aa];
 
-                $function = isset ($cbt['function']) ? $cbt ['function'] : "";
-                $file = isset ($cbt['file']) ? $cbt ['file'] : "";
-                $line = isset ($cbt['line']) ? $cbt ['line'] : "";
+                $function = isset($cbt['function']) ? $cbt ['function'] : "";
+                $file = isset($cbt['file']) ? $cbt ['file'] : "";
+                $line = isset($cbt['line']) ? $cbt ['line'] : "";
 
-                $backtraceCurrentLine .= $function . "() called at [" . $file . ":" . $line . "]\n";
+                $backtraceCurrentLine .= $function."() called at [".$file.":".$line."]\n";
 
                 if (isset($cbt['class'])) {
-                    $backtraceCurrentLine = $cbt['class'] . "::" . $backtraceCurrentLine;
+                    $backtraceCurrentLine = $cbt['class']."::".$backtraceCurrentLine;
                 }
                 $backtrace .= $backtraceCurrentLine;
             }
 
             return $backtrace;
-        } else trigger_error ($this->invalidParam);
+        } else {
+            trigger_error($this->invalidParam);
+        }
     } // fn __convertBacktraceArrayToString
-
 }

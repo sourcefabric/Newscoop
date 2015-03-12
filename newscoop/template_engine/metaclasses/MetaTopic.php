@@ -1,15 +1,17 @@
 <?php
+
 /**
  * @package Newscoop
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+require_once __DIR__.'/MetaDbObject.php';
 
 /**
  * Meta topic class
  */
-class MetaTopic
+class MetaTopic extends MetaDbObject
 {
     /**
      * Topic
@@ -67,7 +69,7 @@ class MetaTopic
     public function __construct($topicIdOrName = null)
     {
         if (!$topicIdOrName) {
-            return null;
+            return;
         }
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
@@ -89,7 +91,7 @@ class MetaTopic
         }
 
         if (empty($this->topic)) {
-            return null;
+            return;
         }
 
         $this->id = $this->topic['id'];
@@ -127,12 +129,12 @@ class MetaTopic
     protected function getValue()
     {
         if (!isset($this->topic) || empty($this->topic)) {
-            return null;
+            return;
         }
 
         $name = $this->topic['title'];
         if (empty($name)) {
-            return null;
+            return;
         }
 
         return $name.':'.$this->topic['locale'];
@@ -155,7 +157,7 @@ class MetaTopic
             return new MetaTopic($this->topic['parent']['id']);
         }
 
-        return null;
+        return;
     }
 
     public static function GetTypeName()
