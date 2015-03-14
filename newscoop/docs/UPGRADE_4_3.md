@@ -17,13 +17,15 @@ Above steps are required to upgrade Newscoop 4.2.3/4.2.4/4.3.x to 4.3.x.
 
 We also recommend to update all the legacy plugins: `debate`, `poll`, `soundcloud`, `recaptcha`, because they will not be compatible with Newscoop 4.3.x anymore.
 
+## Updating Newscoop legacy plugins
+
 How to do this?: (only when upgrading from 4.2.3/4.2.4 to 4.3.x)
 
 * Make a backup of `newscoop/plugins/` directory.
-* Remove the whole `newscoop/plugins/` content(Linux command: `sudo rm -rf newscoop/plugins/*`).
+* Remove old versions of the legacy plugins: `sudo rm -rf newscoop/plugins/debate newscoop/plugins/poll newscoop/plugins/soundcloud newscoop/plugins/recaptcha`.
 * Download the fixed package of legacy plugins from [here][3].
 * Extract archive and copy it to `newscoop/plugins/` directory.
-* Go to newscoop root folder (`../newscoop/`) and execute `php composer.phar dump-autoload —-optimize`
+* Execute `php composer.phar dump-autoload —-optimize` in Newscoop root folder.
 * Clear the cache folder: `sudo rm -rf cache/*`
 
 ## Restoring backup package from Newscoop version 4.2.3/4.2.4 on 4.3.x
