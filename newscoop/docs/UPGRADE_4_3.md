@@ -19,7 +19,7 @@ We also recommend to update all the legacy plugins: `debate`, `poll`, `soundclou
 
 ## Updating Newscoop legacy plugins
 
-How to do this?: (only when upgrading from 4.2.3/4.2.4 to 4.3.x)
+How to do this?
 
 * Make a backup of `newscoop/plugins/` directory.
 * Remove old versions of the legacy plugins: `sudo rm -rf newscoop/plugins/debate newscoop/plugins/poll newscoop/plugins/soundcloud newscoop/plugins/recaptcha`.
