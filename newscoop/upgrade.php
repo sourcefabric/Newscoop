@@ -68,18 +68,6 @@ $app['upgrade_service'] = $app->share(function () use ($app) {
     return new Services\UpgradeService($app['db'], $app['monolog']);
 });
 
-try {
-    // set default alias so it can be read by upgrade php scripts
-    // (e.g. by the script creating oauth default client)
-    if (php_sapi_name() == "cli") {
-        $_SERVER['HTTP_HOST'] = $app['upgrade_service']->getDefaultAlias();
-    }
-} catch (\Exception $e) {
-    echo $e->getMessage()."\n";
-
-    return;
-}
-
 $app->get('/', function (Silex\Application $app) {
     $oldVersions = $app['upgrade_service']->getDBVersion();
     $response = $app['upgrade_service']->upgradeDatabase($oldVersions);
