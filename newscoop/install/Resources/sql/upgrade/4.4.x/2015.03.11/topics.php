@@ -65,6 +65,13 @@ try {
     $app['orm.em']->getEventManager()->addEventSubscriber($treeListener);
     $app['orm.em']->getEventManager()->addEventSubscriber($translatableListener);
 
+    try {
+        $tablesCount = "SELECT COUNT(*) AS count FROM Topics";
+        $app['db']->fetchAll($tablesCount);
+    } catch (\Exception $e) {
+        return;
+    }
+
     $sqlTopics = "SELECT node.id, (COUNT( parent.id) -1) AS depth
     FROM Topics AS node, Topics AS parent
     WHERE node.node_left
@@ -131,8 +138,8 @@ try {
 
                     $app['orm.em']->flush();
                 }
-            } catch (\ResourcesConflictException $e) {
-                $logger->addInfo('Topic '.$topicDetails[0]['name'].'already exists. Skipping this topic...!\n');
+            } catch (ResourcesConflictException $e) {
+                $logger->addInfo('Topic '.$topicDetails[0]['name'].' already exists. Skipping this topic...!\n');
             }
 
             continue;
@@ -159,7 +166,14 @@ try {
             $topic->setId($topicToInsertDetails[0]['id']);
             $topic->setTitle($topicToInsertDetails[0]['name']);
             $topic->setTranslatableLocale($locale);
-            $app['topics_service']->saveTopicPosition($topic, $params);
+            try {
+                $app['topics_service']->saveTopicPosition($topic, $params);
+            } catch (\Exception $e) {
+                $logger->addInfo('Topic '.$topicToInsertDetails[0]['name'].' already exists. Skipping this topic...!\n');
+
+                continue;
+            }
+
             if (count($topicToInsertDetails) > 1) {
                 unset($topicToInsertDetails[0]);
                 foreach ($topicToInsertDetails as $key => $translation) {

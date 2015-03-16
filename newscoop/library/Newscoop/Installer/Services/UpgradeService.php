@@ -167,18 +167,19 @@ class UpgradeService
     /**
      * Gets default alias for the first publication
      *
-     * @return string alias
+     * @return string|null alias
      */
     public function getDefaultAlias()
     {
-        try {
-            $result = $this->connection->fetchAll('SELECT IdDefaultAlias as aliasId FROM Publications LIMIT 1');
+        $alias = null;
+        $result = $this->connection->fetchAll('SELECT IdDefaultAlias as aliasId FROM Publications LIMIT 1');
+        if ($result && isset($result[0])) {
             $aliasId = $result[0]['aliasId'];
-            $result = $this->connection->fetchAll('SELECT Name FROM Aliases WHERE Id = '.$aliasId);
+            $alias = $this->connection->fetchAll('SELECT Name FROM Aliases WHERE Id = '.$aliasId);
+        }
 
-            return $result[0]['Name'];
-        } catch (\Exception $e) {
-            throw new \Exception('Could not find default alias! Aborting...');
+        if ($alias && isset($alias[0])) {
+            return $alias[0]['Name'];
         }
     }
 }
