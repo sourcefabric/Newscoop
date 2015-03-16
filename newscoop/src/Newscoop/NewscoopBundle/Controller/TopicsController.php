@@ -255,7 +255,7 @@ class TopicsController extends Controller
                 'message' => $translator->trans('topics.added', array(), 'topics'),
                 'topicId' => $node->getId(),
                 'topicTitle' => $node->getTitle(),
-                'locale' => $request->getLocale(),
+                'locale' => $locale,
             );
 
             $cacheService->clearNamespace('topic');
