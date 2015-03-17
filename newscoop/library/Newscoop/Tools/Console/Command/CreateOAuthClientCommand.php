@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
@@ -41,8 +40,6 @@ class CreateOAuthClientCommand extends Console\Command\Command
         $container = $this->getApplication()->getKernel()->getContainer();
         $em = $container->getService('em');
         $clientManager = $container->get('fos_oauth_server.client_manager.default');
-        $clientManager = $container->get('fos_oauth_server.client_manager.default');
-
         $name = $input->getArgument('name');
         $publication = $em->getRepository('\Newscoop\Entity\Aliases')
             ->findOneByName($input->getArgument('publication'))
@@ -73,7 +70,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
         if ($input->getOption('default')) {
             $client->setName($defaultClientName);
             $client->setTrusted(true);
-        } 
+        }
 
         $clientManager->updateClient($client);
     }
