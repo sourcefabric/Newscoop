@@ -51,6 +51,7 @@ try {
         $logger->addError($msg);
     } else {
         $php = escapeshellarg($phpPath);
+        exec('rm -rf '.$newscoopDir.'/cache/');
         $process = new Process("$php $newscoopConsole oauth:create-client newscoop ".$alias." ".$alias." --default");
         $process->run();
         if (!$process->isSuccessful()) {
