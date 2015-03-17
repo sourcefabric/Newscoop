@@ -320,6 +320,8 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
             }
         }
 
+        $resources['ingest'] = array('manage');
+
         $this->resources = $resources;
         $this->access = $access;
 

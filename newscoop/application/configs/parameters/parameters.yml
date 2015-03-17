@@ -110,22 +110,6 @@ parameters:
     email:
         from: "no-reply@domain.com"
         contact: "info@domain.com"
-    ingest:
-        path: ""
-    ingest_publisher:
-        article_type: "newswire"
-        section_other: "20"
-        field:
-            NewsItemIdentifier: "getNewsItemId"
-            NewsProduct: "getProduct"
-            Status: "getStatus"
-            Urgency: "getPriority"
-            HeadLine: "getTitle"
-            NewsLineText: "getCatchLine"
-            DataLead: "getSummary"
-            DataContent: "getContent"
-            AuthorNames: "getAuthors"
-        image_path: ""
     blog:
         role: "6"
         publication: "5"
