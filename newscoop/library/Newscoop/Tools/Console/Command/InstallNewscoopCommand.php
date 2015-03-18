@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
@@ -76,7 +75,7 @@ class InstallNewscoopCommand extends Console\Command\Command
 
             return;
         } elseif (count($missingReq) > 0 && $fixCommonIssues) {
-            $newscoopDir = realpath(__DIR__ . '/../../../../../');
+            $newscoopDir = realpath(__DIR__.'/../../../../../');
             // set chmods for directories
             exec('chmod -R 777 '.$newscoopDir.'/cache/');
             exec('chmod -R 777 '.$newscoopDir.'/log/');
@@ -129,13 +128,13 @@ class InstallNewscoopCommand extends Console\Command\Command
             $databaseService->loadGeoData($connection);
             $databaseService->saveDatabaseConfiguration($connection);
         } else {
-            throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
+            throw new \Exception('There is already a database named '.$connection->getDatabase().'. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
 
         $command = $this->getApplication()->find('cache:clear');
         $arguments = array(
             'command' => 'cache:clear',
-            '--no-warmup' => true
+            '--no-warmup' => true,
         );
 
         $inputCache = new ArrayInput($arguments);
@@ -155,9 +154,11 @@ class InstallNewscoopCommand extends Console\Command\Command
         $finishService->saveInstanceConfig(array(
             'site_title' => $input->getArgument('site_title'),
             'user_email' => $input->getArgument('user_email'),
-            'recheck_user_password' => $input->getArgument('user_password')
+            'recheck_user_password' => $input->getArgument('user_password'),
         ), $connection);
         $output->writeln('<info>Config have been saved successfully.<info>');
+        $finishService->createDefaultOauthClient($input->getArgument('alias'));
+        $output->writeln('<info>Default OAuth client has been created successfully.<info>');
         $output->writeln('<info>Newscoop is installed.<info>');
     }
 }
