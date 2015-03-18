@@ -5,14 +5,12 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\NewscoopBundle\Entity\SystemPreferences;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\ExpressionBuilder;
 
 /**
  * System preferences service
@@ -48,7 +46,7 @@ class SystemPreferencesService
 
         $checkProperty = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')
             ->findOneBy(array(
-                'option' => $property
+                'option' => $property,
         ));
 
         if ($checkProperty) {
@@ -60,7 +58,7 @@ class SystemPreferencesService
                 ->setParameters(array(
                     'value' => $value,
                     'property' => $property,
-                    'lastmodified' => new \DateTime('now')
+                    'lastmodified' => new \DateTime('now'),
                 ))
                 ->getQuery();
             $preference->execute();
@@ -90,7 +88,7 @@ class SystemPreferencesService
         if (!$currentProperty->isEmpty()) {
             return $currentProperty->first()->getValue();
         } else {
-            return null;
+            return;
         }
     }
 
@@ -136,7 +134,7 @@ class SystemPreferencesService
     {
         $property = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')
             ->findOneBy(array(
-                'option' => $varname
+                'option' => $varname,
         ));
 
         if ($property) {
@@ -170,8 +168,8 @@ class SystemPreferencesService
      */
     public function findOneBy($property)
     {
-        return new ArrayCollection(array_filter($this->getAllPreferences(), function($pref) use ($property) {
-            return $pref->option === $property;
+        return new ArrayCollection(array_filter($this->getAllPreferences(), function ($pref) use ($property) {
+            return $pref->getOption() === $property;
         }));
     }
 }

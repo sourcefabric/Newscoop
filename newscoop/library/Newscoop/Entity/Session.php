@@ -4,10 +4,9 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -35,14 +34,15 @@ class Session
     protected $user_id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Request", mappedBy="session_id")
+     * @ORM\OneToMany(targetEntity="Request", mappedBy="session")
      */
     protected $requests;
 
     /**
      * Construct Session object
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->requests = new ArrayCollection();
     }
 
@@ -50,7 +50,8 @@ class Session
      * Get $id
      * @return string
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -58,7 +59,8 @@ class Session
      * Get $start_time
      * @return \DateTime $start_time
      */
-    public function getStartTime() {
+    public function getStartTime()
+    {
         return $this->start_time;
     }
 
@@ -66,7 +68,8 @@ class Session
      * Set $start_time
      * @param \DateTime $startTime
      */
-    public function setStartTime(\DateTime $startTime) {
+    public function setStartTime(\DateTime $startTime)
+    {
         $this->start_time = $startTime;
 
         return $this;
@@ -76,7 +79,8 @@ class Session
      * Get $user_id
      * @return integer $user_id
      */
-    public function getUserId() {
+    public function getUserId()
+    {
         return $this->user_id;
     }
 
@@ -84,7 +88,8 @@ class Session
      * Set $user_id
      * @param integer $userId
      */
-    public function setUserId($userId) {
+    public function setUserId($userId)
+    {
         $this->user_id = $userId;
 
         return $this;
@@ -94,15 +99,17 @@ class Session
      * Get $requests
      * @return ArrayCollection Session requests
      */
-    public function getRequests() {
+    public function getRequests()
+    {
         return $this->requests;
     }
 
     /**
      * Add new request to Session
-     * @param \Newscoop\Entity\Request $request 
+     * @param \Newscoop\Entity\Request $request
      */
-    public function addRequest(\Newscoop\Entity\Request $request) {
+    public function addRequest(\Newscoop\Entity\Request $request)
+    {
         $this->requests[] = $request;
 
         return $this;
