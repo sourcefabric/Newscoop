@@ -6,7 +6,7 @@ class SourcefabricFeed extends FeedWidget
 {
     protected $title = 'Sourcefabric.org News reader';
 
-    protected $url = 'http://www.sourcefabric.org/en/about/rss_news';
+    protected $url = 'http://feeds.feedburner.com/sourcefabric';
 
     /**
      * @setting
