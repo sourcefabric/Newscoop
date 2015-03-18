@@ -101,11 +101,8 @@ class Comment implements DocumentInterface
     protected $article;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
-     *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     *      })
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article", inversedBy="comments")
+     * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
     protected $thread;

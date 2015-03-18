@@ -35,8 +35,7 @@ class PublicationType extends AbstractType
                 'property' => 'name',
                 'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('a')
-                        ->join('a.publication', 'p')
-                        ->where('p.id = :publicationId')
+                        ->where('a.publication = :publicationId')
                         ->setParameter('publicationId', $options['publication_id'])
                         ->orderBy('a.name', 'ASC');
                 },

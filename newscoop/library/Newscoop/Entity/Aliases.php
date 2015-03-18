@@ -31,7 +31,7 @@ class Aliases
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Newscoop\Entity\Publication", mappedBy="defaultAlias")
+     * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var \Newscoop\Entity\Publication
      */
