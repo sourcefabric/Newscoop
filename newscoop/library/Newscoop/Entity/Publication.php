@@ -5,10 +5,9 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -81,7 +80,7 @@ class Publication
     protected $defaultAliasId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Aliases", inversedBy="publication")
+     * @ORM\ManyToOne(targetEntity="Aliases")
      * @ORM\JoinColumn(name="IdDefaultAlias", referencedColumnName="Id")
      */
     protected $defaultAlias;
@@ -208,7 +207,7 @@ class Publication
     /**
      * Add issue
      *
-     * @param Newscoop\Entity\Issue $issue
+     * @param  Newscoop\Entity\Issue $issue
      * @return void
      */
     public function addIssue(Issue $issue)
@@ -246,7 +245,7 @@ class Publication
     /**
      * Set default language
      *
-     * @param Newscoop\Entity\Language $language
+     * @param  Newscoop\Entity\Language $language
      * @return void
      */
     public function setDefaultLanguage(Language $language)
@@ -300,7 +299,7 @@ class Publication
     /**
      * Set id
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function setId($id)
@@ -321,7 +320,7 @@ class Publication
     /**
      * Set moderator to email address
      *
-     * @param string $p_moderator_to
+     * @param  string      $p_moderator_to
      * @return Publication
      */
     public function setModeratorTo($p_moderator_to)
@@ -342,7 +341,7 @@ class Publication
     /**
      * Set moderator from email address
      *
-     * @param string $p_moderator_from
+     * @param  string      $p_moderator_from
      * @return Publication
      */
     public function setModeratorFrom($p_moderator_from)
@@ -430,7 +429,7 @@ class Publication
         return $this;
     }
 
-	/**
+    /**
      * Getter for defaultAliasId
      *
      * @return mixed
@@ -493,7 +492,7 @@ class Publication
     public function setSeoChoices($data)
     {
         $seo = array();
-        foreach($data as $value) {
+        foreach ($data as $value) {
             $seo[$value] = 'on';
         }
 
@@ -509,7 +508,7 @@ class Publication
     {
         return $this->urlTypeId;
     }
-    
+
     /**
      * Sets the value of urlTypeId.
      *
