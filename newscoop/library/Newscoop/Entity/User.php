@@ -222,7 +222,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     protected $countryCode;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client")
+     * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client", inversedBy="users")
      * @ORM\JoinTable(name="user_oauth_clients",
      *      joinColumns={
      *          @ORM\JoinColumn(name="user_id", referencedColumnName="Id")

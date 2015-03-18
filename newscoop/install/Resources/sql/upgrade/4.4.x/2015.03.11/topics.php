@@ -11,6 +11,7 @@ use Newscoop\NewscoopBundle\Entity\Topic;
 use Newscoop\NewscoopBundle\Entity\TopicTranslation;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use Newscoop\Exception\ResourcesConflictException;
+use Doctrine\ORM\EntityNotFoundException;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -40,13 +41,13 @@ $app->register(new DoctrineOrmServiceProvider(), array(
             array(
                 "type" => "annotation",
                 "namespace" => "Newscoop\Entity",
-                "path" => $newscoopDir."/library/Newscoop/Entity",
+                "path" => $newscoopDir."library/Newscoop/Entity",
                 "use_simple_annotation_reader" => false,
                 ),
             array(
                 "type" => "annotation",
                 "namespace" => "Newscoop\NewscoopBundle\Entity",
-                "path" => $newscoopDir."/src/Newscoop/NewscoopBundle/Entity",
+                "path" => $newscoopDir."src/Newscoop/NewscoopBundle/Entity",
                 "use_simple_annotation_reader" => false,
                 ),
             ),
@@ -109,9 +110,9 @@ try {
     $topicSql = "SELECT `fk_topic_id` as id, `fk_language_id` as languageId, `name` FROM `TopicNames` WHERE `fk_topic_id` = ?";
 
     foreach ($tree as $key => $row) {
-        $topicDetails = $app['db']->fetchAll($topicSql, array($row[0]));
-            // if root
+        // if root
         if (count($row) === 1) {
+            $topicDetails = array();
             $topicDetails = $app['db']->fetchAll($topicSql, array($row[0]));
             // if the tree is broken and have some left, right nodes only without names, skip it
             if (empty($topicDetails)) {
@@ -122,7 +123,8 @@ try {
             $topic = new Topic();
             $topic->setId($topicDetails[0]['id']);
             $topic->setTitle($topicDetails[0]['name']);
-            $locale = $app['orm.em']->getReference("Newscoop\Entity\Language", $topicDetails[0]['languageId'])->getCode();
+            $language = $app['orm.em']->getReference("Newscoop\Entity\Language", $topicDetails[0]['languageId']);
+            $locale = $language->getCode();
 
             try {
                 $app['topics_service']->saveNewTopic($topic, $locale, true);
@@ -138,51 +140,61 @@ try {
 
                     $app['orm.em']->flush();
                 }
-            } catch (ResourcesConflictException $e) {
-                $logger->addInfo('Topic '.$topicDetails[0]['name'].' already exists. Skipping this topic...!\n');
-            }
 
-            continue;
+                continue;
+            } catch (ResourcesConflictException $e) {
+                //topic already exists or language can not be found
+                continue;
+            } catch (EntityNotFoundException $e) {
+                //Language can not be found
+                continue;
+            }
         }
 
             // if child
         if (count($row) > 1) {
-            $topicToInsert = end($row);
-            $topicToInsertDetails = $app['db']->fetchAll($topicSql, array($topicToInsert));
-            $parentTopic = prev($row);
-
-            $parentTopicDetails = $app['db']->fetchAll($topicSql, array($parentTopic));
-            if (empty($parentTopicDetails) || empty($topicToInsertDetails)) {
-                continue;
-            }
-
-            $params = array(
-                'parent' => $parentTopic,
-                'last' => true,
-            );
-
-            $locale = $app['orm.em']->getReference("Newscoop\Entity\Language", $topicToInsertDetails[0]['languageId'])->getCode();
-            $topic = new Topic();
-            $topic->setId($topicToInsertDetails[0]['id']);
-            $topic->setTitle($topicToInsertDetails[0]['name']);
-            $topic->setTranslatableLocale($locale);
             try {
-                $app['topics_service']->saveTopicPosition($topic, $params);
-            } catch (\Exception $e) {
-                $logger->addInfo('Topic '.$topicToInsertDetails[0]['name'].' already exists. Skipping this topic...!\n');
+                $topicToInsert = end($row);
+                $topicToInsertDetails = $app['db']->fetchAll($topicSql, array($topicToInsert));
+                $parentTopic = prev($row);
 
-                continue;
-            }
+                $parentTopicDetails = $app['db']->fetchAll($topicSql, array($parentTopic));
 
-            if (count($topicToInsertDetails) > 1) {
-                unset($topicToInsertDetails[0]);
-                foreach ($topicToInsertDetails as $key => $translation) {
-                    $locale = $app['orm.em']->getReference("Newscoop\Entity\Language", $translation['languageId'])->getCode();
-                    $topicTranslation = new TopicTranslation($locale, 'title', $translation['name']);
-                    $topic->addTranslation($topicTranslation);
+                if (empty($parentTopicDetails) || empty($topicToInsertDetails)) {
+                    continue;
                 }
 
-                $app['orm.em']->flush();
+                $params = array(
+                    'parent' => $parentTopic,
+                    'last' => true,
+                );
+
+                try {
+                    $locale = $app['orm.em']->getReference("Newscoop\Entity\Language", $topicToInsertDetails[0]['languageId'])->getCode();
+                    $topic = new Topic();
+                    $topic->setId($topicToInsertDetails[0]['id']);
+                    $topic->setTitle($topicToInsertDetails[0]['name']);
+                    $topic->setTranslatableLocale($locale);
+
+                    $app['topics_service']->saveTopicPosition($topic, $params);
+                } catch (\Exception $e) {
+                    //topic already exists or language can not be found
+                    continue;
+                }
+
+                if (count($topicToInsertDetails) > 1) {
+                    unset($topicToInsertDetails[0]);
+                    foreach ($topicToInsertDetails as $key => $translation) {
+                        $locale = $app['orm.em']->getReference("Newscoop\Entity\Language", $translation['languageId'])->getCode();
+                        $topicTranslation = new TopicTranslation($locale, 'title', $translation['name']);
+                        $topic->addTranslation($topicTranslation);
+                    }
+
+                    $app['orm.em']->flush();
+                }
+            } catch (EntityNotFoundException $e) {
+                //Language can not be found
+                continue;
             }
         }
     }

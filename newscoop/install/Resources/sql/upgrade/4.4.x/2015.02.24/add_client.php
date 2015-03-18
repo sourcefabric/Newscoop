@@ -7,8 +7,10 @@ require $newscoopDir.'/conf/database_conf.php';
 
 use Monolog\Logger;
 use Newscoop\Installer\Services;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\PhpExecutableFinder;
+use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
+use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+use Newscoop\GimmeBundle\Entity\Client;
+use FOS\OAuthServerBundle\Util\Random;
 
 $upgradeErrors = array();
 $app = new Silex\Application();
@@ -30,18 +32,47 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     ),
 ));
 
+$app->register(new DoctrineOrmServiceProvider(), array(
+    "orm.proxies_dir" => $newscoopDir."/library/Proxy",
+    "orm.em.options" => array(
+        "mappings" => array(
+            array(
+                "type" => "annotation",
+                "namespace" => "Newscoop\Entity",
+                "path" => $newscoopDir."/library/Newscoop/Entity",
+                "use_simple_annotation_reader" => false,
+                ),
+            array(
+                "type" => "annotation",
+                "namespace" => "Newscoop\NewscoopBundle\Entity",
+                "path" => $newscoopDir."/src/Newscoop/NewscoopBundle/Entity",
+                "use_simple_annotation_reader" => false,
+                ),
+            array(
+                "type" => "annotation",
+                "namespace" => "Newscoop\GimmeBundle\Entity",
+                "path" => $newscoopDir."/src/Newscoop/GimmeBundle/Entity",
+                "use_simple_annotation_reader" => false,
+                ),
+            ),
+        ),
+    ));
+
 $app['upgrade_service'] = $app->share(function () use ($app) {
     return new Services\UpgradeService($app['db'], $app['monolog']);
 });
 
-$logger = $app['monolog'];
+$app['preferences'] = $app->share(function () use ($app) {
+    return new SystemPreferencesService($app['orm.em']);
+});
 
-$newscoopConsole = escapeshellarg($newscoopDir.'/application/console');
-$phpFinder = new PhpExecutableFinder();
-$phpPath = $phpFinder->find();
-if (!$phpPath) {
-    throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+$defaultClientName = 'newscoop_'.$app['preferences']->SiteSecretKey;
+$client = $app['orm.em']->getRepository('Newscoop\GimmeBundle\Entity\Client')->findOneByName($defaultClientName);
+if ($client) {
+    return;
 }
+
+$logger = $app['monolog'];
 
 try {
     $alias = $app['upgrade_service']->getDefaultAlias();
@@ -50,12 +81,21 @@ try {
         $upgradeErrors[] = $msg;
         $logger->addError($msg);
     } else {
-        $php = escapeshellarg($phpPath);
-        $process = new Process("$php $newscoopConsole oauth:create-client newscoop ".$alias." ".$alias." --default");
-        $process->run();
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
-        }
+        $publication = $app['orm.em']->getRepository('\Newscoop\Entity\Aliases')
+            ->findOneByName($alias)
+            ->getPublication();
+
+        $conn = $app['orm.em']->getConnection();
+        $stmt = $conn->prepare('INSERT INTO OAuthClient(random_id, redirect_uris, secret, allowed_grant_types, name, IdPublication, trusted)
+        	VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bindValue(1, Random::generateToken());
+        $stmt->bindValue(2, serialize(array($alias)));
+        $stmt->bindValue(3, Random::generateToken());
+        $stmt->bindValue(4, serialize(array('token', 'authorization_code', 'client_credentials', 'password')));
+        $stmt->bindValue(5, $defaultClientName);
+        $stmt->bindValue(6, $publication->getId());
+        $stmt->bindValue(7, true);
+        $stmt->execute();
     }
 } catch (\Exception $e) {
     $msg = $e->getMessage();
