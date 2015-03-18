@@ -65,17 +65,12 @@ class SearchService implements ServiceInterface
         WebcodeFacade $webcoder,
         RenditionService $renditionService,
         LinkService $linkService,
-        EntityManager $em,
-        $config = null
-    )
-    {
+        EntityManager $em
+    ) {
         $this->webcoder = $webcoder;
         $this->renditionService = $renditionService;
         $this->linkService = $linkService;
         $this->em = $em;
-        if ($config !== null &&  is_array($config)) {
-            $this->config = array_merge($this->config, $config);
-        }
     }
 
     /**
@@ -118,7 +113,6 @@ class SearchService implements ServiceInterface
     public function isIndexable(DocumentInterface $article)
     {
         return $article->isPublished()
-            && in_array($article->getType(), $this->config['type'])
             && $article->getLanguageId() > 0
             && $article->getSectionId() > 0;
     }
@@ -131,7 +125,11 @@ class SearchService implements ServiceInterface
      */
     public function getDocument(DocumentInterface $article)
     {
-        $image = $this->renditionService->getArticleRenditionImage($article->getNumber(), $this->config['rendition'], 200, 150);
+        $image = null;
+        $renditions = $this->renditionService->getRenditions();
+        if (is_array($renditions) && count($renditions) > 0) {
+            $image = $this->renditionService->getArticleRenditionImage($article->getNumber(), key($renditions));
+        }
 
         $webcode = $this->webcoder->getArticleWebcode($article);
         if (strpos($webcode, 0, 1) != '+') {

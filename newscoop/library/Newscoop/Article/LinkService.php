@@ -198,7 +198,7 @@ class LinkService
             'number' => $article->getSectionId(),
             'publication' => $article->getPublicationId(),
             'language' => $article->getLanguageId(),
-            'issue' => $issue->getId(),
+            'issue' => $issue ? $issue->getId() : null,
         ));
 
         return $section ? $section->getShortName() : null;
