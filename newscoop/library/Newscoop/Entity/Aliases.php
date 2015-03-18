@@ -4,10 +4,9 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Aliases entity
@@ -32,7 +31,7 @@ class Aliases
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Publication")
+     * @ORM\OneToMany(targetEntity="\Newscoop\Entity\Publication", mappedBy="defaultAlias")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var \Newscoop\Entity\Publication
      */
@@ -94,4 +93,3 @@ class Aliases
         return $this;
     }
 }
-

@@ -5,7 +5,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +14,7 @@ use DateTime;
 
 /**
  * Comment entity
- * 
+ *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
  */
@@ -39,7 +38,7 @@ class Comment implements DocumentInterface
         'p' => array(),
         'br' => array(),
         'strike' => array(),
-        'strong' => array());
+        'strong' => array(), );
 
     /**
      * Constants for status
@@ -103,7 +102,10 @@ class Comment implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
-     * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
+     *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      })
      * @var Newscoop\Entity\Article
      */
     protected $thread;
@@ -236,7 +238,7 @@ class Comment implements DocumentInterface
     /**
      * Set article
      *
-     * @param Newscoop\Entity\Article $article
+     * @param  Newscoop\Entity\Article $article
      * @return void
      */
     public function setArticle(Article $article)
@@ -313,7 +315,7 @@ class Comment implements DocumentInterface
      */
     public function setSubject($subject)
     {
-        $this->subject = (string)$subject;
+        $this->subject = (string) $subject;
 
         return $this;
     }
@@ -337,7 +339,7 @@ class Comment implements DocumentInterface
      */
     public function setMessage($message)
     {
-        $this->message = $this->formatMessage((string)$message);
+        $this->message = $this->formatMessage((string) $message);
 
         return $this;
     }
@@ -644,7 +646,7 @@ class Comment implements DocumentInterface
             return $this->parent->getId();
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -720,14 +722,14 @@ class Comment implements DocumentInterface
         if (isset($this->$key)) {
             return $this->$key;
         } else {
-            return null;
+            return;
         }
     }
 
     /**
      * Method used to format message from comments
      *
-     * @param string $str
+     * @param  string $str
      * @return string
      */
     protected function formatMessage($str)
@@ -766,31 +768,31 @@ class Comment implements DocumentInterface
         $allowedNameTags = array_keys($this->allowedTags);
         for ($i = 0, $counti = count($contentAfter); $i < $counti; $i++) {
             $isClosed = isset($tag[$i]) ? (substr($tag[$i], 0, 1) == '/') : false;
-            if(isset($tag[$i])) {
+            if (isset($tag[$i])) {
                 $tagName = $tag[$i];
-                if(substr($tagName,-1,1) == '/') {
-                   $tagName = substr($tagName, 0, -1);
+                if (substr($tagName, -1, 1) == '/') {
+                    $tagName = substr($tagName, 0, -1);
                 }
             }
             if (isset($tag[$i]) && (in_array($tagName, $allowedNameTags))) {
                 unset($closed[$i]);
-                $good = array_search('/' . $tag[$i], $closed, true);
+                $good = array_search('/'.$tag[$i], $closed, true);
                 if ($good) {
                     unset($closed[$good]);
-                    $composeTag = '<' . $tag[$i] . ' ';
+                    $composeTag = '<'.$tag[$i].' ';
                     if (isset($attrib[$i])) {
                         for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
                             if ($attrib[$i][$j][0] == 'href') {
                             }
                             $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i', '', $attrib[$i][$j][1]);
                             if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
-                                $composeTag .= $attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
+                                $composeTag .= $attrib[$i][$j][0].'="'.$attrib[$i][$j][1].'" ';
                             }
                         }
                     }
-                    $return .= substr($composeTag, 0, -1) . '>' . $contentAfter[$i];
+                    $return .= substr($composeTag, 0, -1).'>'.$contentAfter[$i];
                 } else {
-                    $composeTag = '<' . $tag[$i] . ' ';
+                    $composeTag = '<'.$tag[$i].' ';
                     $title = false;
                     $cite = false;
                     if (isset($attrib[$i])) {
@@ -804,33 +806,33 @@ class Comment implements DocumentInterface
                                 } elseif ($attrib[$i][$j][0] == 'cite') {
                                     $cite = $attrib[$i][$j][1];
                                 } else {
-                                    $composeTag .= $attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
+                                    $composeTag .= $attrib[$i][$j][0].'="'.$attrib[$i][$j][1].'" ';
                                 }
                             }
                         }
                     }
                     // if title is set and is a broken tag use the title like inline text
-                    if( in_array($tagName, $this->allowedEmpty)) {
-                        $return .= substr($composeTag, 0, -1) . '>' . $contentAfter[$i];
-                    }
-                    elseif ($title !== false) {
+                    if (in_array($tagName, $this->allowedEmpty)) {
+                        $return .= substr($composeTag, 0, -1).'>'.$contentAfter[$i];
+                    } elseif ($title !== false) {
                         $return .= substr($composeTag, 0,
-                                          -1) . '>' . $title . '</' . $tag[$i] . '>' . $contentAfter[$i];
+                                          -1).'>'.$title.'</'.$tag[$i].'>'.$contentAfter[$i];
                     } // if cite is set and is a broken tag use the cite like inline text
                     elseif ($cite !== false) {
-                        $return .= substr($composeTag, 0, -1) . '>' . $cite . '</' . $tag[$i] . '>' . $contentAfter[$i];
+                        $return .= substr($composeTag, 0, -1).'>'.$cite.'</'.$tag[$i].'>'.$contentAfter[$i];
                     } // else use the text after
                     else {
-                        $return .= substr($composeTag, 0, -1) . '>' . $contentAfter[$i] . '</' . $tag[$i] . '>';
+                        $return .= substr($composeTag, 0, -1).'>'.$contentAfter[$i].'</'.$tag[$i].'>';
                     }
                 }
             } elseif (isset($tag[$i]) && $isClosed && in_array(substr($tag[$i], 1), $allowedNameTags)) {
                 unset($closed[$i]);
-                $return .= '<' . $tag[$i] . '>' . $contentAfter[$i];
+                $return .= '<'.$tag[$i].'>'.$contentAfter[$i];
             } else {
                 $return .= $contentAfter[$i];
             }
         }
+
         return $return;
     }
 
@@ -871,7 +873,7 @@ class Comment implements DocumentInterface
     /**
      * Set comment source
      *
-     * @param  string $source
+     * @param string $source
      *
      * @return string
      */
