@@ -119,14 +119,14 @@ try {
                 continue;
             }
 
-            //create root Topic object
-            $topic = new Topic();
-            $topic->setId($topicDetails[0]['id']);
-            $topic->setTitle($topicDetails[0]['name']);
-            $language = $app['orm.em']->getReference("Newscoop\Entity\Language", $topicDetails[0]['languageId']);
-            $locale = $language->getCode();
-
             try {
+                //create root Topic object
+                $topic = new Topic();
+                $topic->setId($topicDetails[0]['id']);
+                $topic->setTitle($topicDetails[0]['name']);
+                $language = $app['orm.em']->getReference("Newscoop\Entity\Language", $topicDetails[0]['languageId']);
+                $locale = $language->getCode();
+
                 $app['topics_service']->saveNewTopic($topic, $locale, true);
                 // loop for each translations and add not added translations
                 // if topic has more translations
