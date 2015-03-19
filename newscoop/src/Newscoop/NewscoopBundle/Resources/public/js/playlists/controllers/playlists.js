@@ -366,7 +366,12 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * @param  {Object} list  Playlist
      */
      $scope.setPlaylistInfoOnChange = function (list) {
-        $scope.featuredArticles = Playlist.getArticlesByListId(list);
+        Playlist.getArticlesByListId(list).then(function (data) {
+            $scope.featuredArticles = data.items;
+        }, function(response) {
+            flashMessage(Translator.trans('Could not refresh the list'), 'error');
+        });
+
         Playlist.setListId(list.id);
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
@@ -504,49 +509,12 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     }
 
     /**
-     * Saves, updates the list and make post actions on promise resolve, such
-     * clearing log list, showing/hiding flash messages etc.
-     */
-    var saveList = function () {
-        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
-        $scope.processing = true;
-
-        doSaveAPICalls().then(function (response) {
-            flash.fadeOut();
-            $scope.processing = false;
-            Playlist.clearLogList();
-            flashMessage(Translator.trans('List saved'));
-            $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems});
-            $scope.playlist.selected.id = Playlist.getListId();
-            $scope.page = 2;
-            $scope.isRunning = false;
-            $scope.isEmpty = false;
-
-            if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
-                $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
-            }
-        }, function(response) {
-            if (response.errors[0].code === 409) {
-                flashMessage(Translator.trans(
-                    'This list is already in a different state than the one in which it was loaded.'
-                ), 'error');
-                // automatically refresh playlist
-                $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
-            } else {
-                flashMessage(Translator.trans('Could not save the list'), 'error');
-            }
-            flash.fadeOut();
-            $scope.processing = false;
-        });
-    }
-
-    /**
      * Saves, updates playlist with all articles on server side.
      * It makes batch link or unlink of the articles. It also
      * saves a proper order of the articles. All list's changes are saved
      * by clicking Save button.
      */
-    var doSaveAPICalls = function () {
+    var saveList = function () {
         var deferred,
             listname,
             logList = [],
@@ -565,24 +533,91 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             update = true;
         }
 
-        deferred = $q.defer();
-        list = deferred;
         $scope.playlist.selected.title = listname;
+        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
+        $scope.processing = true;
 
         if (!playlistExists && !update && $scope.playlist.selected.id === undefined) {
-            return Playlist.createPlaylist($scope.playlist.selected);
+            Playlist.createPlaylist($scope.playlist.selected).then(function (response) {
+                $scope.playlist.selected.id = response.id;
+                logList = Playlist.getLogList();
+                if (logList.length == 0) {
+                    afterSave(response);
+                    flash.fadeOut();
+                    return;
+                }
+
+                Playlist.batchUpdate(logList, $scope.playlist.selected).then(function (data) {
+                    afterSave(data);
+                    flash.fadeOut();
+                }, function(response) {
+                    flash.fadeOut();
+                    afterSaveError(response);
+                });
+            }, function(response) {
+                flash.fadeOut();
+                afterSaveError(response);
+            });
+
+            return;
         }
 
         if ($scope.playlist.selected !== undefined) {
-            list = Playlist.updatePlaylist($scope.playlist.selected);
-            deferred.resolve();
+            Playlist.updatePlaylist($scope.playlist.selected).then(function (response) {
+                logList = Playlist.getLogList();
+                if (logList.length == 0) {
+                    afterSave(response);
+                    flash.fadeOut();
+                    return;
+                }
+
+                Playlist.batchUpdate(logList, $scope.playlist.selected).then(function (data) {
+                    afterSave(data);
+                    flash.fadeOut();
+                }, function(response) {
+                    flash.fadeOut();
+                    afterSaveError(response);
+                });
+            }, function(response) {
+                flash.fadeOut();
+                afterSaveError(response);
+            });
+        }
+    }
+
+    var afterSave = function (response) {
+        $scope.processing = false;
+        Playlist.clearLogList();
+        flashMessage(Translator.trans('List saved'));
+        Playlist.getArticlesByListId({id: Playlist.getListId()}).then(function (data) {
+            $scope.featuredArticles = data.items;
+        }, function(response) {
+            flashMessage(Translator.trans('Could not refresh the list'), 'error');
+        });
+
+        $scope.playlist.selected.id = Playlist.getListId();
+
+        if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
+            $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
+        }
+    }
+
+    var afterSaveError = function (response) {
+        if (response.errors[0].code === 409) {
+            flashMessage(Translator.trans(
+                        'This list is already in a different state than the one in which it was loaded.'
+            ), 'error');
+            // automatically refresh playlist
+            Playlist.getArticlesByListId({id: Playlist.getListId()}).then(function (data) {
+                $scope.featuredArticles = data.items;
+                $scope.playlist.selected.articlesModificationTime = data.articlesModificationTime;
+            }, function(response) {
+               flashMessage(Translator.trans('Could not refresh the list'), 'error');
+            });
+        } else {
+            flashMessage(Translator.trans('Could not save the list'), 'error');
         }
 
-        logList = Playlist.getLogList();
-        if (logList.length == 0) {
-            return list;
-        }
-
-        return Playlist.batchUpdate(logList, $scope.playlist.selected);
+        $scope.processing = false;
     }
 }]);
