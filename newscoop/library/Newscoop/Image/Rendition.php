@@ -226,11 +226,12 @@ class Rendition
              if (count($cropSpecs) === 1) {
                 list($width, $height) = ImageService::calculateSize($imageSize->getWidth(), $imageSize->getHeight(), $this->width, $this->height, $this->getFlags());
                 $image->resize(new Box($width, $height));
-                list($left, $top, $width, $height) = ImageService::calculateCutout($width, $height, '50%', '50%', $width, $height);
+                list($left, $top, $width, $height) = ImageService::calculateCutout($width, $height, '50%', '50%', $this->width, $this->height);
                 $image->crop(new Point($left, $top), new Box($width, $height));
              } else {
                 list(, $x0, $y0, $x1, $y1) = $cropSpecs;
                 $image->crop(new Point($x0, $y0), new Box($x1 - $x0, $y1 - $y0));
+                $imageSize = $image->getSize();
                 list($width, $height) = ImageService::calculateSize($imageSize->getWidth(), $imageSize->getHeight(), $this->width, $this->height, $this->getFlags());
                 $image->resize(new Box($width, $height));
              }
