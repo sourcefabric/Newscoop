@@ -40,6 +40,7 @@ class InstallNewscoopCommand extends Console\Command\Command
             ->addOption('database_password', null, InputOption::VALUE_REQUIRED, 'Database password')
             ->addOption('database_server_port', null, InputOption::VALUE_OPTIONAL, 'Database server port', '3306')
             ->addOption('database_override', null, InputOption::VALUE_NONE, 'Override existing database')
+            ->addOption('no-client', null, InputOption::VALUE_NONE, 'Don not create OAuth default client')
             ->addArgument('site_title', InputArgument::OPTIONAL, 'Publication name', 'Newscoop publication')
             ->addArgument('user_email', InputArgument::OPTIONAL, 'Admin email', 'admin@newscoop.dev')
             ->addArgument('user_password', InputArgument::OPTIONAL, 'Admin user password', 'password');
@@ -157,8 +158,11 @@ class InstallNewscoopCommand extends Console\Command\Command
             'recheck_user_password' => $input->getArgument('user_password'),
         ), $connection);
         $output->writeln('<info>Config have been saved successfully.<info>');
-        $finishService->createDefaultOauthClient($input->getArgument('alias'));
-        $output->writeln('<info>Default OAuth client has been created successfully.<info>');
+        if (!$input->getOption('no-client')) {
+            $finishService->createDefaultOauthClient($input->getArgument('alias'));
+            $output->writeln('<info>Default OAuth client has been created successfully.<info>');
+        }
+
         $output->writeln('<info>Newscoop is installed.<info>');
     }
 }
