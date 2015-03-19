@@ -124,7 +124,6 @@ angular.module('playlistsApp').controller('FeaturedController', [
      * @param  {Object} scope Current scope
      */
     $scope.updateParentLimit = function (scope) {
-        console.log($scope.$parent.playlistLimit, scope.limitForm);
         $scope.$parent.playlistLimit = scope.limitForm.$valid;
     }
 }]);

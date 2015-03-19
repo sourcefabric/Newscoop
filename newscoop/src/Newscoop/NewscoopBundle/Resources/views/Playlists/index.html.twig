@@ -242,6 +242,7 @@
                         <div class="context-list-results" >
                             <div style="display: block">
                                 <form>
+                                <div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
                                     <div id="placeholder-wrapper" {% if editorView == false %}ng-class="{'empty-placeholder': $parent.featuredArticles.length == 0}" {% endif %}>
                                     <p>{{ 'Drag here to add to list'|trans }}</p>
                                     <ul id="context_list" ng-sortable="sortableConfig">
@@ -269,6 +270,7 @@
                                             </li>
                                         </ul>
                                         </div>
+                                    </div>
                                     </form>
                                 </div>
                                 <!-- alert message start -->

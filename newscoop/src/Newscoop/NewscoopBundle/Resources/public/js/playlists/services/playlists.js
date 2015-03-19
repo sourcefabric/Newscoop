@@ -67,6 +67,10 @@ angular.module('playlistsApp').factory('Playlist', [
 
             var params = {id: playlist.id};
 
+            if (playlist.maxItems !== null && playlist.maxItems > 0) {
+                params.items_per_page = 9999;
+            }
+
             if (page !== undefined) {
             	params.page = page;
             }
@@ -334,7 +338,7 @@ angular.module('playlistsApp').factory('Playlist', [
             };
 
             if (playlist.maxItems !== undefined) {
-            	formData.playlist.maxItems = playlist.maxItems;
+            	formData.playlist.maxItems = playlist.maxItems == null ? 0 : playlist.maxItems;
             }
 
             $http({

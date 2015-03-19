@@ -351,9 +351,12 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     // (right box), by default it's set to 2 because we start fetching new
     // articles from page 2, since articles on page 1 are loaded
     // by default when selecting playlist.
-    var page = 2,
-    isRunning = false,
-    isEmpty = false;
+    // set in scope so we can reset it when playlist will be saved
+    // and it can load more articles on scroll, without a need
+    // to refresh the page
+    $scope.page = 2;
+    $scope.isRunning = false;
+    $scope.isEmpty = false;
 
     /**
      * Sets playlist details to the current scope.
@@ -368,9 +371,39 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
         $scope.formData = {title: list.title}
-        page = 2;
-        isRunning = false;
+        $scope.page = 2;
+        $scope.isRunning = false;
     };
+
+    /**
+     * Loads more playlist's articles on scroll
+     */
+     $scope.loadArticlesOnScrollDown = function () {
+        if ($scope.playlist.selected) {
+            if ($scope.playlist.selected.maxItems === undefined ||
+                $scope.playlist.selected.maxItems === 0) {
+                if (!$scope.isEmpty && !$scope.isRunning) {
+                    $scope.isRunning = true;
+                    Playlist.getArticlesByListId($scope.playlist.selected, $scope.page).$promise
+                    .then(function (response) {
+                        if (response.length == 0) {
+                            $scope.isEmpty = true;
+                        } else {
+                            $scope.page++;
+                            $scope.isEmpty = false;
+                            angular.forEach(response, function(value, key) {
+                                if (value.number !== undefined) {
+                                    $scope.featuredArticles.push(value);
+                                }
+                            });
+                        }
+
+                        $scope.isRunning = false;
+                    });
+                }
+            }
+        }
+    }
 
     /**
      * Adds new playlist. Sets default list name to current date.
@@ -439,7 +472,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
-        if ($scope.playlist.selected.title !== $scope.formData.title) {
+        if ($scope.playlist.selected.title !== $scope.formData.title && $scope.playlist.selected.id !== undefined) {
             title = Translator.trans('Info');
             text = Translator.trans('articles.playlists.namechanged', {}, 'articles');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
@@ -483,10 +516,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.processing = false;
             Playlist.clearLogList();
             flashMessage(Translator.trans('List saved'));
-            $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
+            $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems});
             $scope.playlist.selected.id = Playlist.getListId();
+            $scope.page = 2;
+            $scope.isRunning = false;
+            $scope.isEmpty = false;
 
-            if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
+            if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
                 $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
             }
         }, function(response) {
