@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
@@ -41,6 +40,7 @@ class InstallNewscoopCommand extends Console\Command\Command
             ->addOption('database_password', null, InputOption::VALUE_REQUIRED, 'Database password')
             ->addOption('database_server_port', null, InputOption::VALUE_OPTIONAL, 'Database server port', '3306')
             ->addOption('database_override', null, InputOption::VALUE_NONE, 'Override existing database')
+            ->addOption('no-client', null, InputOption::VALUE_NONE, 'Don not create OAuth default client')
             ->addArgument('site_title', InputArgument::OPTIONAL, 'Publication name', 'Newscoop publication')
             ->addArgument('user_email', InputArgument::OPTIONAL, 'Admin email', 'admin@newscoop.dev')
             ->addArgument('user_password', InputArgument::OPTIONAL, 'Admin user password', 'password');
@@ -76,7 +76,7 @@ class InstallNewscoopCommand extends Console\Command\Command
 
             return;
         } elseif (count($missingReq) > 0 && $fixCommonIssues) {
-            $newscoopDir = realpath(__DIR__ . '/../../../../../');
+            $newscoopDir = realpath(__DIR__.'/../../../../../');
             // set chmods for directories
             exec('chmod -R 777 '.$newscoopDir.'/cache/');
             exec('chmod -R 777 '.$newscoopDir.'/log/');
@@ -129,13 +129,13 @@ class InstallNewscoopCommand extends Console\Command\Command
             $databaseService->loadGeoData($connection);
             $databaseService->saveDatabaseConfiguration($connection);
         } else {
-            throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
+            throw new \Exception('There is already a database named '.$connection->getDatabase().'. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
 
         $command = $this->getApplication()->find('cache:clear');
         $arguments = array(
             'command' => 'cache:clear',
-            '--no-warmup' => true
+            '--no-warmup' => true,
         );
 
         $inputCache = new ArrayInput($arguments);
@@ -155,9 +155,14 @@ class InstallNewscoopCommand extends Console\Command\Command
         $finishService->saveInstanceConfig(array(
             'site_title' => $input->getArgument('site_title'),
             'user_email' => $input->getArgument('user_email'),
-            'recheck_user_password' => $input->getArgument('user_password')
+            'recheck_user_password' => $input->getArgument('user_password'),
         ), $connection);
         $output->writeln('<info>Config have been saved successfully.<info>');
+        if (!$input->getOption('no-client')) {
+            $finishService->createDefaultOauthClient($input->getArgument('alias'));
+            $output->writeln('<info>Default OAuth client has been created successfully.<info>');
+        }
+
         $output->writeln('<info>Newscoop is installed.<info>');
     }
 }
