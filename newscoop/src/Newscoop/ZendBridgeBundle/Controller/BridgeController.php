@@ -23,6 +23,7 @@ class BridgeController extends Controller
             'js/tinymce/plugins/campsiteimage/images.php',
             'js/tinymce/plugins/campsiteattachment/popup.php',
             'js/tinymce/plugins/campsiteattachment/attachments.php',
+            'js/tinymce/plugins/campsiteinternallink/link.php',
             'bin/events-notifier',
             'bin/newscoop-autopublish',
             'bin/newscoop-indexer',
