@@ -63,9 +63,11 @@ angular.module('playlistsApp').factory('Playlist', [
                 deferredGet = $q.defer(),
                 url;
 
-            articles.$promise = deferredGet.promise;
-
             var params = {id: playlist.id};
+
+            if ((playlist.maxItems !== null) && playlist.maxItems > 0) {
+                params.items_per_page = 9999;
+            }
 
             if (page !== undefined) {
             	params.page = page;
@@ -83,12 +85,12 @@ angular.module('playlistsApp').factory('Playlist', [
                     articles.push(item);
                 });
                 playlistArticles = articles;
-                deferredGet.resolve(articles);
+                deferredGet.resolve(response);
             }).error(function (responseBody) {
                 deferredGet.reject(responseBody);
             });
 
-            return articles;
+            return deferredGet.promise;
         };
 
         Playlist.getArticle = function (number, language) {
@@ -277,7 +279,7 @@ angular.module('playlistsApp').factory('Playlist', [
 	            data: $.param(formData)
         	}).success(function (response) {
         		listId = response.id;
-                deferred.resolve();
+                deferred.resolve(response);
             }).error(function (responseBody) {
                 deferred.reject(responseBody);
             });
@@ -334,7 +336,7 @@ angular.module('playlistsApp').factory('Playlist', [
             };
 
             if (playlist.maxItems !== undefined) {
-            	formData.playlist.maxItems = playlist.maxItems;
+            	formData.playlist.maxItems = playlist.maxItems == null ? 0 : playlist.maxItems;
             }
 
             $http({
