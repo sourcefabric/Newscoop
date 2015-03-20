@@ -1,0 +1,1 @@
+system php ./init_order_in_playlists.php

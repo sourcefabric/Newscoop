@@ -64,7 +64,7 @@ class PlaylistRepository extends EntityRepository
      * @param int $offset
      * @param bool $publishedOnly
      */
-    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false)
+    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false, $orderBy = "order")
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
@@ -74,7 +74,7 @@ class PlaylistRepository extends EntityRepository
             WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
-        .       " ORDER BY pa.order "
+        .       " ORDER BY pa.$orderBy "
         );
 
         $query->setParameter(1, $playlist);
