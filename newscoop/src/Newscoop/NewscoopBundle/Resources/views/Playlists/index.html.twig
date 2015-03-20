@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/select.min.css') }}">
 <link rel="stylesheet" href="/js/select2/select2.css">
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/ng-table.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/bundles/newscooparticles/app/loading-bar.css') }}">
 {% endblock %}
 {% block admin_scripts %}
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
@@ -240,7 +241,8 @@
                             </div>
                         </div>
                         <div class="context-list-results" >
-                            <div style="display: block">
+                        <div ng-if="loadingSpinner" style="margin-left:45%; margin-top: 100px;" class="ai-circled ai-indicator ai-grey-spin"></div>
+                            <div style="display: block" ng-hide="loadingSpinner">
                                 <form>
                                 <div infinite-scroll="loadArticlesOnScrollDown()" infinite-scroll-container="'#context_list'" infinite-scroll-parent infinite-scroll-distance='2'>
                                     <div id="placeholder-wrapper" {% if editorView == false %}ng-class="{'empty-placeholder': $parent.featuredArticles.length == 0}" {% endif %}>
@@ -326,6 +328,7 @@
             <script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/ui-bootstrap-modal.js') }}"></script>
             <script src="{{ asset('/bundles/newscooparticles/app/ng-infinite-scroll.min.js') }}"></script>
+            <script src="{{ asset('/bundles/newscooparticles/app/loading-bar.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/select.min.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/ng-table.min.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/Sortable.js') }}"></script>
