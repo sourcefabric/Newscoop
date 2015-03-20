@@ -103,8 +103,6 @@ class PlaylistsService
 
     private function reorderAfterRemove($playlist, $removedArticlePosition)
     {
-        $this->initOrderOnPlaylist($playlist);
-
         try {
             $this->em->getConnection()->exec('LOCK TABLES playlist_article WRITE;');
 
@@ -143,8 +141,6 @@ class PlaylistsService
 
     private function positionPlaylistArticle($playlist, $playlistArticle, $position)
     {
-        $this->initOrderOnPlaylist($playlist);
-
         if ($position == false) {
             $position = 1;
         } else {
