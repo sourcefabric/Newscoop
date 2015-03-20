@@ -18,19 +18,11 @@ angular.module('playlistsApp').controller('FeaturedController', [
         animation: 150,
         onSort: function (evt/**Event*/){
             var article = evt.model;
-            var isInLogList = false;
-            isInLogList = _.some(
-                Playlist.getLogList(),
-                {number: article.number}
-            );
-
             // only when sorting list of featured articles (playlist)
             var logList = Playlist.getLogList();
             article._order = evt.newIndex + 1;
             article._method = "link";
-            if (!isInLogList) {
-                Playlist.addItemToLogList(article);
-            }
+            Playlist.addItemToLogList(article);
         }
     };
 
@@ -58,7 +50,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 $scope.$parent.featuredArticles,
                 {number: article.number}
             );
-            flashMessage(Translator.trans('List updated.'));
+            flashMessage(Translator.trans('List updated.', {}, 'articles'));
             Playlist.setCurrentPlaylistArticles($scope.$parent.featuredArticles);
         });
     };

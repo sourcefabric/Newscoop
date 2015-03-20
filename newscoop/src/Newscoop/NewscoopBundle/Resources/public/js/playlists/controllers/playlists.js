@@ -67,7 +67,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
             if (occurences > 1) {
                 $scope.featuredArticles.splice(evt.newIndex, 1);
-                flashMessage(Translator.trans('Item already exists in the list'), 'error');
+                flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
 
                 return true;
             }
@@ -75,6 +75,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             limit = $scope.playlist.selected.maxItems;
             // show alert with revert button
             if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
+                // article that shouldn't be removed, its needed to determine on
+                // which position it's placed so we can remove the last one elment
+                // from the list or the one before last - see removeLastArticle function
+                $scope.articleNotToRemove = item;
                 $scope.articleOverLimitIndex = evt.newIndex;
                 $scope.articleOverLimitNumber = number;
                 $scope.showLimitAlert = true;
@@ -161,10 +165,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
     var removeLastArticle =  function () {
         // remove one before last article from the featured articles list
-        // when we drag-drop new article, it will be
-        // automatically added to the list as a last element, thats why we need to remove
-        // one before last article
-        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        // when we drag-drop to the list as a last element, thats why we need to remove
+        // one before last article else remove last one (-1)
+        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 1];
+        if ($scope.articleNotToRemove._order == $scope.featuredArticles.length) {
+            articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        }
+
         articleToRemove._method = "unlink";
         _.remove(
             $scope.featuredArticles,
@@ -248,7 +255,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         if (isLimitReached()) {
             flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.'
+                    'List limit reached! Remove some articles from the list before adding new ones.', {}, 'articles'
             ), 'error');
 
             return true;
@@ -266,7 +273,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.featuredArticles.unshift($scope.articlePreview);
             $scope.isViewing = false;
         } else {
-            flashMessage(Translator.trans('Item already exists in the list'), 'error');
+            flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
         }
     };
 
@@ -281,7 +288,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         if (isLimitReached()) {
             flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.'
+                    'List limit reached! Remove some articles from the list before adding new ones.', {}, 'articles'
             ), 'error');
 
             return true;
@@ -304,14 +311,14 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                     $scope.featuredArticles.unshift(article);
                     $scope.processing = false;
                 }, function() {
-                    flashMessage(Translator.trans('Error List'), 'error');
+                    flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
                 });
 
                 return true;
             }
         }
 
-        flashMessage(Translator.trans('Item already exists in the list'), 'error');
+        flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
     };
 
     /**
@@ -333,7 +340,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.processing = true;
         logList = Playlist.getLogList();
         if (logList.length == 0) {
-            flashMessage(Translator.trans('List saved'));
+            flashMessage(Translator.trans('List saved', {}, 'articles'));
             $scope.processing = false;
 
             return true;
@@ -341,11 +348,11 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         Playlist.batchUpdate(logList, $scope.playlist.selected)
         .then(function () {
-            flashMessage(Translator.trans('List saved'));
+            flashMessage(Translator.trans('List saved', {}, 'articles'));
             Playlist.clearLogList();
             $scope.processing = false;
         }, function() {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
+            flashMessage(Translator.trans('Could not save the list', {}, 'articles'), 'error');
         });
     }
 
@@ -374,7 +381,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.loadingSpinner = false;
             $activityIndicator.stopAnimating();
         }, function(response) {
-            flashMessage(Translator.trans('Could not refresh the list'), 'error');
+            flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
             $scope.loadingSpinner = false;
             $activityIndicator.stopAnimating();
         });
@@ -411,7 +418,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                         }
                         $scope.isRunning = false;
                     }, function(response) {
-                        flashMessage(Translator.trans('Could not refresh the list'), 'error');
+                        flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
                     });
                 }
             }
@@ -444,8 +451,8 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         okText,
         cancelText;
 
-        title = Translator.trans('Remove list');
-        text = Translator.trans('Are you sure you want to delete this list?');
+        title = Translator.trans('Remove list', {}, 'articles');
+        text = Translator.trans('Are you sure you want to delete this list?', {}, 'articles');
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
 
@@ -486,7 +493,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
         if ($scope.playlist.selected.title !== $scope.formData.title && $scope.playlist.selected.id !== undefined) {
-            title = Translator.trans('Info');
+            title = Translator.trans('Info', {}, 'articles');
             text = Translator.trans('articles.playlists.namechanged', {}, 'articles');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
 
@@ -502,7 +509,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     var showLimitPopupAndSave = function (newLimit, oldLimit, modal, okText, cancelText) {
         if (newLimit && newLimit != 0 && newLimit != oldLimit) {
-            var title = Translator.trans('Info');
+            var title = Translator.trans('Info', {}, 'articles');
             var text = Translator.trans('articles.playlists.alert', {}, 'articles');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
             modal.result.then(function () {
@@ -596,14 +603,14 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     var afterSave = function (response) {
         $scope.processing = false;
         Playlist.clearLogList();
-        flashMessage(Translator.trans('List saved'));
+        flashMessage(Translator.trans('List saved', {}, 'articles'));
         $scope.loadingSpinner = true;
         Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
             $activityIndicator.stopAnimating();
         }, function(response) {
-            flashMessage(Translator.trans('Could not refresh the list'), 'error');
+            flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
             $scope.loadingSpinner = false;
             $activityIndicator.stopAnimating();
         });
@@ -618,7 +625,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     var afterSaveError = function (response) {
         if (response.errors[0].code === 409) {
             flashMessage(Translator.trans(
-                        'This list is already in a different state than the one in which it was loaded.'
+                        'This list is already in a different state than the one in which it was loaded.', {}, 'articles'
             ), 'error');
             // automatically refresh playlist
             $scope.loadingSpinner = true;
@@ -628,12 +635,12 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 $scope.loadingSpinner = false;
                 $activityIndicator.stopAnimating();
             }, function(response) {
-               flashMessage(Translator.trans('Could not refresh the list'), 'error');
+               flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
                $scope.loadingSpinner = false;
                $activityIndicator.stopAnimating();
             });
         } else {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
+            flashMessage(Translator.trans('Could not save the list', {}, 'articles'), 'error');
         }
 
         $scope.processing = false;

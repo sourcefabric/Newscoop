@@ -104,7 +104,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    public function searchArticles($articleSearchCriteria, $onlyPublished = true)
+    public function searchArticles($articleSearchCriteria, $onlyPublished = true, $order = "desc")
     {
         $em = $this->getEntityManager();
         $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
@@ -148,6 +148,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         $queryBuilder->setMaxResults(100);
+        $queryBuilder->orderBy('aa.uploaded', $order);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
         $tmpNumbers = array();
