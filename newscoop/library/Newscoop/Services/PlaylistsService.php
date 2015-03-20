@@ -152,7 +152,7 @@ class PlaylistsService
 
             // check if position isn't bigger that max one;
             $maxPosition = $this->em
-                ->createQuery('SELECT COUNT(pa) FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.idPlaylist = :playlistId AND pa.order > 0 ORDER BY pa.order ASC')
+                ->createQuery('SELECT COUNT(pa) FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.idPlaylist = :playlistId AND pa.order >= 0 ORDER BY pa.order ASC')
                 ->setParameter('playlistId', $playlist->getId())
                 ->getSingleScalarResult();
 
@@ -162,8 +162,6 @@ class PlaylistsService
 
             // get article - move to position 0
             $oldOrder = $playlistArticle->getOrder();
-            $playlistArticle->setOrder(0);
-            $this->em->flush();
             // it's not new element and we need to pull down bigger elements on it place
             if ($oldOrder > 0) {
                 // move all bigger than old position up (-1)
@@ -193,7 +191,7 @@ class PlaylistsService
         }
 
         $this->dispatcher->dispatch('playlist.save', new GenericEvent($this, array(
-            'id' => $playlist->getId()
+            'id' => $playlist->getId(),
         )));
         $this->cacheService->clearNamespace('boxarticles');
     }

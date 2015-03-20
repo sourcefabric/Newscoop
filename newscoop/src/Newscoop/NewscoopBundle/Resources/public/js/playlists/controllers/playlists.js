@@ -75,6 +75,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             limit = $scope.playlist.selected.maxItems;
             // show alert with revert button
             if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
+                // article that shouldn't be removed, its needed to determine on
+                // which position it's placed so we can remove the last one elment
+                // from the list or the one before last - see removeLastArticle function
+                $scope.articleNotToRemove = item;
                 $scope.articleOverLimitIndex = evt.newIndex;
                 $scope.articleOverLimitNumber = number;
                 $scope.showLimitAlert = true;
@@ -161,10 +165,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
     var removeLastArticle =  function () {
         // remove one before last article from the featured articles list
-        // when we drag-drop new article, it will be
-        // automatically added to the list as a last element, thats why we need to remove
-        // one before last article
-        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        // when we drag-drop to the list as a last element, thats why we need to remove
+        // one before last article else remove last one (-1)
+        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 1];
+        if ($scope.articleNotToRemove._order == $scope.featuredArticles.length) {
+            articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        }
+
         articleToRemove._method = "unlink";
         _.remove(
             $scope.featuredArticles,
