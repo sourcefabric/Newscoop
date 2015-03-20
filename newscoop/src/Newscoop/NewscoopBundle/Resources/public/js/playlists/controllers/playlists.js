@@ -12,13 +12,15 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     'modalFactory',
     '$q',
     '$timeout',
+    '$activityIndicator',
     function (
         $scope,
         Playlist,
         ngTableParams,
         modalFactory,
         $q,
-        $timeout
+        $timeout,
+        $activityIndicator
         ) {
 
         $scope.isViewing = false;
@@ -366,10 +368,15 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * @param  {Object} list  Playlist
      */
      $scope.setPlaylistInfoOnChange = function (list) {
+        $scope.loadingSpinner = true;
         Playlist.getArticlesByListId(list).then(function (data) {
             $scope.featuredArticles = data.items;
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
         }, function(response) {
             flashMessage(Translator.trans('Could not refresh the list'), 'error');
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
         });
 
         Playlist.setListId(list.id);
@@ -389,21 +396,22 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 $scope.playlist.selected.maxItems === 0) {
                 if (!$scope.isEmpty && !$scope.isRunning) {
                     $scope.isRunning = true;
-                    Playlist.getArticlesByListId($scope.playlist.selected, $scope.page).$promise
+                    Playlist.getArticlesByListId($scope.playlist.selected, $scope.page)
                     .then(function (response) {
-                        if (response.length == 0) {
+                        if (response.items.length == 0) {
                             $scope.isEmpty = true;
                         } else {
                             $scope.page++;
                             $scope.isEmpty = false;
-                            angular.forEach(response, function(value, key) {
+                            angular.forEach(response.items, function(value, key) {
                                 if (value.number !== undefined) {
                                     $scope.featuredArticles.push(value);
                                 }
                             });
                         }
-
                         $scope.isRunning = false;
+                    }, function(response) {
+                        flashMessage(Translator.trans('Could not refresh the list'), 'error');
                     });
                 }
             }
@@ -589,10 +597,15 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.processing = false;
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved'));
+        $scope.loadingSpinner = true;
         Playlist.getArticlesByListId({id: Playlist.getListId()}).then(function (data) {
             $scope.featuredArticles = data.items;
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
         }, function(response) {
             flashMessage(Translator.trans('Could not refresh the list'), 'error');
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
         });
 
         $scope.playlist.selected.id = Playlist.getListId();
@@ -608,11 +621,16 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                         'This list is already in a different state than the one in which it was loaded.'
             ), 'error');
             // automatically refresh playlist
+            $scope.loadingSpinner = true;
             Playlist.getArticlesByListId({id: Playlist.getListId()}).then(function (data) {
                 $scope.featuredArticles = data.items;
                 $scope.playlist.selected.articlesModificationTime = data.articlesModificationTime;
+                $scope.loadingSpinner = false;
+                $activityIndicator.stopAnimating();
             }, function(response) {
                flashMessage(Translator.trans('Could not refresh the list'), 'error');
+               $scope.loadingSpinner = false;
+               $activityIndicator.stopAnimating();
             });
         } else {
             flashMessage(Translator.trans('Could not save the list'), 'error');
