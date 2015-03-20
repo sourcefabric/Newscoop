@@ -191,6 +191,7 @@ Snippet: null
 'List limit': null
 'Last item of the list has been deleted to add this item to the list. Revert?': null
 Revert: null
+'Could not automatically refresh the list': null
 articles:
     playlists:
         namechanged: null
