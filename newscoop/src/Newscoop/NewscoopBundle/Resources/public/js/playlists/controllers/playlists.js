@@ -598,7 +598,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved'));
         $scope.loadingSpinner = true;
-        Playlist.getArticlesByListId({id: Playlist.getListId()}).then(function (data) {
+        Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
             $activityIndicator.stopAnimating();
