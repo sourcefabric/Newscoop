@@ -58,7 +58,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 $scope.$parent.featuredArticles,
                 {number: article.number}
             );
-            flashMessage(Translator.trans('List updated.'));
+            flashMessage(Translator.trans('List updated.', {}, 'articles'));
             Playlist.setCurrentPlaylistArticles($scope.$parent.featuredArticles);
         });
     };
