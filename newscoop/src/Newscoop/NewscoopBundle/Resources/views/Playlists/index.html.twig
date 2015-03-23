@@ -1,5 +1,5 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
-{% trans_default_domain "article" %}
+{% trans_default_domain "articles" %}
 {% block admin_title %}{{ parent() }} - {{ 'Featured Article Lists'|trans }}{% endblock %}
 {% block admin_page_title_content %}{{ 'Featured Article Lists'|trans }}{% endblock %}
 {% block admin_page_title_box %}
@@ -41,8 +41,8 @@
 
             <div class="save-button-bar">
                 <button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
-                <button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
-                <button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+                <button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
+                <button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
             </div>
         </div>
         {% endif %}
@@ -79,8 +79,8 @@
     </li>
     <li style="float: right" ng-if="playlist.selected">
         <div class="save-button-bar">
-            <button type="button" ng-click="removePlaylist()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans }}</button>
-            <button type="button" ng-disabled="processing || playlistForm.$invalid || !playlistLimit" ng-click="savePlaylist()" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans }}</button>
+            <button type="button" ng-click="removePlaylist()" ng-disabled="processing" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> {{ 'Remove'|trans({}, 'messages') }}</button>
+            <button type="button" ng-disabled="processing || playlistForm.$invalid || !playlistLimit" ng-click="savePlaylist()" name="save" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
         </div>
     </li>
 </ul>
@@ -344,6 +344,7 @@
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/auth-interceptor.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/playlists.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/filters-service.js') }}"></script>
+            <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'articles' }) }}"></script>
 
 {% endblock %}
 {% block admin_page_footer_box %}
