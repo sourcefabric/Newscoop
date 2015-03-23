@@ -13,17 +13,41 @@ angular.module('playlistsApp').controller('FeaturedController', [
         Playlist
     ) {
 
+    var canRemoveLastDroppedArticle = false;
     $scope.sortableConfig = {
         group: 'articles',
         animation: 150,
+        onAdd: function (evt/**Event*/){
+            if (canRemoveLastDroppedArticle) {
+                $scope.$parent.featuredArticles.splice(evt.newIndex, 1);
+                canRemoveLastDroppedArticle = false;
+            }
+        },
         onSort: function (evt/**Event*/){
-            var article = evt.model;
+            var logList,
+                limit,
+                occurences = 0,
+                article = evt.model;
             // only when sorting list of featured articles (playlist)
-            var logList = Playlist.getLogList();
+            logList = Playlist.getLogList();
 
-            var limit = $scope.$parent.playlist.selected.maxItems;
-            console.log(article);
-            // we need to call countDown function here again, because in PlaylistController
+            limit = $scope.$parent.playlist.selected.maxItems;
+            angular.forEach($scope.$parent.featuredArticles, function(value, key) {
+                if (value.number == article.number) {
+                    occurences++;
+                }
+            });
+
+            if (occurences > 0) {
+                canRemoveLastDroppedArticle = true;
+                //$scope.$parent.featuredArticles.splice(evt.newIndex, 1);
+                flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
+
+                return true;
+            }
+
+            // we need to call countDown function here again and check if the item already exist on the list,
+            // because in PlaylistController
             // onEnd event doesnt work on Firefox, thus showing revert alert wont work.
             // see: https://github.com/RubaXa/Sortable/issues/313
             // we check if list length and limit equals because dropped item is not inserted into
