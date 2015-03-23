@@ -20,6 +20,37 @@ angular.module('playlistsApp').controller('FeaturedController', [
             var article = evt.model;
             // only when sorting list of featured articles (playlist)
             var logList = Playlist.getLogList();
+
+            var limit = $scope.$parent.playlist.selected.maxItems;
+            console.log(article);
+            // we need to call countDown function here again, because in PlaylistController
+            // onEnd event doesnt work on Firefox, thus showing revert alert wont work.
+            // see: https://github.com/RubaXa/Sortable/issues/313
+            // we check if list length and limit equals because dropped item is not inserted into
+            // the list in onSort event yet
+            // show alert with revert button
+            if (limit && limit != 0 && $scope.$parent.featuredArticles.length == limit) {
+                // make sure that the counter is not counting
+                // if using browser diffrent than FF, counter will be started in onEnd event
+                // thats why we need to check if it't not running already
+                if ($scope.$parent.isCounting === false) {
+                    // setting article order and increasing by 1 because in
+                    // onSort event item is not inserted into the list yet, which means
+                    // that the list length equals the length of existing items in it
+                    // (without the dragged-dropped one)
+                    article._order = evt.newIndex + 1;
+                    $scope.$parent.articleNotToRemove = article;
+                    $scope.$parent.articleOverLimitIndex = evt.newIndex;
+                    $scope.$parent.articleOverLimitNumber = article.number;
+                    $scope.$parent.showLimitAlert = true;
+
+                    $scope.$parent.countDown = 6;
+                    $scope.$parent.startCountDown();
+
+                    return true;
+                }
+            }
+
             article._order = evt.newIndex + 1;
             article._method = "link";
             Playlist.addItemToLogList(article);

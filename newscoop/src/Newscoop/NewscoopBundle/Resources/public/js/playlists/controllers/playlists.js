@@ -75,6 +75,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             limit = $scope.playlist.selected.maxItems;
             // show alert with revert button
             if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
+
                 // article that shouldn't be removed, its needed to determine on
                 // which position it's placed so we can remove the last one elment
                 // from the list or the one before last - see removeLastArticle function
@@ -128,6 +129,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     // stops, starts counter
     $scope.isCounting = false;
+
+    $scope.startCountDown = function () {
+        countDown();
+    }
 
     /**
      * This function count seconds after which revert popup will be closed
