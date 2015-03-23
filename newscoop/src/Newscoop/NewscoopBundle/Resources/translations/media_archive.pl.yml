@@ -60,4 +60,4 @@ Size: Rozmiar
 'Change image information': 'Zmień informacje o zdjęciu'
 'Photographer URL': 'Adres www fotografa'
 'Add website url starting with http://': 'Podaj adres www zaczynając od http://'
-'An error occured while uploading the file $1': null
+'An error occured while uploading the file $1': 'Podczas ładowania pliku $1 wystąpił błąd'

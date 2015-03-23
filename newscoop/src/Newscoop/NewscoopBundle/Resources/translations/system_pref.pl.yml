@@ -64,9 +64,9 @@ newscoop:
             imagewidth: 'Długość pomniejszanych zdjęć:'
             imageheight: 'Wysokość pomniejszanych zdjęć:'
             zoom: 'Włączyć zoom dla zdjęć w obrębie artykułu??'
-            mediaRichTextCaptions: null
-            mediaCaptionLength: null
-            mediaCaptionLength_after: null
+            mediaRichTextCaptions: 'Włączyć rozbudowany tekst dla podpisów zdjęcia?'
+            mediaCaptionLength: 'Limit znaków dla podpisu zdjęcia:'
+            mediaCaptionLength_after: znak(ów)
             external: 'Subskrypcje czytelników zarządzane zewnętrznie?'
             usereplication: 'Ustawić Serwer Replikacji Newscoop?'
             serverdb: 'Baza danych serwera Newscoop'
@@ -123,7 +123,7 @@ newscoop:
             enabled: Status
             options: Opcje
             info: 'Informacje:'
-            infodesc: null
+            infodesc: 'Dzięki tym ustawieniom możesz wyłączać i włączać wybrane zadania w tle.'
             prevRun: 'Data ostatniego uruchomienia (według harmonogramu).'
             nextRun: 'Data następnego uruchomienia (według harmonogramu).'
             norecords: 'Nie znaleziono żadnych rekordów.'
@@ -147,8 +147,8 @@ newscoop:
             separator: 'Określa separator słów kluczowych na stronie Edycji artykułu (przecinek lub myślnik).'
             stats: 'Ta opcja pozwala na gromadzenie statystyk dostępu czytelników do publikacji na serwerze. Jeśli używasz innej usługi do statystyk, wybierz ''Nie''. Wyłaczenie zbierania statystyk może zmniejszyć obciążenie serwera Newscoop.'
             zoom: 'Jeśli jest ustawiona na Tak, czytelnicy mogą powiększać obrazy artykułów w publikacjach stron, klikając na nie. Ta funkcja powiększania działa na wszelkie obrazy wstawiane do tekstu artykułu.'
-            richtext_status: null
-            richtext_length: null
+            richtext_status: 'Włącz edycję rozbudowanych tekstów dla podpisów zdjęcia.'
+            richtext_length: 'Domyślnie ustawione na 255 (nawet gdy pełen tekst podpisów jest wyłączony). Użyj 0 aby wyłączyć limit.'
             ratio: 'Wskaźnik zmiany rozmiaru ma pierwszeństwo przed każdą zmianą szerokości lub wartości zmiany wysokości, który jest ustawiony tutaj. Jeśli współczynnik nie jest ustawiony, ale wysokość i szerokość są ustawione to Newscoop użyje tych ostatnich wartości, co skutkuje mniejszym rozmiarem. Domyślne ustawienia mogą być przesłonięte przez stosunek szerokości lub wysokości ustawienia dla konkretnego obrazu ustawionej na inline stronie Edycji artykułu.'
             replication: 'Pozwala ustawić Newscoop aby działał na dwóch serwerach jednocześnie, co jest cechą bezpieczeństwa w przypadku sprzętu lub problemu z siecią.'
             filter: 'Wprowadź słowa kluczowe dla szablonów, które chcesz ukryć przed edytorami szablonów dostępnych za pośrednictwem strony ''Szablony''. Na przykład szablony, które są już w użyciu, ale nie chcesz, aby zostały usunięte z serwera.'
@@ -161,4 +161,4 @@ newscoop:
                 secure: 'Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak.'
             garbage: 'Jeśli opcja ta jest włączona, to możesz ustalić liczbę dni po których nieaktualne dane oczekujących użytkowników zostaną usunięte. Domyślnie jest to 90 dni.'
             lifetime: 'Czas ważności sesji w sekundach. Maksymalnie 86400 (24 godziny). Minimalnie 0 (aż do zamknięcia okna przeglądarki).'
-            smartyuseprotocol: null
+            smartyuseprotocol: 'Jeśli opcja ta jest włączona, to Smarty będzie generował linki z dołączonym do adresu protokołem. Domyślnie jest to wyłączone tak aby generować względne adresy URL. Możliwe jest nadpisanie tej opcji z parametrem "useprotocol" w szablonach Smarty. '
