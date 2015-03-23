@@ -14,23 +14,7 @@ parameters:
             path: ":memory:"
         functions:
             rand: "Newscoop\Query\SqliteRandom"
-    ingest:
-        path: %application_path%/../tests/ingest
-    ingest_publisher:
-        image_path: %application_path%/../tests/ingest
-        article_type: "news"
-        field.NewsItemIdentifier: false
-        field.NewsProduct: false
-        field.Status: false
-        field.Urgency: false
-        field.HeadLine: false
-        field.NewsLineText: false
-        field.DataContent: false
-        field.DataLead: false
-        field.AuthorNames: false
-        field.deck: "getSummary"
-        field.full_text: "getContent"
-    phpSettings:
+   phpSettings:
         display_startup_errors: true
         display_errors: true
     resources:
