@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3659d2effbc14a87b35c1ff254a10f83",
+    "hash": "3b4b08a04d861d799563214c34d94bb0",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1081,12 +1081,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "941f3ba41754205827bcd80db6b0141ce9c7c8cb"
+                "reference": "3aa1820087f65c64e136b8cf16258f9ee1168de0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/941f3ba41754205827bcd80db6b0141ce9c7c8cb",
-                "reference": "941f3ba41754205827bcd80db6b0141ce9c7c8cb",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/3aa1820087f65c64e136b8cf16258f9ee1168de0",
+                "reference": "3aa1820087f65c64e136b8cf16258f9ee1168de0",
                 "shasum": ""
             },
             "require": {
@@ -1151,7 +1151,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2015-03-03 19:39:11"
+            "time": "2015-03-22 16:02:34"
         },
         {
             "name": "hellogerard/jobby",
@@ -1209,12 +1209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "404bb9678490093e0fb50319e54d8cac8a052d56"
+                "reference": "6ebcf37e7abbd1ff0c3bd928c29160b5f6b72494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/404bb9678490093e0fb50319e54d8cac8a052d56",
-                "reference": "404bb9678490093e0fb50319e54d8cac8a052d56",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/6ebcf37e7abbd1ff0c3bd928c29160b5f6b72494",
+                "reference": "6ebcf37e7abbd1ff0c3bd928c29160b5f6b72494",
                 "shasum": ""
             },
             "require": {
@@ -1250,7 +1250,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2015-03-15 19:11:13"
+            "time": "2015-03-19 19:51:06"
         },
         {
             "name": "imagine/imagine",
@@ -1747,12 +1747,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "d6f3cc426c949d9a41925db2be5ffa0e5833f15a"
+                "reference": "c40075bea26f63dd5b81ca5b3cdd2b54d38e811f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/d6f3cc426c949d9a41925db2be5ffa0e5833f15a",
-                "reference": "d6f3cc426c949d9a41925db2be5ffa0e5833f15a",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/c40075bea26f63dd5b81ca5b3cdd2b54d38e811f",
+                "reference": "c40075bea26f63dd5b81ca5b3cdd2b54d38e811f",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1789,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1803,7 +1803,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2014-10-28 08:40:35"
+            "time": "2015-03-20 12:35:38"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -2217,12 +2217,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "d8c05dbf57b11b4602ed9c5fa3b7ba43653d0257"
+                "reference": "26fe302a5ad9d9465fcb3ee2a44f9f38533a3a45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/d8c05dbf57b11b4602ed9c5fa3b7ba43653d0257",
-                "reference": "d8c05dbf57b11b4602ed9c5fa3b7ba43653d0257",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/26fe302a5ad9d9465fcb3ee2a44f9f38533a3a45",
+                "reference": "26fe302a5ad9d9465fcb3ee2a44f9f38533a3a45",
                 "shasum": ""
             },
             "require": {
@@ -2236,16 +2236,19 @@
                 "jms/serializer-bundle": "<0.11"
             },
             "require-dev": {
+                "dunglas/json-ld-api-bundle": "dev-master",
                 "friendsofsymfony/rest-bundle": "~1.0",
                 "jms/serializer-bundle": ">=0.11",
                 "sensio/framework-extra-bundle": "~3.0",
                 "symfony/browser-kit": "~2.1",
                 "symfony/css-selector": "~2.1",
                 "symfony/form": "~2.1",
+                "symfony/serializer": "~2.7@dev",
                 "symfony/validator": "~2.1",
                 "symfony/yaml": "~2.1"
             },
             "suggest": {
+                "dunglas/json-ld-api-bundle": "For making use of resources definitions of DunglasJsonLdApiBundle.",
                 "friendsofsymfony/rest-bundle": "For making use of REST information in the doc.",
                 "jms/serializer": "For making use of serializer information in the doc.",
                 "symfony/form": "For using form definitions as input.",
@@ -2283,7 +2286,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2015-03-13 16:22:24"
+            "time": "2015-03-20 09:51:03"
         },
         {
             "name": "newscoop/plugins-installer",
@@ -3324,16 +3327,16 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "dev-master",
+            "version": "v3.1.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "e9b1f296cb7217b37ac55ed7b2333342a304f295"
+                "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/03c7b786a05cfc265c0c0cb05044d84242d99ebd",
-                "reference": "e9b1f296cb7217b37ac55ed7b2333342a304f295",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
+                "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
                 "shasum": ""
             },
             "require": {
@@ -3349,7 +3352,7 @@
                 "classmap": [
                     "libs/Smarty.class.php",
                     "libs/SmartyBC.class.php",
-                    "libs/sysplugins/"
+                    "libs/sysplugins/smarty_security.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3375,7 +3378,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-03-10 17:06:05"
+            "time": "2014-10-31 04:22:20"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -3440,7 +3443,7 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "dev-master",
+            "version": "5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
@@ -4666,12 +4669,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "d0a878177e75d4c9bea4b63101784deeb7181008"
+                "reference": "81f8e9439d0041866849c05d334584ea31c7b05e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0a878177e75d4c9bea4b63101784deeb7181008",
-                "reference": "d0a878177e75d4c9bea4b63101784deeb7181008",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/81f8e9439d0041866849c05d334584ea31c7b05e",
+                "reference": "81f8e9439d0041866849c05d334584ea31c7b05e",
                 "shasum": ""
             },
             "require": {
@@ -4710,7 +4713,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2015-03-17 07:40:47"
+            "time": "2015-03-18 16:46:58"
         },
         {
             "name": "guzzle/common",
@@ -5193,12 +5196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "26530c5a425c6f67c9fe4fa10a3773adc96c418d"
+                "reference": "07606749da971eda75434814a313ed0ce6790f6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/26530c5a425c6f67c9fe4fa10a3773adc96c418d",
-                "reference": "26530c5a425c6f67c9fe4fa10a3773adc96c418d",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/07606749da971eda75434814a313ed0ce6790f6a",
+                "reference": "07606749da971eda75434814a313ed0ce6790f6a",
                 "shasum": ""
             },
             "require": {
@@ -5245,7 +5248,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-03-13 14:15:05"
+            "time": "2015-03-20 17:41:29"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5253,12 +5256,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "74cf128bd0f643957c076cc67121dbff445755fe"
+                "reference": "4676604b851bfc6fc02bf3394bf350c727bcebf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/74cf128bd0f643957c076cc67121dbff445755fe",
-                "reference": "74cf128bd0f643957c076cc67121dbff445755fe",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/4676604b851bfc6fc02bf3394bf350c727bcebf4",
+                "reference": "4676604b851bfc6fc02bf3394bf350c727bcebf4",
                 "shasum": ""
             },
             "require": {
@@ -5307,7 +5310,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-03-06 11:27:25"
+            "time": "2015-03-19 05:49:08"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -6053,7 +6056,6 @@
         "sensio/generator-bundle": 20,
         "friendsofsymfony/rest-bundle": 20,
         "hybridauth/hybridauth": 20,
-        "smarty/smarty": 20,
         "knplabs/knp-menu-bundle": 20,
         "knplabs/knp-menu": 20,
         "yzalis/crontab": 20,

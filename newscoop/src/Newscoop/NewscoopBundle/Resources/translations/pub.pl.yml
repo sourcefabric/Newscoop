@@ -77,62 +77,62 @@ Currency: Waluta
 'Article topics': 'Tematy artykułów'
 publications:
     title:
-        list: null
-        edit: null
-        add: null
-        remove: null
-    no_publications: null
-    general_settings: null
-    comments_settings: null
-    seo_settings: null
-    publication_removed: null
-    publication_saved: null
+        list: 'Lista publikacji'
+        edit: 'Edytuj publikację'
+        add: 'Dodaj nową publikację'
+        remove: 'Usuń publikację'
+    no_publications: 'Brak publikacji.'
+    general_settings: 'Ustawienia główne'
+    comments_settings: 'Ustawienia komentarzy'
+    seo_settings: 'Ustawienia SEO'
+    publication_removed: 'Publikacja została usunięta'
+    publication_saved: 'Zmiany w publikacji zostały zapisane pomyślnie.'
     remove:
-        cant_be_removed: null
-        can_be_removed: null
-        left_issues: null
-        left_sections: null
-        left_articles: null
-        show_issues: null
-        before_removing: null
-        you_sure: null
-        remove: null
+        cant_be_removed: 'Ta publikacja nie jest pusta, i nie może zostać usunięta.'
+        can_be_removed: 'Ta publikacja jest pusta, i może zostać usunięta.'
+        left_issues: 'Pozostałe wydania'
+        left_sections: 'Pozostałe sekcje'
+        left_articles: 'Pozostałe artykuły'
+        show_issues: 'pokaż wydania'
+        before_removing: 'Przed usunięciem publikacji musisz najpierw usunąć wszystkie pozostałe elementy.'
+        you_sure: 'Czy na pewno chcesz usunąć publikację'
+        remove: 'Usuń publikację'
     buttons:
-        addNew: null
-        listPublications: null
-        listIssues: null
+        addNew: 'Dodaj nową publikację'
+        listPublications: 'Lista publikacji'
+        listIssues: 'Lista wydań w publikacji'
     table:
-        number: null
-        name: null
-        default_alias: null
-        default_language: null
-        comments_status: null
-        url_type: null
-        configure: null
-        remove: null
+        number: Numer
+        name: Nazwa
+        default_alias: 'Domyślny alias'
+        default_language: 'Domyślny język'
+        comments_status: 'Status komentarzy'
+        url_type: 'Typ URL'
+        configure: Konfiguracja
+        remove: Usuń
     form_type:
         label:
-            name: null
-            template_path: null
-            short_names: null
-            alias: null
-            url_type: null
-            seo: null
-            seo_article_title: null
-            seo_article_keywords: null
-            seo_article_topics: null
-            edit_aliases: null
-            edit_languages: null
-            moderator_to: null
-            moderator_from: null
-            comments_enabled: null
-            public_comments_enabled: null
-            comments_article_default_enabled: null
-            comments_subscribers_moderated: null
-            comments_public_moderated: null
-            comments_captcha_enabled: null
-            comments_spam_blocking_enabled: null
-            meta_title: null
-            meta_keywords: null
-            meta_description: null
-    tip1: null
+            name: 'Nazwa publikacji'
+            template_path: 'ścieżka szablonu'
+            short_names: 'Krótkie nazwy'
+            alias: 'Domyślny alias strony'
+            url_type: 'Typ URL'
+            seo: 'Elementy adresu url artykułu'
+            seo_article_title: 'Tytuł artykułu'
+            seo_article_keywords: 'Słowa kluczowe artykułu'
+            seo_article_topics: 'Tematy artykułów'
+            edit_aliases: 'Edytuj aliasy'
+            edit_languages: 'Edytuj języki'
+            moderator_to: 'Adres moderatora'
+            moderator_from: 'Adres moderatora w polu "od"'
+            comments_enabled: 'Komentarze włączone?'
+            public_comments_enabled: 'Moderacja publicznych komentarzy?'
+            comments_article_default_enabled: 'Komentarze do artykułu są domyślnie włączone?'
+            comments_subscribers_moderated: 'Moderacja komentarzy zarejestrowanych użytkowników?'
+            comments_public_moderated: 'Moderacja publicznych komentarzy?'
+            comments_captcha_enabled: 'Captcha jest włączona?'
+            comments_spam_blocking_enabled: 'Wewnętrzny system blokowania spamowych komentarzy jest włączony?'
+            meta_title: 'Tytuł publikacji'
+            meta_keywords: 'Słowa kluczowe dla publikacji'
+            meta_description: 'Opis publikacji'
+    tip1: 'Treści w Newscoopie zorganizowane są w hierarchicznej strukturze, która wywodzi się z tradycyjnych gazet i magazynów: Publikacje, Wydania, Sekcje i Artykuły. Każda publikacja zawiera wydania, każde wydanie jest złożone z sekcji, sekcje zawierają artykuły.'

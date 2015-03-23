@@ -1,9 +1,9 @@
 dynatable:
-    page: null
-    perPageText: null
-    pageText: null
-    recordCountPageBoundTemplate: null
-    recordCountPageUnboundedTemplate: null
-    recordCountFilteredTemplate: null
-    recordCountText: null
-    processingText: null
+    page: Strona
+    perPageText: 'Pokazuje: '
+    pageText: 'Strony: '
+    recordCountPageBoundTemplate: '{pageLowerBound} do {pageUpperBound} z'
+    recordCountPageUnboundedTemplate: '{recordsShown} z'
+    recordCountFilteredTemplate: ' (wyszukane z {recordsTotal} wszystkich wyników)'
+    recordCountText: 'Wyświetla '
+    processingText: Przetważanie...
