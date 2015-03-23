@@ -311,6 +311,16 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->view->themeForm = $themeForm;
     }
 
+    public function wizardThemePlaylistsAction()
+    {
+        $playlistsService = \Zend_Registry::get('container')->getService('playlists');
+        $theme = $this->getThemeService()->findById($this->_request->getParam('id'));
+        $path = __DIR__.'/../../../../themes/'.$theme->getPath().'theme.xml';
+
+        $this->view->themePlaylists = $playlistsService->loadThemePlaylists($path);
+        $this->view->theme = $theme;
+    }
+
     /**
      * see Admin_ThemesController::outputEditAction()
      */

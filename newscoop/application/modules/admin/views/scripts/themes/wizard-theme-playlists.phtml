@@ -1,0 +1,32 @@
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
+<div class="articleTypes">
+    <form id="" method="post" action="#">
+        <fieldset>
+            <legend><?php echo $translator->trans('Theme playlists', array(), 'themes') ?></legend>
+            <?php dump($this->theme, $this->themePlaylists); ?>
+            <ul>
+            <?php foreach($this->themePlaylists['list'] as $themePlaylist) { ?>
+                <li class="playlist">
+                    <h4><span><?php echo $themePlaylist['@attributes']['name'] ?></span></h4>
+                    <ul>
+                        <li><?php echo $translator->trans('Max items', array(), 'themes') ?>: <?php echo $themePlaylist['@attributes']['maxItems'] ?></li>
+                        <?php if (!empty($themePlaylist['@attributes']['notes'])){ ?>
+                        <li><?php echo $translator->trans('Notes', array(), 'themes') ?>: <?php echo $themePlaylist['@attributes']['notes'] ?>
+                        </li>
+                        <?php } ?>
+                        <?php if (count($themePlaylist['template']) > 0){ ?>
+                            <ul>
+                            <?php foreach($themePlaylist['template'] as $template) { ?>
+                                <li><?php echo $template['@attributes']['file'] ?></li>
+                            <?php } ?>
+                            </ul>
+                        <?php } ?>
+                    </ul>
+                </li>
+            <?php } ?>
+            </ul>
+        </fieldset>
+    </form>
+</div>
