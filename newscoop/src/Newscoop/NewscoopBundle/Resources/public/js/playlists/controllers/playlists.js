@@ -11,6 +11,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     'ngTableParams',
     'modalFactory',
     '$q',
+    '$timeout',
     '$activityIndicator',
     function (
         $scope,
@@ -18,6 +19,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         ngTableParams,
         modalFactory,
         $q,
+        $timeout,
         $activityIndicator
         ) {
 
@@ -32,6 +34,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         // limit var, which is set to false by FeaturedController
         // when provided limit is invalid
         $scope.playlistLimit = true;
+        $scope.showLimitAlert = false;
 
     // array of the articles,
     // that will be removed or added to the list
@@ -59,6 +62,80 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.getAllArticles($defer, params);
         }
     });
+
+    // stops, starts counter
+    $scope.isCounting = false;
+
+    $scope.startCountDown = function () {
+        countDown();
+    }
+
+    /**
+     * This function count seconds after which revert popup will be closed
+     * and removes last article from the playlist if the limit is reached,
+     * inserts new article
+     */
+    var countDown = function(){
+       if($scope.isCounting) {
+            return;
+       }
+
+       $scope.isCounting = true;
+       (function countEvery() {
+            if ($scope.isCounting) {
+                $scope.countDown--;
+                $timeout(countEvery, 1000);
+                if ($scope.countDown === 0) {
+                    removeLastArticle();
+                }
+            }
+        }());
+    }
+
+    /**
+     * It removes last article from the playlist if the limit is reached,
+     * inserts new article. It is called from FeaturedController.
+     */
+    $scope.removeLastInsertNew = function () {
+        removeLastArticle();
+    }
+
+    /**
+     * It removes last article from the playlist if the limit is reached,
+     * inserts new article
+     */
+    var removeLastArticle =  function () {
+        // remove one before last article from the featured articles list
+        // when we drag-drop to the list as a last element, thats why we need to remove
+        // one before last article else remove last one (-1)
+        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 1];
+        if ($scope.articleNotToRemove._order == $scope.featuredArticles.length) {
+            articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        }
+
+        articleToRemove._method = "unlink";
+        _.remove(
+            $scope.featuredArticles,
+            {number: articleToRemove.number}
+        );
+
+        Playlist.addItemToLogList(articleToRemove);
+        var logList = Playlist.getLogList();
+
+        // we have to now replace last element with one before last in log list
+        // so it can be save in API in a proper order, actually we first add a
+        // new article to the featured articles list and then we unlink the last one.
+        // We need to do it in a reverse way, so we first unlink, and then add a new one.
+        var lastElement = logList[logList.length - 1];
+        var beforeLast = logList[logList.length - 2];
+
+        logList[logList.length - 1] = beforeLast;
+        logList[logList.length - 2] = lastElement;
+
+        Playlist.setLogList(logList);
+        $scope.showLimitAlert = false;
+        $scope.isCounting = false;
+    }
 
     /**
      * Checks if list name max length is not exceeded,
@@ -107,14 +184,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             {number: $scope.articlePreview.number}
             );
 
-        if (isLimitReached()) {
-            flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.', {}, 'articles'
-            ), 'error');
-
-            return true;
-        }
-
         if (!exists) {
             var isInLogList = _.some(
                 Playlist.getLogList(),
@@ -126,6 +195,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.addItemToLogList($scope.articlePreview);
             $scope.featuredArticles.unshift($scope.articlePreview);
             $scope.isViewing = false;
+
+            if (isLimitReached()) {
+                $scope.articleNotToRemove = $scope.articlePreview;
+                $scope.articleOverLimitIndex = 0;
+                $scope.articleOverLimitNumber = $scope.articlePreview.number;
+                $scope.showLimitAlert = true;
+                $scope.countDown = 6;
+                $scope.startCountDown();
+
+                return true;
+            }
         } else {
             flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
         }
@@ -139,14 +219,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.featuredArticles,
             {number: number}
             );
-
-        if (isLimitReached()) {
-            flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.', {}, 'articles'
-            ), 'error');
-
-            return true;
-        }
 
         if (!exists) {
             var article = undefined,
@@ -164,6 +236,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                     Playlist.addItemToLogList(article);
                     $scope.featuredArticles.unshift(article);
                     $scope.processing = false;
+
+                    if (isLimitReached()) {
+                        $scope.articleNotToRemove = article;
+                        $scope.articleOverLimitIndex = 0;
+                        $scope.articleOverLimitNumber = article.number;
+                        $scope.showLimitAlert = true;
+                        $scope.countDown = 6;
+                        $scope.startCountDown();
+
+                        return true;
+                    }
                 }, function() {
                     flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
                 });
@@ -181,7 +264,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * @return {Boolean}
      */
     var isLimitReached = function () {
-        var limit = $scope.playlist.selected.maxItems;
+        var limit = 0;
+        if ($scope.playlist.selected !== undefined) {
+            limit = $scope.playlist.selected.maxItems;
+        }
 
         return (limit && limit != 0 && $scope.featuredArticles.length >= limit);
     }
