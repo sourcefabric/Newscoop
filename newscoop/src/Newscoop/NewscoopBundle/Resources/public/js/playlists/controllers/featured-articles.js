@@ -48,7 +48,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 // which position it's placed so we can remove the last one elment
                 // from the list or the one before last - see removeLastArticle function
                 $scope.articleNotToRemove = item;
-                $scope.articleOverLimitIndex = evt.newIndex + 1;
+                $scope.articleOverLimitIndex = evt.newIndex;
                 $scope.articleOverLimitNumber = number;
                 $scope.showLimitAlert = true;
                 $scope.countDown = 6;
@@ -172,10 +172,10 @@ angular.module('playlistsApp').controller('FeaturedController', [
      */
     $scope.revertAction = function () {
         if ($scope.articleOverLimitIndex !== undefined) {
-            $scope.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
+            $scope.$parent.featuredArticles.splice($scope.articleOverLimitIndex, 1);
             $scope.showLimitAlert = false;
             $scope.isCounting = false;
-            Playlist.removeItemFromLogList($scope.$parent.articleOverLimitNumber, 'link');
+            Playlist.removeItemFromLogList($scope.articleOverLimitNumber, 'link');
         }
     }
 
