@@ -50,8 +50,6 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 $scope.$parent.showLimitAlert = true;
                 $scope.$parent.countDown = 6;
                 $scope.$parent.startCountDown();
-
-                return true;
             }
 
             isInLogList = _.some(
@@ -82,9 +80,16 @@ angular.module('playlistsApp').controller('FeaturedController', [
         },
         onSort: function (evt/**Event*/){
             var article = evt.model;
-            article._order = evt.newIndex + 1;
-            article._method = "link";
-            Playlist.addItemToLogList(article);
+            var exists = _.some(
+                $scope.$parent.featuredArticles,
+                {number: article.number}
+            );
+
+            if (exists && evt.newIndex !== evt.oldIndex) {
+                article._order = evt.newIndex + 1;
+                article._method = "link";
+                Playlist.addItemToLogList(article);
+            }
         }
     };
 
