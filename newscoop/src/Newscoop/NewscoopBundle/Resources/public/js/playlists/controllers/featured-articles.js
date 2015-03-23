@@ -8,87 +8,173 @@
 angular.module('playlistsApp').controller('FeaturedController', [
     '$scope',
     'Playlist',
+    '$timeout',
     function (
         $scope,
-        Playlist
+        Playlist,
+        $timeout
     ) {
 
-    var canRemoveLastDroppedArticle = false;
     $scope.sortableConfig = {
         group: 'articles',
         animation: 150,
         onAdd: function (evt/**Event*/){
-            if (canRemoveLastDroppedArticle) {
-                $scope.$parent.featuredArticles.splice(evt.newIndex, 1);
-                canRemoveLastDroppedArticle = false;
-            }
-        },
-        onSort: function (evt/**Event*/){
-            var logList,
-                limit,
-                occurences = 0,
-                article = evt.model;
-            // only when sorting list of featured articles (playlist)
-            logList = Playlist.getLogList();
-
-            limit = $scope.$parent.playlist.selected.maxItems;
+         var item,
+            number,
+            occurences,
+            isInLogList = false,
+            limit;
+            item = evt.model; // the current dragged article
+            number = item.number;
+            occurences = 0;
             angular.forEach($scope.$parent.featuredArticles, function(value, key) {
-                if (value.number == article.number) {
+                if (value.number == number) {
                     occurences++;
                 }
             });
 
-            if (occurences > 0) {
-                canRemoveLastDroppedArticle = true;
-                //$scope.$parent.featuredArticles.splice(evt.newIndex, 1);
+            if (occurences > 1) {
+                $scope.$parent.featuredArticles.splice(evt.newIndex, 1);
+                Playlist.removeItemFromLogList(number, 'link');
                 flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
 
                 return true;
             }
 
-            // we need to call countDown function here again and check if the item already exist on the list,
-            // because in PlaylistController
-            // onEnd event doesnt work on Firefox, thus showing revert alert wont work.
-            // see: https://github.com/RubaXa/Sortable/issues/313
-            // we check if list length and limit equals because dropped item is not inserted into
-            // the list in onSort event yet
+            limit = $scope.$parent.playlist.selected.maxItems;
             // show alert with revert button
-            if (limit && limit != 0 && $scope.$parent.featuredArticles.length == limit) {
-                // make sure that the counter is not counting
-                // if using browser diffrent than FF, counter will be started in onEnd event
-                // thats why we need to check if it't not running already
-                if ($scope.$parent.isCounting === false) {
-                    // setting article order and increasing by 1 because in
-                    // onSort event item is not inserted into the list yet, which means
-                    // that the list length equals the length of existing items in it
-                    // (without the dragged-dropped one)
-                    article._order = evt.newIndex + 1;
-                    $scope.$parent.articleNotToRemove = article;
-                    $scope.$parent.articleOverLimitIndex = evt.newIndex;
-                    $scope.$parent.articleOverLimitNumber = article.number;
-                    $scope.$parent.showLimitAlert = true;
+            if (limit && limit != 0 && $scope.$parent.featuredArticles.length > limit) {
+                // article that shouldn't be removed, its needed to determine on
+                // which position it's placed so we can remove the last one elment
+                // from the list or the one before last - see removeLastArticle function
+                $scope.articleNotToRemove = item;
+                $scope.articleOverLimitIndex = evt.newIndex + 1;
+                $scope.articleOverLimitNumber = number;
+                $scope.showLimitAlert = true;
+                $scope.countDown = 6;
+                $scope.startCountDown();
 
-                    $scope.$parent.countDown = 6;
-                    $scope.$parent.startCountDown();
-
-                    return true;
-                }
+                return true;
             }
 
+            isInLogList = _.some(
+                Playlist.getLogList(),
+                {number: number, _method: 'unlink'}
+            );
+
+            if (!isInLogList) {
+                // this check prevents inserting duplicate article
+                // when it's drag from the available articles list.
+                // onSort event is executed before onEnd so in both of them it will
+                // insert the same value to the log list
+                isInLogList = _.some(
+                    Playlist.getLogList(),
+                    {number: number}
+                    );
+
+                if (!isInLogList) {
+                    // add article to log list, so we can save it later using batch save
+                    item._method = "link";
+                    item._order = evt.newIndex + 1;
+                    Playlist.addItemToLogList(item);
+                }
+            } else {
+                Playlist.removeItemFromLogList(number, 'unlink');
+            }
+
+        },
+        onSort: function (evt/**Event*/){
+            var article = evt.model;
             article._order = evt.newIndex + 1;
             article._method = "link";
             Playlist.addItemToLogList(article);
+
         }
     };
+
+    // stops, starts counter
+    $scope.isCounting = false;
+    $scope.showLimitAlert = false;
+
+    $scope.startCountDown = function () {
+        countDown();
+    }
+
+    /**
+     * This function count seconds after which revert popup will be closed
+     * and removes last article from the playlist if the limit is reached,
+     * inserts new article
+     */
+    var countDown = function(){
+       if($scope.isCounting) {
+            return;
+       }
+
+       $scope.isCounting = true;
+       (function countEvery() {
+            if ($scope.isCounting) {
+                $scope.countDown--;
+                $timeout(countEvery, 1000);
+                if ($scope.countDown === 0) {
+                    removeLastArticle();
+                }
+            }
+        }());
+    }
+
+    /**
+     * It removes last article from the playlist if the limit is reached,
+     * inserts new article. It is called from FeaturedController.
+     */
+    $scope.removeLastInsertNew = function () {
+        removeLastArticle();
+    }
+
+    /**
+     * It removes last article from the playlist if the limit is reached,
+     * inserts new article
+     */
+    var removeLastArticle =  function () {
+        // remove one before last article from the featured articles list
+        // when we drag-drop to the list as a last element, thats why we need to remove
+        // one before last article else remove last one (-1)
+        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 1];
+        if ($scope.articleNotToRemove._order == $scope.featuredArticles.length) {
+            articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        }
+
+        articleToRemove._method = "unlink";
+        _.remove(
+            $scope.featuredArticles,
+            {number: articleToRemove.number}
+        );
+
+        Playlist.addItemToLogList(articleToRemove);
+        var logList = Playlist.getLogList();
+
+        // we have to now replace last element with one before last in log list
+        // so it can be save in API in a proper order, actually we first add a
+        // new article to the featured articles list and then we unlink the last one.
+        // We need to do it in a reverse way, so we first unlink, and then add a new one.
+        var lastElement = logList[logList.length - 1];
+        var beforeLast = logList[logList.length - 2];
+
+        logList[logList.length - 1] = beforeLast;
+        logList[logList.length - 2] = lastElement;
+
+        Playlist.setLogList(logList);
+        $scope.showLimitAlert = false;
+        $scope.isCounting = false;
+    }
 
     /**
      * It reverts new article insertion over the playlist's limit
      */
     $scope.revertAction = function () {
-        if ($scope.$parent.articleOverLimitIndex !== undefined) {
-            $scope.$parent.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
-            $scope.$parent.showLimitAlert = false;
-            $scope.$parent.isCounting = false;
+        if ($scope.articleOverLimitIndex !== undefined) {
+            $scope.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
+            $scope.showLimitAlert = false;
+            $scope.isCounting = false;
             Playlist.removeItemFromLogList($scope.$parent.articleOverLimitNumber, 'link');
         }
     }
