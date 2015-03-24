@@ -34,6 +34,8 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 $app->register(new DoctrineOrmServiceProvider(), array(
     "orm.proxies_dir" => $newscoopDir."/library/Proxy",
+    "orm.auto_generate_proxies" => false,
+    "orm.proxies_namespace" => "Proxy",
     "orm.em.options" => array(
         "mappings" => array(
             array(
