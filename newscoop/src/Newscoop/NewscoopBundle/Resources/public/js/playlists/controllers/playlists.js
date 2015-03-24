@@ -548,6 +548,8 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
+            $scope.isEmpty = false;
+            $scope.page = 2;
             $activityIndicator.stopAnimating();
         }, function(response) {
             flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
