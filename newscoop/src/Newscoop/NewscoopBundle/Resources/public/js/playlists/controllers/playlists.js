@@ -49,70 +49,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         sort: false,
         animation: 150,
         handle: ".move-elements",
-        filter: ".ignore-elements",
-        onEnd: function (evt/**Event*/){
-            var item,
-            number,
-            occurences,
-            isInLogList = false,
-            limit;
-            item = evt.model; // the current dragged article
-            number = item.number;
-            occurences = 0;
-            angular.forEach($scope.featuredArticles, function(value, key) {
-                if (value.number == number) {
-                    occurences++;
-                }
-            });
-
-            if (occurences > 1) {
-                $scope.featuredArticles.splice(evt.newIndex, 1);
-                flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
-
-                return true;
-            }
-
-            limit = $scope.playlist.selected.maxItems;
-            // show alert with revert button
-            if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
-                // article that shouldn't be removed, its needed to determine on
-                // which position it's placed so we can remove the last one elment
-                // from the list or the one before last - see removeLastArticle function
-                $scope.articleNotToRemove = item;
-                $scope.articleOverLimitIndex = evt.newIndex;
-                $scope.articleOverLimitNumber = number;
-                $scope.showLimitAlert = true;
-                $scope.countDown = 6;
-                countDown();
-
-                return true;
-            }
-
-            isInLogList = _.some(
-                Playlist.getLogList(),
-                {number: number, _method: 'unlink'}
-            );
-
-            if (!isInLogList) {
-                // this check prevents inserting duplicate article
-                // when it's drag from the available articles list.
-                // onSort event is executed before onEnd so in both of them it will
-                // insert the same value to the log list
-                isInLogList = _.some(
-                    Playlist.getLogList(),
-                    {number: number}
-                    );
-
-                if (!isInLogList) {
-                    // add article to log list, so we can save it later using batch save
-                    item._method = "link";
-                    item._order = evt.newIndex + 1;
-                    Playlist.addItemToLogList(item);
-                }
-            } else {
-                Playlist.removeItemFromLogList(number, 'unlink');
-            }
-        }
+        filter: ".ignore-elements"
     };
 
     $scope.tableParams = new ngTableParams({
@@ -128,6 +65,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     // stops, starts counter
     $scope.isCounting = false;
+
+    $scope.startCountDown = function () {
+        countDown();
+    }
 
     /**
      * This function count seconds after which revert popup will be closed
@@ -181,16 +122,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.addItemToLogList(articleToRemove);
         var logList = Playlist.getLogList();
 
-        // find dropped article's in logList by number and decrease order by 1
-        // because we removed last article from the list, and we need to put dropped
-        // article to position of the last one, that was removed
-        angular.forEach(logList, function(value, key){
-            if (value.number == $scope.articleOverLimitNumber) {
-                value._order = value._order - 1;
-            }
-        });
-
-        Playlist.setLogList(logList);
         // we have to now replace last element with one before last in log list
         // so it can be save in API in a proper order, actually we first add a
         // new article to the featured articles list and then we unlink the last one.
@@ -253,14 +184,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             {number: $scope.articlePreview.number}
             );
 
-        if (isLimitReached()) {
-            flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.', {}, 'articles'
-            ), 'error');
-
-            return true;
-        }
-
         if (!exists) {
             var isInLogList = _.some(
                 Playlist.getLogList(),
@@ -272,6 +195,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             Playlist.addItemToLogList($scope.articlePreview);
             $scope.featuredArticles.unshift($scope.articlePreview);
             $scope.isViewing = false;
+
+            if (isLimitReached()) {
+                $scope.articleNotToRemove = $scope.articlePreview;
+                $scope.articleOverLimitIndex = 0;
+                $scope.articleOverLimitNumber = $scope.articlePreview.number;
+                $scope.showLimitAlert = true;
+                $scope.countDown = 6;
+                $scope.startCountDown();
+
+                return true;
+            }
         } else {
             flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
         }
@@ -285,14 +219,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.featuredArticles,
             {number: number}
             );
-
-        if (isLimitReached()) {
-            flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.', {}, 'articles'
-            ), 'error');
-
-            return true;
-        }
 
         if (!exists) {
             var article = undefined,
@@ -310,6 +236,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                     Playlist.addItemToLogList(article);
                     $scope.featuredArticles.unshift(article);
                     $scope.processing = false;
+
+                    if (isLimitReached()) {
+                        $scope.articleNotToRemove = article;
+                        $scope.articleOverLimitIndex = 0;
+                        $scope.articleOverLimitNumber = article.number;
+                        $scope.showLimitAlert = true;
+                        $scope.countDown = 6;
+                        $scope.startCountDown();
+
+                        return true;
+                    }
                 }, function() {
                     flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
                 });
@@ -327,7 +264,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * @return {Boolean}
      */
     var isLimitReached = function () {
-        var limit = $scope.playlist.selected.maxItems;
+        var limit = 0;
+        if ($scope.playlist.selected !== undefined) {
+            limit = $scope.playlist.selected.maxItems;
+        }
 
         return (limit && limit != 0 && $scope.featuredArticles.length >= limit);
     }
@@ -608,6 +548,8 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
+            $scope.isEmpty = false;
+            $scope.page = 2;
             $activityIndicator.stopAnimating();
         }, function(response) {
             flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');

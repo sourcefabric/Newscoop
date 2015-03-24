@@ -1,6 +1,6 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "articles" %}
-{% block admin_title %}{{ parent() }} - {{ 'topics.title'|trans }}{% endblock %}
+{% block admin_title %}{{ parent() }} - {{ 'Featured Article Lists'|trans }}{% endblock %}
 {% block admin_page_title_content %}{{ 'Featured Article Lists'|trans }}{% endblock %}
 {% block admin_page_title_box %}
   {% if editorView == false %}
@@ -189,7 +189,7 @@
                     <div loading-container="tableParams.settings().$loading">
                         <table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
                             <tbody ng-sortable="sortableConfig">
-                                <tr ng-repeat="article in $data" class="move-elements">
+                                <tr ng-repeat="article in $data track by article.number" class="move-elements">
                                     <td class="query" filter="{ 'query': 'text' }" sortable="query">
                                         <div class="context-item">
                                             <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
@@ -248,7 +248,7 @@
                                     <div id="placeholder-wrapper" {% if editorView == false %}ng-class="{'empty-placeholder': $parent.featuredArticles.length == 0}" {% endif %}>
                                     <p>{{ 'Drag here to add to list'|trans }}</p>
                                     <ul id="context_list" ng-sortable="sortableConfig">
-                                        <li class="item" ng-repeat="article in $parent.featuredArticles">
+                                        <li class="item" ng-repeat="article in $parent.featuredArticles track by article.number">
                                             <div class="context-item" {% if editorView %}style="width: 620px"{% endif %} >
                                                 <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
                                                 <div class="context-item-header">
@@ -278,7 +278,7 @@
                                 <!-- alert message start -->
                                 <div class="limit-alert-wrapper" ng-show="showLimitAlert">
                                     <div class="limit-alert">
-                                        <button type="button" class="close" ng-click="$parent.removeLastInsertNew()"><span aria-hidden="true">×</span></button>
+                                        <button type="button" class="close" ng-click="removeLastInsertNew()"><span aria-hidden="true">×</span></button>
                                         <div class="limit-alert-content">{{'Last item of the list has been deleted to add this item to the list. Revert?'|trans}} {[{countDown}]}...</div>
                                         <div class="limit-alert-footer">
                                             <button type="button" ng-click="revertAction()" name="revert" class="btn btn-sm btn-primary">{{'Revert'|trans}}</button>
