@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ImagesController extends Controller
 {
     /**
-     * @Route("get_img")
+     * @Route("get_img", name="newscoop_get_img")
      */
     public function indexAction(Request $request)
     {

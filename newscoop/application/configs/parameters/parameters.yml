@@ -21,6 +21,8 @@ parameters:
         view: ""
         modules:
             - ""
+        session:
+            throw_startup_exceptions: false
     pluginPaths:
         Resource: "%application_path%/../library/Resource"
     session:

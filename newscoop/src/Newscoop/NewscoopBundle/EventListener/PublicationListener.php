@@ -33,6 +33,8 @@ class PublicationListener
 
     public function onRequest(GetResponseEvent $event)
     {
-        $this->publicationService->publicationResolver($event->getRequest());
+        if ($event->getRequest()->get('_route') != 'newscoop_get_img') {
+            $this->publicationService->publicationResolver($event->getRequest());
+        }
     }
 }
