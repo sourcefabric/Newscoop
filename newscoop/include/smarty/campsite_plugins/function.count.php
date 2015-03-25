@@ -54,6 +54,11 @@ function smarty_function_count($p_params, &$p_smarty)
             $art_language_code = $art_language_obj->getCode();
         }
 
+        $count_automatically = true;
+        if (isset($p_params['dont_count_automatically'])) {
+            $count_automatically = false;
+        }
+
         if ((!$art_number) || (!$art_language_num)) {
             $meta_article = $campsite->article;
             if ($meta_article->defined) {
@@ -108,7 +113,7 @@ function smarty_function_count($p_params, &$p_smarty)
                     $article_number = $article->getProperty('Number');
                     $name_spec = '_' . $article_number . '_' . $art_language_code;
 
-                    $content .= \Statistics::JavaScriptTrigger(array('name_spec' => $name_spec, 'object_type_id' => $object_type_id, 'request_object_id' => $requestObjectId));
+                    $content .= \Statistics::JavaScriptTrigger(array('count_automatically' => $count_automatically,'name_spec' => $name_spec, 'object_type_id' => $object_type_id, 'request_object_id' => $requestObjectId));
                 }
         } catch (\Exception $ex) {
                 return '';

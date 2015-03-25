@@ -36,6 +36,12 @@ class OldPluginsTranslationListener
 
     public function onRequest(GetResponseEvent $event)
     {
+        $request = $event->getRequest();
+        $route = $request->attributes->get('_route');
+        if (strpos($route, 'newscoop_gimme_') === false || $route == 'newscoop_get_img') {
+            return;
+        }
+
         $locale = $event->getRequest()->getLocale();
         $cacheKey = 'oldPlugins_translations_'.count($this->pluginsService->getEnabledPlugins());
         if ($this->cacheService->contains($cacheKey)) {
