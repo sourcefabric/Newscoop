@@ -246,12 +246,15 @@ class ArticlesList extends ListObject
                         $locale = $context->language->code;
                         $topicObj = $repository->getTopicByIdOrName($word, $locale)->getOneOrNullResult();
                         if (!$topicObj) {
-                            CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
+                            $topicService = \Zend_Registry::get('container')->getService('topic');
+                            $topicObj = $topicService->getTopicByFullName($word);
+                            if (!$topicObj) {
+                                CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
 
-                            return false;
-                        } else {
-                            $value = $topicObj->getTopicId();
+                                return false;
+                            }
                         }
+                        $value = $topicObj->getTopicId();
                     } elseif ($attribute == 'author') {
                         if (strtolower($word) == '__current') {
                             $value = $context->article->author->name;
