@@ -4,6 +4,7 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
+
 namespace Newscoop\Entity;
 
 use DateTime;
@@ -44,14 +45,14 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="number")
+     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */
     protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @ORM\JoinColumn(name="NrSection", referencedColumnName="number")
+     * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     protected $section;
@@ -698,7 +699,7 @@ class Article implements DocumentInterface
     public function getFieldNames()
     {
         if ($this->data === null) {
-            return;
+            return null;
         }
 
         if (is_array($this->data)) {
@@ -904,7 +905,7 @@ class Article implements DocumentInterface
     public function getWebcode()
     {
         if (!$this->webcode) {
-            return;
+            return null;
         }
 
         return $this->webcode->getWebcode();
@@ -928,7 +929,7 @@ class Article implements DocumentInterface
     public function getKeywords()
     {
         if (!$this->keywords) {
-            return;
+            return null;
         }
 
         return (string) $this->keywords;
@@ -986,7 +987,7 @@ class Article implements DocumentInterface
     public function getPackages()
     {
         if (count($this->packages) == 0) {
-            return;
+            return null;
         }
 
         return $this->packages;
@@ -1009,7 +1010,7 @@ class Article implements DocumentInterface
     public function getTopics()
     {
         if (count($this->topics) == 0) {
-            return;
+            return null;
         }
 
         return $this->topics;
@@ -1024,6 +1025,7 @@ class Article implements DocumentInterface
      */
     public function addTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
+
         if (!$this->topics->contains($topic)) {
             $this->topics->add($topic);
             $topic->addArticleTopic($this);
@@ -1085,7 +1087,7 @@ class Article implements DocumentInterface
     public function getFields()
     {
         if (count($this->fields) == 0) {
-            return;
+            return null;
         }
 
         return $this->fields;
@@ -1108,7 +1110,7 @@ class Article implements DocumentInterface
     public function getTranslations()
     {
         if (count($this->translations) == 0) {
-            return;
+            return null;
         }
 
         return $this->translations;
@@ -1131,7 +1133,7 @@ class Article implements DocumentInterface
     public function getRenditions()
     {
         if (count($this->renditions) == 0) {
-            return;
+            return null;
         }
 
         return $this->renditions;
@@ -1218,7 +1220,7 @@ class Article implements DocumentInterface
     public function getAttachments()
     {
         if (count($this->attachments) == 0) {
-            return;
+            return null;
         }
 
         return $this->attachments;
@@ -1336,7 +1338,7 @@ class Article implements DocumentInterface
     private function setFieldValue($field, $value)
     {
         $this->initArticleData();
-        $this->data->setProperty('F'.$field, $value);
+        $this->data->setProperty('F' . $field, $value);
     }
 
     /**
@@ -1475,7 +1477,7 @@ class Article implements DocumentInterface
     public function getLockTime()
     {
         if (null === $this->lockTime) {
-            return;
+            return null;
         }
 
         return $this->lockTime;
@@ -1509,7 +1511,7 @@ class Article implements DocumentInterface
             'days' => $sinceStart->d,
             'hours' => $sinceStart->h,
             'minutes' => $sinceStart->i,
-            'seconds' => $sinceStart->s,
+            'seconds' => $sinceStart->s
         );
     }
 
@@ -1626,7 +1628,7 @@ class Article implements DocumentInterface
             }
 
             return $this;
-        } elseif (is_string($onFrontPage)) {
+        } else if (is_string($onFrontPage)) {
             $this->onFrontPage = $onFrontPage;
         } else {
             $this->onFrontPage = "N";
@@ -1662,11 +1664,12 @@ class Article implements DocumentInterface
             }
 
             return $this;
-        } elseif (is_string($onSection)) {
+        } else if (is_string($onSection)) {
             $this->onSection = $onFrontPage;
         } else {
             $this->onSection = "N";
         }
+
 
         return $this;
     }
