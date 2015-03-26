@@ -59,7 +59,7 @@ class ArticlesController extends FOSRestController
             $articleService = $this->container->get('newscoop_newscoop.article_service');
 
             $attributes = $form->getData();
-            $language = $em->getRepository('Newscoop\Entity\Language')->findOneBy(array('id' => $attributes['language']));
+            $language = $em->getRepository('Newscoop\Entity\Language')->findOneBy(array('id' => $attributes['languageId']));
             if (!$language) {
                 throw new EntityNotFoundException("Language was not found");
             }
@@ -69,16 +69,16 @@ class ArticlesController extends FOSRestController
                 throw new EntityNotFoundException("Article type was not found");
             }
 
-            $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneBy(array('id' => $attributes['publication']));
+            $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneBy(array('id' => $attributes['publicationId']));
             if (!$publication) {
                 throw new EntityNotFoundException("Publication was not found");
             }
 
             $issue = $em->getRepository('Newscoop\Entity\Issue')
-                ->findOneBy(array('publication' => $publication, 'id' => $attributes['issue']));
+                ->findOneBy(array('publication' => $publication, 'id' => $attributes['issueId']));
 
             $section = $em->getRepository('Newscoop\Entity\Section')
-                ->findOneBy(array('publication' => $publication, 'issue' => $issue, 'id' => $attributes['section']));
+                ->findOneBy(array('publication' => $publication, 'issue' => $issue, 'id' => $attributes['sectionId']));
 
             $article = $articleService->createArticle($articleType, $language, $user, $publication, $attributes, $issue, $section);
 

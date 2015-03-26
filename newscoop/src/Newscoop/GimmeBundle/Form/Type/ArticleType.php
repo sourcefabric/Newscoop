@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -27,16 +26,16 @@ class ArticleType extends AbstractType
         ->add('name', 'text', array(
             'required' => true,
         ))
-        ->add('language', 'text', array(
+        ->add('languageId', 'text', array(
             'required' => true,
         ))
-        ->add('publication', 'number', array(
+        ->add('publicationId', 'number', array(
             'required' => true,
         ))
-        ->add('issue', 'number', array(
+        ->add('issueId', 'number', array(
             'required' => false,
         ))
-        ->add('section', 'number', array(
+        ->add('sectionId', 'number', array(
             'required' => false,
         ))
         ->add('comments_enabled', 'integer', array(
