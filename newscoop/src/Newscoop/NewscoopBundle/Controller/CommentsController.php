@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,8 +33,13 @@ class CommentsController extends Controller
     {
         $userService = $this->get('user');
         $blogService = $this->get('blog');
-        $user = $userService->getCurrentUser();
-        if ($blogService->isBlogger($user)) {
+        try {
+            $user = $userService->getCurrentUser();
+        } catch (\Newscoop\NewscoopException $e) {
+            $user = null;
+        }
+
+        if (!$user || $blogService->isBlogger($user)) {
             throw new AccessDeniedException();
         }
 
@@ -80,7 +84,7 @@ class CommentsController extends Controller
                         'pagination' => $pagination,
                         'commentsArray' => $this->createCommentsArray($pagination, $imageService),
                         'filterForm' => $filterForm->createView(),
-                        'searchForm' => $searchForm->createView()
+                        'searchForm' => $searchForm->createView(),
                     );
                 }
             }
@@ -194,7 +198,7 @@ class CommentsController extends Controller
             'pagination' => $pagination,
             'commentsArray' => $this->createCommentsArray($pagination, $imageService),
             'filterForm' => $filterForm->createView(),
-            'searchForm' => $searchForm->createView()
+            'searchForm' => $searchForm->createView(),
         );
     }
 
@@ -225,10 +229,10 @@ class CommentsController extends Controller
                     $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
                     if ($status == "deleted") {
                         $message = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
-                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode()), 'new_comments');
+                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), ), 'new_comments');
                     } else {
                         $message = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
-                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status), 'new_comments');
+                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status, ), 'new_comments');
                     }
                 }
 
@@ -244,7 +248,7 @@ class CommentsController extends Controller
             return new JsonResponse(array(
                 'message' => $message,
                 'comments' => $comments,
-                'status' => $status
+                'status' => $status,
             ));
         }
     }
@@ -274,12 +278,12 @@ class CommentsController extends Controller
                 $em->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(array(
-                    'status' => $e->getMessage()
+                    'status' => $e->getMessage(),
                 ));
             }
 
             return new JsonResponse(array(
-                'status' => true
+                'status' => true,
             ));
         }
     }
@@ -342,7 +346,7 @@ class CommentsController extends Controller
                 'status' => true,
                 'comment' => $id,
                 'subject' => $values['subject'],
-                'message' => $values['message']
+                'message' => $values['message'],
             ));
         }
     }
@@ -360,7 +364,7 @@ class CommentsController extends Controller
         if ($article) {
             $filter = array(
                 'thread' => $article,
-                'language' => $language
+                'language' => $language,
             );
         } elseif ($comment) {
             $filter = array('id' => $comment);
@@ -371,7 +375,7 @@ class CommentsController extends Controller
             'iDisplayStart' => $request->request->get('iDisplayStart') != null ? $request->request->get('iDisplayStart') : 0,
             'iDisplayLength' => $request->request->get('iDisplayLength'),
             'iSortCol_0' => 0,
-            'sSortDir_0' => 'desc'
+            'sSortDir_0' => 'desc',
         );
 
         $commentService = $this->container->get('comment');
@@ -393,7 +397,7 @@ class CommentsController extends Controller
             );
         }
 
-       return new JsonResponse(array('result' => $result));
+        return new JsonResponse(array('result' => $result));
     }
 
     /**
