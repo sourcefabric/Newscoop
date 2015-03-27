@@ -19,11 +19,11 @@ class PublicResourcesListener
     protected $serverService;
     protected $security;
 
-    public function __construct($em, $serverService, $security)
+    public function __construct($container)
     {
-        $this->em = $em;
-        $this->serverService = $serverService;
-        $this->security = $security;
+        $this->em = $container->get('em');
+        $this->serverService = $container->get('fos_oauth_server.server');
+        $this->security = $container->get('security.context');
     }
 
     public function onRequest(GetResponseEvent $event)
