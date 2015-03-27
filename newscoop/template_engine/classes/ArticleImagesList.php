@@ -38,7 +38,6 @@ class ArticleImagesList extends ListObject
             implode('-', $this->m_order),
             $p_start,
             $p_limit,
-            implode('-', $p_parameters),
             $p_count
         ), 'article_image');
 

@@ -985,22 +985,6 @@ class ArticleTypeField extends DatabaseObject
     {
         global $g_ado_db;
 
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-            $paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
-            $paramsArray['article_type'] = (is_null($p_articleType)) ? 'null' : $p_articleType;
-            $paramsArray['data_type'] = (is_null($p_dataType)) ? 'null' : $p_dataType;
-            $paramsArray['negate_name'] = ($p_negateName == false) ? 'false' : 'true';
-            $paramsArray['negate_article_type'] = ($p_negateArticleType == false) ? 'false' : 'true';
-            $paramsArray['negate_data_type'] = ($p_negateDataType == false) ? 'false' : 'true';
-            $paramsArray['select_hidden'] = ($p_selectHidden == false)? 'false' : 'true';
-            $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-            $articleTypeFieldsList = $cacheListObj->fetchFromCache();
-            if ($articleTypeFieldsList !== false
-            && is_array($articleTypeFieldsList)) {
-                return $articleTypeFieldsList;
-            }
-        }
-
         $whereClauses = array();
         if (isset($p_name)) {
             $operator = $p_negateName ? '<>' : '=';
@@ -1017,28 +1001,26 @@ class ArticleTypeField extends DatabaseObject
         if (!$p_selectHidden) {
             $whereClauses[] = 'is_hidden = false';
         }
-        $where = count($whereClauses) > 0 ? ' WHERE ' . implode(' and ', $whereClauses) : null;
-        $query = "SELECT * FROM `ArticleTypeMetadata` $where ORDER BY type_name ASC, field_weight ASC";
-        $rows = $g_ado_db->GetAll($query);
-        $fields = array();
-        foreach ($rows as $row) {
-            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('article_type_field', $row['type_name'], $row['field_name']), 'article_type');
-            if ($cacheService->contains($cacheKey)) {
-                 $field = $cacheService->fetch($cacheKey);
-            } else {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('article_type_fields'), 'article_type');
+        if ($cacheService->contains($cacheKey)) {
+             $fields = $cacheService->fetch($cacheKey);
+        } else {
+            $where = count($whereClauses) > 0 ? ' WHERE ' . implode(' and ', $whereClauses) : null;
+            $query = "SELECT * FROM `ArticleTypeMetadata` $where ORDER BY type_name ASC, field_weight ASC";
+            $rows = $g_ado_db->GetAll($query);
+            $fields = array();
+            foreach ($rows as $row) {
                 $field = new ArticleTypeField($row['type_name'], $row['field_name']);
-                $cacheService->save($cacheKey, $field);
+                if ($field->getPrintName() == '') {
+                    $field->delete();
+
+                    continue;
+                }
+                $fields[] = $field;
             }
 
-            if ($field->getPrintName() == '') {
-                $field->delete();
-                continue;
-            }
-            $fields[] = $field;
-        }
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-            $cacheListObj->storeInCache($fields);
+            $cacheService->save($cacheKey, $fields);
         }
 
         return $fields;

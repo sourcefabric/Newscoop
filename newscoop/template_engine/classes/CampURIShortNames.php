@@ -280,39 +280,27 @@ class CampURIShortNames extends CampURI
     private function _getIssue($name, MetaLanguage $language, MetaPublication $publication)
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKeyGetCurrentIssue = $cacheService->getCacheKey(array('GetCurrentIssue', $publication->identifier, $language->number), 'issue');
-        if ($cacheService->contains($cacheKeyGetCurrentIssue)) {
-            $issueObj = $cacheService->fetch($cacheKeyGetCurrentIssue);
-        } else {
-            $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
-            $cacheService->save($cacheKeyGetCurrentIssue, $issueObj);
+        $issueKey = $cacheService->getCacheKey(array('metaIssue', $name, $publication->identifier, $language->number), 'issue');
+        if ($cacheService->contains($issueKey)) {
+            return $cacheService->fetch($issueKey);
         }
+
+        $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
         if (!empty($name)) {
-            $cacheKeyIssueWithName = $cacheService->getCacheKey(array('MetaIssueWithName', $publication->identifier, $language->number, $name), 'issue');
-            if ($cacheService->contains($cacheKeyIssueWithName)) {
-                $issue = $cacheService->fetch($cacheKeyIssueWithName);
+            $issueArray = Issue::GetIssues($publication->identifier, $language->number, null, $name, null, !$this->m_preview);
+            if (is_array($issueArray) && sizeof($issueArray) == 1) {
+                $issue = new MetaIssue($publication->identifier, $language->number, $issueArray[0]->getIssueNumber());
             } else {
-                //$issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
-                $issueArray = Issue::GetIssues($publication->identifier, $language->number, null, $name, null, !$this->m_preview);
-                if (is_array($issueArray) && sizeof($issueArray) == 1) {
-                    $issue = new MetaIssue($publication->identifier, $language->number, $issueArray[0]->getIssueNumber());
-                } else {
-                    throw new InvalidArgumentException("Invalid issue identifier in URL.", self::INVALID_ISSUE);
-                }
-                $cacheService->save($cacheKeyIssueWithName, $issue);
+                throw new InvalidArgumentException("Invalid issue identifier in URL.", self::INVALID_ISSUE);
             }
         } else {
-            $cacheKeyMetaIssue = $cacheService->getCacheKey(array('MetaIssue', $publication->identifier, $language->number, $issueObj->getIssueNumber()), 'issue');
-            if ($cacheService->contains($cacheKeyMetaIssue)) {
-                $issue = $cacheService->fetch($cacheKeyMetaIssue);
-            } else {
-                $issue = new MetaIssue($publication->identifier, $language->number, $issueObj->getIssueNumber());
-                $cacheService->save($cacheKeyMetaIssue, $issue);
-            }
+            $issue = new MetaIssue($publication->identifier, $language->number, $issueObj->getIssueNumber());
             if (!$issue->defined()) {
                 throw new InvalidArgumentException("No published issue was found.", self::INVALID_ISSUE);
             }
         }
+
+        $cacheService->save($issueKey, $issue);
 
         return $issue;
     }

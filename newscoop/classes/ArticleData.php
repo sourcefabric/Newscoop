@@ -164,18 +164,20 @@ class ArticleData extends DatabaseObject
             return array();
         }
 
-        if (is_null($this->m_articleTypeObject)) {
-            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey('article_type_'.$this->m_articleTypeName, 'article_type');
-            if ($cacheService->contains($cacheKey)) {
-                $this->m_articleTypeObject = $cacheService->fetch($cacheKey);
-            } else {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey('article_type_'.$this->m_articleTypeName.'_defined_columns', 'article_type');
+        if ($cacheService->contains($cacheKey)) {
+            $definedColumns = $cacheService->fetch($cacheKey);
+        } else {
+            if (is_null($this->m_articleTypeObject)) {
                 $this->m_articleTypeObject = new ArticleType($this->m_articleTypeName);
-                $cacheService->save($cacheKey, $this->m_articleTypeObject);
             }
+
+            $definedColumns = $this->m_articleTypeObject->getUserDefinedColumns(null, $p_showAll, $p_skipCache);
+            $cacheService->save($cacheKey, $definedColumns);
         }
 
-        return $this->m_articleTypeObject->getUserDefinedColumns(null, $p_showAll, $p_skipCache);
+        return $definedColumns;
     }
 
     /**
