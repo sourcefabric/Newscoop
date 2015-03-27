@@ -33,13 +33,9 @@ class CommentsController extends Controller
     {
         $userService = $this->get('user');
         $blogService = $this->get('blog');
-        try {
-            $user = $userService->getCurrentUser();
-        } catch (\Newscoop\NewscoopException $e) {
-            $user = null;
-        }
+        $user = $userService->getCurrentUser();
 
-        if (!$user || $blogService->isBlogger($user)) {
+        if ($blogService->isBlogger($user)) {
             throw new AccessDeniedException();
         }
 
