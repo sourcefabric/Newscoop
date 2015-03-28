@@ -4,19 +4,18 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Newscoop\Entity\User;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
-use Newscoop\NewscoopException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Newscoop\Exception\AuthenticationException;
 
 /**
  * User service
@@ -73,13 +72,13 @@ class UserService
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
                     $currentUser = $this->security->getToken()->getUser();
-                    if ($this->security->isGranted('IS_AUTHENTICATED_FULLY') ) {
+                    if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
                         $this->currentUser = $currentUser;
                     } else {
-                        throw new NewscoopException("User is not Authenticated", 1);
+                        throw new AuthenticationException();
                     }
                 } else {
-                    throw new NewscoopException("User was not found", 1);
+                    throw new AuthenticationException();
                 }
             }
         }
@@ -141,7 +140,7 @@ class UserService
         $qb->setMaxResults($limit);
 
         if (!empty($criteria['q'])) {
-            $q = $qb->expr()->literal('%' . $criteria['q'] . '%');
+            $q = $qb->expr()->literal('%'.$criteria['q'].'%');
             $qb->andWhere($qb->expr()->orX(
                 $qb->expr()->like('u.username', $q),
                 $qb->expr()->like('u.email', $q)
@@ -268,7 +267,7 @@ class UserService
         }
 
         $user = new User();
-        $user->setUsername(trim($firstName) . ' ' . trim($lastName));
+        $user->setUsername(trim($firstName).' '.trim($lastName));
         $username = $user->getUsername();
 
         for ($i = '';; $i++) {
