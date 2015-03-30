@@ -984,8 +984,9 @@ class ArticleTypeField extends DatabaseObject
     $p_negateDataType = false, $p_selectHidden = true, $p_skipCache = false)
     {
         global $g_ado_db;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 
-        if (!$p_skipCache && CampCache::IsEnabled()) {
+        if (!$p_skipCache) {
             $paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
             $paramsArray['article_type'] = (is_null($p_articleType)) ? 'null' : $p_articleType;
             $paramsArray['data_type'] = (is_null($p_dataType)) ? 'null' : $p_dataType;
@@ -993,11 +994,14 @@ class ArticleTypeField extends DatabaseObject
             $paramsArray['negate_article_type'] = ($p_negateArticleType == false) ? 'false' : 'true';
             $paramsArray['negate_data_type'] = ($p_negateDataType == false) ? 'false' : 'true';
             $paramsArray['select_hidden'] = ($p_selectHidden == false)? 'false' : 'true';
-            $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-            $articleTypeFieldsList = $cacheListObj->fetchFromCache();
-            if ($articleTypeFieldsList !== false
-            && is_array($articleTypeFieldsList)) {
-                return $articleTypeFieldsList;
+            $paramsArray['method'] = __METHOD__;
+
+            $cacheKey = $cacheService->getCacheKey($paramsArray, 'article_type');
+            if ($cacheService->contains($cacheKey)) {
+                $articleTypeFieldsList = $cacheService->fetch($cacheKey);
+                if ($articleTypeFieldsList !== false && is_array($articleTypeFieldsList)) {
+                    return $articleTypeFieldsList;
+                }
             }
         }
 
@@ -1020,25 +1024,19 @@ class ArticleTypeField extends DatabaseObject
         $where = count($whereClauses) > 0 ? ' WHERE ' . implode(' and ', $whereClauses) : null;
         $query = "SELECT * FROM `ArticleTypeMetadata` $where ORDER BY type_name ASC, field_weight ASC";
         $rows = $g_ado_db->GetAll($query);
+
         $fields = array();
         foreach ($rows as $row) {
-            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('article_type_field', $row['type_name'], $row['field_name']), 'article_type');
-            if ($cacheService->contains($cacheKey)) {
-                 $field = $cacheService->fetch($cacheKey);
-            } else {
-                $field = new ArticleTypeField($row['type_name'], $row['field_name']);
-                $cacheService->save($cacheKey, $field);
-            }
-
+            $field = new ArticleTypeField($row['type_name'], $row['field_name']);
             if ($field->getPrintName() == '') {
                 $field->delete();
                 continue;
             }
             $fields[] = $field;
         }
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-            $cacheListObj->storeInCache($fields);
+
+        if (!$p_skipCache) {
+            $cacheService->save($cacheKey, $fields);
         }
 
         return $fields;
