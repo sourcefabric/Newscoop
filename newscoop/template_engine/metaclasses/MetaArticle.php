@@ -730,13 +730,23 @@ final class MetaArticle extends MetaDbObject
      */
     protected function getSEOURLEnd()
     {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('seo_url_end', $this->m_dbObject->getProperty('IdPublication')), 'publication');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        }
+
         $pubSeo = $this->getPublication()->seo;
         $lanNum = $this->getLanguage()->number;
         if (empty($pubSeo) || empty($lanNum)) {
+            $cacheService->save($cacheKey, '');
             return '';
         }
 
-        return $this->m_dbObject->getSEOURLEnd($pubSeo, $lanNum);
+        $seoUrlEnd = $this->m_dbObject->getSEOURLEnd($pubSeo, $lanNum);
+        $cacheService->save($cacheKey, $seoUrlEnd);
+
+        return $seoUrlEnd;
     }
 
     protected function getTypeTranslated()
