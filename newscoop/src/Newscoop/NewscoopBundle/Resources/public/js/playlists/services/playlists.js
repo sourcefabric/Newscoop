@@ -175,7 +175,7 @@ angular.module('playlistsApp').factory('Playlist', [
             postParams = parseAndBuildParams(logList);
 
             if (playlist.articlesModificationTime !== undefined) {
-            	playlistDateTime = new Date(playlist.articlesModificationTime);
+            	playlistDateTime = playlist.articlesModificationTime;
             }
 
             $http({
@@ -196,7 +196,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
 			        // send also datetime to see if playlist is locked by diffrent user
 			        if (playlistDateTime !== undefined) {
-			    		str.push("articlesModificationTime=" + $filter('date')(playlistDateTime, 'yyyy-MM-ddTHH:mm:ss'));
+			    		str.push("articlesModificationTime=" + playlistDateTime);
 			    	} else {
 			    		str.push("articlesModificationTime=" + $filter('date')(now, 'yyyy-MM-ddTHH:mm:ss'));
 			    	}

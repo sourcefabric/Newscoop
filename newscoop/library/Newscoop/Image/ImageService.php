@@ -117,15 +117,15 @@ class ImageService
         $this->fillImage($image, $attributes);
         $this->orm->flush();
 
-        $imagePath = $this->generateImagePath($image->getId(), $file->getClientOriginalExtension());
-        $thumbnailPath = $this->generateThumbnailPath($image->getId(), $file->getClientOriginalExtension());
+        $imagePath = $this->generateImagePath($image->getId(), strtolower($file->getClientOriginalExtension()));
+        $thumbnailPath = $this->generateThumbnailPath($image->getId(), strtolower($file->getClientOriginalExtension()));
 
-        $image->setBasename($this->generateImagePath($image->getId(), $file->getClientOriginalExtension(), true));
-        $image->setThumbnailPath($this->generateThumbnailPath($image->getId(), $file->getClientOriginalExtension(), true));
+        $image->setBasename($this->generateImagePath($image->getId(), strtolower($file->getClientOriginalExtension()), true));
+        $image->setThumbnailPath($this->generateThumbnailPath($image->getId(), strtolower($file->getClientOriginalExtension()), true));
         $this->orm->flush();
 
         try {
-            $file->move($this->config['image_path'], $this->generateImagePath($image->getId(), $file->getClientOriginalExtension(), true));
+            $file->move($this->config['image_path'], $this->generateImagePath($image->getId(), strtolower($file->getClientOriginalExtension()), true));
             $filesystem->chmod($imagePath, 0644);
 
             if ($keepRatio) {
