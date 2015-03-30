@@ -26,17 +26,21 @@ class ArticleType extends AbstractType
         ->add('name', 'text', array(
             'required' => true,
         ))
-        ->add('languageId', 'text', array(
+        ->add('language', 'text', array(
             'required' => true,
+            'description' => 'Language identifier',
         ))
-        ->add('publicationId', 'number', array(
+        ->add('publication', 'number', array(
             'required' => true,
+            'description' => 'Publication identifier',
         ))
-        ->add('issueId', 'number', array(
+        ->add('issue', 'number', array(
             'required' => false,
+            'description' => 'Issue identifier',
         ))
-        ->add('sectionId', 'number', array(
+        ->add('section', 'number', array(
             'required' => false,
+            'description' => 'Section identifier',
         ))
         ->add('comments_enabled', 'integer', array(
             'required' => false,
@@ -46,6 +50,7 @@ class ArticleType extends AbstractType
         ))
         ->add('type', 'text', array(
             'required' => true,
+            'description' => 'Article type (e.g. news)',
         ))
         ->add('onFrontPage', 'integer', array(
             'required' => false,
