@@ -165,11 +165,17 @@ class ArticleService
         $article->setPublication($publication);
         $article->setType($articleType);
         $article->setCreator($user);
+        $article->setIssueId(0);
+        $article->setSectionId(0);
+        if (!is_null($issue)) {
+            $article->setIssueId($issue->getId());
+            $article->setIssue($issue);
+        }
 
-        $article->setIssueId((!is_null($issue)) ? $issue->getId() : 0);
-        $article->setSectionId((!is_null($section)) ? $section->getId() : 0);
-        $article->setIssue($issue);
-        $article->setSection($section);
+        if (!is_null($section)) {
+            $article->setSectionId($section->getId());
+            $article->setSection($section);
+        }
 
         $this->updateArticleMeta($article, $attributes);
 
