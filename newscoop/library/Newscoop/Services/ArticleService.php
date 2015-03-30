@@ -5,7 +5,6 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
@@ -89,7 +88,7 @@ class ArticleService
 
         // Articles are allways under newscoop_zendbridge_bridge_index_3 route
         if ($request->attributes->get('_route') != 'newscoop_zendbridge_bridge_index_3') {
-            return null;
+            return;
         }
 
         // if key 4 does not exist, it's probably not an article
@@ -99,7 +98,7 @@ class ArticleService
             $articleInfo['section'] = $uriExplode[3];
 
             $query = $this->em->createQuery('SELECT a, p, i, s FROM Newscoop\Entity\Article a LEFT JOIN a.packages p LEFT JOIN a.issue i LEFT JOIN a.section s LEFT JOIN a.language l WHERE a.number = :number AND l.code = :code');
-            $article = $query->setParameters(array('number'=> $articleInfo['id'], 'code' => $articleInfo['lang']))
+            $article = $query->setParameters(array('number' => $articleInfo['id'], 'code' => $articleInfo['lang']))
                 ->getArrayResult();
 
             if (!empty($article)) {
@@ -118,10 +117,10 @@ class ArticleService
 
                 return true;
             } else {
-                return null;
+                return;
             }
         } else {
-            return null;
+            return;
         }
     }
 
@@ -154,7 +153,6 @@ class ArticleService
                 ->getMinArticleOrder($publication, $issue, $section)
                 ->getSingleScalarResult();
 
-
             $increment = $minArticleOrder > 0 ? 1 : 2;
             $this->em->getRepository('Newscoop\Entity\Article')
                 ->updateArticleOrder($increment, $publication, $issue, $section)
@@ -162,13 +160,22 @@ class ArticleService
 
             $articleOrder = 1;
         }
+
         $article->setArticleOrder($articleOrder);
         $article->setPublication($publication);
         $article->setType($articleType);
         $article->setCreator($user);
+        $article->setIssueId(0);
+        $article->setSectionId(0);
+        if (!is_null($issue)) {
+            $article->setIssueId($issue->getId());
+            $article->setIssue($issue);
+        }
 
-        $article->setIssueId((!is_null($issue)) ? $issue->getId() : 0);
-        $article->setSectionId((!is_null($section)) ? $section->getId() : 0);
+        if (!is_null($section)) {
+            $article->setSectionId($section->getId());
+            $article->setSection($section);
+        }
 
         $this->updateArticleMeta($article, $attributes);
 
@@ -252,12 +259,12 @@ class ArticleService
             'name' => $articleTitle,
             'publication' => $publication,
             'issue' => $issue,
-            'section' => $section
+            'section' => $section,
         ));
 
         if (count($conflictingArticles) > 0) {
             throw new \Newscoop\Exception\ResourcesConflictException(
-                "You cannot have two articles in the same section with the same name. The article name you specified is already in use by the article ".$conflictingArticles[0]->getNumber() ." '".$conflictingArticles[0]->getName()."'"
+                "You cannot have two articles in the same section with the same name. The article name you specified is already in use by the article ".$conflictingArticles[0]->getNumber()." '".$conflictingArticles[0]->getName()."'"
             );
         }
 

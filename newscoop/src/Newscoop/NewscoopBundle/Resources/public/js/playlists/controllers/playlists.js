@@ -23,18 +23,19 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $activityIndicator
         ) {
 
-        $scope.isViewing = false;
-        $scope.playlist = {};
-        $scope.playlists = [];
-        $scope.playlistInfo = undefined;
-        $scope.featuredArticles = [];
-        $scope.formData = {};
-        $scope.processing = false;
-        $scope.playlist.selected = undefined;
-        // limit var, which is set to false by FeaturedController
-        // when provided limit is invalid
-        $scope.playlistLimit = true;
-        $scope.showLimitAlert = false;
+    $scope.isViewing = false;
+    $scope.playlist = {};
+    $scope.playlists = [];
+    $scope.playlistInfo = undefined;
+    $scope.featuredArticles = [];
+    $scope.formData = {};
+    $scope.processing = false;
+    $scope.playlist.selected = undefined;
+    // limit var, which is set to false by FeaturedController
+    // when provided limit is invalid
+    $scope.playlistLimit = true;
+    $scope.showLimitAlert = false;
+    var countDownTimeInSeconds = 11;
 
     // array of the articles,
     // that will be removed or added to the list
@@ -188,24 +189,22 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             var isInLogList = _.some(
                 Playlist.getLogList(),
                 {number: $scope.articlePreview.number}
-                );
-
-            $scope.articlePreview._method = "link";
-            $scope.articlePreview._order = 1;
-            Playlist.addItemToLogList($scope.articlePreview);
-            $scope.featuredArticles.unshift($scope.articlePreview);
-            $scope.isViewing = false;
+            );
 
             if (isLimitReached()) {
                 $scope.articleNotToRemove = $scope.articlePreview;
                 $scope.articleOverLimitIndex = 0;
                 $scope.articleOverLimitNumber = $scope.articlePreview.number;
                 $scope.showLimitAlert = true;
-                $scope.countDown = 6;
+                $scope.countDown = countDownTimeInSeconds;
                 $scope.startCountDown();
-
-                return true;
             }
+
+            $scope.articlePreview._method = "link";
+            $scope.articlePreview._order = 1;
+            Playlist.addItemToLogList($scope.articlePreview);
+            $scope.featuredArticles.unshift($scope.articlePreview);
+            $scope.isViewing = false;
         } else {
             flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
         }
@@ -231,22 +230,20 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
             if (!isInLogList) {
                 Playlist.getArticle(number, language).then(function (article) {
-                    article._method = "link";
-                    article._order = 1;
-                    Playlist.addItemToLogList(article);
-                    $scope.featuredArticles.unshift(article);
-                    $scope.processing = false;
-
                     if (isLimitReached()) {
                         $scope.articleNotToRemove = article;
                         $scope.articleOverLimitIndex = 0;
                         $scope.articleOverLimitNumber = article.number;
                         $scope.showLimitAlert = true;
-                        $scope.countDown = 6;
+                        $scope.countDown = countDownTimeInSeconds;
                         $scope.startCountDown();
-
-                        return true;
                     }
+
+                    article._method = "link";
+                    article._order = 1;
+                    Playlist.addItemToLogList(article);
+                    $scope.featuredArticles.unshift(article);
+                    $scope.processing = false;
                 }, function() {
                     flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
                 });
@@ -276,24 +273,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * Saves playlist from the article edit screen view
      */
     $scope.savePlaylistInEditorMode = function () {
-        var logList = [];
-        $scope.processing = true;
-        logList = Playlist.getLogList();
-        if (logList.length == 0) {
-            flashMessage(Translator.trans('List saved', {}, 'articles'));
-            $scope.processing = false;
-
-            return true;
-        }
-
-        Playlist.batchUpdate(logList, $scope.playlist.selected)
-        .then(function () {
-            flashMessage(Translator.trans('List saved', {}, 'articles'));
-            Playlist.clearLogList();
-            $scope.processing = false;
-        }, function() {
-            flashMessage(Translator.trans('Could not save the list', {}, 'articles'), 'error');
-        });
+        saveList();
     }
 
     // page variable is needed for fetching articles on scroll in playlist box

@@ -77,6 +77,7 @@ fos_rest:
             'Newscoop\Exception\ResourceNotModifiedException': 304
             'Newscoop\NewscoopException': 500
             'OAuth2\OAuth2AuthenticateException': 401
+            'Newscoop\Exception\AuthenticationException': 401
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
             'Newscoop\Exception\InvalidParametersException': true
@@ -89,6 +90,7 @@ fos_rest:
             'Newscoop\Exception\ResourceNotModifiedException': false
             'OAuth2\OAuth2AuthenticateException': true
             'Newscoop\NewscoopException': true
+            'Newscoop\Exception\AuthenticationException': true
 
 fos_oauth_server:
     service:
