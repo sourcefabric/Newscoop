@@ -13,6 +13,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
         Playlist
     ) {
 
+    var countDownTimeInSeconds = 11;
     $scope.sortableConfig = {
         group: 'articles',
         animation: 150,
@@ -48,7 +49,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 $scope.$parent.articleOverLimitIndex = evt.newIndex;
                 $scope.$parent.articleOverLimitNumber = number;
                 $scope.$parent.showLimitAlert = true;
-                $scope.$parent.countDown = 6;
+                $scope.$parent.countDown = countDownTimeInSeconds;
                 $scope.$parent.startCountDown();
             }
 
@@ -76,16 +77,16 @@ angular.module('playlistsApp').controller('FeaturedController', [
             } else {
                 Playlist.removeItemFromLogList(number, 'unlink');
             }
-
         },
         onSort: function (evt/**Event*/){
             var article = evt.model;
-            var exists = _.some(
+            var articleInList = _.find(
                 $scope.$parent.featuredArticles,
                 {number: article.number}
             );
 
-            if (exists && evt.newIndex !== evt.oldIndex) {
+            if (articleInList !== undefined && evt.newIndex !== evt.oldIndex) {
+                Playlist.removeItemFromLogList(articleInList.number, 'link');
                 article._order = evt.newIndex + 1;
                 article._method = "link";
                 Playlist.addItemToLogList(article);
