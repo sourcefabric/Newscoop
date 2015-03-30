@@ -36,7 +36,7 @@ final class MetaSection extends MetaDbObject {
         $this->m_customProperties = self::$m_defaultCustomProperties;
         $this->m_skipFilter = array('description');
 
-        if ($p_publicationId & $p_issueNumber & $p_languageId & $p_sectionNumber = null) {
+        if (is_null($p_publicationId) && is_null($p_issueNumber) && is_null($p_languageId) && is_null($p_sectionNumber)) {
             $this->m_dbObject = new Section();
 
             return;
