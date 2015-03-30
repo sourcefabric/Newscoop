@@ -77,16 +77,16 @@ angular.module('playlistsApp').controller('FeaturedController', [
             } else {
                 Playlist.removeItemFromLogList(number, 'unlink');
             }
-
         },
         onSort: function (evt/**Event*/){
             var article = evt.model;
-            var exists = _.some(
+            var articleInList = _.find(
                 $scope.$parent.featuredArticles,
                 {number: article.number}
             );
 
-            if (exists && evt.newIndex !== evt.oldIndex) {
+            if (articleInList !== undefined && evt.newIndex !== evt.oldIndex) {
+                Playlist.removeItemFromLogList(articleInList.number, 'link');
                 article._order = evt.newIndex + 1;
                 article._method = "link";
                 Playlist.addItemToLogList(article);
