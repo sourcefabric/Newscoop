@@ -15,15 +15,11 @@ use OAuth2\OAuth2AuthenticateException;
 
 class PublicResourcesListener
 {
-    protected $em;
-    protected $serverService;
-    protected $security;
+    protected $container;
 
     public function __construct($container)
     {
-        $this->em = $container->get('em');
-        $this->serverService = $container->get('fos_oauth_server.server');
-        $this->security = $container->get('security.context');
+        $this->container = $container;
     }
 
     public function onRequest(GetResponseEvent $event)
@@ -34,7 +30,7 @@ class PublicResourcesListener
             return;
         }
 
-        $unprotected = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
+        $unprotected = $this->container->get('em')->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
         $rootsArray = array(
             'newscoop_gimme_users_login',
             'newscoop_gimme_users_logout',
@@ -49,11 +45,11 @@ class PublicResourcesListener
 
         if (!$unprotected &&
             strpos($route, 'newscoop_gimme_') !== false &&
-            false === $this->security->isGranted('IS_AUTHENTICATED_FULLY')
+            false === $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')
          ) {
             throw new OAuth2AuthenticateException(OAuth2::HTTP_UNAUTHORIZED,
                 OAuth2::TOKEN_TYPE_BEARER,
-                $this->serverService->getVariable(OAuth2::CONFIG_WWW_REALM),
+                $this->container->get('fos_oauth_server.server')->getVariable(OAuth2::CONFIG_WWW_REALM),
                 'OAuth2 authentication required'
             );
         }
