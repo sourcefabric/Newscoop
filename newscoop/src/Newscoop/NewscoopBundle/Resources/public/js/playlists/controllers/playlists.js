@@ -23,18 +23,19 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $activityIndicator
         ) {
 
-        $scope.isViewing = false;
-        $scope.playlist = {};
-        $scope.playlists = [];
-        $scope.playlistInfo = undefined;
-        $scope.featuredArticles = [];
-        $scope.formData = {};
-        $scope.processing = false;
-        $scope.playlist.selected = undefined;
-        // limit var, which is set to false by FeaturedController
-        // when provided limit is invalid
-        $scope.playlistLimit = true;
-        $scope.showLimitAlert = false;
+    $scope.isViewing = false;
+    $scope.playlist = {};
+    $scope.playlists = [];
+    $scope.playlistInfo = undefined;
+    $scope.featuredArticles = [];
+    $scope.formData = {};
+    $scope.processing = false;
+    $scope.playlist.selected = undefined;
+    // limit var, which is set to false by FeaturedController
+    // when provided limit is invalid
+    $scope.playlistLimit = true;
+    $scope.showLimitAlert = false;
+    var countDownTimeInSeconds = 11;
 
     // array of the articles,
     // that will be removed or added to the list
@@ -201,7 +202,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 $scope.articleOverLimitIndex = 0;
                 $scope.articleOverLimitNumber = $scope.articlePreview.number;
                 $scope.showLimitAlert = true;
-                $scope.countDown = 6;
+                $scope.countDown = countDownTimeInSeconds;
                 $scope.startCountDown();
 
                 return true;
@@ -242,7 +243,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                         $scope.articleOverLimitIndex = 0;
                         $scope.articleOverLimitNumber = article.number;
                         $scope.showLimitAlert = true;
-                        $scope.countDown = 6;
+                        $scope.countDown = countDownTimeInSeconds;
                         $scope.startCountDown();
 
                         return true;
