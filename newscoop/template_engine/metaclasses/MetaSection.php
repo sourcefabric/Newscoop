@@ -36,6 +36,12 @@ final class MetaSection extends MetaDbObject {
         $this->m_customProperties = self::$m_defaultCustomProperties;
         $this->m_skipFilter = array('description');
 
+        if ($p_publicationId & $p_issueNumber & $p_languageId & $p_sectionNumber = null) {
+            $this->m_dbObject = new Section();
+
+            return;
+        }
+
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('section', $p_publicationId, $p_issueNumber, $p_languageId, $p_sectionNumber), 'section');
         if ($cacheService->contains($cacheKey)) {

@@ -423,7 +423,7 @@ class ArticleImage extends DatabaseObject {
     {
         global $g_ado_db;
 
-        if (!$p_skipCache)) {
+        if (!$p_skipCache) {
         	$paramsArray['parameters'] = serialize($p_parameters);
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
@@ -518,7 +518,7 @@ class ArticleImage extends DatabaseObject {
         }
 
         if (!$p_skipCache) {
-        	$cacheService->save($cacheKey, $this->m_dbObject);
+        	$cacheService->save($cacheKey, $articleImagesList);
         }
 
         return $articleImagesList;
