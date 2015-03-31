@@ -12,27 +12,30 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     'modalFactory',
     '$q',
     '$timeout',
+    '$activityIndicator',
     function (
         $scope,
         Playlist,
         ngTableParams,
         modalFactory,
         $q,
-        $timeout
+        $timeout,
+        $activityIndicator
         ) {
 
-        $scope.isViewing = false;
-        $scope.playlist = {};
-        $scope.playlists = [];
-        $scope.playlistInfo = undefined;
-        $scope.featuredArticles = [];
-        $scope.formData = {};
-        $scope.processing = false;
-        $scope.playlist.selected = undefined;
-        // limit var, which is set to false by FeaturedController
-        // when provided limit is invalid
-        $scope.playlistLimit = true;
-        $scope.showLimitAlert = false;
+    $scope.isViewing = false;
+    $scope.playlist = {};
+    $scope.playlists = [];
+    $scope.playlistInfo = undefined;
+    $scope.featuredArticles = [];
+    $scope.formData = {};
+    $scope.processing = false;
+    $scope.playlist.selected = undefined;
+    // limit var, which is set to false by FeaturedController
+    // when provided limit is invalid
+    $scope.playlistLimit = true;
+    $scope.showLimitAlert = false;
+    var countDownTimeInSeconds = 11;
 
     // array of the articles,
     // that will be removed or added to the list
@@ -47,66 +50,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         sort: false,
         animation: 150,
         handle: ".move-elements",
-        filter: ".ignore-elements",
-        onEnd: function (evt/**Event*/){
-            var item,
-            number,
-            occurences,
-            isInLogList = false,
-            limit;
-            item = evt.model; // the current dragged article
-            number = item.number;
-            occurences = 0;
-            angular.forEach($scope.featuredArticles, function(value, key) {
-                if (value.number == number) {
-                    occurences++;
-                }
-            });
-
-            if (occurences > 1) {
-                $scope.featuredArticles.splice(evt.newIndex, 1);
-                flashMessage(Translator.trans('Item already exists in the list'), 'error');
-
-                return true;
-            }
-
-            limit = $scope.playlist.selected.maxItems;
-            // show alert with revert button
-            if (limit && limit != 0 && $scope.featuredArticles.length > limit) {
-                $scope.articleOverLimitIndex = evt.newIndex;
-                $scope.articleOverLimitNumber = number;
-                $scope.showLimitAlert = true;
-                $scope.countDown = 6;
-                countDown();
-
-                return true;
-            }
-
-            isInLogList = _.some(
-                Playlist.getLogList(),
-                {number: number, _method: 'unlink'}
-            );
-
-            if (!isInLogList) {
-                // this check prevents inserting duplicate article
-                // when it's drag from the available articles list.
-                // onSort event is executed before onEnd so in both of them it will
-                // insert the same value to the log list
-                isInLogList = _.some(
-                    Playlist.getLogList(),
-                    {number: number}
-                    );
-
-                if (!isInLogList) {
-                    // add article to log list, so we can save it later using batch save
-                    item._method = "link";
-                    item._order = evt.newIndex + 1;
-                    Playlist.addItemToLogList(item);
-                }
-            } else {
-                Playlist.removeItemFromLogList(number, 'unlink');
-            }
-        }
+        filter: ".ignore-elements"
     };
 
     $scope.tableParams = new ngTableParams({
@@ -122,6 +66,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     // stops, starts counter
     $scope.isCounting = false;
+
+    $scope.startCountDown = function () {
+        countDown();
+    }
 
     /**
      * This function count seconds after which revert popup will be closed
@@ -159,10 +107,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
     var removeLastArticle =  function () {
         // remove one before last article from the featured articles list
-        // when we drag-drop new article, it will be
-        // automatically added to the list as a last element, thats why we need to remove
-        // one before last article
-        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        // when we drag-drop to the list as a last element, thats why we need to remove
+        // one before last article else remove last one (-1)
+        var articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 1];
+        if ($scope.articleNotToRemove._order == $scope.featuredArticles.length) {
+            articleToRemove = $scope.featuredArticles[$scope.featuredArticles.length - 2];
+        }
+
         articleToRemove._method = "unlink";
         _.remove(
             $scope.featuredArticles,
@@ -172,16 +123,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.addItemToLogList(articleToRemove);
         var logList = Playlist.getLogList();
 
-        // find dropped article's in logList by number and decrease order by 1
-        // because we removed last article from the list, and we need to put dropped
-        // article to position of the last one, that was removed
-        angular.forEach(logList, function(value, key){
-            if (value.number == $scope.articleOverLimitNumber) {
-                value._order = value._order - 1;
-            }
-        });
-
-        Playlist.setLogList(logList);
         // we have to now replace last element with one before last in log list
         // so it can be save in API in a proper order, actually we first add a
         // new article to the featured articles list and then we unlink the last one.
@@ -244,19 +185,20 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             {number: $scope.articlePreview.number}
             );
 
-        if (isLimitReached()) {
-            flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.'
-            ), 'error');
-
-            return true;
-        }
-
         if (!exists) {
             var isInLogList = _.some(
                 Playlist.getLogList(),
                 {number: $scope.articlePreview.number}
-                );
+            );
+
+            if (isLimitReached()) {
+                $scope.articleNotToRemove = $scope.articlePreview;
+                $scope.articleOverLimitIndex = 0;
+                $scope.articleOverLimitNumber = $scope.articlePreview.number;
+                $scope.showLimitAlert = true;
+                $scope.countDown = countDownTimeInSeconds;
+                $scope.startCountDown();
+            }
 
             $scope.articlePreview._method = "link";
             $scope.articlePreview._order = 1;
@@ -264,7 +206,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.featuredArticles.unshift($scope.articlePreview);
             $scope.isViewing = false;
         } else {
-            flashMessage(Translator.trans('Item already exists in the list'), 'error');
+            flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
         }
     };
 
@@ -277,14 +219,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             {number: number}
             );
 
-        if (isLimitReached()) {
-            flashMessage(Translator.trans(
-                    'List limit reached! Remove some articles from the list before adding new ones.'
-            ), 'error');
-
-            return true;
-        }
-
         if (!exists) {
             var article = undefined,
             isInLogList;
@@ -296,20 +230,29 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
             if (!isInLogList) {
                 Playlist.getArticle(number, language).then(function (article) {
+                    if (isLimitReached()) {
+                        $scope.articleNotToRemove = article;
+                        $scope.articleOverLimitIndex = 0;
+                        $scope.articleOverLimitNumber = article.number;
+                        $scope.showLimitAlert = true;
+                        $scope.countDown = countDownTimeInSeconds;
+                        $scope.startCountDown();
+                    }
+
                     article._method = "link";
                     article._order = 1;
                     Playlist.addItemToLogList(article);
                     $scope.featuredArticles.unshift(article);
                     $scope.processing = false;
                 }, function() {
-                    flashMessage(Translator.trans('Error List'), 'error');
+                    flashMessage(Translator.trans('Error List', {}, 'articles'), 'error');
                 });
 
                 return true;
             }
         }
 
-        flashMessage(Translator.trans('Item already exists in the list'), 'error');
+        flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
     };
 
     /**
@@ -318,7 +261,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * @return {Boolean}
      */
     var isLimitReached = function () {
-        var limit = $scope.playlist.selected.maxItems;
+        var limit = 0;
+        if ($scope.playlist.selected !== undefined) {
+            limit = $scope.playlist.selected.maxItems;
+        }
 
         return (limit && limit != 0 && $scope.featuredArticles.length >= limit);
     }
@@ -327,33 +273,19 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * Saves playlist from the article edit screen view
      */
     $scope.savePlaylistInEditorMode = function () {
-        var logList = [];
-        $scope.processing = true;
-        logList = Playlist.getLogList();
-        if (logList.length == 0) {
-            flashMessage(Translator.trans('List saved'));
-            $scope.processing = false;
-
-            return true;
-        }
-
-        Playlist.batchUpdate(logList, $scope.playlist.selected)
-        .then(function () {
-            flashMessage(Translator.trans('List saved'));
-            Playlist.clearLogList();
-            $scope.processing = false;
-        }, function() {
-            flashMessage(Translator.trans('Could not save the list'), 'error');
-        });
+        saveList();
     }
 
     // page variable is needed for fetching articles on scroll in playlist box
     // (right box), by default it's set to 2 because we start fetching new
     // articles from page 2, since articles on page 1 are loaded
     // by default when selecting playlist.
-    var page = 2,
-    isRunning = false,
-    isEmpty = false;
+    // set in scope so we can reset it when playlist will be saved
+    // and it can load more articles on scroll, without a need
+    // to refresh the page
+    $scope.page = 2;
+    $scope.isRunning = false;
+    $scope.isEmpty = false;
 
     /**
      * Sets playlist details to the current scope.
@@ -363,14 +295,55 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * @param  {Object} list  Playlist
      */
      $scope.setPlaylistInfoOnChange = function (list) {
-        $scope.featuredArticles = Playlist.getArticlesByListId(list);
+        $scope.loadingSpinner = true;
+        Playlist.getArticlesByListId(list).then(function (data) {
+            $scope.featuredArticles = data.items;
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
+        }, function(response) {
+            flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
+        });
+
         Playlist.setListId(list.id);
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
         $scope.formData = {title: list.title}
-        page = 2;
-        isRunning = false;
+        $scope.page = 2;
+        $scope.isRunning = false;
     };
+
+    /**
+     * Loads more playlist's articles on scroll
+     */
+     $scope.loadArticlesOnScrollDown = function () {
+        if ($scope.playlist.selected) {
+            if ($scope.playlist.selected.maxItems === undefined ||
+                $scope.playlist.selected.maxItems === 0) {
+                if (!$scope.isEmpty && !$scope.isRunning) {
+                    $scope.isRunning = true;
+                    Playlist.getArticlesByListId($scope.playlist.selected, $scope.page)
+                    .then(function (response) {
+                        if (response.items.length == 0) {
+                            $scope.isEmpty = true;
+                        } else {
+                            $scope.page++;
+                            $scope.isEmpty = false;
+                            angular.forEach(response.items, function(value, key) {
+                                if (value.number !== undefined) {
+                                    $scope.featuredArticles.push(value);
+                                }
+                            });
+                        }
+                        $scope.isRunning = false;
+                    }, function(response) {
+                        flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
+                    });
+                }
+            }
+        }
+    }
 
     /**
      * Adds new playlist. Sets default list name to current date.
@@ -398,8 +371,8 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         okText,
         cancelText;
 
-        title = Translator.trans('Remove list');
-        text = Translator.trans('Are you sure you want to delete this list?');
+        title = Translator.trans('Remove list', {}, 'articles');
+        text = Translator.trans('Are you sure you want to delete this list?', {}, 'articles');
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
 
@@ -439,8 +412,8 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         okText = Translator.trans('OK', {}, 'messages');
         cancelText = Translator.trans('Cancel', {}, 'messages');
-        if ($scope.playlist.selected.title !== $scope.formData.title) {
-            title = Translator.trans('Info');
+        if ($scope.playlist.selected.title !== $scope.formData.title && $scope.playlist.selected.id !== undefined) {
+            title = Translator.trans('Info', {}, 'articles');
             text = Translator.trans('articles.playlists.namechanged', {}, 'articles');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
 
@@ -456,7 +429,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     var showLimitPopupAndSave = function (newLimit, oldLimit, modal, okText, cancelText) {
         if (newLimit && newLimit != 0 && newLimit != oldLimit) {
-            var title = Translator.trans('Info');
+            var title = Translator.trans('Info', {}, 'articles');
             var text = Translator.trans('articles.playlists.alert', {}, 'articles');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
             modal.result.then(function () {
@@ -471,46 +444,12 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     }
 
     /**
-     * Saves, updates the list and make post actions on promise resolve, such
-     * clearing log list, showing/hiding flash messages etc.
-     */
-    var saveList = function () {
-        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
-        $scope.processing = true;
-
-        doSaveAPICalls().then(function (response) {
-            flash.fadeOut();
-            $scope.processing = false;
-            Playlist.clearLogList();
-            flashMessage(Translator.trans('List saved'));
-            $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
-            $scope.playlist.selected.id = Playlist.getListId();
-
-            if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
-                $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
-            }
-        }, function(response) {
-            if (response.errors[0].code === 409) {
-                flashMessage(Translator.trans(
-                    'This list is already in a different state than the one in which it was loaded.'
-                ), 'error');
-                // automatically refresh playlist
-                $scope.featuredArticles = Playlist.getArticlesByListId({id: Playlist.getListId()});
-            } else {
-                flashMessage(Translator.trans('Could not save the list'), 'error');
-            }
-            flash.fadeOut();
-            $scope.processing = false;
-        });
-    }
-
-    /**
      * Saves, updates playlist with all articles on server side.
      * It makes batch link or unlink of the articles. It also
      * saves a proper order of the articles. All list's changes are saved
      * by clicking Save button.
      */
-    var doSaveAPICalls = function () {
+    var saveList = function () {
         var deferred,
             listname,
             logList = [],
@@ -529,24 +468,103 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             update = true;
         }
 
-        deferred = $q.defer();
-        list = deferred;
         $scope.playlist.selected.title = listname;
+        var flash = flashMessage(Translator.trans('Processing', {}, 'messages'), null, true);
+        $scope.processing = true;
 
         if (!playlistExists && !update && $scope.playlist.selected.id === undefined) {
-            return Playlist.createPlaylist($scope.playlist.selected);
+            Playlist.createPlaylist($scope.playlist.selected).then(function (response) {
+                $scope.playlist.selected.id = response.id;
+                logList = Playlist.getLogList();
+                if (logList.length == 0) {
+                    afterSave(response);
+                    flash.fadeOut();
+                    return;
+                }
+
+                Playlist.batchUpdate(logList, $scope.playlist.selected).then(function (data) {
+                    afterSave(data);
+                    flash.fadeOut();
+                }, function(response) {
+                    flash.fadeOut();
+                    afterSaveError(response);
+                });
+            }, function(response) {
+                flash.fadeOut();
+                afterSaveError(response);
+            });
+
+            return;
         }
 
         if ($scope.playlist.selected !== undefined) {
-            list = Playlist.updatePlaylist($scope.playlist.selected);
-            deferred.resolve();
+            Playlist.updatePlaylist($scope.playlist.selected).then(function (response) {
+                logList = Playlist.getLogList();
+                if (logList.length == 0) {
+                    afterSave(response);
+                    flash.fadeOut();
+                    return;
+                }
+
+                Playlist.batchUpdate(logList, $scope.playlist.selected).then(function (data) {
+                    afterSave(data);
+                    flash.fadeOut();
+                }, function(response) {
+                    flash.fadeOut();
+                    afterSaveError(response);
+                });
+            }, function(response) {
+                flash.fadeOut();
+                afterSaveError(response);
+            });
+        }
+    }
+
+    var afterSave = function (response) {
+        $scope.processing = false;
+        Playlist.clearLogList();
+        flashMessage(Translator.trans('List saved', {}, 'articles'));
+        $scope.loadingSpinner = true;
+        Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
+            $scope.featuredArticles = data.items;
+            $scope.loadingSpinner = false;
+            $scope.isEmpty = false;
+            $scope.page = 2;
+            $activityIndicator.stopAnimating();
+        }, function(response) {
+            flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
+            $scope.loadingSpinner = false;
+            $activityIndicator.stopAnimating();
+        });
+
+        $scope.playlist.selected.id = Playlist.getListId();
+
+        if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
+            $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
+        }
+    }
+
+    var afterSaveError = function (response) {
+        if (response.errors[0].code === 409) {
+            flashMessage(Translator.trans(
+                        'This list is already in a different state than the one in which it was loaded.', {}, 'articles'
+            ), 'error');
+            // automatically refresh playlist
+            $scope.loadingSpinner = true;
+            Playlist.getArticlesByListId({id: Playlist.getListId()}).then(function (data) {
+                $scope.featuredArticles = data.items;
+                $scope.playlist.selected.articlesModificationTime = data.articlesModificationTime;
+                $scope.loadingSpinner = false;
+                $activityIndicator.stopAnimating();
+            }, function(response) {
+               flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
+               $scope.loadingSpinner = false;
+               $activityIndicator.stopAnimating();
+            });
+        } else {
+            flashMessage(Translator.trans('Could not save the list', {}, 'articles'), 'error');
         }
 
-        logList = Playlist.getLogList();
-        if (logList.length == 0) {
-            return list;
-        }
-
-        return Playlist.batchUpdate(logList, $scope.playlist.selected);
+        $scope.processing = false;
     }
 }]);

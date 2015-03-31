@@ -189,8 +189,9 @@ Comments: Comments
 'List name should not be longer than 40 chars': 'List name should not be longer than 40 chars'
 'Not valid number': 'Not valid number'
 'List limit': 'List limit'
-'Last item of the list has been deleted to add this item to the list. Revert?': 'Last item of the list has been deleted to add this item to the list. Revert?'
+'The last article of this list has been removed.': 'The last article of this list has been removed.'
 'Revert': 'Revert'
+'Could not automatically refresh the list': 'Could not automatically refresh the list'
 articles:
     playlists:
         namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'

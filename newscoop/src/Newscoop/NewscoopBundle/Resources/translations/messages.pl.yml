@@ -283,5 +283,5 @@ at: w
 published: opublikowany
 unpublished: nieopublikowany
 nopermissions: 'Nie masz wystarczających uprawnień.'
-importantmessage: null
-anonymous: null
+importantmessage: 'Ważna informacja'
+anonymous: Anonim

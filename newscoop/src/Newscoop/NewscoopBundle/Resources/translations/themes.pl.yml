@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Podwójnie przydzielone'
 Templates: Szablony
 'Import theme': 'Importuj motyw'
-'Import succeeded!': null
+'Import succeeded!': 'Import zakończył się sukcesem!'
 'Import failed!': 'Import nie powiódł się.'
 'Edit template: $1': 'Edytuj szablon: $1'
 'Set new name to': 'Ustaw nową nazwę na'
@@ -85,4 +85,4 @@ Compatibility: Kompatybilność
 '$1 is not writable': 'Brak praw zapisu dla $1'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 pliki $2'
-'Available themes': null
+'Available themes': 'Dostępne szablony'

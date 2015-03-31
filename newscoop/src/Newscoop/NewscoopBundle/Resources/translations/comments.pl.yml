@@ -100,20 +100,20 @@ Ban: Blokada
 'Acceptance $1 deleted.': 'Kryterium akceptacji $1 zostało usuniete.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Wiadomość jest za długa'
+        added: 'Komentarz został dodany pomyślnie.'
+        edited: 'Komentarz został zedytowany pomyślnie.'
+        resolved: 'Komentarz został zmieniony. '
+        deleted: 'Komentarz został usunięty pomyślnie.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Wyślij
+        cancel: Anuluj
+        resolve: 'Rozwiąż '
+        save: Zapisz
+        edit: Edycja
+        delete: Usuń
+        reply: Odpowiedz
     label:
-        post: null
-        reply: null
-        nocomments: null
+        post: 'Dodaj komentarz'
+        reply: Odpowiedz
+        nocomments: 'Brak komentarzy.'

@@ -4,7 +4,8 @@ $newscoopDir = realpath(dirname(__FILE__).'/../../../../../../').'/';
 $upgradeErrors = array();
 
 require $newscoopDir.'conf/database_conf.php';
-require_once $newscoopDir.'vendor/autoload.php';
+$loader = require $newscoopDir.'/vendor/autoload.php';
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 use Monolog\Logger;
 use Newscoop\NewscoopBundle\Entity\Topic;
@@ -36,6 +37,8 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 $app->register(new DoctrineOrmServiceProvider(), array(
     "orm.proxies_dir" => $newscoopDir."/library/Proxy",
+    "orm.auto_generate_proxies" => true,
+    "orm.proxies_namespace" => "Proxy",
     "orm.em.options" => array(
         "mappings" => array(
             array(

@@ -104,13 +104,11 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    public function searchArticles($articleSearchCriteria, $onlyPublished = true)
+    public function searchArticles($articleSearchCriteria, $onlyPublished = true, $order = "desc")
     {
         $em = $this->getEntityManager();
         $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
-            ->select('DISTINCT(a.article) as number')
-            ->leftJoin('a.keyword', 'k')
-            ->leftJoin('a.article', 'aa');
+            ->select('DISTINCT(a.article) as number');
 
         $orX = $queryBuilder->expr()->orx();
 
@@ -120,7 +118,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if (count($keywords) > 0) {
-            $queryBuilder->andWhere($orX);
+            $queryBuilder->leftJoin('a.keyword', 'k')
+                ->andWhere($orX);
         }
 
         if ($articleSearchCriteria->publication) {
@@ -147,7 +146,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             }
         }
 
-        $queryBuilder->setMaxResults(100);
+        $queryBuilder->setMaxResults(80);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
         $tmpNumbers = array();
@@ -156,12 +155,12 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
         $articleNumbers = $tmpNumbers;
 
-        $query = $this->getArticlesByIds($articleSearchCriteria, $articleNumbers, $onlyPublished);
+        $query = $this->getArticlesByCriteria($articleSearchCriteria, $articleNumbers, $onlyPublished, $order);
 
         return $query;
     }
 
-    public function getArticlesByIds($articleSearchCriteria, $ids = array(), $onlyPublished = true)
+    public function getArticlesByCriteria($articleSearchCriteria, $ids = array(), $onlyPublished = true, $order = "desc")
     {
         $em = $this->getEntityManager();
 
@@ -238,6 +237,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $queryBuilder->andWhere('a.workflowStatus  = :workflowStatus')
                 ->setParameter('workflowStatus', Article::STATUS_PUBLISHED);
         }
+
+        $queryBuilder->orderBy('a.uploaded', $order);
 
         $countQueryBuilder = clone $queryBuilder;
         $query = $queryBuilder->getQuery();

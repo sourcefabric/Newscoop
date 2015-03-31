@@ -191,6 +191,7 @@ Snippet: Snippet
 'List limit': 'List limit'
 'Last item of the list has been deleted to add this item to the list. Revert?': 'Last item of the list has been deleted to add this item to the list. Revert?'
 Revert: Revert
+'Could not automatically refresh the list': 'Could not automatically refresh the list'
 articles:
     playlists:
         namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the front end. Please check with your site administrator if you have doubts.'

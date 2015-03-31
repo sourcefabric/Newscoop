@@ -13,22 +13,82 @@ angular.module('playlistsApp').controller('FeaturedController', [
         Playlist
     ) {
 
+    var countDownTimeInSeconds = 11;
     $scope.sortableConfig = {
         group: 'articles',
         animation: 150,
-        onSort: function (evt/**Event*/){
-            var article = evt.model;
-            var isInLogList = false;
+        onAdd: function (evt/**Event*/){
+         var item,
+            number,
+            occurences,
+            isInLogList = false,
+            limit;
+            item = evt.model; // the current dragged article
+            number = item.number;
+            occurences = 0;
+            angular.forEach($scope.$parent.featuredArticles, function(value, key) {
+                if (value.number == number) {
+                    occurences++;
+                }
+            });
+
+            if (occurences > 1) {
+                $scope.$parent.featuredArticles.splice(evt.newIndex, 1);
+                flashMessage(Translator.trans('Item already exists in the list', {}, 'articles'), 'error');
+
+                return true;
+            }
+
+            limit = $scope.$parent.playlist.selected.maxItems;
+            // show alert with revert button
+            if (limit && limit != 0 && $scope.$parent.featuredArticles.length > limit) {
+                // article that shouldn't be removed, its needed to determine on
+                // which position it's placed so we can remove the last one elment
+                // from the list or the one before last - see removeLastArticle function
+                $scope.$parent.articleNotToRemove = item;
+                $scope.$parent.articleOverLimitIndex = evt.newIndex;
+                $scope.$parent.articleOverLimitNumber = number;
+                $scope.$parent.showLimitAlert = true;
+                $scope.$parent.countDown = countDownTimeInSeconds;
+                $scope.$parent.startCountDown();
+            }
+
             isInLogList = _.some(
                 Playlist.getLogList(),
+                {number: number, _method: 'unlink'}
+            );
+
+            if (!isInLogList) {
+                // this check prevents inserting duplicate article
+                // when it's drag from the available articles list.
+                // onSort event is executed before onEnd so in both of them it will
+                // insert the same value to the log list
+                isInLogList = _.some(
+                    Playlist.getLogList(),
+                    {number: number}
+                    );
+
+                if (!isInLogList) {
+                    // add article to log list, so we can save it later using batch save
+                    item._method = "link";
+                    item._order = evt.newIndex + 1;
+                    Playlist.addItemToLogList(item);
+                }
+            } else {
+                Playlist.removeItemFromLogList(number, 'unlink');
+            }
+        },
+        onSort: function (evt/**Event*/){
+            var article = evt.model;
+            var articleInList = _.find(
+                $scope.$parent.featuredArticles,
                 {number: article.number}
             );
 
-            // only when sorting list of featured articles (playlist)
-            var logList = Playlist.getLogList();
-            article._order = evt.newIndex + 1;
-            article._method = "link";
-            if (!isInLogList) {
+            if (articleInList !== undefined && evt.newIndex !== evt.oldIndex) {
+                Playlist.removeItemFromLogList(articleInList.number, 'link');
+                article._order = evt.newIndex + 1;
+                article._method = "link";
                 Playlist.addItemToLogList(article);
             }
         }
@@ -58,7 +118,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 $scope.$parent.featuredArticles,
                 {number: article.number}
             );
-            flashMessage(Translator.trans('List updated.'));
+            flashMessage(Translator.trans('List updated.', {}, 'articles'));
             Playlist.setCurrentPlaylistArticles($scope.$parent.featuredArticles);
         });
     };
@@ -124,7 +184,6 @@ angular.module('playlistsApp').controller('FeaturedController', [
      * @param  {Object} scope Current scope
      */
     $scope.updateParentLimit = function (scope) {
-        console.log($scope.$parent.playlistLimit, scope.limitForm);
         $scope.$parent.playlistLimit = scope.limitForm.$valid;
     }
 }]);

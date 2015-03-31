@@ -21,7 +21,7 @@ _default:
     version-persister:
         vcs-tag:                           # Release with VCS tag
             tag-prefix: ''   # Prefix any tag with the VCS branch name
-    post-release-actions:
+    pre-release-actions:
         bin/UpdateApplicationVersionCurrentVersion.php: ~
         composer-update: ~
         changelog-update:          # Update a CHANGELOG file before the release
@@ -29,6 +29,6 @@ _default:
             format: semantic
             dump-commits: true
             exclude-merge-commits: true
+    post-release-actions:
         vcs-commit: ~              # Commit the CHANGELOG
-        vcs-publish:
-            ask-remote-name: true
+        vcs-publish: ~

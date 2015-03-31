@@ -19,18 +19,18 @@ newscoop.plugins_manager.upload.private: 'Wgraj plik prywatnego pluginu'
 newscoop.plugins_manager.search_for_plugins: 'Szukaj pluginów'
 newscoop.plugins_manager.form.package: 'Plik pluginu'
 newscoop.plugins_manager.form.submit: Wgraj
-newscoop.plugins_manager.runcommand: null
-newscoop.plugins_manager.openterminal: null
-newscoop.plugins_manager.installassets: null
-newscoop.plugins_manager.done: null
-newscoop.plugins_manager.close: null
-newscoop.plugins_manager.update: null
-newscoop.plugins_manager.install: null
-newscoop.plugins_manager.remove: null
-newscoop.plugins_manager.installed: null
-newscoop.plugins_manager.clipboard: null
-newscoop.plugins_manager.downloads: null
-newscoop.plugins_manager.favers: null
+newscoop.plugins_manager.runcommand: 'Uruchom polecenie'
+newscoop.plugins_manager.openterminal: 'Otwórz terminal konsoli i uruchom polecenie'
+newscoop.plugins_manager.installassets: 'Zainstaluj wymagane pliki'
+newscoop.plugins_manager.done: 'Zakończono. Zamknij to okno i odśwież stronę. '
+newscoop.plugins_manager.close: Zamknij
+newscoop.plugins_manager.update: 'Jak zaktualizować wtyczkę?'
+newscoop.plugins_manager.install: 'Jak zainstalować wtyczkę?'
+newscoop.plugins_manager.remove: 'Jak usunąć wtyczkę?'
+newscoop.plugins_manager.installed: 'Zakończono. Odśwież tą stronę. Wtyczka powinna być widoczna na liście zainstalowanych wtyczek.'
+newscoop.plugins_manager.clipboard: 'Skopiuj do schowka: Ctrl+C (Cmd + C na komputerach Mac), Enter'
+newscoop.plugins_manager.downloads: pobrania
+newscoop.plugins_manager.favers: Ulubione
 newscoop:
     datatable:
         table:

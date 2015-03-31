@@ -2,15 +2,13 @@
 
 $newscoopDir = realpath(dirname(__FILE__).'/../../../../../../');
 
-require_once $newscoopDir.'/vendor/autoload.php';
 require $newscoopDir.'/conf/database_conf.php';
+$loader = require $newscoopDir.'/vendor/autoload.php';
+// mainly needed to load @Gedmo annotations, but also load other annotations
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 use Monolog\Logger;
-use Newscoop\Installer\Services;
-use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
-use Newscoop\GimmeBundle\Entity\Client;
-use FOS\OAuthServerBundle\Util\Random;
 
 $upgradeErrors = array();
 $app = new Silex\Application();
@@ -43,61 +41,46 @@ $app->register(new DoctrineOrmServiceProvider(), array(
                 "namespace" => "Newscoop\Entity",
                 "path" => $newscoopDir."/library/Newscoop/Entity",
                 "use_simple_annotation_reader" => false,
-                ),
+            ),
             array(
                 "type" => "annotation",
                 "namespace" => "Newscoop\NewscoopBundle\Entity",
                 "path" => $newscoopDir."/src/Newscoop/NewscoopBundle/Entity",
                 "use_simple_annotation_reader" => false,
-                ),
+            ),
             array(
                 "type" => "annotation",
-                "namespace" => "Newscoop\GimmeBundle\Entity",
-                "path" => $newscoopDir."/src/Newscoop/GimmeBundle/Entity",
+                "namespace" => "Newscoop\Package",
+                "path" => $newscoopDir."/library/Newscoop/Package",
                 "use_simple_annotation_reader" => false,
-                ),
+            ),
+            array(
+                "type" => "annotation",
+                "namespace" => "Newscoop\Image",
+                "path" => $newscoopDir."/library/Newscoop/Image",
+                "use_simple_annotation_reader" => false,
             ),
         ),
-    ));
-
-$app['upgrade_service'] = $app->share(function () use ($app) {
-    return new Services\UpgradeService($app['db'], $app['monolog']);
-});
-
-$app['preferences'] = $app->share(function () use ($app) {
-    return new SystemPreferencesService($app['orm.em']);
-});
-
-$defaultClientName = 'newscoop_'.$app['preferences']->SiteSecretKey;
-$client = $app['orm.em']->getRepository('Newscoop\GimmeBundle\Entity\Client')->findOneByName($defaultClientName);
-if ($client) {
-    return;
-}
+    ),
+));
 
 $logger = $app['monolog'];
 
 try {
-    $alias = $app['upgrade_service']->getDefaultAlias();
-    if (!$alias) {
-        $msg = "Could not find default alias! Aborting...";
-        $upgradeErrors[] = $msg;
-        $logger->addError($msg);
-    } else {
-        $publication = $app['orm.em']->getRepository('\Newscoop\Entity\Aliases')
-            ->findOneByName($alias)
-            ->getPublication();
+    $playlists = $app['orm.em']->getRepository('\Newscoop\Entity\Playlist')
+        ->findAll();
 
-        $conn = $app['orm.em']->getConnection();
-        $stmt = $conn->prepare('INSERT INTO OAuthClient(random_id, redirect_uris, secret, allowed_grant_types, name, IdPublication, trusted)
-        	VALUES (?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bindValue(1, Random::generateToken());
-        $stmt->bindValue(2, serialize(array($alias)));
-        $stmt->bindValue(3, Random::generateToken());
-        $stmt->bindValue(4, serialize(array('token', 'authorization_code', 'client_credentials', 'password')));
-        $stmt->bindValue(5, $defaultClientName);
-        $stmt->bindValue(6, $publication->getId());
-        $stmt->bindValue(7, true);
-        $stmt->execute();
+    foreach ($playlists as $playlist) {
+        $playlistArticles = $app['orm.em']->getRepository('Newscoop\Entity\Playlist')
+            ->articles($playlist, null, true, null, null, false, true, 'id')
+            ->getResult();
+
+        $index = 0;
+        foreach ($playlistArticles as $article) {
+            $index++;
+            $article->setOrder($index);
+        }
+        $app['orm.em']->flush();
     }
 } catch (\Exception $e) {
     $msg = $e->getMessage();

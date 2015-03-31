@@ -43,7 +43,11 @@ class UserAttributeService
 
         if (is_int($user)) {
             $user_repo = $this->em->getRepository('Newscoop\Entity\User');
-            $user = $user_repo->find($user);
+            try {
+                $user = $user_repo->findOneById($user);
+            } catch (\Exception $e) {
+                $user = '';
+            }
         }
 
         if (empty($user)) {

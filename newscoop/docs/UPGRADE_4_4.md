@@ -7,7 +7,7 @@
 3. Run `upgrade.php` script. (Go to `http://www.example.com/upgrade.php`)
 4. Check if there are any instructions to follow in the output of upgrade script. If so, then follow the steps.
 5. When it is done, clear the cache folder: `sudo rm -rf cache/*`.
-6. Run `php composer.phar dump-autoload --optimize` command in `../newscoop/` directory - this will autoload new classes.
+6. Run `php composer.phar dump-autoload --optimize --no-dev` command in `../newscoop/` directory - this will autoload new classes.
 7. Run `php application/console assets:install public/` command in `../newscoop/` directory - it will install assets.
 8. Run `php scripts/fixer.php` script in `../newscoop/` directory - it will fix files permissions. (optional, run it when you don't know how to manage files permissions)
 9. Clear the cache folder for the last time: `sudo rm -rf cache/*`.
