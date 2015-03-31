@@ -25,6 +25,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Newscoop\Exception\AuthenticationException;
 
 class ArticlesListController extends FOSRestController
 {
@@ -135,7 +136,7 @@ class ArticlesListController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {
+        } catch (AuthenticationException $e) {
         }
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')

@@ -29,21 +29,23 @@ class ArticleAuthorsList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('articleAuthorList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'authors');
+        $cacheKey = $cacheService->getCacheKey(array('metaAuthorsList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'authors');
         if ($cacheService->contains($cacheKey)) {
-            $articleAuthorsList = $cacheService->fetch($cacheKey);
+            $metaAuthorsList = $cacheService->fetch($cacheKey);
         } else {
             $articleAuthorsList = ArticleAuthor::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-            $cacheService->save($cacheKey, $articleAuthorsList);
+            $metaAuthorsList = array();
+		    foreach ($articleAuthorsList as $author) {
+	                $authorTypeId = NULL;
+	                if (!is_null($author->getAuthorType()) && $author->getAuthorType()->exists()) {
+	                    $authorTypeId = $author->getAuthorType()->getId();
+	                }
+		        $metaAuthorsList[] = new MetaAuthor($author->getId(), $authorTypeId);
+		    }
+
+            $cacheService->save($cacheKey, $metaAuthorsList);
         }
-	    $metaAuthorsList = array();
-	    foreach ($articleAuthorsList as $author) {
-                $authorTypeId = NULL;
-                if (!is_null($author->getAuthorType()) && $author->getAuthorType()->exists()) {
-                    $authorTypeId = $author->getAuthorType()->getId();
-                }
-	        $metaAuthorsList[] = new MetaAuthor($author->getId(), $authorTypeId);
-	    }
+        
 	    return $metaAuthorsList;
 	}
 

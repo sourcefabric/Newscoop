@@ -419,21 +419,25 @@ class ArticleImage extends DatabaseObject {
      * @return array $articleImagesList
      *    An array of Image objects
      */
-    public static function GetList(array $p_parameters, array $p_order = array(),
-                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+    public static function GetList(array $p_parameters, array $p_order = array(), $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
 
-        if (!$p_skipCache && CampCache::IsEnabled()) {
+        if (!$p_skipCache) {
         	$paramsArray['parameters'] = serialize($p_parameters);
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
-        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-        	$articleImagesList = $cacheListObj->fetchFromCache();
-        	if ($articleImagesList !== false && is_array($articleImagesList)) {
-        		return $articleImagesList;
-        	}
+        	$paramsArray['method'] = __METHOD__;
+
+        	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+	        $cacheKey = $cacheService->getCacheKey($paramsArray, 'article');
+	        if ($cacheService->contains($cacheKey)) {
+	            $articleImagesList = $cacheService->fetch($cacheKey);
+	            if ($articleImagesList !== false && is_array($articleImagesList)) {
+	        		return $articleImagesList;
+	        	}
+	        }
         }
 
         $hasArticleNr = false;
@@ -512,12 +516,13 @@ class ArticleImage extends DatabaseObject {
         	$articleImagesList = array();
         	$p_count = 0;
         }
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-        	$cacheListObj->storeInCache($articleImagesList);
+
+        if (!$p_skipCache) {
+        	$cacheService->save($cacheKey, $articleImagesList);
         }
 
         return $articleImagesList;
-    } // fn GetList
+    }
 
 
     /**

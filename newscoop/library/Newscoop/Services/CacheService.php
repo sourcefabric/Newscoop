@@ -91,6 +91,9 @@ class CacheService
             $id = implode('__', $id);
         }
 
+        // make cache key short
+        $id = base64_encode($id);
+
         if ($namespace) {
             $namespace = $this->getNamespace($namespace);
 

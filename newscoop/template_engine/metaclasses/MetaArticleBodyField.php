@@ -57,9 +57,8 @@ final class MetaArticleBodyField {
      *
      * @param string $p_content
      */
-    public function __construct($p_content, MetaArticle $p_parent, $p_fieldName,
-                                $p_articleName, $p_subtitleNumber = null,
-                                $p_headerFormatStart = null, $p_headerFormatEnd = null) {
+    public function __construct($p_content, MetaArticle $p_parent, $p_fieldName, $p_articleName, $p_subtitleNumber = null, $p_headerFormatStart = null, $p_headerFormatEnd = null) 
+    {
         $this->m_subtitleNumber = $p_subtitleNumber;
         $this->m_subtitles = MetaSubtitle::ReadSubtitles($p_content, $p_fieldName, $p_articleName,
                                                          $p_headerFormatStart, $p_headerFormatEnd);

@@ -78,12 +78,11 @@ class ThemesService implements ThemesServiceInterface
         $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $languageId, $publication->getId(), $issue->getNumber()), 'issue');
 
         $themePath = null;
-        $webOutput = null;
-        $outSetIssues = null;
-
         if ($this->cacheService->contains($cacheKeyThemePath)) {
             $themePath = $this->cacheService->fetch($cacheKeyThemePath);
         } else {
+            $webOutput = null;
+            $outSetIssues = null;
             $cacheKeyWebOutput = $this->cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
             if ($this->cacheService->contains($cacheKeyWebOutput)) {
                 $webOutput = $this->cacheService->fetch($cacheKeyWebOutput);

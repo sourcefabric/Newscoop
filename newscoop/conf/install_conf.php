@@ -14,8 +14,7 @@ global $Campsite, $ADMIN;
 
 $Campsite['APACHE_USER'] = 'www-data';
 $Campsite['APACHE_GROUP'] = 'www-data';
-$Campsite['CAMPSITE_DIR'] = (strlen($GLOBALS['g_campsiteDir']) > 0)
-    ? $GLOBALS['g_campsiteDir'] : dirname(dirname(__FILE__));
+$Campsite['CAMPSITE_DIR'] = (array_key_exists('g_campsiteDir', $GLOBALS)) ? $GLOBALS['g_campsiteDir'] : dirname(dirname(__FILE__));
 $Campsite['ETC_DIR'] = $Campsite['CAMPSITE_DIR'].'/conf';
 $Campsite['BIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/bin';
 $Campsite['WWW_DIR'] = $Campsite['CAMPSITE_DIR'];

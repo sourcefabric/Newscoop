@@ -44,8 +44,6 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         throw new \RuntimeException("Not in article context.");
     }
 
-    $imageService = \Zend_Registry::get('container')->getService('image');
-
     $articleRenditions = $article->getRenditions();
     $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
     if ($articleRendition === null) {
@@ -61,6 +59,7 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         $image = $renditionService->getArticleRenditionImage($article->number, $params['rendition']);
     }
 
+    $imageService = \Zend_Registry::get('container')->getService('image');
     $smarty->assign('image', (object) array(
         'src' => \Zend_Registry::get('view')->url(array('src' => $image['src']), 'image', true, false),
         'width' => $image['width'],

@@ -403,8 +403,7 @@ class Image extends DatabaseObject
 
             $createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
             if (!isset($createMethodName)) {
-                throw new Exception($translator->trans("Image type $1 is not supported.", array(
-                                    '$1' => image_type_to_mime_type($p_imageType)), 'api'));
+                throw new Exception($translator->trans("Image type $1 is not supported.", array('$1' => image_type_to_mime_type($p_imageType)), 'api'));
             }
 
             $imageHandler = $createMethodName($target);
@@ -690,38 +689,37 @@ class Image extends DatabaseObject
     /**
      * Resizes the given image
      *
-     * @param  resource $p_image
+     * @param  resource $image
      *                               The image resource handler
      * @param  int      $p_maxWidth
      *                               The maximum width of the resized image
      * @param  int      $p_maxHeight
      *                               The maximum height of the resized image
-     * @param  bool     $p_keepRatio
+     * @param  bool     $keepRatio
      *                               If true keep the image ratio
      * @param  int      $type
      *                               Image type
      * @return int
      *                              Return the new image resource handler.
      */
-    public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
-                                       $p_keepRatio = true, $type = IMAGETYPE_JPEG)
+    public static function ResizeImage($image, $p_maxWidth, $p_maxHeight, $keepRatio = true, $type = IMAGETYPE_JPEG)
     {
-        if (!isset($p_image) || empty($p_image)) {
-            return new PEAR_Error('The image resource handler is not available.');
+        if (!isset($image) || empty($image)) {
+            throw new Exception('The image resource handler is not available.');
         }
 
-        $origImageWidth = imagesx($p_image);
-        $origImageHeight = imagesy($p_image);
+        $origImageWidth = imagesx($image);
+        $origImageHeight = imagesy($image);
         if ($origImageWidth <= 0 || $origImageHeight <= 0) {
-            return new PEAR_Error("The file uploaded is not an image.");
+            throw new Exception("The file uploaded is not an image.");
         }
 
         $p_maxWidth = is_numeric($p_maxWidth) ? (int) $p_maxWidth : 0;
         $p_maxHeight = is_numeric($p_maxHeight) ? (int) $p_maxHeight : 0;
         if ($p_maxWidth <= 0 || $p_maxHeight <= 0) {
-            return new PEAR_Error("Invalid resize width/height.");
+            throw new Exception("Invalid resize width/height.");
         }
-        if ($p_keepRatio) {
+        if ($keepRatio) {
             $ratioOrig = $origImageWidth / $origImageHeight;
             $ratioNew = $p_maxWidth / $p_maxHeight;
             if ($ratioNew > $ratioOrig) {
@@ -736,7 +734,7 @@ class Image extends DatabaseObject
             $newImageHeight = $p_maxHeight;
         }
 
-        $image = new \Imagine\Gd\Image($p_image);
+        $image = new \Imagine\Gd\Image($image);
         $image->resize(new Box($newImageWidth, $newImageHeight));
 
         return $image;

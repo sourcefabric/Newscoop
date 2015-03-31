@@ -28,16 +28,12 @@ class SectionsList extends ListObject
     protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('sectionList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'section');
+        $cacheKey = $cacheService->getCacheKey(array('metaSectionList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'section');
         if ($cacheService->contains($cacheKey)) {
-            $sectionsList = $cacheService->fetch($cacheKey);
-        } else {
-            $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-            if (count($sectionsList) > 0) {
-                $cacheService->save($cacheKey, $sectionsList);
-            }
+            return $cacheService->fetch($cacheKey);
         }
-
+        
+        $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaSectionsList = array();
         foreach ($sectionsList as $section) {
             $metaSectionsList[] = new MetaSection(
@@ -47,6 +43,8 @@ class SectionsList extends ListObject
                 $section->getSectionNumber()
             );
         }
+
+        $cacheService->save($cacheKey, $metaSectionsList);
 
         return $metaSectionsList;
     }

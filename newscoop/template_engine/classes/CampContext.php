@@ -334,7 +334,10 @@ final class CampContext
         $this->m_objects['article'] = $this->m_readonlyProperties['url']->article;
         $this->m_objects['template'] = $this->m_readonlyProperties['url']->template;
         if (is_numeric($this->m_readonlyProperties['url']->get_parameter('tpid'))) {
-            $this->m_objects['topic'] = new MetaTopic($this->m_readonlyProperties['url']->get_parameter('tpid'));
+            $this->m_objects['topic'] = new MetaTopic(
+                $this->m_readonlyProperties['url']->get_parameter('tpid'), 
+                $this->m_readonlyProperties['url']->language->code
+            );
         }
 
         $this->m_readonlyProperties['default_template'] = $this->m_objects['template'];

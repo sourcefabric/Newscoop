@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Newscoop\Criteria\ArticleSearchCriteria;
+use Newscoop\Exception\AuthenticationException;
 
 /**
  * Articles controller
@@ -269,7 +270,7 @@ class ArticlesController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {
+        } catch (AuthenticationException $e) {
         }
 
         $articleSearchCriteria = new ArticleSearchCriteria();
@@ -327,7 +328,7 @@ class ArticlesController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (\Newscoop\NewscoopException $e) {
+        } catch (AuthenticationException $e) {
         }
 
         $relatedArticles = $relatedArticlesService
