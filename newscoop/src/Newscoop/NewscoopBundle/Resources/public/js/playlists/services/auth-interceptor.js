@@ -9,8 +9,7 @@
 angular.module('playlistsApp').factory('authInterceptor', [
     '$injector',
     '$q',
-    '$window',
-    function ($injector, $q, $window) {
+    function ($injector, $q) {
         // NOTE: userAuth service is not injected directly, because it depends
         // on the $http service and the latter's provider uses this
         // authInterceptor service --> circular dependency.
@@ -64,8 +63,8 @@ angular.module('playlistsApp').factory('authInterceptor', [
                     // obtain a new token and then repeat the failed request.
                     failedRequestConfig = response.config;
                     retryDeferred = $q.defer();
-                    $window.sessionStorage.setItem('token', '');
-                    userAuth.newToken()
+
+                    userAuth.newTokenByLoginModal()
                     .then(function () {
                         // new token successfully obtained, repeat the request
                         $http = $injector.get('$http');
