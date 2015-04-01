@@ -40,9 +40,9 @@
             </div>
 
             <div class="save-button-bar">
-                <button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
+                <button ng-disabled="!playlist.selected" ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
                 <button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
-                <button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
+                <button type="button" ng-disabled="processing || !playlist.selected" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
             </div>
         </div>
         {% endif %}
