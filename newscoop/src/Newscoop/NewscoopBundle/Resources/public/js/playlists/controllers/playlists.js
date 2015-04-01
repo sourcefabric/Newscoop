@@ -226,7 +226,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             isInLogList = _.some(
                 Playlist.getLogList(),
                 {number: number}
-                );
+            );
 
             if (!isInLogList) {
                 Playlist.getArticle(number, language).then(function (article) {
@@ -306,6 +306,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $activityIndicator.stopAnimating();
         });
 
+        Playlist.clearLogList();
         Playlist.setListId(list.id);
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
