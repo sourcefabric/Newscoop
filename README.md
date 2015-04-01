@@ -50,6 +50,7 @@ PHP version must be at least 5.4 on Debian and CentOS to run Newscoop properly. 
 | Google Chrome 31+ |  not supported | not supported |
 | Internet Explorer 9+ | not supported | not supported |
 | Firefox 35+ |  not supported |  not supported |
+| Opera 27+ | not supported |  not supported |
 
 ## REST API documentation
 
