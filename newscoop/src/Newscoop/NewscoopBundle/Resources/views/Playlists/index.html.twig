@@ -320,6 +320,7 @@
 
             <script type="text/javascript">
                 var clientId = '{{ clientId }}';
+                var redirectUris = '{{ redirectUris }}';
                 $(document).ready(function() {
                     $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
                 });
@@ -339,6 +340,7 @@
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/featured-articles.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/articles-filters.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/loading-container.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/sf-iframe.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/lists-search.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/modal-factory.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>
