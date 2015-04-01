@@ -46,6 +46,7 @@ class PlaylistsController extends Controller
 
         return $this->render('NewscoopNewscoopBundle:Playlists:index.html.twig', array(
             'clientId' => $client ? $client->getPublicId() : '',
+            'redirectUris' => $client->getRedirectUrisString(),
             'editorView' => $editorView,
             'articleNumber' => $articleNumber,
             'language' => $language,
