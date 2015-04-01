@@ -189,7 +189,7 @@
                     <div loading-container="tableParams.settings().$loading">
                         <table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
                             <tbody ng-sortable="sortableConfig">
-                                <tr ng-repeat="article in $data track by article.number" class="move-elements">
+                                <tr ng-repeat="article in $data" class="move-elements">
                                     <td class="query" filter="{ 'query': 'text' }" sortable="query">
                                         <div class="context-item">
                                             <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
@@ -248,7 +248,7 @@
                                     <div id="placeholder-wrapper" {% if editorView == false %}ng-class="{'empty-placeholder': $parent.featuredArticles.length == 0}" {% endif %}>
                                     <p>{{ 'Drag here to add to list'|trans }}</p>
                                     <ul id="context_list" ng-sortable="sortableConfig">
-                                        <li class="item" ng-repeat="article in $parent.featuredArticles track by article.number">
+                                        <li class="item" ng-repeat="article in $parent.featuredArticles">
                                             <div class="context-item" {% if editorView %}style="width: 620px"{% endif %} >
                                                 <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
                                                 <div class="context-item-header">
