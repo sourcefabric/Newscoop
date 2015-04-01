@@ -16,7 +16,7 @@
         // its onLoad event, giving us a chance to extract new token from URL.
 
         /**
-        * Updates article's workflow status on the server.
+        * Updates workflow status on the server.
         *
         * @method iframeLoadedHandler
         * @param location {Object} window.location object of the page
