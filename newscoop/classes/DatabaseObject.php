@@ -63,6 +63,8 @@ class DatabaseObject
 	 */
 	var $m_oldKeyValues = array();
 
+	protected $ado_db = null;
+
     /** @var EventDispatcher */
     protected static $eventDispatcher = null;
 
@@ -80,6 +82,7 @@ class DatabaseObject
 	 */
 	public function DatabaseObject($p_columnNames = null)
 	{
+		$this->ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
 	    if (!is_null($p_columnNames)) {
 	    	$this->setColumnNames($p_columnNames);
 	    }
@@ -248,7 +251,7 @@ class DatabaseObject
 	 */
 	public function fetch($p_recordSet = null, $p_forceExists = false)
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
 		if (is_null($p_recordSet)) {
 			if ($this->readFromCache() !== false) {
@@ -328,7 +331,7 @@ class DatabaseObject
 	 */
 	public function getKeyWhereClause()
 	{
-	    $g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+	    $g_ado_db = $this->ado_db;
 
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
@@ -375,7 +378,7 @@ class DatabaseObject
 	 */
 	public function create($p_values = null)
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
 		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
 
@@ -454,7 +457,7 @@ class DatabaseObject
 	 */
 	public function delete()
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
 					.' WHERE ' . $this->getKeyWhereClause()
@@ -500,7 +503,7 @@ class DatabaseObject
 	 */
 	public function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
         if (in_array($p_dbColumnName, $this->m_columnNames) === false
                 && !array_key_exists($p_dbColumnName, $this->m_data)) {
@@ -566,7 +569,7 @@ class DatabaseObject
 	 */
 	public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
 		// If we are not committing, the value cannot be SQL.
 		if (!$p_commit && $p_isSql) {
@@ -683,7 +686,7 @@ class DatabaseObject
 	 */
 	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
 		// Check input
 		if (!is_array($p_columns)) {
@@ -761,7 +764,7 @@ class DatabaseObject
 	 */
 	public function commit($p_ignoreColumns = null)
 	{
-		$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+		$g_ado_db = $this->ado_db;
 
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
@@ -800,7 +803,7 @@ class DatabaseObject
 	 */
 	public static function Search($p_className, $p_columns = null, $p_sqlOptions = null)
 	{
-        $g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+        $g_ado_db = $this->ado_db;
 
 		if (!class_exists($p_className)) {
 			return array();
@@ -1060,7 +1063,7 @@ class DatabaseObject
 
     protected function lockTables(array $p_tables = array(), $p_write = true)
     {
-    	$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+    	$g_ado_db = $this->ado_db;
 
     	if (count($p_tables) == 0) {
     		return;
@@ -1073,7 +1076,7 @@ class DatabaseObject
 
     protected function unlockTables()
     {
-    	$g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+    	$g_ado_db = $this->ado_db;
 
     	$unlockQuery = 'UNLOCK TABLES';
     	return $g_ado_db->Execute($unlockQuery);

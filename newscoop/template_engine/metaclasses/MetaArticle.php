@@ -731,7 +731,7 @@ final class MetaArticle extends MetaDbObject
     protected function getSEOURLEnd()
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('seo_url_end', $this->m_dbObject->getProperty('IdPublication')), 'publication');
+        $cacheKey = $cacheService->getCacheKey(array('seo_url_end', $this->m_dbObject->getProperty('Number'), $this->m_dbObject->getProperty('IdLanguage')), 'article');
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         }
