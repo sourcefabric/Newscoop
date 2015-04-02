@@ -88,6 +88,17 @@ class DatabaseObject
 	    }
 	} // constructor
 
+	public function getAdoDb()
+	{
+		if ($this->ado_db) {
+			return $this->ado_db;
+		}
+
+		$this->ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
+
+		return $this->ado_db;
+	}
+
 
     /**
      * Returns true if the current object is the same type as the given
@@ -251,7 +262,7 @@ class DatabaseObject
 	 */
 	public function fetch($p_recordSet = null, $p_forceExists = false)
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
 		if (is_null($p_recordSet)) {
 			if ($this->readFromCache() !== false) {
@@ -331,12 +342,13 @@ class DatabaseObject
 	 */
 	public function getKeyWhereClause()
 	{
-	    $g_ado_db = $this->ado_db;
+	    $g_ado_db = $this->getAdoDb();
 
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
             $value = isset($this->m_oldKeyValues[$columnName]) ? $this->m_oldKeyValues[$columnName]
                 : $this->m_data[$columnName];
+            dump($g_ado_db);
             $whereParts[] = $g_ado_db->escapeKeyVal($columnName, $value);
 		}
 
@@ -378,7 +390,7 @@ class DatabaseObject
 	 */
 	public function create($p_values = null)
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
 		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
 
@@ -457,7 +469,7 @@ class DatabaseObject
 	 */
 	public function delete()
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
 					.' WHERE ' . $this->getKeyWhereClause()
@@ -503,7 +515,7 @@ class DatabaseObject
 	 */
 	public function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
         if (in_array($p_dbColumnName, $this->m_columnNames) === false
                 && !array_key_exists($p_dbColumnName, $this->m_data)) {
@@ -569,7 +581,7 @@ class DatabaseObject
 	 */
 	public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
 		// If we are not committing, the value cannot be SQL.
 		if (!$p_commit && $p_isSql) {
@@ -686,7 +698,7 @@ class DatabaseObject
 	 */
 	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
 		// Check input
 		if (!is_array($p_columns)) {
@@ -764,7 +776,7 @@ class DatabaseObject
 	 */
 	public function commit($p_ignoreColumns = null)
 	{
-		$g_ado_db = $this->ado_db;
+		$g_ado_db = $this->getAdoDb();
 
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
@@ -1063,7 +1075,7 @@ class DatabaseObject
 
     protected function lockTables(array $p_tables = array(), $p_write = true)
     {
-    	$g_ado_db = $this->ado_db;
+    	$g_ado_db = $this->getAdoDb();
 
     	if (count($p_tables) == 0) {
     		return;
@@ -1076,7 +1088,7 @@ class DatabaseObject
 
     protected function unlockTables()
     {
-    	$g_ado_db = $this->ado_db;
+    	$g_ado_db = $this->getAdoDb();
 
     	$unlockQuery = 'UNLOCK TABLES';
     	return $g_ado_db->Execute($unlockQuery);
