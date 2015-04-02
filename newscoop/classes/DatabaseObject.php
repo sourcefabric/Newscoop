@@ -803,7 +803,7 @@ class DatabaseObject
 	 */
 	public static function Search($p_className, $p_columns = null, $p_sqlOptions = null)
 	{
-        $g_ado_db = $this->ado_db;
+        $g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
 
 		if (!class_exists($p_className)) {
 			return array();
