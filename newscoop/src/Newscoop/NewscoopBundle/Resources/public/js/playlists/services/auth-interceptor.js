@@ -9,8 +9,7 @@
 angular.module('playlistsApp').factory('authInterceptor', [
     '$injector',
     '$q',
-    '$window',
-    function ($injector, $q, $window) {
+    function ($injector, $q) {
         // NOTE: userAuth service is not injected directly, because it depends
         // on the $http service and the latter's provider uses this
         // authInterceptor service --> circular dependency.
@@ -59,18 +58,13 @@ angular.module('playlistsApp').factory('authInterceptor', [
                     return $q.reject(response);
                 }
 
-                // NOTE: The API is not perfect yet and does not always return
-                // 401 on authentication errors, thus we must also rely on the
-                // error message (for now at least).
-                if (response.status === 401 ||
-                    response.statusText === 'OAuth2 authentication required'
-                ) {
+                if (response.status === 401) {
                     // Request failed due to invalid oAuth token - try to
                     // obtain a new token and then repeat the failed request.
                     failedRequestConfig = response.config;
                     retryDeferred = $q.defer();
-                    $window.sessionStorage.setItem('token', '');
-                    userAuth.newToken()
+
+                    userAuth.newTokenByLoginModal()
                     .then(function () {
                         // new token successfully obtained, repeat the request
                         $http = $injector.get('$http');

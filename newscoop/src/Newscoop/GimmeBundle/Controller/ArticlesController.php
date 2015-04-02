@@ -339,9 +339,11 @@ class ArticlesController extends FOSRestController
             $ids[]  = $relatedArticle->getArticleNumber();
         }
 
+        $articleSearchCriteria = new ArticleSearchCriteria();
+        $articleSearchCriteria->language = $article->getLanguage()->getCode();
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesByIds(
-                $article->getLanguage()->getCode(),
+            ->getArticlesByCriteria(
+                $articleSearchCriteria,
                 $ids,
                 $onlyPublished
             );

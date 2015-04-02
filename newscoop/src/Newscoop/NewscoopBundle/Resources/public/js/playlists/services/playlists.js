@@ -175,7 +175,7 @@ angular.module('playlistsApp').factory('Playlist', [
             postParams = parseAndBuildParams(logList);
 
             if (playlist.articlesModificationTime !== undefined) {
-            	playlistDateTime = playlist.articlesModificationTime;
+                playlistDateTime = playlist.articlesModificationTime;
             }
 
             $http({
