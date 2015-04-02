@@ -318,7 +318,27 @@ class Admin_ThemesController extends Zend_Controller_Action
         $path = __DIR__.'/../../../../themes/'.$theme->getPath().'theme.xml';
 
         $this->view->themePlaylists = $playlistsService->loadThemePlaylists($path);
+        $this->view->playlistsAreUpToDate = $playlistsService->checkIfThemePlaylistsAreUpToDate($theme, $this->view->themePlaylists);
         $this->view->theme = $theme;
+    }
+
+    public function updatePlaylistsAction()
+    {
+        $playlistsService = \Zend_Registry::get('container')->getService('playlists');
+        $theme = $this->getThemeService()->findById($this->_request->getParam('id'));
+        $path = __DIR__.'/../../../../themes/'.$theme->getPath().'theme.xml';
+
+        $themePlaylists = $playlistsService->loadThemePlaylists($path);
+        $playlistsService->updateThemePlaylists($theme, $themePlaylists);
+
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->_helper->flashMessenger($translator->trans('Theme playlists updated successfully.', array(), 'themes') );
+        $this->_helper->redirector->gotoUrl($this->_helper->url->url(array(
+            'action'     => 'advanced-theme-settings',
+            'controller' => 'themes',
+            'module'     => 'admin',
+            'id'         => $this->_request->getParam( 'id' )
+        ), null, true, false ));
     }
 
     /**
@@ -589,10 +609,14 @@ class Admin_ThemesController extends Zend_Controller_Action
         $p_forwardedFrom = $this->_request->getParam( 'p_forwardedFrom' );
         if ( ( $themeId = $this->_getParam( 'id', null ) ) ) {
             try {
+                $theme = $this->getThemeService()->getById($themeId);
+                $playlistsService = \Zend_Registry::get('container')->getService('playlists');
+                $themePlaylists = $playlistsService->loadThemePlaylists(__DIR__.'/../../../../themes/'.$theme->getPath().'theme.xml');
+                $playlistsService->removeThemeFromPlaylists($theme, $themePlaylists);
+
                 if ($p_forwardedFrom == 'deleteAction') {
                     global $Campsite;
                     $themeIsAssigned = FALSE;
-                    $theme = $this->getThemeService()->getById($themeId);
                     $themeName = $theme->getName();
                     foreach ($Campsite['publications'] as $publication) {
                         $pub = $this->getPublicationService()->findById( $publication->getPublicationId() );
@@ -610,6 +634,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
                 $this->getThemeService()->removeTheme($themeId);
                 $this->_helper->service('image.rendition')->reloadRenditions();
+
                 $this->view->status = true;
                 $this->view->response = $translator->trans( "Unassign successful" , array(), 'themes');
             } catch ( RemoveThemeException $e ) {
@@ -690,6 +715,9 @@ class Admin_ThemesController extends Zend_Controller_Action
 
             if ( $this->getThemeService()->assignTheme( $theme, $pub ) ) {
                 $this->_helper->service('image.rendition')->reloadRenditions();
+                $playlistsService = \Zend_Registry::get('container')->getService('playlists');
+                $themePlaylists = $playlistsService->loadThemePlaylists(__DIR__.'/../../../../themes/'.$theme->getPath().'theme.xml');
+                $playlistsService->updateThemePlaylists($theme, $themePlaylists);
                 $this->view->response =  $translator->trans( 'Assigned successfully' , array(), 'themes');
             } else {
                 throw new Exception();

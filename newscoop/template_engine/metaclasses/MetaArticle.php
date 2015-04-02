@@ -5,8 +5,6 @@
 
 require_once __DIR__ . '/../../classes/Article.php';
 require_once __DIR__ . '/../../classes/ArticleAttachment.php';
-require_once __DIR__ . '/../../classes/GeoMap.php';
-require_once __DIR__ . '/../../classes/Template.php';
 require_once __DIR__ . '/../../classes/Language.php';
 require_once __DIR__ . '/MetaDbObject.php';
 require_once __DIR__ . '/MetaArticleSlideshowList.php';

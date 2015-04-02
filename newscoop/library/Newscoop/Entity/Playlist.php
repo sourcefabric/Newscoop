@@ -30,13 +30,13 @@ class Playlist extends AbstractEntity
     protected $name;
 
     /**
-     * @ORM\Column(length=1024, name="notes")
+     * @ORM\Column(length=1024, name="notes", nullable=true)
      * @var string
      */
     protected $notes;
 
     /**
-     * @ORM\Column(type="integer", name="max_items")
+     * @ORM\Column(type="integer", name="max_items", nullable=true)
      * @var int
      */
     protected $maxItems;
@@ -57,6 +57,39 @@ class Playlist extends AbstractEntity
      * @var string
      */
     protected $articlesLink;
+
+    /**
+     * @ORM\Column(type="string", name="themes", nullable=true)
+     */
+    protected $themes;
+
+    /**
+     * Provides the themes attached to playlist.
+     *
+     * @return string
+     */
+    public function getThemes()
+    {
+        if (!$this->themes) {
+            return array();
+        }
+
+        return json_decode($this->themes, true);
+    }
+
+    /**
+     * Set the themes attached to playlist.
+     *
+     * @param string $themes
+     *
+     * @return self
+     */
+    public function setThemes(array $themes)
+    {
+        $this->themes = json_encode($themes);
+
+        return $this;
+    }
     
     /**
      * Set link to topic articles resource
@@ -93,6 +126,7 @@ class Playlist extends AbstractEntity
     public function setName($name)
 	{
 	    $this->name = $name;
+
 		return $this;
 	}
 
