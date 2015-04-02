@@ -196,7 +196,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
 			        // send also datetime to see if playlist is locked by diffrent user
 			        if (playlistDateTime !== undefined) {
-			    		str.push("articlesModificationTime=" + playlistDateTime);
+			    		str.push("articlesModificationTime=" + encodeURIComponent(playlistDateTime));
 			    	} else {
 			    		str.push("articlesModificationTime=" + $filter('date')(now, 'yyyy-MM-ddTHH:mm:ss'));
 			    	}
