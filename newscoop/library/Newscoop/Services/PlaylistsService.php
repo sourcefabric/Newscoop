@@ -199,6 +199,11 @@ class PlaylistsService
         $this->clearPlaylistTemplates($playlist);
     }
 
+    /**
+     * Remove items above the limit on playlist
+     *
+     * @param Playlist $playlist
+     */
     public function removeLeftItems($playlist)
     {
         if ($playlist->getMaxItems() != null) {
@@ -210,6 +215,13 @@ class PlaylistsService
         }
     }
 
+    /**
+     * Load xml file
+     *
+     * @param string $path
+     * 
+     * @return array content of xml file as an array
+     */
     public function loadThemePlaylists($path)
     {
         $xml = simplexml_load_file($path);
@@ -217,6 +229,14 @@ class PlaylistsService
         return json_decode(json_encode($xml->articlesLists), true);
     }
 
+    /**
+     * Check if playlists have current theme lists definitions
+     *
+     * @param Theme $theme
+     * @param array $themePlaylists
+     *
+     * @return boolean
+     */
     public function checkIfThemePlaylistsAreUpToDate($theme, $themePlaylists)
     {
         $newThemePlaylists = array();
@@ -248,6 +268,14 @@ class PlaylistsService
         return true;
     }
 
+    /**
+     * Update playists with current theme playlists definitions
+     *
+     * @param Theme $theme
+     * @param array $themePlaylists
+     *
+     * @return boolean
+     */
     public function updateThemePlaylists($theme, $themePlaylists) {
         $newThemePlaylists = array();
         foreach($themePlaylists['list'] as $themePlaylist) {
@@ -277,6 +305,13 @@ class PlaylistsService
         return true;
     }
 
+    /**
+     * Clear playlists themes definitions unnasigning theme
+     *
+     * @param  [type] $theme          [description]
+     * @param  [type] $themePlaylists [description]
+     * @return [type]                 [description]
+     */
     public function removeThemeFromPlaylists($theme, $themePlaylists) {
         $newThemePlaylists = array();
         foreach($themePlaylists['list'] as $themePlaylist) {
@@ -303,6 +338,11 @@ class PlaylistsService
         return true;
     }
 
+    /**
+     * Clear cache for all temlates assigned to playlist
+     *
+     * @param Playlist $playlist
+     */
     public function clearPlaylistTemplates($playlist)
     {
         foreach($playlist->getThemes() as $theme) {
