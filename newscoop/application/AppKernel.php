@@ -28,7 +28,6 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
-            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
@@ -43,6 +42,7 @@ class AppKernel extends Kernel
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
         }

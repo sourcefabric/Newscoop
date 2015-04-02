@@ -5,8 +5,9 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Twig;
+
+use Newscoop\Exception\AuthenticationException;
 
 class NewscoopExtension extends \Twig_Extension
 {
@@ -46,7 +47,7 @@ class NewscoopExtension extends \Twig_Extension
 
         try {
             $currentUser = $this->container->getService('user')->getCurrentUser();
-        } catch (\Newscoop\NewscoopException $e) {
+        } catch (AuthenticationException $e) {
             $currentUser = null;
         }
 
@@ -55,7 +56,7 @@ class NewscoopExtension extends \Twig_Extension
             'NewscoopVersion' => new \CampVersion(),
             'SecurityToken' => \SecurityToken::GetToken(),
             'NewscoopUser' => $currentUser,
-            'localeFromCookie' => $localeFromCookie
+            'localeFromCookie' => $localeFromCookie,
         );
     }
 
@@ -98,7 +99,7 @@ class NewscoopExtension extends \Twig_Extension
         $aFonts = array(
             $fontsDirectory.'fonts/VeraBd.ttf',
             $fontsDirectory.'fonts/VeraIt.ttf',
-            $fontsDirectory.'fonts/Vera.ttf'
+            $fontsDirectory.'fonts/Vera.ttf',
         );
         $oVisualCaptcha = new \PhpCaptcha($aFonts, 200, 60);
         $oVisualCaptcha->Create(__DIR__.'/../../../../images/cache/recaptcha.png');
@@ -144,7 +145,7 @@ class NewscoopExtension extends \Twig_Extension
     public function renderTip($tipMessage)
     {
         return $this->container->get('templating')->render('NewscoopNewscoopBundle::tooltip.html.twig', array(
-            'tipMessage' => $tipMessage
+            'tipMessage' => $tipMessage,
         ));
     }
 

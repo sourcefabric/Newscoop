@@ -38,12 +38,6 @@ parameters:
             namespace: "Proxy"
             autogenerate: false
         functions:
-            rand: "Newscoop\Query\MysqlRandom"
-            dayofweek: "Newscoop\Query\MysqlDayOfWeek"
-            dayofmonth: "Newscoop\Query\MysqlDayOfMonth"
-            dayofyear: "Newscoop\Query\MysqlDayOfYear"
-            date_format: "Newscoop\Query\MysqlDateFormat"
-            field: "Newscoop\Query\MysqlField"
     admin:
         resources:
             layout:

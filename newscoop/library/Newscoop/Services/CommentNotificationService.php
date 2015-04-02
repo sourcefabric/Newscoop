@@ -4,12 +4,11 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Doctrine\ORM\EntityManager;
-use Newscoop\NewscoopException;
+use Newscoop\Exception\AuthenticationException;
 
 /**
  */
@@ -57,7 +56,7 @@ class CommentNotificationService
 
         try {
             $user = $this->userService->getCurrentUser();
-        } catch (NewscoopException $e) {
+        } catch (AuthenticationException $e) {
             $user = null;
         }
 

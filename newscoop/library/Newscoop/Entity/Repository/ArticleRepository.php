@@ -155,12 +155,12 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
         $articleNumbers = $tmpNumbers;
 
-        $query = $this->getArticlesByIds($articleSearchCriteria, $articleNumbers, $onlyPublished, $order);
+        $query = $this->getArticlesByCriteria($articleSearchCriteria, $articleNumbers, $onlyPublished, $order);
 
         return $query;
     }
 
-    public function getArticlesByIds($articleSearchCriteria, $ids = array(), $onlyPublished = true, $order = "desc")
+    public function getArticlesByCriteria($articleSearchCriteria, $ids = array(), $onlyPublished = true, $order = "desc")
     {
         $em = $this->getEntityManager();
 

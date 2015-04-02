@@ -2652,9 +2652,10 @@ DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE playlist (
   id_playlist INT AUTO_INCREMENT NOT NULL, 
   name VARCHAR(256) NOT NULL, 
-  notes VARCHAR(1024) NOT NULL, 
-  max_items INT NOT NULL, 
+  notes VARCHAR(1024) DEFAULT NULL, 
+  max_items INT DEFAULT NULL, 
   modification_time DATETIME DEFAULT NULL, 
+  themes VARCHAR(255) DEFAULT NULL, 
   PRIMARY KEY(id_playlist)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 

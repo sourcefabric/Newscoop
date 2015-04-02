@@ -19,5 +19,10 @@
 
 function smarty_modifier_dump($object)
 {
-    ladybug_dump($object);
+	if (function_exists('ladybug_dump')) {
+		ladybug_dump($object);
+	} else {
+	    print_r($object);
+	}
+    
 }
