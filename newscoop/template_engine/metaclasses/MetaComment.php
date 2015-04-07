@@ -107,9 +107,7 @@ final class MetaComment extends MetaDbObject
 
     protected function getArticle()
     {
-        //TODO remove this when the composite key stuff is done.
-        return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getArticleNumber() );
-    	//return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getThread()->getId() );
+        return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getThread() );
     }
 
 
