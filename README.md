@@ -42,6 +42,16 @@ For more details run:
 
 PHP version must be at least 5.4 on Debian and CentOS to run Newscoop properly. See [PHP bug][14].
 
+**Compatibility**
+
+| Browsers | Tablets |  Smartphones |
+| -------- | ------- | ----------- |
+| Safari 7.1+| not supported |  not supported |
+| Google Chrome 31+ |  not supported | not supported |
+| Internet Explorer 9+ | not supported | not supported |
+| Firefox 35+ |  not supported |  not supported |
+| Opera 27+ | not supported |  not supported |
+
 ## REST API documentation
 
 REST API documentation will be available under the link: `http://www.domain.com/documentation/rest-api/` after Newscoop installation is done.
