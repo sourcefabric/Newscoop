@@ -5,7 +5,6 @@
  * @copyright 2015 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Newscoop\EditorInterface;
@@ -37,14 +36,14 @@ class EditorService implements EditorInterface
         $language = $this->em->getReference('Newscoop\Entity\Language', $articleInfo['languageId']);
         $arguments = $this->dispatcher->dispatch('newscoop_admin.editor', new GenericEvent(null, array(
             'articleNumber' => $articleInfo['number'],
-            'articleLanguage' => $language->getCode()
+            'articleLanguage' => $language->getCode(),
         )));
 
         if ($arguments->hasArgument('link') && $arguments->getArgument('link')) {
             return $arguments->getArgument('link');
         }
 
-        return self::DEFAULT_EDITOR_LINK . $this->getLinkParameters($article);
+        return self::DEFAULT_EDITOR_LINK.$this->getLinkParameters($article);
     }
 
     /**
@@ -54,10 +53,10 @@ class EditorService implements EditorInterface
     {
         $article = $this->getArticleDetails($article);
 
-        return '?f_publication_id=' . $article['publicationId']
-            . '&f_issue_number=' . $article['issueId'] . '&f_section_number=' . $article['sectionId']
-            . '&f_article_number=' . $article['number'] . '&f_language_id=' . $article['languageId']
-            . '&f_language_selected=' . $article['languageId'];
+        return '?f_publication_id='.$article['publicationId']
+            .'&f_issue_number='.$article['issueId'].'&f_section_number='.$article['sectionId']
+            .'&f_article_number='.$article['number'].'&f_language_id='.$article['languageId']
+            .'&f_language_selected='.$article['languageId'];
     }
 
     private function getArticleDetails($article)
