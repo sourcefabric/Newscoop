@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<theme name="Liquid" designer="Sourcefabric" version="1.0" require="4.3">
+  <description>Theme for Newscoop Version 4.3</description>
+  <presentation-img src="themethumbs/front.png" name="Front page"/>
+  <presentation-img src="themethumbs/section.png" name="Section page"/>
+  <presentation-img src="themethumbs/article.png" name="Article"/>
+  <!-- =============================== -->
+  <output name="Web">
+    <frontPage src="front.tpl"/>
+    <sectionPage src="section.tpl"/>
+    <articlePage src="article.tpl"/>
+    <errorPage src="404.tpl"/>
+  </output>
+  <renditions>
+    <rendition name="section" width="496" height="334" specs="crop"/>
+    <rendition name="article" width="770" height="515" specs="crop"/>
+    <rendition name="front_small" width="478" height="326" specs="crop"/>
+    <rendition name="front_medium" width="478" height="320" specs="crop"/>
+    <rendition name="front_big" width="570" height="384" specs="crop"/>
+    <rendition name="slideshow" width="770" height="515" specs="crop"/>
+  </renditions>
+  <articlesLists>
+    <list name="Front page" maxItems="0" notes="optional notes">
+      <template file="front.tpl" />
+      <template file="_tpl/header.tpl" />
+      <template file="issue.tpl" /> 
+    </list>
+    <list name="Basel playlist" maxItems="0" notes="optional notes for basel">
+      <template file="_sections/basel.tpl" />
+      <template file="section.tpl" /> 
+    </list>
+  </articlesLists>
+</theme>
+

@@ -88,24 +88,16 @@ class Comment implements DocumentInterface
      * @ORM\Column(type="integer", name="fk_thread_id")
      * @var int
      */
-    protected $article_num;
+    protected $thread;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
      *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     *      })
-     * @var Newscoop\Entity\Article
+     *  })
      */
     protected $article;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article", inversedBy="comments")
-     * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
-     * @var Newscoop\Entity\Article
-     */
-    protected $thread;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
@@ -220,16 +212,6 @@ class Comment implements DocumentInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * TODO get rid of this when the composite key stuff is done.
-     *
-     * @return int
-     */
-    public function getArticleNumber()
-    {
-        return $this->article_num;
     }
 
     /**

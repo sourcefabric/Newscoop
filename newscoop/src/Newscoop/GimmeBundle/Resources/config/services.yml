@@ -32,7 +32,7 @@ services:
         class: Newscoop\GimmeBundle\EventListener\PublicResourcesListener
         arguments:  ["@service_container"]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 6 }
     newscoop.gimme.listener.format_json:
         class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
         tags:

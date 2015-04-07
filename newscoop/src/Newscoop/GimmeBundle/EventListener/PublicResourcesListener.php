@@ -26,12 +26,12 @@ class PublicResourcesListener
     {
         $request = $event->getRequest();
         $route = $request->attributes->get('_route');
-        if (strpos($route, 'newscoop_gimme_') === false || $route == 'newscoop_get_img') {
+        if (strpos($route, 'newscoop_gimme_') === false) {
             return;
         }
 
         $unprotected = $this->container->get('em')->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
-        $rootsArray = array(
+        $routesArray = array(
             'newscoop_gimme_users_login',
             'newscoop_gimme_users_logout',
             'newscoop_gimme_users_register',
@@ -39,7 +39,17 @@ class PublicResourcesListener
             'newscoop_gimme_users_getuseraccesstoken',
         );
 
-        if (in_array($route, $rootsArray)) {
+        if ($request->getMethod() == 'POST' && $route == 'newscoop_gimme_comments_createcomment') {
+            $publicationService = $this->container->get('newscoop.publication_service');
+            $publication = $publicationService->getPublication();
+            $this->container->get('ladybug')->log($publicationService, $publication, $publication->getPublicCommentsEnabled());
+            if ($publication->getPublicCommentsEnabled()) {
+                $routesArray[] = 'newscoop_gimme_comments_createcomment';
+            }
+        }
+
+
+        if (in_array($route, $routesArray)) {
             $unprotected = true;
         }
 

@@ -14,7 +14,7 @@ class Version
 {
     const VERSION = '4.4.0';
 
-    const API_VERSION = '1.1';
+    const API_VERSION = '1.2';
 
     /**
      * Compare version with current Newscoop version

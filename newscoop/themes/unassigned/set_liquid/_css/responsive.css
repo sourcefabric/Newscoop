@@ -1,0 +1,288 @@
+@media (max-width: 767px) {
+	body {
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+		border:none !important;
+	}
+
+	.container {
+		padding: 0px 10px;
+	}
+
+	#page {
+		margin-top: 20px;
+	}
+
+	.blue_box.blue_box_posts .tabs_menu li {
+		margin-bottom: 10px;
+	}
+
+	#titlebar {
+		border-top: 3px solid #d74b4b;
+		margin: 0 -10px;
+
+	}
+
+	#top {
+		margin-bottom:10px;
+		clear: both;
+	}
+
+	#top .top_content {
+		margin-top: -20px;
+	}
+
+	.menu_wrap {
+		display: none;
+	}
+
+	.space_left_content {
+		padding-left: 0px;
+	}
+
+	.article_content .news_item .content {
+		padding: 0 5px;
+	}
+
+	.bloger {
+		padding: 20px 20px 0px 0px;
+	}
+
+	#footer_menu_second{
+		padding: 0 5px;
+	}
+
+}
+
+@media (max-width: 500px) {
+	.news_item .thumbnail img{
+		display: block;
+		width:100%;
+	}
+
+	.bloger_news_items .news_item .content {
+		padding: 0px 20px 20px 20px;
+		margin-left: 0px;
+	}
+
+	.bloger_news_items .news_item .thumbnail {
+		float: none;
+		margin: -30px -30px 0px -30px;
+	}
+
+	.news_item:after{
+
+		content: ".";
+		display: block;
+		height: 0px;
+		clear: both;
+		visibility: hidden;
+	}
+
+	#top .top_content #logo {
+		margin: 0 auto;
+		float: none;
+	}
+
+	#top .top_content .add {
+		display: none;
+	}
+
+	.debate_author {
+		margin: 20px 0px !important;
+	}
+}
+
+@media (min-width: 501px) and (max-width: 767px){
+	.news_item .thumbnail {
+		display: inline-block;
+		float: left;
+		margin-right: 10px;
+		margin-bottom:10px;
+		max-width:220px;
+	}
+
+	.news_item:after{
+
+		content: ".";
+		display: block;
+		height: 0px;
+		clear: both;
+		visibility: hidden;
+
+	}
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+	.orange_box .people .span3 {
+		width: 160px !important;
+	}
+
+	.blue_box.blue_box_posts .span3 {
+		width: 156px !important;
+	}
+
+	.article_content .span10 .article_side_element.align_left {
+		left: -62px;
+		margin-right: -52px;
+	}
+
+	.article_content .span10 .article_side_element.align_right {
+		right: -62px;
+		margin-left: -52px;
+	}
+
+
+}
+
+@media (min-width: 980px) and (max-width: 1199px ) {
+
+	.orange_box .people .span3 {
+		width: 214px !important;
+	}
+
+	.blue_box.blue_box_posts .span3 {
+		width: 210px !important;
+	}
+
+	.article_content .span8 .article_side_element.align_left {
+		left: -160px;
+		margin-right: -150px;
+		padding: 20px;
+		background: #fff;
+	}
+
+	.article_content .span8 .article_side_element.align_right {
+		right: -160px;
+		margin-left: -150px;
+		padding: 30px;
+		background: #fff;
+	}
+
+	.article_content .span10 .article_side_element.align_left {
+		left: -80px;
+		margin-right: -60px;
+	}
+
+	.article_content .span10 .article_side_element.align_right {
+		right: -80px;
+		margin-left: -60px;
+	}
+
+
+}
+
+@media (max-width: 979px) {
+	#top .top_content #logo {
+		margin-bottom: 20px;
+	}
+}
+
+@media (min-width: 1200px) {
+
+	.EditorialCommentsText{
+		margin-left:40px;
+	}
+
+	.blue_box.blue_box_posts .span3 {
+		width: 260px !important;
+	}
+
+	.news_item {
+	margin-bottom: 30px;
+	}
+
+
+}
+
+@media (min-width: 500px) {
+
+	.news_item .thumbnail img.small {
+
+		max-width:230px;
+	}
+
+}
+
+#mobilemenu{
+	background: #475f77;
+	color:#fff;
+	max-height:0px;
+	overflow:hidden;
+	margin: 0 -10px;
+	transition: max-height 0.5s ease;
+	-webkit-transition: max-height 0.5s ease ; /* Safari */
+}
+
+#mobilemenu.open{
+	max-height:600px;
+}
+
+
+#mobilemenu .menu li a{
+	display:block;
+	color:#fff;
+	padding:10px 10px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+#mobilemenu .menu li.current, #mobilemenu .menu li:hover{
+
+	background:#d74b4b;
+}
+
+
+
+
+.navbar-toggle {
+	position: relative;
+	float: right;
+	margin-top: 8px;
+	margin-right: 15px;
+	background-color: transparent;
+	outline:none;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
+
+.navbar-toggle .icon-bar {
+	display: block;
+	width: 25px;
+	height: 2px;
+	border-radius: 1px;
+	background-color: #333;
+	margin-bottom: 4px;
+}
+
+
+.mobile-search{
+
+
+	padding: 15px 10px;
+
+}
+
+.mobile-search input[type='text']{
+	width:100%;
+	line-height: 1.2em;
+	padding:5px;
+	-moz-box-sizing:border-box; /* Firefox */
+	box-sizing:border-box;
+	border:none;
+
+
+}
+
+.mobile-search input[type='submit']{
+	display:none;
+}

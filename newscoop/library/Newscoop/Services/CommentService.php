@@ -59,7 +59,7 @@ class CommentService
             ->save($comment, $attributes);
 
         // save persisted comment object
-        $this->em->flush();
+        $this->em->flush($comment);
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheService->clearNamespace('comment');

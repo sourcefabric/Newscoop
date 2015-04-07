@@ -81,7 +81,7 @@ services:
         class: Newscoop\NewscoopBundle\EventListener\PublicationListener
         arguments:  ["@newscoop_newscoop.publication_service"]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 7 }
 
     newscoop.publication_service:
         alias: newscoop_newscoop.publication_service
