@@ -83,7 +83,7 @@
   margin-right: 8px;
 }
 .notification-list {
-  padding: 0;
+  padding: 0 5px;
 }
 .notification-list::-webkit-scrollbar {
   width: 14px !important;

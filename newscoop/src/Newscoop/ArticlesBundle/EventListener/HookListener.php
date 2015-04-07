@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\ArticlesBundle\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -50,6 +49,8 @@ class HookListener
 
         $response = $this->templating->renderResponse('NewscoopArticlesBundle:Hook:editorialComments.html.twig', array(
             'article' => $article,
+            'articleNumber' => $article->getArticleNumber(),
+            'articleLanguage' => $article->getLanguageId(),
             'clientId' => $client->getPublicId(),
             'pluginName' => 'Editorial Comments',
         ));

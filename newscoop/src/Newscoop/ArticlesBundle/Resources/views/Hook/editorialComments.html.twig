@@ -5,88 +5,25 @@
 {% trans_default_domain "comments" %}
 <script type="text/javascript">
     var clientId = '{{ clientId }}';
-    var token = "{{ default_csrf_token() }}";
+    var  token = "{{ default_csrf_token() }}";
+    var  articleNumber = "{{ articleNumber }}";
+    var  articleLanguage = "{{ articleLanguage }}";
 </script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+<div ng-app="editorialCommentsApp" class="tabpane articlebox" title="{{ 'editorial.label.title'|trans }}">
+<div ng-view=""></div>
 <script type="text/javascript" src="{{ asset('public/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.7/angular-route.js"></script>
+<script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscooparticles/app/loading-bar.js') }}"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.js"></script>
+<script type="text/javascript" src="{{ asset('public/bundles/newscoopnewscoop/js/moment-with-locales.js') }}"></script>
+<script type="text/javascript" src="{{ asset('public/bundles/newscoopnewscoop/js/angular-moment.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscooparticles/app/ng-infinite-scroll.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscooparticles/app/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscooparticles/app/comments-ctrl.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscooparticles/app/services/comments.js') }}"></script>
 <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
 <script src="{{ url('bazinga_jstranslation_js', { 'domain': 'comments' }) }}?locales={{ localeFromCookie }}"></script>
-
-<div class="tabpane articlebox" title="Editorial Comments">
-<section ng-app="editorialCommentsApp" ng-controller="EditorialCommentsCtrl" class="tab-content chat" style="display: block;">
-            <div id="main_block_with_scroll" class="notification-list-box">
-                <div ng-if="comments.items.length == 0 && !comments.busy">{{ 'editorial.label.nocomments'|trans }}</div>
-              <ul infinite-scroll="comments.nextPage('{{ article.getArticleNumber() }}', '{{ article.getLanguageId() }}')" infinite-scroll-container="'#main_block_with_scroll'" infinite-scroll-parent class="notification-list">
-                <li class="personal" ng-class="{'comment-reply': comment.parent}" ng-repeat="comment in comments.items" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-                <button ng-if="!comment.parent" type="button" ng-click="resolveComment(comment.id);" ng-show="hover" class="btn btn-xs btn-primary resolve-btn">
-                    <span title="{{ 'editorial.btn.resolve'|trans }}" class="glyphicon glyphicon-ok-circle"></span>
-                </button>
-                <button ng-if="comment.parent" type="button" ng-click="deleteComment(comment.id);" ng-show="hover" class="btn btn-xs btn-default resolve-btn">
-                        <span title="{{ 'editorial.btn.delete'|trans }}" class="glyphicon glyphicon-remove"></span>
-                </button>
-                <button type="button" ng-click="isEditing(comment)" ng-show="hover" ng-class="{'active': comment.editing}" class="btn btn-default btn-xs resolve-btn alignment-btn"><span title="{{ 'editorial.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></button>
-                <button type="button" ng-click="showReplyBox(comment)" ng-show="hover && !comment.parent" ng-class="{'active': comment.isReplying}" class="btn btn-default btn-xs resolve-btn alignment-btn"><span title="{{ 'editorial.btn.reply'|trans }}" class="glyphicon glyphicon-share-alt"></span></button>
-                <div class="commenter-container">
-                  <figure class="notification-avatar">
-                      <img ng-if="comment.user.image" ng-src="{[{ comment.user.image }]}">
-                  </figure>
-                  <div class="notification-content author-headline">
-                    <p class="notification-text">
-                        <span class="notification-author">{[{ ::comment.user.firstName }]} {[{ ::comment.user.lastName }]}</span>
-                    <br>
-                    <span am-time-ago="comment.created" title="{[{ comment.created }]}" class="notification-info"></span>
-                    </p>
-                  </div>
-                  <div class="notification-content" ng-if="!comment.editing">
-                    <p class="notification-text">{[{ ::comment.comment }]}</p>
-                  </div>
-                  </div>
-                  <br>
-                  <form name="editForm" class="form-inline" role="form" novalidate ng-if="comment.editing">
-                  <div class="typing-active">
-                        <div class="notification-write-box">
-                            <textarea ng-model="comment.comment" name="comment" required ng-minlength="1" ng-maxlength="160" value="{[{ ::comment.comment }]}" class="notification-writer" placeholder="{{ 'editorial.label.reply'|trans }}"></textarea>
-                            <div class="alert alert-danger" ng-show="editForm.comment.$error.maxlength" role="alert">{{ 'editorial.alert.toolong'|trans }}</div>
-                            <div class="button-area clearfix pull-right">
-                                <button class="btn btn-primary btn-xs send-notif" ng-disabled="editForm.$invalid" ng-click="editComment(comment);">{{ 'editorial.btn.save'|trans }}</button>
-                                <button class="btn btn-default btn-xs cancel-notif" ng-click="hide(comment)">{{ 'editorial.btn.cancel'|trans }}</button>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                <form name="replyForm" class="form-inline" role="form" novalidate ng-if="comment.isReplying && !comment.parent">
-                  <div class="typing-active">
-                        <div class="notification-write-box">
-                            <textarea ng-model="textareaReply.comment" name="comment" required ng-minlength="1" ng-maxlength="160" placeholder="{{ 'editorial.label.reply'|trans }}" class="notification-writer" placeholder="{{ 'editorial.label.reply'|trans }}"></textarea>
-                            <div class="alert alert-danger" ng-show="replyForm.comment.$error.maxlength" role="alert">{{ 'editorial.alert.toolong'|trans }}</div>
-                            <div class="button-area clearfix pull-right">
-                                <button class="btn btn-primary btn-xs send-notif" ng-disabled="replyForm.$invalid" ng-click="addComment(comment)">{{ 'editorial.btn.send'|trans }}</button>
-                                <button class="btn btn-default btn-xs cancel-notif" ng-click="hide(comment)">{{ 'editorial.btn.cancel'|trans }}</button>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                </li>
-              </ul>
-            </div>
-        <div ng-show="comments.busy" style="margin-left:45%" class="ai-circled ai-indicator ai-grey-spin"></div>
-        <div ng-class="{'typing-active': enableTyping}">
-        <div class="notification-write-box">
-        <form name="addForm" class="form-inline" role="form" novalidate>
-          <textarea ng-model="textareaMessage.comment" name="comment" required ng-minlength="1" ng-maxlength="160" class="notification-writer" ng-focus="enableTyping = true" placeholder="{{ 'editorial.label.post'|trans }}"></textarea>
-          <div class="alert alert-danger" ng-show="addForm.comment.$error.maxlength" role="alert">{{ 'editorial.alert.toolong'|trans }}</div>
-          <div class="button-area clearfix pull-right">
-              <button class="btn btn-primary send-notif" ng-click="addComment(this)" ng-disabled="addForm.$invalid">{{ 'editorial.btn.send'|trans }}</button>
-              <button class="btn btn-default cancel-notif" ng-click="enableTyping = false">{{ 'editorial.btn.cancel'|trans }}</button>
-          </div>
-        </form>
-        </div>
-        </div>
-    </section>
 </div>
