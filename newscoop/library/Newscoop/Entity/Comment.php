@@ -83,8 +83,6 @@ class Comment implements DocumentInterface
     protected $parent;
 
     /**
-     * TODO get rid of this when the composite key stuff is done.
-     *
      * @ORM\Column(type="integer", name="fk_thread_id")
      * @var int
      */

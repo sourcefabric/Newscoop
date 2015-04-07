@@ -310,7 +310,8 @@ class SystemPrefController extends Controller
 
         try {
             $cacheDriver->deleteAll();
-        } catch (Exception $e) {
+            $cacheDriver->flushAll();
+        } catch (\Exception $e) {
             return new JsonResponse(array($e->getMessage()), 404);
         }
 
