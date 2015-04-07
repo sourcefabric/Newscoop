@@ -71,7 +71,6 @@ angular.module('editorialCommentsApp').factory('Comments', function($http, $acti
         });
 
 	    if (this.itemsCount <= 5) {
-	    	console.log(this.busy)
 	    	if (this.busy) {
 	    		return;
 	    	}

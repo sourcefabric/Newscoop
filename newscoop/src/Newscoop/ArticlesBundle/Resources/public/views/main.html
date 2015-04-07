@@ -1,5 +1,5 @@
 <section ng-controller="EditorialCommentsCtrl" class="tab-content chat" style="display: block;">
-  <div id="main_block_with_scroll" class="notification-list-box">
+  <div ng-init="refresher()" id="main_block_with_scroll" class="notification-list-box">
     <div ng-if="comments.items.length == 0 && !comments.busy">{[{ trans('editorial.label.nocomments') }]}</div>
     <ul infinite-scroll="comments.nextPage()" infinite-scroll-container="'#main_block_with_scroll'" infinite-scroll-parent class="notification-list">
       <li class="personal" ng-class="{'comment-reply': comment.parent}" ng-repeat="comment in comments.items" ng-mouseenter="hover = true" ng-mouseleave="hover = false">

@@ -24,14 +24,27 @@ angular.module('editorialCommentsApp').controller('EditorialCommentsCtrl', [
 	$scope.comments = comments;
 	$scope.stopRefreshing = false;
 
-	$interval(function(){
-		if (!$scope.stopRefreshing) {
-			comments.refresh();
-		}
-    }.bind(this), 20000);
-
     $scope.trans = function (phrase) {
         return Translator.trans(phrase);
+    }
+
+    /**
+     * It loads comments every 20 seconds to update
+     * the curent list of the comments
+     */
+    $scope.refresher = function () {
+        var intervalPromise = $interval(function(){
+            if (!$scope.stopRefreshing) {
+                comments.refresh();
+            }
+        }, 20000);
+
+        $scope.$on('$destroy', function() {
+            if (angular.isDefined(intervalPromise)) {
+                $interval.cancel(intervalPromise);
+                intervalPromise = undefined;
+            }
+        });
     }
 
 	/**
