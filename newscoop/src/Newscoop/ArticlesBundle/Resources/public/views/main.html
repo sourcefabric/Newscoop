@@ -1,16 +1,16 @@
 <section ng-controller="EditorialCommentsCtrl" class="tab-content chat" style="display: block;">
   <div id="main_block_with_scroll" class="notification-list-box">
-    <div ng-if="comments.items.length == 0 && !comments.busy">editorial.label.nocomments</div>
+    <div ng-if="comments.items.length == 0 && !comments.busy">{[{ trans('editorial.label.nocomments') }]}</div>
     <ul infinite-scroll="comments.nextPage()" infinite-scroll-container="'#main_block_with_scroll'" infinite-scroll-parent class="notification-list">
       <li class="personal" ng-class="{'comment-reply': comment.parent}" ng-repeat="comment in comments.items" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
         <button ng-if="!comment.parent" type="button" ng-click="resolveComment(comment.id);" ng-show="hover" class="btn btn-xs btn-primary resolve-btn">
-          <span title="{{ 'editorial.btn.resolve'|trans }}" class="glyphicon glyphicon-ok-circle"></span>
+          <span title="{[{ trans('editorial.btn.resolve') }]}" class="glyphicon glyphicon-ok-circle"></span>
         </button>
         <button ng-if="comment.parent" type="button" ng-click="deleteComment(comment.id);" ng-show="hover" class="btn btn-xs btn-default resolve-btn">
-          <span title="{{ 'editorial.btn.delete'|trans }}" class="glyphicon glyphicon-remove"></span>
+          <span title="{[{ trans('editorial.btn.delete') }]}" class="glyphicon glyphicon-remove"></span>
         </button>
-        <button type="button" ng-click="isEditing(comment)" ng-show="hover" ng-class="{'active': comment.editing}" class="btn btn-default btn-xs resolve-btn alignment-btn"><span title="{{ 'editorial.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></button>
-        <button type="button" ng-click="showReplyBox(comment)" ng-show="hover && !comment.parent" ng-class="{'active': comment.isReplying}" class="btn btn-default btn-xs resolve-btn alignment-btn"><span title="{{ 'editorial.btn.reply'|trans }}" class="glyphicon glyphicon-share-alt"></span></button>
+        <button type="button" ng-click="isEditing(comment)" ng-show="hover" ng-class="{'active': comment.editing}" class="btn btn-default btn-xs resolve-btn alignment-btn"><span title="{[{ trans('editorial.btn.edit') }]}" class="glyphicon glyphicon-pencil"></span></button>
+        <button type="button" ng-click="showReplyBox(comment)" ng-show="hover && !comment.parent" ng-class="{'active': comment.isReplying}" class="btn btn-default btn-xs resolve-btn alignment-btn"><span title="{[{ trans('editorial.btn.reply') }]}" class="glyphicon glyphicon-share-alt"></span></button>
         <div class="commenter-container">
           <figure class="notification-avatar">
             <img ng-if="comment.user.image" ng-src="{[{ comment.user.image }]}">
@@ -30,11 +30,11 @@
         <form name="editForm" class="form-inline" role="form" novalidate ng-if="comment.editing">
           <div class="typing-active">
             <div class="notification-write-box">
-              <textarea ng-model="comment.comment" name="comment" required ng-minlength="1" ng-maxlength="160" value="{[{ ::comment.comment }]}" class="notification-writer" placeholder="editorial.label.reply"></textarea>
-              <div class="alert alert-danger" ng-show="editForm.comment.$error.maxlength" role="alert">editorial.alert.toolong</div>
+              <textarea ng-model="comment.comment" name="comment" required ng-minlength="1" ng-maxlength="160" value="{[{ ::comment.comment }]}" class="notification-writer" placeholder="{[{ trans('editorial.label.reply') }]}"></textarea>
+              <div class="alert alert-danger" ng-show="editForm.comment.$error.maxlength" role="alert">{[{ trans('editorial.alert.toolong') }]}</div>
               <div class="button-area clearfix pull-right">
-                <button class="btn btn-primary btn-xs send-notif" ng-disabled="editForm.$invalid" ng-click="editComment(comment);">editorial.btn.save</button>
-                <button class="btn btn-default btn-xs cancel-notif" ng-click="hide(comment)">editorial.btn.cancel</button>
+                <button class="btn btn-primary btn-xs send-notif" ng-disabled="editForm.$invalid" ng-click="editComment(comment);">{[{ trans('editorial.btn.save') }]}</button>
+                <button class="btn btn-default btn-xs cancel-notif" ng-click="hide(comment)">{[{ trans('editorial.btn.cancel') }]}</button>
               </div>
             </div>
           </div>
@@ -42,11 +42,11 @@
         <form name="replyForm" class="form-inline" role="form" novalidate ng-if="comment.isReplying && !comment.parent">
           <div class="typing-active">
             <div class="notification-write-box">
-              <textarea ng-model="textareaReply.comment" name="comment" required ng-minlength="1" ng-maxlength="160" placeholder="{{ 'editorial.label.reply'|trans }}" class="notification-writer" placeholder="{{ 'editorial.label.reply'|trans }}"></textarea>
-              <div class="alert alert-danger" ng-show="replyForm.comment.$error.maxlength" role="alert">{editorial.alert.toolong</div>
+              <textarea ng-model="textareaReply.comment" name="comment" required ng-minlength="1" ng-maxlength="160" placeholder="{[{ trans('editorial.label.reply') }]}" class="notification-writer" placeholder="{[{ trans('editorial.label.reply') }]}"></textarea>
+              <div class="alert alert-danger" ng-show="replyForm.comment.$error.maxlength" role="alert">{[{ trans('editorial.alert.toolong') }]}</div>
               <div class="button-area clearfix pull-right">
-                <button class="btn btn-primary btn-xs send-notif" ng-disabled="replyForm.$invalid" ng-click="addComment(comment)">editorial.btn.send</button>
-                <button class="btn btn-default btn-xs cancel-notif" ng-click="hide(comment)">editorial.btn.cancel</button>
+                <button class="btn btn-primary btn-xs send-notif" ng-disabled="replyForm.$invalid" ng-click="addComment(comment)">{[{ trans('editorial.btn.send') }]}</button>
+                <button class="btn btn-default btn-xs cancel-notif" ng-click="hide(comment)">{[{ trans('editorial.btn.cancel') }]}</button>
               </div>
             </div>
           </div>
@@ -58,11 +58,11 @@
   <div ng-class="{'typing-active': enableTyping}">
     <div class="notification-write-box">
       <form name="addForm" class="form-inline" role="form" novalidate>
-        <textarea ng-model="textareaMessage.comment" name="comment" required ng-minlength="1" ng-maxlength="160" class="notification-writer" ng-focus="enableTyping = true" placeholder="editorial.label.post"></textarea>
-        <div class="alert alert-danger" ng-show="addForm.comment.$error.maxlength" role="alert">editorial.alert.toolong</div>
+        <textarea ng-model="textareaMessage.comment" name="comment" required ng-minlength="1" ng-maxlength="160" class="notification-writer" ng-focus="enableTyping = true" placeholder="{[{ trans('editorial.label.post') }]}"></textarea>
+        <div class="alert alert-danger" ng-show="addForm.comment.$error.maxlength" role="alert">{[{ trans('editorial.alert.toolong') }]}</div>
         <div class="button-area clearfix pull-right">
-          <button class="btn btn-primary send-notif" ng-click="addComment(this)" ng-disabled="addForm.$invalid">editorial.btn.send</button>
-          <button class="btn btn-default cancel-notif" ng-click="enableTyping = false">editorial.btn.cancel</button>
+          <button class="btn btn-primary send-notif" ng-click="addComment(this)" ng-disabled="addForm.$invalid">{[{ trans('editorial.btn.send') }]}</button>
+          <button class="btn btn-default cancel-notif" ng-click="enableTyping = false">{[{ trans('editorial.btn.cancel') }]}</button>
         </div>
       </form>
     </div>

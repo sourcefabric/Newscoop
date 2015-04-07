@@ -30,6 +30,9 @@ angular.module('editorialCommentsApp').controller('EditorialCommentsCtrl', [
 		}
     }.bind(this), 20000);
 
+    $scope.trans = function (phrase) {
+        return Translator.trans(phrase);
+    }
 
 	/**
      * Updates comments array. It adds a new comment to the array
