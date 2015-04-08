@@ -1,5 +1,5 @@
 'Usage at automatic statistics': 'Использование в автоматической статистике'
-'Show field in article edit screen': null
+'Show field in article edit screen': 'Показывать поле в окне редактирования статьи'
 'Event Color': 'Цвет события'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'В поле $3 нужно ввести число большее, чем $1 и меньшее, чем $2.'
 'You do not have the right to translate article types.': 'У вас нет прав на перевод типов статей. '
@@ -24,7 +24,7 @@ Precision: Точность
 'Are you sure you want to make $1 a $2 field?': 'Вы уверены, что хотите сделать $1 полем $2?'
 'Is Content': Контент
 'Back to Article Types List': 'Вернуться к списку типов статей'
-show: Показать
+show: Показывать
 hide: Спрятать
 'You must enter a name for the field.': 'Вы должны ввести название поля.'
 'You must choose a language for the field.': 'Вы должны выбрать язык для поля.'

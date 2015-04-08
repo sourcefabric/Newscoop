@@ -14,7 +14,7 @@ Facebook: null
 'Date of birth': null
 'Allow sending emails': null
 'About me': null
-'User with email %s is registered already.': null
+'User with email %s is registered already.': 'Пользователь с email %s уже зарегистрирован.'
 'Username is used. Please use another one.': null
 Continue: null
 'Accepting terms of use': null
@@ -29,7 +29,7 @@ Continue: null
 'No entries to show': 'Нет записей для просмотра'
 'Display _MENU_ records': 'Отобразить _MENU_ записи'
 'Are you sure you want to {action}?': null
-'Active Logins': null
+'Active Logins': 'Активные логины'
 ' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
 'User renamed.': 'Пользователь переименован.'
 'User attributes': 'Атрибуты пользователя'
@@ -90,7 +90,7 @@ Filters: Фильтры
 'Enable Firefox spell checking by default': 'Включить проверку провописания в Firefox по умолчанию'
 'User may use the editor status bar': 'Пользователь может использовать строку состояния редактора'
 'User may clear up the system cache': 'Пользователь может очищать систему кеширования'
-'Another user is registered with that e-mail address, please choose a different one.': 'Другой пользователь зарегистрировался под этим электронным адресом, пожалуйста, введите другой.'
+'Another user is registered with that e-mail address, please choose a different one.': 'Другой пользователь зарегистрировался под этим email адресом, пожалуйста, введите другой.'
 'There was an error when trying to update the user info.': 'Произошла ошибка при попытке обновления информации о пользователе.'
 'User may moderate comments': 'Пользователь может модерировать комментарии'
 'User may enable comments': 'Пользователь может разрешать комментарии'
@@ -185,19 +185,19 @@ Miscellaneous: Разное
 'Editor Miscellaneous Settings': 'Прочие настройки редактора'
 'No such user account.': 'Нет такой учетной записи пользователя.'
 'User image (full-size)': null
-'User account is highlighted as "featured account"': null
-'Custom attribute...': null
+'User account is highlighted as "featured account"': 'Пользователь отмечен как избранный'
+'Custom attribute...': 'Настраиваемый атрибут'
 users:
     label:
         title: null
     menu:
         manage: 'Управление пользователями'
     created: Создана
-    updated: null
+    updated: Обновлено
     status:
         status: Состояние
-        registered: null
-        pending: null
+        registered: Зарегистрированные
+        pending: 'Ожидающие подтверждения'
         deleted: 'Удалено '
         active: Активно
     table:

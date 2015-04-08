@@ -95,7 +95,7 @@ login: Вход
 'Password recovery is disabled.': 'Невозможно восстановить пароль. '
 'Password recovery': 'Восстановление пароля'
 'Password Recovery': 'Восстановление Пароля'
-'No user is registered with this email.': 'Нет пользователей, зарегистрированных под этим паролем.'
+'No user is registered with this email.': 'Нет пользователей, зарегистрированных с этим email.'
 'Forgot your password?': 'Забыл пароль?'
 'Email: incorrect format.': 'Email: неверный формат.'
 Email: Email

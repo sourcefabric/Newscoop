@@ -1,7 +1,7 @@
-'No such article type': null
-'Multi-line Text': null
-'Filter saved': null
-'Filter not saved': null
+'No such article type': 'Нет такого типа статьи'
+'Multi-line Text': 'Многострочный текст'
+'Filter saved': 'Фильтр сохранен'
+'Filter not saved': 'Фильтр не сохранен'
 'Not a color': 'Не является цветом'
 'No such field': 'Нет такого поля'
 'Color saved': 'Цвет сохранен'
@@ -62,9 +62,9 @@ First: Первый
 'URL $1 is invalid or is not an image.': 'URL $1 неверен или не является изображением.'
 'URL $1 is not an image.': 'URL $1 не является изображением.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Клиент добавлен'
+    notfound: 'Клиент не найден'
+    removed: 'Клиент удален'
 publicresources:
     updated: null
 api:
@@ -73,16 +73,16 @@ api:
         title_content: null
         tabs:
             resources: null
-            clients: null
+            clients: Клиенты
         resources:
-            info: null
-            add_button: null
+            info: 'По умолчанию все элементы защищены файрволом, но вы можете выбрать те из них, доступ к которым хотите открыть'
+            add_button: 'Добавить клиента'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: null
+                name: 'Имя клиента'
+                id: 'ID клиента'
+                secret: 'Секретный ключ'
+                trusted: 'Проверенный клиент?'
                 redirect: null
                 publication: Издание
                 actions: Операции
@@ -90,15 +90,15 @@ api:
                     remove: Удалить
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'Вы действительно хотите удалить этого клиента?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
+                name: 'Выберите имя для клиента:'
+                publication: 'Выберите издание для клиента:'
                 redirectUris: null
-                trusted: null
+                trusted: 'Проверенный клиент? '
                 save: Сохранить
         PublicResources:
             label:

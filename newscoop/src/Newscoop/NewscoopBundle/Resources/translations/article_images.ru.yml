@@ -1,6 +1,6 @@
 'Display newsfeed images': null
-'Mark image': null
-'Add selected images to slideshow': null
+'Mark image': 'Отметить изображение'
+'Add selected images to slideshow': 'Добавить выбранные изображения в слайдшоу'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'К сожалению, это изображение слишком мало. Размер изображений должен быть по меньшей мере %dx%d.'
 'Slideshow rendition': 'Комплект размеров слайд-шоу'
 'Renditions reloaded': 'Комплект размеров  перезагружен'
@@ -46,7 +46,7 @@ Create: Создать
 Caption: Подпись
 'Attached images': 'Прикрепленные изображения'
 'Attach & Place': 'Прикрепить и разместить'
-'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Добавить url видео (например, http://vimeo.com/25083275 для Vimeo, http://youtu.be/1XsPVO61e9w для YouTube)'
 'Add video': 'Добавить видео'
 'Add caption': 'Добавить подпись'
 'Show all': 'Показать все'

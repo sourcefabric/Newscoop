@@ -85,4 +85,4 @@ Compatibility: Совместимость
 '$1 is not writable': '$1 не является перезаписываемым'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 файлы $2'
-'Available themes': null
+'Available themes': 'Доступные темы'

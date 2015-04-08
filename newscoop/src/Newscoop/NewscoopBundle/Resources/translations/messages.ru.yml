@@ -17,7 +17,7 @@ Configure: Настройки
 Fields: Поля
 Delete: Удалить
 Type: Тип
-Name: Заголовок
+Name: Название
 Code: Код
 Edit: Правка
 Login: Логин
@@ -85,7 +85,7 @@ Date/Time: Дата/Время
 'Remove from section page': 'Удалить со страницы рубрики'
 Actions: Операции
 Publishing: Публикации
-Show: Показать
+Show: Показывать
 Remove: Удалить
 'Article Types': 'Тип статьи'
 'Staff User Types': 'Пользовательский тип персонала'
@@ -275,7 +275,7 @@ Title: Заголовок
 'Permissions: $1': null
 'Change user account information': null
 'Staff management': null
-Updated: null
+Updated: Обновлено
 Options: null
 Verified: null
 Confirm: null

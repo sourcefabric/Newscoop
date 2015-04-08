@@ -5,5 +5,5 @@ dynatable:
     recordCountPageBoundTemplate: null
     recordCountPageUnboundedTemplate: null
     recordCountFilteredTemplate: null
-    recordCountText: null
+    recordCountText: Показано
     processingText: null

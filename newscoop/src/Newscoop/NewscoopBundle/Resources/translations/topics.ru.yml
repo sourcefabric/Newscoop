@@ -24,13 +24,13 @@ Top: Верх
 'Deleting topic': 'Удаление темы'
 'Change topic name': 'Переименовать тему'
 'There are $1 articles using the topic.': 'Тема используется в $1 статье(-ях).'
-'Search for topics': null
+'Search for topics': 'Искать темы'
 topics:
     tip: null
     label:
         all: null
         filterbylang: null
-        search: null
+        search: Поиск
         filterplaceholder: null
         addroot: null
         topicname: null
@@ -42,7 +42,7 @@ topics:
         addtranslation: null
         topictranslations: null
         choose: null
-        translationstring: null
+        translationstring: 'Строка перевода'
         tree: null
     title: null
     btn:
@@ -55,17 +55,17 @@ topics:
         saveandclose: null
         removetrans: null
     alerts:
-        languagenotfound: null
+        languagenotfound: 'Не удалось найти язык по коду : %locale%'
         translationadded: null
         translationexists: null
         beforedelete: null
         wrongparams: null
         ordersaved: null
         saved: null
-        beforedeleteinfo: null
+        beforedeleteinfo: 'При удалении тем, имеющих вложенные темы, все вложенные вместе с переводами будут безвозвратно удалены. Вы уверены, что хотите этого?'
     added: null
-    failedfind: null
-    failedfindTranslation: null
+    failedfind: 'Не удалось найти тему по id: %id%'
+    failedfindTranslation: 'Не удалось найти перевод темы по id: %id%'
     removed: null
     exists: null
     existsname: null
@@ -74,7 +74,7 @@ topics:
     updated: null
     error: null
     csrfinvalid: null
-    tooshort: null
-    toolong: null
-    attachtopics: null
-    attached: null
+    tooshort: 'Название темы слишком короткое.'
+    toolong: 'Название темы слишком длинное.'
+    attachtopics: 'Прикрепить темы'
+    attached: 'Эта тема связана с %occurence% статьей(статьями). При ее удалении она будет автоматически откреплена от всех этих статей. Если у нее были вложенные темы, они также будут откреплены. '
