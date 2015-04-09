@@ -43,7 +43,6 @@ $container = $kernel->getContainer();
 \Zend_Registry::set('container', $container);
 
 $cli->addCommands(array(
-    new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
     new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
     new \Newscoop\Tools\Console\Command\SendStatsCommand(),
     new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
