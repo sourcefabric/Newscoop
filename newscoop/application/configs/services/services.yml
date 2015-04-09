@@ -80,12 +80,6 @@ services:
     email:
         class:      Newscoop\Services\EmailService
         arguments:  ["@service_container"]
-    ingest.publisher:
-        class:      Newscoop\Services\Ingest\PublisherService
-        arguments:  ["%ingest_publisher%"]
-    ingest:
-        class:      Newscoop\Services\IngestService
-        arguments:  ["%ingest%", "@em", "@ingest.publisher"]
     blog:
         class:      Newscoop\Services\BlogService
         arguments:  ["%blog%", "@em"]
