@@ -35,3 +35,12 @@ $(function() {
     });
 });
 </script>
+</div>
+<div id="add-video">
+    <form method="<?php echo $this->form->getMethod(); ?>" action="<?php echo $this->url(array(
+    'action' => 'add-video-item',
+)); ?>"><div class="add-video">
+    <input type="text" name="url" title="<?php echo $translator->trans("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)", array(), 'article_images'); ?>" placeholder="<?php echo $translator->trans('Video URL', array(), 'article_images'); ?>" /> <button><?php echo $translator->trans('Add video', array(), 'article_images'); ?></button>
+</div></form>
+</div>
+

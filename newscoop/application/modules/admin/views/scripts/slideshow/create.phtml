@@ -1,1 +1,174 @@
-<?php echo $this->form; ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/slideshow.css')); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('bodyId')->set('next');
+$this->placeholder('bodyClass')->set('iframe expanded');
+?>
+<div class="content">
+<form id="edit_slideshow_form" method="<?php echo $this->form->getMethod(); ?>">
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php echo $translator->trans('Create Slideshow', array(), 'article_images'); ?>
+        <span style="float: right;">
+            <input type="submit" style="margin: 0;" value="<?php echo $translator->trans('Create'); ?>" class="save-button">
+        </span>
+    </h1>
+    </div>
+</div>
+<div class="slideshow-headline">
+    <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->escape($this->form->headline->getValue()); ?>" title="<?php echo $translator->trans('Slideshow headline', array(), 'article_images'); ?>" placeholder="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : $translator->trans('Slideshow name...', array(), 'article_images'); ?>"/>
+     <?php echo $this->form->rendition->setDecorators(array(
+	   'ViewHelper',
+	   'Errors',
+	   'Label'
+	  )); ?>
+</div>
+
+<h2 class="slideshow-images"><?php echo $translator->trans('Slideshow images', array(), 'article_images'); ?></h2>
+
+<ul id="slideshow-items" class="slideshow">
+
+</ul>
+
+<script>
+/**
+ * Set order of items
+ *
+ * @return void
+ */
+function setOrder() {
+    $.post("<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'slideshow',
+        'action' => 'set-order',
+        'format' => 'json',
+    )); ?>", {
+        order: $('#slideshow-items').sortable('toArray'),
+    }, function (data, textStatus) {
+    }, 'json');
+}
+
+var draggableOptions = {
+    revert: true,
+    connectToSortable: 'ul.slideshow',
+    opacity: 0.8,
+    helper: 'clone',
+    cursor: 'move'
+};
+
+$(function() {
+    $('.slideshow').sortable({
+        placeholder: 'placeholder',
+        <?php if ($this->slideshow) { ?>
+        receive: function(event, ui) {
+            var imageId = ui.item.attr('id');
+            $.post("<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'slideshow',
+                'action' => 'add-item',
+                'format' => 'json',
+            )); ?>", {
+                image: imageId,
+            }, function (data, textStatus) {
+                if (data.error_message) {
+                    $('#slideshow-items #' + imageId).detach();
+                    alert(data.error_message);
+                    return;
+                }
+
+                $('#slideshow-items #' + imageId).replaceWith(data.item);
+                setOrder();
+            }, 'json');
+        },
+        update: setOrder,
+        cursor: 'move'
+        <?php } ?>
+    });
+
+    <?php if ($this->slideshow) { ?>
+    $('.thumbnails li').draggable(draggableOptions);
+    <?php } ?>
+
+    $('#slideshow-items .remove').live('click', function(e) {
+        e.preventDefault();
+        var link = $(this);
+        $.post(link.attr('href') + '?format=json', function (data, textStatus) {
+            link.closest('li').detach();
+        });
+    });
+
+    $('#select-image').tabs();
+
+    $('#add-sellected-to-gallery').click(function(){
+        var images = [];
+        $('.thumbnails li figure input:checkbox[name=checked-images[]]:checked').each(function(index, element){
+            images.push($(element).val());
+        });
+
+         // ping for connection
+        callServer('ping', [], function(json) {
+            flashMessage('<?php echo $translator->trans('Processing...', array(), 'home'); ?>');
+            $.post("<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'slideshow',
+                'action' => 'add-multiple-items',
+                'format' => 'json',
+            )); ?>", {
+                images: images
+            }, function() {
+                window.location.reload();
+            });
+        }); // /ping
+    })
+
+    $('#select-all-images').click(function(e){
+        $('.thumbnails li figure input:checkbox[name=checked-images[]]').attr('checked', true);
+        e.preventDefault();
+    });
+
+    $('.expand-btn').click(function (){
+        $('body#next').toggleClass('expanded');
+    });
+});
+</script>
+
+
+<div class="expand-btn"><?php echo $translator->trans('Add items to slideshow', array(), 'article_images'); ?></div>
+<div id="select-image" class="tabs popup-tabs">
+    <ul>
+        <?php if (!empty($this->images)) { ?><li><a href="#attached-images"><?php echo $translator->trans('Attached images', array(), 'article_images'); ?></a></li><?php } ?>
+        <li><a href="#media-archive"><?php echo $translator->trans('Media Archive', array(), 'article_images'); ?></a></li>
+        <li class="ui-state-default ui-corner-top">
+            <a href="#add-video"><?php echo $translator->trans('Add video', array(), 'article_images'); ?></a>
+        </li>
+    </ul>
+
+    <?php if (!empty($this->images)) { ?>
+    <div id="attached-images">
+        <ul class="thumbnails">
+            <?php foreach ($this->images as $image) { ?>
+            <li id="image-<?php echo $image->getId(); ?>">
+                <figure>
+                    <div><?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?></div>
+                    <input type="checkbox" id="default-<?php echo $image->getId(); ?>" name="checked-images[]" value="<?php echo $image->getId(); ?>" title="<?php echo $translator->trans('Mark image', array(), 'article_images'); ?>" />
+                    <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+                </figure>
+            </li>
+            <?php } ?>
+        </ul>
+        <div class="add-images">
+            <button id="add-sellected-to-gallery" class="button"><?php echo $translator->trans('Add selected images to slideshow', array(), 'article_images'); ?></button>
+            <button id="select-all-images" class="button"><?php echo $translator->trans('Select all images', array(), 'article_images'); ?></button>
+        </div>
+    </div>
+    <?php } ?>
+
+    <div id="media-archive">
+        <?php echo $this->imageArchive(); ?>
+    </div>
+</div>
+</form>
+</div>

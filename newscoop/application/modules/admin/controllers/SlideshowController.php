@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 use Newscoop\Annotations\Acl;
 use Newscoop\Image\Rendition;
 use Newscoop\Package\PackageService;
@@ -50,7 +49,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 $slideshows[] = $slideshow;
                 $this->_helper->service('package')->saveArticle(array(
                     'id' => $this->_getParam('article_number'),
-                    'slideshows' => array_map(function($slideshow) { return array('id' => $slideshow->getId()); }, $slideshows),
+                    'slideshows' => array_map(function ($slideshow) { return array('id' => $slideshow->getId()); }, $slideshows),
                 ));
             }
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
@@ -59,11 +58,13 @@ class Admin_SlideshowController extends Zend_Controller_Action
             ));
         }
 
+        $this->view->type = 'create';
         $this->view->form = $form;
+        $this->view->images = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
     }
 
     public function editAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
         $form = new Admin_Form_Slideshow();
@@ -88,7 +89,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
     }
 
     public function addItemAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
         $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
@@ -110,14 +111,15 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $slideshow = $this->getSlideshow();
 
         $items = array();
-        foreach($this->_getParam('images') as $key => $value) {
+        foreach ($this->_getParam('images') as $key => $value) {
             $image = $this->_helper->service('image')->find($value);
             try {
                 $item = $this->_helper->service('package')->addItem($slideshow, $image);
                 $items[] = $this->view->slideshowItem($item);
-            } catch (\InvalidArgumentException $e) {}
+            } catch (\InvalidArgumentException $e) {
+            }
         }
-        
+
         $this->_helper->json($items);
     }
 
@@ -192,7 +194,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
     /**
      * Set slideshow renditions
      *
-     * @param Zend_Form $form
+     * @param  Zend_Form $form
      * @return void
      */
     private function setSlideshowRenditions(\Zend_Form $form)
