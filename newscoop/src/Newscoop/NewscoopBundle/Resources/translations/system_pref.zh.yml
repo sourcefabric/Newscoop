@@ -120,7 +120,7 @@ newscoop:
             usergarbagedays: null
             smartyUseProtocol: null
             cronjob: null
-            enabled: null
+            enabled: 状态
             options: null
             info: null
             infodesc: null

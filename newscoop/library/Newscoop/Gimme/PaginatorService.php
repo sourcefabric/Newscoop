@@ -93,7 +93,8 @@ class PaginatorService
      * Get Pagination object
      * @return Pagination Pagination object
      */
-    public function getPagination() {
+    public function getPagination()
+    {
         return $this->pagination;
     }
 
@@ -104,6 +105,8 @@ class PaginatorService
     public function setPartialResponse($partialResponse)
     {
         $this->partialResponse = $partialResponse;
+
+        return $this;
     }
 
     /**
@@ -163,21 +166,13 @@ class PaginatorService
     /**
      * Paginate data
      *
-     * @param mixed $data                    Data to paginate
-     * @param array $params                  Parameters for Paginator
-     * @param bool  $params['emptyResponse'] Sets behaviour for an empty response, Default true returns 204. False returns 404
-     *                                       Won't be send to the Paginator
+     * @param mixed $data   Data to paginate
+     * @param array $params Parameters for Paginator
      *
      * @return array         Paginated data
      */
     public function paginate($data, $params = array())
     {
-        $emptyResponse = true;
-        if (array_key_exists('emptyResponse', $params)) {
-            $emptyResponse = $params['emptyResponse'];
-            unset($params['emptyAllowed']);
-        }
-
         $paginator = $this->paginator->paginate(
             $data,
             $this->pagination->getPage(),
@@ -186,14 +181,6 @@ class PaginatorService
         );
 
         $items['items'] = $paginator->getItems();
-
-        if (count($items['items']) == 0) {
-            if ($emptyResponse) {
-                throw new ResourceIsEmptyException('Result is empty.');
-            } else {
-                throw new NotFoundHttpException('Results was not found.');
-            }
-        }
 
         /**
          * Set pagination object only when need
@@ -214,10 +201,6 @@ class PaginatorService
      */
     private function getPaginationLinks($paginationData)
     {
-        // idea is that if you are somewhere and you use pagination 
-        // and get link to go back it should be the very same uri you've visited
-        // in general it can filter all the params with default values
-
         $data = array();
 
         if ($paginationData['current'] < $paginationData['lastPageInRange']) {

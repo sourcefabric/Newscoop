@@ -185,6 +185,8 @@ Miscellaneous: Verschiedenes
 'Editor Miscellaneous Settings': 'Verschiedene Editor Einstellungen'
 'No such user account.': 'Benutzerkonto nicht vorhanden'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

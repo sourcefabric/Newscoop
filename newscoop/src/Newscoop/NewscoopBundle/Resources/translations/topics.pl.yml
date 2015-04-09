@@ -25,3 +25,56 @@ Top: Góra
 'Change topic name': 'Zmień nazwę tematu'
 'There are $1 articles using the topic.': 'Artykuły w temacie: $1'
 'Search for topics': 'Szukaj dla tematu'
+topics:
+    tip: 'W Newscoopie, tematy zarządzanie są przed edytorów i dziennikarzy na poziomie artykułów. Dzięki temu można grupować podobne artykuły i wyświetlać je razem. Główny temat może mieć wiele podtematów, na przykład: temat "Sport" może mieć podtematy takie jak "piłka nożna", "koszykówka", "piłka wodna". Pojedynczy artykuł może być dołączony do wielu głównych tematów jak i wielu różnych podtematów. '
+    label:
+        all: Wszystko
+        filterbylang: 'Pokaż tematy w tym języku'
+        search: Szukaj
+        filterplaceholder: 'Wpisz część nazwy tematu'
+        addroot: 'Dodaj główny temat'
+        topicname: 'Nazwa tematu'
+        expandcollapse: rozwiń/zwiń
+        changename: 'Zmień nazwę tematu'
+        for: dla
+        addsubtopic: 'Dodaj podtemat'
+        subtopicname: 'Nazwa podtematu'
+        addtranslation: 'Dodaj tłumaczenie'
+        topictranslations: 'Tłumaczenia tematu'
+        choose: Wybierz...
+        translationstring: 'Tekst tłumaczenia'
+        tree: 'Drzewo tematów'
+    title: Tematy
+    btn:
+        hide: Schowaj
+        remove: 'Usuń temat'
+        edit: 'Edytuj temat'
+        close: Zamknij
+        add: Dodaj
+        save: Zapisz
+        saveandclose: 'Zapisz i zamknij'
+        removetrans: 'Usuń tłumaczenie tematów'
+    alerts:
+        languagenotfound: 'Nie można znaleźć języka dla lokalizacji: %locale%'
+        translationadded: 'Tłumaczenie zostało dodane'
+        translationexists: 'Tłumaczenie dla lokalizacji %locale% już istnieje!'
+        beforedelete: 'Czy na pewno chcesz usunąć ten temat?'
+        wrongparams: 'Liczba sortowanych tematów musi być taka sama jak liczba wszystkich głównych tematów.'
+        ordersaved: 'Kolejność została zapisana.'
+        saved: 'Zapisano pomyślnie.'
+        beforedeleteinfo: 'Gdy usuwasz temat z podtematami, wszystkie podtematy razem z ich tłumaczeniami zostaną usunięte. Jesteś pewnie że chcesz to zrobić?'
+    added: 'Temat został dodany'
+    failedfind: 'Nie można znaleźć tematu z identyfikatorem: %id%'
+    failedfindTranslation: 'Nie można znaleźć tłumaczeń tematu z identyfikatorem: %id%'
+    removed: 'Temat %title% został usunięty'
+    exists: 'Taki temat już istnieje'
+    existsname: 'Taka nazwa tematu już istnieje!'
+    removedTranslation: 'Tłumaczenie tematu zostało usunięte'
+    failedremoveTranslation: 'Nie można usunąć domyślnego tłumaczenia tematu. Zamiast tego usuń temat.'
+    updated: 'Temat został zaktualizowany'
+    error: 'Wystąpił błąd, spróbuj ponownie później.'
+    csrfinvalid: 'Klucz bezpieczeństwa wygasł. Wyślij formularz ponownie.'
+    tooshort: 'Nazwa tematu jest za krótka!'
+    toolong: 'Nazwa tematu jest za długa!'
+    attachtopics: 'Dołącz tematy'
+    attached: 'Ten temat jest dołączony do %occurence% artykułów. Po usunięciu tematu zostanie od automatycznie odłączony od wszystkich artykułów do których był dołączony. Jeśli temat ma podtematy to i one zostaną odłączone.'

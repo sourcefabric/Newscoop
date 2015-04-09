@@ -26,7 +26,7 @@ function smarty_block_list_slideshow_items($params, $content, &$smarty, &$repeat
     $cacheService = \Zend_Registry::get('container')->get('newscoop.cache');
 
     if (!isset($content)) { // init
-        $start = $context->next_list_start('Newscoop\TemplateList\SlideshowItemssList');
+        $start = $context->next_list_start('Newscoop\TemplateList\SlideshowItemsList');
         $list = new \Newscoop\TemplateList\SlideshowItemsList(
             new \Newscoop\Criteria\SlideshowItemCriteria(),
             $paginatorService,

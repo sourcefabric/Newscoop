@@ -1,5 +1,6 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
+$router = \Zend_Registry::get('container')->getService('router');
 if (empty($userIsBlogger)) : ?>
 <div class="articlebox" title="<?php echo $translator->trans('Featured Article Lists', array(), 'articles'); ?>">
   <div>
@@ -13,12 +14,12 @@ if (empty($userIsBlogger)) : ?>
 
               $playlistsData = array();
               foreach ($playlists as $playlist) {
-                  $playlistsData[] = (object) array (
+                  $playlistsData[] = (object) array(
                       'name' => $playlist->getName(),
                       'id' => $playlist->getId(),
                   );
               }
-          } catch(\Exception $e) {
+          } catch (\Exception $e) {
               $playlistsData = array();
           }
       ?>
@@ -37,7 +38,10 @@ if (empty($userIsBlogger)) : ?>
       <?php if ($inEditMode && $GLOBALS['controller']->getHelper('acl')->isAllowed('playlist', 'manage')) : ?>
       <a class="iframe ui-state-default icon-button right-floated"
         popup-width="600"
-        href="<?php echo camp_html_article_url($articleObj, $f_language_id, "playlist/popup.php"); ?>">
+        href="<?php echo $router->generate('newscoop_newscoop_playlists_editor', array(
+            'articleNumber' => $articleObj->getArticleNumber(),
+            'language' => $f_language_id,
+        )); ?>">
         <span class="ui-icon ui-icon-pencil"></span><?php echo $translator->trans('Edit'); ?></a>
       <?php endif; ?>
     </div>

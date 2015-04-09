@@ -24,8 +24,6 @@ require_once WWW_DIR . '/classes/GeoMap.php';
 require_once WWW_DIR . '/classes/Article.php';
 require_once WWW_DIR . '/classes/ArticleData.php';
 
-$translator = \Zend_Registry::get('container')->getService('translator');
-
 try {
     // init request
     $serverRequest = new ServerRequest($_POST['callback'], isset($_POST['args']) ? $_POST['args'] : array());
@@ -44,15 +42,12 @@ try {
     $serverRequest->allow('ContextList::getFilterSections');
     $serverRequest->allow('ContextList::doOrder', 'Publish');
 
-
     $serverRequest->allow('WidgetManager::AddWidget');
     $serverRequest->allow('WidgetManagerDecorator::delete');
     $serverRequest->allow('WidgetRendererDecorator::render');
     $serverRequest->allow('WidgetManagerDecorator::getSetting');
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
-    $serverRequest->allow('Topic::UpdateOrder');
-    $serverRequest->allow('Topic::add');
     $serverRequest->allow('Geo_Names::FindCitiesByPosition');
     $serverRequest->allow('Geo_Names::FindCitiesByName');
     $serverRequest->allow('Geo_Map::LoadMapData');
@@ -78,7 +73,7 @@ try {
 } catch (Exception $e) {
     echo json_encode(array(
         'error_code' => $e->getCode(),
-        'error_message' => $translator->trans('Error') . ': ' . $e->getMessage(),
+        'error_message' => 'Error: '.$e->getMessage(),
         'error_file' => $e->getFile(),
         'error_line' => $e->getLine(),
     ));

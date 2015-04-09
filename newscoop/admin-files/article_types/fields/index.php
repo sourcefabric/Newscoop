@@ -191,6 +191,7 @@ $color_list = array(
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Display Name", array(), 'article_type_fields'); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Translate"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Is Content", array(), 'article_type_fields'); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show in Editor", array(), 'article_type_fields'); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Event Color", array(), 'article_type_fields'); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show/Hide", array(), 'article_type_fields'); ?></B></TD>
 
@@ -222,6 +223,15 @@ foreach ($fields as $field) {
 	    $contentType = 'content';
         $isContentField = 'false';
         $setContentField = 'true';
+	}
+	if ($field->showInEditor()) {
+	    $editorType = 'not displayed in editor';
+        $showInEditor = 'true';
+        $setShowInEditor = 'false';
+	} else {
+	    $editorType = 'displayed in editor';
+        $showInEditor = 'false';
+        $setShowInEditor = 'true';
 	}
 	$fieldName = $field->getPrintName();
 	$article = new MetaArticle();
@@ -277,6 +287,11 @@ foreach ($fields as $field) {
         <?php } else { ?>
         <?php echo $translator->trans('N/A'); ?>
         <?php } ?>
+    </TD>
+
+    <TD ALIGN="CENTER">
+        <input type="checkbox" title="<?php echo $translator->trans('Show field in article edit screen', array(), 'article_type_fields'); ?>" <?php if ($field->showInEditor()) { ?>checked<?php } ?> id="set_show_in_editor_<?php echo $i; ?>" name="set_show_in_editor_<?php echo $i; ?>" 
+        onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make $1 a $2 field?', array('$1' => $field->getPrintName(), '$2' => $editorType), 'article_type_fields'); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_show_in_editor.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_show_in_editor=<?php print $setShowInEditor; ?>&<?php echo SecurityToken::URLParameter(); ?>' } else { document.getElementById('set_show_in_editor_<?php echo $i; ?>').checked = <?php echo $showInEditor; ?> }">
     </TD>
 
 <TD>

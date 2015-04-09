@@ -8,7 +8,6 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\ORM\Collections\ArrayCollection;
 
 /**
  * Issue entity
@@ -27,10 +26,10 @@ class ArticleTypeField
     protected $name;
 
     /**
-	 * @var Newscoop\Entity\ArticleType
-	 * (at) ManyToOne( targetEntity="Newscoop\Entity\ArticleType" )
-	 * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
-	 * @todo hack
+     * @var Newscoop\Entity\ArticleType
+     * (at) ManyToOne( targetEntity="Newscoop\Entity\ArticleType" )
+     * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
+     * @todo hack
      */
     protected $articleType;
 
@@ -69,6 +68,13 @@ class ArticleTypeField
     protected $commentsEnabled;
 
     /**
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation")
+     * @ORM\JoinColumn(name="fk_phrase_id", referencedColumnName="phrase_id", nullable=true, onDelete="SET NULL")
+     * @var Newscoop\Entity\Translation
+     */
+    protected $phrase;
+
+    /**
      * @ORM\Column(type="integer", name="fk_phrase_id", nullable=True)
      * @var int
      */
@@ -87,6 +93,12 @@ class ArticleTypeField
     protected $isContentField;
 
     /**
+     * @ORM\Column(type="integer", name="show_in_editor", nullable=False)
+     * @var int
+     */
+    protected $showInEditor;
+
+    /**
      * Get the article type
      * @return \Newscoop\Entity\ArticleType
      */
@@ -95,34 +107,37 @@ class ArticleTypeField
         return $this->articleType;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
     public function setArticleType(ArticleType $type)
     {
         $this->articleType = $type;
+
         return $this;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
     public function setArticleTypeHack(ArticleType $type)
     {
         $this->typeHack = $type;
+
         return $this;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
-	/**
+    /**
      * @return string
      */
     public function getName()
@@ -130,7 +145,7 @@ class ArticleTypeField
         return $this->name;
     }
 
-	/**
+    /**
      * @return int
      */
     public function getLength()
@@ -138,16 +153,17 @@ class ArticleTypeField
         return $this->length;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
     public function setLength($val)
     {
         $this->length = $val;
+
         return $this;
     }
 
-	/**
+    /**
      * @return string
      */
     public function getType()
@@ -155,12 +171,13 @@ class ArticleTypeField
         return $this->type;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
     public function setType($val)
     {
         $this->type = $val;
+
         return $this;
     }
 
@@ -247,20 +264,6 @@ class ArticleTypeField
     }
 
     /**
-     * Setter for phraseId
-     *
-     * @param int $phraseId Value to set
-     *
-     * @return self
-     */
-    public function setPhraseId($phraseId)
-    {
-        $this->phraseId = $phraseId;
-
-        return $this;
-    }
-
-    /**
      * Getter for fieldTypeParam
      *
      * @return string
@@ -307,5 +310,52 @@ class ArticleTypeField
 
         return $this;
     }
-}
 
+    /**
+     * Getter for showInEditor
+     *
+     * @return int
+     */
+    public function getShowInEditor()
+    {
+        return $this->showInEditor;
+    }
+
+    /**
+     * Setter for showInEditor
+     *
+     * @param int $showInEditor Value to set
+     *
+     * @return self
+     */
+    public function setShowInEditor($showInEditor)
+    {
+        $this->showInEditor = $showInEditor;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of phrase.
+     *
+     * @return Newscoop\Entity\Translation
+     */
+    public function getPhrase()
+    {
+        return $this->phrase;
+    }
+
+    /**
+     * Sets the value of phrase.
+     *
+     * @param Newscoop\Entity\Translation $phrase the phrase
+     *
+     * @return self
+     */
+    protected function setPhrase(Translation $phrase)
+    {
+        $this->phrase = $phrase;
+
+        return $this;
+    }
+}

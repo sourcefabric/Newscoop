@@ -1,4 +1,4 @@
-Newscoop\Entity\Topic:
+Newscoop\NewscoopBundle\Entity\Topic:
     exclusion_policy: ALL
     properties:
         id:
@@ -6,16 +6,71 @@ Newscoop\Entity\Topic:
             read_only: true
             type: integer
             groups: ["list", "details"]
-            serialized_name: id
-        name:
+        title:
             expose: true
             read_only: true
             type: string
             groups: ["list", "details"]
-            serialized_name: title
+        root:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: root
+            since_version: 1.2
+        parent:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: parent
+            accessor:
+                getter: getParentAsInteger
+            since_version: 1.2
+        lft:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: left
+            since_version: 1.2
+        rgt:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: right
+            since_version: 1.2
+        level:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            since_version: 1.2
+        topicOrder:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: order
+            since_version: 1.2
+        translations:
+            expose: true
+            read_only: true
+            type: ArrayCollection<string, Newscoop\NewscoopBundle\Entity\TopicTranslation>
+            groups: ["list", "details"]
+            since_version: 1.2
         articlesLink:
             expose: true
             read_only: true
             type: articles_link
             groups: ["list", "details"]
             serialized_name: articlesLink
+    virtual_properties:
+        getObject:
+            expose: true
+            read_only: true
+            type: topic_path
+            groups: ["list", "details"]
+            serialized_name: path
+            since_version: 1.2

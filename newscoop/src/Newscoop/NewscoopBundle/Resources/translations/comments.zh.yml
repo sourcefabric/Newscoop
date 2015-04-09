@@ -19,9 +19,9 @@ Processed: null
 'Message status change to $1.': null
 'Message deleted.': null
 Message: null
-Last: null
+Last: 最后
 'Full article': null
-First: null
+First: '最初 '
 'Feedback Messages': null
 'Display _MENU_ records': null
 Deleted: null
@@ -34,7 +34,7 @@ Anonymous: null
 'You are about to permanently delete multiple messages.': null
 'You are about to permanently delete a message.': null
 User: '&#29992;&#25143;'
-None: null
+None: 没有
 'Coming from': null
 'Ban/Unban user': null
 Ip: null
@@ -98,3 +98,22 @@ Ban: null
 'Add new acceptance criteria': null
 'Acceptance $1 saved.': null
 'Acceptance $1 deleted.': null
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

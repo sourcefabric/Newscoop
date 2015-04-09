@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,6 +15,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Newscoop\Exception\AuthenticationException;
 
 /**
  * User service
@@ -72,11 +72,13 @@ class UserService
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
                     $currentUser = $this->security->getToken()->getUser();
-                    if ( $this->security->isGranted('IS_AUTHENTICATED_FULLY') ) {
+                    if ($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
                         $this->currentUser = $currentUser;
                     } else {
-                        $this->currentUser = null;
+                        throw new AuthenticationException();
                     }
+                } else {
+                    throw new AuthenticationException();
                 }
             }
         }
@@ -138,7 +140,7 @@ class UserService
         $qb->setMaxResults($limit);
 
         if (!empty($criteria['q'])) {
-            $q = $qb->expr()->literal('%' . $criteria['q'] . '%');
+            $q = $qb->expr()->literal('%'.$criteria['q'].'%');
             $qb->andWhere($qb->expr()->orX(
                 $qb->expr()->like('u.username', $q),
                 $qb->expr()->like('u.email', $q)
@@ -265,7 +267,7 @@ class UserService
         }
 
         $user = new User();
-        $user->setUsername(trim($firstName) . ' ' . trim($lastName));
+        $user->setUsername(trim($firstName).' '.trim($lastName));
         $username = $user->getUsername();
 
         for ($i = '';; $i++) {
@@ -356,6 +358,41 @@ class UserService
     }
 
     /**
+     * Create new activated user
+     *
+     * @param string  $email
+     * @param string  $password
+     * @param string  $firstName
+     * @param string  $lastName
+     * @param integer $publication
+     */
+    public function createUser($email, $password, $username, $firstName = null, $lastName = null, $publication = 0, $public = true, $userTypes = array())
+    {
+        $users = $this->findBy(array('email' => $email));
+        if (!empty($users)) {
+            throw new \Newscoop\Exception\ResourcesConflictException("User with this email already exists");
+        }
+
+        $user = new User($email);
+        $user->setPassword($password);
+        $user->setUsername($username);
+        $user->setPublic($public);
+        $user->setActive();
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+        $user->setPublication($publication);
+
+        foreach ($userTypes as $type) {
+            $user->addUserType($this->em->getReference('Newscoop\Entity\User\Group', $type));
+        }
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
+
+    /**
      * Test if username is available
      *
      * @param string $username
@@ -378,6 +415,13 @@ class UserService
     {
         return $this->getRepository()->findOneBy(array(
             'author' => $authorId,
+        ));
+    }
+
+    public function loadUserByUsername($username)
+    {
+        return $this->getRepository()->findOneBy(array(
+            'username' => $username,
         ));
     }
 
@@ -550,5 +594,59 @@ class UserService
         if ($user || $authorId) {
             $this->getRepository()->setUserPoints($user, $authorId);
         }
+    }
+
+    public function extractCriteriaFromRequest($request)
+    {
+        $criteria = new \Newscoop\User\UserCriteria();
+
+        if ($request->query->has('sorts')) {
+            foreach ($request->get('sorts') as $key => $value) {
+                $criteria->orderBy[$key] = $value == '-1' ? 'desc' : 'asc';
+            }
+        }
+
+        if ($request->query->has('queries')) {
+            $queries = $request->query->get('queries');
+
+            if (array_key_exists('search', $queries)) {
+                $criteria->query = $queries['search'];
+            }
+
+            if (array_key_exists('search_name', $queries)) {
+                $criteria->query_name = $queries['search_name'];
+            }
+
+            if (array_key_exists('filter', $queries)) {
+                if ($queries['filter'] == 'active') {
+                    $criteria->lastLoginDays = 30;
+                }
+
+                if ($queries['filter'] == 'registered') {
+                    $criteria->status = User::STATUS_ACTIVE;
+                }
+
+                if ($queries['filter'] == 'pending') {
+                    $criteria->status = User::STATUS_INACTIVE;
+                }
+
+                if ($queries['filter'] == 'deleted') {
+                    $criteria->status = User::STATUS_DELETED;
+                }
+            }
+
+            if (array_key_exists('user-group', $queries)) {
+                foreach ($queries['user-group'] as $key => $value) {
+                    $criteria->groups[$key] = $value;
+                }
+            }
+        }
+
+        $criteria->maxResults = $request->query->get('perPage', 10);
+        if ($request->query->has('offset')) {
+            $criteria->firstResult = $request->query->get('offset');
+        }
+
+        return $criteria;
     }
 }

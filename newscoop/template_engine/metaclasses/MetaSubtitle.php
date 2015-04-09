@@ -90,7 +90,8 @@ final class MetaSubtitle
      */
     public function MetaSubtitle($p_number = null, $p_fieldName = null,
     $p_count = null, $p_name = null, $p_content = null, $p_formattingStart = '',
-    $p_formattingEnd = '') {
+    $p_formattingEnd = '')
+    {
         $this->m_number = $p_number;
         $this->m_fieldName = $p_fieldName;
         $this->m_count = $p_count;
@@ -128,7 +129,7 @@ final class MetaSubtitle
             default:
                 $this->trigger_invalid_property_error($p_property);
 
-                return null;
+                return;
         }
     }
 
@@ -155,12 +156,13 @@ final class MetaSubtitle
      * @return array  of MetaSubtitle
      */
     public static function ReadSubtitles($p_content, $p_fieldName, $p_firstSubtitle = '',
-    $p_headerFormatStart = null, $p_headerFormatEnd = null) {
+    $p_headerFormatStart = null, $p_headerFormatEnd = null)
+    {
         $result = preg_match_all('/('.MetaSubtitle::GetFindPattern().')/i', $p_content, $subtitlesNames);
 
         $contentParts = preg_split('/'.MetaSubtitle::GetSplitPattern().'/i', $p_content);
         $subtitlesContents = array();
-        foreach ($contentParts as $index=>$contentPart) {
+        foreach ($contentParts as $index => $contentPart) {
             $name = $index > 0 ? $subtitlesNames[3][$index-1] : $p_firstSubtitle;
             if (empty($p_headerFormatStart)) {
                 $formatStart = $index > 0 ? $subtitlesNames[2][$index-1] : '';
@@ -203,10 +205,17 @@ final class MetaSubtitle
 
         // image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
         $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|ratio|\w+)\s*=\s*("[^"]*"|[^\s]*))*)[\s]*>';
-
-        return preg_replace_callback("/$imagePattern/i",
+        $content = preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
+
+        // snippet tag format: <-- Snippet 1 -->
+        $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
+        $content = preg_replace_callback("/$snippetPattern/i",
+                                     array('MetaSubtitle', 'ProcessSnippet'),
+                                     $content);
+
+        return $content;
     }
 
     /**
@@ -266,12 +275,15 @@ final class MetaSubtitle
             }
         }
 
-        $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
-        'height'=>'EditorImageResizeHeight');
+        $defaultOptions = array('ratio' => 'EditorImageRatio', 'width' => 'EditorImageResizeWidth',
+        'height' => 'EditorImageResizeHeight', );
         foreach (array('ratio', 'width', 'height') as $imageOption) {
             $defaultOption = (int) $preferencesService->get($defaultOptions[$imageOption]);
             if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
-                $imageOptions .= " $imageOption " . (int) $detailsArray[$imageOption];
+                if (strpos($detailsArray[$imageOption], '%') === false) {
+                    $imageOptions .= " $imageOption ".(int) $detailsArray[$imageOption];
+                    $detailsArray[$imageOption] = $detailsArray[$imageOption]."px";
+                }
             } elseif ($imageOption != 'ratio' && $defaultOption > 0) {
                 $imageOptions .= " $imageOption $defaultOption";
             } elseif ($imageOption == 'ratio' && $defaultOption != 100) {
@@ -282,7 +294,7 @@ final class MetaSubtitle
 
         $imgZoomLink = '';
         if ($preferencesService->EditorImageZoom == 'Y' && strlen($imageOptions) > 0) {
-            $imgZoomLink = '/' . $image->filerpath;
+            $imgZoomLink = '/'.$image->filerpath;
         }
 
         try {
@@ -298,6 +310,24 @@ final class MetaSubtitle
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    /**
+     * Process the Snippet markup and return the Snippet rendered
+     *
+     * @param  array  $p_matches
+     * @return string
+     */
+    public static function ProcessSnippet(array $p_matches)
+    {
+        $snippet = '';
+        if (array_key_exists(1, $p_matches)) {
+            $em = \Zend_Registry::get('container')->getService('doctrine.em');
+            $snippet = $em->getRepository('Newscoop\Entity\Snippet')->getSnippetById($p_matches[1]);
+            $snippet = $snippet->render();
+        }
+
+        return $snippet;
     }
 
     /**
@@ -354,8 +384,8 @@ final class MetaSubtitle
 
     protected function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
-        $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
-        . OF_OBJECT_STRING . ' subtitle';
+        $errorMessage = INVALID_PROPERTY_STRING." $p_property "
+        .OF_OBJECT_STRING.' subtitle';
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 }

@@ -118,7 +118,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Articles` WRITE;
 /*!40000 ALTER TABLE `Articles` DISABLE KEYS */;
-INSERT INTO `Articles` VALUES (1,1,5,1,1,'Credits','page',1,'N','N','Y','2014-02-27 13:28:37','2014-02-20 13:12:39','','Y','Y',0,'0000-00-00 00:00:00','1',1,1,0,'2014-03-10 02:08:46',31,'c1q43',NULL,1),(1,10,10,2,1,'The truth behind the European housing market','news',1,'N','N','Y','2014-02-21 13:25:35','2014-02-21 13:17:43','','Y','Y',0,'0000-00-00 00:00:00','2',3,1,0,'2014-02-21 13:28:29',1,'isl6s',NULL,1),(1,10,30,6,1,'10 amazing geolocation apps','news',1,'N','N','Y','2014-02-25 15:17:37','2014-02-25 15:15:48','','Y','Y',0,'0000-00-00 00:00:00','6',7,1,0,'2014-03-03 10:14:40',16,'3suzm',NULL,1),(1,10,10,3,1,'Mayoral race looks to the future','news',1,'N','N','Y','2014-02-21 13:32:07','2014-02-21 13:28:29','','Y','Y',0,'0000-00-00 00:00:00','3',1,1,0,'2014-03-03 12:24:44',24,'1lfde',NULL,1),(1,10,20,4,1,'Advertisers target online demographic','news',1,'N','N','Y','2014-02-21 13:41:27','2014-02-21 13:33:57','','Y','Y',0,'0000-00-00 00:00:00','4',5,1,0,'2014-03-03 10:14:33',12,'zxmbd',NULL,1),(1,10,20,5,1,'Car industry resurgence boosts economy','news',1,'N','N','Y','2014-02-21 13:45:49','2014-02-21 13:42:54','','Y','Y',0,'0000-00-00 00:00:00','5',1,1,0,'2014-03-03 10:14:33',11,'q84uk',NULL,1),(1,10,30,7,1,'5 alternatives to Delicious','news',1,'N','N','Y','2014-02-25 15:21:34','2014-02-25 15:17:57','','Y','Y',0,'0000-00-00 00:00:00','7',1,1,0,'2014-03-03 10:14:40',15,'ykwvh',NULL,1),(1,10,40,8,1,'Hayfever remedy a breath of fresh air','news',1,'N','N','Y','2014-02-25 15:33:05','2014-02-25 15:27:44','','Y','Y',0,'0000-00-00 00:00:00','8',9,1,0,'2014-03-03 14:01:34',25,'1fmjo',NULL,1),(1,10,40,9,1,'Healthy options for your sweet tooth','news',1,'N','N','Y','2014-02-25 15:42:53','2014-02-25 15:37:08','','Y','Y',0,'0000-00-00 00:00:00','9',1,1,0,'2014-03-15 18:47:01',53,'w7er3',NULL,1),(1,10,50,10,1,'Sarajevo Film Festival unveils 2013 line-up','news',1,'N','N','Y','2014-02-25 15:53:50','2014-02-25 15:44:09','','Y','Y',0,'0000-00-00 00:00:00','10',11,1,0,'2014-03-17 07:53:56',54,'cebaa',NULL,1),(1,10,50,11,1,'Hidden cultural delights of the Adriatic','news',1,'N','N','Y','2014-02-25 15:56:14','2014-02-25 15:54:22','','Y','Y',0,'0000-00-00 00:00:00','11',1,1,0,'2014-03-12 18:02:19',44,'goylg',NULL,1),(1,10,60,12,1,'Grand Slam winner sets new record','news',1,'N','N','Y','2014-02-25 15:58:40','2014-02-25 15:56:45','','Y','Y',0,'0000-00-00 00:00:00','12',12,1,0,'2014-03-10 05:36:35',34,'qq1hd',NULL,1),(1,10,100,13,1,'Preserving Berlin Wall vs new developments','debate',1,'N','N','Y','2014-02-26 13:55:03','2014-02-25 15:59:12','','Y','Y',0,'0000-00-00 00:00:00','13',13,1,0,'2014-03-03 11:39:16',22,'gtm3j',NULL,1),(1,11,10,14,1,'Food export duties set to rise','news',1,'N','N','Y','2014-02-26 14:00:31','2014-02-26 13:56:46','','Y','Y',0,'0000-00-00 00:00:00','14',39,1,0,'2014-03-04 13:49:31',23,'2bct0',NULL,1),(1,11,10,15,1,'Wintry conditions sweep across China','news',1,'N','N','Y','2014-02-26 14:03:48','2014-02-26 14:01:01','','Y','Y',0,'0000-00-00 00:00:00','15',25,1,0,'2014-03-04 13:49:31',17,'jpcdw',NULL,1),(1,11,10,16,1,'News on general theory of relativity','news',1,'N','N','Y','2014-02-26 14:06:56','2014-02-26 14:04:13','','Y','Y',0,'0000-00-00 00:00:00','16',24,1,0,'2014-03-04 13:49:31',3,'v8o79',NULL,1),(1,11,10,17,1,'European Council candidates set to be named','news',1,'Y','N','Y','2014-02-26 14:12:52','2014-02-26 14:07:20','','Y','Y',0,'0000-00-00 00:00:00','17',23,1,0,'2014-03-04 13:49:31',2,'ng6z0',NULL,1),(1,11,20,18,1,'Where to locate your internet start-up','news',1,'N','N','Y','2014-02-26 14:34:56','2014-02-26 14:32:50','','Y','Y',0,'0000-00-00 00:00:00','18',20,1,0,'2014-03-03 10:14:33',10,'7ith9',NULL,1),(1,11,20,19,1,'Tax and trade bureau considers alcohol labeling','news',1,'N','N','Y','2014-02-26 14:37:30','2014-02-26 14:35:25','','Y','Y',0,'0000-00-00 00:00:00','19',2,1,0,'2014-03-03 10:14:33',9,'a7mql',NULL,1),(1,11,20,20,1,'Private aviation companies take flight','news',1,'N','N','Y','2014-02-26 14:42:17','2014-02-26 14:37:55','','Y','Y',0,'0000-00-00 00:00:00','20',1,1,0,'2014-03-03 10:14:33',8,'zxggi',NULL,1),(1,11,30,21,1,'Online security risks exposed','news',1,'N','N','Y','2014-02-27 12:53:36','2014-02-27 12:51:02','','Y','Y',0,'0000-00-00 00:00:00','21',23,1,0,'2014-03-03 10:14:40',14,'jsrve',NULL,1),(1,11,30,22,1,'New horizons for the browser','news',1,'N','N','Y','2014-02-27 12:57:25','2014-02-27 12:54:02','','Y','Y',0,'0000-00-00 00:00:00','22',2,1,0,'2014-03-03 10:14:40',13,'q3jv7',NULL,1),(1,11,30,23,1,'Commercial space flight becomes a reality','news',1,'N','N','Y','2014-02-27 12:59:42','2014-02-27 12:57:44','','N','Y',0,'0000-00-00 00:00:00','23',1,1,0,'2014-03-03 10:14:20',6,'d5mwf',NULL,1),(1,11,40,24,1,'Luxury health breaks on offer','news',1,'N','N','Y','2014-02-27 13:04:25','2014-02-27 13:00:10','','Y','Y',0,'0000-00-00 00:00:00','24',26,1,0,'2014-03-03 10:14:51',19,'dib75',NULL,1),(1,11,40,25,1,'City life may be beneficial say doctors','news',1,'N','N','Y','2014-02-27 13:09:41','2014-02-27 13:04:58','','Y','Y',0,'0000-00-00 00:00:00','25',2,1,0,'2014-03-03 10:14:51',18,'qm26m',NULL,1),(1,11,40,26,1,'Sightseeing is good for the heart','news',1,'N','N','Y','2014-02-27 13:13:50','2014-02-27 13:10:12','','N','Y',0,'0000-00-00 00:00:00','26',1,1,0,'2014-03-03 10:14:20',7,'05psn',NULL,1),(1,11,50,27,1,'New Cannes winner a taste of paradise','news',1,'N','N','Y','2014-02-27 13:17:59','2014-02-27 13:14:22','','Y','Y',0,'0000-00-00 00:00:00','27',27,1,0,'2014-03-03 10:14:18',5,'x51rv',NULL,1),(1,11,60,28,1,'Italian football reaches new world audience','news',1,'N','N','Y','2014-02-27 13:20:44','2014-02-27 13:18:35','','Y','Y',0,'0000-00-00 00:00:00','28',29,1,0,'2014-03-03 10:14:18',4,'fdweg',NULL,1),(1,11,60,29,1,'Lionel Messi: the Argentinean who makes children dream all over the world','news',1,'N','N','Y','2014-02-27 13:22:49','2014-02-27 13:21:05','','Y','Y',0,'0000-00-00 00:00:00','29',1,1,0,'2014-03-03 10:14:51',20,'f5rkl',NULL,1),(1,11,100,30,1,'UEFA Champions league Enlargement: yes or no?','debate',1,'N','N','Y','2014-02-27 13:25:11','2014-02-27 13:23:20','','Y','Y',0,'0000-00-00 00:00:00','30',31,1,0,'2014-03-03 11:39:16',21,'pwqhd',NULL,1),(1,11,100,31,1,'Favorite sport','poll',1,'N','N','Y','2014-02-27 13:26:17','2014-02-27 13:26:05','','Y','Y',0,'0000-00-00 00:00:00','31',1,1,0,'2014-02-27 13:26:17',0,'0hmsc',NULL,1),(1,1,5,32,1,'Marketing','page',1,'N','N','Y','2014-02-27 13:36:02','2014-02-27 13:34:45','','Y','Y',0,'0000-00-00 00:00:00','32',2,1,0,'2014-03-10 02:15:03',32,'p5e8a',NULL,1),(1,1,5,33,1,'Contact','page',1,'N','N','Y','2014-02-27 13:37:01','2014-02-27 13:36:48','','Y','Y',0,'0000-00-00 00:00:00','33',3,1,0,'2014-03-10 03:23:10',33,'d7e71',NULL,1),(1,1,5,34,1,'About Us','page',1,'N','N','Y','2014-02-27 13:38:24','2014-02-27 13:37:35','','Y','Y',0,'0000-00-00 00:00:00','34',4,1,0,'2014-03-03 14:51:37',26,'fc6h2',NULL,1),(1,1,15,35,1,'Sourcefabric','link',1,'N','N','Y','2014-02-27 13:39:25','2014-02-27 13:39:15','','Y','Y',0,'0000-00-00 00:00:00','35',39,1,0,'2014-02-27 13:41:44',0,'75zd4',NULL,1),(1,1,15,36,1,'Newscoop','link',1,'N','N','Y','2014-02-27 13:39:56','2014-02-27 13:39:49','','Y','Y',0,'0000-00-00 00:00:00','36',4,1,0,'2014-02-27 13:41:44',0,'tuorf',NULL,1),(1,1,15,37,1,'Airtime','link',1,'N','N','Y','2014-02-27 13:40:29','2014-02-27 13:40:20','','Y','Y',0,'0000-00-00 00:00:00','37',3,1,0,'2014-02-27 13:41:44',0,'0a8w4',NULL,1),(1,1,15,38,1,'Sourcefabric Services','link',1,'N','N','Y','2014-02-27 13:41:12','2014-02-27 13:41:01','','Y','Y',0,'0000-00-00 00:00:00','38',2,1,0,'2014-02-27 13:41:44',0,'fekaa',NULL,1),(1,1,15,39,1,'Join Sourcefabric','link',1,'N','N','Y','2014-02-27 13:41:51','2014-02-27 13:41:44','','Y','Y',0,'0000-00-00 00:00:00','39',1,1,0,'2014-02-27 13:41:51',0,'odmcz',NULL,1);
+INSERT INTO `Articles` VALUES (1,1,5,1,1,'Credits','page',1,'N','N','Y','2014-02-27 13:28:37','2014-02-20 13:12:39','','Y','Y',NULL,NULL,'1',1,1,0,'2014-03-10 02:08:46',31,'c1q43',NULL,1),(1,10,10,2,1,'The truth behind the European housing market','news',1,'N','N','Y','2014-02-21 13:25:35','2014-02-21 13:17:43','','Y','Y',NULL,NULL,'2',3,1,0,'2014-02-21 13:28:29',1,'isl6s',NULL,1),(1,10,30,6,1,'10 amazing geolocation apps','news',1,'N','N','Y','2014-02-25 15:17:37','2014-02-25 15:15:48','','Y','Y',NULL,NULL,'6',7,1,0,'2014-03-03 10:14:40',16,'3suzm',NULL,1),(1,10,10,3,1,'Mayoral race looks to the future','news',1,'N','N','Y','2014-02-21 13:32:07','2014-02-21 13:28:29','','Y','Y',NULL,NULL,'3',1,1,0,'2014-03-03 12:24:44',24,'1lfde',NULL,1),(1,10,20,4,1,'Advertisers target online demographic','news',1,'N','N','Y','2014-02-21 13:41:27','2014-02-21 13:33:57','','Y','Y',NULL,NULL,'4',5,1,0,'2014-03-03 10:14:33',12,'zxmbd',NULL,1),(1,10,20,5,1,'Car industry resurgence boosts economy','news',1,'N','N','Y','2014-02-21 13:45:49','2014-02-21 13:42:54','','Y','Y',NULL,NULL,'5',1,1,0,'2014-03-03 10:14:33',11,'q84uk',NULL,1),(1,10,30,7,1,'5 alternatives to Delicious','news',1,'N','N','Y','2014-02-25 15:21:34','2014-02-25 15:17:57','','Y','Y'NULL,NULL,'7',1,1,0,'2014-03-03 10:14:40',15,'ykwvh',NULL,1),(1,10,40,8,1,'Hayfever remedy a breath of fresh air','news',1,'N','N','Y','2014-02-25 15:33:05','2014-02-25 15:27:44','','Y','Y'NULL,NULL,'8',9,1,0,'2014-03-03 14:01:34',25,'1fmjo',NULL,1),(1,10,40,9,1,'Healthy options for your sweet tooth','news',1,'N','N','Y','2014-02-25 15:42:53','2014-02-25 15:37:08','','Y','Y'NULL,NULL,'9',1,1,0,'2014-03-15 18:47:01',53,'w7er3',NULL,1),(1,10,50,10,1,'Sarajevo Film Festival unveils 2013 line-up','news',1,'N','N','Y','2014-02-25 15:53:50','2014-02-25 15:44:09','','Y','Y'NULL,NULL,'10',11,1,0,'2014-03-17 07:53:56',54,'cebaa',NULL,1),(1,10,50,11,1,'Hidden cultural delights of the Adriatic','news',1,'N','N','Y','2014-02-25 15:56:14','2014-02-25 15:54:22','','Y','Y'NULL,NULL,'11',1,1,0,'2014-03-12 18:02:19',44,'goylg',NULL,1),(1,10,60,12,1,'Grand Slam winner sets new record','news',1,'N','N','Y','2014-02-25 15:58:40','2014-02-25 15:56:45','','Y','Y'NULL,NULL,'12',12,1,0,'2014-03-10 05:36:35',34,'qq1hd',NULL,1),(1,10,100,13,1,'Preserving Berlin Wall vs new developments','debate',1,'N','N','Y','2014-02-26 13:55:03','2014-02-25 15:59:12','','Y','Y'NULL,NULL,'13',13,1,0,'2014-03-03 11:39:16',22,'gtm3j',NULL,1),(1,11,10,14,1,'Food export duties set to rise','news',1,'N','N','Y','2014-02-26 14:00:31','2014-02-26 13:56:46','','Y','Y'NULL,NULL,'14',39,1,0,'2014-03-04 13:49:31',23,'2bct0',NULL,1),(1,11,10,15,1,'Wintry conditions sweep across China','news',1,'N','N','Y','2014-02-26 14:03:48','2014-02-26 14:01:01','','Y','Y'NULL,NULL,'15',25,1,0,'2014-03-04 13:49:31',17,'jpcdw',NULL,1),(1,11,10,16,1,'News on general theory of relativity','news',1,'N','N','Y','2014-02-26 14:06:56','2014-02-26 14:04:13','','Y','Y'NULL,NULL,'16',24,1,0,'2014-03-04 13:49:31',3,'v8o79',NULL,1),(1,11,10,17,1,'European Council candidates set to be named','news',1,'Y','N','Y','2014-02-26 14:12:52','2014-02-26 14:07:20','','Y','Y'NULL,NULL,'17',23,1,0,'2014-03-04 13:49:31',2,'ng6z0',NULL,1),(1,11,20,18,1,'Where to locate your internet start-up','news',1,'N','N','Y','2014-02-26 14:34:56','2014-02-26 14:32:50','','Y','Y'NULL,NULL,'18',20,1,0,'2014-03-03 10:14:33',10,'7ith9',NULL,1),(1,11,20,19,1,'Tax and trade bureau considers alcohol labeling','news',1,'N','N','Y','2014-02-26 14:37:30','2014-02-26 14:35:25','','Y','Y'NULL,NULL,'19',2,1,0,'2014-03-03 10:14:33',9,'a7mql',NULL,1),(1,11,20,20,1,'Private aviation companies take flight','news',1,'N','N','Y','2014-02-26 14:42:17','2014-02-26 14:37:55','','Y','Y'NULL,NULL,'20',1,1,0,'2014-03-03 10:14:33',8,'zxggi',NULL,1),(1,11,30,21,1,'Online security risks exposed','news',1,'N','N','Y','2014-02-27 12:53:36','2014-02-27 12:51:02','','Y','Y'NULL,NULL,'21',23,1,0,'2014-03-03 10:14:40',14,'jsrve',NULL,1),(1,11,30,22,1,'New horizons for the browser','news',1,'N','N','Y','2014-02-27 12:57:25','2014-02-27 12:54:02','','Y','Y'NULL,NULL,'22',2,1,0,'2014-03-03 10:14:40',13,'q3jv7',NULL,1),(1,11,30,23,1,'Commercial space flight becomes a reality','news',1,'N','N','Y','2014-02-27 12:59:42','2014-02-27 12:57:44','','N','Y'NULL,NULL,'23',1,1,0,'2014-03-03 10:14:20',6,'d5mwf',NULL,1),(1,11,40,24,1,'Luxury health breaks on offer','news',1,'N','N','Y','2014-02-27 13:04:25','2014-02-27 13:00:10','','Y','Y'NULL,NULL,'24',26,1,0,'2014-03-03 10:14:51',19,'dib75',NULL,1),(1,11,40,25,1,'City life may be beneficial say doctors','news',1,'N','N','Y','2014-02-27 13:09:41','2014-02-27 13:04:58','','Y','Y'NULL,NULL,'25',2,1,0,'2014-03-03 10:14:51',18,'qm26m',NULL,1),(1,11,40,26,1,'Sightseeing is good for the heart','news',1,'N','N','Y','2014-02-27 13:13:50','2014-02-27 13:10:12','','N','Y'NULL,NULL,'26',1,1,0,'2014-03-03 10:14:20',7,'05psn',NULL,1),(1,11,50,27,1,'New Cannes winner a taste of paradise','news',1,'N','N','Y','2014-02-27 13:17:59','2014-02-27 13:14:22','','Y','Y'NULL,NULL,'27',27,1,0,'2014-03-03 10:14:18',5,'x51rv',NULL,1),(1,11,60,28,1,'Italian football reaches new world audience','news',1,'N','N','Y','2014-02-27 13:20:44','2014-02-27 13:18:35','','Y','Y'NULL,NULL,'28',29,1,0,'2014-03-03 10:14:18',4,'fdweg',NULL,1),(1,11,60,29,1,'Lionel Messi: the Argentinean who makes children dream all over the world','news',1,'N','N','Y','2014-02-27 13:22:49','2014-02-27 13:21:05','','Y','Y'NULL,NULL,'29',1,1,0,'2014-03-03 10:14:51',20,'f5rkl',NULL,1),(1,11,100,30,1,'UEFA Champions league Enlargement: yes or no?','debate',1,'N','N','Y','2014-02-27 13:25:11','2014-02-27 13:23:20','','Y','Y'NULL,NULL,'30',31,1,0,'2014-03-03 11:39:16',21,'pwqhd',NULL,1),(1,11,100,31,1,'Favorite sport','poll',1,'N','N','Y','2014-02-27 13:26:17','2014-02-27 13:26:05','','Y','Y'NULL,NULL,'31',1,1,0,'2014-02-27 13:26:17',0,'0hmsc',NULL,1),(1,1,5,32,1,'Marketing','page',1,'N','N','Y','2014-02-27 13:36:02','2014-02-27 13:34:45','','Y','Y'NULL,NULL,'32',2,1,0,'2014-03-10 02:15:03',32,'p5e8a',NULL,1),(1,1,5,33,1,'Contact','page',1,'N','N','Y','2014-02-27 13:37:01','2014-02-27 13:36:48','','Y','Y'NULL,NULL,'33',3,1,0,'2014-03-10 03:23:10',33,'d7e71',NULL,1),(1,1,5,34,1,'About Us','page',1,'N','N','Y','2014-02-27 13:38:24','2014-02-27 13:37:35','','Y','Y'NULL,NULL,'34',4,1,0,'2014-03-03 14:51:37',26,'fc6h2',NULL,1),(1,1,15,35,1,'Sourcefabric','link',1,'N','N','Y','2014-02-27 13:39:25','2014-02-27 13:39:15','','Y','Y'NULL,NULL,'35',39,1,0,'2014-02-27 13:41:44',0,'75zd4',NULL,1),(1,1,15,36,1,'Newscoop','link',1,'N','N','Y','2014-02-27 13:39:56','2014-02-27 13:39:49','','Y','Y'NULL,NULL,'36',4,1,0,'2014-02-27 13:41:44',0,'tuorf',NULL,1),(1,1,15,37,1,'Airtime','link',1,'N','N','Y','2014-02-27 13:40:29','2014-02-27 13:40:20','','Y','Y'NULL,NULL,'37',3,1,0,'2014-02-27 13:41:44',0,'0a8w4',NULL,1),(1,1,15,38,1,'Sourcefabric Services','link',1,'N','N','Y','2014-02-27 13:41:12','2014-02-27 13:41:01','','Y','Y'NULL,NULL,'38',2,1,0,'2014-02-27 13:41:44',0,'fekaa',NULL,1),(1,1,15,39,1,'Join Sourcefabric','link',1,'N','N','Y','2014-02-27 13:41:51','2014-02-27 13:41:44','','Y','Y'NULL,NULL,'39',1,1,0,'2014-02-27 13:41:51',0,'odmcz',NULL,1);
 /*!40000 ALTER TABLE `Articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -584,6 +584,75 @@ UNLOCK TABLES;
 
 LOCK TABLES `SnippetTemplates` WRITE;
 /*!40000 ALTER TABLE `SnippetTemplates` DISABLE KEYS */;
+INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
+VALUES 
+    (1, 'Embed.ly', 'Newscoop\\NewscoopBundle\\Controller\\EmbedlyController', '<a class=\"embedly-card\" href=\"{{ URL }}\">{{ title }}</a><script>!function(a){var b=\"embedly-platform\",c=\"script\";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b,d.src=(\"https:\"===document.location.protocol?\"https\":\"http\")+\"://cdn.embedly.com/widgets/platform.js\";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}}(document);</script>', 0, 1, NULL, NULL, '2014-05-12 13:19:43', '2014-05-12 13:19:43');
+
+INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `Required`, `TemplateId`)
+VALUES
+    (1, 'URL', 'url', 'frontend', 1, 1),
+    (2, 'maxwidth', 'integer', 'frontend', 0, 1),
+    (3, 'provider_url', 'url', 'backend', 0, 1),
+    (4, 'description', 'textarea', 'backend', 0, 1),
+    (5, 'title', 'text', 'backend', 0, 1),
+    (6, 'type', 'text', 'backend', 0, 1),
+    (7, 'thumbnail_width', 'integer', 'backend', 0, 1),
+    (8, 'height', 'integer', 'backend', 0, 1),
+    (9, 'width', 'integer', 'backend', 0, 1),
+    (10, 'html', 'textarea', 'backend', 0, 1),
+    (11, 'author_name', 'text', 'backend', 0, 1),
+    (12, 'version', 'text', 'backend', 0, 1),
+    (13, 'provider_name', 'text', 'backend', 0, 1),
+    (14, 'thumbnail_url', 'url', 'backend', 0, 1),
+    (15, 'thumbnail_height', 'integer', 'backend', 0, 1),
+    (16, 'author_url', 'url', 'backend', 0, 1);
+INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
+VALUES
+    (2, 'Youtube', NULL, '<iframe width=\"{{ width }}\" height=\"{{ height }}\" src=\"//www.youtube.com/embed/{{ ID }}\" frameborder=\"0\" allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
+VALUES
+    (18, 'ID', 'text', 'frontend', 2, 1),
+    (19, 'width', 'integer', 'frontend', 2, 0),
+    (20, 'height', 'integer', 'frontend', 2, 0);
+INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
+VALUES
+    (3, 'Vimeo', NULL, '<iframe src=\"//player.vimeo.com/video/{{ ID }}\" width=\"{{ width }}\" height=\"{{ height }}\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
+VALUES
+    (21, 'ID', 'text', 'frontend', 3, 1),
+    (22, 'width', 'integer', 'frontend', 3, 0),
+    (23, 'height', 'integer', 'frontend', 3, 0);
+INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
+VALUES
+    (4, 'Generic', NULL, '{{Generic | raw}}', 0, 1, NULL, NULL, '2014-06-10 14:15:49', '2014-06-10 14:15:49');
+
+INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
+VALUES
+    (24, 'Generic', 'textarea', 'frontend', 4, 1);
+INSERT INTO `Snippets` (`Id`, `Name`, `Enabled`, `Created`, `Modified`, `TemplateId`)
+VALUES
+    (1, 'Youtube Sourcefabric Booktype Video', 1, '2014-06-10 13:15:10', '2014-06-10 13:15:12', 1);
+
+INSERT INTO `SnippetFields` (`Id`, `Data`, `SnippetId`, `TemplateFieldId`, `Name`)
+VALUES
+    (1, 'https://www.youtube.com/watch?v=AYVUPem_jaM', 1, 1, 'URL'),,
+    (2, '0', 1, 3, 'maxwidth'),
+    (3, 'http://www.youtube.com/', 1, 4, 'provider_url'),
+    (4, 'Sourcefabric builds open source software to support independent media worldwide. On February 14th, we\'ll announce our tool to help people and organisations write and publish great multi-platform books. Write and publish great books ready for iPad, Kindle, Nook or print within minutes.', 1, 5, 'description'),
+    (5, 'The future of the book is in your hands', 1, 6, 'title'),
+    (6, 'video', 1, 7, 'type'),
+    (7, '480', 1, 8, 'thumbnail_width'),
+    (8, '309', 1, 9, 'height'),
+    (9, '550', 1, 10, 'width'),
+    (10, '<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAYVUPem_jaM&src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FAYVUPem_jaM%3Ffeature%3Doembed&image=http%3A%2F%2Fi1.ytimg.com%2Fvi%2FAYVUPem_jaM%2Fhqdefault.jpg&type=text%2Fhtml&schema=youtube\" width=\"550\" height=\"309\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>', 1, 11, 'html'),
+    (11, 'Sourcefabric', 1, 12, 'author_name'),
+    (12, '1.0', 1, 13, 'version'),
+    (13, 'YouTube', 1, 14, 'provider_name'),
+    (14, 'http://i1.ytimg.com/vi/AYVUPem_jaM/hqdefault.jpg', 1, 15, 'thumbnail_url'),
+    (15, '360', 1, 16, 'thumbnail_height'),
+    (16, 'http://www.youtube.com/user/Sourcefabric', 1, 17, 'author_url');
 /*!40000 ALTER TABLE `SnippetTemplates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1053,219 +1122,6 @@ LOCK TABLES `package_item` WRITE;
 /*!40000 ALTER TABLE `package_item` DISABLE KEYS */;
 INSERT INTO `package_item` VALUES (10,5,31,0,'Sea','0_53_1971_1371',NULL),(11,5,30,1,'Waterfall','13_0_5195_3465',NULL),(12,5,27,2,'',NULL,NULL),(13,5,34,3,'',NULL,NULL),(14,4,25,0,'Summer City','11_0_2907_1936',NULL),(15,4,31,1,'Plane over sea','0_53_1971_1371',NULL),(16,4,23,2,'Venice','0_122_2303_1663',NULL),(17,4,30,3,'Waterfall','13_0_5195_3465',NULL);
 /*!40000 ALTER TABLE `package_item` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `playlist`
---
-
-LOCK TABLES `playlist` WRITE;
-/*!40000 ALTER TABLE `playlist` DISABLE KEYS */;
-INSERT INTO `playlist` VALUES (1,'Front page',NULL),(2,'Editorial Comments',NULL);
-/*!40000 ALTER TABLE `playlist` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `playlist_article`
---
-
-LOCK TABLES `playlist_article` WRITE;
-/*!40000 ALTER TABLE `playlist_article` DISABLE KEYS */;
-INSERT INTO `playlist_article` VALUES (94,1,15),(91,1,17),(95,1,19),(98,1,21),(97,1,22),(99,1,23),(93,1,25),(92,1,26),(96,1,27),(89,2,7),(90,2,8);
-/*!40000 ALTER TABLE `playlist_article` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_blog_blog`
---
-
-LOCK TABLES `plugin_blog_blog` WRITE;
-/*!40000 ALTER TABLE `plugin_blog_blog` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_blog_blog` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_blog_comment`
---
-
-LOCK TABLES `plugin_blog_comment` WRITE;
-/*!40000 ALTER TABLE `plugin_blog_comment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_blog_comment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_blog_entry`
---
-
-LOCK TABLES `plugin_blog_entry` WRITE;
-/*!40000 ALTER TABLE `plugin_blog_entry` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_blog_entry` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_blog_entry_topic`
---
-
-LOCK TABLES `plugin_blog_entry_topic` WRITE;
-/*!40000 ALTER TABLE `plugin_blog_entry_topic` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_blog_entry_topic` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_blog_topic`
---
-
-LOCK TABLES `plugin_blog_topic` WRITE;
-/*!40000 ALTER TABLE `plugin_blog_topic` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_blog_topic` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate`
---
-
-LOCK TABLES `plugin_debate` WRITE;
-/*!40000 ALTER TABLE `plugin_debate` DISABLE KEYS */;
-INSERT INTO `plugin_debate` VALUES (1,1,0,0,'POLL - favourite sport','What is your everyday sport of choice?','2014-03-28 12:00:00','2016-04-10 11:59:00','00:00:00',6,0,'daily',8,1,1,100,'2014-03-28 13:35:01',''),(2,1,0,0,'DEBATE - UEFA CL Enlargement','Do you support the enlargement of UEFA Champions league?','2014-03-28 12:00:00','2014-04-10 11:59:00','00:00:00',2,0,'daily',1,1,1,100,'2014-03-28 13:36:10',''),(3,1,0,0,'DEBATE - Berlin Wall question','Preserve Berlin Wall?','2014-03-28 12:00:00','2014-04-10 11:59:00','00:00:00',2,0,'daily',1,1,1,100,'2014-03-28 13:36:38','');
-/*!40000 ALTER TABLE `plugin_debate` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate_answer`
---
-
-LOCK TABLES `plugin_debate_answer` WRITE;
-/*!40000 ALTER TABLE `plugin_debate_answer` DISABLE KEYS */;
-INSERT INTO `plugin_debate_answer` VALUES (1,1,1,'running',0,0,0,0,0,0,'2014-03-28 13:35:01'),(1,1,2,'skiing',0,0,0,0,0,0,'2014-03-28 13:35:01'),(1,1,3,'biking',0,0,0,0,0,0,'2014-03-28 13:35:01'),(1,1,4,'swimming',0,0,0,0,0,0,'2014-03-28 13:35:01'),(1,1,5,'basketball',1,0,100,1,1,0,'2014-03-28 13:35:01'),(1,1,6,'something else',0,0,0,0,0,0,'2014-03-28 13:35:01'),(2,1,1,'yes',1,0,100,1,1,0,'2014-03-28 13:36:10'),(2,1,2,'no',0,0,0,0,0,0,'2014-03-28 13:36:10'),(3,1,1,'yes',0,0,0,0,0,0,'2014-03-28 13:36:38'),(3,1,2,'no',1,0,100,1,1,0,'2014-03-28 13:36:38');
-/*!40000 ALTER TABLE `plugin_debate_answer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate_article`
---
-
-LOCK TABLES `plugin_debate_article` WRITE;
-/*!40000 ALTER TABLE `plugin_debate_article` DISABLE KEYS */;
-INSERT INTO `plugin_debate_article` VALUES (1,31,1),(2,30,1),(3,13,1);
-/*!40000 ALTER TABLE `plugin_debate_article` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate_issue`
---
-
-LOCK TABLES `plugin_debate_issue` WRITE;
-/*!40000 ALTER TABLE `plugin_debate_issue` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_debate_issue` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate_publication`
---
-
-LOCK TABLES `plugin_debate_publication` WRITE;
-/*!40000 ALTER TABLE `plugin_debate_publication` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_debate_publication` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate_section`
---
-
-LOCK TABLES `plugin_debate_section` WRITE;
-/*!40000 ALTER TABLE `plugin_debate_section` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_debate_section` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debate_vote`
---
-
-LOCK TABLES `plugin_debate_vote` WRITE;
-/*!40000 ALTER TABLE `plugin_debate_vote` DISABLE KEYS */;
-INSERT INTO `plugin_debate_vote` VALUES (38,2,1,1,'2014-03-28 13:38:46'),(39,3,2,1,'2014-03-28 13:39:01'),(41,1,5,1,'2014-03-28 13:41:38');
-/*!40000 ALTER TABLE `plugin_debate_vote` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_debateanswer_attachment`
---
-
-LOCK TABLES `plugin_debateanswer_attachment` WRITE;
-/*!40000 ALTER TABLE `plugin_debateanswer_attachment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_debateanswer_attachment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_poll`
---
-
-LOCK TABLES `plugin_poll` WRITE;
-/*!40000 ALTER TABLE `plugin_poll` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_poll` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_poll_answer`
---
-
-LOCK TABLES `plugin_poll_answer` WRITE;
-/*!40000 ALTER TABLE `plugin_poll_answer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_poll_answer` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_poll_article`
---
-
-LOCK TABLES `plugin_poll_article` WRITE;
-/*!40000 ALTER TABLE `plugin_poll_article` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_poll_article` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_poll_issue`
---
-
-LOCK TABLES `plugin_poll_issue` WRITE;
-/*!40000 ALTER TABLE `plugin_poll_issue` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_poll_issue` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_poll_publication`
---
-
-LOCK TABLES `plugin_poll_publication` WRITE;
-/*!40000 ALTER TABLE `plugin_poll_publication` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_poll_publication` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_poll_section`
---
-
-LOCK TABLES `plugin_poll_section` WRITE;
-/*!40000 ALTER TABLE `plugin_poll_section` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_poll_section` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_pollanswer_attachment`
---
-
-LOCK TABLES `plugin_pollanswer_attachment` WRITE;
-/*!40000 ALTER TABLE `plugin_pollanswer_attachment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_pollanswer_attachment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `plugin_soundcloud`
---
-
-LOCK TABLES `plugin_soundcloud` WRITE;
-/*!40000 ALTER TABLE `plugin_soundcloud` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plugin_soundcloud` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

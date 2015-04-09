@@ -185,6 +185,8 @@ Miscellaneous: null
 'Editor Miscellaneous Settings': null
 'No such user account.': null
 'User image (full-size)': null
+'User account is highlighted as "featured account"': 'User account is highlighted as "featured account"'
+'Custom attribute...': 'Custom attribute...'
 users:
     label:
         title: null

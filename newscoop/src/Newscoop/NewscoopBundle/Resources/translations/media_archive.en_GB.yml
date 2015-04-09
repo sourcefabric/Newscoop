@@ -1,7 +1,7 @@
 'No thumbnails were fixed.': 'No thumbnails were fixed.'
 'Missing thumbnails fixed.': 'Missing thumbnails fixed.'
 Slideshows: Slideshows
-'You cant update used files.': 'You cant update used files.'
+'You cant update used files.': 'You can not update used files.'
 Source: Source
 Local: Local
 'Items updated.': 'Items updated.'
@@ -22,7 +22,7 @@ Feedback: Feedback
 'All translations': 'All translations'
 'Save All': 'Save All'
 Files: Files
-'You cant delete used files.': 'You cant delete used files.'
+'You cant delete used files.': 'You can not delete used files.'
 'Do you want to delete unused only?': 'Do you want to delete unused only?'
 'View attachment': 'View attachment'
 'Select some items first.': 'Select some items first.'
@@ -60,3 +60,4 @@ Size: Size
 'Change image information': 'Change image information'
 'Photographer URL': 'Photographer URL'
 'Add website url starting with http://': 'Add website url starting with http://'
+'An error occured while uploading the file $1': 'An error occured while uploading the file $1'

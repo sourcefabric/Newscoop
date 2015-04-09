@@ -31,3 +31,12 @@ Newscoop\Entity\Section:
                 getter: getIssueName
             serialized_name: issueName
             since_version: 1.1
+        language:
+            expose: true
+            read_only: true
+            type: string
+            accessor:
+                getter: getLanguageCode
+            groups: ["list", "details"]
+            serialized_name: language
+            since_version: 1.2

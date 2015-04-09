@@ -1,10 +1,10 @@
-'Duplicate assignment': null
+'Duplicate assignment': 'Kettős hozzárendelés'
 Templates: Sablonok
 'Import theme': 'Téma importálása'
-'Import succeded!': 'Sikerült az importálás!'
+'Import succeeded!': null
 'Import failed!': 'Nem sikerült az importálás!'
 'Edit template: $1': 'Sablon szerkesztése: $1'
-'Set new name to': null
+'Set new name to': 'Új név beállítása'
 'Rename file': 'Fájl átnevezése'
 'Caching templates in:': 'Sablonok gyorsítótárazásának helye:'
 'Caching templates finished': 'A sablonok gyorsítótárazása befejeződött'
@@ -29,7 +29,7 @@ Unassign: 'Hozzárendelés megszüntetése'
 'Theme settings updated.': 'A téma beállításainak frissítése megtörtént.'
 'Theme settings saved.': 'A téma beállításainak mentése megtörtént.'
 'Theme name / version': 'Téma neve / verziója'
-'Theme management': 'Téma kezelése'
+'Theme management': Témakezelés
 'Theme $1': '$1 téma'
 'The file $1 is empty.': 'A/z $1 fájl üres.'
 'Template object $1 was renamed to $2.': 'A/z $1 sablonobjektum átnevezése $2 névre megtörtént.'
@@ -47,7 +47,7 @@ Replace: Csere
 'New name': 'Új név'
 'Name cant be empty': 'A név nem lehet üres'
 'Last modified': 'Utolsó módosítás'
-'Issue page': null
+'Issue page': Számlap
 'Go to parent': 'Ugrás a szülőre'
 'Go to $1': 'Ugrás a következőre: $1 '
 'Geo Filtering': 'Földrajzi szűrés'
@@ -75,10 +75,10 @@ Compatibility: Kompatibilitás
 'Choose destination': 'Válassz célt'
 'Cant override directory $1.': 'A/z $1 könyvtár nem írható felül.'
 'Cache Lifetime': 'Gyorsítótár élettartama'
-'Browse for the theme': 'A téma keresése'
+'Browse for the theme': 'Keresd meg a témát'
 'Assigned successfully': 'A hozzárendelés sikerült.'
-'Article page template': Cikkoldalsablon
-'Article page': Cikkoldal
+'Article page template': Cikklapsablon
+'Article page': Cikklap
 'Are you sure you want to unassign this theme?': 'Biztosan meg akarod szüntetni ennek a témának a hozzárendelését?'
 'Are you sure you want to delete this theme?': 'Biztosan törölni akarod ezt a témát?'
 'Add to publication': 'Hozzáadás kiadványhoz'

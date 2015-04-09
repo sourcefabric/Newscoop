@@ -80,6 +80,7 @@ class ThemesService implements ThemesServiceInterface
         $themePath = null;
         $webOutput = null;
         $outSetIssues = null;
+
         if ($this->cacheService->contains($cacheKeyThemePath)) {
             $themePath = $this->cacheService->fetch($cacheKeyThemePath);
         } else {

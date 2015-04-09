@@ -3,8 +3,6 @@
  * @package Newscoop
  */
 
-use Newscoop\Webcode\Manager;
-
 require_once __DIR__ . '/../../classes/Article.php';
 require_once __DIR__ . '/../../classes/ArticleAttachment.php';
 require_once __DIR__ . '/../../classes/GeoMap.php';
@@ -15,7 +13,8 @@ require_once __DIR__ . '/MetaArticleSlideshowList.php';
 
 /**
  */
-final class MetaArticle extends MetaDbObject {
+final class MetaArticle extends MetaDbObject
+{
     private $m_articleData = null;
 
     private $m_state = null;
@@ -93,7 +92,7 @@ final class MetaArticle extends MetaDbObject {
 
     public function __construct($p_languageId = null, $p_articleId = null)
     {
-    	$this->m_properties = self::$m_baseProperties;
+        $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
@@ -108,7 +107,7 @@ final class MetaArticle extends MetaDbObject {
         }
 
         if ($this->m_dbObject->exists()) {
-            $cacheKeyArticleData = $cacheService->getCacheKey(array('articleData', $this->m_dbObject->getType(), 
+            $cacheKeyArticleData = $cacheService->getCacheKey(array('articleData', $this->m_dbObject->getType(),
                 $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'article');
             if ($cacheService->contains($cacheKeyArticleData)) {
                 $this->m_articleData = $cacheService->fetch($cacheKeyArticleData);
@@ -131,26 +130,27 @@ final class MetaArticle extends MetaDbObject {
                 $this->m_customProperties[$tr_property] = array($property);
             }
         } else {
-        	if (!is_null($p_languageId) || !is_null($p_articleId)) {
-        		$this->m_dbObject = new Article();
-        	}
-        	$this->m_articleData = new ArticleData(null, null, null);
+            if (!is_null($p_languageId) || !is_null($p_articleId)) {
+                $this->m_dbObject = new Article();
+            }
+            $this->m_articleData = new ArticleData(null, null, null);
         }
 
         $this->slideshows = new MetaArticleSlideshowList($p_articleId);
     } // fn __construct
-
 
     final public function __get($p_property)
     {
         $property = $this->translateProperty($p_property);
         if ($this->m_state == 'type_name_error') {
             $this->m_state = null;
+
             return null;
         }
 
         if ($property == 'type' && $this->m_state == null) {
             $this->m_state = 'type';
+
             return $this;
         }
 
@@ -160,6 +160,7 @@ final class MetaArticle extends MetaDbObject {
             } else {
                 $this->m_state = null;
             }
+
             return $this;
         }
 
@@ -179,6 +180,7 @@ final class MetaArticle extends MetaDbObject {
                     $metaImage = new MetaImage($articleImage->getImageId());
                 }
                 $cacheService->save($cacheKey, $metaImage);
+
                 return $metaImage;
             }
         }
@@ -194,26 +196,29 @@ final class MetaArticle extends MetaDbObject {
                 return null;
             }
             if (empty($propertyValue) || !is_string($propertyValue) || is_numeric($propertyValue)) {
-            	return $propertyValue;
+                return $propertyValue;
             }
             if (count($this->m_skipFilter) == 0 || !in_array(strtolower($p_property), $this->m_skipFilter)) {
-            	$propertyValue = self::htmlFilter($propertyValue);
+                $propertyValue = self::htmlFilter($propertyValue);
             }
+
             return $propertyValue;
         } catch (InvalidPropertyException $e) {
             $this->trigger_invalid_property_error($p_property);
+
             return null;
         }
     } // fn __get
 
-
-    public function subtitle_url_id($p_fieldName) {
+    public function subtitle_url_id($p_fieldName)
+    {
         $property = $this->translateProperty($p_fieldName);
+
         return 'st-'.$property;
     }
 
-
-    public function current_subtitle_no($p_fieldName) {
+    public function current_subtitle_no($p_fieldName)
+    {
         $property = $this->translateProperty($p_fieldName);
         if (isset($this->m_customProperties[$property])
         && is_array($this->m_customProperties[$property])) {
@@ -221,12 +226,13 @@ final class MetaArticle extends MetaDbObject {
             $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
             if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                 $subtitleId = $this->subtitle_url_id($p_fieldName);
+
                 return CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
             }
         }
+
         return null;
     }
-
 
     protected function getCustomProperty($p_property)
     {
@@ -247,8 +253,8 @@ final class MetaArticle extends MetaDbObject {
                 }
                 if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                     if (is_null($this->getContentCache($property))) {
-                    	$context = CampTemplate::singleton()->context();
-                    	$subtitleId = $this->subtitle_url_id($property);
+                        $context = CampTemplate::singleton()->context();
+                        $subtitleId = $this->subtitle_url_id($property);
                         $subtitleNo = $context->default_url->get_parameter($subtitleId);
                         if (is_null($subtitleNo)) {
                             $subtitleNo = 0;
@@ -266,15 +272,16 @@ final class MetaArticle extends MetaDbObject {
                     $fieldValue = TopicName::GetTopicNames($fieldValue);
                     $fieldValue = $fieldValue[$this->m_dbObject->getProperty('IdLanguage')];
                 }
+
                 return $fieldValue;
             } catch (InvalidPropertyException $e) {
                 // do nothing; will throw another exception with original property field name
             }
             throw new InvalidPropertyException(get_class($this->m_dbObject), $p_property);
         }
+
         return parent::getCustomProperty($p_property);
     }
-
 
     private function getContentCache($p_property)
     {
@@ -283,9 +290,9 @@ final class MetaArticle extends MetaDbObject {
         || !isset($this->m_contentCache[$p_property])) {
             return null;
         }
+
         return $this->m_contentCache[$p_property];
     }
-
 
     private function setContentCache($p_property, $p_value)
     {
@@ -293,118 +300,113 @@ final class MetaArticle extends MetaDbObject {
         $this->m_contentCache[$p_property] = $p_value;
     }
 
-
     protected function getCreationYear()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['year'];
     }
-
 
     protected function getCreationMonth()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['mon'];
     }
-
 
     protected function getCreationWeekDay()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['wday'];
     }
-
 
     protected function getCreationMonthDay()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['mday'];
     }
-
 
     protected function getCreationYearDay()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['yday'];
     }
-
 
     protected function getCreationHour()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['hours'];
     }
-
 
     protected function getCreationMinute()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['minutes'];
     }
-
 
     protected function getCreationSecond()
     {
         $creation_timestamp = strtotime($this->m_dbObject->getProperty('UploadDate'));
         $creation_date_time = getdate($creation_timestamp);
+
         return $creation_date_time['seconds'];
     }
 
-
-    protected function getCreationMonthName() {
+    protected function getCreationMonthName()
+    {
         $dateTime = new MetaDatetime($this->m_dbObject->getProperty('UploadDate'));
+
         return $dateTime->getMonthName();
     }
 
-
-    protected function getCreationWeekDayName() {
+    protected function getCreationWeekDayName()
+    {
         $dateTime = new MetaDatetime($this->m_dbObject->getProperty('UploadDate'));
+
         return $dateTime->getWeekDayName();
     }
 
-
     protected function getOnFrontPage()
     {
-        return (int)($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
+        return (int) ($this->m_dbObject->getProperty('OnFrontPage') == 'Y');
     }
-
 
     protected function getOnSectionPage()
     {
-        return (int)($this->m_dbObject->getProperty('OnSection') == 'Y');
+        return (int) ($this->m_dbObject->getProperty('OnSection') == 'Y');
     }
-
 
     protected function getIsPublished()
     {
-        return (int)($this->m_dbObject->getProperty('Published') == 'Y');
+        return (int) ($this->m_dbObject->getProperty('Published') == 'Y');
     }
-
 
     protected function getIsPublic()
     {
-        return (int)($this->m_dbObject->getProperty('Public') == 'Y');
+        return (int) ($this->m_dbObject->getProperty('Public') == 'Y');
     }
-
 
     protected function getIsIndexed()
     {
-        return (int)($this->m_dbObject->getProperty('IsIndexed') == 'Y');
+        return (int) ($this->m_dbObject->getProperty('IsIndexed') == 'Y');
     }
-
 
     protected function getPublication()
     {
         return new MetaPublication($this->m_dbObject->getProperty('IdPublication'));
     }
-
 
     protected function getIssue()
     {
@@ -412,7 +414,6 @@ final class MetaArticle extends MetaDbObject {
         $this->m_dbObject->getProperty('IdLanguage'),
         $this->m_dbObject->getProperty('NrIssue'));
     }
-
 
     protected function getSection()
     {
@@ -422,20 +423,18 @@ final class MetaArticle extends MetaDbObject {
         $this->m_dbObject->getProperty('NrSection'));
     }
 
-
     protected function getLanguage()
     {
         return new MetaLanguage($this->m_dbObject->getProperty('IdLanguage'));
     }
 
-
     protected function getOwner()
     {
         $container = Zend_Registry::get('container');
         $userService =  $container->getService('user');
+
         return new MetaUser($userService->find($this->m_dbObject->getProperty('IdUser')));
     }
-
 
     protected function getAuthor()
     {
@@ -458,9 +457,10 @@ final class MetaArticle extends MetaDbObject {
         }
 
         $metaAuthors = array();
-        foreach($authors as $author) {
+        foreach ($authors as $author) {
             $metaAuthors[] = new MetaAuthor($author->getId(), $author->getType());
         }
+
         return $metaAuthors;
     }
 
@@ -476,6 +476,7 @@ final class MetaArticle extends MetaDbObject {
         $articleIssue = new Issue($this->m_dbObject->getProperty('IdPublication'),
         $this->m_dbObject->getProperty('IdLanguage'),
         $this->m_dbObject->getProperty('NrIssue'));
+
         return new MetaTemplate($articleIssue->getArticleTemplateId());
     }
 
@@ -486,11 +487,11 @@ final class MetaArticle extends MetaDbObject {
         if ($cacheService->contains($cacheKey)) {
             $attachments = $cacheService->fetch($cacheKey);
         } else {
-			$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
+            $attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
             $cacheService->save($cacheKey, $attachments);
-		}
+        }
 
-        return (int)(sizeof($attachments) > 0);
+        return (int) (sizeof($attachments) > 0);
     }
 
     /**
@@ -501,6 +502,7 @@ final class MetaArticle extends MetaDbObject {
     protected function hasMap()
     {
         $map = Geo_Map::GetMapByArticle($this->m_dbObject->getProperty('Number'));
+
         return (bool) $map->exists();
     }
 
@@ -509,8 +511,10 @@ final class MetaArticle extends MetaDbObject {
      *
      * @return Geo_Map
      */
-    protected function getMap() {
+    protected function getMap()
+    {
         $map = Geo_Map::GetMapByArticle($this->m_dbObject->getProperty('Number'));
+
         return new MetaMap($map);
     }
 
@@ -536,14 +540,14 @@ final class MetaArticle extends MetaDbObject {
         return $publicationObj->commentsEnabled() && $articleTypeObj->commentsEnabled() && $this->m_dbObject->commentsEnabled();
     }
 
-
     /**
      * Returns the index of the current image inside the article.
      * If the image doesn't belong to the article returns null.
      *
      * @return int
      */
-    protected function getImageIndex() {
+    protected function getImageIndex()
+    {
         $image = CampTemplate::singleton()->context()->image;
         if (!$image->defined) {
             return null;
@@ -567,7 +571,8 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    protected function getCommentCount() {
+    protected function getCommentCount()
+    {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('getCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'comment');
         if ($cacheService->contains($cacheKey)) {
@@ -586,11 +591,13 @@ final class MetaArticle extends MetaDbObject {
             $result = $repository->getCount($params);
             $cacheService->save($cacheKey, $result);
         }
+
         return $result;
     }
 
 
-    protected function getCommentCountAllLang() {
+    protected function getCommentCountAllLang()
+    {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('getCommentCountAllLang', $this->m_dbObject->getArticleNumber()), 'comment');
         if ($cacheService->contains($cacheKey)) {
@@ -608,10 +615,12 @@ final class MetaArticle extends MetaDbObject {
             $result = $repository->getCount($params);
             $cacheService->save($cacheKey, $result);
         }
+
         return $result;
     }
 
-    protected function getRecommendedCommentCount() {
+    protected function getRecommendedCommentCount()
+    {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('getRecommendedCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'comment');
         if ($cacheService->contains($cacheKey)) {
@@ -631,6 +640,7 @@ final class MetaArticle extends MetaDbObject {
             $result = $repository->getCount($params);
             $cacheService->save($cacheKey, $result);
         }
+
         return $result;
     }
 
@@ -642,13 +652,13 @@ final class MetaArticle extends MetaDbObject {
      */
     protected function isContentAccessible()
     {
-    	if ($this->m_dbObject->isPublic() && $this->getIsPublished()) {
-            return (int)true;
+        if ($this->m_dbObject->isPublic() && $this->getIsPublished()) {
+            return (int) true;
         }
 
         $context = CampTemplate::singleton()->context();
         if ($context->preview) {
-        	return (int)true;
+            return (int) true;
         }
 
         $user = $context->user;
@@ -664,7 +674,8 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    protected function getImage() {
+    protected function getImage()
+    {
         $context = CampTemplate::singleton()->context();
         if ($context->image->defined) {
             return $context->image;
@@ -673,31 +684,37 @@ final class MetaArticle extends MetaDbObject {
         if (count($images) == 0) {
             return new MetaImage();
         }
+
         return new MetaImage($images[0]->getImageId());
     }
 
 
-    protected function getReads() {
+    protected function getReads()
+    {
         return $this->m_dbObject->getReads();
     }
 
 
-    protected function topicsCount() {
+    protected function topicsCount()
+    {
         $articleTopics = $this->getContentCache('article_topics');
         if (is_null($articleTopics)) {
             $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
             $this->setContentCache('article_topics', $articleTopics);
         }
+
         return count($articleTopics);
     }
 
 
-    protected function hasTopics() {
-        return (int)($this->topicsCount() > 0);
+    protected function hasTopics()
+    {
+        return (int) ($this->topicsCount() > 0);
     }
 
 
-    protected function getTopics() {
+    protected function getTopics()
+    {
         $articleTopics = $this->getContentCache('article_topics');
         if (is_null($articleTopics)) {
             $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
@@ -707,6 +724,7 @@ final class MetaArticle extends MetaDbObject {
         foreach ($articleTopics as $topic) {
             $topics[] = $topic->getName($this->getLanguage()->number);
         }
+
         return $topics;
     }
 
@@ -723,11 +741,12 @@ final class MetaArticle extends MetaDbObject {
             return '';
         }
 
-    	return $this->m_dbObject->getSEOURLEnd($pubSeo, $lanNum);
+        return $this->m_dbObject->getSEOURLEnd($pubSeo, $lanNum);
     }
 
-    protected function getTypeTranslated() {
-    	return $this->m_dbObject->getTranslateType($this->m_dbObject->getLanguageId());
+    protected function getTypeTranslated()
+    {
+        return $this->m_dbObject->getTranslateType($this->m_dbObject->getLanguageId());
     }
 
     protected function getUrl()
@@ -748,26 +767,33 @@ final class MetaArticle extends MetaDbObject {
             $repo = $em->getRepository('Newscoop\Entity\ArticleDatetime');
             $this->_datetimeData = new MetaArticleDatetime($repo->findBy(array('articleId'=>$this->m_dbObject->getProperty('Number'))));
         }
+
         return $this->_datetimeData;
     }
 
-    public function has_topic($p_topicName) {
+    public function has_topic($p_topicName)
+    {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('has_topic', $this->m_dbObject->getArticleNumber(), $p_topicName), 'article');
         if ($cacheService->contains($cacheKey)) {
             $exists = $cacheService->fetch($cacheKey);
         } else {
-            $exists = (int)false;
-            $topic = new Topic($p_topicName);
-            if (!$topic->exists()) {
+            $exists = (int) false;
+            $em = \Zend_Registry::get('container')->getService('em');
+            $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+            $context = CampTemplate::singleton()->context();
+            $locale = $context->language->code;
+            $topic = $repository->getTopicByIdOrName($p_topicName, $locale)->getOneOrNullResult();
+            if (!$topic) {
                 $this->trigger_invalid_value_error('has_topic', $p_topicName);
+
                 return null;
             }
 
             $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
             foreach ($articleTopics as $articleTopic) {
                 if ($articleTopic->getTopicId() == $topic->getTopicId()) {
-                    $exists = (int)true;
+                    $exists = (int) true;
                 }
             }
 
@@ -782,14 +808,15 @@ final class MetaArticle extends MetaDbObject {
      * Returns true if the article was translated in to the language
      * identified by the given language code
      *
-     * @param string $p_language - language code
+     * @param  string $p_language - language code
      * @return bool
      */
-    public function translated_to($p_language) {
+    public function translated_to($p_language)
+    {
         if (is_string($p_language)) {
             $languages = Language::GetLanguages(null, $p_language);
             if (sizeof($languages) == 0) {
-                return (int)false;
+                return (int) false;
             }
             $language = $languages[0];
         } else {
@@ -797,7 +824,8 @@ final class MetaArticle extends MetaDbObject {
         }
         $article = new Article($language->getLanguageId(),
         $this->m_dbObject->getArticleNumber());
-        return (int)$article->exists()
+
+        return (int) $article->exists()
         && ($article->isPublished() || CampTemplate::singleton()->context()->preview);
     }
 
@@ -806,31 +834,34 @@ final class MetaArticle extends MetaDbObject {
      * Returns a list of MetaLanguage objects - list of languages in which
      * the article was translated.
      *
-     * @param boolean $p_excludeCurrent
-     * @param array $p_order
-     * @return array of MetaLanguage
+     * @param  boolean $p_excludeCurrent
+     * @param  array   $p_order
+     * @return array   of MetaLanguage
      */
     public function languages_list($p_excludeCurrent = true,
     array $p_order = array()) {
-    	$languages = $this->m_dbObject->getLanguages($p_excludeCurrent, $p_order,
-    	!CampTemplate::singleton()->context()->preview);
-    	$metaLanguagesList = array();
-    	foreach ($languages as $language) {
+        $languages = $this->m_dbObject->getLanguages($p_excludeCurrent, $p_order,
+        !CampTemplate::singleton()->context()->preview);
+        $metaLanguagesList = array();
+        foreach ($languages as $language) {
             $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
-    	}
-    	return $metaLanguagesList;
+        }
+
+        return $metaLanguagesList;
     }
 
 
     /**
      * Returns true if the article keywords field had the given keyword.
      *
-     * @param string $p_keyword
+     * @param  string $p_keyword
      * @return bool
      */
-    public function has_keyword($p_keyword) {
+    public function has_keyword($p_keyword)
+    {
         $keywords = $this->m_dbObject->getKeywords();
-        return (int)(stristr($keywords, $p_keyword) !== false);
+
+        return (int) (stristr($keywords, $p_keyword) !== false);
     }
 
 
@@ -838,19 +869,22 @@ final class MetaArticle extends MetaDbObject {
      * Returns the number of the subtitles of the given article field.
      * Returns null if the field name was invalid or it name a non body field.
      *
-     * @param string $p_property - article field name
+     * @param  string $p_property - article field name
      * @return int
      */
-    public function subtitles_count($p_property) {
+    public function subtitles_count($p_property)
+    {
         try {
             $propertyValue = $this->getCustomProperty($p_property);
             if (!is_a($propertyValue, 'MetaArticleBodyField')) {
                 return null;
             }
+
             return $propertyValue->subtitles_count;
         } catch (InvalidPropertyException $e) {
             // do nothing, return null
         }
+
         return null;
     }
 
@@ -859,10 +893,11 @@ final class MetaArticle extends MetaDbObject {
      * Returns true if the article had an attached image identified
      * by the given article internal index.
      *
-     * @param int $p_imageIndex - the index of the image attachment in the article
+     * @param  int  $p_imageIndex - the index of the image attachment in the article
      * @return bool
      */
-    public function has_image($p_imageIndex) {
+    public function has_image($p_imageIndex)
+    {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 
         $cacheKey = $cacheService->getCacheKey(array('has_article_image', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');
@@ -871,7 +906,7 @@ final class MetaArticle extends MetaDbObject {
             $exists = $cacheService->fetch($cacheKey);
         } else {
             $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $p_imageIndex);
-            $exists = (int)$articleImage->exists();
+            $exists = (int) $articleImage->exists();
             $cacheService->save($cacheKey, $exists);
         }
 
@@ -884,10 +919,11 @@ final class MetaArticle extends MetaDbObject {
      * of the image attachment inside the article. Returns an empty
      * meta image object if the image did not exist.
      *
-     * @param int $p_imageIndex - the index of the image attachment in the article
+     * @param  int       $p_imageIndex - the index of the image attachment in the article
      * @return MetaImage
      */
-    public function image($p_imageIndex) {
+    public function image($p_imageIndex)
+    {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 
         $cacheKey = $cacheService->getCacheKey(array('ArticleImage', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');

@@ -5,7 +5,6 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Installer\Services;
 
 use Doctrine\DBAL\DriverManager;
@@ -59,7 +58,7 @@ class DatabaseService
     public function fillNewscoopDatabase($connection)
     {
         // import database from sql file
-        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_core.sql';
+        $sqlFile =  __DIR__.'/../../../../install/Resources/sql/campsite_core.sql';
 
         try {
             $connection->exec(file_get_contents($sqlFile));
@@ -67,11 +66,11 @@ class DatabaseService
             return false;
         }
 
-        $dbVersions = array_map('basename', glob(__DIR__ . '/../../../../install/Resources/sql/upgrade/[2-9].[0-9]*'));
+        $dbVersions = array_map('basename', glob(__DIR__.'/../../../../install/Resources/sql/upgrade/[2-9].[0-9]*'));
         if (!empty($dbVersions)) {
             usort($dbVersions, array($this, 'versionCompare'));
             $dbLastVersion = array_pop($dbVersions);
-            $dbLastVersionDir = __DIR__ . '/../../../../install/Resources/sql/upgrade/'.$dbLastVersion.'/';
+            $dbLastVersionDir = __DIR__.'/../../../../install/Resources/sql/upgrade/'.$dbLastVersion.'/';
             $dbLastRoll = '';
             $dbRolls = $this->searchDbRolls($dbLastVersionDir, '');
             if (!empty($dbRolls)) {
@@ -93,15 +92,15 @@ class DatabaseService
      */
     public function saveDatabaseConfiguration($connection)
     {
-        $this->renderFile('_database_conf.twig', __DIR__ . '/../../../../conf/database_conf.php', array(
+        $this->renderFile('_database_conf.twig', __DIR__.'/../../../../conf/database_conf.php', array(
             'database_name' => $connection->getDatabase(),
             'database_server_host' => $connection->getHost(),
             'database_server_port' => $connection->getPort(),
             'database_user' => $connection->getUsername(),
-            'database_password' => $connection->getPassword()
+            'database_password' => $connection->getPassword(),
         ));
 
-        $this->renderFile('_configuration.twig', __DIR__ . '/../../../../conf/configuration.php', array());
+        $this->renderFile('_configuration.twig', __DIR__.'/../../../../conf/configuration.php', array());
     }
 
     /**
@@ -111,7 +110,7 @@ class DatabaseService
      */
     public function installSampleData($connection)
     {
-        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
+        $sqlFile =  __DIR__.'/../../../../install/Resources/sql/campsite_demo_data.sql';
         $errors = $this->importDB($sqlFile, $connection);
     }
 
@@ -123,11 +122,11 @@ class DatabaseService
      */
     public function installDatabaseSchema($connection, $host = null, $publicationName = null)
     {
-        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_tables.sql';
-        $errors = $this->importDB($sqlFile, $connection);
-
         $connection->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($host));
-        $connection->executeQuery("INSERT IGNORE INTO Publications VALUES (1,?,1,'D',0.00,0.00,'',0,0,2,2,NULL,1,1,0,0,1,0,0,'','',NULL,'a:1:{s:4:\"name\";s:2:\"on\";}')", array($publicationName));
+        $connection->executeQuery('INSERT IGNORE INTO Publications (`Id`, `Name`, `IdDefaultLanguage`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_public_enabled`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`, `comments_moderator_to`, `comments_moderator_from`, `url_error_tpl_id`, `seo`, `meta_title`, `meta_keywords`, `meta_description`) VALUES ("1", ?, "1", "2", "2", NULL, "1", "1", NULL, "0", NULL, NULL, "1", NULL, NULL, NULL, "a:1:{s:4:\"name\";s:2:\"on\";}", NULL, NULL, NULL)', array($publicationName));
+
+        // needed for tests - sample new article type
+        $connection->executeQuery("INSERT INTO `ArticleTypeMetadata` (`type_name`, `field_name`, `field_weight`, `is_hidden`, `comments_enabled`, `fk_phrase_id`, `field_type`, `field_type_param`, `is_content_field`, `max_size`, `show_in_editor`) VALUES ('news', 'NULL', NULL, 0, 1, NULL, NULL, NULL, 0, NULL, 1),('news', 'lead', 1, 0, 0, NULL, 'text', NULL, 0, 160, 0),('news', 'content', 2, 0, 0, NULL, 'body', 'editor_size=500', 1, NULL, 0);");
     }
 
     /**
@@ -151,7 +150,7 @@ class DatabaseService
             }
 
             $last_dir = getcwd();
-            $work_dir = __DIR__ . '/../../../../install/Resources/sql';
+            $work_dir = __DIR__.'/../../../../install/Resources/sql';
             chdir($work_dir);
 
             $db_host = $connection->getHost();
@@ -161,17 +160,17 @@ class DatabaseService
             $db_name = $connection->getDatabase();
 
             $access_params = '';
-            $access_params .= ' -h ' . escapeshellarg($db_host);
+            $access_params .= ' -h '.escapeshellarg($db_host);
             if (!empty($db_port)) {
-                $access_params .= ' -P ' . escapeshellarg('' . $db_port);
+                $access_params .= ' -P '.escapeshellarg(''.$db_port);
             }
-            $access_params .= ' -u ' . escapeshellarg($db_user);
+            $access_params .= ' -u '.escapeshellarg($db_user);
             if (!empty($db_pass)) {
-                $access_params .= ' -p' . escapeshellarg($db_pass);
+                $access_params .= ' -p'.escapeshellarg($db_pass);
             }
-            $access_params .= ' -D ' . escapeshellarg($db_name);
+            $access_params .= ' -D '.escapeshellarg($db_name);
 
-            $cmd_string = escapeshellcmd($mysql_client_command) . $access_params . ' --local-infile=1 < ' . 'geonames.sql';
+            $cmd_string = escapeshellcmd($mysql_client_command).$access_params.' --local-infile=1 < '.'geonames.sql';
             $cmd_output = array();
             $cmd_retval = 0;
             exec($cmd_string, $cmd_output, $cmd_retval);
@@ -246,7 +245,7 @@ class DatabaseService
                 $command_path = dirname($sqlFilePath);
                 $command_path = $this->combinePaths($command_path, $command_script);
 
-                require_once($command_path);
+                require_once $command_path;
 
                 if (isset($upgradeErrors) && is_array($upgradeErrors) && count($upgradeErrors) > 0) {
                     foreach ($upgradeErrors as $upgradeError) {
@@ -277,7 +276,7 @@ class DatabaseService
         if (0 === strpos(strtolower($dirSecond), "./")) {
             $dirSecond = substr($dirSecond, 2);
 
-            return $dirFirst . DIRECTORY_SEPARATOR . $dirSecond;
+            return $dirFirst.DIRECTORY_SEPARATOR.$dirSecond;
         }
 
         while (0 === strpos(strtolower($dirSecond), "../")) {
@@ -285,7 +284,7 @@ class DatabaseService
             $dirSecond = substr($dirSecond, 3);
         }
 
-        return $dirFirst . DIRECTORY_SEPARATOR . $dirSecond;
+        return $dirFirst.DIRECTORY_SEPARATOR.$dirSecond;
     }
 
     /**
@@ -322,7 +321,7 @@ class DatabaseService
     protected function renderTwigTemplate($template, $parameters)
     {
         $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/'),
+            new \Twig_Loader_Filesystem(__DIR__.'/../../../../install/Resources/templates/'),
             array(
                 'debug'            => true,
                 'cache'            => false,
@@ -362,8 +361,8 @@ class DatabaseService
     {
         $sqlFile = trim($sqlFile);
         $sqlFile = preg_replace("/\n\#[^\n]*/", '', "\n".$sqlFile);
-        $buffer = array ();
-        $return = array ();
+        $buffer = array();
+        $return = array();
         $inString = false;
 
         for ($i = 0; $i < strlen($sqlFile) - 1; $i ++) {
@@ -378,7 +377,7 @@ class DatabaseService
                 $inString = false;
             } elseif (!$inString && ($sqlFile[$i] == '"'
                                      || $sqlFile[$i] == "'")
-                          && (!isset ($buffer[0]) || $buffer[0] != "\\")) {
+                          && (!isset($buffer[0]) || $buffer[0] != "\\")) {
                 $inString = $sqlFile[$i];
             }
             if (isset($buffer[1])) {
@@ -405,8 +404,8 @@ class DatabaseService
      */
     public function versionCompare($p_version1, $p_version2)
     {
-        $version1 = "" . $p_version1;
-        $version2 = "" . $p_version2;
+        $version1 = "".$p_version1;
+        $version2 = "".$p_version2;
 
         $ver1_arr = explode(".", $version1);
         $ver2_arr = explode(".", $version2);
@@ -414,15 +413,25 @@ class DatabaseService
         $ver2_len = count($ver2_arr);
 
         $ver_len = $ver1_len;
-        if ($ver2_len < $ver_len) {$ver_len = $ver2_len;}
-
-        for ($ind = 0; $ind < $ver_len; $ind++) {
-            if ($ver1_arr[$ind] < $ver2_arr[$ind]) {return -1;}
-            if ($ver1_arr[$ind] > $ver2_arr[$ind]) {return 1;}
+        if ($ver2_len < $ver_len) {
+            $ver_len = $ver2_len;
         }
 
-        if ($ver1_len < $ver2_len) {return -1;}
-        if ($ver1_len > $ver2_len) {return 1;}
+        for ($ind = 0; $ind < $ver_len; $ind++) {
+            if ($ver1_arr[$ind] < $ver2_arr[$ind]) {
+                return -1;
+            }
+            if ($ver1_arr[$ind] > $ver2_arr[$ind]) {
+                return 1;
+            }
+        }
+
+        if ($ver1_len < $ver2_len) {
+            return -1;
+        }
+        if ($ver1_len > $ver2_len) {
+            return 1;
+        }
 
         return 0;
     }
@@ -447,7 +456,7 @@ class DatabaseService
         $avoid_starts = array('.', '_');
         $some_top_files = false;
         foreach ($roll_dir_names as $one_rol_dir) {
-            $cur_rol_path = $roll_base_dir . DIRECTORY_SEPARATOR . $one_rol_dir;
+            $cur_rol_path = $roll_base_dir.DIRECTORY_SEPARATOR.$one_rol_dir;
             if (is_file($cur_rol_path) && ('sql' == pathinfo($cur_rol_path, PATHINFO_EXTENSION))) {
                 $some_top_files = true;
             }
@@ -488,8 +497,13 @@ class DatabaseService
         $version = str_replace(array('"', '\''), array('_', '_'), $version);
         $roll = str_replace(array('"', '\''), array('_', '_'), $roll);
 
-        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_version", "' . $version . '") ON DUPLICATE KEY UPDATE ver_value = "' . $version . '"');
-        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_roll", "' . $roll . '") ON DUPLICATE KEY UPDATE ver_value = "' . $roll . '"');
+        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_version", :version) ON DUPLICATE KEY UPDATE ver_value = :version', array(
+            'version' => $version,
+        ));
+
+        $connection->executeQuery('INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_roll", :roll) ON DUPLICATE KEY UPDATE ver_value = :roll', array(
+            'roll' => $roll,
+        ));
 
         return true;
     }

@@ -36,7 +36,13 @@ class AuthController extends Zend_Controller_Action
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-                setcookie('NO_CACHE', '1', null, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+                $expire = null;
+                if (!empty($values['remember_me'])) {
+                    // set expire to 10 years in the future
+                    $expire = time() + (10 * 365 * 24 * 60 * 60);
+                }
+
+                setcookie('NO_CACHE', '1', $expire, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
                 if (isset($values['_target_path'])) {
                     $this->_helper->redirector->gotoUrl($values['_target_path']);
                 }
@@ -98,7 +104,8 @@ class AuthController extends Zend_Controller_Action
                 $user = $this->_helper->service('user')->findOneBy(array('email' => $userData->email));
 
                 if (!$user) {
-                    $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName);
+                    $publicationService = \Zend_Registry::get('container')->getService('newscoop_newscoop.publication_service');
+                    $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName, null, $publicationService->getPublication()->getId());
                 }
 
                 $this->_helper->service('auth.adapter.social')->addIdentity($user, $adapter->id, $userData->identifier);
@@ -110,6 +117,7 @@ class AuthController extends Zend_Controller_Action
                 $OAuthtoken = $userService->loginUser($user, 'oauth_authorize');
                 $session->set('_security_oauth_authorize', serialize($OAuthtoken));
             }
+
             setcookie('NO_CACHE', '1', null, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
             if ($user->isPending()) {
                 $this->_forward('confirm', 'register', 'default', array(

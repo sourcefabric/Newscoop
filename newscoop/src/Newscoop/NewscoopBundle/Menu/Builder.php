@@ -4,7 +4,6 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
@@ -77,8 +76,8 @@ class Builder
         // change menu for blogger
         $blogService = $this->container->get('blog');
         if ($blogService->isBlogger($this->user)) {
-             $menu->addChild('Blog', array('uri' => $this->generateZendRoute('admin'), 'attributes' => array(
-                'data-menu' => 'not-menu'
+            $menu->addChild('Blog', array('uri' => $this->generateZendRoute('admin'), 'attributes' => array(
+                'data-menu' => 'not-menu',
             )));
 
             if (!$modern) {
@@ -88,9 +87,9 @@ class Builder
             return $menu;
         }
 
-        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
-
         if ($modern) {
+            $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
+
             $menu->addChild($translator->trans('Content'), array('uri' => '#'))
                 ->setAttribute('dropdown', true)
                 ->setLinkAttribute('data-toggle', 'dropdown');
@@ -117,6 +116,8 @@ class Builder
                 $this->prepareUsersMenu($menu[$translator->trans('Users')]);
             }
         } else {
+            $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
+
             $menu->addChild($translator->trans('Content'), array('uri' => '#'));
             $this->prepareContentMenu($menu[$translator->trans('Content')], $modern);
 
@@ -180,7 +181,8 @@ class Builder
         return $current;
     }
 
-    private function decorateMenu($menu) {
+    private function decorateMenu($menu)
+    {
         foreach ($menu as $key => $value) {
             $value->setLinkAttribute('class', 'fg-button fg-button-menu ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
         }
@@ -192,14 +194,32 @@ class Builder
     {
         $translator = $this->container->get('translator');
 
-        $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'pub',
-                'action' => 'index.php',
-            ),
+        $this->addChild($menu, $translator->trans('Publications'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_publications_index'),
             'resource' => 'publication',
             'privilege' => 'manage',
         ));
+
+        if ($menu[$translator->trans('Publications')]) {
+            $publicationId = $this->container->get('request')->get('id', 1);
+            if (!is_numeric($publicationId)) {
+                $publicationId = 1;
+            }
+
+            $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.edit', array(), 'pub'), array(
+                'route' => 'newscoop_newscoop_publications_edit',
+                'routeParameters' => array('id' => $publicationId),
+                'resource' => 'publication',
+                'privilege' => 'manage',
+            ))->setDisplay(false);
+
+            $this->addChild($menu[$translator->trans('Publications')], $translator->trans('publications.title.remove', array(), 'pub'), array(
+                'route' => 'newscoop_newscoop_publications_remove',
+                'routeParameters' => array('id' => $publicationId),
+                'resource' => 'publication',
+                'privilege' => 'manage',
+            ))->setDisplay(false);
+        }
 
         $this->addChild(
             $menu,
@@ -220,43 +240,41 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'media-archive',
                 'action' => 'index.php',
-            )
+            ),
         ));
 
         $this->addChild($menu, $translator->trans('Search'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'universal-list',
                 'action' => 'index.php',
-            )
+            ),
         ));
 
         $this->addChild($menu, $translator->trans('Pending articles', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'pending_articles',
                 'action' => 'index.php',
-            )
+            ),
         ));
 
-        $this->addChild($menu, $translator->trans('Featured Article Lists', array(), 'home'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'playlist',
-                'action' => 'index',
-            ),
+        $this->addChild($menu, $translator->trans('Featured Article Lists', array(), 'home'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_playlists_index'),
             'resource' => 'playlist',
-            'privilege' => 'manage'
+            'privilege' => 'manage',
         ));
 
         // add content/publications
         $publicationService = $this->container->get('content.publication');
         foreach ($publicationService->getPublicationsForMenu()->getArrayResult() as $publication) {
             $pubId = $publication['id'];
-            $this->addChild($menu, $publication['name'], array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"))
+            $this->addChild($menu, $publication['name'], array('uri' => $this->generateZendRoute('admin')."/issues/?Pub=$pubId"))
                 ->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
             $query = $this->container->get('em')
                 ->getRepository('Newscoop\Entity\Issue')
                 ->getLatestByPublication($pubId, 11);
+
             if ($query) {
                 $issues = $query->getArrayResult();
             } else {
@@ -277,7 +295,7 @@ class Builder
                 $issueChild = $this->addChild(
                     $menu[$publication['name']],
                     $issueName,
-                    array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
+                    array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true)))."/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId",
                 ))->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
@@ -288,41 +306,41 @@ class Builder
 
                 // add content/publication/issue/section
                     $firstSections = array();
-                    foreach ($issue['sections'] as $section) {
-                        $firstSections[$section['number']] = $section;
-                    }
+                foreach ($issue['sections'] as $section) {
+                    $firstSections[$section['number']] = $section;
+                }
 
-                    ksort($firstSections);
-                    $sectionsCounter = 0;
-                    foreach ($firstSections as $section) {
-                        if ($sectionsCounter < 10) {
-                            $sectionId = $section['number'];
-                            $sectionName = sprintf('%d. %s', $section['number'], $section['name']);
-                            $this->addChild(
+                ksort($firstSections);
+                $sectionsCounter = 0;
+                foreach ($firstSections as $section) {
+                    if ($sectionsCounter < 10) {
+                        $sectionId = $section['number'];
+                        $sectionName = sprintf('%d. %s', $section['number'], $section['name']);
+                        $this->addChild(
                                 $menu[$publication['name']][$issueName],
                                 $sectionName,
-                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"
+                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true)))."/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId",
                             ));
-                            $sectionsCounter ++;
-                        }
+                        $sectionsCounter ++;
                     }
+                }
 
-                    if (count($issue['sections']) > 0) {
-                        if (!$modern) {
-                            $this->addChild($menu[$publication['name']][$issueName], null, array())->setAttribute('class', 'divider');
-                            $this->addChild(
+                if (count($issue['sections']) > 0) {
+                    if (!$modern) {
+                        $this->addChild($menu[$publication['name']][$issueName], null, array())->setAttribute('class', 'divider');
+                        $this->addChild(
                                 $menu[$publication['name']][$issueName],
                                 $translator->trans('More...'),
-                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
+                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true)))."/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId",
                             ));
-                        } else {
-                            $this->addChild(
+                    } else {
+                        $this->addChild(
                                 $menu[$publication['name']][$issueName],
                                 $translator->trans('More...'),
-                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
+                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true)))."/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId",
                             ))->setAttribute('divider_prepend', true);
-                        }
                     }
+                }
             }
 
             if ($moreIssues) {
@@ -331,13 +349,13 @@ class Builder
                     $this->addChild(
                         $menu[$publication['name']],
                         $translator->trans('More...'),
-                        array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
+                        array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true)))."/issues/?Pub=$pubId",
                     ));
                 } else {
                     $this->addChild(
                         $menu[$publication['name']],
                         $translator->trans('More...'),
-                        array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
+                        array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true)))."/issues/?Pub=$pubId",
                     ))->setAttribute('divider_prepend', true);
                 }
             }
@@ -357,11 +375,8 @@ class Builder
             'privilege' => 'add',
         ));
 
-        $this->addChild($menu, $translator->trans('Add new publication'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'pub',
-                'action' => 'add.php',
-            ),
+        $this->addChild($menu, $translator->trans('publications.title.add', array(), 'pub'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_publications_add'),
             'resource' => 'publication',
             'privilege' => 'manage',
         ));
@@ -369,7 +384,7 @@ class Builder
         $this->addChild($menu, $translator->trans('Add new user', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
-                'action' => 'create'
+                'action' => 'create',
             ),
             'resource' => 'user',
             'privilege' => 'manage',
@@ -378,7 +393,7 @@ class Builder
         $this->addChild($menu, $translator->trans('Add new user type', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user-group',
-                'action' => 'add'
+                'action' => 'add',
             ),
             'resource' => 'user-group',
             'privilege' => 'manage',
@@ -388,7 +403,7 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'add.php',
-                'reset_params' => false
+                'reset_params' => false,
             ),
             'resource' => 'article-type',
             'privilege' => 'manage',
@@ -398,7 +413,7 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'merge.php',
-                'reset_params' => false
+                'reset_params' => false,
             ),
             'resource' => 'article-type',
             'privilege' => 'manage',
@@ -408,7 +423,7 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'merge2.php',
-                'reset_params' => false
+                'reset_params' => false,
             ),
             'resource' => 'article-type',
             'privilege' => 'manage',
@@ -422,7 +437,7 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'merge3.php',
-                'reset_params' => false
+                'reset_params' => false,
             ),
             'resource' => 'article-type',
             'privilege' => 'manage',
@@ -437,7 +452,7 @@ class Builder
                     'module' => 'admin',
                     'controller' => 'country',
                     'action' => 'index.php',
-                )
+                ),
             ));
 
             if ($status) {
@@ -447,7 +462,7 @@ class Builder
             $this->addChild($menu[$translator->trans('Countries')], $translator->trans('Add new country'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'country',
-                    'action' => 'add.php'
+                    'action' => 'add.php',
                 ),
                 'resource' => 'country',
                 'privilege' => 'manage',
@@ -457,7 +472,7 @@ class Builder
                     'module' => 'admin',
                     'controller' => 'country',
                     'action' => 'edit.php',
-                    'reset_params' => false
+                    'reset_params' => false,
                 ),
                 'resource' => 'country',
                 'privilege' => 'manage',
@@ -471,23 +486,23 @@ class Builder
         $this->addChild($menu, $translator->trans('Edit your password', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
-                'action' => 'edit-password'
-            )
+                'action' => 'edit-password',
+            ),
         ));
 
         if ($this->user->hasPermission('ManageIssue') && $this->user->hasPermission('AddArticle')) {
             $this->addChild($menu, $translator->trans('Import XML', array(), 'home'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'articles',
-                    'action' => 'la_import.php'
-                )
+                    'action' => 'la_import.php',
+                ),
             ));
         }
 
         $this->addChild($menu, $translator->trans('Backup/Restore', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'backup.php',
-                'action' => null
+                'action' => null,
             ),
             'resource' => 'backup',
             'privilege' => 'manage',
@@ -497,7 +512,7 @@ class Builder
             $this->addChild(
                 $menu,
                 $translator->trans('Clear system cache', array(), 'home'),
-                array('uri' => $this->generateZendRoute('admin') . "/?clear_cache=yes"
+                array('uri' => $this->generateZendRoute('admin')."/?clear_cache=yes",
             ));
         }
     }
@@ -509,7 +524,7 @@ class Builder
         $this->addChild($menu, $translator->trans('System Preferences'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'preferences',
-                'action' => 'index'
+                'action' => 'index',
             ),
             'resource' => 'system-preferences',
             'privilege' => 'edit',
@@ -518,8 +533,8 @@ class Builder
         $status = $this->addChild($menu, $translator->trans('Templates', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
-                'action' => 'index'
-            )
+                'action' => 'index',
+            ),
         ));
 
         if ($status) {
@@ -529,8 +544,8 @@ class Builder
         $status = $this->addChild($menu[$translator->trans('Templates', array(), 'home')], $translator->trans('Edit'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
-                'action' => 'edit'
-            )
+                'action' => 'edit',
+            ),
         ));
 
         if ($status) {
@@ -540,8 +555,8 @@ class Builder
         $status = $this->addChild($menu[$translator->trans('Templates', array(), 'home')], $translator->trans('Upload', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
-                'action' => 'upload'
-            )
+                'action' => 'upload',
+            ),
         ));
 
         if ($status) {
@@ -551,10 +566,10 @@ class Builder
         $this->addChild($menu, $translator->trans('Themes', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'themes',
-                'action' => null
+                'action' => null,
             ),
             'resource' => 'theme',
-            'privilege' => 'manage'
+            'privilege' => 'manage',
         ));
 
         $status = $this->addChild($menu[$translator->trans('Themes', array(), 'home')], $translator->trans('Settings', array(), 'home'), array('zend_route' => array(
@@ -565,8 +580,8 @@ class Builder
                     'next' => null,
                     'file' => null,
                 ),
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -577,8 +592,8 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'upload',
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -589,8 +604,8 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'edit',
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -604,17 +619,14 @@ class Builder
                     'action' => 'index.php',
                 ),
                 'resource' => 'article-type',
-                'privilege' => 'manage'
+                'privilege' => 'manage',
             ));
         }
 
-        $this->addChild($menu, $translator->trans('Topics'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'topics',
-                'action' => 'index.php',
-            ),
+        $this->addChild($menu, $translator->trans('Topics'), array(
+            'uri' => $this->container->get('router')->generate('newscoop_newscoop_topics_index'),
             'resource' => 'topic',
-            'privilege' => 'manage'
+            'privilege' => 'manage',
         ));
 
         $this->addChild($menu, $translator->trans('Languages'), array('zend_route' => array(
@@ -623,17 +635,17 @@ class Builder
                 'action' => null,
             ),
             'resource' => 'language',
-            'privilege' => 'manage'
+            'privilege' => 'manage',
         ));
 
         $status = $this->addChild($menu[$translator->trans('Languages')], $translator->trans('Edit language', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'languages',
                 'action' => 'edit',
-                'reset_params' => false
+                'reset_params' => false,
             ),
             'resource' => 'language',
-            'privilege' => 'manage'
+            'privilege' => 'manage',
         ));
 
         if ($status) {
@@ -646,7 +658,7 @@ class Builder
                 'action' => 'add',
             ),
             'resource' => 'language',
-            'privilege' => 'manage'
+            'privilege' => 'manage',
         ));
 
         if ($status) {
@@ -658,7 +670,7 @@ class Builder
                     'module' => 'admin',
                     'controller' => 'country',
                     'action' => 'index.php',
-                )
+                ),
             ));
         }
 
@@ -666,10 +678,10 @@ class Builder
             $this->addChild($menu, $translator->trans('Logs'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'log',
-                    'action' => null
+                    'action' => null,
                 ),
                 'resource' => 'log',
-                'privilege' => 'view'
+                'privilege' => 'view',
             ));
         }
 
@@ -679,15 +691,15 @@ class Builder
                 'action' => null,
                 'params' => array(
                     'id' => 'stat',
-                )
-            )
+                ),
+            ),
         ));
 
         $this->addChild($menu, $translator->trans('Image Rendering', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'rendition',
-                'action' => null
-            )
+                'action' => null,
+            ),
         ));
 
         $this->addChild(
@@ -710,8 +722,8 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'edit',
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -721,8 +733,8 @@ class Builder
         $status = $this->addChild($menu[$translator->trans('users.menu.manage', array(), 'users')][$translator->trans('Edit user', array(), 'home')], $translator->trans('Edit permissions', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'acl',
-                'action' => 'edit'
-            )
+                'action' => 'edit',
+            ),
         ));
 
         if ($status) {
@@ -733,8 +745,8 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'rename',
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -745,8 +757,8 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'create',
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -757,7 +769,7 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'users',
                 'action' => 'authors.php',
-            )
+            ),
         ));
 
         $this->addChild($menu, $translator->trans('Manage Authors', array(), 'home'), array('zend_route' => array(
@@ -782,8 +794,8 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'user-group',
                 'action' => 'edit-access',
-                'reset_params' => false
-            )
+                'reset_params' => false,
+            ),
         ));
 
         if ($status) {
@@ -794,7 +806,7 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'create',
-            )
+            ),
         ));
     }
 
@@ -829,7 +841,6 @@ class Builder
             return;
         }
 
-
         if ($this->user->hasPermission('plugin_manager')) {
             $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'),  array('uri' => $this->container->get('router')->generate('newscoop_newscoop_plugins_index')));
         }
@@ -857,11 +868,11 @@ class Builder
                 if ($parentMenu && isset($info['menu'])) {
                     $uri = '#';
                     if (isset($info['menu']['path'])) {
-                        $uri = $this->generateZendRoute('admin') .'/'. $info['menu']['path'];
+                        $uri = $this->generateZendRoute('admin').'/'.$info['menu']['path'];
                     }
 
                     $this->addChild($menu[$translator->trans('Plugins')], $translator->trans($info['menu']['label']), array(
-                        'uri' => $uri
+                        'uri' => $uri,
                     ))->setLinkAttribute('data-toggle', 'rightdrop');
                 }
 
@@ -870,11 +881,11 @@ class Builder
                         if ($this->user->hasPermission($menuInfo['permission'])) {
                             $uri = '#';
                             if (isset($menuInfo['path'])) {
-                                $uri = $this->generateZendRoute('admin') .'/'. $menuInfo['path'];
+                                $uri = $this->generateZendRoute('admin').'/'.$menuInfo['path'];
                             }
 
                             $this->addChild($menu[$translator->trans('Plugins')][$translator->trans($info['menu']['label'])], $translator->trans($menuInfo['label']), array(
-                                'uri' => $uri
+                                'uri' => $uri,
                             ));
                         }
                     }
@@ -928,7 +939,7 @@ class Builder
         return $this->container->get('zend_router')->assemble(array(
             'controller' => $controller,
             'action' => $action,
-            'module' => $module
+            'module' => $module,
         ) + $params, 'default', $resetParams).$getParams;
     }
 }

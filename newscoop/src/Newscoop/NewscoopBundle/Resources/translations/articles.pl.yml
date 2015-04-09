@@ -184,7 +184,18 @@ Comments: Komentarze
 'No such article.': 'Brak artykułu.'
 'No such section.': 'Brak sekcji.'
 Characters: Znaków
+Snippet: Fragment
+'This list is already in a different state than the one in which it was loaded.': 'Ta lista wygląda już inaczej niż w momencie jej załadowania. Ktoś inny zapisał jej inną wersję. '
+'List name should not be longer than 40 chars': 'Nazwa listy nie może być dłuższa niż 40 znaków'
+'Not valid number': 'Podana wartość nie jest liczbą'
+'List limit': 'Limit artykułów na liście'
+'Last item of the list has been deleted to add this item to the list. Revert?': 'Ostatni element na tej liście został automatycznie usunięty aby móc dodać nowy. Cofnąć?'
+Revert: Cofnij
+'Could not automatically refresh the list': 'Nie można odświeżyć tej listy'
 articles:
+    playlists:
+        namechanged: 'Jesteś pewien że chcesz zmienić nazwę tej listy? Nazwa może być używana w szablonach twojego motywu do wyświetlania zawartości tej listy. Jeśli masz wątpliwości zapytaj osobę odpowiedzialną za używany motyw.'
+        alert: 'Jesteś pewien że chcesz zmienić maksymalną liczbę artykułów na tej liści? Jeśli zmniejszasz limit, to artykuły poza limitem zostaną automatycznie usunięte. Na przykład: jeśli zmieniasz limit z 50 na 30 artykułów, to wszystkie 20 artykułów zaczynając od pozycji 31 do 50 zostaną usunięte z tej listy.'
     images:
         edit:
             edit_image_metadata: 'Edytuj metadane zdjęcia'

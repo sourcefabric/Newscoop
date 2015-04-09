@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\EventListener;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener as SymfonyExceptionListener;
 
 /**
@@ -29,15 +30,13 @@ class ExceptionListener extends SymfonyExceptionListener
         }
 
         $handling = true;
-
         $exception = $event->getException();
         $request = $event->getRequest();
-
         $this->logException($exception, sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', get_class($exception), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 
         $attributes = array(
             '_controller' => $this->controller,
-            'exception'   => $exception,
+            'exception'   => FlattenException::create($exception),
             'logger'      => $this->logger instanceof DebugLoggerInterface ? $this->logger : null,
             // keep for BC -- as $format can be an argument of the controller callable
             // see src/Symfony/Bundle/TwigBundle/Controller/ExceptionController.php

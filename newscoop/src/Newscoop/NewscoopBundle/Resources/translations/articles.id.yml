@@ -184,7 +184,18 @@ Comments: null
 'No such article.': null
 'No such section.': null
 Characters: null
+Snippet: null
+'This list is already in a different state than the one in which it was loaded.': null
+'List name should not be longer than 40 chars': null
+'Not valid number': null
+'List limit': null
+'Last item of the list has been deleted to add this item to the list. Revert?': null
+Revert: null
+'Could not automatically refresh the list': null
 articles:
+    playlists:
+        namechanged: null
+        alert: null
     images:
         edit:
             edit_image_metadata: null

@@ -12,6 +12,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class ImageType extends AbstractType
 {
@@ -35,6 +37,26 @@ class ImageType extends AbstractType
                 new Assert\NotNull()
             )
         ));
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $image = $options['image'];
+            $form = $event->getForm();
+
+            $form->remove('image');
+
+            if ($image && null !== $image->getId()) {
+                $form->add('image', 'file', array(
+                    'required' => false
+                ));
+            } else {
+                $form->add('image', 'file', array(
+                    'constraints' => array(
+                        new Assert\File(),
+                        new Assert\NotNull()
+                    )
+                ));
+            }
+        });
     }
 
     public function getName()
@@ -46,6 +68,7 @@ class ImageType extends AbstractType
     {
         $resolver->setDefaults(array(
             'csrf_protection'   => false,
+            'image' => null
         ));
     }
 }

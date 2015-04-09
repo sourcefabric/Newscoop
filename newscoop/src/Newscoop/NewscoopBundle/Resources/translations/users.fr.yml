@@ -185,6 +185,8 @@ Miscellaneous: Divers
 'Editor Miscellaneous Settings': 'Editeur des Paramètres Divers'
 'No such user account.': 'Pas  un tel compte utilisateur.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

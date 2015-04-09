@@ -39,7 +39,7 @@ Coordinates: null
 'Setting the map name helps with map search': null
 Longitude: null
 Latitude: null
-Center: null
+Center: 中心
 'Last Saved Map View': null
 'List of locations updated': null
 width: null
@@ -55,7 +55,7 @@ height: null
 'The map has been removed from the article.': null
 'Point no.': null
 'Point markers': null
-None: null
+None: 没有
 'Map Search Example': null
 'Map Preview': null
 'Image URL': null
@@ -64,3 +64,4 @@ text: null
 image: null
 icon: null
 'Setting Map Locations': null
+Deselect: null

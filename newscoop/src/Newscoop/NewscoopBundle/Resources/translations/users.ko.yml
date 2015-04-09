@@ -185,6 +185,8 @@ Miscellaneous: 기타
 'Editor Miscellaneous Settings': '에디터 기타 설정 '
 'No such user account.': '그런 아이디 없슴.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

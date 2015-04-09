@@ -710,6 +710,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
                 ->setParameter($key, $criteria->$key);
         }
 
+        if ($criteria->is_author) {
+            $qb->andWhere($qb->expr()->isNotNull("u.author"));
+        }
+
         if (!empty($criteria->groups)) {
             $em = $this->getEntityManager();
             $groupRepo = $em->getRepository('Newscoop\Entity\User\Group');

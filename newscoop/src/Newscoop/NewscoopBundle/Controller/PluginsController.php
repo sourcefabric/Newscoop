@@ -93,34 +93,9 @@ class PluginsController extends Controller
         return array(
             'allAvailablePlugins' => $allAvailablePlugins,
             'privatePackages' => $privatePackages,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'newscoopPath' => realpath($pluginService->getPluginsDir() .'/../')
         );
-    }
-
-    /**
-     * @Route("/admin/plugins/chnageStatus/{action}/{pluginId}", requirements={"action" = "enable|disable"})
-     */
-    public function changePluginStatusAction(Request $request, $action, $pluginId)
-    {
-        $pluginService = $this->container->get('newscoop.plugins.service');
-        $pluginsManager = $this->container->get('newscoop.plugins.manager');
-
-        $plugin = $pluginService->getPluginByCriteria('id', intval($pluginId))->first();
-        $em = $this->container->get('em');
-        if ($action == 'enable') {
-            $plugin->setEnabled(true);
-        } else {
-            $plugin->setEnabled(false);
-        }
-
-        $em->flush();
-
-        // send event for plugin
-        $pluginsManager->dispatchEventForPlugin($plugin->getName(), $action);
-
-        return new Response(json_encode(array(
-            $pluginId => $plugin->getEnabled()
-        )));
     }
 
     /**
@@ -161,33 +136,32 @@ class PluginsController extends Controller
         return $response->setData($packages);
     }
 
+
+
     /**
-     * @Route("/admin/plugins/getStream/{action}/{name}", requirements={"name" = ".+"})
+     * @Route("/admin/plugins/chnageStatus/{action}/{pluginId}", requirements={"action" = "enable|disable"})
      */
-    public function getStreamAction($action, $name)
+    public function changePluginStatusAction(Request $request, $action, $pluginId)
     {
-        @apache_setenv('no-gzip', 1);
-        @ini_set('implicit_flush', 1);
+        $pluginService = $this->container->get('newscoop.plugins.service');
+        $pluginsManager = $this->container->get('newscoop.plugins.manager');
 
-        ob_start();
+        $plugin = $pluginService->getPluginByCriteria('id', intval($pluginId))->first();
+        $em = $this->container->get('em');
+        if ($action == 'enable') {
+            $plugin->setEnabled(true);
+        } else {
+            $plugin->setEnabled(false);
+        }
 
-        $response = new Response();
-        $response->sendHeaders();
+        $em->flush();
 
-        flush();
-        ob_flush();
-        $this->dump_chunk('<pre>');
+        // send event for plugin
+        $pluginsManager->dispatchEventForPlugin($plugin->getName(), $action);
 
-        $newscoopDir = __DIR__ . '/../../../../';
-        putenv("COMPOSER_HOME=".$newscoopDir);
-        $process = new Process('php '.$newscoopDir.'application/console plugins:'. $action .' '. $name);
-        $process->setTimeout(3600);
-        $CI = $this;
-        $process->run(function ($type, $buffer) use ($CI) {
-            $CI->dump_chunk($buffer);
-        });
-        $this->dump_chunk('</pre>');
-        die();
+        return new Response(json_encode(array(
+            $pluginId => $plugin->getEnabled()
+        )));
     }
 
     private function createFolderStructure($pluginService)

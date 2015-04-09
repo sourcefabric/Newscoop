@@ -69,7 +69,6 @@ class RegisterController extends Zend_Controller_Action
             exit;
         } else {
             $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name'], $parameters['subscriber_id']);
-
             $this->_helper->service('email')->sendConfirmationToken($user);
             echo '1';
             exit;
@@ -122,7 +121,7 @@ class RegisterController extends Zend_Controller_Action
                 } else {
                     $adapter = $this->_helper->service('auth.adapter');
                     $adapter->setEmail($user->getEmail())->setPassword($values['password']);
-                    $result = $auth->authenticate($adapter);
+                    $auth->authenticate($adapter);
                     $token = $this->_helper->service('user')->loginUser($user, 'frontend_area');
                     $session->set('_security_frontend_area', serialize($token));
                     $OAuthtoken = $this->_helper->service('user')->loginUser($user, 'oauth_authorize');

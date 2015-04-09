@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Duplicate assignment'
 Templates: Templates
 'Import theme': 'Import theme'
-'Import succeded!': 'Import succeded!'
+'Import succeeded!': 'Import succeeded!'
 'Import failed!': 'Import failed!'
 'Edit template: $1': 'Edit template: $1'
 'Set new name to': 'Set new name to'
@@ -45,7 +45,7 @@ Saving..: Saving..
 Replace: Replace
 'New template $1 created.': 'New template $1 created.'
 'New name': 'New name'
-'Name cant be empty': 'Name cant be empty'
+'Name cant be empty': 'Name can not be empty'
 'Last modified': 'Last modified'
 'Issue page': 'Issue page'
 'Go to parent': 'Go to parent'
@@ -73,7 +73,7 @@ Design: Design
 Compatibility: Compatibility
 'Click to enlarge': 'Click to enlarge'
 'Choose destination': 'Choose destination'
-'Cant override directory $1.': 'Cant override directory $1.'
+'Cant override directory $1.': 'Can not override directory $1.'
 'Cache Lifetime': 'Cache Lifetime'
 'Browse for the theme': 'Browse for the theme'
 'Assigned successfully': 'Assigned successfully'

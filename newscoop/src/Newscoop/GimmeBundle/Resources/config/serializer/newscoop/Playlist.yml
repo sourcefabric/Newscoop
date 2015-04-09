@@ -5,17 +5,35 @@ Newscoop\Entity\Playlist:
             expose: true
             read_only: true
             type: integer
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: id
         name:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: title
+        notes:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: notes
+        maxItems:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: maxItems
+        articlesModificationTime:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["list", "details"]
+            serialized_name: articlesModificationTime
         articlesLink:
             expose: true
             read_only: true
             type: articles_link
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: articlesLink

@@ -17,7 +17,7 @@ class PartialResponse {
      * @var string
      */
     protected $fields = null;
-    
+
     /**
      * Set fields
      * @param string $fields string with comma separated fields

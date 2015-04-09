@@ -170,6 +170,11 @@ class LocalImage implements ImageInterface
     protected $captions;
 
     /**
+    * Virtual property set by rest api with connection to articleImage 
+    */
+    protected $articleImageId;
+
+    /**
      * @param string $image
      */
     public function __construct($image = '')
@@ -739,6 +744,30 @@ class LocalImage implements ImageInterface
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Gets articleImage.
+     *
+     * @return mixed
+     */
+    public function getArticleImageId()
+    {
+        return $this->articleImageId;
+    }
+
+    /**
+     * Sets articleImage.
+     *
+     * @param mixed $articleImageId the article image id
+     *
+     * @return self
+     */
+    public function setArticleImageId($articleImageId)
+    {
+        $this->articleImageId = $articleImageId;
 
         return $this;
     }

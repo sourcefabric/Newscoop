@@ -6,7 +6,7 @@ Source: null
 'Select type': null
 On: null
 Off: null
-Title: null
+Title: 标题
 'No video playback capabilities, please download the video below': null
 'Article status set to $1 for $2 articles': null
 'Article status not set to $1 for $2 articles': null
@@ -52,8 +52,8 @@ Locations: null
 'Loading data': null
 'Last modified': null
 'Last Modified': null
-Last: null
-First: null
+Last: 最后
+First: '最初 '
 'Filter by...': null
 Filter: null
 Filename: null
@@ -67,7 +67,7 @@ Creator: null
 'All Publications': null
 'All Issues': null
 Added: null
-'Access denied.': null
+'Access denied.': '拒绝访问。 '
 '$1 toggled.': null
 '$1 articles have been removed': null
 ' - filtering from _MAX_ records': null

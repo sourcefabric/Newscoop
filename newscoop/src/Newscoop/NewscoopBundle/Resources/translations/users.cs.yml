@@ -185,6 +185,8 @@ Miscellaneous: Různé
 'Editor Miscellaneous Settings': 'Různé Nastavení Editoru'
 'No such user account.': 'Uživatelský účet neexistuje'
 'User image (full-size)': 'Obrázek uživatele (plná velikost)'
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: 'Hledání uživatele'

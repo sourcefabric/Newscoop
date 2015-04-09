@@ -4,10 +4,9 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Aliases entity
@@ -15,12 +14,13 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity()
  * @ORM\Table(name="Aliases")
  */
-class Aliases 
+class Aliases
 {
     /**
-     * @ORM\Id
+     * @ORM\Id()
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="Id")
-     * @var string
+     * @var integer
      */
     protected $id;
 
@@ -31,9 +31,9 @@ class Aliases
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
-     * @var Newscoop\Entity\Publication
+     * @var \Newscoop\Entity\Publication
      */
     protected $publication;
 
@@ -55,7 +55,7 @@ class Aliases
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -72,11 +72,24 @@ class Aliases
     /**
      * Get publication
      *
-     * @return Newscoop\Entity\Publication
+     * @return \Newscoop\Entity\Publication
      */
     public function getPublication()
     {
         return $this->publication;
     }
-}
 
+    /**
+     * Sets the value of publication.
+     *
+     * @param \Newscoop\Entity\Publication $publication the publication
+     *
+     * @return self
+     */
+    public function setPublication(\Newscoop\Entity\Publication $publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+}

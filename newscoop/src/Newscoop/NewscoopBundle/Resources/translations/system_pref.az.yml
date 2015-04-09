@@ -11,14 +11,14 @@ newscoop:
             latitude: 'En sahə dəyəri düzgün deyil.'
             longitude: 'Hündürlük sahə dəyəri düzgün deyil.'
             cacheNotCleared: 'Keşin təmizlənməsində xəta var idi'
-            joberror: null
-            jobnotifyerror: null
+            joberror: 'Seçilən işin statusunu dəyişdirmədi.'
+            jobnotifyerror: 'Xəbərdarlıqları yandırıb-söndürə bilmədi.'
         success:
             saved: 'Sistem seçimləri yeniləndi.'
             cacheCleared: 'Keş təmizləndi'
-            jobenabled: null
-            jobdisabled: null
-            jobnotifyswitched: null
+            jobenabled: 'İş uğurla aktivləşdirildi.'
+            jobdisabled: 'İş uğurla söndürüldü.'
+            jobnotifyswitched: 'Arxa fon xəbərdarlıqlar dəyişdirildi,'
         menu:
             general: 'Ümumi Parametrlər'
             email: 'Email Parametləri'
@@ -29,7 +29,7 @@ newscoop:
             cache: 'Keş Seçimləri'
             other: 'Digər Seçimlər'
             recaptcha: 'reCAPTCHA seçimləri'
-            cronjob: null
+            cronjob: 'Arxa fon İş Quraşdırmaları'
         btn:
             cleardatabasecache: 'drayverin keş yaddaşını təmizlə'
             disable: null
@@ -64,9 +64,9 @@ newscoop:
             imagewidth: 'Şəklin Ölçüdəyişmə Genişliyi:'
             imageheight: 'Şəklin Ölçüdəyişmə Hündürlüyü:'
             zoom: 'Məqalə tərkibindəki şəkillərin daha böyük görüntüsünə icazə verilir?'
-            mediaRichTextCaptions: null
-            mediaCaptionLength: null
-            mediaCaptionLength_after: null
+            mediaRichTextCaptions: 'Şəkilaltılar üçün redaktə imkanlarını yandırsın?'
+            mediaCaptionLength: 'Şəkilaltılar üçün işarə limiti'
+            mediaCaptionLength_after: işarə(lər)
             external: 'Oxucu abunəlikləri kənardan idarə edilib?'
             usereplication: 'Newscoop Cavab Serverini Quraşdırırsan?'
             serverdb: 'Onlayn Newscoop Server Məlumat Bazası'
@@ -119,24 +119,24 @@ newscoop:
             usergarbagedaysinfo: 'Gözləmədə olan istifadəçilərin neçə gündən sonra silinməsini silinəcəyini təyin edin.'
             usergarbagedays: 'Günlərin sayı'
             smartyUseProtocol: 'Smarty tərəfindən hazırlanmış mütləq URL-lər üçün protokol istifadə edirsən?'
-            cronjob: null
+            cronjob: 'Cron iş adı'
             enabled: null
             options: null
-            info: null
-            infodesc: null
-            prevRun: null
-            nextRun: null
+            info: 'İnfo:'
+            infodesc: 'Bu seçimlər arxa fon iş(lərini) yandırıb-söndürməyə imkan verir.'
+            prevRun: 'Əvvəlki tarix'
+            nextRun: 'Növbəti işlətmə tarixi'
             norecords: null
-            cronJobEmail: null
-            cronJobSenderEmail: null
-            cronJobSenderName: null
-            cronJobNotify: null
-            cronslist: null
-            cronsadvanced: null
-            moredetails: null
+            cronJobEmail: 'Xəbərdarlıqlar üçün email ünvanları'
+            cronJobSenderEmail: 'Alanın email ünvanı'
+            cronJobSenderName: 'Alanın adı (məsələn: Newscoop Scheduler)'
+            cronJobNotify: 'Xəbərdarlıq edək?'
+            cronslist: 'Arxa fon işlərinin siyahısı.'
+            cronsadvanced: 'Əlavə Seçimlər'
+            moredetails: 'Əlavə məlumatlar.'
         popover:
-            cronJobEmail: null
-            cronJobSenderEmail: null
+            cronJobEmail: 'Xəta xəbərdarlıqları alacaq email ünvanları. '
+            cronJobSenderEmail: 'Xəbərdarlıqlar göndərən email ünvanı.'
             cacheengine: 'Newscoop-un performansını inkişaf etdirə biləcək sistem keş keşini aktiv və ya deaktiv edir.'
             cacheenginehost: 'Keş evini təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
             cacheengineport: 'Keş ev portunu təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
@@ -147,8 +147,8 @@ newscoop:
             separator: 'Məqalənin Dəyişilmə səhifəsindəki Açarsöz üçün ayırıcı təyin et (vergül və ya defis).'
             stats: 'Bu seçim serverdəki nəşrlərə oxucu girişinin statistikasının toplanmasını aktivləşdirir. Əgər tamamilə başqa mənbədən olan statistika xidmətini istifadə edirsənsə, Yox düyməsini klikləyə bilərsən. Nəzərə al ki, statistika toplanmasının deaktivasiya edilməsi Newscoop serverində yüklənməni azaldacaqdır.'
             zoom: 'Bəli seçimini etsən, oxucular məqalə tərkibindəki şəkilləri klikləməklə onların ölçüsünü böyüdə bilərlər. Yaxınlaşdırma xüsusiyyəti məqalə mətni daxilində yerləşdirilən istənilən şəkil üçün keçərlidir.'
-            richtext_status: null
-            richtext_length: null
+            richtext_status: 'Şəkilaltılar üçün əlavə redaktə imkanlarını yandır.'
+            richtext_length: '255-i standart kimi müəyyən et (hətta əlavə şəkilaltılar söndürüləndə. 0-ı limitsiz üçün istifadə et.)'
             ratio: 'Ölçülərin uyğunlaşdırılması burada qeyd olunan Dəyişdirilən Uzunluq və Dəyişdirilən En ölçülərinə uyğun aparılır. Əgər nisbət göstərilibsə və eyni zamanda Uzunluq və En də göstərilibsə Newscoop avtomatik olaraq daha kiçik ölçünü seçəcək. Standart ölçüləri yeni yaradılan nisbətlə dəyişməklə mükündür, bunu Yazını Dəyiş səhifəsində etmək olar.'
             replication: 'Avadanlıq və şəbəkə problemləri yarandığı hallarda təhlükəsizlik göstəricisi olaraq Newscoop-un iki serverdə eyni zamanda əməliyyat həyata keçirməyə imkan yaradır.'
             filter: 'Mövzu İdarəçiliyi səhifəsi tərəfindən əldə edilə bilən nümunələrin nümunə dəyişmə səhifəsindən gizləmək üçün açar sözləri daxil et. Məsələn, artıq istifadədə olmayan, amma serverdən silmək istəmədiyin nümunələr.'

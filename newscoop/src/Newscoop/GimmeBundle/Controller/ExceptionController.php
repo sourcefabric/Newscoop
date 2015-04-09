@@ -5,10 +5,8 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
-use Newscoop\GimmeBundle\Util\ExceptionWrapper;
 use FOS\RestBundle\Controller\ExceptionController as FOSExceptionController;
 use FOS\RestBundle\View\ViewHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,20 +15,20 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 class ExceptionController extends FOSExceptionController
 {
-   /**
+    /**
      * Newscoop REST API exceptions Controller.
      * Converts an Exception to a Response.
      *
      * TODO: change exceptions handling in listener - this controller should deal only with REST API exceptions.
      *
      * @param Request              $request   Request
-     * @param Exception            $exception A Exception instance
+     * @param FlattenException     $exception A FlattenException instance
      * @param DebugLoggerInterface $logger    A DebugLoggerInterface instance
      * @param string               $format    The format to use for rendering (html, xml, ...)
      *
      * @return Response Response instance
      */
-    public function showAction(Request $request, \Exception $exception, DebugLoggerInterface $logger = null, $format = 'html')
+    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html')
     {
         $urlMatcher = $this->container->get('router');
         try {
@@ -49,7 +47,7 @@ class ExceptionController extends FOSExceptionController
             return;
         }
 
-        return parent::showAction($request, FlattenException::create($exception), $logger, $format);
+        return parent::showAction($request, $exception, $logger, $format);
     }
 
     protected function createExceptionWrapper(array $parameters)
@@ -65,8 +63,8 @@ class ExceptionController extends FOSExceptionController
                 array(
                     'code' => $defaultParameters['status_code'],
                     'message' => $defaultParameters['message'],
-                )
-            )
+                ),
+            ),
         );
 
         return $parameters;

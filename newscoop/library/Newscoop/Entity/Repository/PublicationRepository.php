@@ -7,35 +7,22 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\User\Subscriber;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Publication repository
  */
 class PublicationRepository extends EntityRepository
 {
-    /**
-     * Get subscriber options
-     *
-     * @param Newscoop\Entity\User $user
-     * @return array
-     */
-    public function getSubscriberOptions(User $user)
+    public function getPublications()
     {
         $em = $this->getEntityManager();
+        $qb = $em->getRepository('Newscoop\Entity\Publication')
+            ->createQueryBuilder('p')
+            ->select('p', 'a', 'l')
+            ->leftJoin('p.defaultAlias', 'a')
+            ->leftJoin('p.language', 'l');
 
-        $query = $this->createQueryBuilder('p')
-            ->andWhere('p.id NOT IN (:subscribed)')
-            ->getQuery();
-
-        $query->setParameter('subscribed', $this->getSubscribedPublications($user));
-
-        $publications = array();
-        foreach ($query->getResult() as $publication) {
-            $publications[$publication->getId()] = $publication->getName();
-        }
-
-        return $publications;
+        return $qb->getQuery();
     }
 }

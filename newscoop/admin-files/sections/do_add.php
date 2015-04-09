@@ -19,11 +19,6 @@ $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_name = trim(Input::Get('f_name', 'string', '', true));
 $f_description = trim(Input::Get('f_description', '', true));
 $f_number = trim(Input::Get('f_number', 'int', 0, true));
-if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
-	$f_add_subscriptions = Input::Get('f_add_subscriptions', 'checkbox');
-} else {
-	$f_add_subscriptions = 0;
-}
 $f_url_name = trim(Input::Get('f_url_name', 'string', '', true));
 
 if (!Input::IsValid()) {
@@ -79,13 +74,6 @@ if ($correct) {
     $columns['Description'] = $f_description;
     $created = $newSection->create($f_name, $f_url_name, $columns);
     if ($created) {
-	    if ($f_add_subscriptions) {
-	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($f_publication_id, $f_number);
-			if ($numSubscriptionsAdded == -1) {
-	            $errors[] = $translator->trans('Error updating subscriptions.', array(), 'sections');
-			}
-	    }
-
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheService->clearNamespace('section');
 
@@ -110,12 +98,6 @@ camp_html_content_top($translator->trans('Adding new section', array(), 'section
 	if ($created) {    ?>
         <LI><?php  echo $translator->trans('The section $1 has been successfuly added.', array('$1' => '<B>'.htmlspecialchars($f_name).'</B>'), 'sections'); ?></LI>
         <?php
-        if ($f_add_subscriptions) {
-			if ($numSubscriptionsAdded > 0) { ?>
-				<LI><?php  echo $translator->trans('A total of $1 subscriptions were updated.', array('$1' => '<B>'.$numSubscriptionsAdded.'</B>'), 'sections'); ?></LI>
-	           <?php
-			}
-		}
     } else {
         if ($correct != 0) { ?>
         	<LI><?php  echo $translator->trans('The section could not be added.', array(), 'sections'); ?></LI>

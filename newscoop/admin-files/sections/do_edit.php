@@ -25,11 +25,6 @@ $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
-if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
-	$cSubs = Input::Get('cSubs', 'string', '', true);
-} else {
-	$cSubs = 'n';
-}
 $cShortName = trim(Input::Get('cShortName', 'string'));
 $cDescription = trim(Input::Get('cDescription'));
 
@@ -110,19 +105,6 @@ if (!camp_html_has_msgs()) {
 		$outSetSection->setArticlePage(null);
 	}
 	//@New theme management
-
-	if ($cSubs == "a") {
-	$numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
-		if ($numSubscriptionsAdded < 0) {
-			$errors[] = $translator->trans('Error updating subscriptions.', array(), 'sections');
-		}
-	}
-	if ($cSubs == "d") {
-		$numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($Pub, $Section);
-		if ($numSubscriptionsDeleted < 0) {
-			$errors[] = $translator->trans('Error updating subscriptions.', array(), 'sections');
-		}
-	}
 
 	$conflictingSection = array_pop(Section::GetSections($Pub, $Issue, $Language, $cShortName, null, null, true));
 	if (is_object($conflictingSection) && ($conflictingSection->getSectionNumber() != $Section)) {

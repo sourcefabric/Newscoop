@@ -75,3 +75,64 @@ Currency: Valuta
 'Article title': 'Artikel titel'
 'Article keywords': 'Artikel nøgleord'
 'Article topics': 'Artikel emner'
+publications:
+    title:
+        list: 'Publikations liste'
+        edit: 'Rediger publikation'
+        add: 'Tilføj ny publikation'
+        remove: 'Fjern publikation'
+    no_publications: 'Ingen publikationer.'
+    general_settings: 'Generelle indstillinger'
+    comments_settings: 'Indstillinger for kommentarer'
+    seo_settings: 'Indstillinger for SEO'
+    publication_removed: 'Publikationen blev fjernet'
+    publication_saved: 'Ændringerne til publikationen blev gemt.'
+    remove:
+        cant_be_removed: 'Publikationen er ikke tom, så den kan ikke fjernes.'
+        can_be_removed: 'Publikationen er tom og kan fjernes.'
+        left_issues: 'Resterende udgivelser'
+        left_sections: 'Resterende sektioner'
+        left_articles: 'Resterende artikler'
+        show_issues: 'vis udgivelser'
+        before_removing: 'Publikationen skal være tom før du kan fjerne den.'
+        you_sure: 'Vil du fjerne publikationen'
+        remove: 'Fjern publikation'
+    buttons:
+        addNew: 'Tilføj ny publikation'
+        listPublications: 'Vis publikations liste'
+        listIssues: 'Vis publikationens udgivelser'
+    table:
+        number: Nummer
+        name: Navn
+        default_alias: 'Standard Alias'
+        default_language: 'Standard sprog'
+        comments_status: 'Kommentar status'
+        url_type: 'URL type'
+        configure: Indstillinger
+        remove: Fjern
+    form_type:
+        label:
+            name: 'Navn på publikation'
+            template_path: 'Skabelon sti'
+            short_names: 'Kort navn'
+            alias: 'Standard alias'
+            url_type: 'URL type'
+            seo: 'Artikel url stier'
+            seo_article_title: 'Artikel titel'
+            seo_article_keywords: 'Artikel nøgleord'
+            seo_article_topics: 'Artikel emner'
+            edit_aliases: 'Rediger alias'
+            edit_languages: 'Rediger sprog'
+            moderator_to: 'Moderator adresse'
+            moderator_from: 'Afsender adresse for moderator emails'
+            comments_enabled: 'Tillad kommentarer?'
+            public_comments_enabled: 'Tillad offentlige (anonyme) kommentarer?'
+            comments_article_default_enabled: 'Tillad kommentarer på artikler som standard?'
+            comments_subscribers_moderated: 'Skal registrerede brugeres kommentarer godkendes?'
+            comments_public_moderated: 'Skal offentlige (anonyme) kommentarer godkendes?'
+            comments_captcha_enabled: 'Brug captcha?'
+            comments_spam_blocking_enabled: null
+            meta_title: 'Publikationens titel'
+            meta_keywords: 'Publikationens nøgleord'
+            meta_description: 'Publikationens beskrivelse'
+    tip1: 'Indhold i Newscoop er organiseret i en hierarkisk struktur, baseret på avisers og magasiners traditionelle opbygning: Publikationer, Udgivelser, Sektioner og Artikler. Hver publikation består af udgivelser, hver udgivelse er delt op i sektioner, og hver sektion indeholder artikler.'

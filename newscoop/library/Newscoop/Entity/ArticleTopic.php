@@ -7,14 +7,13 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Utils\Validation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article topic entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  * @ORM\Table(name="ArticleTopics")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTopicRepository")
  */
 class ArticleTopic
 {
@@ -27,8 +26,8 @@ class ArticleTopic
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Topic")
-     * @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\NewscoopBundle\Entity\Topic")
+     * @ORM\JoinColumn(name="TopicId", referencedColumnName="id")
      */
     protected $topic;
 
@@ -50,14 +49,14 @@ class ArticleTopic
     public function setArticle($article)
     {
         $this->article = $article;
-        
+
         return $this;
     }
 
     /**
      * Get Topic
      *
-     * @return Newscoop\Entity\TopicNames
+     * @return Newscoop\NewscoopBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -72,7 +71,7 @@ class ArticleTopic
     public function setTopic($topic)
     {
         $this->topic = $topic;
-        
+
         return $this;
     }
 }

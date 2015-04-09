@@ -185,6 +185,8 @@ Miscellaneous: სხვადასხვა
 'Editor Miscellaneous Settings': 'რედაქტორის სხვადასხვა პარამეტრები'
 'No such user account.': 'ასეთი მომხმარებელი არ არსებობს.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

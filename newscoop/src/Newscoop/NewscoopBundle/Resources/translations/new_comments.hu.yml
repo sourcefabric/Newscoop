@@ -29,9 +29,9 @@ comments:
         unrecommended: null
         editcomment: 'Hozzászólás gyors szerkesztése'
         actions: Műveletek
-        selectstatus: 'Állapot kiválasztása'
+        selectstatus: 'Válassz állapotot'
         deleted: Törölve
-        alert: Figyelmeztetás
+        alert: Figyelmeztetés
         searchholder: 'Keresés... ( pl. név, e-mail cím, tárgy, hozzászólás, cikk címe)'
     btn:
         cancel: Mégse
@@ -40,7 +40,7 @@ comments:
         recommend: Ajánlás
         delete: Törlés
         reply: Válasz
-        edit: 'Gyors szerkesztés'
+        edit: Gyorsszerkesztés
         close: Bezárás
         okay: OK
         filter: Szűrő

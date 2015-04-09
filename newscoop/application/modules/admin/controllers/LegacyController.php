@@ -28,7 +28,6 @@ class Admin_LegacyController extends Zend_Controller_Action
             '/articles/autopublish_do_add.php',
             '/articles/images/popup.php',
             '/articles/images/view.php',
-            '/articles/topics/popup.php',
             '/articles/files/popup.php',
             '/articles/empty.php',
             '/articles/post.php',
@@ -37,8 +36,6 @@ class Admin_LegacyController extends Zend_Controller_Action
             '/imagearchive/do_add.php',
             '/users/authors_ajax/detail.php',
             '/users/authors_ajax/grid.php',
-            $prefix . 'password_recovery.php',
-            $prefix . 'password_check_token.php',
             '/articles/locations/popup.php',
             '/articles/locations/preview.php',
             '/articles/locations/search.php',
@@ -127,6 +124,7 @@ class Admin_LegacyController extends Zend_Controller_Action
 
             // render view
             require_once $path_name;
+
             return;
 
         } elseif (file_exists($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script")) {

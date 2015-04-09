@@ -31,7 +31,7 @@ $f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
 // Whether to show comments at the bottom of the article
 // (you may not want to show them to speed up your loading time)
 // Selected language of the article
-$f_language_selected = (int)camp_session_get('f_language_selected', 0);
+$f_language_selected = (int) camp_session_get('f_language_selected', 0);
 
 if (!Input::IsValid()) {
     camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
@@ -67,7 +67,11 @@ $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj = new User($articleObj->getLockedByUser());
 $articleCreator = new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, TRUE);
-$articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
+$em = \Zend_Registry::get('container')->getService('em');
+$articleTopics = $em->getRepository("Newscoop\Entity\ArticleTopic")
+   ->getArticleTopicsIds($f_article_number)
+   ->getResult();
+
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
 
@@ -193,6 +197,8 @@ if ($f_publication_id > 0 && $f_issue_number && $f_section_number) {
 
 function parseTextBody($text, $articleNumber)
 {
+    $translator = \Zend_Registry::get('container')->getService('translator');
+    
     // Subheads
     $text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
     $text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
@@ -218,9 +224,13 @@ function parseTextBody($text, $articleNumber)
 
     preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
 
+    // snippet tag format: <-- Snippet 1 -->
+    $snippetPattern = '<\-\-\sSnippet\s([\d]+)\s\-\->';
+    $text = preg_replace("/$snippetPattern/i", '<div data-snippet-id="$1" class="camp_snippet">'.$translator->trans('Snippet', array(), 'articles').' $1</div>', $text);
+
     if (isset($imageMatches[1][0])) {
         if (isset($titles) && sizeof($titles) > 0) {
-            for($x = 0; $x < sizeof($titles[0]); $x++) {
+            for ($x = 0; $x < sizeof($titles[0]); $x++) {
                 $text = preg_replace("/\s*".preg_replace('~\/~', '\/',
                 preg_quote($titles[0][$x]))."/", ' title="'.htmlspecialchars($titles[1][$x], ENT_QUOTES, 'UTF-8').'"', $text);
             }
@@ -255,12 +265,13 @@ function parseTextBody($text, $articleNumber)
             print ('<script type="text/javascript">window.location.reload();</script>');
         }
     }
+
     return $text;
 }
 
 $hasMultiDates = false;
 $multiDatesFields = array();
-include_once('edit_html.php');
+include_once 'edit_html.php';
 
 // Display tinymce loading code if required
 $hasArticleBodyField = FALSE;
@@ -307,6 +318,4 @@ if( isset($fCustomTextareas) )
         }
     }
 
-include ("edit_javascript.php");
-
-?>
+include 'edit_javascript.php';

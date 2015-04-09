@@ -20,7 +20,7 @@ class SystemPrefController extends Controller
 {
     /**
      * @Route("/admin/preferences")
-     * @Template()
+     * @Template("NewscoopNewscoopBundle:SystemPref:index.html.twig")
      */
     public function indexAction(Request $request)
     {

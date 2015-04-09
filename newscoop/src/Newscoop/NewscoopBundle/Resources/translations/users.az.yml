@@ -185,6 +185,8 @@ Miscellaneous: Digər
 'Editor Miscellaneous Settings': 'Dəyişmə Panelinin Qarışıq Parametrləri'
 'No such user account.': 'Belə istifadəçi hesabı yoxdur.'
 'User image (full-size)': 'İstifadəçi şəkli (tam ölçü)'
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: 'İstifadəçi axtarışı'

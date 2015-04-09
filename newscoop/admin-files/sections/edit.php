@@ -129,22 +129,6 @@ if($issueHasTheme){
     <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php echo $translator->trans('The $1 field may only contain letters, digits and underscore (_) character.', array('$1' => "'" . $translator->trans('URL Name', array(), 'sections') . "'")); ?>"/>
   </td>
 </tr>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
-?>
-<tr>
-  <td align="right"><?php echo $translator->trans("Subscriptions"); ?>:</td>
-  <td>
-    <select name="cSubs" class="input_select">
-    <option value="n"> --- </option>
-    <option value="a"><?php echo $translator->trans("Add section to all subscriptions.", array(), 'sections'); ?></option>
-    <option value="d"><?php echo $translator->trans("Delete section from all subscriptions.", array(), 'sections'); ?></option>
-    </select>
-  </td>
-</tr>
-<?php
-	}
-?>
 <tr>
   <td align="right" valign="top"><?php echo $translator->trans("Description"); ?>:</td>
   <td>

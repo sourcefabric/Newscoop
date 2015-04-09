@@ -60,7 +60,7 @@ class SchedulerService implements SchedulerServiceInterface
                 $this->em->flush($cronJob);
             }
         } catch (\Exception $e) {
-            throw new \Exception("Could not register job: '$jobName'");
+            throw new \Exception("Could not register job: '$jobName'", 0, $e);
         }
     }
 

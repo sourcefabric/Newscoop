@@ -6,8 +6,8 @@ newscoop.plugins_manager.install.public: null
 newscoop.plugins_manager.installed_table.name: 名称
 newscoop.plugins_manager.installed_table.description: 描述
 newscoop.plugins_manager.installed_table.enabled: null
-newscoop.plugins_manager.installed_table.version: null
-newscoop.plugins_manager.installed_table.license: null
+newscoop.plugins_manager.installed_table.version: 版本
+newscoop.plugins_manager.installed_table.license: 许可证
 newscoop.plugins_manager.installed_table.installed_at: null
 newscoop.plugins_manager.installed_table.updated_at: null
 newscoop.plugins_manager.installed_table.actions: null
@@ -19,6 +19,18 @@ newscoop.plugins_manager.upload.private: null
 newscoop.plugins_manager.search_for_plugins: null
 newscoop.plugins_manager.form.package: null
 newscoop.plugins_manager.form.submit: null
+newscoop.plugins_manager.runcommand: null
+newscoop.plugins_manager.openterminal: null
+newscoop.plugins_manager.installassets: null
+newscoop.plugins_manager.done: null
+newscoop.plugins_manager.close: null
+newscoop.plugins_manager.update: null
+newscoop.plugins_manager.install: null
+newscoop.plugins_manager.remove: null
+newscoop.plugins_manager.installed: null
+newscoop.plugins_manager.clipboard: null
+newscoop.plugins_manager.downloads: null
+newscoop.plugins_manager.favers: null
 newscoop:
     datatable:
         table:

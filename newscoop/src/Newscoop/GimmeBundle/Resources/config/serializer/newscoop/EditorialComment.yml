@@ -1,0 +1,71 @@
+Newscoop\ArticlesBundle\Entity\EditorialComment:
+    exclusion_policy: ALL
+    exclude: false
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: id
+            since_version: 1.2
+        articleNumber:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: articleNumber
+            since_version: 1.2
+        languageId:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: languageId
+            since_version: 1.2
+        article:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: article
+            since_version: 1.2
+        comment:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: comment
+            since_version: 1.2
+        resolved:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["details", "list"]
+            serialized_name: resolved
+            since_version: 1.2
+        parent:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: parent
+            since_version: 1.2
+        user:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: user
+            since_version: 1.2
+        created:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details", "list"]
+            serialized_name: created
+            since_version: 1.2
+        is_active:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["details", "list"]
+            serialized_name: is_active
+            since_version: 1.2

@@ -98,3 +98,22 @@ Ban: ბანი
 'Add new acceptance criteria': 'ახალი დადასტურების კრიტერიუმის დამატება'
 'Acceptance $1 saved.': '$1 დადასტურება დამახსოვრდა.'
 'Acceptance $1 deleted.': '$1 დადასტურება წაშლილია.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

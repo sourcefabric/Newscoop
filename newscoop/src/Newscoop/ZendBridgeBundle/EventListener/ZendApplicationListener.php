@@ -9,6 +9,7 @@
 namespace Newscoop\ZendBridgeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernel;
 
 /**
  * Run zend legacy code (zend router, acl etc...)
@@ -17,13 +18,19 @@ class ZendApplicationListener
 {
     protected $container;
 
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container = $container;
         \Zend_Registry::set('container', $this->container);
     }
 
     public function onRequest(GetResponseEvent $event)
     {
+        if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
+            // don't do anything if it's not the master request
+            return;
+        }
+
         $request = $event->getRequest();
         $pos = strpos($request->server->get('REQUEST_URI'), '_profiler');
 
@@ -35,12 +42,6 @@ class ZendApplicationListener
             // Fill zend application options
             $config = $this->container->getParameterBag()->all();
             $application = new \Zend_Application(APPLICATION_ENV);
-            $iniConfig = APPLICATION_PATH . '/configs/application.ini';
-            if (file_exists($iniConfig)) {
-                $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
-                $config = $application->mergeOptions($config, $userConfig->toArray());
-            }
-
             $application->setOptions($config);
             $application->bootstrap();
 

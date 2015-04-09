@@ -5,11 +5,11 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\View as FOSView;
 use Newscoop\Entity\LocalImage;
 use Newscoop\Entity\User;
 use Newscoop\GimmeBundle\Form\Type\ImageType;
@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Images controller
@@ -53,7 +52,7 @@ class ImagesController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $images = $paginator->paginate($images, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $images;
@@ -95,7 +94,7 @@ class ImagesController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $images = $paginator->paginate($images, array(
-            'distinct' => false
+            'distinct' => false,
         ));
 
         return $images;
@@ -180,7 +179,9 @@ class ImagesController extends FOSRestController
 
         $images = array();
         foreach ($articleImages['items'] as $articleImage) {
-            $images[] = $articleImage->getImage();
+            $image = $articleImage->getImage();
+            $image->setArticleImageId($articleImage->getNumber());
+            $images[] = $image;
         }
 
         $images = $paginator->paginate($images);
@@ -304,9 +305,12 @@ class ImagesController extends FOSRestController
             }
         }
 
-        $form = $this->createForm(new ImageType(), array());
-        $form->handleRequest($request);
+        $form = $this->createForm(new ImageType(), array(), array(
+            'image' => $image,
+            'method' => $request->getMethod(),
+        ));
 
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $file = $form['image']->getData();
             $attributes = $form->getData();
@@ -316,19 +320,18 @@ class ImagesController extends FOSRestController
                 $attributes['user'] = $user;
             }
 
-            $image = $imageService->upload($file, $attributes, $image);
+            if ($file) {
+                $image = $imageService->upload($file, $attributes, $image);
+            } else {
+                $imageService->fillImage($image, $attributes);
+                $em->flush();
+            }
 
-            $response = new Response();
-            $response->setStatusCode($statusCode);
-
-            $response->headers->set(
-                'X-Location',
-                $this->generateUrl('newscoop_gimme_images_getimage', array(
+            return new FOSView\View($image, $statusCode, array(
+                'X-Location' => $this->generateUrl('newscoop_gimme_images_getimage', array(
                     'number' => $image->getId(),
-                ), true)
+                ), true), )
             );
-
-            return $response;
         }
 
         return $form;

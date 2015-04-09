@@ -239,6 +239,7 @@ CREATE TABLE `ArticleTypeMetadata` (
   `field_type_param` varchar(255) DEFAULT NULL,
   `is_content_field` tinyint(1) NOT NULL DEFAULT '0',
   `max_size` int(10) unsigned DEFAULT NULL,
+  `show_in_editor` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`type_name`,`field_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -276,8 +277,8 @@ CREATE TABLE `Articles` (
   `Keywords` varchar(255) NOT NULL DEFAULT '',
   `Public` enum('N','Y') NOT NULL DEFAULT 'N',
   `IsIndexed` enum('N','Y') NOT NULL DEFAULT 'N',
-  `LockUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `LockTime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `LockUser` int(10) unsigned DEFAULT NULL,
+  `LockTime` datetime DEFAULT NULL,
   `ShortName` varchar(32) NOT NULL DEFAULT '',
   `ArticleOrder` int(10) unsigned NOT NULL DEFAULT '0',
   `comments_enabled` tinyint(1) NOT NULL DEFAULT '0',
@@ -287,6 +288,8 @@ CREATE TABLE `Articles` (
   `webcode` varchar(10) DEFAULT NULL,
   `indexed` timestamp NULL DEFAULT NULL,
   `rating_enabled` tinyint(1) DEFAULT '1',
+  `issue_id` INT DEFAULT NULL,
+  `section_id` INT DEFAULT NULL,
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -294,7 +297,9 @@ CREATE TABLE `Articles` (
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`ShortName`),
   KEY `Type` (`Type`),
   KEY `ArticleOrderIdx` (`ArticleOrder`),
-  FULLTEXT KEY `articles_name_skey` (`Name`)
+  FULLTEXT KEY `articles_name_skey` (`Name`),
+  INDEX IDX_46AB533E5E7AA58C (issue_id),
+  INDEX IDX_46AB533ED823E37A (section_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1334,37 +1339,31 @@ CREATE TABLE Plugins (
 --
 
 DROP TABLE IF EXISTS `Publications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Publications` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `IdDefaultLanguage` int(10) unsigned NOT NULL DEFAULT '0',
-  `TimeUnit` enum('D','W','M','Y') NOT NULL DEFAULT 'D',
-  `UnitCost` float(10,2) unsigned NOT NULL DEFAULT '0.00',
-  `UnitCostAllLang` float(10,2) unsigned NOT NULL DEFAULT '0.00',
-  `Currency` varchar(140) NOT NULL DEFAULT '',
-  `TrialTime` int(10) unsigned NOT NULL DEFAULT '0',
-  `PaidTime` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdDefaultAlias` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdURLType` int(10) unsigned NOT NULL DEFAULT '1',
-  `fk_forum_id` int(11) DEFAULT NULL,
-  `comments_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_subscribers_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_public_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_public_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_captcha_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_spam_blocking_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_moderator_to` varchar(255) NOT NULL DEFAULT '',
-  `comments_moderator_from` varchar(255) NOT NULL DEFAULT '',
-  `url_error_tpl_id` int(10) unsigned DEFAULT NULL,
-  `seo` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Alias` (`IdDefaultAlias`),
-  UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE Publications (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  comments_public_enabled VARCHAR(255) DEFAULT NULL,
+  comments_moderator_to VARCHAR(255) DEFAULT NULL,
+  comments_moderator_from VARCHAR(255) DEFAULT NULL,
+  IdDefaultAlias INT DEFAULT NULL,
+  IdURLType INT DEFAULT NULL,
+  fk_forum_id INT DEFAULT NULL,
+  comments_enabled TINYINT(1) DEFAULT NULL,
+  comments_article_default_enabled TINYINT(1) DEFAULT NULL,
+  comments_subscribers_moderated TINYINT(1) DEFAULT NULL,
+  comments_public_moderated TINYINT(1) DEFAULT NULL,
+  comments_captcha_enabled TINYINT(1) DEFAULT NULL,
+  comments_spam_blocking_enabled TINYINT(1) DEFAULT NULL,
+  url_error_tpl_id INT DEFAULT NULL,
+  seo VARCHAR(255) DEFAULT NULL,
+  IdDefaultLanguage int(10),
+  meta_title VARCHAR(255) DEFAULT NULL,
+  meta_keywords VARCHAR(255) DEFAULT NULL,
+  meta_description VARCHAR(255) DEFAULT NULL,
+  INDEX IDX_2A49E10CEC194F36 (IdDefaultLanguage),
+  INDEX IDX_2A49E10CAB83D3A4 (IdDefaultAlias),
+  INDEX Name (Name), PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Dumping data for table `Publications`
@@ -1778,55 +1777,43 @@ LOCK TABLES `TopicFields` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `TopicNames`
+-- Table structure for table `main_topics`
 --
 
-DROP TABLE IF EXISTS `TopicNames`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `TopicNames` (
-  `fk_topic_id` int(10) unsigned NOT NULL,
-  `fk_language_id` int(10) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`fk_topic_id`,`fk_language_id`),
-  UNIQUE KEY `fk_language_id` (`fk_language_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `TopicNames`
---
-
-LOCK TABLES `TopicNames` WRITE;
-/*!40000 ALTER TABLE `TopicNames` DISABLE KEYS */;
-/*!40000 ALTER TABLE `TopicNames` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Topics`
---
-
-DROP TABLE IF EXISTS `Topics`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Topics` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `node_left` int(10) unsigned NOT NULL,
-  `node_right` int(10) unsigned NOT NULL,
+CREATE TABLE IF NOT EXISTS `main_topics` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL,
+  `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `lft` int(11) NOT NULL,
+  `rgt` int(11) NOT NULL,
+  `root` int(11) DEFAULT NULL,
+  `lvl` int(11) NOT NULL,
+  `description` longtext COLLATE utf8_unicode_ci,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  `topicOrder` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `node_left` (`node_left`),
-  KEY `node_right` (`node_right`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `IDX_EEAFE2F727ACA70` (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+ALTER TABLE `main_topics` ADD CONSTRAINT `FK_EEAFE2F727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `main_topics` (`id`) ON DELETE SET NULL;
 
 --
--- Dumping data for table `Topics`
+-- Table structure for table `topic_translations`
 --
 
-LOCK TABLES `Topics` WRITE;
-/*!40000 ALTER TABLE `Topics` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Topics` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE IF NOT EXISTS `topic_translations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` int(11) DEFAULT NULL,
+  `locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `field` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `lookup_unique_idx` (`locale`,`object_id`,`field`),
+  KEY `IDX_98B25D13232D562B` (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+ALTER TABLE `topic_translations` ADD CONSTRAINT `FK_98B25D13232D562B` FOREIGN KEY (`object_id`) REFERENCES `main_topics` (`id`) ON DELETE CASCADE;
 
 --
 -- Table structure for table `Translations`
@@ -1977,6 +1964,22 @@ LOCK TABLES `WidgetContext_Widget` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Xnews`
+--
+
+DROP TABLE IF EXISTS `Xnews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Xnews` (
+  `NrArticle` int(11) NOT NULL,
+  `IdLanguage` int(11) NOT NULL,
+  `Flead` mediumblob,
+  `Fcontent` mediumblob,
+  PRIMARY KEY (`NrArticle`,`IdLanguage`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `acl_role`
 --
 
@@ -2098,9 +2101,8 @@ CREATE TABLE `user_topic` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `topic_id` int(11) unsigned NOT NULL,
-  `topic_language` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_topic` (`user_id`,`topic_id`,`topic_language`)
+  UNIQUE KEY `user_topic` (`user_id`,`topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2215,13 +2217,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `context_articles`;
 
--- Tables for context box
-CREATE TABLE IF NOT EXISTS `context_articles` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT,
-  `fk_context_id` int(10) NOT NULL,
-  `fk_article_no` int(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE context_articles (
+  Id INT AUTO_INCREMENT NOT NULL,
+  fk_context_id INT NOT NULL,
+  fk_article_no INT NOT NULL,
+  `order_number` INT NOT NULL,
+  INDEX article_number (fk_article_no),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `context_boxes`;
 
@@ -2229,7 +2232,7 @@ CREATE TABLE IF NOT EXISTS `context_boxes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `fk_article_no` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 
 --
@@ -2645,25 +2648,27 @@ LOCK TABLES `output_theme` WRITE;
 /*!40000 ALTER TABLE `output_theme` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
--- Article playlist tables
 DROP TABLE IF EXISTS `playlist`;
-CREATE TABLE `playlist` (
-  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `notes` varchar(1024) DEFAULT NULL,
-  PRIMARY KEY (`id_playlist`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+CREATE TABLE playlist (
+  id_playlist INT AUTO_INCREMENT NOT NULL, 
+  name VARCHAR(256) NOT NULL, 
+  notes VARCHAR(1024) NOT NULL, 
+  max_items INT NOT NULL, 
+  modification_time DATETIME DEFAULT NULL, 
+  PRIMARY KEY(id_playlist)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `playlist_article`;
-CREATE TABLE `playlist_article` (
-  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_playlist` int(10) unsigned NOT NULL,
-  `article_no` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id_playlist_article`),
-  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE playlist_article (
+  id_playlist_article INT AUTO_INCREMENT NOT NULL, 
+  id_playlist INT NOT NULL, 
+  article_no INT NOT NULL, 
+  order_number INT NOT NULL, 
+  INDEX IDX_BD05197C8759FDB8 (id_playlist), 
+  INDEX IDX_BD05197CAA07C9D3 (article_no), 
+  UNIQUE INDEX playlist_article (id_playlist, article_no), 
+  PRIMARY KEY(id_playlist_article)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 
 --
@@ -3042,7 +3047,7 @@ CREATE TABLE IF NOT EXISTS `audit_event` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
   `resource_type` varchar(80) NOT NULL,
-  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_id` varchar(255) DEFAULT NULL,
   `resource_title` varchar(255) DEFAULT NULL,
   `resource_diff` longtext,
   `action` varchar(80) NOT NULL,
@@ -3367,16 +3372,18 @@ CREATE TABLE Snippets (
 DROP TABLE IF EXISTS `SnippetTemplates`;
 
 CREATE TABLE SnippetTemplates (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Name VARCHAR(255) NOT NULL,
-  Controller VARCHAR(255) NOT NULL,
-  Parameters LONGTEXT NOT NULL,
-  Template LONGTEXT NOT NULL,
-  Favourite TINYINT(1) NOT NULL,
-  IconInactive LONGTEXT NOT NULL,
-  IconActive LONGTEXT NOT NULL,
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Controller` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TemplateCode` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `Favourite` tinyint(1) DEFAULT NULL,
+  `Enabled` tinyint(1) NOT NULL,
+  `IconInactive` longtext COLLATE utf8_unicode_ci,
+  `IconActive` longtext COLLATE utf8_unicode_ci,
+  `Created` datetime NOT NULL,
+  `Modified` datetime NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
 
@@ -3400,7 +3407,9 @@ CREATE TABLE user_oauth_clients (
   PRIMARY KEY(user_id, client_id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `cron_jobs` (
+DROP TABLE IF EXISTS `cron_jobs`;
+
+CREATE TABLE `cron_jobs` (
   `id` int AUTO_INCREMENT NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `command` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -3430,3 +3439,18 @@ CREATE TABLE `community_ticker_event` (
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `editorial_comments`;
+
+CREATE TABLE `editorial_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_article_number` int(11) NOT NULL,
+  `fk_language_id` int(11) NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
+  `resolved` int(1) NOT NULL DEFAULT '0',
+  `fk_parent_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `is_active` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

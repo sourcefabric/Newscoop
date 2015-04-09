@@ -185,6 +185,8 @@ Miscellaneous: Рознае
 'Editor Miscellaneous Settings': 'Iншыя наладкі рэдактара'
 'No such user account.': 'Няма такога ўлiковага запicу карыстальнiка.'
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

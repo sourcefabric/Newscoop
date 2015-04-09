@@ -185,6 +185,8 @@ Miscellaneous: Różne
 'Editor Miscellaneous Settings': 'Dodatkowe ustawienia edytora'
 'No such user account.': 'Brak użytkownika.'
 'User image (full-size)': 'Obraz użytkownika (pełen rozmiar)'
+'User account is highlighted as "featured account"': 'Konto użytkownika jest oznaczone jako "promowane konto"'
+'Custom attribute...': 'Własna właściwość '
 users:
     label:
         title: 'Wyszukiwarka uzytkowników'

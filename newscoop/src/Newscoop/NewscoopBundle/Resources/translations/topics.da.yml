@@ -25,3 +25,56 @@ Top: Top
 'Change topic name': 'Omdøb emne'
 'There are $1 articles using the topic.': 'Emnet bruges i $1 artikler.'
 'Search for topics': 'Søg efter emner'
+topics:
+    tip: 'Emner i Newscoop tildeles af redaktører og journalister til artikler, så relaterede artikler kan identificeres og vises sammen. Et hovedemne kan have mange underemner. For eksempel kan hovedemnet sport have underemnerne fodbold, basketball og vandpolo. En artikel kan have flere hovedemner og underemner.'
+    label:
+        all: Alle
+        filterbylang: 'Vis emner på sprog'
+        search: Søg
+        filterplaceholder: 'Skriv en del af et emnenavn...'
+        addroot: 'Tilføj rod emne'
+        topicname: 'Emnets navn'
+        expandcollapse: vis/skjul
+        changename: 'Omdøb emne'
+        for: for
+        addsubtopic: 'Tilføj underemne'
+        subtopicname: 'Navn på underemne'
+        addtranslation: 'Tilføj oversættelse'
+        topictranslations: 'Emnets oversættelser'
+        choose: Vælg...
+        translationstring: 'Oversættelses streng'
+        tree: Emnetræ
+    title: Emner
+    btn:
+        hide: Skjul
+        remove: 'Fjern emne'
+        edit: 'Rediger emne'
+        close: Luk
+        add: Tilføj
+        save: Gem
+        saveandclose: 'Gem og luk'
+        removetrans: 'Slet emnets oversættelse'
+    alerts:
+        languagenotfound: 'Sproget %locale% kunne ikke findes'
+        translationadded: 'Oversættelsen blev tilføjet'
+        translationexists: 'Der findes allerede en oversættelse for sproget %locale%!'
+        beforedelete: 'Vil du slette dette emne?'
+        wrongparams: null
+        ordersaved: 'Ordren er gemt.'
+        saved: Gemt.
+        beforedeleteinfo: 'Hvis du sletter et emne med underemner bliver alle underemnerne og deres oversættelser slettet permanent. Er du sikker?'
+    added: 'Emnet blev tilføjet'
+    failedfind: 'Kunne ikke finde emne med id: %id%'
+    failedfindTranslation: 'Kunne ikke finde emnets oversættelse med id: %id%'
+    removed: 'Emnet %title% blev slettet'
+    exists: 'Emnet findes allerede'
+    existsname: 'Emnenavnet findes allerede!'
+    removedTranslation: 'Emnets oversættelse blev slettet'
+    failedremoveTranslation: null
+    updated: 'Emnet blev opdateret'
+    error: 'Der skete en fejl. Prøv igen senere.'
+    csrfinvalid: 'Ugyldig CSRF token. Prøv at sende formularen igen.'
+    tooshort: 'Emnets navn er for kort!'
+    toolong: 'Emnets navn er for langt!'
+    attachtopics: 'Vedhæft emner'
+    attached: 'Emnet er tildelt til %occurence% artikler. Hvis du fjerner emnet vil det automatisk blive fjernet fra artiklerne. Hvis emnet har underemner bliver de også fjernet.'

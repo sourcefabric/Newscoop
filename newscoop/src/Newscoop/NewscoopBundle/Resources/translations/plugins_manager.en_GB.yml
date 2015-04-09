@@ -19,6 +19,18 @@ newscoop.plugins_manager.upload.private: 'Upload private plugin'
 newscoop.plugins_manager.search_for_plugins: 'Search for plugins'
 newscoop.plugins_manager.form.package: 'Package must be a zip file.'
 newscoop.plugins_manager.form.submit: Upload
+newscoop.plugins_manager.runcommand: 'Run command'
+newscoop.plugins_manager.openterminal: 'Open terminal and run command'
+newscoop.plugins_manager.installassets: 'Install assets'
+newscoop.plugins_manager.done: 'Done. Close this window and refresh page.'
+newscoop.plugins_manager.close: Close
+newscoop.plugins_manager.update: 'How to update this plugin?'
+newscoop.plugins_manager.install: 'How to install this plugin?'
+newscoop.plugins_manager.remove: 'How to remove this plugin?'
+newscoop.plugins_manager.installed: 'Done. Refresh this page. The plugin should be now visible in your list of installed plugins.'
+newscoop.plugins_manager.clipboard: 'Copy to clipboard: Ctrl+C (Cmd + C for Mac), Enter'
+newscoop.plugins_manager.downloads: downloads
+newscoop.plugins_manager.favers: favourites
 newscoop:
     datatable:
         table:

@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping AS ORM;
 class AuditEvent
 {
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
@@ -30,7 +30,7 @@ class AuditEvent
     protected $resource_type;
 
     /**
-     * @ORM\Column(length=80, nullable=True, name="resource_id")
+     * @ORM\Column(length=255, nullable=True, name="resource_id")
      * @var string
      */
     protected $resource_id;
@@ -92,12 +92,13 @@ class AuditEvent
     /**
      * Set resource type.
      *
-     * @param string $resourceType
+     * @param  string                     $resourceType
      * @return Newscoop\Entity\AuditEvent
      */
     public function setResourceType($resourceType)
     {
         $this->resource_type = (string) $resourceType;
+
         return $this;
     }
 
@@ -114,12 +115,13 @@ class AuditEvent
     /**
      * Set action.
      *
-     * @param string $action
+     * @param  string                     $action
      * @return Newscoop\Entity\AuditEvent
      */
     public function setAction($action)
     {
         $this->action = (string) $action;
+
         return $this;
     }
 
@@ -136,12 +138,13 @@ class AuditEvent
     /**
      * Set resource id.
      *
-     * @param mixed $resourceId
+     * @param  mixed                      $resourceId
      * @return Newscoop\Entity\AuditEvent
      */
     public function setResourceId($resourceId)
     {
         $this->resource_id = json_encode($resourceId);
+
         return $this;
     }
 
@@ -158,12 +161,13 @@ class AuditEvent
     /**
      * Set resource title.
      *
-     * @param string $resourceTitle
+     * @param  string                     $resourceTitle
      * @return Newscoop\Entity\AuditEvent
      */
     public function setResourceTitle($resourceTitle)
     {
         $this->resource_title = $resourceTitle;
+
         return $this;
     }
 
@@ -180,12 +184,13 @@ class AuditEvent
     /**
      * Set user
      *
-     * @param Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User       $user
      * @return Newscoop\Entity\AuditEvent
      */
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 
@@ -202,12 +207,13 @@ class AuditEvent
     /**
      * Set resource diff.
      *
-     * @param array $diff
+     * @param  array                      $diff
      * @return Newscoop\Entity\AuditEvent
      */
     public function setResourceDiff($diff)
     {
         $this->resource_diff = json_encode($diff);
+
         return $this;
     }
 

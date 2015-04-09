@@ -53,3 +53,33 @@ NewscoopGimmeBundleAttachments:
     resource: "@NewscoopGimmeBundle/Controller/AttachmentsController.php"
     prefix:   /
     type:     annotation
+
+NewscoopGimmeBundleSnippets:
+    resource: "@NewscoopGimmeBundle/Controller/SnippetsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleSnippetTemplates:
+    resource: "@NewscoopGimmeBundle/Controller/SnippetTemplatesController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopEditorialCommentsApiController:
+    resource: "@NewscoopGimmeBundle/Controller/EditorialCommentsApiController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopPublicationController:
+    resource: "@NewscoopGimmeBundle/Controller/PublicationsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopIssuesController:
+    resource: "@NewscoopGimmeBundle/Controller/IssuesController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleUserTopics:
+    resource: "@NewscoopGimmeBundle/Controller/UserTopicsController.php"
+    prefix:   /
+    type:     annotation

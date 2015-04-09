@@ -55,7 +55,7 @@ E-Mail: Email
 'Change subscriber information': 'Abunə məlumatını dəyiş'
 'Add new IP address': 'Yeni IP ünvan əlavə et'
 'Add new IP Address': 'Yeni IP Ünvan əlavə et'
-'Account Name': 'Hesab Adı'
+'Account Name': null
 '%value% must be greater than %min%': '%value% %min%-dən böyük olmalıdır'
 '%value% is not a valid IP Address': '%value% düzgün IP Ünvan deyil'
 'Regardless of the language': 'Dildən asılı olmayaraq'

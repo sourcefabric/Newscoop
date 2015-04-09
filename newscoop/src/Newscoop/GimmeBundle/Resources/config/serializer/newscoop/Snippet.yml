@@ -1,0 +1,64 @@
+Newscoop\Entity\Snippet:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list", "rendered"]
+            serialized_name: id
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list", "rendered"]
+            serialized_name: name
+        fields:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: fields
+            type: ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>
+            accessor:
+                getter: getFieldsWithoutBackend
+        template:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: templateName
+            accessor:
+                getter: getTemplateName
+        enabled:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["list", "details"]
+            serialized_name: enabled
+        created:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: created
+        modified:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: modified
+    virtual_properties:
+        getTemplateId:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list", "rendered"]
+            serialized_name: templateId
+            accessor:
+                getter: getTemplateId
+        render:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["rendered"]
+            serialized_name: render
+            accessor:
+                getter: render

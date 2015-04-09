@@ -4,11 +4,11 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Services;
 
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Doctrine\ORM\EntityManager;
+use Newscoop\Exception\AuthenticationException;
 
 /**
  */
@@ -54,7 +54,13 @@ class CommentNotificationService
             ->getArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId())
             ->getSingleResult();
 
+        try {
+            $user = $this->userService->getCurrentUser();
+        } catch (AuthenticationException $e) {
+            $user = null;
+        }
+
         $authors = \ArticleAuthor::GetAuthorsByArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId());
-        $this->emailService->sendCommentNotification($comment, $article, $authors, $this->userService->getCurrentUser());
+        $this->emailService->sendCommentNotification($comment, $article, $authors, $user);
     }
 }

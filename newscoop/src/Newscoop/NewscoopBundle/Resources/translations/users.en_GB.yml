@@ -47,7 +47,7 @@ Picture: Picture
 None: None
 'New confirmation email was sent to user.': 'New confirmation email was sent to user.'
 'Email is used already': 'Email is used already'
-'Edit your password': 'Edit your password'
+'Edit your password': 'Change your password'
 'Edit user $1': 'Edit user $1'
 'Edit subscriptions': 'Edit subscriptions'
 'Edit profile': 'Edit profile'
@@ -185,6 +185,8 @@ Miscellaneous: Miscellaneous
 'Editor Miscellaneous Settings': 'Editor Miscellaneous Settings'
 'No such user account.': 'No such user account.'
 'User image (full-size)': 'User image (full-size)'
+'User account is highlighted as "featured account"': 'User account is highlighted as "featured account"'
+'Custom attribute...': 'Custom attribute...'
 users:
     label:
         title: 'Users search'

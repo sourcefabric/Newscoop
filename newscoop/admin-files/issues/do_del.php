@@ -1,7 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Subscription.php');
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 

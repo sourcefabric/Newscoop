@@ -7,18 +7,18 @@ at: u
 Starred: null
 Star: null
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
-'Reply to message': null
+'Reply to message': 'Odgovori na poruku'
 Reply: Odgovori
 Processed: null
 'No records found.': 'Nema zapisa'
 'No entries to show': 'Nema unosa za prikaz'
-'Messages updated.': null
+'Messages updated.': 'Poruka izmenjena.'
 'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
+'Messages deleted.': 'Poruka obrisana.'
+'Message updated.': 'Poruka izmenjena.'
 'Message status change to $1.': null
 'Message deleted.': null
-Message: null
+Message: Poruka
 Last: Poslednji
 'Full article': 'Ceo tekst'
 First: Prvi
@@ -98,3 +98,22 @@ Ban: Zabrani
 'Add new acceptance criteria': 'Dodaj novi kriterijum prihvatljivosti'
 'Acceptance $1 saved.': 'Prihvatljivost $1 sačuvana.'
 'Acceptance $1 deleted.': 'Prihvatljivost $1 obrisana.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

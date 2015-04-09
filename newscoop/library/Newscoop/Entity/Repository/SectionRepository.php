@@ -4,19 +4,18 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Publication,
-    Newscoop\Entity\Subscription;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Publication;
+use Newscoop\Entity\Subscription;
 
 /**
  * Section repository
  */
 class SectionRepository extends EntityRepository
 {
-    public function getSections($publication)
+    public function getSections($publication, $issue = null, $language = null)
     {
         $em = $this->getEntityManager();
         $queryBuilder = $em->getRepository('Newscoop\Entity\Section')
@@ -24,11 +23,18 @@ class SectionRepository extends EntityRepository
             ->where('s.publication = :publication')
             ->setParameter('publication', $publication);
 
-        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Section')
-            ->createQueryBuilder('s')
-            ->select('count(s)')
-            ->where('s.publication = :publication')
-            ->setParameter('publication', $publication);
+        if ($issue) {
+            $queryBuilder->andWhere('s.issue = :issue')
+                ->setParameter('issue', $issue);
+        }
+
+        if ($language) {
+            $queryBuilder->andWhere('s.language = :language')
+                ->setParameter('language', $language);
+        }
+
+        $countQueryBuilder = clone $queryBuilder;
+        $countQueryBuilder->select('count(s)');
 
         $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
 
@@ -38,12 +44,23 @@ class SectionRepository extends EntityRepository
         return $query;
     }
 
+    public function getSectionsCountForPublication($publicationId)
+    {
+        $sectionsCount = $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->andWhere('s.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery();
+
+        return $sectionsCount;
+    }
+
     /**
      * Get list of publication sections
      *
-     * @param Newscoop\Entity\Publication $publication
-     * @param Newscoop\Entity\Subscription $subscription;
-     * @param bool $groupByLanguage
+     * @param  Newscoop\Entity\Publication  $publication
+     * @param  Newscoop\Entity\Subscription $subscription;
+     * @param  bool                         $groupByLanguage
      * @return array
      */
     public function getAvailableSections(Publication $publication, Subscription $subscription, $groupByLanguage = false)
@@ -95,7 +112,7 @@ class SectionRepository extends EntityRepository
             ));
 
         if ($issue === null) {
-            return null;
+            return;
         }
 
         $section = $em->getRepository('Newscoop\Entity\Section')
@@ -109,4 +126,3 @@ class SectionRepository extends EntityRepository
         return $section;
     }
 }
-

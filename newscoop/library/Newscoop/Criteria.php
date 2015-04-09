@@ -28,6 +28,11 @@ class Criteria
     public $orderBy = array();
 
     /**
+     * @var string
+     */
+    public $query;
+
+    /**
      * Criteria parameters operators chars
      * @var array
      */

@@ -1,5 +1,5 @@
 <?php
-require_once  dirname(__FILE__) . DIR_SEP. 'TemplateCacheHandler.php';
+require_once dirname(__FILE__) . DIR_SEP. 'TemplateCacheHandler.php';
 
 class TemplateCacheHandler_DB extends TemplateCacheHandler
 {
@@ -78,9 +78,9 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                 $this->_ado_db->execute($queryStr);
             }
         }
+
         return;
     }
-
 
     /**
      * Returns a short description of the cache engine.
@@ -91,7 +91,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         return self::$m_description;
     }
 
-    static function handler($action, &$cache_content, $tpl_file = null, $cache_id = null,
+    public function handler($action, &$cache_content, $tpl_file = null, $cache_id = null,
         $compile_id = null, $exp_time = 0)
     {
         global $g_ado_db;
@@ -191,13 +191,14 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
 
             default:
         }
+
         return $return;
     }
 
-    static function vectorToWhereString($vector)
+    public static function vectorToWhereString($vector)
     {
         $output = null;
-        foreach ((array)$vector as $key => $value) {
+        foreach ((array) $vector as $key => $value) {
             if (isset($value)) {
                 $output .= $key . ' = ' . ($key == 'params' ? "'" . addslashes($value) . "'" : $value);
             } else {
@@ -206,6 +207,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             $output .= ' AND ';
         }
         $output = substr($output, 0, strlen($output) - 4);
+
         return $output;
     }
 }

@@ -6,7 +6,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -16,9 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Newscoop\Exception\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
@@ -54,8 +52,53 @@ class UsersController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $users = $paginator->paginate($users, array(
-            'distinct' => false
+            'distinct' => false,
         ));
+
+        return $users;
+    }
+
+    /**
+     * Search for users
+     *
+     * Get list of users for search query
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful"
+     *     },
+     *     filters={
+     *          {"name"="query", "dataType"="string", "description"="search query"}
+     *     },
+     * )
+     *
+     * @Route("/search/users.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     */
+    public function searchUsersAction(Request $request)
+    {
+        $em = $this->container->get('em');
+
+        $onlyPublic = true;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $onlyPublic = null;
+            }
+        } catch (AuthenticationException $e) {
+        }
+
+        $criteria = new \Newscoop\User\UserCriteria();
+        $criteria->is_public = $onlyPublic;
+        $criteria->query_name = $request->query->get('query', '');
+
+        $results = $em->getRepository('Newscoop\Entity\User')
+            ->getListByCriteria($criteria, false);
+        $users = $results[0]->getQuery();
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $users = $paginator->paginate($users, array('distinct' => false));
 
         return $users;
     }
@@ -148,13 +191,13 @@ class UsersController extends FOSRestController
         $passwordEncoder = $this->container->get('newscoop_newscoop.password_encoder');
         $user = $em->getRepository('Newscoop\Entity\User')
             ->findOneBy(array(
-                'username' => $username
+                'username' => $username,
             ));
 
         if (!$user) {
             $user = $user = $em->getRepository('Newscoop\Entity\User')
                 ->findOneBy(array(
-                    'email' => $username
+                    'email' => $username,
                 ));
         }
 
@@ -179,13 +222,13 @@ class UsersController extends FOSRestController
         $authAdapter = $this->get('auth.adapter');
         $authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
         $zendAuth->authenticate($authAdapter);
-        setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+        setcookie('NO_CACHE', '1', null, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
         $response->setStatusCode($targetPath ? 302 : 200);
         $response->headers->set(
             'X-Location',
             $targetPath ? $request->getUriForPath($targetPath) : $this->generateUrl('newscoop_gimme_users_getuser', array(
-                'id' => $user->getId()
+                'id' => $user->getId(),
             ), true)
         );
 
@@ -362,7 +405,7 @@ class UsersController extends FOSRestController
         $authRequest = Request::create($authUrl, 'GET', array(
             'client_id' => $clientId,
             'redirect_uri' => $redirectUris[0],
-            'response_type' => 'code'
+            'response_type' => 'code',
         ), $request->cookies->all());
 
         $kernel = $this->get('http_kernel');

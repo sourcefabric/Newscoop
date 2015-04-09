@@ -8,8 +8,8 @@
 'Click to edit': 'Kattints a szerkesztéshez'
 'Add root topic': 'Gyökértéma hozzáadása'
 'Topic was deleted.': 'A téma törlése megtörtént.'
-'The topic name is already in use by another topic.': 'Egy másik téma már használja a téma nevét.'
-'You must enter a name for the topic.': 'Meg kell adnia a téma nevét.'
+'The topic name is already in use by another topic.': 'Már használja egy másik téma a téma nevét.'
+'You must enter a name for the topic.': 'Meg kell adnod a téma nevét.'
 'You must choose a language for the topic.': 'Ki kell választanod a téma nyelvét.'
 'This topic has subtopics, therefore it cannot be deleted.': 'Ez a téma tartalmaz altémákat, ezért nem törölhető.'
 'Add translation:': 'Fordítás hozzáadása:'
@@ -25,3 +25,56 @@ Top: null
 'Change topic name': 'Téma nevének módosítása'
 'There are $1 articles using the topic.': 'Jelenleg $1 cikk használja a témát.'
 'Search for topics': 'Témák keresése'
+topics:
+    tip: null
+    label:
+        all: null
+        filterbylang: null
+        search: null
+        filterplaceholder: 'Írd be valanelyik téma nevének egy részét...'
+        addroot: null
+        topicname: 'Téma neve'
+        expandcollapse: null
+        changename: null
+        for: null
+        addsubtopic: 'Altéma hozzáadása'
+        subtopicname: 'Altéma neve'
+        addtranslation: 'Fordítás hozzáadása'
+        topictranslations: null
+        choose: null
+        translationstring: 'Fordítási karakterlánc'
+        tree: Témák
+    title: null
+    btn:
+        hide: null
+        remove: 'Téma eltávolítása'
+        edit: 'Téma szerkesztése'
+        close: null
+        add: null
+        save: null
+        saveandclose: null
+        removetrans: 'A téma fordításának eltávolítása'
+    alerts:
+        languagenotfound: 'Nem található a nyelv a következő területi beállítás szerint: %locale%'
+        translationadded: 'A fordítás hozzáadásra került'
+        translationexists: 'Már létezik %locale% nyelvű fordítás!'
+        beforedelete: 'Biztosan törölni akarod ezt a témát?'
+        wrongparams: 'A rendszerezett gyökértémák számának azonosnak kell lennie az összes gyökértéma számával.'
+        ordersaved: null
+        saved: null
+        beforedeleteinfo: 'Altémákat tartalmazó témák törlésekor végleg eltávolításra fog kerülni az összes altéma a fordításokkal együtt. Biztos vagy benne?'
+    added: 'A téma hozzáadása megtörtént'
+    failedfind: 'Nem sikerült megtalálni a témát az azonosító alapján: %id%'
+    failedfindTranslation: 'Nem sikerült megtalálni a téma fordítását az azonosító alapján: %id%'
+    removed: 'A/z %title% téma eltávolításra került'
+    exists: null
+    existsname: null
+    removedTranslation: 'A téma fordítása eltávolításra került'
+    failedremoveTranslation: 'Nem távolítható el az alapértelmezett téma fordítása. Távolítsd el inkább a témát.'
+    updated: 'A téma frissítésre került'
+    error: 'Hiba történt, próbálkozz később.'
+    csrfinvalid: 'A CSRF-jogkivonat érvénytelen. Próbáld meg ismét beküldeni az űrlapot.'
+    tooshort: 'Túl rövid a téma neve!'
+    toolong: 'Túl hosszú a téma neve!'
+    attachtopics: null
+    attached: null

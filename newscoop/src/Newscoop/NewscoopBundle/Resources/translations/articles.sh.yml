@@ -7,10 +7,10 @@ Rating: null
 'Remove list': null
 'Please select a list': null
 Playlist: null
-'List updated.': null
-'List saved': null
-'List Name': null
-'List ID': null
+'List updated.': 'Lista izmenjena.'
+'List saved': 'Lista snimljena.'
+'List Name': 'Naziv liste.'
+'List ID': 'ID liste'
 'Item already exists in the list': null
 'Featured Articles': null
 'Featured Article Lists': null
@@ -184,23 +184,34 @@ Comments: Komentari
 'No such article.': 'Nema takvog teksta.'
 'No such section.': 'Nema te rubrike.'
 Characters: null
+Snippet: null
+'This list is already in a different state than the one in which it was loaded.': null
+'List name should not be longer than 40 chars': null
+'Not valid number': null
+'List limit': null
+'Last item of the list has been deleted to add this item to the list. Revert?': null
+Revert: null
+'Could not automatically refresh the list': null
 articles:
+    playlists:
+        namechanged: null
+        alert: null
     images:
         edit:
             edit_image_metadata: null
-            save: null
+            save: Snimi
             form:
                 use: null
-                number: null
+                number: Broj
                 caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
+                status_approved: Odobren
+                status_unapproved: Neodobren
+                status: Status
+                description: Opis
+                photographer: Fotograf
                 photographer_url: null
-                place: null
-                date: null
+                place: Mesto
+                date: Datum
                 article_specific: null
-                global: null
+                global: Globalno
                 other_captions: null

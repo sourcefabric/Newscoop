@@ -62,7 +62,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
     <a href="http://newscoop.sourcefabric.org/" target="_blank">
     <?php
       echo $campVersion->getPackage();
-      ?></a>, the open content management system for professional journalists.
+      ?></a>, the open content management system for professional journalists. Version: <?php echo $campVersion->getRelease() ?>
       <br />
       <?php
       echo $campVersion->getCopyright() . '&nbsp;';
@@ -206,8 +206,8 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	if (!is_null($publicationObj)) {
 	    $prompt =  $translator->trans("Publication").":";
 	    $name = $publicationObj->getName();
-    	$breadcrumbs[] = array($prompt, "/$ADMIN/pub/", false);
-    	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
+    	$breadcrumbs[] = array($prompt, \Zend_Registry::get('container')->get('router')->generate('newscoop_newscoop_publications_index'), false);
+    	$breadcrumbs[] = array($name, \Zend_Registry::get('container')->get('router')->generate('newscoop_newscoop_publications_edit', array('id' => $publicationObj->getPublicationId())));
 	}
 
 	if ($issueObj instanceof Issue) {

@@ -34,36 +34,36 @@ Saved: null
 Location: null
 Items: null
 Item: null
-'Image files': null
-'Image Files: ': null
-Headline: null
-Finish: null
-'Edit Image Data': null
-'Edit $1': null
-'Done editing': null
-Detach: null
-Create: null
-Caption: null
-'Attached images': null
-'Attach & Place': null
-'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
-'Add video': null
-'Add caption': null
-'Show all': null
-'The image has been removed from the article.': null
-'Unable to add new image.': null
-'Image number $1 already exists': null
-'You do not have the right to change image information.': null
-'The image number specified is already in use.': null
-'Image $1 updated.': null
-'Image $1 added.': null
-'Edit article': null
-'You do not have the right to attach images to articles.': null
-'You do not have the right to add images.': null
-'Image information': null
-'Attach New Image': null
-'Attach Image To Article': null
-'Attach Existing Image': null
+'Image files': 图像文件
+'Image Files: ': 图像文件：
+Headline: 头条
+Finish: 完成
+'Edit Image Data': 编辑图像数据
+'Edit $1': '编辑 $1'
+'Done editing': 编辑完成
+Detach: 拆分
+Create: 创建
+Caption: 标题
+'Attached images': 附加图片
+'Attach & Place': 连接和放置
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': '添加视频网址 (例如，Vimeo网站的http://vimeo.com/25083275, YouTube 网站的http://youtu.be/1XsPVO61e9w) '
+'Add video': '添加视频 '
+'Add caption': 添加标题
+'Show all': 显示所有
+'The image has been removed from the article.': 图像已经从文章中移除。
+'Unable to add new image.': 无法添加新图片。
+'Image number $1 already exists': '图像编号$1 已经存在'
+'You do not have the right to change image information.': 您没有权限更改图像信息。
+'The image number specified is already in use.': 指定图像编号已在使用中。
+'Image $1 updated.': '图像 $1 已更新。'
+'Image $1 added.': '图像 $1 已添加'
+'Edit article': 编辑文章
+'You do not have the right to attach images to articles.': 您没有权限将图像附加到文章中。
+'You do not have the right to add images.': 您没有权限添加图片。
+'Image information': 图像信息
+'Attach New Image': 附加新的图片
+'Attach Image To Article': 将图像附加到文章
+'Attach Existing Image': 附加已经存在的图像
 'Add New Image': 添加新图片
 Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 日期(yyyy-mm-dd)
 'You must select an image file to upload.': null

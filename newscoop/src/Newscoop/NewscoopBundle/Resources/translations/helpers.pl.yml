@@ -1,0 +1,9 @@
+dynatable:
+    page: Strona
+    perPageText: 'Pokazuje: '
+    pageText: 'Strony: '
+    recordCountPageBoundTemplate: '{pageLowerBound} do {pageUpperBound} z'
+    recordCountPageUnboundedTemplate: '{recordsShown} z'
+    recordCountFilteredTemplate: ' (wyszukane z {recordsTotal} wszystkich wyników)'
+    recordCountText: 'Wyświetla '
+    processingText: Przetważanie...

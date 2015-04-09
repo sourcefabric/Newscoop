@@ -1,0 +1,158 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "users" %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+    <span class="article-title">Journalist dashboard</span>
+</div>
+{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/jquery.dynatable.css') }}">
+<style type="text/css">
+.dashboard h3 {font-size: 18px;padding: 0 0 8px 0;margin-top: 0px;}
+#users-table {padding: 10px;border: 1px solid #ccc;}
+#users-table th {background: #007fb3;color: #fff;}
+</style>
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/bundles/newscoopnewscoop/js/jquery.dynatable.js') }}"></script>
+<script src="{{ asset('/js/raphael-min.js') }}"></script>
+<script src="{{ asset('/js/morris.min.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row dashboard">
+    <div class="col-md-5 widget">
+        <h3>Draft Your new awesome article!</h3>
+        <div class="form-group">
+            <textarea name="article_cotent" rows="5" class="form-control"></textarea>
+        </div>
+        <div class="form-group pull-left">
+            <input type="file" multiple="true" id="exampleInputFile">
+            <p class="help-block">Choose images or attachments.</p>
+        </div>
+        <div class="pull-right">
+            <button type="submit" class="btn btn-success">Create pending article</button>
+        </div>
+    </div>
+
+    <div class="col-md-7 widget">
+        <h3>Your Latest Articles</h3>
+        <table id="users-table" class="table table-bordered table-hover table-striped" style="word-wrap: break-word;table-layout: fixed;">
+        <thead>
+          <tr>
+            <th data-dynatable-column="name">Title</th>
+            <th data-dynatable-column="published">Published</th>
+            <th data-dynatable-column="reads">Reads</th>
+            <th data-dynatable-column="shares">Shares (on Facebook)</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+    </div>
+    <div style="clear:both"></div>
+    <div class="col-md-12 widget" style="height: 350px;">
+        <div id="line-widget" style="height: 300px;"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var dynatable = $('#users-table')
+    .dynatable({
+        inputs: {
+            paginationClass: 'pagination',
+            paginationActiveClass: 'current',
+            paginationDisabledClass: 'unavailable',
+            paginationPrev: '&laquo;',
+            paginationNext: '&raquo;',
+            pageText: '{{ 'users.table.table_messages.page'|trans }}',
+            perPageText: '{{ 'users.table.table_messages.perPageText'|trans }}',
+            pageText: '{{ 'users.table.table_messages.pageText'|trans }}',
+            recordCountPageBoundTemplate: '{{ 'users.table.table_messages.recordCountPageBoundTemplate'|trans }}',
+            recordCountPageUnboundedTemplate: '{{ 'users.table.table_messages.recordCountPageUnboundedTemplate'|trans }}',
+            recordCountTotalTemplate: '{{ 'users.table.table_messages.recordCountTotalTemplate'|trans }}',
+            recordCountFilteredTemplate: '{{ 'users.table.table_messages.recordCountFilteredTemplate'|trans }}',
+            recordCountText: '{{ 'users.table.table_messages.recordCountText'|trans }}',
+            recordCountTextTemplate: '{{ 'users.table.table_messages.recordCountTextTemplate'|trans }}',
+            recordCountTemplate: '{{ 'users.table.table_messages.recordCountTemplate'|trans }}',
+            processingText: '{{ 'users.table.table_messages.processingText'|trans }}'
+        },
+        dataset: {
+            ajax: true,
+            ajaxUrl: Routing.generate('newscoop_newscoop_dashboard_author_articles'),
+            ajaxOnLoad: false,
+            records: [],
+            perPageDefault: 10,
+            perPageOptions: [10,20,50,100],
+        },
+        features: {
+            paginate: true,
+        },
+        writers: {
+            _cellWriter: function (column, record) {
+                if (column.id == 'published') {
+                    column.attributeWriter = function(record) {
+                        return record.published.date;
+                    }
+                }
+
+                if (column.id == 'shares') {
+                    column.attributeWriter = function(record) {
+                        column.cssClass = 'shares__'+record.id;
+                        $.ajax({
+                          url: "https://graph.facebook.com",
+                          dataType: "json",
+                          data: {
+                            id: record.link
+                          },
+                          success: function (data) {
+                            if (typeof data.shares != 'undefined') {
+                                $('.'+column.cssClass).html(data.shares);
+                            } else {
+                                $('.'+column.cssClass).html(0);
+                            }
+                          }
+                        });
+
+                        return 'Loading...';
+                    }
+                }
+
+                var html = column.attributeWriter(record),
+                    td = '<td';
+
+                if (column.hidden || column.textAlign) {
+                  td += ' style="';
+                  // keep cells for hidden column headers hidden
+                  if (column.hidden) {
+                    td += 'display: none;';
+                  }
+                  // keep cells aligned as their column headers are aligned
+                  if (column.textAlign) {
+                    td += 'text-align: ' + column.textAlign + ';';
+                  }
+                  td += '"';
+                }
+                if (column.cssClass) {
+                  td += ' class="' + column.cssClass + '"';
+                }
+
+                return td + '>' + html + '</td>';
+            }
+        },
+    }).data('dynatable');
+
+    Morris.Line({
+      element: 'line-widget',
+      data: {{ lineWidgetData|json_encode|raw }},
+      xkey: 'date',
+      lineColors: ['#0b62a4', 'green'],
+      ykeys: ['comments', 'articles'],
+      labels: ['Comments', 'Articles']
+    });
+</script>
+
+{% endblock %}

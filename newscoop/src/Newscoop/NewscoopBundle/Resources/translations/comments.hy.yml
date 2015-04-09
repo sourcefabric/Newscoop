@@ -98,3 +98,22 @@ Ban: null
 'Add new acceptance criteria': null
 'Acceptance $1 saved.': null
 'Acceptance $1 deleted.': null
+editorial:
+    alert:
+        toolong: 'Message is too long.'
+        added: 'Comment has been successfully added.'
+        edited: 'Comment has been successfully edited.'
+        resolved: 'Comment has been successfully resolved.'
+        deleted: 'Comment has been successfully deleted.'
+    btn:
+        send: Send
+        cancel: Cancel
+        resolve: Resolve
+        save: Save
+        edit: Edit
+        delete: Delete
+        reply: Reply
+    label:
+        post: 'Post a new comment'
+        reply: Reply...
+        nocomments: 'No comments yet.'

@@ -26,6 +26,11 @@ class SectionsController extends FOSRestController
      *         404={
      *           "Returned when sections are not found",
      *         }
+     *     },
+     *     parameters={
+     *         {"name"="publication", "dataType"="integer", "required"=true, "description"="Publication id"},
+     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Filter by language code"},
      *     }
      * )
      *
@@ -37,13 +42,30 @@ class SectionsController extends FOSRestController
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
-
-        $sections = $em->getRepository('Newscoop\Entity\Section')
-            ->getSections($publication);
-
-        if (!$sections) {
-            throw new NotFoundHttpException('Result was not found.');
+        $issue = null;
+        $language = null;
+        if ($request->query->has('language')) {
+            $language = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($request->query->get('language'));
         }
+
+        if (!$language) {
+            $language = $this->get('newscoop_newscoop.publication_service')->getPublication()->getLanguage();
+        }
+
+        if ($request->query->has('issue')) {
+            $issue = $em->getRepository('Newscoop\Entity\Issue')->getByPublicationAndNumberAndLanguage(
+                $request->query->get('publication', $publication),
+                $request->query->get('issue'),
+                $language
+            )->getOneOrNullResult();
+        }
+
+        $sections = $em->getRepository('Newscoop\Entity\Section')->getSections(
+            $request->query->get('publication', $publication),
+            $issue,
+            $issue ? $issue->getLanguage() : $language
+        )->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $sections = $paginator->paginate($sections, array(

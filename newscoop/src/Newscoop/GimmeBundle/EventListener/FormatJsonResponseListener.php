@@ -29,9 +29,11 @@ class FormatJsonResponseListener
             return;
         }
 
-        $response = $event->getResponse();
-        $responseData = $event->getResponse()->getContent();
-        $response->setContent(Json::indent($responseData));
-        $event->setResponse($response);
+        if (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev' || $request->query->get('pretty_json', false) == true) {
+            $response = $event->getResponse();
+            $responseData = $event->getResponse()->getContent();
+            $response->setContent(Json::indent($responseData));
+            $event->setResponse($response);
+        }
     }
 }

@@ -42,7 +42,7 @@ class IssueListener
     public function onRequest(GetResponseEvent $event)
     {
         $onAdminInterface = strpos($event->getRequest()->getRequestUri(), '/admin');
-        if ($onAdminInterface === false) {
+        if ($onAdminInterface === false && $event->getRequest()->get('_route') != 'newscoop_get_img') {
             $this->issueService->issueResolver($event->getRequest());
         }
     }

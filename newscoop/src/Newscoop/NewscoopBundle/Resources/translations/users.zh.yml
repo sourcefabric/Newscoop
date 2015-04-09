@@ -44,7 +44,7 @@ Continue: null
 'Profile saved.': null
 Picture: null
 'Password updated': null
-None: null
+None: 没有
 'New confirmation email was sent to user.': null
 'Email is used already': null
 'Edit your password': null
@@ -185,6 +185,8 @@ Miscellaneous: null
 'Editor Miscellaneous Settings': null
 'No such user account.': 无此帐户
 'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: null

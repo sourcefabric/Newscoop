@@ -6,7 +6,7 @@
 'Application error': Alkalmazáshiba
 'An error occurred': 'Hiba történt'
 'Newscoop has encountered a problem.': 'A Newscoop problémát észlelt.'
-'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'A Newscoop csapat munkájának a probléma elemzése és megtalálása elősegítése érdekében kérjük szánjon egy percet arra, hogy leírja, mi történt.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'A Newscoop csapat munkájának a probléma elemzése és megtalálása elősegítése érdekében kérjük, szánjon egy percet arra, hogy leírja, mi történt.'
 'What were you trying to do when this happened?': 'Mit akart csinálni, amikor ez történt?'
 'Description:': 'Leírás:'
 'We are sorry for the inconvenience.': 'Elnézést kérünk a kellemetlenségért.'
@@ -20,4 +20,4 @@
 'Error String:': 'Hibakarakterlánc:'
 'Software:': 'Szoftver:'
 'We are sorry, but there was a problem sending your bug report.': 'Sajnáljuk, probléma merült fel a hibabejelentés küldésekor.'
-'Simply copy and paste the error report below and send it to:': 'Egyszerűen csak másolja a vágólapra és illessze be alább a hibajelentést, majd küldje el erre a címre:'
+'Simply copy and paste the error report below and send it to:': 'Egyszerűen csak másold a vágólapra és illeszd be alább a hibajelentést, majd küldd el erre a címre:'

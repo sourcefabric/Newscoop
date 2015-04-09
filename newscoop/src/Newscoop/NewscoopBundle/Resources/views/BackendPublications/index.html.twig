@@ -1,0 +1,120 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "pub" %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+    <span class="article-title">{{ 'publications.title.list'|trans }}</span>
+    <div class="pull-right">
+        <div class="actions">
+            <ul class="navigation" style="height: auto;">
+                <li>
+                    <a class="add" href="{{ url('newscoop_newscoop_publications_add') }}">{{ 'publications.buttons.addNew'|trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_title %}{{ 'publications.title.list'|trans }} - {{ parent() }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/jquery.dynatable.css') }}">
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
+<style type="text/css" media="screen">
+    #publications-table {padding: 10px;border: 1px solid #ccc;}
+    #publications-table th {background: #007fb3;color: #fff;}
+    #publications-table .glyphicon{font-size: 1.50em;}
+    a.action-btn {margin-left: 5px; margin-bottom: 5px;}
+</style>
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/bundles/newscoopnewscoop/js/jquery.dynatable.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alerts alert-danger">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alerts alert-success">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+
+<div class="row publications ns_container col-md-8">
+    {% if publications|length > 0 %}
+    <table id="publications-table" class="table table-bordered table-hover table-striped" style="word-wrap: break-word;table-layout: fixed;">
+        <thead>
+          <tr>
+            <th data-dynatable-column="id" style="width: 60px;text-align: center">{{ 'publications.table.number'|trans }}</th>
+            <th data-dynatable-column="name">{{ 'publications.table.name'|trans }}</th>
+            <th data-dynatable-column="defaultAlias">{{ 'publications.table.default_alias'|trans }}</th>
+            <th data-dynatable-column="defaultLanguage">{{ 'publications.table.default_language'|trans }}</th>
+            <th data-dynatable-column="comments_on" style="text-align: center">{{ 'publications.table.comments_status'|trans }}</th>
+            <th data-dynatable-column="url_type">{{ 'publications.table.url_type'|trans }}</th>
+            <th data-dynatable-column="configure" data-dynatable-no-sort="true" style="text-align: center">{{ 'publications.table.configure'|trans }}</th>
+            <th data-dynatable-column="remove" data-dynatable-no-sort="true" style="text-align: center">{{ 'publications.table.remove'|trans }}</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% for publication in publications %}
+            <tr>
+                <td>{{ publication.id }}</td>
+                <td><a href="/admin/issues/?Pub={{ publication.id }}" style="font-weight: bold;">{{ publication.name }}</a></td>
+                <td>{% if publication.defaultAlias.name is defined %}{{ publication.defaultAlias.name}}{% endif %}</td>
+                <td>{{ publication.language.name}}</td>
+                <td><span class="glyphicon glyphicon-{% if publication.commentsEnabled %}ok{% else %}minus{% endif %}"></span></td>
+                <td>{% if publication.urlTypeId == 1%}{{ 'template path'|trans({}, 'api')}}{% else %}{{ 'short names'|trans({}, 'api')}}{% endif %}</td>
+                <td><a href="{{ url('newscoop_newscoop_publications_edit', {'id': publication.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a href="{{ url('newscoop_newscoop_publications_remove', {'id': publication.id}) }}"><span class="glyphicon glyphicon-remove-circle"></span></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h3>{{ 'publications.no_publications'|trans }}</h3>
+    <div class="center-block" style="width: 160px;">
+        <div class="actions">
+            <ul class="navigation" style="height: auto;">
+                <li>
+                    <a class="add" href="{{ url('newscoop_newscoop_publications_add') }}">{{ 'publications.buttons.addNew'|trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    {{ renderTip('publications.tip1'|trans) }}
+</div>
+
+<script type="text/javascript">
+    var dynatable = $('#publications-table').dynatable({
+        inputs: {
+            paginationClass: 'pagination',
+            paginationActiveClass: 'current',
+            paginationDisabledClass: 'unavailable',
+            paginationPrev: '&laquo;',
+            paginationNext: '&raquo;',
+            pageText: '{{ 'dynatable.page'|trans({},'helpers') }}',
+            perPageText: '{{ 'dynatable.perPageText'|trans({},'helpers') }}',
+            pageText: '{{ 'dynatable.pageText'|trans({},'helpers') }}',
+            recordCountPageBoundTemplate: '{{ 'dynatable.recordCountPageBoundTemplate'|trans({},'helpers') }}',
+            recordCountPageUnboundedTemplate: '{{ 'dynatable.recordCountPageUnboundedTemplate'|trans({},'helpers') }}',
+            recordCountFilteredTemplate: '{{ 'dynatable.recordCountFilteredTemplate'|trans({},'helpers') }}',
+            recordCountText: '{{ 'dynatable.recordCountText'|trans({},'helpers') }}',
+            processingText: '{{ 'dynatable.processingText'|trans({},'helpers') }}'
+        },
+        features: {
+            paginate: false,
+            search: false,
+            recordCount: false,
+            perPageSelect: false
+        }
+    }).data('dynatable');
+</script>
+{% endblock %}

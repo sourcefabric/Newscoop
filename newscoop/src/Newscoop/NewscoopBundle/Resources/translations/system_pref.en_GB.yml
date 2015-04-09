@@ -6,7 +6,7 @@ newscoop:
             cache: 'Invalid: You need PHP %cache% enabled in order to use the template caching system.'
             replication: 'Database Replication data incomplete'
             maxupload: 'Invalid Max Upload File Size value submitted'
-            geolocation: 'Invalid Geolocation fields. Must contain numbers. Latitude can''t be > 90 and < -90. Longitude can''t be > 180 and < -180.'
+            geolocation: 'Invalid Geolocation fields. Must contain numbers. Latitude can not be > 90 and < -90. Longitude can not be > 180 and < -180.'
             noaccess: 'You do not have the right to change system preferences.'
             latitude: 'Latitude field value is not valid.'
             longitude: 'Longitude field value is not valid.'

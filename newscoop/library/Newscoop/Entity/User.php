@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -223,7 +222,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     protected $countryCode;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client")
+     * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client", inversedBy="users")
      * @ORM\JoinTable(name="user_oauth_clients",
      *      joinColumns={
      *          @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
@@ -235,6 +234,20 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
      * @var Newscoop\Package\Package
      */
     protected $clients;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\NewscoopBundle\Entity\Topic")
+     * @ORM\JoinTable(name="user_topic",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $topics;
 
     /**
      * @param string $email
@@ -301,7 +314,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
         $this->password = implode(self::HASH_SEP, array(
             self::HASH_ALGO,
             $salt,
-            hash(self::HASH_ALGO, $salt . $password),
+            hash(self::HASH_ALGO, $salt.$password),
         ));
 
         return $this;
@@ -319,19 +332,19 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
             if ($this->password == sha1($password)) { // update old password on success
                 $this->setPassword($password);
 
-                return TRUE;
+                return true;
             }
 
-            return FALSE;
+            return false;
         }
 
         list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
 
-        return $password_hash === hash($algo, $salt . $password);
+        return $password_hash === hash($algo, $salt.$password);
     }
 
     /**
-     * Get password salt for authentication (symfony)
+     * Get password salt for authentication
      * @return string
      */
     public function getSalt()
@@ -342,7 +355,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     }
 
     /**
-     * Get password for authentication (symfony)
+     * Get password for authentication
      * @return [type] [description]
      */
     public function getPassword()
@@ -698,7 +711,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     }
 
     /**
-     * Get user roles for authentication (symfony)
+     * Get user roles for authentication
      * @return array array with roles
      */
     public function getRoles()
@@ -765,7 +778,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
             return $this->attributes[$name]->getValue();
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -865,16 +878,16 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
 
                 return true;
             } else {
-                return FALSE;
+                return false;
             }
         } catch (\Exception $e) {
-            return FALSE;
+            return false;
         }
     }
 
     public function getCommenters()
     {
-       return $this->commenters;
+        return $this->commenters;
     }
 
     /**
@@ -887,7 +900,6 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
         $comments = array();
 
         foreach ($this->commenters as $commenter) {
-
             foreach ($commenter->getComments() as $comment) {
                 $comments[] = $comment;
             }
@@ -1010,6 +1022,16 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     public function getAuthorId()
     {
         return $this->author ? $this->author->getId() : null;
+    }
+
+    /**
+     * Get author
+     *
+     * @return int
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 
     /**
@@ -1162,7 +1184,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
             's' => $status,
             'c' => $this->created->format('Y-m-d h:i:s'),
             'up' => $this->updated->format('Y-m-d h:i:s'),
-            've' => ((bool) !$this->isPending() ? 'Yes' : 'No')
+            've' => ((bool) !$this->isPending() ? 'Yes' : 'No'),
         );
     }
 
@@ -1240,7 +1262,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
     {
         return serialize(array(
             $this->id,
-            $this->status
+            $this->status,
         ));
     }
 
@@ -1529,5 +1551,24 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
         }
 
         return false;
+    }
+
+    public function getObject()
+    {
+        return clone $this;
+    }
+
+    /**
+     * Gets user's topics
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection|null
+     */
+    public function getTopics()
+    {
+        if ($this->topics->count() > 0) {
+            return $this->topics;
+        }
+
+        return;
     }
 }

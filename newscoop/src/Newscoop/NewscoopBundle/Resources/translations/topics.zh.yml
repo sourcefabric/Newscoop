@@ -8,8 +8,8 @@
 'Click to edit': null
 'Add root topic': null
 'Topic was deleted.': null
-'The topic name is already in use by another topic.': null
-'You must enter a name for the topic.': null
+'The topic name is already in use by another topic.': 该话题名已被其他话题使用
+'You must enter a name for the topic.': 您必须为话题输入一个名字。
 'You must choose a language for the topic.': null
 'This topic has subtopics, therefore it cannot be deleted.': null
 'Add translation:': null
@@ -25,3 +25,56 @@ Top: null
 'Change topic name': 改变主题名
 'There are $1 articles using the topic.': 有$1篇文章用此主题
 'Search for topics': null
+topics:
+    tip: null
+    label:
+        all: null
+        filterbylang: null
+        search: null
+        filterplaceholder: null
+        addroot: null
+        topicname: null
+        expandcollapse: null
+        changename: null
+        for: null
+        addsubtopic: null
+        subtopicname: null
+        addtranslation: null
+        topictranslations: null
+        choose: null
+        translationstring: null
+        tree: null
+    title: null
+    btn:
+        hide: null
+        remove: null
+        edit: null
+        close: null
+        add: null
+        save: null
+        saveandclose: null
+        removetrans: null
+    alerts:
+        languagenotfound: null
+        translationadded: null
+        translationexists: null
+        beforedelete: null
+        wrongparams: null
+        ordersaved: null
+        saved: null
+        beforedeleteinfo: null
+    added: null
+    failedfind: null
+    failedfindTranslation: null
+    removed: null
+    exists: null
+    existsname: null
+    removedTranslation: null
+    failedremoveTranslation: null
+    updated: null
+    error: null
+    csrfinvalid: null
+    tooshort: null
+    toolong: null
+    attachtopics: null
+    attached: null

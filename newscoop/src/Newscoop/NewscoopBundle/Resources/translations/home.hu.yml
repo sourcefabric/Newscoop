@@ -1,7 +1,7 @@
 'Rename user': 'Felhasználó átnevezése'
 Campsite: Campsite
-'Image Rendering': 'Kép leképezése'
-'Featured Article Lists': 'Kiemelt cikkek listái'
+'Image Rendering': 'Kép megjelenítése'
+'Featured Article Lists': 'Kiemelt cikklisták'
 'You have tried to upload an invalid backup file.': 'Érvénytelen biztonságimásolat-fájlt próbáltál feltölteni.'
 'You do not have the right to manage backups.': 'Nincs jogod a biztonsági másolatok kezeléséhez.'
 'Make a new backup': 'Új biztonsági másolat készítése'
@@ -19,8 +19,8 @@ Support: Támogatás
 'Manage User Points System': 'Felhasználói pontrendszer kezelése'
 Last: Utolsó
 First: Első
-Feedback: Visszajelzés
-'Edit your password': 'Jelszavad szerkesztése'
+Feedback: Visszajelzések
+'Edit your password': 'Jelszavad módosítása'
 'Edit user': 'Felhasználó szerkesztése'
 'Edit permissions': 'Engedélyek szerkesztése'
 Detail: Adat
@@ -46,17 +46,17 @@ Themes: Témák
 Settings: Beállítások
 'Select files': 'Fájlok kiválasztása'
 Reply: Válasz
-'New comment added': 'Az új hozzászólás hozzáadása megtörtnt'
+'New comment added': 'Az új hozzászólás hozzáadása megtörtént'
 'Manage Authors': 'Szerzők kezelése'
 Loading..: Betöltés...
 Filename: Fájlnév
 'Edit user type': 'Felhasználótípus szerkesztése'
 'Edit language': 'Nyelv szerkesztése'
-'Drag files here.': 'Húzd ide a fájlokat.'
+'Drag files here.': 'Húzz ide fájlokat.'
 'Connection interrupted': 'A kapcsolat megszakadt'
 Ban: Kitiltás
 'Are you sure you want to': 'Biztosan akarod'
-'Add files to the upload queue and click the start button.': 'Adj hozzá fájlokat a feltöltési várólistára, és kattints az Indítás gombra.'
+'Add files to the upload queue and click the start button.': 'Adj hozzá fájlokat a feltöltési várólistához, majd kattints a Feltöltés indítása gombra.'
 'Add files': 'Fájlok hozzáadása'
 '%value% is more than %max% characters long': 'A/z %value% több %max% karakternél'
 '%value% is less than %min% characters long': 'A/z %value% kevesebb %max% karakternél'
@@ -72,7 +72,7 @@ Newscoop: Newscoop
 'Session expired.': 'A munkamenet lejárt.'
 Processing...: Feldolgozás...
 Please: Kérjük
-'Go to dashboard': 'Ugrás az irányítópulthoz'
+'Go to dashboard': 'Ugrás az irányítópultra'
 'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'A böngésződ nem támogatja a JavaScriptet, vagy (valószínűbb) letiltottad a beállításokban. Javítsd ezt a Newscoop további használata céljából.'
 'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'A Newscoop frissítette biztonsági intézkedéseit. Fiókod frissítése, a fokozott biztonság használata érdekében ismét meg kell adnod a jelszavadat.'
 'Newscoop cache was cleaned up': 'A Newscoop gyorsítótárának karbantartása megtörtént'
@@ -83,19 +83,19 @@ Dashboard: Irányítópult
 'Media Archive': Médiaarchívum
 Widgets: Widgetek
 'Widget info': 'Widget adatai'
-'Widget added to dashboard.': 'A widget hozzáadása az irányítópulthoz megtörtént.'
+'Widget added to dashboard.': 'A widget elhelyezése az irányítópulton megtörtént.'
 'Remove widget': 'Widget eltávolítása'
 'Please login to continue.': 'Kérjük, jelentkezz be a folytatáshoz.'
-'Add to dashboard': 'Hozzáadás az irányítópulthoz'
+'Add to dashboard': 'Elhelyezés az irányítópulton'
 'Add more widgets': 'További widgetek hozzáadása'
 login: bejelentkezés
 'This link is not valid.': 'Ez a hivatkozás érvénytelen.'
-'Recover password': 'Jelszó helyreállítáaa'
+'Recover password': 'Jelszó helyreállítása'
 'Please enter your email.': 'Kérjük, add meg az e-mail címedet.'
 'Password recovery is disabled.': 'A jelszó-helyreállítás letiltott.'
 'Password recovery': Jelszó-helyreállítás
 'Password Recovery': Jelszó-helyreállítás
-'No user is registered with this email.': 'Nem regisztrált felhasználó ezzel az e-mail címmel.'
+'No user is registered with this email.': 'Nincs ezzel az e-mail címmel regisztrált felhasználó.'
 'Forgot your password?': 'Elfelejtetted a jelszavadat?'
 'Email: incorrect format.': 'E-mail: helytelen formátum.'
 Email: E-mail
@@ -126,13 +126,13 @@ Download: Letöltés
 'Clear system cache': 'Rendszergyorsítótár törlése'
 'The system was unable to upload the file $1. ': 'A rendszer nem tudta feltölteni a/z $1 fájlt.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Ellenőrizd a feltölteni kívánt fájlt, mert lehet, hogy sérült.'
-'An error occurred in session management. Please reload the login page.': 'Hiba történt a munkamenet-kezelésben. Töltsd be újra a bejelentkezési lapot.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'Ez a fájl $1 néven lemezen kerül tárolásra.'
 'The system is unable to write to the directory $1.': 'A rendszer nem tud írni a/z $1 könyvtárba.'
 'The system was unable to read the file $1.': 'A rendszer nem tudta olvasni a/z $1 fájlt.'
 'The system was unable to delete the directory $1.': 'A rendszer nem tudta törölni a/z $1 könyvtárt.'
 'Please check if the user $1 has permission to read this file.': 'Ellenőrizd, hogy a/z $1 nevű felhasználó számára engedélyezett-e ennek a fájlnak az olvasása.'
-'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy üres-e a könyvtár, és a/z $1 nevű felhasználónak van--e írási engedélye a/z $2 könyvtárrhoz'
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy üres-e a könyvtár, és a/z $1 nevű felhasználónak van--e írási engedélye a/z $2 könyvtárhoz'
 'The system was unable to write to the file $1.': 'A rendszer nem tudott írni a/z $1 fájlba.'
 'The system was unable to delete the file $1.': 'A rendszer nem tudta törölni a/z $1 fájlt.'
 'The system was unable to create the file $1.': 'A rendszer nem tudta létrehozni a/z $1 fájlt.'
@@ -147,7 +147,7 @@ Download: Letöltés
 'Signed in: $1': 'Bejelentkezve: $1'
 Help: Súgó
 'Please enter your user name and password': 'Add meg a felhasználónevedet és a jelszavadat'
-'You do not have the right to access this page.': 'Nincs jogod az oldal eléréséhez.'
+'You do not have the right to access this page.': 'Nincs jogod ennek az oldalnak az eléréséhez.'
 'Login failed': 'A bejelentkezés sikertelen'
 'Please make sure that you typed the correct user name and password.': 'Ellenőrizd, hogy helyesen adtad-e meg a felhasználónevedet és a jelszavadat.'
 'If your problem persists please contact the site administrator $1': 'Ha a probléma továbbra is fennáll, kérjük, fordulj a webhely $1 rendszergazdájához'

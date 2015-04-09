@@ -114,7 +114,7 @@
                                     {% if row.user.image(50, 50, 'crop') is empty %}
                                      <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
                                     {% else %}
-                                     <img src="{{ row.user.image(50, 50, 'crop') }}">
+                                     <img style="width: 49px;" src="{{ row.user.image(50, 50, 'crop') }}">
                                     {% endif %}
                                 {% endif %}
                             </div>

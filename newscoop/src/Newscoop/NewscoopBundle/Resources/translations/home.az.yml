@@ -126,7 +126,7 @@ Download: Endir
 'Clear system cache': 'Sistemin keş yaddaşını təmizlə'
 'The system was unable to upload the file $1. ': 'Sistem $1 adlı faylı yükləyə bilmədi.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Lütfən, yükləməyə cəhd etdiyin faylı yoxla, o təhlükəli ola bilər.'
-'An error occurred in session management. Please reload the login page.': 'Seans idarəçiliyində xəta baş verdi. Lütfən, giriş səhifəsini yeniləyin.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'Bu fayl diskdə $1 adı ilə saxlandı.'
 'The system is unable to write to the directory $1.': 'Siztem $1 kataloquna yaza bilmir.'
 'The system was unable to read the file $1.': 'Sistem $1 adlı faylı oxuya bilmədi.'
@@ -160,4 +160,4 @@ Backup/Restore: Ehtiyat/Arxiv
 'New comments': 'Yeni şərhlər'
 'Published articles': 'Nümayiş edilmiş məqalələr'
 'Last 7 days statistics': 'Son 7 günün statistikası'
-'Change password': null
+'Change password': 'Parolu dəyiş'

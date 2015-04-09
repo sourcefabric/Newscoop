@@ -126,7 +126,7 @@ Download: Преузми
 'Clear system cache': 'Обриши системски кеш'
 'The system was unable to upload the file $1. ': 'Систем није био у могуности да аплоудује фајл $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Проверите фајл који покушавате да аплоудујете, могуће је да је оштећен.'
-'An error occurred in session management. Please reload the login page.': 'Дошло је до грешке у сесији. Молимо Вас учитајте поново страницу за пријављивање.'
+'An error occurred in session management. Please reload the login page.': null
 'This file is stored on disk as $1.': 'Фајл је спремљен на диску као $1.'
 'The system is unable to write to the directory $1.': 'Систем није у могућности да уписује у директоријум $1.'
 'The system was unable to read the file $1.': 'Систем није у могућности да чита фајл $1.'

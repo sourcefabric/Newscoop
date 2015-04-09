@@ -127,8 +127,13 @@ final class MetaComment extends MetaDbObject
      */
     public function getUser()
     {
-        $user = $this->m_dbObject->getCommenter()->getUser();
-        return new \MetaUser($user);
+        try {
+            $user = $this->m_dbObject->getCommenter()->getUser();
+
+            return new \MetaUser($user);
+        } catch (\Doctrine\ORM\EntityNotFoundException $e) {
+            return new \MetaUser();
+        }
     }
 
 

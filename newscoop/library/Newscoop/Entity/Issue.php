@@ -4,10 +4,9 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -99,19 +98,19 @@ class Issue
     protected $shortName = '';
 
     /**
-    * @ORM\OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
-    * @var Newscoop\Entity\Output\OutputSettingsIssue
-    */
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
+     * @var Newscoop\Entity\Output\OutputSettingsIssue
+     */
     protected $outputSettingsIssues;
 
     /**
-     * @param int $number
+     * @param int                         $number
      * @param Newscoop\Entity\Publication $publication
      */
     public function __construct($number, \Newscoop\Entity\Publication $publication = null, \Newscoop\Entity\Language $language = null)
     {
         $this->number = (int) $number;
-        $this->sections = new ArrayCollection;
+        $this->sections = new ArrayCollection();
 
         if ($publication !== null) {
             $this->publication = $publication;
@@ -151,6 +150,16 @@ class Issue
     }
 
     /**
+     * Get language code
+     *
+     * @return string
+     */
+    public function getLanguageCode()
+    {
+        return $this->language !== null ? $this->language->getCode() : null;
+    }
+
+    /**
      * Get publication
      *
      * @return Publication
@@ -173,7 +182,7 @@ class Issue
     /**
      * Add section
      *
-     * @param Newscoop\Entity\Section $section
+     * @param  Newscoop\Entity\Section $section
      * @return void
      */
     public function addSection(Section $section)
@@ -196,36 +205,39 @@ class Issue
     /**
      * Set template
      *
-     * @param Newscoop\Entity\Template $template
+     * @param  Newscoop\Entity\Template $template
      * @return Newscoop\Entity\Issue
      */
     public function setTemplate(Template $template)
     {
         $this->template = $template;
+
         return $this;
     }
 
     /**
      * Set section template
      *
-     * @param Newscoop\Entity\Template $template
+     * @param  Newscoop\Entity\Template $template
      * @return Newscoop\Entity\Issue
      */
     public function setSectionTemplate(Template $template)
     {
         $this->sectionTemplate = $template;
+
         return $this;
     }
 
     /**
      * Set article template
      *
-     * @param Newscoop\Entity\Template $template
+     * @param  Newscoop\Entity\Template $template
      * @return Newscoop\Entity\Issue
      */
     public function setArticleTemplate(Template $template)
     {
         $this->articleTemplate = $template;
+
         return $this;
     }
 
@@ -252,7 +264,7 @@ class Issue
     /**
      * Set workflow status
      *
-     * @param string $workflowStatus
+     * @param  string $workflowStatus
      * @return void
      */
     public function setWorkflowStatus($workflowStatus)

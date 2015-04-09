@@ -1,0 +1,9 @@
+dynatable:
+    page: Oldal
+    perPageText: 'Megjelenítés:'
+    pageText: 'Oldalak:'
+    recordCountPageBoundTemplate: '{pageLowerBound} - {pageUpperBound} /'
+    recordCountPageUnboundedTemplate: '{recordsShown} /'
+    recordCountFilteredTemplate: '(a/z összes {recordsTotal} rekordból szűrve)'
+    recordCountText: Megjelenítve
+    processingText: Feldolgozás...

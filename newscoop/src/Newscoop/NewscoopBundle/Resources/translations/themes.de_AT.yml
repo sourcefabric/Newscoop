@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Doppelte Zuordnung'
 Templates: Templates
 'Import theme': 'Designvorlage importieren'
-'Import succeded!': 'Import erfolgreich. '
+'Import succeeded!': null
 'Import failed!': 'Import fehlgeschlagen. '
 'Edit template: $1': 'Designvorlage bearbeiten: $1'
 'Set new name to': 'Neuen Namen einstellen für'

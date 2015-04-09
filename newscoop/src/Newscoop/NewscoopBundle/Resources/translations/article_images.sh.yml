@@ -47,8 +47,8 @@ Caption: null
 'Attached images': null
 'Attach & Place': null
 'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
-'Add video': null
-'Add caption': null
+'Add video': 'Dodaj video'
+'Add caption': 'Dodaj opis'
 'Show all': 'Prikaži sve'
 'The image has been removed from the article.': 'Slika je uklonjena iz teksta'
 'Unable to add new image.': 'Nije moguće dodati novu sliku.'

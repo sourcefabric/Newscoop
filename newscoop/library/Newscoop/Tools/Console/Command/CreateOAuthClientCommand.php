@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
@@ -29,7 +28,8 @@ class CreateOAuthClientCommand extends Console\Command\Command
             ->addArgument('name', InputArgument::REQUIRED, 'Client name')
             ->addArgument('publication', InputArgument::REQUIRED, 'Publication alias')
             ->addArgument('redirectUris', InputArgument::REQUIRED, 'Redirect uris')
-            ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefnied data (for automatic tests)');
+            ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefined data (for automatic tests)')
+            ->addOption('default', null, InputOption::VALUE_NONE, 'If set it will create default client with predefined name');
     }
 
     /**
@@ -40,15 +40,23 @@ class CreateOAuthClientCommand extends Console\Command\Command
         $container = $this->getApplication()->getKernel()->getContainer();
         $em = $container->getService('em');
         $clientManager = $container->get('fos_oauth_server.client_manager.default');
-
         $name = $input->getArgument('name');
         $publication = $em->getRepository('\Newscoop\Entity\Aliases')
             ->findOneByName($input->getArgument('publication'))
             ->getPublication();
         $redirectUris = $input->getArgument('redirectUris');
 
+        if ($input->getOption('default')) {
+            $preferencesService = $container->get('preferences');
+            $defaultClientName = 'newscoop_'.$preferencesService->SiteSecretKey;
+            $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($defaultClientName);
+            if ($client) {
+                return;
+            }
+        }
+
         $client = $clientManager->createClient();
-        $client->setAllowedGrantTypes(array('token', 'authorization_code', 'client_credentials'));
+        $client->setAllowedGrantTypes(array('token', 'authorization_code', 'client_credentials', 'password'));
         $client->setRedirectUris(array($redirectUris));
         $client->setName($name);
         $client->setPublication($publication);
@@ -56,6 +64,11 @@ class CreateOAuthClientCommand extends Console\Command\Command
         if ($input->getOption('test')) {
             $client->setRandomId('svdg45ew371vtsdgd29fgvwe5v');
             $client->setSecret('h48fgsmv0due4nexjsy40jdf3sswwr');
+            $client->setTrusted(true);
+        }
+
+        if ($input->getOption('default')) {
+            $client->setName($defaultClientName);
             $client->setTrusted(true);
         }
 

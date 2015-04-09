@@ -1,10 +1,4 @@
 services:
-    newscoop_newscoop.listener.authentication.backend.session:
-        class: Newscoop\NewscoopBundle\EventListener\AuthenticationListener
-        arguments:  ["@user", "@router"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
-
     newscoop_newscoop.routing.loader.plugins:
         class: Newscoop\NewscoopBundle\Routing\PluginsLoader
         arguments: ["@newscoop.plugins.manager", "@service_container"]
@@ -151,6 +145,14 @@ services:
         class: Newscoop\Services\ThemesService
         arguments:  ["@newscoop_newscoop.issue_service", "@newscoop.cache", "@newscoop_newscoop.publication_service", "@em"]
 
+    newscoop_newscoop.issue_service:
+        class: Newscoop\Services\IssueService
+        arguments:  ["@em", "@newscoop_newscoop.publication_service", "@newscoop.cache"]
+
+    newscoop_newscoop.themes_service:
+        class: Newscoop\Services\ThemesService
+        arguments:  ["@newscoop_newscoop.issue_service", "@newscoop.cache", "@newscoop_newscoop.publication_service", "@em"]
+
     newscoop_newscoop.listener.userip:
         class: Newscoop\NewscoopBundle\EventListener\UserIpListener
         arguments:  ["@user"]
@@ -160,6 +162,10 @@ services:
     newscoop_newscoop.article_service:
         class: Newscoop\Services\ArticleService
         arguments:  ["@em"]
+
+    newscoop_newscoop.topic_service:
+        class: Newscoop\NewscoopBundle\Services\TopicService
+        arguments:  ["@em", "@dispatcher"]
 
     newscoop_newscoop.listener.article:
         class: Newscoop\NewscoopBundle\EventListener\ArticleListener

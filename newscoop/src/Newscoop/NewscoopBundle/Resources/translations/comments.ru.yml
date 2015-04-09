@@ -98,3 +98,22 @@ Ban: Запретить
 'Add new acceptance criteria': 'Добавить новые критерии допустимости комментария'
 'Acceptance $1 saved.': 'Критерий $1 сохранен.'
 'Acceptance $1 deleted.': 'Критерий $1 удален.'
+editorial:
+    alert:
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
+    btn:
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
+    label:
+        post: null
+        reply: null
+        nocomments: null

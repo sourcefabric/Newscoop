@@ -15,19 +15,19 @@ Facebook: Facebook
 'Allow sending emails': 'E-mailek küldésének engedélyezése'
 'About me': Rólam
 'User with email %s is registered already.': 'A/z %s e-mail címmel rendelkező felhasználó regisztrált már.'
-'Username is used. Please use another one.': 'A felhasználónév használatban van. Válasszon másikat.'
+'Username is used. Please use another one.': 'A felhasználónév használatban van. Válassz másikat.'
 Continue: Folytatás
 'Accepting terms of use': 'A használati feltételek elfogadása'
 'send confirmation email': 'megerősítő e-mail küldése'
 'edit user': 'felhasználó szerkesztése'
 'delete user': 'felhasználó törlése'
 'Verified profile': 'Ellenőrzött profil'
-'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ - _END_. bejegyzés / _TOTAL_ megjelenítése'
 'Send email to user:': 'E-mail küldése a felhasználónak:'
 'No users found.': 'Nem találhatók felhasználók.'
 'No records found.': 'Nem találhatók rekordok.'
 'No entries to show': 'Nincsenek megjelenítendő bejegyzések'
-'Display _MENU_ records': '_MENU_ rekordok megjelenítése'
+'Display _MENU_ records': '_MENU_ rekord megjelenítése'
 'Are you sure you want to {action}?': 'Biztosan {action} akarod?'
 'Active Logins': 'Aktív bejelentkezések'
 ' - filtering from _MAX_ records': '- szűrés a _MAX_ rekordokból'
@@ -39,15 +39,15 @@ Continue: Folytatás
 'User was deleted.': 'A felhasználó törlése megtörtént.'
 'User saved': 'A felhasználó mentése megtörtént.'
 'User id not specified': 'A felhasználóazonosító nincs meghatározva'
-'User $1 created': 'A/z $1 nevű felhasználó elkészült'
+'User $1 created': 'A/z $1 nevű felhasználó létrehozása megtörtént'
 'Send confirm email': 'Megerősítő e-mail küldése'
 'Profile saved.': 'A profil mentése megtörtént.'
 Picture: Kép
 'Password updated': 'A jelszó frissítése megtörtént'
-None: null
+None: Nincs
 'New confirmation email was sent to user.': 'Az új megerősítő e-mail elküldésre került a felhasználónak.'
 'Email is used already': 'Az e-mail cím már használatban van'
-'Edit your password': 'Jelszavad szerkesztése'
+'Edit your password': 'Jelszavad módosítása'
 'Edit user $1': 'A/z $1 nevű felhasználó szerkesztése'
 'Edit subscriptions': 'Előfizetések szerkesztése'
 'Edit profile': 'Profil szerkesztése'
@@ -57,7 +57,7 @@ None: null
 'Ban for user $1 saved.': 'A/z $1 nevű felhasználó kitiltásának mentése megtörtént.'
 'User account is active': 'A felhasználói fiók aktív'
 'Allow users profile to be publicly displayed': 'A felhasználói profil nyilvános megjelenésének engedélyezése'
-'Allow user access to login to site backend': 'A hely kiszolgálói oldalára való bejelentkezés hozzáférésének engedélyezése a felhasználó számára'
+'Allow user access to login to site backend': 'A hely kiszolgáló oldalára való bejelentkezés hozzáférésének engedélyezése a felhasználó számára'
 Templates: Sablonok
 Username: Felhasználónév
 'Last Name': Vezetéknév
@@ -112,7 +112,7 @@ Filters: Szűrők
 'User account $1 was created successfully.': 'A/z $1 felhasználói fiók létrehozása sikerült.'
 'You do not have the right to change user account permissions.': 'Nincs jogod a felhasználói fiók engedélyeinek módosításához.'
 'You do not have the right to change user account information.': 'Nincs jogod a felhasználói fiók adatainak módosításához.'
-'The password you typed is incorrect.': 'Az általad megadott jelszó helytelen.'
+'The password you typed is incorrect.': 'Az általad megadott jelszó téves.'
 'You do not have the right to delete user accounts.': 'Nincs jogod a felhasználói fiókok törléséhez.'
 'User account $1 was deleted successfully.': 'A/z $1 felhasználói fiók törlése sikerült.'
 'The IP Group $1 has been created.': 'A/z $1 IP-csoport létrehozása megtörtént.'
@@ -185,6 +185,8 @@ Miscellaneous: Egyebek
 'Editor Miscellaneous Settings': 'Szerkesztő egyéb beállításai'
 'No such user account.': 'Nincs ilyen felhasználói fiók.'
 'User image (full-size)': 'Felhasználó képe (teljes méretű)'
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
 users:
     label:
         title: 'Felhasználók keresése'
@@ -214,7 +216,7 @@ users:
             recordCountPageUnboundedTemplate: '{recordsShown} /'
             recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
             recordCountFilteredTemplate: '(szűrve a  {recordsTotal} összes rekordbóé)'
-            recordCountText: Megjelenítendő
+            recordCountText: 'Megjelenítve '
             recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
             recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
             processingText: Feldolgozás...

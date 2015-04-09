@@ -14,7 +14,6 @@ $f_language_id = Input::Get('Language', 'int', 0);
 $f_section_number = Input::Get('Section', 'int', 0);
 
 $numArticles = count(Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, $f_language_id));
-$numSubscriptions = count(Subscription::GetSubscriptions($f_publication_id));
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
@@ -50,14 +49,6 @@ camp_html_content_top($translator->trans('Delete section', array(), 'sections'),
                 <br/>
                 <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="Y"> <?php echo $translator->trans('Delete all articles and all of their translations', array(), 'sections'); ?>
         </TD>
-</TR>
-<TR>
-	<TD COLSPAN="2" align="center">
-		<?php  echo $translator->trans('There are $1 subscriptions which will be affected.', array('$1' => '<B>'.$numSubscriptions.'</B>'), 'sections'); ?>
-		<br>
-		<INPUT TYPE="checkbox" checked NAME="f_delete_subscriptions" class="input_checkbox"> <?php  echo $translator->trans("Delete section from all subscriptions.", array(), 'sections'); ?>
-
-	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center"><?php  echo $translator->trans('Are you sure you want to delete the section $1?', array('$1' => '<B>'.htmlspecialchars($sectionObj->getName()).'</B>'), 'sections'); ?></TD>

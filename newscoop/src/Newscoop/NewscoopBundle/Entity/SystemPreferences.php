@@ -5,10 +5,9 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * System Preferences entity
@@ -16,7 +15,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity()
  * @ORM\Table(name="SystemPreferences")
  */
-class SystemPreferences 
+class SystemPreferences
 {
     /**
      * @ORM\Id()
@@ -30,7 +29,7 @@ class SystemPreferences
      * @ORM\Column(type="string", length=100, name="varname")
      * @var string
      */
-    public $option;
+    protected $option;
 
     /**
      * @ORM\Column(type="string", length=100, name="value", nullable=true)
@@ -44,7 +43,8 @@ class SystemPreferences
      */
     protected $created_at;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->setCreatedAt(new \DateTime());
     }
 
@@ -77,7 +77,7 @@ class SystemPreferences
     public function setValue($value)
     {
         $this->value = $value;
-        
+
         return $this;
     }
 
@@ -90,20 +90,30 @@ class SystemPreferences
     public function setOption($option)
     {
         $this->option = $option;
-        
+
         return $this;
     }
 
     /**
      * Set create date
      *
-     * @param datetime $created_at
+     * @param  datetime $created_at
      * @return datetime
      */
     public function setCreatedAt(\DateTime $created_at)
     {
         $this->created_at = $created_at;
-        
+
         return $this;
+    }
+
+    /**
+     * Gets the value of option.
+     *
+     * @return string
+     */
+    public function getOption()
+    {
+        return $this->option;
     }
 }

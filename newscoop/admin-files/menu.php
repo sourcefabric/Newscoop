@@ -27,7 +27,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
   //--></script>
 
     <?php include dirname(__FILE__) . '/html_head.php'; ?>
-    
+
     <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fg.menu.js" type="text/javascript"></script>
     <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.widgets.js" type="text/javascript"></script>
     <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
@@ -39,11 +39,11 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.css" />
 
     <!--[if IE 6]>
-	<style type="text/css">
-		.fg-menu-ipod .fg-menu li { width: 95%; }
-		.fg-menu-ipod .ui-widget-content { border:0; }
-	</style>
-	<![endif]-->
+    <style type="text/css">
+        .fg-menu-ipod .fg-menu li { width: 95%; }
+        .fg-menu-ipod .ui-widget-content { border:0; }
+    </style>
+    <![endif]-->
 
   <script type="text/javascript">
   <!--
@@ -57,18 +57,18 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
     }
     <?php } ?>
     var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
-    $(document).ready(function() {
+    $(document).ready(function () {
         $.datepicker.setDefaults( $.datepicker.regional['<?php echo $locale; ?>'] );
     });
     //-->
   </script>
   <script type="text/javascript">
   <!--
-  $(function(){
+  $(function () {
       // BUTTONS
       $('.fg-button').hover(
-          function(){ $(this).removeClass('fg-button-ui-state-default').addClass('fg-button-ui-state-focus'); },
-          function(){ $(this).removeClass('fg-button-ui-state-focus').addClass('fg-button-ui-state-default'); }
+          function () { $(this).removeClass('fg-button-ui-state-default').addClass('fg-button-ui-state-focus'); },
+          function () { $(this).removeClass('fg-button-ui-state-focus').addClass('fg-button-ui-state-default'); }
       );
 
       // MENUS
@@ -111,9 +111,9 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
   //-->
   </script>
   <script type="text/javascript">
-  $(document).ready(function() {
+  $(document).ready(function () {
       var sticky_limit = 0;
-      $(window).scroll(function() {
+      $(window).scroll(function () {
           if ($('.sticky').size() == 0) {
               return false; // no sticky
           }

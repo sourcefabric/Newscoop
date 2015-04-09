@@ -2,6 +2,120 @@
 VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
+   Version 4.4 - Newscoop 4.4 minor release
+      24/03/2015 16:08  4.4.0  initial release
+         2f8dd0f fixed proxy regeneration when already generated in upgrade scripts
+         34783f4 improve rmt config
+         734e5ed optimize search query
+         2bbad8f fixed loading more articles on scroll - afterlist save
+         1c3dad1 added track by
+         098b175 removed height from the editor image tpl so images can be disppplayed responsively
+         2d9f639 fix translation
+         e3369b8 fix issue with dissapearing articles
+         f9079dd display revert popup when adding article from preview
+         41937ab revert button fix
+         f93f95f changed onEnd to onAdd events in playlist app
+         e137cb6 Set new codename for minor release
+         268a8f5 updated translation resources
+         f01cbe7 updated translation resources
+         b5bcd71 add missing domain translations
+         e921f3a fix typo in translations domain
+         ea4421e updated translation resources
+         ded1774 CS-5735: Changes find into findOneBy and catches exception if not found.
+         e3840e7 fix admin menu under low permisions, update vendors
+         b1fd64a CS-5732 - User can add into playlist same article multi times in FF
+         218582e CS-5731 - playlist limit alert "limit reached - should I revert" is not being triggered on firefox
+         068b04b Set new codename for minor release
+         0e93c9d set descending sorting in article repository
+         633d2aa CS-5709 - Playlist is not correct working with long list
+         b153f14 updated translation resources
+         c249df1 updated translation resources
+         f0b167a added translation domain
+         4b5165f fix playlist limit when saving and fetching more articles on scroll
+         d75258f fix limit
+         d350920 added spinner when loading featured articles
+         6e800d9 disable proxy regeneration, laod other annotations
+         165b9d6 added spinner when loading featured articles
+         ee75778 [CS-5729] add upgrade script for initializing playlists articles order, remove some not used files
+         7553d46 improvements to list saving
+         0ff18f0 disable proxy regeneration, laod other annotations
+         ee78558 CS-5728 - Remove limitation from loaded playlist, load more on scroll when no limit
+         cffecc9 Update BridgeController.php
+         a2923f5 [CS-5720] Fix Insert/edit internal link
+         59e37d1 added option to not create default client in console command installer
+         c5547a3 fix try catch for topics.php script
+         c469078 fix renditions cropping with in implementation
+         d81433a create oauth client when installing newscoop from console command
+         bd35900 added fixed rss fields links to dashboard widgets
+         a47652d mapping fixes
+         5144978 fix some of the not valid associations
+         09108b0 fix add_client.php script to not fail when diffrent files permissions
+         56e40bf CS-5721: Adds composer.lock for updated composer.jsont
+         d18f1d7 Fixes issue
+         e6410b8 catch Entity not found exception when topic's language cant be found
+         a412c53 clear cache before adding oauth client
+         87e8574 CS-5721: Fixes issue when using <% or %> in templates with smarty
+         2ea50ba improved topics script
+         30a545f CS-5723 - AES is showing incorrect language for added topics
+         916cbd5 CS-5715 - Remove not used core files in 4.4
+         0ec87a8 updated docs
+         62f3414 CS-5718 - added and changed upgrade docs
+         4159f61 move editorial comment sql so the script can be executed
+         6d06f31 revert exception handling
+         2553179 fix bug in authors table causing: headers already sent issue
+         3b0a9ed CS-5684 - Front-end is not support correctly percent values from AES
+         9834873 CS-5642 - Article Editor removes the img tags for imported articles
+         fb420df CS-5717 - fixed topics script
+         379b8f0 CS-5714 - Restore of backup is not working from 4.3.2 to 4.4.0 RC
+         a060634 CS-5719 - DB query errors for dashboard widgets
+         c4c2e4b CS-5717 - Integrate script which converts topics into Newscoop
+         37ef66b CS-5666 - Stop creating newscoop-indexer.lock in the root of newscoop instance
+         093a8e1 fixed topic unlinking - behat
+         bb38717 require MetaDbObject class in MetaTopic class
+         93a560c CS-5708 - Add info how to install Newscoop from the console
+         00ccfde CS-5666 - Stop creating newscoop-indexer.lock in the root of newscoop instance
+         222220e added isset
+         e755d0f Adds link to 'Add publication'-button, if no publications are available
+         27f927e added try catch block to getDefaultAlias function
+         9e94a10 fix documentation block for getServerOS in bug reporter
+         de7c397 added php version and OS info to bug reporter
+         0862d1b clear 'topic' namespace
+         19a41c6 fixed image width for user image in comments management
+         807b0e2 added 'site' for backward compability
+         a256d18 fixed subtopics list and added caching to it
+         4198d32 fix install plugins command
+         0efb477 remove request
+         33bbd59 throw exception when alias not found
+         008d056 provide default alias for creating oauth default client upgrade script
+         863979f changed preview function name
+         4c63ea7 fixed article preview for related articles
+         804a13f fix sections API, article translate url
+         6973425 CS-5713 - Namespace alias can't be detected in Topic service
+         f3394db updated translation resources
+         71361e7 updated translation resources
+         b4685fe updated translation resources
+         e522575 updated translation resources
+         4014748 CS-5712 - Show popup when changing list name
+         00302f8 revert action improvements
+         56197f7 CS-5711 - Remove last item from the list with possibility to revert
+         47d84cf added alert, changed draggable placeholder, removed load on scroll
+         5ad70b2 changed DateTime parameter when locking, unlocking article
+         201dff5 AENV-428 - image captions not updating
+         fc2743b updated translation resources
+         1a9f857 updated translation resources
+         07c0d62 updated translation resources
+         7b23a29 AENV-356 - Related articles is not showing correctly issues - added parameter
+         5deae2e AENV-356 - Related articles is not showing correctly issues
+         8269cc5 A proper merge of #918 into 4.3
+         df845a4 CS-5656 - Error in section articles API - languages mixed
+         68567b3 CS-5656 - Error in section articles API - languages mixed
+         9a9b367 removed wrong phrase in articles.en.yml
+         0bff89f updated translation resources
+         0bea33b Release of new version 4.4.0-rc
+
+   Version 4.4 - Newscoop 4.4 Release Candidate 1
+      04/03/2015 12:01  4.4.0-rc  initial release
+
    Version 4.3 - Tag Newscoop 4.3 stable release
       23/01/2015 11:35  4.3.2  Newscoop 4.3.2 minor release (bugfixes)
       28/11/2014 14:46  4.3.1  "Newscoop 4.3.1 minor release"

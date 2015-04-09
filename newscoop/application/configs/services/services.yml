@@ -31,6 +31,9 @@ services:
         arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory"]
         tags:
             - { name: kernel.event_listener, event: user.set_points, method: updateUserPoints }
+    user.manager:
+        class:      Newscoop\User\UserManager
+        arguments:  ["@em"]
     user.list:
         class:      Newscoop\Services\ListUserService
         arguments:  ["%blog%", "@em"]
@@ -58,6 +61,12 @@ services:
     article.link:
         class:      Newscoop\Article\LinkService
         arguments:  ["@em", "@zend_router", "@router"]
+    related_articles:
+        class:      Newscoop\Services\RelatedArticlesService
+        arguments:  ["@em"]
+    playlists:
+        class:      Newscoop\Services\PlaylistsService
+        arguments:  ["@em", "@dispatcher", "@newscoop.cache"]
     article.repository:
         class:      Doctrine\Common\Persistence\ObjectRepository
         factory_service: doctrine
@@ -151,8 +160,7 @@ services:
         class:      Newscoop\Services\NotificationService
         arguments:  ["@em"]
     topic:
-        class: Newscoop\Topic\TopicService
-        arguments: ["@em"]
+        alias: newscoop_newscoop.topic_service
     index_client.default:
         class: Newscoop\Search\DefaultIndexClient
         arguments: ["@service_container"]
@@ -193,6 +201,8 @@ services:
     newscoop.cache:
         class: Newscoop\Services\CacheService
         arguments: ["@system_preferences_service"]
+    newscoop.input_manipulator:
+        class: Newscoop\Services\InputManipulator
     user.garbage:
         class: Newscoop\Services\GarbageCollectionService
         arguments: ["@em"]
@@ -202,6 +212,9 @@ services:
     newscoop.scheduler:
         class: Newscoop\Services\SchedulerService
         arguments: ["@em", "%scheduler%"]
+    newscoop.editor:
+        class: Newscoop\Services\EditorService
+        arguments: ["@dispatcher", "@em"]
 
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:

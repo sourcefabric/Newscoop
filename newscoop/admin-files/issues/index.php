@@ -26,8 +26,8 @@ camp_html_content_top($translator->trans('Issue List'), array('Pub' => $publicat
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php echo $translator->trans("Publication List"); ?></B></A></TD>
+    <TD><A HREF="<?php echo \Zend_Registry::get('container')->get('router')->generate('newscoop_newscoop_publications_index'); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+    <TD><A HREF="<?php echo \Zend_Registry::get('container')->get('router')->generate('newscoop_newscoop_publications_index'); ?>"><B><?php echo $translator->trans("Publication List"); ?></B></A></TD>
 <?php
 if ($g_user->hasPermission('ManageIssue')) {
     if (Issue::GetNumIssues($Pub) <= 0) {

@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
-use Newscoop\Entity\Attachment;
 use Newscoop\Search\DocumentInterface;
 
 /**
@@ -39,33 +38,35 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\Publication
      */
     protected $publication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @ORM\JoinColumn(name="issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */
     protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @ORM\JoinColumn(name="NrSection", referencedColumnName="Number")
+     * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     protected $section;
 
     /**
-     * @ORM\Column(name="NrSection", nullable=True)
+     * TODO: Fix this bug. It's not section Id - it's sectionNumber!
+     * @ORM\Column(name="NrSection", nullable=true)
      * @var int
      */
     protected $sectionId;
 
     /**
-     * @ORM\Column(name="NrIssue", nullable=True)
+     * TODO: Fix this bug. It's not Issue Id - it's issueNumber!
+     * @ORM\Column(name="NrIssue", nullable=true)
      * @var int
      */
     protected $issueId;
@@ -209,22 +210,22 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\User
      */
     protected $lockUser;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\ManyToMany(targetEntity="Newscoop\NewscoopBundle\Entity\Topic", inversedBy="articles")
      * @ORM\JoinTable(name="ArticleTopics",
      *      joinColumns={
      *          @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="id")
      *      }
      *  )
-     * @var Newscoop\Entity\Topic
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $topics;
 
@@ -243,7 +244,7 @@ class Article implements DocumentInterface
     protected $playlists;
 
     /**
-     * @ORM\Column(type="datetime", name="LockTime", nullable=True)
+     * @ORM\Column(type="datetime", name="LockTime", nullable=true)
      * @var DateTime
      */
     protected $lockTime;
@@ -339,16 +340,12 @@ class Article implements DocumentInterface
     protected $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet", inversedBy="articles")
      * @ORM\JoinTable(name="ArticleSnippets",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="ArticleId", referencedColumnName="Number")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
-     *      }
+     *      joinColumns={@ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")}
      *  )
-     * @var Newscoop\Entity\Snippet
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $snippets;
 
@@ -358,7 +355,7 @@ class Article implements DocumentInterface
     protected $data;
 
     /**
-     * @param int $number
+     * @param int                      $number
      * @param Newscoop\Entity\Language $language
      */
     public function __construct($number, Language $language)
@@ -366,16 +363,17 @@ class Article implements DocumentInterface
         $this->number = (int) $number;
         $this->language = $language;
         $this->updated = new DateTime();
-        $this->authors = new Collection();
+        $this->authors = new ArrayCollection();
         $this->topics = new ArrayCollection();
         $this->attachments = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->snippets = new ArrayCollection();
     }
 
     /**
      * Set article id
      *
-     * @param int $p_id
+     * @param  int     $p_id
      * @return Article
      */
     public function setId($p_id)
@@ -403,6 +401,20 @@ class Article implements DocumentInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Sets the value of name.
+     *
+     * @param string $name the name
+     *
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -463,16 +475,6 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get issue id
-     *
-     * @return int
-     */
-    public function getIssueId()
-    {
-        return $this->issueId;
-    }
-
-    /**
      * Get section
      *
      * @return \Newscoop\Entity\Section
@@ -497,19 +499,9 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get section id
-     *
-     * @return int
-     */
-    public function getSectionId()
-    {
-        return $this->sectionId;
-    }
-
-    /**
      * Set workflowStatus
      *
-     * @param string $status
+     * @param  string $status
      * @return void
      */
     public function setWorkflowStatus($workflowStatus)
@@ -583,7 +575,6 @@ class Article implements DocumentInterface
         return ($this->language) ? $this->language->getCode() : null;
     }
 
-
     /**
      * Get number
      *
@@ -592,6 +583,18 @@ class Article implements DocumentInterface
     public function getNumber()
     {
         return $this->number;
+    }
+
+    /**
+     * Set number
+     *
+     * @return int
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
     }
 
     /**
@@ -612,6 +615,7 @@ class Article implements DocumentInterface
     public function setTitle($title)
     {
         $this->name = $title;
+
         return $this;
     }
 
@@ -628,7 +632,7 @@ class Article implements DocumentInterface
     /**
      * Set date
      *
-     * @param DateTime $updated
+     * @param  DateTime $updated
      * @return void
      */
     public function setDate(DateTime $date)
@@ -639,7 +643,7 @@ class Article implements DocumentInterface
     /**
      * Set data
      *
-     * @param array $data
+     * @param  array $data
      * @return void
      */
     public function setData(array $data)
@@ -650,13 +654,17 @@ class Article implements DocumentInterface
     /**
      * Get article type field data
      *
-     * @param string $field
+     * @param  string $field
      * @return mixed
      */
     public function getData($field)
     {
         if ($this->data === null) {
             $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+        }
+
+        if ($field == null) {
+            return $this->data;
         }
 
         if (is_array($this->data)) {
@@ -669,14 +677,15 @@ class Article implements DocumentInterface
     /**
      * Set article type field data
      *
-     * @param string $field
-     * @param string $value
+     * @param  string $field
+     * @param  string $value
      * @return mixed
      */
     public function setFieldData($field, $value)
     {
         if ($this->data === null) {
             $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+            $this->data->create();
         }
 
         return $this->data->setProperty('F'.$field, $value);
@@ -770,7 +779,8 @@ class Article implements DocumentInterface
      * Set comments_link
      * @param string $link uri for comments resource in Newscoop API
      */
-    public function setCommentsLink($link) {
+    public function setCommentsLink($link)
+    {
         $this->comments_link = $link;
     }
 
@@ -808,7 +818,6 @@ class Article implements DocumentInterface
         return $this;
     }
 
-
     /**
      * Get publishDate
      *
@@ -832,9 +841,9 @@ class Article implements DocumentInterface
     /**
      * Set published
      *
-     * @param Datetime|null $published
+     * @param \Datetime|null $published
      *
-     * @return string
+     * @return self
      */
     public function setPublished($published)
     {
@@ -856,7 +865,7 @@ class Article implements DocumentInterface
     /**
      * Set creator
      *
-     * @param  User $p_user
+     * @param  User    $p_user
      * @return Article
      */
     public function setCreator(User $p_user)
@@ -898,6 +907,7 @@ class Article implements DocumentInterface
         if (!$this->webcode) {
             return null;
         }
+
         return $this->webcode->getWebcode();
     }
 
@@ -933,6 +943,7 @@ class Article implements DocumentInterface
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
+
         return $this;
     }
 
@@ -1003,6 +1014,45 @@ class Article implements DocumentInterface
         }
 
         return $this->topics;
+    }
+
+    /**
+     * Add Topic to the Article
+     *
+     * @param Topic $topic the Topic to attach
+     *
+     * @return boolean
+     */
+    public function addTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
+    {
+
+        if (!$this->topics->contains($topic)) {
+            $this->topics->add($topic);
+            $topic->addArticleTopic($this);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove a Topic from the Article
+     *
+     * @param Topic $topic the Topic to remove
+     *
+     * @return boolean
+     */
+    public function removeTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
+    {
+        if ($this->topics->contains($topic)) {
+            $this->topics->removeElement($topic);
+            $topic->removeArticleTopic($this);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -1149,8 +1199,8 @@ class Article implements DocumentInterface
     /**
      * Author article
      *
-     * @param string $title
-     * @param array $fields
+     * @param  string $title
+     * @param  array  $fields
      * @return void
      */
     public function author($title, array $fields)
@@ -1172,6 +1222,7 @@ class Article implements DocumentInterface
         if (count($this->attachments) == 0) {
             return null;
         }
+
         return $this->attachments;
     }
 
@@ -1185,6 +1236,7 @@ class Article implements DocumentInterface
     public function setAttachments($attachments)
     {
         $this->attachments = $attachments;
+
         return $this;
     }
 
@@ -1252,6 +1304,8 @@ class Article implements DocumentInterface
                 'updated' => $this->updated,
                 'published' => $this->published,
                 'indexed' => $this->indexed,
+                'onFrontPage' => $this->onFrontPage,
+                'onSection' => $this->onSection,
                 'type' => $this->type,
                 'webcode' => $this->getWebcode(),
                 'publication_number' => $this->publication ? $this->publication->getId() : null,
@@ -1270,14 +1324,15 @@ class Article implements DocumentInterface
             ->toArray();
 
         $this->addFields($view);
+
         return $view;
     }
 
     /**
      * Set article type field value
      *
-     * @param string $field
-     * @param string $value
+     * @param  string $field
+     * @param  string $value
      * @return void
      */
     private function setFieldValue($field, $value)
@@ -1311,6 +1366,7 @@ class Article implements DocumentInterface
     {
         if ($this->data === null) {
             $this->data = new ArticleData($this->type, $this->number, $this->getLanguageId());
+            $this->data->create();
         }
 
         return $this->data;
@@ -1319,5 +1375,398 @@ class Article implements DocumentInterface
     public function getObject()
     {
         return clone $this;
+    }
+
+    /**
+     * Get Article Snippets
+     *
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getSnippets()
+    {
+        return $this->snippets;
+    }
+
+    /**
+     * Add a Snippet to the Article
+     *
+     * @param Snippet $snippet the Snippet to attach
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function addSnippet(Snippet $snippet)
+    {
+        if (!$this->snippets->contains($snippet)) {
+            $this->snippets->add($snippet);
+            $snippet->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a Snippet from the Article
+     *
+     * @param Snippet $snippet the Snippet to remove
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function removeSnippet(Snippet $snippet)
+    {
+        if ($this->snippets->contains($snippet)) {
+            $this->snippets->removeElement($snippet);
+            $snippet->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get language object
+     *
+     * @return Newscoop\Entity\Language
+     */
+    public function getLanguageObject()
+    {
+        return $this->getLanguage();
+    }
+
+    /**
+     * Checks if article is locked or not
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        if ((null === $this->getLockUser()) && ($this->getLockTime() === null)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets the value of lockUser.
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function getLockUser()
+    {
+        return $this->lockUser;
+    }
+
+    /**
+     * Sets the value of lockUser.
+     *
+     * @param Newscoop\Entity\User $lockUser the lock user
+     *
+     * @return self
+     */
+    public function setLockUser(User $lockUser = null)
+    {
+        $this->lockUser = $lockUser;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of lockTime.
+     *
+     * @return DateTime
+     */
+    public function getLockTime()
+    {
+        if (null === $this->lockTime) {
+            return null;
+        }
+
+        return $this->lockTime;
+    }
+
+    /**
+     * Sets the value of lockTime.
+     *
+     * @param DateTime $lockTime the lock time
+     *
+     * @return self
+     */
+    public function setLockTime(DateTime $lockTime = null)
+    {
+        $this->lockTime = $lockTime;
+
+        return $this;
+    }
+
+    /**
+     * Gets the time difference between current and article lock time
+     *
+     * @return array
+     */
+    public function getLockTimeDiffrence()
+    {
+        $time1 = $this->getLockTime();
+        $sinceStart = $time1->diff(new DateTime());
+
+        return array(
+            'days' => $sinceStart->d,
+            'hours' => $sinceStart->h,
+            'minutes' => $sinceStart->i,
+            'seconds' => $sinceStart->s
+        );
+    }
+
+    /**
+     * Gets the value of articleOrder.
+     *
+     * @return int
+     */
+    public function getArticleOrder()
+    {
+        return $this->articleOrder;
+    }
+
+    /**
+     * Sets the value of articleOrder.
+     *
+     * @param int $articleOrder the article order
+     *
+     * @return self
+     */
+    public function setArticleOrder($articleOrder)
+    {
+        $this->articleOrder = $articleOrder;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of shortName.
+     *
+     * @return string
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
+    }
+
+    /**
+     * Sets the value of shortName.
+     *
+     * @param string $shortName the short name
+     *
+     * @return self
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of type.
+     *
+     * @param string $type the type
+     *
+     * @return self
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of public.
+     *
+     * @return string
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * Sets the value of public.
+     *
+     * @param boolean $public the public
+     *
+     * @return self
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of onFrontPage.
+     *
+     * @return string
+     */
+    public function getOnFrontPage()
+    {
+        return $this->onFrontPage;
+    }
+
+    /**
+     * Sets the value of onFrontPage.
+     *
+     * @param string $onFrontPage the on front page
+     *
+     * @return self
+     */
+    public function setOnFrontPage($onFrontPage = false)
+    {
+        if (is_bool($onFrontPage) || is_int($onFrontPage)) {
+            if ($onFrontPage) {
+                $this->onFrontPage = 'Y';
+            } else {
+                $this->onFrontPage = 'N';
+            }
+
+            return $this;
+        } else if (is_string($onFrontPage)) {
+            $this->onFrontPage = $onFrontPage;
+        } else {
+            $this->onFrontPage = "N";
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of onSection.
+     *
+     * @return string
+     */
+    public function getOnSection()
+    {
+        return $this->onSection;
+    }
+
+    /**
+     * Sets the value of onSection.
+     *
+     * @param string $onSection the on section
+     *
+     * @return self
+     */
+    public function setOnSection($onSection = false)
+    {
+        if (is_bool($onSection) || is_int($onSection)) {
+            if ($onSection) {
+                $this->onSection = 'Y';
+            } else {
+                $this->onSection = 'N';
+            }
+
+            return $this;
+        } else if (is_string($onSection)) {
+            $this->onSection = $onFrontPage;
+        } else {
+            $this->onSection = "N";
+        }
+
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of uploaded.
+     *
+     * @return DateTime
+     */
+    public function getUploaded()
+    {
+        return $this->uploaded;
+    }
+
+    /**
+     * Sets the value of uploaded.
+     *
+     * @param DateTime $uploaded the uploaded
+     *
+     * @return self
+     */
+    public function setUploaded(DateTime $uploaded)
+    {
+        $this->uploaded = $uploaded;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of isIndexed.
+     *
+     * @return string
+     */
+    public function getIsIndexed()
+    {
+        return $this->isIndexed;
+    }
+
+    /**
+     * Sets the value of isIndexed.
+     *
+     * @param boolean $isIndexed the is indexed
+     *
+     * @return self
+     */
+    public function setIsIndexed($isIndexed)
+    {
+        $this->isIndexed = $isIndexed;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of issueId.
+     *
+     * @return int
+     */
+    public function getIssueId()
+    {
+        return $this->issueId;
+    }
+
+    /**
+     * Sets the value of issueId.
+     *
+     * @param int $issueId the issue id
+     *
+     * @return self
+     */
+    public function setIssueId($issueId)
+    {
+        $this->issueId = $issueId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of sectionId.
+     *
+     * @return int
+     */
+    public function getSectionId()
+    {
+        return $this->sectionId;
+    }
+
+    /**
+     * Sets the value of sectionId.
+     *
+     * @param int $sectionId the section id
+     *
+     * @return self
+     */
+    public function setSectionId($sectionId)
+    {
+        $this->sectionId = $sectionId;
+
+        return $this;
     }
 }
