@@ -765,8 +765,9 @@ class DatabaseObject
 
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
+        	$value = is_null($columnValue) ? 'NULL' : $g_ado_db->escape($columnValue);
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
-        		$setColumns[] = $g_ado_db->escapeKeyVal($columnName, $columnValue);
+        		$setColumns[] = $columnName.' = '.$value;
         	}
         }
 		$queryStr = 'UPDATE ' . $this->m_dbTableName

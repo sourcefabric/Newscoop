@@ -40,9 +40,9 @@
             </div>
 
             <div class="save-button-bar">
-                <button ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
+                <button ng-disabled="!playlist.selected" ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
                 <button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
-                <button type="button" ng-disabled="processing" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
+                <button type="button" ng-disabled="processing || !playlist.selected" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
             </div>
         </div>
         {% endif %}
@@ -189,7 +189,7 @@
                     <div loading-container="tableParams.settings().$loading">
                         <table ng-table="tableParams" show-filter="true" class="table datatable dataTable">
                             <tbody ng-sortable="sortableConfig">
-                                <tr ng-repeat="article in $data track by article.number" class="move-elements">
+                                <tr ng-repeat="article in $data" class="move-elements">
                                     <td class="query" filter="{ 'query': 'text' }" sortable="query">
                                         <div class="context-item">
                                             <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
@@ -248,7 +248,7 @@
                                     <div id="placeholder-wrapper" {% if editorView == false %}ng-class="{'empty-placeholder': $parent.featuredArticles.length == 0}" {% endif %}>
                                     <p>{{ 'Drag here to add to list'|trans }}</p>
                                     <ul id="context_list" ng-sortable="sortableConfig">
-                                        <li class="item" ng-repeat="article in $parent.featuredArticles track by article.number">
+                                        <li class="item" ng-repeat="article in $parent.featuredArticles">
                                             <div class="context-item" {% if editorView %}style="width: 620px"{% endif %} >
                                                 <div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>
                                                 <div class="context-item-header">
@@ -276,12 +276,13 @@
                                     </form>
                                 </div>
                                 <!-- alert message start -->
-                                <div class="limit-alert-wrapper" ng-show="showLimitAlert">
+                                <div class="limit-alert-wrapper" ng-show="$parent.showLimitAlert">
                                     <div class="limit-alert">
                                         <button type="button" class="close" ng-click="removeLastInsertNew()"><span aria-hidden="true">×</span></button>
-                                        <div class="limit-alert-content">{{'Last item of the list has been deleted to add this item to the list. Revert?'|trans}} {[{countDown}]}...</div>
+                                        <div class="limit-alert-content">{{'The last article of this list has been removed.'|trans}} {[{countDown}]}...</div>
                                         <div class="limit-alert-footer">
-                                            <button type="button" ng-click="revertAction()" name="revert" class="btn btn-sm btn-primary">{{'Revert'|trans}}</button>
+                                            <button type="button" ng-click="revertAction()" name="revert" class="btn btn-sm btn-default">{{'Revert'|trans}}</button>
+                                            <button type="button" ng-click="removeLastInsertNew()" name="revert" class="btn btn-sm btn-primary">{{'Ok'|trans({}, 'messages')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -319,6 +320,7 @@
 
             <script type="text/javascript">
                 var clientId = '{{ clientId }}';
+                var redirectUris = '{{ redirectUris }}';
                 $(document).ready(function() {
                     $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
                 });
@@ -338,6 +340,7 @@
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/featured-articles.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/controllers/articles-filters.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/loading-container.js') }}"></script>
+            <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/directives/sf-iframe.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/filters/lists-search.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/modal-factory.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/playlists/services/user-auth.js') }}"></script>

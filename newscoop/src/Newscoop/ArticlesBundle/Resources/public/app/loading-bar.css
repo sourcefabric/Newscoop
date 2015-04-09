@@ -36,6 +36,7 @@
 /* Circled */
 
 .ai-circled {
+  z-index: 9999;
   height: 32px;
   width: 32px;
   position: relative;

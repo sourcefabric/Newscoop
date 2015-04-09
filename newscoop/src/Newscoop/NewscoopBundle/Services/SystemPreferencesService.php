@@ -9,7 +9,6 @@ namespace Newscoop\NewscoopBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\NewscoopBundle\Entity\SystemPreferences;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 
 /**
@@ -85,10 +84,10 @@ class SystemPreferencesService
     {
         $currentProperty = $this->findOneBy($property);
 
-        if (!$currentProperty->isEmpty()) {
-            return $currentProperty->first()->getValue();
-        } else {
-            return;
+        if (!empty($currentProperty)) {
+            $currentProperty = reset($currentProperty);
+
+            return $currentProperty['value'];
         }
     }
 
@@ -154,8 +153,12 @@ class SystemPreferencesService
             return $this->preferences;
         }
 
-        // TODO: replace it with dql and measure performance
-        return $this->preferences = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')->findAll();
+        return $this->preferences = $this->em
+            ->createQueryBuilder('p')
+            ->select('p.value', 'p.option')
+            ->from('Newscoop\NewscoopBundle\Entity\SystemPreferences', 'p')
+            ->getQuery()
+            ->getArrayResult();
     }
 
     /**
@@ -164,12 +167,12 @@ class SystemPreferencesService
      *
      * @param string $property Property name
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function findOneBy($property)
     {
-        return new ArrayCollection(array_filter($this->getAllPreferences(), function ($pref) use ($property) {
-            return $pref->getOption() === $property;
-        }));
+        return array_filter($this->getAllPreferences(), function ($pref) use ($property) {
+            return $pref['option'] === $property;
+        });
     }
 }
