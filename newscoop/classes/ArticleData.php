@@ -19,7 +19,6 @@ class ArticleData extends DatabaseObject
     public $m_keyColumnNames = array('NrArticle', 'IdLanguage');
     public $m_dbTableName;
     public $m_articleTypeName;
-    private $m_articleTypeObject = null;
 
     /**
      * An article type is a dynamic table that is created for an article
@@ -164,18 +163,17 @@ class ArticleData extends DatabaseObject
             return array();
         }
 
-        if (is_null($this->m_articleTypeObject)) {
-            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey('article_type_'.$this->m_articleTypeName, 'article_type');
-            if ($cacheService->contains($cacheKey)) {
-                $this->m_articleTypeObject = $cacheService->fetch($cacheKey);
-            } else {
-                $this->m_articleTypeObject = new ArticleType($this->m_articleTypeName);
-                $cacheService->save($cacheKey, $this->m_articleTypeObject);
-            }
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey('article_type_user_defined_columns_'.$this->m_articleTypeName, 'article_type');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        } else {
+            $articleTypeObject = new ArticleType($this->m_articleTypeName);
+            $definedColumns = $articleTypeObject->getUserDefinedColumns(null, $p_showAll, $p_skipCache);
+            $cacheService->save($cacheKey, $definedColumns);
         }
 
-        return $this->m_articleTypeObject->getUserDefinedColumns(null, $p_showAll, $p_skipCache);
+        return $definedColumns;
     }
 
     /**

@@ -13,7 +13,7 @@ $this->headLink( array( 'type' => 'text/css', 'href' => $this->baseUrl('/admin-s
 				<div class="clear"></div>
 
 				<?php echo $this->action( 'wizard-theme-settings', 'themes', 'admin', array( 'format' => 'adv', 'id' => $this->themeId ) ) ?>
-
+				<?php echo $this->action( 'wizard-theme-playlists', 'themes', 'admin', array('id' => $this->themeId ) ) ?>
 				<div class="themeSettingsTabs">
 
 					<?php echo $this->action( 'wizard-theme-template-settings', 'themes', 'admin', array( 'format' => 'adv', 'id' => $this->themeId ) ) ?>

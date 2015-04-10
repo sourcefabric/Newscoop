@@ -108,7 +108,7 @@ class CommentsController extends FOSRestController
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
      *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
-     *         {"name"="order", "dataType"="string", "required"=false, "description"="Ordering type"}
+     *         {"name"="order", "dataType"="string", "required"=false, "description"="Ordering type. Possible values: [chrono, nested]"}
      *     }
      * )
      *
@@ -185,7 +185,7 @@ class CommentsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
-     * @Route("/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_comments_createcomment")
      * @Method("POST")
      * @View()
      *

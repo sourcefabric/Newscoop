@@ -117,7 +117,8 @@ class ArticlesList extends ListObject
         $value = null;
         $switchTypeHint = false;
         $context = CampTemplate::singleton()->context();
-        for ($index = 0; $index < count($p_constraints); $index++) {
+        $constraintsCount = count($p_constraints);
+        for ($index = 0; $index < $constraintsCount; $index++) {
             $word = $p_constraints[$index];
 
             switch ($state) {

@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Annotations\Acl;
+use Newscoop\Version;
 
 /**
  * @Acl(ignore="1")
@@ -23,6 +24,7 @@ class Admin_ApplicationController extends Zend_Controller_Action
     {
         $newscoop = new CampVersion;
         $this->view->version = $newscoop->getVersion();
+        $this->view->api_version = Version::API_VERSION;
         $this->view->date = $newscoop->getReleaseDate();
     }
 }

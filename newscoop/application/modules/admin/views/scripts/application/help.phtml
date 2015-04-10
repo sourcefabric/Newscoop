@@ -6,6 +6,7 @@ $this->placeholder('title')->set($translator->trans('Help', array(), 'help')); ?
 
 <dl class="metadata">
   <dt><?php echo $translator->trans('Version', array(), 'help'); ?>:</dt> <dd><?php echo $this->version; ?></dd>
+  <dt><?php echo $translator->trans('REST API Version', array(), 'help'); ?>:</dt> <dd><?php echo $this->api_version; ?></dd>
   <dt><?php echo $translator->trans('Release date', array(), 'help'); ?>:</dt> <dd><?php echo $this->date; ?></dd>
 </dl>
 
