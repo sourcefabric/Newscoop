@@ -235,7 +235,8 @@
                                 <input ng-change="updateParentLimit(this)" type="number" name="input" ng-model="playlist.selected.maxItems" min="0" max="99" class="form-control input-sm" id="playlistId">
                                 <span class="error-custom" ng-show="limitForm.input.$error.number">{{ 'Not valid number'|trans}}!</span>
                             {% else %}
-                                <span style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
+                                <span ng-if="playlist.selected.maxItems" style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
+                                <span ng-if="!playlist.selected.maxItems" style="line-height: 28px;">0</span>
                             {% endif %}
                             </form>
                             </div>

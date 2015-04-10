@@ -50,6 +50,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             ->createQueryBuilder('c')
             ->where('c.thread = :thread')
             ->andWhere('c.language = :language')
+            ->orderBy('c.time_created', 'desc')
             ->setParameters(array(
                 'thread' => $article,
                 'language' => $languageId->getId()

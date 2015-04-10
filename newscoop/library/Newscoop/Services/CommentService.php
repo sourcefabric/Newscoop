@@ -59,7 +59,7 @@ class CommentService
             ->save($comment, $attributes);
 
         // save persisted comment object
-        $this->em->flush();
+        $this->em->flush($comment);
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheService->clearNamespace('comment');
@@ -358,8 +358,8 @@ class CommentService
     {
         $qb = $this->getRepository()
             ->createQueryBuilder('c')
-            ->select('COUNT(c), c.article_num')
-            ->andWhere('c.article_num IN (:ids)')
+            ->select('COUNT(c), c.thread')
+            ->andWhere('c.thread IN (:ids)')
             ->andWhere('c.status = :status');
 
         if (!$all) {
@@ -370,7 +370,7 @@ class CommentService
             }
         }
 
-        return $qb->groupBy('c.article_num')
+        return $qb->groupBy('c.thread')
             ->setParameter('ids', array_values($ids))
             ->setParameter('status', Comment::STATUS_APPROVED)
             ->getQuery()
