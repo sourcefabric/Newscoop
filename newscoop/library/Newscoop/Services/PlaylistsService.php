@@ -117,6 +117,8 @@ class PlaylistsService
             $this->em->getConnection()->exec('UNLOCK TABLES;');
         }
 
+        $this->clearPlaylistTemplates($playlist);
+
         return true;
     }
 
@@ -194,8 +196,14 @@ class PlaylistsService
             'id' => $playlist->getId(),
         )));
         $this->cacheService->clearNamespace('boxarticles');
+        $this->clearPlaylistTemplates($playlist);
     }
 
+    /**
+     * Remove items above the limit on playlist
+     *
+     * @param Playlist $playlist
+     */
     public function removeLeftItems($playlist)
     {
         if ($playlist->getMaxItems() != null) {
@@ -204,6 +212,144 @@ class PlaylistsService
                 ->setParameter('maxPosition', $playlist->getMaxItems() + 1)
                 ->setParameter('playlistId', $playlist->getId())
                 ->execute();
+        }
+    }
+
+    /**
+     * Load xml file
+     *
+     * @param string $path
+     * 
+     * @return array content of xml file as an array
+     */
+    public function loadThemePlaylists($path)
+    {
+        $xml = simplexml_load_file($path);
+
+        return json_decode(json_encode($xml->articlesLists), true);
+    }
+
+    /**
+     * Check if playlists have current theme lists definitions
+     *
+     * @param Theme $theme
+     * @param array $themePlaylists
+     *
+     * @return boolean
+     */
+    public function checkIfThemePlaylistsAreUpToDate($theme, $themePlaylists)
+    {
+        $newThemePlaylists = array();
+        foreach($themePlaylists['list'] as $themePlaylist) {
+            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
+            foreach($themePlaylist['template'] as $template) {
+                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
+            }
+        }
+
+        foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
+            $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
+            if (!$playlist) {
+                return false;
+            }
+            
+            $themes = $playlist->getThemes();
+            if (!array_key_exists($theme->getId(), $themes)) {
+                return false;
+            }
+
+            foreach($themePlaylist['templates'] as $template) {
+                if (!in_array($template, $themes[$theme->getId()])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Update playists with current theme playlists definitions
+     *
+     * @param Theme $theme
+     * @param array $themePlaylists
+     *
+     * @return boolean
+     */
+    public function updateThemePlaylists($theme, $themePlaylists) {
+        $newThemePlaylists = array();
+        foreach($themePlaylists['list'] as $themePlaylist) {
+            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
+            foreach($themePlaylist['template'] as $template) {
+                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
+            }
+        }
+
+        foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
+            $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
+            if (!$playlist) {
+                $playlist = new Playlist();
+                $playlist->setName($playlistName);
+
+                $this->em->persist($playlist);
+            }
+
+            $themes = $playlist->getThemes();
+            $themes[$theme->getId()] = $themePlaylist['templates'];
+
+            $playlist->setThemes($themes);
+        }
+
+        $this->em->flush();
+
+        return true;
+    }
+
+    /**
+     * Clear playlists themes definitions on unassign action
+     *
+     * @param Theme $theme
+     * @param array $themePlaylists
+     * 
+     * @return boolean
+     */
+    public function removeThemeFromPlaylists($theme, $themePlaylists) {
+        $newThemePlaylists = array();
+        foreach($themePlaylists['list'] as $themePlaylist) {
+            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
+            foreach($themePlaylist['template'] as $template) {
+                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
+            }
+        }
+
+        foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
+            $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
+            if (!$playlist) {
+                continue;
+            }
+
+            $themes = $playlist->getThemes();
+            unset($themes[$theme->getId()]);
+
+            $playlist->setThemes($themes);
+        }
+
+        $this->em->flush();
+
+        return true;
+    }
+
+    /**
+     * Clear cache for all temlates assigned to playlist
+     *
+     * @param Playlist $playlist
+     */
+    public function clearPlaylistTemplates($playlist)
+    {
+        foreach($playlist->getThemes() as $theme) {
+            foreach($theme as $file) {
+                \TemplateCacheHandler_DB::clean($file);
+            }
         }
     }
 }
