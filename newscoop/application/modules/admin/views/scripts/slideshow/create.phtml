@@ -7,6 +7,7 @@ $this->placeholder('bodyClass')->set('iframe expanded');
 ?>
 <div class="content">
 <form id="edit_slideshow_form" method="<?php echo $this->form->getMethod(); ?>">
+<input type="hidden" name="image" id="imageId">
 <div id="modal-top">
     <div class="toolbar fixed-top">
     <div class="save-button-bar"></div>
@@ -56,72 +57,49 @@ var draggableOptions = {
     connectToSortable: 'ul.slideshow',
     opacity: 0.8,
     helper: 'clone',
-    cursor: 'move'
+    cursor: 'move',
+    drag: function(event, ui)
+    {
+        if($('.slideshow-headline input').val() == '') {
+            return false;
+        }
+    },
+    stop: function(event, ui) {
+    	if($('.slideshow-headline input').val() != '') {
+    		$('#imageId').val(ui.helper.attr('id'));
+            $('#edit_slideshow_form').submit();
+        }
+    }
 };
 
 $(function() {
-    $('.slideshow').sortable({
-        placeholder: 'placeholder',
-        <?php if ($this->slideshow) { ?>
-        receive: function(event, ui) {
-            var imageId = ui.item.attr('id');
-            $.post("<?php echo $this->url(array(
-                'module' => 'admin',
-                'controller' => 'slideshow',
-                'action' => 'add-item',
-                'format' => 'json',
-            )); ?>", {
-                image: imageId,
-            }, function (data, textStatus) {
-                if (data.error_message) {
-                    $('#slideshow-items #' + imageId).detach();
-                    alert(data.error_message);
-                    return;
-                }
-
-                $('#slideshow-items #' + imageId).replaceWith(data.item);
-                setOrder();
-            }, 'json');
-        },
-        update: setOrder,
-        cursor: 'move'
-        <?php } ?>
-    });
-
     <?php if ($this->slideshow) { ?>
-    $('.thumbnails li').draggable(draggableOptions);
+    $('.thumbnails li').draggable('disabled');
+    <?php }  else { ?>
+    	$('.slideshow-headline input').addClass('error');
+    	$('.slideshow-headline input').attr('placeholder', '<?php echo $translator->trans("Value is required and can\'t be empty", array(), 'article_images'); ?>');
+    	$('.slideshow-headline input').focus(function() {
+    		if ($(this).val() == "") {
+				$(this).addClass('error');
+			} else {
+				$(this).removeClass('error');
+			}
+		});
+		$('.slideshow-headline input').blur( function() {
+				if ($(this).val() !== "") {
+			  		$(this).removeClass('error');
+			  	} else {
+			  		$(this).addClass('error');
+			  	}
+			});
+		$('.thumbnails li').draggable(draggableOptions);
     <?php } ?>
 
-    $('#slideshow-items .remove').live('click', function(e) {
-        e.preventDefault();
-        var link = $(this);
-        $.post(link.attr('href') + '?format=json', function (data, textStatus) {
-            link.closest('li').detach();
-        });
-    });
 
     $('#select-image').tabs();
 
     $('#add-sellected-to-gallery').click(function(){
-        var images = [];
-        $('.thumbnails li figure input:checkbox[name=checked-images[]]:checked').each(function(index, element){
-            images.push($(element).val());
-        });
-
-         // ping for connection
-        callServer('ping', [], function(json) {
-            flashMessage('<?php echo $translator->trans('Processing...', array(), 'home'); ?>');
-            $.post("<?php echo $this->url(array(
-                'module' => 'admin',
-                'controller' => 'slideshow',
-                'action' => 'add-multiple-items',
-                'format' => 'json',
-            )); ?>", {
-                images: images
-            }, function() {
-                window.location.reload();
-            });
-        }); // /ping
+        $('#edit_slideshow_form').submit();
     })
 
     $('#select-all-images').click(function(e){

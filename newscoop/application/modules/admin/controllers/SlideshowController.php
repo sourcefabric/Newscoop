@@ -40,7 +40,12 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $form->rendition->setMultiOptions($this->_helper->service('image.rendition')->getOptions());
 
         $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
+        $postParams = $request->getPost();
+
+        $image = isset($postParams['image']) ? $postParams['image'] : null;
+        $checkedImages = isset($postParams['checked-images']) ? $postParams['checked-images'] : array();
+
+        if ($request->isPost() && $form->isValid($postParams)) {
             $values = $form->getValues();
             $values['rendition'] = $this->_helper->service('image.rendition')->getRendition($values['rendition']);
             $slideshow = $this->_helper->service('package')->save($values);
@@ -52,13 +57,23 @@ class Admin_SlideshowController extends Zend_Controller_Action
                     'slideshows' => array_map(function ($slideshow) { return array('id' => $slideshow->getId()); }, $slideshows),
                 ));
             }
+
+            if (!empty($checkedImages)) {
+                foreach ($checkedImages as $key => $value) {
+                    $this->addItemToPackage($value, $slideshow);
+                }
+            }
+
+            if (!is_null($image) && $image !== "") {
+                $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
+            }
+
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
                 'article_number' => $this->_getParam('article_number'),
                 'slideshow' => $slideshow->getId(),
             ));
         }
 
-        $this->view->type = 'create';
         $this->view->form = $form;
         $this->view->images = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
     }
@@ -92,9 +107,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
     {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
-        $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
         try {
-            $item = $this->_helper->service('package')->addItem($slideshow, $image);
+            $item = $this->addItemToPackage(array_pop(explode('-', $this->_getParam('image'))), $slideshow);
             $this->_helper->json(array(
                 'item' => $this->view->slideshowItem($item),
             ));
@@ -112,15 +126,21 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
         $items = array();
         foreach ($this->_getParam('images') as $key => $value) {
-            $image = $this->_helper->service('image')->find($value);
-            try {
-                $item = $this->_helper->service('package')->addItem($slideshow, $image);
-                $items[] = $this->view->slideshowItem($item);
-            } catch (\InvalidArgumentException $e) {
-            }
+            $item = $this->addItemToPackage($value, $slideshow);
+            $items[] = $this->view->slideshowItem($item);
         }
 
         $this->_helper->json($items);
+    }
+
+    private function addItemToPackage($imageId, $slideshow)
+    {
+        try {
+            $image = $this->_helper->service('image')->find($imageId);
+
+            return $this->_helper->service('package')->addItem($slideshow, $image);
+        } catch (\InvalidArgumentException $e) {
+        }
     }
 
     public function addVideoItemAction()
@@ -130,9 +150,30 @@ class Admin_SlideshowController extends Zend_Controller_Action
             'action' => 'add-video-item',
         )));
 
+        $slideshow = null;
+        if ($this->_getParam('slideshow')) {
+            $slideshow = $this->getSlideshow();
+        }
+
+        if ($this->_getParam('slideshow_name') && !$slideshow) {
+            $values = array(
+                'rendition' => $this->_getParam('rendition'),
+                'headline' => $this->_getParam('slideshow_name'),
+            );
+            $values['rendition'] = $this->_helper->service('image.rendition')->getRendition($values['rendition']);
+            $slideshow = $this->_helper->service('package')->save($values);
+            if ($this->_getParam('article_number', false)) {
+                $slideshows = $this->_helper->service('package')->findByArticle($this->_getParam('article_number'));
+                $slideshows[] = $slideshow;
+                $this->_helper->service('package')->saveArticle(array(
+                    'id' => $this->_getParam('article_number'),
+                    'slideshows' => array_map(function ($slideshow) { return array('id' => $slideshow->getId()); }, $slideshows),
+                ));
+            }
+        }
+
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $slideshow = $this->getSlideshow();
             $this->_helper->service('package')->addItem($slideshow, new \Newscoop\Package\RemoteVideo($form->url->getValue()));
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
                 'article_number' => $this->_getParam('article_number'),

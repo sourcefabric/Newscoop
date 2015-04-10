@@ -33,6 +33,15 @@ $(function() {
             $('#image-archive li').draggable(draggableOptions);
         });
     });
+
+    $('#add-video form').submit(function(e) {
+        if ($('.slideshow-headline input').val() == "") {
+            return false;
+        } else {
+            $(this).append('<input type="hidden" name="slideshow_name" value="'+$('.slideshow-headline input').val()+'" /> ');
+            $(this).append('<input type="hidden" name="rendition" value="'+$('.slideshow-headline select').val()+'" /> ');
+        }
+    });
 });
 </script>
 </div>

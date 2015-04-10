@@ -24,14 +24,14 @@ require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_t
                     'action' => 'edit',
                     'item' => null,
                     'format' => null
-                )); ?>" class="save-button"><?php echo $translator->trans('Done editing', array(), 'article_images'); ?></a>
+                )); ?>" class="save-button" style="margin-right: 0"><?php echo $translator->trans('Done editing', array(), 'article_images'); ?></a>
             </span>
 
     </h1>
     </div>
 </div>
 <div class="editor-wrapper">
-<div class="editarea">
+<div <?php if ($this->item->isVideo()) { ?> style="padding-left: 55px;" <?php } ?> class="editarea">
     <div>
         <?php if ($this->item->isVideo()) { ?>
         <h2>Video: <?php echo $this->item->getVideoUrl(); ?></h2>

@@ -4,7 +4,6 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Package;
 
 /**
@@ -42,7 +41,7 @@ class PackageService
     /**
      * Find package
      *
-     * @param int $id
+     * @param  int                      $id
      * @return Newscoop\Package\Package
      */
     public function find($id)
@@ -53,20 +52,21 @@ class PackageService
     /**
      * Find packages by article
      *
-     * @param int $articleNumber
+     * @param  int   $articleNumber
      * @return array
      */
     public function findByArticle($articleNumber)
     {
         $article = $this->getArticle($articleNumber);
+
         return $article->getPackages()->toArray();
     }
 
     /**
      * Save package
      *
-     * @param array $values
-     * @param Newscoop\Package\Package $package
+     * @param  array                    $values
+     * @param  Newscoop\Package\Package $package
      * @return Newscoop\Package\Package
      */
     public function save(array $values, Package $package = null)
@@ -90,6 +90,7 @@ class PackageService
 
         try {
             $this->orm->flush($package);
+
             return $package;
         } catch (\PDOException $e) {
             if (strpos($e->getMessage(), 'slug is not unique') !== false) {
@@ -103,9 +104,9 @@ class PackageService
     /**
      * Add package item
      *
-     * @param Newscoop\Package\Package $package
-     * @param mixed $item
-     * @param int $offset
+     * @param  Newscoop\Package\Package $package
+     * @param  mixed                    $item
+     * @param  int                      $offset
      * @return Newscoop\Package\Item
      */
     public function addItem(Package $package, $item)
@@ -122,21 +123,22 @@ class PackageService
         $packageItem = new Item($package, $item);
         $this->orm->persist($packageItem);
         $this->orm->flush();
+
         return $packageItem;
     }
 
     /**
      * Set order of items for given package
      *
-     * @param Newscoop\Package\Package $package
-     * @param array $order
+     * @param  Newscoop\Package\Package $package
+     * @param  array                    $order
      * @return void
      */
     public function setOrder(Package $package, $order)
     {
         $items = array();
         foreach ($package->getItems() as $item) {
-            $offset = array_search('item-' . $item->getId(), $order);
+            $offset = array_search('item-'.$item->getId(), $order);
             $package->getItems()->set($offset, $item);
             $package->getItems()->get($offset)->setOffset($offset);
         }
@@ -147,8 +149,8 @@ class PackageService
     /**
      * Remove item from package
      *
-     * @param Newscoop\Package\Package $package
-     * @param int $itemId
+     * @param  Newscoop\Package\Package $package
+     * @param  int                      $itemId
      * @return void
      */
     public function removeItem(Package $package, $itemId)
@@ -163,6 +165,7 @@ class PackageService
                 $package->getItems()->remove(count($package->getItems()) - 1);
                 $this->orm->remove($item);
                 $this->orm->flush();
+
                 return;
             }
         }
@@ -171,7 +174,7 @@ class PackageService
     /**
      * Find item by given id
      *
-     * @param int $id
+     * @param  int                   $id
      * @return Newscoop\Package\Item
      */
     public function findItem($id)
@@ -182,8 +185,8 @@ class PackageService
     /**
      * Save item
      *
-     * @param array $values
-     * @param Newscoop\Package\Item $item
+     * @param  array                 $values
+     * @param  Newscoop\Package\Item $item
      * @return void
      */
     public function saveItem(array $values, Item $item)
@@ -206,7 +209,7 @@ class PackageService
     /**
      * Find package by slug
      *
-     * @param string $slug
+     * @param  string                   $slug
      * @return Newscoop\Package\Package
      */
     public function findBySlug($slug)
@@ -219,10 +222,10 @@ class PackageService
     /**
      * Find package by a set of criteria
      *
-     * @param array $criteria
-     * @param array $orderBy
-     * @param int $limit
-     * @param int $offset
+     * @param  array $criteria
+     * @param  array $orderBy
+     * @param  int   $limit
+     * @param  int   $offset
      * @return array
      */
     public function findBy(array $criteria, array $orderBy = array(), $limit = 25, $offset = 0)
@@ -233,7 +236,7 @@ class PackageService
     /**
      * Get count by a set of criteria
      *
-     * @param array $criteria
+     * @param  array $criteria
      * @return int
      */
     public function getCountBy(array $criteria = array())
@@ -244,7 +247,7 @@ class PackageService
     /**
      * Save article packages
      *
-     * @param array $articleArray
+     * @param  array $articleArray
      * @return void
      */
     public function saveArticle(array $articleArray)
@@ -262,8 +265,8 @@ class PackageService
     /**
      * Remove package from article
      *
-     * @param Newscoop\Package\Package $package
-     * @param int $articleNumber
+     * @param  Newscoop\Package\Package $package
+     * @param  int                      $articleNumber
      * @return void
      */
     public function removeArticle(Package $package, $articleNumber)
@@ -276,19 +279,20 @@ class PackageService
     /**
      * Find packages not attached to article
      *
-     * @param int $articleNumber
+     * @param  int   $articleNumber
      * @return array
      */
     public function findAvailableForArticle($articleNumber)
     {
         $article = $this->getArticle($articleNumber);
+
         return $this->orm->getRepository('Newscoop\Package\Package')->findAvailableForArticle($article);
     }
 
     /**
      * Delete package
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function delete($id)
@@ -301,7 +305,7 @@ class PackageService
     /**
      * Get article entity
      *
-     * @param int $articleNumber
+     * @param  int                      $articleNumber
      * @return Newscoop\Package\Article
      */
     private function getArticle($articleNumber)
