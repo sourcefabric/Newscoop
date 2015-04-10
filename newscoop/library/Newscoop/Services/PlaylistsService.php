@@ -306,11 +306,12 @@ class PlaylistsService
     }
 
     /**
-     * Clear playlists themes definitions unnasigning theme
+     * Clear playlists themes definitions on unassign action
      *
-     * @param  [type] $theme          [description]
-     * @param  [type] $themePlaylists [description]
-     * @return [type]                 [description]
+     * @param Theme $theme
+     * @param array $themePlaylists
+     * 
+     * @return boolean
      */
     public function removeThemeFromPlaylists($theme, $themePlaylists) {
         $newThemePlaylists = array();
