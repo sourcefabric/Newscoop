@@ -175,7 +175,7 @@ services:
 
     newscoop_newscoop.listener.access_denied:
         class: Newscoop\NewscoopBundle\EventListener\AccessDeniedExceptionListener
-        arguments:  ["@templating"]
+        arguments:  ["@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
