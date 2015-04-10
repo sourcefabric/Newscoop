@@ -216,7 +216,21 @@ class PlaylistsService
     }
 
     /**
-     * Load xml file
+     * Load articlesLists from xml file
+     *
+     * example template articles lists schema:
+     *
+     * <articlesLists> # main section
+     *   <list name="FrontPage"> # single playlist declaration
+     *     <template file="article.tpl" /> # single template file assigned to playlist declaration
+     *   </list>
+     *   <list name="Second Playlist">
+     *     <template file="issue.tpl" />
+     *     <template file="front.tpl" />
+     *   </list>
+     * </articlesLists>
+     *
+     * Cache for all assigned to playlist templates will be cleared after playlist update action
      *
      * @param string $path
      * 
@@ -239,13 +253,7 @@ class PlaylistsService
      */
     public function checkIfThemePlaylistsAreUpToDate($theme, $themePlaylists)
     {
-        $newThemePlaylists = array();
-        foreach($themePlaylists['list'] as $themePlaylist) {
-            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
-            foreach($themePlaylist['template'] as $template) {
-                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
-            }
-        }
+        $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
 
         foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
             $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
@@ -276,14 +284,9 @@ class PlaylistsService
      *
      * @return boolean
      */
-    public function updateThemePlaylists($theme, $themePlaylists) {
-        $newThemePlaylists = array();
-        foreach($themePlaylists['list'] as $themePlaylist) {
-            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
-            foreach($themePlaylist['template'] as $template) {
-                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
-            }
-        }
+    public function updateThemePlaylists($theme, $themePlaylists)
+    {
+        $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
 
         foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
             $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
@@ -313,14 +316,9 @@ class PlaylistsService
      * 
      * @return boolean
      */
-    public function removeThemeFromPlaylists($theme, $themePlaylists) {
-        $newThemePlaylists = array();
-        foreach($themePlaylists['list'] as $themePlaylist) {
-            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
-            foreach($themePlaylist['template'] as $template) {
-                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
-            }
-        }
+    public function removeThemeFromPlaylists($theme, $themePlaylists)
+    {
+        $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
 
         foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
             $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
@@ -351,5 +349,30 @@ class PlaylistsService
                 \TemplateCacheHandler_DB::clean($file);
             }
         }
+    }
+
+    private function buildNewThemePlaylists($themePlaylists)
+    {
+        $newThemePlaylists = array();
+        if (array_key_exists('template', $themePlaylists['list'])) {
+            $bakThemePlaylists = $themePlaylists;
+            $themePlaylists = array();
+            $themePlaylists['list'][0] = $bakThemePlaylists['list'];
+        }
+
+        foreach($themePlaylists['list'] as $themePlaylist) {
+            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
+            if (array_key_exists('@attributes', $themePlaylist['template'])) {
+                $bakThemePlaylist = $themePlaylist;
+                $themePlaylist = array();
+                $themePlaylist['template'][0] = $bakThemePlaylist['template'];
+            }
+
+            foreach($themePlaylist['template'] as $template) {
+                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
+            }
+        }
+
+        return $newThemePlaylists;
     }
 }

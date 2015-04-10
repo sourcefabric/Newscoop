@@ -99,12 +99,8 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         $exp_time += time();
         $tpl_file = md5($tpl_file).substr($tpl_file, -15);
 
-        $uri = CampSite::GetURIInstance();
-        $smarty = CampTemplate::singleton();
-        $campsiteVector = array_merge(
-            $uri->getCampsiteVector(),
-            $smarty->campsiteVector
-        );
+        $smarty = CampTemplate::singleton();        
+        $campsiteVector = $smarty->campsiteVector;
 
         $return = false;
         if ($action != 'clean') {
