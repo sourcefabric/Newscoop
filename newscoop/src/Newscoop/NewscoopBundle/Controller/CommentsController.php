@@ -49,10 +49,9 @@ class CommentsController extends Controller
             ->createQueryBuilder('c');
 
         $queryBuilder
-            ->select('c', 'cm.name', 't.name')
+            ->select('c', 'cm.name')
             ->leftJoin('c.commenter', 'cm')
-            ->leftJoin('c.thread', 't')
-            ->where($queryBuilder->expr()->isNotNull('c.article_num'))
+            ->where($queryBuilder->expr()->isNotNull('c.thread'))
             ->andWhere('c.status != :deleted')
             ->setParameter('deleted', array_search('deleted', $statusMap))
             ->orderBy('c.time_created', 'desc');
@@ -470,8 +469,7 @@ class CommentsController extends Controller
             $qb = $em->createQueryBuilder();
             $comments = $qb
                 ->from('Newscoop\Entity\Comment', 'c', 'c.id')
-                ->select('c', 't', 'cc', 'u')
-                ->leftJoin('c.thread', 't')
+                ->select('c', 'cc', 'u')
                 ->leftJoin('c.commenter', 'cc')
                 ->leftJoin('cc.user', 'u')
                 ->where($qb->expr()->in('c.id', $commentIds))
@@ -480,14 +478,17 @@ class CommentsController extends Controller
 
             foreach ($pagination as $comment) {
                 $comment = $comment[0];
+                $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
+
                 $commentsArray[] = array(
                     'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
                     'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
                     'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
-                    'issueNumber' => $comments[$comment->getId()]->getThread()->getIssueId(),
-                    'section' => $comments[$comment->getId()]->getThread()->getSection()->getName(),
+                    'issueNumber' => $thread->getIssueId(),
+                    'section' => $thread->getSection()->getName(),
                     'comment' => $comment,
                     'index' => $counter,
+                    'article' => $thread
                 );
 
                 $counter++;
