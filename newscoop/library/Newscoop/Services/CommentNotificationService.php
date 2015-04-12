@@ -51,7 +51,7 @@ class CommentNotificationService
     {
         $comment = $this->commentService->find($event['id']);
         $article = $this->em->getRepository('Newscoop\Entity\Article')
-            ->getArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId())
+            ->getArticle($comment->getThread(), $comment->getLanguage()->getId())
             ->getSingleResult();
 
         try {
@@ -60,7 +60,7 @@ class CommentNotificationService
             $user = null;
         }
 
-        $authors = \ArticleAuthor::GetAuthorsByArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId());
+        $authors = \ArticleAuthor::GetAuthorsByArticle($comment->getThread(), $comment->getLanguage()->getId());
         $this->emailService->sendCommentNotification($comment, $article, $authors, $user);
     }
 }

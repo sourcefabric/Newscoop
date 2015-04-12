@@ -305,7 +305,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                     ->andWhere('c.thread = :thread')
                     ->andWhere('c.language = :language')
                     ->setParameter('parent', $parent)
-                    ->setParameter('thread', $parent->getThread()->getId())
+                    ->setParameter('thread', $parent->getThread())
                     ->setParameter('language', $parent->getLanguage()->getId());
 
             $threadOrder = $threadOrder->getQuery()->getSingleScalarResult();
@@ -325,7 +325,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                ->andWhere('c.thread = :thread')
                ->andWhere('c.language = :language')
                     ->setParameter('language', $parent->getLanguage()->getId())
-                    ->setParameter('thread', $parent->getThread()->getId())
+                    ->setParameter('thread', $parent->getThread())
                     ->setParameter('thread_order', $threadOrder);
             $qb->getQuery()->execute();
             // set the thread level the thread level of the parent plus one the current level
@@ -356,7 +356,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $entity
                 ->setLanguage($language)
                 ->setForum($thread->getPublication())
-                ->setThread($thread);
+                ->setThread($thread->getNumber());
         }
 
         $entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);
