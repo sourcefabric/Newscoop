@@ -77,7 +77,10 @@ class Article extends DatabaseObject
         'comments_locked',
         'time_updated',
         'object_id',
-        'rating_enabled');
+        'rating_enabled',
+        'section_id',
+        'issue_id'
+    );
 
     public $m_languageName = null;
 
@@ -298,9 +301,17 @@ class Article extends DatabaseObject
             && is_numeric($p_sectionNumber)
             && ($p_publicationId > 0)
             && ($p_issueNumber > 0)
-            && ($p_sectionNumber > 0) ) {
+            && ($p_sectionNumber > 0) )
+        {
+            $issueObj = new Issue($p_publicationId, $this->m_data['IdLanguage'], $p_issueNumber);
+            $sectionObj = new Section($p_publicationId, $p_issueNumber, $this->m_data['IdLanguage'], $p_sectionNumber);
+
             $values['NrIssue'] = (int) $p_issueNumber;
             $values['NrSection'] = (int) $p_sectionNumber;
+
+            // for internall relations in entity we need also to keep sectionId and issueId
+            $values['issue_id'] = $issueObj->getIssueId();
+            $values['section_id'] = $sectionObj->getSectionId();
         }
         $values['ShortName'] = $this->m_data['Number'];
         $values['Type'] = $p_articleType;
@@ -540,10 +551,16 @@ class Article extends DatabaseObject
             $columns["IdPublication"] = (int) $p_destPublicationId;
         }
         if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
+            $issueObj = new Issue($p_destPublicationId, $this->m_data['IdLanguage'], $p_destIssueNumber);
             $columns["NrIssue"] = (int) $p_destIssueNumber;
+            // for internall relations in entity we need also to keep issueId
+            $columns['issue_id'] = $issueObj->getIssueId();
         }
         if ($this->m_data["NrSection"] != $p_destSectionNumber) {
+            $sectionObj = new Section($p_destPublicationId, $p_destIssueNumber, $this->m_data['IdLanguage'], $p_destSectionNumber);
             $columns["NrSection"] = (int) $p_destSectionNumber;
+            // for internall relations in entity we need also to keep sectionId
+            $columns['section_id'] = $sectionObj->getSectionId();
         }
         $success = false;
         if (count($columns) > 0) {
