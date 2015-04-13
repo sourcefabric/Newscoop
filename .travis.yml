@@ -29,5 +29,3 @@ before_script:
 script:
 - newscoop/vendor/bin/phpspec run --format pretty
 - newscoop/vendor/bin/behat
-- "sudo tail -n 100 /var/log/apache2/error.log"
-- "sudo tail -n 600 /home/travis/build/ahilles107/Newscoop/newscoop/log/dev.log"
