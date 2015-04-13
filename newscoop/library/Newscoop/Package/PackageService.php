@@ -269,7 +269,7 @@ class PackageService
      * @param  int                      $articleNumber
      * @return void
      */
-    public function removeArticle(Package $package, $articleNumber)
+    public function removeFromArticle(Package $package, $articleNumber)
     {
         $article = $this->getArticle($articleNumber);
         $article->getPackages()->removeElement($package);
