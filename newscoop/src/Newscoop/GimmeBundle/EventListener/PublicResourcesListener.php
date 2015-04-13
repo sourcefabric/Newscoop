@@ -42,7 +42,6 @@ class PublicResourcesListener
         if ($request->getMethod() == 'POST' && $route == 'newscoop_gimme_comments_createcomment') {
             $publicationService = $this->container->get('newscoop.publication_service');
             $publication = $publicationService->getPublication();
-            $this->container->get('ladybug')->log($publicationService, $publication, $publication->getPublicCommentsEnabled());
             if ($publication->getPublicCommentsEnabled()) {
                 $routesArray[] = 'newscoop_gimme_comments_createcomment';
             }

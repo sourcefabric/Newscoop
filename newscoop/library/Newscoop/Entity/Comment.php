@@ -89,15 +89,6 @@ class Comment implements DocumentInterface
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
-     *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     *  })
-     */
-    protected $article;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
@@ -210,29 +201,6 @@ class Comment implements DocumentInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set article
-     *
-     * @param  Newscoop\Entity\Article $article
-     * @return void
-     */
-    public function setArticle(Article $article)
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
-    /**
-     * Get article
-     *
-     * @return Newscoop\Entity\Article
-     */
-    public function getArticle()
-    {
-        return $this->article;
     }
 
     /**
@@ -507,7 +475,7 @@ class Comment implements DocumentInterface
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setThread(Article $thread)
+    public function setThread($thread)
     {
         $this->thread = $thread;
 
@@ -517,7 +485,7 @@ class Comment implements DocumentInterface
     /**
      * Get thread
      *
-     * @return Newscoop\Entity\Articles
+     * @return int
      */
     public function getThread()
     {

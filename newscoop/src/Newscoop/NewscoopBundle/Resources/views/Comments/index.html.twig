@@ -133,7 +133,7 @@
                             {% endif %}
                             <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
                             <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
-                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread.number }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> {{ 'comments.label.ban'|trans }}</a>
+                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> {{ 'comments.label.ban'|trans }}</a>
                             <p></p>
                         </div>
                     </td>
@@ -186,10 +186,10 @@
                     <td>
                         <div class="commentArticleHolder">
                             <p>
-                                <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
-                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.section }}</span>
+                                <a href="/admin/articles/get.php?f_publication_id={{ row.article.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.article.section.number }}&amp;f_article_number={{ row.article.number }}&amp;f_language_id={{ row.article.language.id }}&amp;f_language_selected={{ row.article.language.id }}" class="articleLink">{{ row.article.name }}</a><br>
+                                <span>{{ row.article.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.section }}</span>
                             </p>
-                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a>
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.article.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.article.section.number }}&amp;f_article_number={{ row.article.number }}&amp;f_language_id={{ row.article.language.id }}&amp;f_language_selected={{ row.article.language.id }}">{{ 'comments.label.editarticle'|trans }}</a>
                         </div>
                     </td>
                 </tr>

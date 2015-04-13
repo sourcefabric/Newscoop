@@ -274,7 +274,8 @@ class CampURIShortNames extends CampURI
     /**
      * Get issue
      *
-     * @param  string    $name
+     * @param  string $name
+     *
      * @return MetaIssue
      */
     private function _getIssue($name, MetaLanguage $language, MetaPublication $publication)
