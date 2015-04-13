@@ -317,7 +317,22 @@ class Admin_ThemesController extends Zend_Controller_Action
         $theme = $this->getThemeService()->findById($this->_request->getParam('id'));
         $path = __DIR__.'/../../../../themes/'.$theme->getPath().'theme.xml';
 
-        $this->view->themePlaylists = $playlistsService->loadThemePlaylists($path);
+        $themePlaylists = $playlistsService->loadThemePlaylists($path);
+        if (array_key_exists('template', $themePlaylists['list'])) {
+            $bakThemePlaylists = $themePlaylists;
+            $themePlaylists = array();
+            $themePlaylists['list'][0] = $bakThemePlaylists['list'];
+        }
+
+        foreach($themePlaylists['list'] as $key => $themePlaylist) {
+            if (array_key_exists('@attributes', $themePlaylist['template'])) {
+                $bakThemePlaylist = $themePlaylist;
+                $themePlaylists['list'][0]['template'] = array();
+                $themePlaylists['list'][0]['template'][0] = $bakThemePlaylist['template'];
+            }
+        }
+
+        $this->view->themePlaylists = $themePlaylists;
         $this->view->playlistsAreUpToDate = $playlistsService->checkIfThemePlaylistsAreUpToDate($theme, $this->view->themePlaylists);
         $this->view->theme = $theme;
     }
