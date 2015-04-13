@@ -1,39 +1,44 @@
-<?php 
+<?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); 
+$this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js'));
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/slideshow.css'));
 ?>
-
-<header>
-    <h1><?php echo $translator->trans('Attach slideshows', array(), 'article_images'); ?></h1>
-    <div id="app">
-        <button id="attach-slideshows-button" class="prime"><?php echo $translator->trans('Done'); ?></button>
+<div id="modal-top">
+    <div class="toolbar fixed-top" id="app">
+    <h1><?php echo $translator->trans('Attach').'/'.$translator->trans('Detach').' '.$translator->trans('Slideshows', array(), 'articles'); ?>
+        <span style="float: right;">
+          <button id="attach-slideshows-button" class="prime"><?php echo $translator->trans('Done'); ?></button>
+        </span>
+    </h1>
     </div>
-</header>
-
-<section class="dark">
-    <ul id="article-slideshows" class="list-view grid slideshow-list"></ul>
+</div>
+<h2 class="attached-slideshow"><?php echo $translator->trans('Attached Slideshows', array(), 'article_images'); ?></h2>
+<section>
+    <ul id="article-slideshows" class="slideshow attached"></ul>
 </section>
 
+
 <section>
-    <div style="margin: 8px;"></div>
+    <div class="search-wrapper">
     <form method="post" action="<?php echo($this->url(array(
             'module' => 'admin',
             'controller' => 'slideshow',
             'action' => 'attach',
     ))); ?>">
-    <div style="margin-left: 10px;">
+    <div class="search">
         <input type="text" placeholder="<?php echo($translator->trans('Search')); ?>" name="q" value="<?php if ($this->q) echo $this->escape($this->q); ?>">
         <input type="submit" value="<?php echo($translator->trans('Search')); ?>">
     </div>
     </form>
+    <nav></nav>
+    </div>
 </section>
 
-<nav></nav>
+
 
 <section>
     <ul id="slideshow-list" class="list-view grid slideshow-list"></ul>
 </section>
-
 <script type="text/template" id="slideshow-template">
 <h3 class="title"><%= headline.substring(0, 22) %><% if (headline.length > 22) { %>..<% } %></h3>
 <small>(<?php echo $translator->trans('Items: ', array(), 'article_images'); ?><%= itemsCount %>)</small>

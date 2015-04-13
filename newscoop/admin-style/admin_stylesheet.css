@@ -2348,3 +2348,8 @@ abbr {
 .mceExternalToolbar {
     z-index: 500;
 }
+
+#fancybox-content {
+	border-width: 0px !important;
+	width: 100% !important;
+}

@@ -1,20 +1,37 @@
 <?php
 $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/slideshow.css'));
 $translator = \Zend_Registry::get('container')->getService('translator');
 $preferencesService = \Zend_Registry::get('container')->getService('preferences');
 // Load tinymce for richtext editor
 require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
 ?>
 
-<?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
-<h1><?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
+<?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('iframe'); ?>
+
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="<?php
     if ($preferencesService->MediaRichTextCaptions == 'Y') {
         echo 'return validateTinyMCEEditors();';
     }
 ?>">
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small>
+            <span style="float: right;">
+                <a href="<?php echo $this->url(array(
+                    'action' => 'edit',
+                    'item' => null,
+                    'format' => null
+                )); ?>" class="save-button" style="margin-right: 0"><?php echo $translator->trans('Done editing', array(), 'article_images'); ?></a>
+            </span>
 
-<div class="editarea">
+    </h1>
+    </div>
+</div>
+<div class="editor-wrapper">
+<div <?php if ($this->item->isVideo()) { ?> style="padding-left: 55px;" <?php } ?> class="editarea">
     <div>
         <?php if ($this->item->isVideo()) { ?>
         <h2>Video: <?php echo $this->item->getVideoUrl(); ?></h2>
@@ -30,7 +47,7 @@ require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_t
                 $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
                 $editorOptions  = array(
                     'max_chars' => $preferencesService->MediaCaptionLength,
-                    'toolbar_length' => 33,
+                    'toolbar_length' => 24,
                 );
                 $fieldID = 'caption_'.$this->item->getId();
 
@@ -59,18 +76,12 @@ require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_t
     )); ?>" class="next"><span></span><?php echo $translator->trans('Next'); ?></a>
     <?php } ?>
 
-    <a href="<?php echo $this->url(array(
-        'action' => 'edit',
-        'item' => null,
-        'format' => null
-    )); ?>" class="done button"><?php echo $translator->trans('Done editing', array(), 'article_images'); ?></a>
 </div>
-
 </form>
-
 <?php $this->currentItem = $this->item; ?>
 <ul class="slideshow editor">
     <?php foreach ($this->item->getPackageItems() as $item) { ?>
     <?php echo $this->slideshowItem($item, $this->currentItem); ?>
     <?php } ?>
 </ul>
+</div>
