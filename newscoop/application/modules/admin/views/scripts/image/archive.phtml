@@ -33,5 +33,23 @@ $(function() {
             $('#image-archive li').draggable(draggableOptions);
         });
     });
+
+    $('#add-video form').submit(function(e) {
+        if ($('.slideshow-headline input').val() == "") {
+            return false;
+        } else {
+            $(this).append('<input type="hidden" name="slideshow_name" value="'+$('.slideshow-headline input').val()+'" /> ');
+            $(this).append('<input type="hidden" name="rendition" value="'+$('.slideshow-headline select').val()+'" /> ');
+        }
+    });
 });
 </script>
+</div>
+<div id="add-video">
+    <form method="<?php echo $this->form->getMethod(); ?>" action="<?php echo $this->url(array(
+    'action' => 'add-video-item',
+)); ?>"><div class="add-video">
+    <input type="text" name="url" title="<?php echo $translator->trans("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)", array(), 'article_images'); ?>" placeholder="<?php echo $translator->trans('Video URL', array(), 'article_images'); ?>" /> <button><?php echo $translator->trans('Add video', array(), 'article_images'); ?></button>
+</div></form>
+</div>
+

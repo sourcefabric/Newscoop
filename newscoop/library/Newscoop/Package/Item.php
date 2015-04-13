@@ -4,7 +4,6 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Package;
 
 use Newscoop\Image\LocalImage;
@@ -75,7 +74,7 @@ class Item
 
     /**
      * @param Newscoop\Package\Package $package
-     * @param mixed $item
+     * @param mixed                    $item
      */
     public function __construct(Package $package, $item)
     {
@@ -114,7 +113,7 @@ class Item
     /**
      * Set offset
      *
-     * @param int $offset
+     * @param  int  $offset
      * @return void
      */
     public function setOffset($offset)
@@ -125,7 +124,7 @@ class Item
     /**
      * Get offset
      *
-     * @param int $offset
+     * @param  int  $offset
      * @return void
      */
     public function getOffset()
@@ -142,13 +141,14 @@ class Item
     {
         $rendition = $this->package->getRendition();
         $rendition->setCoords($this->coords);
+
         return $rendition;
     }
 
     /**
      * Set caption
      *
-     * @param string $caption
+     * @param  string $caption
      * @return void
      */
     public function setCaption($caption)
@@ -169,7 +169,7 @@ class Item
     /**
      * Set crop coordinates
      *
-     * @param string $coords
+     * @param  string $coords
      * @return void
      */
     public function setCoords($coords)
@@ -200,7 +200,7 @@ class Item
     /**
      * Set video url
      *
-     * @param string $url
+     * @param  string $url
      * @return void
      */
     public function setVideoUrl($url)
@@ -235,7 +235,7 @@ class Item
      */
     public function getImageSpecs()
     {
-        return trim($this->package->getRendition()->getSpecs() . '_' . $this->coords, '_');
+        return trim($this->package->getRendition()->getSpecs().'_'.$this->coords, '_');
     }
 
     /**
@@ -279,7 +279,7 @@ class Item
             return 'image';
         }
 
-        return null;
+        return;
     }
 
     /**

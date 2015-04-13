@@ -4,7 +4,6 @@ $newscoopDir = realpath(dirname(__FILE__).'/../../../../../../');
 
 require $newscoopDir.'/conf/database_conf.php';
 $loader = require $newscoopDir.'/vendor/autoload.php';
-// mainly needed to load @Gedmo annotations, but also load other annotations
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 use Monolog\Logger;
