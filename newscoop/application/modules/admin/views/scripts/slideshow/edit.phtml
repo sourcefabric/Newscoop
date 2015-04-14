@@ -116,6 +116,8 @@ $(function() {
             }, function() {
                 window.location.reload();
             });
+
+            return false;
         }); // /ping
     })
 
@@ -129,7 +131,7 @@ $(function() {
     });
 });
 </script>
-
+</form>
 
 <div class="expand-btn"><?php echo $translator->trans('Add items to slideshow', array(), 'article_images'); ?></div>
 <div id="select-image" class="tabs popup-tabs">
@@ -165,5 +167,4 @@ $(function() {
         <?php echo $this->imageArchive(); ?>
     </div>
 </div>
-</form>
 </div>
