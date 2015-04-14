@@ -56,6 +56,26 @@
 .coverMessage.open {
     display:block;
 }
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../../../../public/bundles/newscoopnewscoop/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../../../public/bundles/newscoopnewscoop/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../public/bundles/newscoopnewscoop/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../../public/bundles/newscoopnewscoop/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../public/bundles/newscoopnewscoop/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-question-sign:before {
+  content: "\e085";
+}
 </style>
 <div class="coverMessageButton"><span class="glyphicon glyphicon-question-sign"></span>
     {{ 'importantmessage'|trans }}
