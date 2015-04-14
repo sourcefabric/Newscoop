@@ -60,7 +60,10 @@
 <div class="coverMessageButton"><span class="glyphicon glyphicon-question-sign"></span>
     {{ 'importantmessage'|trans }}
 </div>
-<div class="coverMessage">{{ tipMessage }}</div>
+<div class="coverMessage">
+{{ tipMessage }}
+{% if tipCode %}<pre>{{ tipCode }}</pre>{% endif %}
+</div>
 <script type="text/javascript">
     $('.coverMessageButton').click(function(e){
         e.preventDefault();

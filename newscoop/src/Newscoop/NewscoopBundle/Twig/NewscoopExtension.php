@@ -142,10 +142,11 @@ class NewscoopExtension extends \Twig_Extension
         return $csrfProvider->generateCsrfToken('default');
     }
 
-    public function renderTip($tipMessage)
+    public function renderTip($tipMessage, $tipCode = null)
     {
         return $this->container->get('templating')->render('NewscoopNewscoopBundle::tooltip.html.twig', array(
             'tipMessage' => $tipMessage,
+            'tipCode' => $tipCode,
         ));
     }
 

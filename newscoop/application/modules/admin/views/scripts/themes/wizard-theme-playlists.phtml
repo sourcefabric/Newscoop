@@ -5,31 +5,46 @@ $translator = \Zend_Registry::get('container')->getService('translator');
     <form id="" method="post" action="<?php echo $this->url(array( 'action' => 'update-playlists', 'controller' => 'themes', 'module' => 'admin', 'id' => $this->theme->getId() )) ?>">
         <fieldset>
             <legend><?php echo $translator->trans('Theme playlists', array(), 'themes') ?></legend>
-            <?php if ($this->playlistsAreUpToDate == false) { ?>
-            <div style="padding: 5px; border: 1px solid #ccc; background-color: red; color: #fff; margin-bottom: 10px;">
-                <div style="float:left; padding: 5px;"><?php echo $translator->trans('Cached informations about theme playlists are not up to date!', array(), 'themes') ?></div>
-                <input style="float:right;" type="submit" name="submit" id="update-theme-playlists" class="button themePlaylistsBtn" value="<?php echo $translator->trans( 'Update cached data' , array(), 'themes') ?>">
-                <div style="clear:both"></div>
-            </div>
-            <?php } ?>
-            <?php foreach($this->themePlaylists['list'] as $themePlaylist) { ?>
-                <div class="playlist" style="border: 1px solid #cccccc;padding: 10px; margin-bottom: 7px;">
-                    <div class="playlist-header" style="width: 400px">
-                        <h4 style="margin-bottom: 10px;margin-top: 0px; font-weight: normal;"><?php echo $translator->trans('Playlist name', array(), 'themes') ?>: <span style="font-weight: bold;"><?php echo $themePlaylist['@attributes']['name'] ?></span></h4>
-                    </div>
-                    <div style="clear: both"></div>
-                    <div>
-                        <label><?php echo $translator->trans('Assigned templates', array(), 'themes') ?>: </label>
-                        <?php if (count($themePlaylist['template']) > 0){ ?>
-                            <?php $iterator = 1; ?>
-                            <?php foreach($themePlaylist['template'] as $template) { ?>
-                                <span style="font-weight: bold;"><?php echo $template['@attributes']['file'] ?><?php if ($iterator < count($themePlaylist['template'])){?>,<?php } ?></span>
-                                <?php $iterator++; ?>
-                            <?php } ?>
-                        <?php } ?>
-                    </div>
+            <?php if (isset($this->themePlaylists['list']))  { ?>
+                <?php if ($this->playlistsAreUpToDate == false) { ?>
+                <div style="padding: 5px; border: 1px solid #ccc; background-color: red; color: #fff; margin-bottom: 10px;">
+                    <div style="float:left; padding: 5px;"><?php echo $translator->trans('Cached informations about theme playlists are not up to date!', array(), 'themes') ?></div>
+                    <input style="float:right;" type="submit" name="submit" id="update-theme-playlists" class="button themePlaylistsBtn" value="<?php echo $translator->trans( 'Update cached data' , array(), 'themes') ?>">
+                    <div style="clear:both"></div>
                 </div>
-            <?php } ?>
+                <?php } ?>
+                <?php foreach($this->themePlaylists['list'] as $themePlaylist) { ?>
+                    <div class="playlist" style="border: 1px solid #cccccc;padding: 10px; margin-bottom: 7px;">
+                        <div class="playlist-header" style="width: 400px">
+                            <h4 style="margin-bottom: 10px;margin-top: 0px; font-weight: normal;"><?php echo $translator->trans('Playlist name', array(), 'themes') ?>: <span style="font-weight: bold;"><?php echo $themePlaylist['@attributes']['name'] ?></span></h4>
+                        </div>
+                        <div style="clear: both"></div>
+                        <div>
+                            <label><?php echo $translator->trans('Assigned templates', array(), 'themes') ?>: </label>
+                            <?php if (count($themePlaylist['template']) > 0){ ?>
+                                <?php $iterator = 1; ?>
+                                <?php foreach($themePlaylist['template'] as $template) { ?>
+                                    <span style="font-weight: bold;"><?php echo $template['@attributes']['file'] ?><?php if ($iterator < count($themePlaylist['template'])){?>,<?php } ?></span>
+                                    <?php $iterator++; ?>
+                                <?php } ?>
+                            <?php } ?>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } else {
+                $twig = \Zend_Registry::get('container')->getService('newscoop_newscoop.twig.newscoop_extension');
+                echo $twig->renderTip($translator->trans("Below code should be placed into theme.xml (between 'theme' nodes) file to make it work. This file is located in every theme's main directory.", array(), 'themes'), '
+<articlesLists> <!-- main section -->
+  <list name="FrontPage"> <!-- single playlist declaration -->
+    <template file="article.tpl" /> <!-- single template file assigned to playlist declaration -->
+  </list>
+  <list name="Second Playlist">
+    <template file="issue.tpl" />
+    <template file="front.tpl" />
+  </list>
+</articlesLists>').'<br>';
+                echo $translator->trans("The theme's configuration file does not contain information about the list of used featured articles.", array(), 'themes');
+             } ?>
         </fieldset>
     </form>
 </div>
