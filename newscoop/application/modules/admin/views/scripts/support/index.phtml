@@ -2,7 +2,7 @@
 $translator = \Zend_Registry::get('container')->getService('translator');
 $this->placeholder('title')->set($translator->trans('Support Feedback', array(), 'support')); ?>
 
-<dl class="zend_form">
+<dl class="zend_form" style="width: auto;">
     <p>
     <?php echo($translator->trans('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.', array(), 'support')); ?>
     <br><br>
