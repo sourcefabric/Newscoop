@@ -6,7 +6,6 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Installer\Services;
 
 use Symfony\Component\Process\PhpExecutableFinder;
@@ -31,7 +30,7 @@ class FinishService
      */
     public function __construct()
     {
-        $this->newscoopDir = __DIR__ . '/../../../..';
+        $this->newscoopDir = __DIR__.'/../../../..';
         $this->filesystem = new Filesystem();
     }
 
@@ -72,7 +71,7 @@ class FinishService
 
         $php = escapeshellarg($phpPath);
         $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
-        $reloadRenditions = new Process("$php $newscoopConsole  oauth:create-client newscoop $alias $alias --default", null, null, null, 300);
+        $reloadRenditions = new Process("$php $newscoopConsole  oauth:create-client newscoop $alias --default", null, null, null, 300);
         $reloadRenditions->run();
         if (!$reloadRenditions->isSuccessful()) {
             throw new \RuntimeException('An error occurred when executing the create default oauth client command.');
@@ -169,7 +168,7 @@ class FinishService
             'command' => $appDirectory.' log:maintenance',
             'schedule' => '30 1 * * *',
             'enabled' => false,
-            'detailsUrl' => 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/'
+            'detailsUrl' => 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/',
         ));
 
         $crontab = new Crontab();
@@ -208,7 +207,7 @@ class FinishService
         $password = implode(User::HASH_SEP, array(
             User::HASH_ALGO,
             $salt,
-            hash(User::HASH_ALGO, $salt . $config['recheck_user_password']),
+            hash(User::HASH_ALGO, $salt.$config['recheck_user_password']),
         ));
 
         $sql = "UPDATE liveuser_users SET Password = ?, EMail = ?, time_updated = NOW(), time_created = NOW(), status = '1', is_admin = '1' WHERE id = 1";
@@ -219,17 +218,17 @@ class FinishService
 
         $sql = "UPDATE SystemPreferences SET value = ? WHERE varname = 'SiteSecretKey'";
         $stmt = $connection->prepare($sql);
-        $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
+        $stmt->bindValue(1, sha1($config['site_title'].mt_rand()));
         $stmt->execute();
 
         $sql = "INSERT INTO SystemPreferences (`varname`, `value`, `last_modified`) VALUES ('installation_id', ?, NOW())";
         $stmt = $connection->prepare($sql);
-        $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
+        $stmt->bindValue(1, sha1($config['site_title'].mt_rand()));
         $stmt->execute();
 
         $result = $this->setupHtaccess();
         if (!empty($result)) {
-            throw new IOException(implode(" ", $result) . " Most likely it's caused by wrong permissions.");
+            throw new IOException(implode(" ", $result)." Most likely it's caused by wrong permissions.");
         }
     }
 
@@ -244,8 +243,8 @@ class FinishService
         $errors = array();
 
         try {
-            if ($this->filesystem->exists($this->newscoopDir . $htaccess)) {
-                $this->filesystem->copy(realpath($this->newscoopDir . $htaccess), realpath($this->newscoopDir) . '/htaccess.bak');
+            if ($this->filesystem->exists($this->newscoopDir.$htaccess)) {
+                $this->filesystem->copy(realpath($this->newscoopDir.$htaccess), realpath($this->newscoopDir).'/htaccess.bak');
             }
         } catch (IOException $e) {
             $errors[] = $e->getMessage();
@@ -254,7 +253,7 @@ class FinishService
         }
 
         try {
-            $this->filesystem->copy(realpath($this->newscoopDir . '/htaccess.dist'), realpath($this->newscoopDir) . $htaccess, true);
+            $this->filesystem->copy(realpath($this->newscoopDir.'/htaccess.dist'), realpath($this->newscoopDir).$htaccess, true);
         } catch (IOException $e) {
             $errors[] = $e->getMessage();
         }

@@ -91,7 +91,7 @@ try {
         $stmt = $conn->prepare('INSERT INTO OAuthClient(random_id, redirect_uris, secret, allowed_grant_types, name, IdPublication, trusted)
         	VALUES (?, ?, ?, ?, ?, ?, ?)');
         $stmt->bindValue(1, Random::generateToken());
-        $stmt->bindValue(2, serialize(array($alias)));
+        $stmt->bindValue(2, serialize(array($alias.'/oauth/authentication/result')));
         $stmt->bindValue(3, Random::generateToken());
         $stmt->bindValue(4, serialize(array('token', 'authorization_code', 'client_credentials', 'password')));
         $stmt->bindValue(5, $defaultClientName);

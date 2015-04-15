@@ -27,7 +27,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
             ->setDescription('Create oauth2 client.')
             ->addArgument('name', InputArgument::REQUIRED, 'Client name')
             ->addArgument('publication', InputArgument::REQUIRED, 'Publication alias')
-            ->addArgument('redirectUris', InputArgument::REQUIRED, 'Redirect uris')
+            ->addArgument('redirectUris', InputArgument::OPTIONAL, 'Redirect uris')
             ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefined data (for automatic tests)')
             ->addOption('default', null, InputOption::VALUE_NONE, 'If set it will create default client with predefined name');
     }
@@ -38,17 +38,23 @@ class CreateOAuthClientCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getApplication()->getKernel()->getContainer();
+        $router = $container->get('router');
         $em = $container->getService('em');
         $clientManager = $container->get('fos_oauth_server.client_manager.default');
         $name = $input->getArgument('name');
         $publication = $em->getRepository('\Newscoop\Entity\Aliases')
             ->findOneByName($input->getArgument('publication'))
             ->getPublication();
+
         $redirectUris = $input->getArgument('redirectUris');
+        if (is_null($redirectUris)) {
+            $redirectUris = 'http://'.$input->getArgument('publication');
+        }
 
         if ($input->getOption('default')) {
             $preferencesService = $container->get('preferences');
             $defaultClientName = 'newscoop_'.$preferencesService->SiteSecretKey;
+            $redirectUris = 'http://'.$input->getArgument('publication').$router->generate('oauth_authentication_result');
             $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($defaultClientName);
             if ($client) {
                 return;
