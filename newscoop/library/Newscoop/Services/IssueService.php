@@ -75,6 +75,10 @@ class IssueService implements IssueServiceInterface
      */
     public function getIssue()
     {
+        if (!$this->issue) {
+            return $this->getLatestPublishedIssue();
+        }
+
         return $this->issue;
     }
 
