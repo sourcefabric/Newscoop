@@ -26,7 +26,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
             ->setName('oauth:create-client')
             ->setDescription('Create oauth2 client.')
             ->addArgument('name', InputArgument::REQUIRED, 'Client name')
-            ->addArgument('publication', InputArgument::REQUIRED, 'Publication alias')
+            ->addArgument('publication', InputArgument::REQUIRED, 'Publication alias (without http, https and www)')
             ->addArgument('redirectUris', InputArgument::OPTIONAL, 'Redirect uris')
             ->addOption('test', null, InputOption::VALUE_NONE, 'If set it will create test client with predefined data (for automatic tests)')
             ->addOption('default', null, InputOption::VALUE_NONE, 'If set it will create default client with predefined name');
