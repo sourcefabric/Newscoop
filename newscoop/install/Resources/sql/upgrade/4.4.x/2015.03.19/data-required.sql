@@ -1,1 +1,0 @@
-ALTER TABLE playlist ADD themes VARCHAR(255) DEFAULT NULL;
