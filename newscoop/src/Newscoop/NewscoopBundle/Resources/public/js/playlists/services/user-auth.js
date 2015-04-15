@@ -90,7 +90,7 @@
                     dialog;
 
                 dialog = $modal.open({
-                    templateUrl: '../../bundles/newscoopnewscoop/views/modal-login.html',
+                    templateUrl: '/bundles/newscoopnewscoop/views/modal-login.html',
                     controller: ModalLoginCtrl,
                     controllerAs: 'ctrl',
                     windowClass: 'modalLogin',
