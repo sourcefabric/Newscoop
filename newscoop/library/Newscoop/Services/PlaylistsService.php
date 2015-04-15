@@ -323,6 +323,10 @@ class PlaylistsService
      */
     public function removeThemeFromPlaylists($theme, $themePlaylists)
     {
+        if (empty($themePlaylists)) {
+            return false;
+        }
+
         $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
 
         foreach ($newThemePlaylists as $playlistName => $themePlaylist) {

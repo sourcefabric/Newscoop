@@ -616,12 +616,12 @@ class Admin_ThemesController extends Zend_Controller_Action
                 $playlistsService->removeThemeFromPlaylists($theme, $themePlaylists);
 
                 if ($p_forwardedFrom == 'deleteAction') {
-                    global $Campsite;
                     $themeIsAssigned = false;
                     $themeName = $theme->getName();
-                    foreach ($Campsite['publications'] as $publication) {
-                        $pub = $this->getPublicationService()->findById($publication->getPublicationId());
-                        foreach ($this->getThemeService()->getThemes($pub) as $th) {
+                    $em = \Zend_Registry::get('container')->getService('em');
+                    $publications = $em->getRepository('Newscoop\Entity\Publication')->getPublications()->getResult();
+                    foreach ($publications as $publication) {
+                        foreach ($this->getThemeService()->getThemes($publication) as $th) {
                             if (trim($th->getName()) === trim($themeName)) {
                                 $themeIsAssigned = true;
                                 break 2;
