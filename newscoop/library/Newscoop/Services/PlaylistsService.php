@@ -233,7 +233,7 @@ class PlaylistsService
      * Cache for all assigned to playlist templates will be cleared after playlist update action
      *
      * @param string $path
-     * 
+     *
      * @return array content of xml file as an array
      */
     public function loadThemePlaylists($path)
@@ -253,22 +253,27 @@ class PlaylistsService
      */
     public function checkIfThemePlaylistsAreUpToDate($theme, $themePlaylists)
     {
-        $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
+        if (empty($themePlaylists)) {
+            return false;
+        }
 
+        $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
         foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
             $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
             if (!$playlist) {
                 return false;
             }
-            
+
             $themes = $playlist->getThemes();
             if (!array_key_exists($theme->getId(), $themes)) {
                 return false;
             }
 
-            foreach($themePlaylist['templates'] as $template) {
-                if (!in_array($template, $themes[$theme->getId()])) {
-                    return false;
+            foreach ($themePlaylist['templates'] as $template) {
+                if (is_array($themes[$theme->getId()])) {
+                    if (!in_array($template, $themes[$theme->getId()])) {
+                        return false;
+                    }
                 }
             }
         }
@@ -313,7 +318,7 @@ class PlaylistsService
      *
      * @param Theme $theme
      * @param array $themePlaylists
-     * 
+     *
      * @return boolean
      */
     public function removeThemeFromPlaylists($theme, $themePlaylists)
@@ -344,8 +349,8 @@ class PlaylistsService
      */
     public function clearPlaylistTemplates($playlist)
     {
-        foreach($playlist->getThemes() as $theme) {
-            foreach($theme as $file) {
+        foreach ($playlist->getThemes() as $theme) {
+            foreach ($theme as $file) {
                 \TemplateCacheHandler_DB::clean($file);
             }
         }
@@ -360,7 +365,7 @@ class PlaylistsService
             $themePlaylists['list'][0] = $bakThemePlaylists['list'];
         }
 
-        foreach($themePlaylists['list'] as $themePlaylist) {
+        foreach ($themePlaylists['list'] as $themePlaylist) {
             $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
             if (array_key_exists('@attributes', $themePlaylist['template'])) {
                 $bakThemePlaylist = $themePlaylist;
@@ -368,7 +373,7 @@ class PlaylistsService
                 $themePlaylist['template'][0] = $bakThemePlaylist['template'];
             }
 
-            foreach($themePlaylist['template'] as $template) {
+            foreach ($themePlaylist['template'] as $template) {
                 $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
             }
         }
