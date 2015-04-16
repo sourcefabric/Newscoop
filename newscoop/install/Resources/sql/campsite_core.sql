@@ -2221,7 +2221,7 @@ CREATE TABLE context_articles (
   Id INT AUTO_INCREMENT NOT NULL,
   fk_context_id INT NOT NULL,
   fk_article_no INT NOT NULL,
-  `order_number` INT NOT NULL,
+  `order_number` INT NOT NULL DEFAULT '0',
   INDEX article_number (fk_article_no),
   PRIMARY KEY(Id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
