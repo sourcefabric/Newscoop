@@ -3,6 +3,101 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      16/04/2015 10:27  4.4.1  Newscoop 4.4.1 minor release
+         7945847 add cacheId parameter for display method in render smarty function
+         89218e6 context_articles table change, cache key change
+         83d99f3 playlist order fix - new upgrade script
+         5be4796 playlist order fix - upgrade script
+         cdfca8e fixed theme deletion
+         80d1f53 fixed redirect uri for oauth
+         1348379 fixed redirect uri handling when creating oauth user
+         541d3ca fixed path to login modal
+         2d7467c improve issue service
+         12f81bb expand info block by default and icon fix
+         a00d8f6 fixed multiple images in edito mode - slideshows
+         efe7795 fixed iframe width ofr support popup
+         0cdfaa8 removed duplicates from themes.en.yml
+         1b09f70 fixed playlist cache bugs
+         a460d43 remove logs from travis
+         0b65524 fix section_id and issue_id handling in Article entity.
+         1dcafa0 fixed fancybox border
+         93baaba revert section/issue relation change
+         40b373c add dev.log to end of tests
+         f5cfbf2 [big change] fix article issue/section relation, fix comments manager after change on thread property
+         f71d3a2 fix comments ussage after change for thread property
+         c2a7be5 fix handling xml content  with single items, add comments
+         d2b2498 fixed upgrade script related to playlists
+         aea5908 rebuilt create view for slideshows to suit new design
+         9bccb33 improve docblock
+         003902f optimize accessDeniedExceptionListener
+         78a1843 AENV-330 - polish newscoop create/manage slideshow modal
+         8fbf4d9 [AENV-434]: remove endpoint property from embedly snippet template
+         9d1d375 CS-5745: Adds execute bit to scripts
+         88837e1 provide default redirect_uri route with oauth_result.tpl template file rendering
+         91d8c71 fix current cache driver cache flushing
+         dd3976c don't use getArticleNumber from comment entity
+         c9b182f change article_num ussage to thread when work with comment entity
+         abf86a7 remove not needed files
+         7d9d68a allow posting anonymous comments when it's allowed in publication settings
+         c23a160 destroy interval after it stops
+         f6cb020 fixed editrial comments translations
+         e983e1f added handling when token expires - added modal
+         8f4b878 improve editorial comments inicialization
+         4d5d823 optimized system preferences service
+         ea5056c revert singleton for adodb in DatabaseObject
+         071bbb9 implement singleton for adodb in DatabaseObject
+         8944b53 do not use this in static
+         082e83e optimize DatabaseObject - don't fetch adodb in every function
+         c0c07ad encode articlesModificationTime value
+         eecc4ea add missing docblocks
+         61ca702 introduce support for theme playlists configuration, clear defined templates on playlist modification
+         ae1b3d8 display 0 when no playlist limit is set
+         2e35933 added opera support to readme
+         3f3741f changed function comment
+         8076fc0 added handling when token expires - ported from aes plugin
+         7b6ad09 added handling when token expires - ported from aes plugin
+         6a1366e removed unnecessary comment and code form auth interceptor
+         f0ff2e5 fixed bug in playlist modification datetime - ignored timezone
+         0039879 fixed search
+         c06f7bf disable save and add to lists buttons when no playlist selected
+         740b9c1 clear temp list on playlist change
+         877dd9d CS-5707 - Define Newscoop requirements related to supported browsers
+         5473c6f CS-5744 - Move custom DQL functions to config.yml
+         c5a7a73 check for array index before using it it install_conf, replace pear errors with exceptions in image class
+         41ece29 CS-5669 - update the Readme file to tell users about the issue with running Newscoop 4.3 on Debian with PHP version 5.3
+         8fefff5 revert strlower on images extensions
+         5c73ba0 fix endless loop in campcontext with tpid parameter in url
+         a657566 cache seourlend in metaArticle
+         2d0bc76 fix MetaSection preventing caching empty objects
+         ddab515 fix ArticleImage, don't cache empty object in metaSection
+         338f37b changed getArticlesByIds to getArticlesByCriteria function name
+         0cbe5ba AENV-445 - Related articles is not working by API 500 message
+         6124002 improve performance in ArticlesList, reintroduce caching in ArticleImage
+         ccb2508 fixed playlists bugs - auto remove last item etc.
+         b96a672 improve cacheService ussage in ArticleTypeField
+         2188811 remove duplicated code in MetaSection, improve cacheService in ArticleData
+         eb365fa CS-5733 - change UI for the playlist revert alert
+         17ffd70 fixed creating article without issue and section via api
+         85e0d8f added description to article type form
+         df57541 revert cache key parameter for article images list
+         71bc9d6 optimize public resources listener
+         bc52f33 lower images extensions, optimize cache keys, fix articlemodificationtime in playlists
+         e9953cd added authentication exception
+         6adfdce fixed failed authentication handling
+         d9d7892 revert user check
+         c2ea1ed optimize public_resources_listener
+         ef480c6 optimize cacheService ussage
+         3632f0d fixed issue and section relationship in article entity - missing issue, section
+         d618af8 handle current user when not logged in in comments
+         2799d21 Revert "fixed issue and section relationship in article entity - missing issue, ..."
+         9fe8a8e fixed issue and section relationship in article entity - missing issue, section
+         4f4a1a9 Adds support for using old style topic names (with locale appended)
+         83706ed performance fixes - catched on production
+         584f4d6 fixed proxy regeneration in upgrade scripts
+         b35d902 update 4.4 upgrade doc
+         a5809ee fix proxy regeneration for publication entity
+         c9759c8 CS-4863: Removes ingest code from core, code from css and config files  - Removes ingest rules form ACL table  - Adds fake permissions for old auth
+         a868d8e save wip
       24/03/2015 16:08  4.4.0  initial release
          2f8dd0f fixed proxy regeneration when already generated in upgrade scripts
          34783f4 improve rmt config
