@@ -15,7 +15,7 @@
  *  * section
  *  * article
  *
- * There is also "params" parameter where we can save put array of custom parameters (serialized into string) or string.
+ * There is also "params" parameter where we can save  array of custom parameters (serialized into string) or string.
  *
  * To ignore one or more parameters (to make cached template this same for many articles, sections, issues etc) just set it value to "off"
  *
@@ -103,7 +103,8 @@ function smarty_function_render($p_params, &$p_smarty)
         }
     }
 
-    $smarty->display($p_params['file']);
+    // make sure that every diffirent set of parameters will get his own cache instance
+    $smarty->display($p_params['file'], sha1(serialize($smarty->campsiteVector)));
 
     // clear assigned variables
     foreach ($p_params as $key => $value) {

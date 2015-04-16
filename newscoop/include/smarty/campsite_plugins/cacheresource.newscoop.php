@@ -30,13 +30,13 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime, $cacheLifetime = 0)
     {
-        $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $handler = new $this->cacheClass;
         $expired = $handler->handler('read', $cache_content, $tpl_name, null, null, null);
 
         if ($cacheLifetime == 0) {
+            $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('template', $themesService->getThemePath(), $tpl_name), 'template');
+            $cacheKey = $cacheService->getCacheKey(array('cacheLifetime', $themesService->getThemePath(), $tpl_name), 'template');
             if ($cacheService->contains($cacheKey)) {
                 $cacheLifetime = $cacheService->fetch($cacheKey);
             } else {
