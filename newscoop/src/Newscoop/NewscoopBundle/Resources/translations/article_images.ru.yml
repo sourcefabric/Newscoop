@@ -2,9 +2,9 @@
 'Mark image': 'Отметить изображение'
 'Add selected images to slideshow': 'Добавить выбранные изображения в слайдшоу'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'К сожалению, это изображение слишком мало. Размер изображений должен быть по меньшей мере %dx%d.'
-'Slideshow rendition': 'Комплект размеров слайд-шоу'
-'Renditions reloaded': 'Комплект размеров  перезагружен'
-'Reload renditions': 'Повторить загрузку комплекта размеров'
+'Slideshow rendition': 'Размеры изображений в слайд-шоу'
+'Renditions reloaded': 'Размеры  перезагружены'
+'Reload renditions': 'Перезагрузить размеры'
 'Edit images': 'Редактировать изображения'
 'Specify image url if you want to load it.': 'Укажите url изображения, если хотите загрузить его.'
 'Items: ': 'Пункты:'
@@ -24,7 +24,7 @@ Saving...: Сохраняется...
 Saved: Сохранено
 'Save headline': 'Сохранить заголовок'
 'Place Images': 'Разместить изображения'
-'No renditions defined.': 'Соответствия не определены. '
+'No renditions defined.': 'Размеры не определены. '
 'No images found.': 'Изображений не найдено.'
 'No images attached to article.': 'К статье не прикреплены изображения.'
 'No images': 'Нет изображений'
@@ -37,7 +37,7 @@ Item: Пункт
 'Image files': 'Файлы изображений'
 'Image Files: ': 'Файл изображений:'
 Headline: Заголовок
-Finish: Конец
+Finish: Завершить
 'Edit Image Data': 'Редактировать данные изображения'
 'Edit $1': 'Редактировать $1'
 'Done editing': 'Закончить редактирование'

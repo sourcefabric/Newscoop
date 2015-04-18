@@ -189,7 +189,7 @@ Snippet: Snippet
 'List name should not be longer than 40 chars': 'List name should not be longer than 40 characters'
 'Not valid number': 'Not a valid number'
 'List limit': 'List limit'
-'Last item of the list has been deleted to add this item to the list. Revert?': 'Last item of the list has been deleted to add this item to the list. Revert?'
+'The last article of this list has been removed.': 'The last article of this list has been removed.'
 Revert: Revert
 'Could not automatically refresh the list': 'Could not automatically refresh the list'
 articles:

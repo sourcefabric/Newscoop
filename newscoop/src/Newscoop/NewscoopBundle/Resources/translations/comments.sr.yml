@@ -114,6 +114,7 @@ editorial:
         delete: null
         reply: null
     label:
+        title: 'Editorial Comments'
         post: null
         reply: null
         nocomments: null

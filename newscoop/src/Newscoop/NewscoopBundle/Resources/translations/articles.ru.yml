@@ -189,7 +189,7 @@ Snippet: Фрагмент
 'List name should not be longer than 40 chars': 'Название списка не должно содержать более 40 знаков'
 'Not valid number': 'Недействующий номер'
 'List limit': null
-'Last item of the list has been deleted to add this item to the list. Revert?': null
+'The last article of this list has been removed.': 'The last article of this list has been removed.'
 Revert: null
 'Could not automatically refresh the list': null
 articles:

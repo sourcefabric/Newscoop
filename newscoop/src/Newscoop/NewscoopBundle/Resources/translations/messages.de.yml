@@ -285,3 +285,5 @@ unpublished: unveröffentlicht
 nopermissions: null
 importantmessage: null
 anonymous: null
+'Successfully refreshed authentication token.': 'Successfully refreshed authentication token.'
+'Failed to refresh authentication token.': 'Failed to refresh authentication token.'

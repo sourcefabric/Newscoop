@@ -285,3 +285,5 @@ unpublished: unpublished
 nopermissions: 'You don''t have permission to access this resource.'
 importantmessage: 'Important Info'
 anonymous: Anonymous
+'Successfully refreshed authentication token.': 'Successfully refreshed authentication token.'
+'Failed to refresh authentication token.': 'Failed to refresh authentication token.'
