@@ -285,5 +285,5 @@ unpublished: visszavonva
 nopermissions: 'A hozzáférés ehhez az erőforrásoz a számodra nem engedélyezett.'
 importantmessage: null
 anonymous: null
-'Successfully refreshed authentication token.': 'Successfully refreshed authentication token.'
-'Failed to refresh authentication token.': 'Failed to refresh authentication token.'
+'Successfully refreshed authentication token.': null
+'Failed to refresh authentication token.': null
