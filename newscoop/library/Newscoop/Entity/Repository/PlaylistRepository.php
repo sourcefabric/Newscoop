@@ -70,7 +70,7 @@ class PlaylistRepository extends EntityRepository
         $query = $em->createQuery("
             SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.updated date, a.workflowStatus workflowStatus, a.type type" )
         .   " FROM Newscoop\Entity\PlaylistArticle pa
-            JOIN pa.article a
+            LEFT JOIN Newscoop\Entity\Article a WITH pa.articleNumber = a.number  
             WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
@@ -133,7 +133,7 @@ class PlaylistRepository extends EntityRepository
     public function getArticlePlaylists($articleId)
     {
         $playlistArticles = $this->getEntityManager()->getRepository('Newscoop\Entity\PlaylistArticle')
-            ->findBy(array('article' => $articleId));
+            ->findBy(array('articleNumber' => $articleId));
 
         $playlists = array();
         foreach ((array) $playlistArticles as $playlistArticle) {

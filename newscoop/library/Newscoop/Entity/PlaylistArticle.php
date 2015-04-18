@@ -37,13 +37,6 @@ class PlaylistArticle extends AbstractEntity
     protected $playlist;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
-	 * @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
-     * @var Newscoop\Entity\Article
-     */
-    protected $article;
-
-    /**
      * @ORM\Column(type="integer", name="article_no")
      * @var int
      */
@@ -57,7 +50,7 @@ class PlaylistArticle extends AbstractEntity
 
     public function __construct($playlist, $article){
         $this->setPlaylist($playlist);
-        $this->setArticle($article);
+        $this->setArticleNumber($article->getNumber());
         $this->setOrder(0);
     }
 
@@ -81,22 +74,22 @@ class PlaylistArticle extends AbstractEntity
     }
 
     /**
-     * set article
+     * set article_number
      * @return Newscoop\Entity\PlaylistArticle
      */
-    public function setArticle(Article $article)
+    public function setArticleNumber($articleNumber)
     {
-        $this->article = $article;
+        $this->articleNumber = $articleNumber;
         return $this;
     }
 
 	/**
-     * get article
+     * get article_number
      * @return Newscoop\Entity\Article
      */
-    public function getArticle()
+    public function getArticleNumber()
     {
-        return $this->article;
+        return $this->articleNumber;
     }
 
     /**
