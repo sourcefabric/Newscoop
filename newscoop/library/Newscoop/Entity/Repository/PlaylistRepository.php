@@ -107,8 +107,8 @@ class PlaylistRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-            SELECT COUNT(DISTINCT pa.article) FROM Newscoop\Entity\PlaylistArticle pa
-            JOIN pa.article a
+            SELECT COUNT(DISTINCT pa.articleNumber) FROM Newscoop\Entity\PlaylistArticle pa
+            LEFT JOIN Newscoop\Entity\Article a WITH pa.articleNumber = a.number  
             WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? "" : " AND a.language = ?2")
