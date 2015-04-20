@@ -149,7 +149,7 @@ class ArticlesListController extends FOSRestController
         }
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesByCriteria(new ArticleSearchCriteria(), $articlesIds)
+            ->getArticlesByCriteria(new ArticleSearchCriteria(), $articlesIds, $onlyPublished)
             ->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
