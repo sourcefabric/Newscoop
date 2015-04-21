@@ -232,7 +232,8 @@ angular.module('editorialCommentsApp').controller('EditorialCommentsCtrl', [
 	        	$scope.textareaMessage = {};
 	        	$scope.textareaReply = {};
 	        	comment.isReplying = false;
-	        	$scope.enableTyping = false
+	        	$scope.enableTyping = false;
+                $scope.stopRefreshing = false;
 	        }).error(function(data, status){
 		        flashMessage(data.errors[0].message, 'error');
 		    });
