@@ -17,6 +17,7 @@ use FOS\RestBundle\View as FOSView;
 use Newscoop\GimmeBundle\Form\Type\PlaylistType;
 use Newscoop\Entity\Playlist;
 use Newscoop\Entity\Article;
+use Newscoop\Criteria\ArticleSearchCriteria;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Newscoop\Exception\ResourcesConflictException;
@@ -140,12 +141,16 @@ class ArticlesListController extends FOSRestController
         }
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, null, true, null, null, $onlyPublished, true)->getResult();
+            ->articles($playlist, null, false, null, null, $onlyPublished, true)->getResult();
 
-        $articles = array();
+        $articlesIds = array();
         foreach ($playlistArticles as $playlistArticle) {
-            $articles[] = $playlistArticle->getArticle();
+            $articlesIds[] = $playlistArticle['articleId'];
         }
+
+        $articles = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticlesByCriteria(new ArticleSearchCriteria(), $articlesIds, $onlyPublished, false)
+            ->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(

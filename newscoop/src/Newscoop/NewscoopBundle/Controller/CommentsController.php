@@ -222,12 +222,13 @@ class CommentsController extends Controller
             try {
                 foreach ($comments as $id) {
                     $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
+                    $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
                     if ($status == "deleted") {
                         $message = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
-                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), ), 'new_comments');
+                            '$2' => $thread->getName(), '$3' => $comment->getLanguage()->getCode(), ), 'new_comments');
                     } else {
                         $message = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
-                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status, ), 'new_comments');
+                            '$2' => $thread->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status, ), 'new_comments');
                     }
                 }
 
@@ -298,11 +299,11 @@ class CommentsController extends Controller
                 continue;
             }
             $comment = $em->getRepository('Newscoop\Entity\Comment')->find($commentId);
-
+            $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
             $this->container->get('dispatcher')->dispatch('comment.recommended', new GenericEvent($this, array(
                     'id' => $comment->getId(),
                     'subject' => $comment->getSubject(),
-                    'article' => $comment->getThread()->getName(),
+                    'article' => $thread->getName(),
                     'commenter' => $comment->getCommenterName(),
                 )));
         }

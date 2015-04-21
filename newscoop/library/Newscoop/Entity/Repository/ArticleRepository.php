@@ -238,7 +238,9 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->setParameter('workflowStatus', Article::STATUS_PUBLISHED);
         }
 
-        $queryBuilder->orderBy('a.uploaded', $order);
+        if ($order != false) {
+            $queryBuilder->orderBy('a.uploaded', $order);
+        }
 
         $countQueryBuilder = clone $queryBuilder;
         $query = $queryBuilder->getQuery();
