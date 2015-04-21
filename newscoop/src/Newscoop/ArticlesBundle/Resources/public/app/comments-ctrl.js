@@ -41,8 +41,8 @@ angular.module('editorialCommentsApp').controller('EditorialCommentsCtrl', [
 
         $scope.$on('$destroy', function() {
             if (angular.isDefined(intervalPromise)) {
-                //$interval.cancel(intervalPromise);
-                //intervalPromise = undefined;
+                $interval.cancel(intervalPromise);
+                intervalPromise = undefined;
             }
         });
     }
