@@ -2,7 +2,7 @@
     overflow-y: auto;
     height: auto;
     max-height: 400px;
-    min-height: 30px
+    min-height: 30px;
 }
 .tabpane .tab-content.chat .notification-write-box {
 
@@ -206,4 +206,12 @@ ul.notification-list .comment-reply {
 }
 a.icon.delete {
   z-index: 1;
+}
+.spinner {
+  height: 20px !important;
+  width: 20px !important;
+  position: relative;
+  margin-top: -24px;
+  left: 90%; 
+  margin-bottom: 4px;
 }
