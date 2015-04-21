@@ -77,32 +77,32 @@ angular.module('editorialCommentsApp').factory('Comments', function($http, $acti
 
 	    	this.busy = true;
 		    $http.get(url).success(function (data) {
-		      	this.itemsCount = data.items.length;
-		      	var result = data.items;
-		      	if (this.items.length > result.length) {
-						this.items = _.difference(result, this.items);
-		      	} else {
-			      	for (var i = 0; i < result.length; i++) {
-			      		var found = false;
-			      		for (var j = 0; j < this.items.length; j++) {
-			      			if (this.items[j].id == result[i].id) {
-			      				found = true;
-			      				break;
-			      			}
-			      		}
+				this.itemsCount = data.items.length;
+				var result = data.items;
+				if (this.items.length > result.length) {
+					this.items = _.difference(result, this.items);
+				} else {
+					for (var i = 0; i < result.length; i++) {
+						var found = false;
+						for (var j = 0; j < this.items.length; j++) {
+							if (this.items[j].id == result[i].id) {
+								found = true;
+								break;
+							}
+						}
 
-			      		if (found && (this.items[i].comment !== result[i].comment)) {
-			      			this.items[i] = result[i];
-			      		}
+				      	if (found && (this.items[i].comment !== result[i].comment)) {
+							this.items[i] = result[i];
+						}
 
-			      		if (!found) {
-			      			this.items.splice(i, 0, result[i]);
-			      		}
+				      	if (!found) {
+							this.items.splice(i, 0, result[i]);
+						}
 			      	}
 		      	}
 
-		      this.busy = false;
-		      $activityIndicator.stopAnimating();
+		      	this.busy = false;
+		    	$activityIndicator.stopAnimating();
 		    }.bind(this));
 		}
   	}
