@@ -3,6 +3,19 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      22/04/2015 09:35  4.4.2  Newscoop 4.4.2 minor release
+         921408c improve rmt config
+         73b3495 identations to spaces
+         1095f71 tabs fix in service
+         5193be8 tabs fix
+         327fad1 removed comments
+         d3045ea CS-5751 - Editorial comments improvements
+         18d3552 remove not used files in 4.4.2
+         46912ea keep orginal order in search by ids
+         bc127ac pass $onlyPublished to articles repository
+         730df98 one more relation usage replace
+         b8c32cf check if smarty_function_uri before initializing
+         3a273b1 fix comments management and remove article relation from playlist_article entity
       16/04/2015 10:27  4.4.1  Newscoop 4.4.1 minor release
          7945847 add cacheId parameter for display method in render smarty function
          89218e6 context_articles table change, cache key change
