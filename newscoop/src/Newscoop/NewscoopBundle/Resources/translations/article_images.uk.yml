@@ -70,3 +70,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(рррр-мм-дд)</SM
 'Change image information': 'Змінити інформацію про зображення'
 'You do not have the right to add images': 'Ви не маєте прав додавати зображення'
 'Filter by uploader...': null
+'Slideshow images': 'Slideshow images'
+'Add items to slideshow': 'Add items to slideshow'
+'Attached Slideshows': 'Attached Slideshows'
+'Value is required and can''t be empty': 'Value is required and can''t be empty'

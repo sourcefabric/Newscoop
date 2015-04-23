@@ -285,3 +285,5 @@ unpublished: neobjavljen
 nopermissions: null
 importantmessage: null
 anonymous: null
+'Successfully refreshed authentication token.': null
+'Failed to refresh authentication token.': null

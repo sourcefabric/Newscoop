@@ -189,7 +189,7 @@ Snippet: Uddrag
 'List name should not be longer than 40 chars': 'Listens navn må ikke være længere end 40 tegn'
 'Not valid number': 'Ikke et gyldigt tal'
 'List limit': null
-'Last item of the list has been deleted to add this item to the list. Revert?': null
+'The last article of this list has been removed.': null
 Revert: null
 'Could not automatically refresh the list': null
 articles:

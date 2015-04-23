@@ -2,7 +2,7 @@
 'Total articles': 'Всего статей'
 Skype: Skype
 'Save All': 'Сохранить все'
-Reset: Обновить
+Reset: Сбросить
 'Please enter the last name': 'Введите фамилию'
 'Please enter the first name': 'Введите имя'
 'No records found': 'Не найдено записей по этому запросу'
@@ -16,4 +16,4 @@ Contacts: Контакты
 Biography: Биография
 Aliases: Псевдонимы
 AIM: AIM
-'Search for authors': null
+'Search for authors': 'Поиск авторов'

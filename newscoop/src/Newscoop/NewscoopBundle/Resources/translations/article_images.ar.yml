@@ -70,3 +70,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'التاريخ <br> <SMALL> (اليوم، 
 'Change image information': 'غير معلومات الصورة'
 'You do not have the right to add images': 'ليس لديك الحق في إضافة صور.'
 'Filter by uploader...': null
+'Slideshow images': 'Slideshow images'
+'Add items to slideshow': 'Add items to slideshow'
+'Attached Slideshows': 'Attached Slideshows'
+'Value is required and can''t be empty': 'Value is required and can''t be empty'

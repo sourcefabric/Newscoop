@@ -285,3 +285,5 @@ unpublished: 'nümayiş dayandırıldı'
 nopermissions: 'Bu ehtiyata girişinə icazən yoxdur.'
 importantmessage: null
 anonymous: null
+'Successfully refreshed authentication token.': null
+'Failed to refresh authentication token.': null

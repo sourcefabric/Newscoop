@@ -6,9 +6,9 @@ comments:
         anonymous: null
         at: в
         noentries: null
-        showing: null
-        of: null
-        to: null
+        showing: Показано
+        of: из
+        to: до
         entries: null
         fullarticle: 'Полный текст статьи'
         hidden: Скрытый
@@ -24,7 +24,7 @@ comments:
         date: null
         article: Статья
         search: Поиск
-        show: Показать
+        show: Показывать
         recommended: Рекомендовано
         unrecommended: 'Не рекомендовано'
         editcomment: null
@@ -32,7 +32,7 @@ comments:
         selectstatus: 'Выбрать статус'
         deleted: 'Удалено '
         alert: null
-        searchholder: null
+        searchholder: 'Искать... (например, по имени, email, теме, комментарию, названию статьи)'
     btn:
         cancel: Отменить
         submit: Отправить
