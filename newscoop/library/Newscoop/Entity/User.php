@@ -872,10 +872,6 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, AdvancedUserInter
             }
 
             if ($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-                if (!$resource && !$action) {
-                    return \SaaS::singleton()->hasPermission($permission);
-                }
-
                 return true;
             } else {
                 return false;

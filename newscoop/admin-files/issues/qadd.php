@@ -33,7 +33,8 @@ camp_html_content_top($translator->trans('Add new issue'), array('Pub' => $publi
 	</TD>
 <TR>
 <?php
-	if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+    // TODO: 4.5 replace this with acl check
+	if (true) {
 ?>
 <TR>
     <TD VALIGN="TOP"><A HREF="/<?php echo $ADMIN; ?>/issues/add_new.php?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/tol.gif" BORDER="0"></A></TD>

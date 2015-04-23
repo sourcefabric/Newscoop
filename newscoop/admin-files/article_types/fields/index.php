@@ -7,7 +7,8 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 $request = \Zend_Registry::get('container')->get('request');
 $locale = $request->getLocale();
 
-if (!Saas::singleton()->hasPermission('ManageArticleTypes')) {
+// TODO: 4.5 replace this with acl check
+if (false) {
     camp_html_display_error($translator->trans("You do not have the right to manage article types.", array(), 'article_type_fields'));
     exit;
 }

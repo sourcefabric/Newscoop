@@ -20,7 +20,7 @@
     ],
     "require":{
         "php":">=5.3.3",
-        "symfony\/symfony":"2.5.*@dev",
+        "symfony\/symfony":"2.7.*@dev",
         "silex\/silex":"1.2.*@dev",
         "doctrine\/orm":"2.4.6",
         "doctrine\/common":"2.4.1",
@@ -42,7 +42,7 @@
         "hybridauth\/hybridauth":"dev-master",
         "smarty\/smarty":"3.1.21",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
-        "knplabs\/knp-menu":"2.0.*@dev",
+        "knplabs\/knp-menu":"2.0.1",
         "raulfraile\/ladybug-bundle":"v1.0.6",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
         "willdurand\/js-translation-bundle":"2.2.0",

@@ -130,12 +130,12 @@ class PreferencesType extends AbstractType
         ))
         ->add('timezone', 'choice', array(
             'choices'   => $timezones,
-            'empty_value' => 'newscoop.preferences.label.disabled',
+            'placeholder' => 'newscoop.preferences.label.disabled',
             'required' => false
         ))
         ->add('cache_engine', 'choice', array(
             'choices'   => $cacheEngines,
-            'empty_value' => 'Array',
+            'placeholder' => 'Array',
             'required' => false
         ))
         ->add('cache_engine_host', 'text', array(
@@ -148,7 +148,7 @@ class PreferencesType extends AbstractType
         ))
         ->add('cache_template', 'choice', array(
             'choices'   => $cacheTemplate,
-            'empty_value' => 'newscoop.preferences.label.disabled',
+            'placeholder' => 'newscoop.preferences.label.disabled',
             'required' => false
         ))
         ->add('cache_image', 'choice', array(

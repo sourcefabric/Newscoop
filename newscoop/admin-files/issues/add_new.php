@@ -3,7 +3,7 @@ require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 // Check permissions
-if (!$g_user->hasPermission('ManageIssue') || !SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error($translator->trans('You do not have the right to add issues.', array(), 'issues'));
 	exit;
 }

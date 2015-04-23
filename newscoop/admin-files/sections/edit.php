@@ -137,7 +137,8 @@ if($issueHasTheme){
   </td>
 </tr>
 <?php
-	if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
+  // TODO: 4.5 replace this with acl check
+	if(true) {
 ?>
 <tr>
   <td colspan="2" style="padding-top:20px;">
