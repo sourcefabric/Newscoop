@@ -70,3 +70,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Datum<BR><SMALL>(åååå-mm-dd)</SMALL>
 'Change image information': 'Ändra bildinformation'
 'You do not have the right to add images': 'Du har inte rätt att lägga till bilder'
 'Filter by uploader...': null
+'Slideshow images': 'Slideshow images'
+'Add items to slideshow': 'Add items to slideshow'
+'Attached Slideshows': 'Attached Slideshows'
+'Value is required and can''t be empty': 'Value is required and can''t be empty'

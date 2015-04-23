@@ -114,6 +114,7 @@ editorial:
         delete: Slet
         reply: Svar
     label:
+        title: null
         post: 'Skriv en ny kommentar'
         reply: Svar...
         nocomments: 'Ingen kommentarer endnu.'

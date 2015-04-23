@@ -114,6 +114,7 @@ editorial:
         delete: Usuń
         reply: Odpowiedz
     label:
+        title: null
         post: 'Dodaj komentarz'
         reply: Odpowiedz
         nocomments: 'Brak komentarzy.'

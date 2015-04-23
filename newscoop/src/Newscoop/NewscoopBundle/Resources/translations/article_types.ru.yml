@@ -1,8 +1,8 @@
-list: null
-filter: null
+list: список
+filter: фильтр
 'In Lists?': null
-'Are you sure you want to $1 articles of article type $2?': null
-'$1 articles of article type $2': null
+'Are you sure you want to $1 articles of article type $2?': 'Вы действительно хотите $1 статьи типа $2?'
+'$1 articles of article type $2': '$1 статьи типа $2'
 'Hide human-readable field names': 'Скрыть названия полей удобные для восприятия человеком'
 'Edit and translate human-readable field names': 'Редактировать и перевести названия полей удобные для восприятия человеком'
 'The template name may only contain letters and the underscore (_) character.': 'Имя шаблона может содержать только буквы и знак подчеркивания (_).'
@@ -35,7 +35,7 @@ NOTHING: НИЧЕГО
 '(Duplicate warning.)': '(Дублировать предупреждение.)'
 '(!) Do NOT merge $1': '(!) Не объединяйте $1'
 '$1 of $2': ' $1 из $2'
-show: Показать
+show: Показывать
 hide: Спрятать
 deactivate: деактивировать
 activate: активировать

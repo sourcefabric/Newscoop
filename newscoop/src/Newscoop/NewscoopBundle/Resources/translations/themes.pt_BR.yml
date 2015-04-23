@@ -86,3 +86,8 @@ Compatibility: Compatibilidade
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 arquivos $2'
 'Available themes': null
+'Update cached data': 'Update cached data'
+'Assigned templates': 'Assigned templates'
+'Cached informations about theme playlists are not up to date!': 'Cached informations about theme playlists are not up to date!'
+'The theme''s configuration file does not contain information about the list of used featured articles.': 'The theme''s configuration file does not contain information about the list of used featured articles.'
+'Below code should be placed into theme.xml (between ''theme'' nodes) file to make it work. This file is located in every theme''s main directory.': 'Below code should be placed into theme.xml (between ''theme'' nodes) file to make it work. This file is located in every theme''s main directory.'

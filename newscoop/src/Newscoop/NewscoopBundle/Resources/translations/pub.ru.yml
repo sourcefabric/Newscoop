@@ -93,7 +93,7 @@ publications:
         left_issues: null
         left_sections: null
         left_articles: null
-        show_issues: null
+        show_issues: 'показывать номера'
         before_removing: null
         you_sure: null
         remove: null
@@ -103,7 +103,7 @@ publications:
         listIssues: null
     table:
         number: null
-        name: null
+        name: Название
         default_alias: null
         default_language: null
         comments_status: null
@@ -126,7 +126,7 @@ publications:
             moderator_to: null
             moderator_from: null
             comments_enabled: null
-            public_comments_enabled: null
+            public_comments_enabled: 'Разрешить публичные (анонимные) комментарии?'
             comments_article_default_enabled: null
             comments_subscribers_moderated: null
             comments_public_moderated: null

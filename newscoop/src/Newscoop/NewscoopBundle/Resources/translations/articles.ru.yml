@@ -125,7 +125,7 @@ Enabled: Разрешено
 Disabled: Запрещено
 Comments: Комментарии
 'The article has already been translated into $1.': 'Статья уже была переведена на $1.'
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'Прежде, чем запланировать публикацию статьи, вы должны назначить для нее издание, номер и рубрику. Для этого перейдите к $1 меню и выберите $2.'
 'You do not have the right to translate articles.': 'Вы не имеете прав доступа для перевода статей.'
 'You do not have the right to publish articles.': 'Вы не имеете прав доступа для публикации статей.'
 'You do not have the right to move articles.': 'Вы не имеете прав доступа для переноса статей.'
@@ -183,13 +183,13 @@ Comments: Комментарии
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон статьи.'
 'No such article.': 'Нет такой статьи.'
 'No such section.': 'Нет такой рубрики.'
-Characters: null
-Snippet: null
+Characters: Знаки
+Snippet: Фрагмент
 'This list is already in a different state than the one in which it was loaded.': null
-'List name should not be longer than 40 chars': null
-'Not valid number': null
+'List name should not be longer than 40 chars': 'Название списка не должно содержать более 40 знаков'
+'Not valid number': 'Недействующий номер'
 'List limit': null
-'Last item of the list has been deleted to add this item to the list. Revert?': null
+'The last article of this list has been removed.': null
 Revert: null
 'Could not automatically refresh the list': null
 articles:

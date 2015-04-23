@@ -71,7 +71,7 @@ Added: Добавлена
 '$1 toggled.': '$1 изменено.'
 '$1 articles have been removed': '$1 статей были удалены'
 ' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
-'Search for creators': null
+'Search for creators': 'Поиск создателей'
 'No matches.': null
-Searching...: null
+Searching...: 'Идет поиск...'
 'Minimum input of characters: $1': null
