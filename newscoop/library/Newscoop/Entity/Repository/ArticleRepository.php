@@ -112,7 +112,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $orX = $queryBuilder->expr()->orx();
 
-        $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
+        $keywords = array_diff(explode(' ', $articleSearchCriteria->query), array(''));
         foreach ($keywords as $keyword) {
             $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
         }
