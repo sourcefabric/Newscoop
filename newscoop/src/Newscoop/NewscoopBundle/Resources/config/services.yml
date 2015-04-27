@@ -196,3 +196,4 @@ parameters:
     newscoop_newscoop.menu_builder.class: "Newscoop\\NewscoopBundle\\Menu\\Builder"
     newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"
     ewz_recaptcha.form.type.class: "Newscoop\\NewscoopBundle\\Form\\Type\\RecaptchaType"
+    security.authentication.rememberme.services.simplehash.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\InteractiveLogin"

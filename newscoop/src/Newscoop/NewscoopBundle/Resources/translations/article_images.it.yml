@@ -70,7 +70,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Data<BR><SMALL>(aaaa-mm-gg)</SMALL>
 'Change image information': 'Cambia le informazioni dellimmagine'
 'You do not have the right to add images': 'Non hai il permesso di aggiungere immagini'
 'Filter by uploader...': null
-'Slideshow images': 'Slideshow images'
-'Add items to slideshow': 'Add items to slideshow'
-'Attached Slideshows': 'Attached Slideshows'
-'Value is required and can''t be empty': 'Value is required and can''t be empty'
+'Slideshow images': null
+'Add items to slideshow': null
+'Attached Slideshows': null
+'Value is required and can''t be empty': null
