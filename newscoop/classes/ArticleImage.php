@@ -425,11 +425,10 @@ class ArticleImage extends DatabaseObject {
 
         if (!$p_skipCache) {
         	$paramsArray['parameters'] = serialize($p_parameters);
-        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : serialize($p_order);
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
         	$paramsArray['method'] = __METHOD__;
-
         	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 	        $cacheKey = $cacheService->getCacheKey($paramsArray, 'article');
 	        if ($cacheService->contains($cacheKey)) {
