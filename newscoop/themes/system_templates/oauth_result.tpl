@@ -37,7 +37,7 @@
 
         token = matches[1];
         console.log('Your access_token is: ' + token);
-        if (!sessionStorage.getItem('newscoop.token') && token) {
+        if (token) {
             console.log('Saving access_token in sessionStorage');
             sessionStorage.setItem('newscoop.token', token);
         }
