@@ -49,8 +49,7 @@ class Adapter implements Zend_Auth_Adapter_Interface
             'password' => sha1($this->password),
         ));
 
-        $code = $user ?
-            Zend_Auth_Result::SUCCESS : Zend_Auth_Result::FAILURE;
+        $code = $user ? Zend_Auth_Result::SUCCESS : Zend_Auth_Result::FAILURE;
 
         return new Zend_Auth_Result($code, $user ? $user->getId() : NULL);
     }
