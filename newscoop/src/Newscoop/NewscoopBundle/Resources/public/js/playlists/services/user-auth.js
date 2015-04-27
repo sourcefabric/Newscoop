@@ -6,42 +6,20 @@
     *
     * @class ModalLoginCtrl
     */
-    function ModalLoginCtrl($modalInstance) {
-        var self = this,
-            tokenRegex = new RegExp('access_token=(\\w+)');
-
+    function ModalLoginCtrl($modalInstance, $window) {
         // On successful login, Newscoop login form redirects user to some
         // redirect URL and that URL contains the new authentication token.
-        // Upon redirect, the iframe in modal body is reloaded and we catch
-        // its onLoad event, giving us a chance to extract new token from URL.
-
-        /**
-        * Updates workflow status on the server.
-        *
-        * @method iframeLoadedHandler
-        * @param location {Object} window.location object of the page
-        *   loaded in the modal's iframe
-        */
-        self.iframeLoadedHandler = function (location) {
-            var matches,
-                token;
-
-            if (typeof location.hash !== 'string') {
-                return;
+        // Upon redirect, the iframe in modal body is reloaded and its
+        // Javascript code extracts the token from the URL. On session
+        // storage change login modal will be closed.
+        angular.element($window).on('storage', function() {
+            if ($window.sessionStorage.getItem('newscoop.token')) {
+                $modalInstance.close();
             }
-
-            matches = tokenRegex.exec(location.hash);
-
-            if (matches !== null) {
-                token = matches[1];
-                $modalInstance.close(token);
-            }
-            // if token is not found (perhaps due to the failed login),
-            // nothing happens and the modal stays open
-        };
+        });
     }
 
-    ModalLoginCtrl.$inject = ['$modalInstance'];
+    ModalLoginCtrl.$inject = ['$modalInstance', '$window'];
 
     /**
     * A service for managing user authentication.
@@ -63,7 +41,7 @@
             * @return {String} the token itself or null if does not exist
             */
             self.token = function () {
-                return $window.sessionStorage.getItem('token');
+                return $window.sessionStorage.getItem('newscoop.token');
             };
 
             /**
@@ -74,7 +52,7 @@
             * @return {Boolean}
             */
             self.isAuthenticated = function () {
-                return !!$window.sessionStorage.getItem('token');
+                return !!$window.sessionStorage.getItem('newscoop.token');
             };
 
             /**
@@ -97,10 +75,9 @@
                     backdrop: 'static'
                 });
 
-                dialog.result.then(function (token) {
-                    $window.sessionStorage.setItem('token', token);
+                dialog.result.then(function () {
                     flashMessage(Translator.trans('Successfully refreshed authentication token.', {}, 'messages'));
-                    deferred.resolve(token);
+                    deferred.resolve();
                 })
                 .catch(function (reason) {
                     flashMessage(Translator.trans('Failed to refresh authentication token.', {}, 'messages'), 'error');
