@@ -42,7 +42,7 @@
         "hybridauth\/hybridauth":"dev-master",
         "smarty\/smarty":"3.1.21",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
-        "knplabs\/knp-menu":"2.0.*@dev",
+        "knplabs\/knp-menu":"2.0.1",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
         "willdurand\/js-translation-bundle":"2.2.0",
         "recaptcha\/php5":"v1.0.0",

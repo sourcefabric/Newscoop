@@ -43,15 +43,11 @@ security:
         oauth_authorize:
             pattern:    ^/oauth/v2/auth
             provider: backend_db
+            context: shared_with_api
             form_login:
                 use_forward: true
                 login_path: /oauth/v2/auth_login
                 check_path: /oauth/v2/auth_login_check
-            remember_me:
-                key: "changeme"
-                lifetime: 31536000
-                path: / 
-                domain: ~ 
 
         api:
             pattern:    ^/(api|content\-api)
@@ -81,6 +77,7 @@ security:
         frontend_area:
             pattern:    ^/
             provider: frontend_db
+            context: shared_with_api
             form_login:
                 login_path:  /auth
                 check_path:  /auth/login_check
