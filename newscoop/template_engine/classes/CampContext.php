@@ -301,7 +301,7 @@ final class CampContext
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
         $this->m_readonlyProperties['default_url'] = new MetaURL();
-        $this->m_readonlyProperties['url'] = new MetaURL();
+        $this->m_readonlyProperties['url'] = clone $this->m_readonlyProperties['default_url'];
         if (!$this->m_readonlyProperties['default_url']->is_valid) {
             if (!$this->m_readonlyProperties['url']->language->defined) {
                 $this->m_readonlyProperties['url']->language = $this->m_readonlyProperties['url']->publication->default_language;

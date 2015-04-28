@@ -96,7 +96,7 @@
 
             <input type="text" class="form-control" placeholder="Login" value="{{ $lastUsername }}" name="_username" required="" autofocus="">
             <input type="password" class="form-control" placeholder="Password" name="_password" required="">
-            <input type="hidden" name="_target_path" value="{{ $targetPath }}" />
+            <input type="hidden" name="_failure_path" value="{{ $targetPath }}" />
             <a class="forgot-password pull-left" href="{{ $view->url(['controller' => 'auth', 'action' => 'password-restore']) }}">Forgot password?</a>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Sign In
