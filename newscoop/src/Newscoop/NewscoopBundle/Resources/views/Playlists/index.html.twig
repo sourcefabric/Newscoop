@@ -293,8 +293,8 @@
                     </div>
                     <div class="context-block plugin-context-block context-preview" ng-if="isViewing">
                         <div class="save-button-bar">
-                        <button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add this article'|trans }}</button>
-                        <button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+                        <button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
+                        <button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
                         </div>
 
                         <div class="context-article-preview" style="overflow-y:auto; height:500px;">
