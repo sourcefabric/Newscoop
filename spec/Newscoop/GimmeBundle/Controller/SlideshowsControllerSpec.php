@@ -99,21 +99,24 @@ class SlideshowsControllerSpec extends ObjectBehavior
         $packageRepository
     ) {
         $entityManager->getRepository('Newscoop\Entity\Article')->willReturn($articleRepository);
-        $parameterBag->get("language", "en")->willReturn("en");
+        $parameterBag->get('language', 'en')->willReturn('en');
         $request->request = $parameterBag;
         $language->getCode()->willReturn('en');
+        $language->getId()->willReturn(1);
         $publication->getLanguage()->willReturn($language);
         $publicationService->getPublication()->willReturn($publication);
 
         $article->getNumber()->willReturn(64);
         $article->getName()->willReturn('test article');
         $article->getLanguage()->willReturn($language);
+        $article->getLanguageId()->willReturn(1);
 
-        $articleRepository->getArticle(64, "en")->willReturn($query);
+        $articleRepository->getArticle(64, 'en')->willReturn($query);
         $query->getOneOrNullResult()->willReturn($article);
 
         $criteria = new SlideshowCriteria();
         $criteria->articleNumber = 64;
+        $criteria->articleLanguage = 1;
         $slideshows = $packageRepository->getListByCriteria($criteria)->willReturn($query);
 
         $result = array(
@@ -123,17 +126,15 @@ class SlideshowsControllerSpec extends ObjectBehavior
                 'type' => 'video',
                 'link' => 'https://www.youtu.be/8xfbum8dmqw',
             ), array(
-                'caption' => "",
-                'type' => "image",
+                'caption' => '',
+                'type' => 'image',
                 'link' => "http:\/\/newscoop.dev\/images\/cache\/3200x2368\/fit\/images%7Ccms-image-000000131.jpg",
             )),
             'itemsCount' => 2,
         );
 
-        $paginator->setUsedRouteParams(array("number" => 64, "language" => "en"))->willReturn($knpPaginator);
-        $paginator->paginate($query, array(
-            'distinct' => false,
-        ))->willReturn($result);
+        $paginator->setUsedRouteParams(array('number' => 64, 'language' => 'en'))->willReturn($knpPaginator);
+        $paginator->paginate($query)->willReturn($result);
 
         $this->getArticleSlideshowsAction($request, 64, 'en')->shouldReturn($result);
     }
