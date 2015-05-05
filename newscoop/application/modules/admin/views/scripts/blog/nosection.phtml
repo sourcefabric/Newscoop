@@ -1,5 +1,5 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Blog management', array(), 'articles')); ?>
+$this->headTitle($translator->trans('Blog management', array(), 'articles').' - Newscoop Admin', 'SET'); ?>
 
 <p>You have no blog assigned to you. Please contact redaction to create blog for you.</p>

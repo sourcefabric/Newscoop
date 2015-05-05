@@ -1,5 +1,5 @@
 <?php $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('User ban settings', array(), 'comments')); ?>
+$this->headTitle($translator->trans('User ban settings', array(), 'comments').' - Newscoop Admin', 'SET'); ?>
 
 <?php echo($translator->trans("Bans can be applied to a user's username, email address or IP address.", array(), 'comments')); ?>
 

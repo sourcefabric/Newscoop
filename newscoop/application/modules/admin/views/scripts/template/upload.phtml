@@ -1,6 +1,6 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Upload', array(), 'themes')); 
+$this->headTitle($translator->trans('Upload', array(), 'themes').' - Newscoop Admin', 'SET'); 
 ?>
 
 <?php if (!$this->isWritable) {

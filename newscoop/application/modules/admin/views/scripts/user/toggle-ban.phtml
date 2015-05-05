@@ -1,5 +1,5 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Comment ban settings', array(), 'users')); ?>
+$this->headTitle($translator->trans('Comment ban settings', array(), 'users').' - Newscoop Admin', 'SET'); ?>
 
 <?php echo $this->form; ?>

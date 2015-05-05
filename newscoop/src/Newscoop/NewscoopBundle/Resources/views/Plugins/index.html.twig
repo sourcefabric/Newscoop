@@ -1,7 +1,7 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "plugins_manager" %}
 
-{% block admin_title %}{{ 'newscoop.plugins_manager.manager'|trans }}{% endblock %}
+{% block admin_title %}{{ 'newscoop.plugins_manager.manager'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_box %}
 <div class="toolbar row">
 <span class="article-title">{{ 'newscoop.plugins_manager.manager'|trans }}</span>
