@@ -76,8 +76,10 @@ try {
 
         $index = 0;
         foreach ($playlistArticles as $article) {
-            $index++;
-            $article->setOrder($index);
+            if ($article instanceof \Newscoop\Entity\PlaylistArticle) {
+                $index++;
+                $article->setOrder($index);
+            }
         }
         $app['orm.em']->flush();
     }
