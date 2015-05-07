@@ -48,13 +48,12 @@ class CreateOAuthClientCommand extends Console\Command\Command
 
         $redirectUris = $input->getArgument('redirectUris');
         if (is_null($redirectUris)) {
-            $redirectUris = 'http://'.$input->getArgument('publication');
+            $redirectUris = $router->generate('oauth_authentication_result');
         }
 
         if ($input->getOption('default')) {
             $preferencesService = $container->get('preferences');
             $defaultClientName = 'newscoop_'.$preferencesService->SiteSecretKey;
-            $redirectUris = 'http://'.$input->getArgument('publication').$router->generate('oauth_authentication_result');
             $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($defaultClientName);
             if ($client) {
                 return;
