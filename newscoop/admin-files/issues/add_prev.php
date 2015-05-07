@@ -21,7 +21,7 @@ $lastCreatedIssue = Issue::GetLastCreatedIssue($Pub);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top($translator->trans('Copy previous issue', array(), 'issues'), array('Pub' => $publicationObj), true, true, array($translator->trans("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
-
+$controller->view->headTitle($translator->trans('Copy previous issue', array(), 'issues').' - Newscoop Admin', 'SET');
 
 if (is_null($lastCreatedIssue)) { ?>
     <BLOCKQUOTE>

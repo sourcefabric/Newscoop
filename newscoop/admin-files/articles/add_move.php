@@ -70,6 +70,8 @@ $crumbs[] = array($translator->trans("Actions"), "");
 $crumbs[] = array($translator->trans("Add new article"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($translator->trans('Add new article').' - Newscoop Admin', 'SET');
+
 ?>
 
 <?php

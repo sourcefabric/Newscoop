@@ -278,7 +278,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'media'    => 'screen',
                 'rel'    => 'stylesheet',
             ));
-            $this->view->placeholder('title')->set($translator->trans('Theme management', array(), 'themes'));
+            $this->view->headTitle($translator->trans('Theme management', array(), 'themes').' - Newscoop Admin', 'SET');
         }
     }
 
@@ -419,14 +419,12 @@ class Admin_ThemesController extends Zend_Controller_Action
         $params = $this->getRequest()->getParams();
         $this->view->templatesParams = $params;
 
-        $this->view->placeholder('title')->set($translator->trans('Theme management', array(), 'themes'));
-
         $themeMngService = $this->getThemeService();
         /* @var $themeMngService Newscoop\Service\Implementation\ThemeManagementServiceLocal */
         $theme = $themeMngService->getById($themeId);
-        $this->view->placeholder('title')->append(": ".$this->view->escape($theme->getName()));
+        $this->view->headTitle($translator->trans('Theme management', array(), 'themes').': '.$this->view->escape($theme->getName()).' - Newscoop Admin', 'SET');
         if (($publication = $themeMngService->getThemePublication($theme))) {
-            $this->view->placeholder('title')->append(" - ".$this->view->escape($publication->getName()));
+            $this->view->headTitle($translator->trans('Theme management', array(), 'themes').': '.$this->view->escape($theme->getName())." - ".$this->view->escape($publication->getName()).' - Newscoop Admin', 'SET');
         }
     }
 

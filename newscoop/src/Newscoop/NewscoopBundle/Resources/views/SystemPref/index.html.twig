@@ -1,6 +1,6 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "system_pref" %}
-{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'newscoop.preferences.label.title'|trans }}{% endblock %}
+{% block admin_title %}{{ 'newscoop.preferences.label.title'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">

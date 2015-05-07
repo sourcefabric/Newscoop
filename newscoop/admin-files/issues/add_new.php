@@ -20,7 +20,7 @@ $newIssueId = Issue::GetUnusedIssueId($Pub);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top($translator->trans('Add new issue'), array('Pub' => $publicationObj), true, true, array($translator->trans("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
-
+$controller->view->headTitle($translator->trans('Add new issue').' - Newscoop Admin', 'SET');
 camp_html_display_msgs();
 ?>
 

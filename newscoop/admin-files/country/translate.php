@@ -21,6 +21,8 @@ $crumbs[] = array($translator->trans("Countries"), "/$ADMIN/country/");
 $crumbs[] = array($translator->trans("Translate country name", array(), 'country'), "");
 echo camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($translator->trans('Translate country name', array(), 'country').' - Newscoop Admin', 'SET');
+
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/country/do_translate.php"  >

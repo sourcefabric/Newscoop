@@ -22,7 +22,7 @@ $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 
 camp_html_content_top($translator->trans('Delete issue', array(), 'issues'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
-
+$controller->view->headTitle($translator->trans('Delete issue', array(), 'issues').' - Newscoop Admin', 'SET');
 ?>
 <P>
 <FORM METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/do_del.php">

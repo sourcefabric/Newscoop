@@ -18,7 +18,7 @@ $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true)
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 
 camp_html_content_top($translator->trans('Add new issue'), array('Pub' => $publicationObj), true, false, array($translator->trans("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
-
+$controller->view->headTitle($translator->trans('Add new issue').' - Newscoop Admin', 'SET');
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">

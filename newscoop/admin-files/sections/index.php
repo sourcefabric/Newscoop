@@ -26,6 +26,7 @@ $pager = new SimplePager($totalSections, $ItemsPerPage, "SectOffs_".$Pub."_".$Is
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top($translator->trans('Section List'), $topArray);
+$controller->view->headTitle($translator->trans('Section List').' - Newscoop Admin', 'SET');
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>

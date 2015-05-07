@@ -21,6 +21,8 @@ $crumbs = array();
 $crumbs[] = array($translator->trans("Configure"), "");
 $crumbs[] = array($translator->trans("Article Types"), "");
 
+$controller->view->headTitle($translator->trans('Article Types').' - Newscoop Admin', 'SET');
+
 echo camp_html_breadcrumbs($crumbs);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
