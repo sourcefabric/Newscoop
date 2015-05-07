@@ -22,6 +22,8 @@ $crumbs[] = array($translator->trans("Countries"), "/$ADMIN/country/");
 $crumbs[] = array($translator->trans("Edit country name", array(), 'country'), "");
 echo camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($translator->trans('Edit country name').' - Newscoop Admin', 'SET');
+
 ?>
 
 <P>

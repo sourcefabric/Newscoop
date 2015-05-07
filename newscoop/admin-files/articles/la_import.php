@@ -257,6 +257,8 @@ $crumbs[] = array($translator->trans("Actions"), "");
 $crumbs[] = array($translator->trans("Import XML", array(), 'articles'), "");
 echo camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($translator->trans("Import XML", array(), 'articles').' - Newscoop Admin', 'SET');
+
 ?>
 
 <?php camp_html_display_msgs(); ?>

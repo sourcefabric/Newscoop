@@ -20,6 +20,8 @@ $crumbs[] = array($translator->trans("Configure"), "");
 $crumbs[] = array($translator->trans("Article Types"), "/$ADMIN/article_types/");
 $crumbs[] = array($translator->trans("Merge article type", array(), 'article_types'), "");
 echo camp_html_breadcrumbs($crumbs);
+
+$controller->view->headTitle($translator->trans("Merge article type", array(), 'article_types').' - Newscoop Admin', 'SET');
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/article_types/merge2.php">

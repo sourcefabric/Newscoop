@@ -135,6 +135,8 @@ $crumbs[] = array($translator->trans("Backup/Restore", array(), 'home'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
+$controller->view->headTitle($translator->trans("Backup/Restore", array(), 'home').' - Newscoop Admin', 'SET');
+
 
 // view template
 ?>

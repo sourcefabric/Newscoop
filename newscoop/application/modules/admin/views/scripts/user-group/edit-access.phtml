@@ -1,5 +1,6 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
+$this->headTitle($translator->trans('Permissions:', array(), 'user_types').' - Newscoop Admin', 'SET');
 $this->placeholder('title')->captureStart(); ?>
 <?php echo $translator->trans('Permissions:', array(), 'user_types'); ?>
 <form action="<?php echo $this->url(array(
