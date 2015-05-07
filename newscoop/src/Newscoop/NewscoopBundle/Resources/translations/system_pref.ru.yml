@@ -3,98 +3,98 @@ newscoop:
         save: Сохранить
     preferences:
         error:
-            cache: null
-            replication: null
+            cache: 'Ошибка: PHP %cache% должен быть доступен для системы кеширования шаблона.'
+            replication: 'Данные репликации базы данных неполные'
             maxupload: 'Неправильное максимальное значение размера загружаемого файла'
             geolocation: 'Неверно заполнены поля геолокации. Обязательно присутствие чисел. Широта не может быть > 90 и < -90. Долгота не может быть > 180 и < -180.'
-            noaccess: null
-            latitude: null
-            longitude: null
-            cacheNotCleared: null
-            joberror: null
-            jobnotifyerror: null
+            noaccess: 'Вы не имеете прав для изменения системных настроек.'
+            latitude: 'Значение поля Широта недопустимо.'
+            longitude: 'Значение поля Долгота недопустимо.'
+            cacheNotCleared: 'Произошла ошибка при очистке кеша'
+            joberror: 'Не удалось изменить статус указанной задачи.'
+            jobnotifyerror: 'Не удалось отключить/включить уведомления.'
         success:
-            saved: null
-            cacheCleared: null
-            jobenabled: null
-            jobdisabled: null
+            saved: 'Системные настройки обновлены.'
+            cacheCleared: 'Кеш очищен'
+            jobenabled: 'Задача успешно активирована'
+            jobdisabled: 'Задача отменена'
             jobnotifyswitched: 'Настройка уведомления о фоновых задачах включена.'
         menu:
-            general: null
-            email: null
-            editor: null
+            general: 'Общие настройки'
+            email: 'Настройки Email'
+            editor: 'Настройки редактора'
             geolocation: 'Настройки геолокации'
-            fb: null
-            media: null
-            cache: null
-            other: null
-            recaptcha: null
-            cronjob: null
+            fb: 'Настройки Facebook'
+            media: 'Настройки видео'
+            cache: 'Настройки кеш'
+            other: 'Другие настройки'
+            recaptcha: 'Настройки reCAPTCHA '
+            cronjob: 'Настройки фоновых задач'
         btn:
             cleardatabasecache: null
-            disable: null
-            enable: null
+            disable: Деактивировать
+            enable: Активировать
         label:
             title: 'Системные настройки'
             header: Настройки
-            siteonline: null
-            sitetitle: null
-            metakeywords: null
-            metadescription: null
-            timezone: null
-            cacheengine: null
+            siteonline: 'Сайт он-лайн:'
+            sitetitle: 'Заголовок сайта'
+            metakeywords: 'Мета ключевые слова сайта:'
+            metadescription: 'Мета описание сайта:'
+            timezone: 'Часовой пояс:'
+            cacheengine: 'Кеширование запросов к БД:'
             cacheenginehost: null
             cacheengineport: null
-            cachetemplate: null
-            cacheimage: null
-            allowrecovery: null
-            secretkey: null
-            sessionlifetime: null
-            sessionlifetimemsg: null
-            separator: null
-            captcha: null
+            cachetemplate: 'Кеширование страниц:'
+            cacheimage: 'Время жизни кеш изображения:'
+            allowrecovery: 'Разрешить восстановление пароля:'
+            secretkey: 'Секретный ключ:'
+            sessionlifetime: 'Время жизни сессии:'
+            sessionlifetimemsg: 'согласно настройкам php.ini.'
+            separator: 'Разделитель ключевых слов:'
+            captcha: 'Число неудачных попыток входа до активации CAPTCHA:'
             maxupload: 'Максимально возможный размер загружаемого файла:'
             maxuploadmsg: 'Введите значение между 0 и %max% (максимальный размер указан в ''php.ini''). Для обозначения килобайтов используйте ''K'', для мегабайтов ''M'' и для гигабайтов ''G'' без пробелов между значением и соответствующей буквой, например, ''3M''.'
-            stats: null
-            smtphost: null
-            smtpport: null
-            email: null
+            stats: 'Автоматический сбор статистики:'
+            smtphost: 'SMTP хост:'
+            smtpport: 'SMTP порт:'
+            email: 'SMTP Email от:'
             emailfrom: 'Email для получения уведомлений от системы:'
             imageratio: 'Пропорции изменяемого изображения:'
             imagewidth: 'Ширина  масштабируемого изображения:'
             imageheight: 'Высота  масштабируемого изображения:'
             zoom: 'Включить масштабирование изображений в статьях?'
-            mediaRichTextCaptions: null
-            mediaCaptionLength: null
-            mediaCaptionLength_after: null
-            external: null
-            usereplication: null
-            serverdb: null
-            replicationhost: null
-            replicationuser: null
-            replicationpw: null
-            replicationport: null
-            filter: null
-            cron: null
-            mysqlpath: null
-            mysqlpathmsg: null
-            latitude: null
-            longitude: null
+            mediaRichTextCaptions: 'Разрешить форматированный текст в подписях к изображениям?'
+            mediaCaptionLength: 'Максимальное число знаков в подписи к изображению:'
+            mediaCaptionLength_after: знак(знаки)
+            external: 'Управление подпиской читателей осуществляется извне?'
+            usereplication: 'Настроить сервер репликации Newscoop?'
+            serverdb: 'База данных онлайн-сервера Newscoop'
+            replicationhost: 'Хост репликации базы данных:'
+            replicationuser: 'Пользователь репликации базы данных:'
+            replicationpw: 'Пароль репликации базы данных:'
+            replicationport: 'Порт репликации базы данных:'
+            filter: 'Время жизни маски фильтра (через запятые)'
+            cron: 'Запускать обслуживающие задачи через Cron?'
+            mysqlpath: 'newscoop:preferences:label:mysqlpath'
+            mysqlpathmsg: 'загрузить данные географических названий'
+            latitude: 'Широта центра карты'
+            longitude: 'Долгота центра карты'
             zoomlevel: 'Масштаб карты:'
             defaultwidth: 'Ширина карты по-умолчанию'
             defaultheight: 'Высота карты по-умолчанию'
-            css: null
-            autofocus: null
+            css: 'Включите CSS файл для просмотра карты'
+            autofocus: 'Автофокусировка карты по умолчанию:'
             zoomautofocus: 'Максимальное приближение для автофокусировки:'
-            borderautofocus: null
-            mapprovider: null
-            mapquest: null
-            openstreet: null
-            defaultmapprovider: null
+            borderautofocus: 'Границы карты для автофокусировки:'
+            mapprovider: 'Принять Google Streets Map в качестве провайдера карты:'
+            mapquest: 'Принять MapQuest Map в качестве провайдера карты:'
+            openstreet: 'Принять OpenStreet Map в качестве провайдера карты:'
+            defaultmapprovider: 'Провайдер карты по-умолчанию:'
             nominatimsearch: 'Использовать поиск MapQuest Nominatim:'
             preflanguage: null
-            markerdir: null
-            defaultmarker: null
+            markerdir: 'Каталог маркера карты:'
+            defaultmarker: 'Маркер карты '
             popupwidth: 'Минимальная ширина всплывающей карты:'
             popupheight: 'Минимальная высота всплывающей карты:'
             youtubewidth: 'Ширина Youtube-ролика по-умолчанию:'
@@ -103,54 +103,54 @@ newscoop:
             vimeoheight: 'Высота Vimeo-ролика по-умолчанию:'
             flashwidth: 'Ширина Flash-блока по-умолчанию:'
             flashheight: 'Высота Flash-блока по-умолчанию:'
-            flashserver: null
-            flashdir: null
-            apikey: null
-            appid: null
-            fbsecret: null
-            recaptchapublickey: null
-            recaptchaprivatekey: null
-            recaptchasecure: null
-            disabled: null
+            flashserver: 'Локальный Flash сервер:'
+            flashdir: 'Локальный Flash каталог:'
+            apikey: 'API ключ:'
+            appid: 'APP ID: '
+            fbsecret: 'newscoop:preferences:label:fbsecret'
+            recaptchapublickey: 'Открытый ключ'
+            recaptchaprivatekey: 'Закрытый ключ'
+            recaptchasecure: 'Безопасный url для reCAPTCHA?'
+            disabled: отключено
             yesoption: Да
             nooption: Нет
             geosearch: 'Использовать поиск Local GeoNames:'
             usergarbage: null
             usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
+            usergarbagedays: 'Число дней'
+            smartyUseProtocol: 'Использовать протокол для абсолютных ссылок сгенерированных Smarty?'
             cronjob: null
-            enabled: null
-            options: null
-            info: null
-            infodesc: null
-            prevRun: null
-            nextRun: null
-            norecords: null
+            enabled: Состояние
+            options: Варианты
+            info: 'Информация:'
+            infodesc: 'Эти настройки служат для управления фоновыми задачами путем включения/отмены указанной задачи (задач).'
+            prevRun: 'Предыдущая дата выполнения'
+            nextRun: 'Следующая дата выполнения'
+            norecords: 'Не выбрана ни одна из записей'
             cronJobEmail: 'E-mail для отправки уведомлений'
             cronJobSenderEmail: 'E-mail адрес отправителя'
             cronJobSenderName: 'Имя отправителя (например, Newscoop Scheduler)'
-            cronJobNotify: null
-            cronslist: null
-            cronsadvanced: null
-            moredetails: null
+            cronJobNotify: 'Уведомлять?'
+            cronslist: 'Список фоновых задач'
+            cronsadvanced: 'Расширенные настройки'
+            moredetails: 'Подробнее:'
         popover:
             cronJobEmail: 'Указать через запятую e-mail адреса, на которые будут отсылаться уведомления об ошибках.'
             cronJobSenderEmail: 'E-mail адреса, с которых будут отсылаться уведомления.'
-            cacheengine: null
+            cacheengine: 'Включает или отключает системный кэш, что может улучшить работу Newscoop.'
             cacheenginehost: null
             cacheengineport: null
-            cacheimage: null
+            cacheimage: 'Период, на который будут изображения помещены в кэш, от 30 секунд до бесконечности.'
             cachetemplate: null
-            recovery: null
+            recovery: 'Возможность восстановить пароль через email. Учтите, что при разрешении этой функции и ослаблении защиты вашего почтового аккаунта, в свою очередь, может быть ослаблена безопасность вашего издания на Newscoop.'
             secret: null
             separator: null
-            stats: null
+            stats: 'Функция сбора статистики посещений. Если вы пользуетесь внешними сервисами статистического учета, можете ответить Нет. Отключение функции снимает нагрузку на сервер Newscoop.'
             zoom: 'Если выбран ответ Да, читатели смогут увеличивать изображения в статьях, кликнув на них. Эта опция масштабирования работает для любых изображений, размещенных в тексте статьи.'
-            richtext_status: null
-            richtext_length: null
+            richtext_status: 'Разрешить расширенное редактирование текста для подписей к изображениям.'
+            richtext_length: 'Значение по умолчанию 255 (в т.ч., когда отключены форматированные подписи). Если ограничение не нужно, используйте значение 0. '
             ratio: 'Сохранение пропорций при изменении изображения более приоритетно, чем указанные здесь изменения ширины или высоты. Если пропорции не указаны, но указаны ширина и высота, Newscoop выберет значение, которое приведет к уменьшению изображения. Значения, указанные здесь по умолчанию, можно отменить для отдельного изображения, применив настройки на странице редактирования статьи.'
-            replication: null
+            replication: 'Дает возможность организации работы Newscoop на двух  серверах одновременно в качестве меры предосторожности в случаях проблем с аппаратным обеспечением или ошибок сети. '
             filter: null
             cron: null
             video: null
@@ -158,7 +158,7 @@ newscoop:
             recaptcha:
                 publickey: null
                 privatekey: null
-                secure: null
-            garbage: null
-            lifetime: null
+                secure: 'Выберите Да, если используете безопасный url для reCAPTCHA.'
+            garbage: 'Данная опция позволяет издателю выбрать количество дней, по истечении которых аккаунты пользователей, не получивших подтверждения, удаляются. Срок ожидания по умолчанию 90 дней. '
+            lifetime: 'Продолжительность сессии в секундах. Max: 86400 (24 часов). Min: 0 (до момента закрытия окна браузера).'
             smartyuseprotocol: null

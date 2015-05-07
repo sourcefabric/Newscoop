@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': null
+'Based on GeoNames.org and OpenStreetMap.org data': 'На основе данных GeoNames.org и OpenStreetMap.org '
 'selected marker icon': 'выбранная пиктограмма маркера'
 'add location to map': 'добавить местоположение на карту '
 'Video source': 'Источник видео'
@@ -64,4 +64,4 @@ text: текст
 image: изображение
 icon: пиктограмма
 'Setting Map Locations': 'Настройки карты мест событий '
-Deselect: null
+Deselect: 'Отменить выбор'

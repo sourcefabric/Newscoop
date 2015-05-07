@@ -1,5 +1,5 @@
-'Display articles of filtered types': null
-'Display Articles of Filtered Types': null
+'Display articles of filtered types': 'Отображать статьи согласно фильтру'
+'Display Articles of Filtered Types': 'Отображать статьи согласно фильтру'
 Webcode: Web-код
 'View article': 'Просмотр статьи'
 Source: Источник
@@ -52,8 +52,8 @@ Locations: Местонахождения
 'Loading data': 'Загрузка данных'
 'Last modified': 'Последние изменения'
 'Last Modified': 'Последние изменения'
-Last: Последний
-First: Первый
+Last: Последняя
+First: Первая
 'Filter by...': 'Фильтр по...'
 Filter: Фильтр
 Filename: 'Имя файла'
@@ -72,6 +72,6 @@ Added: Добавлена
 '$1 articles have been removed': '$1 статей были удалены'
 ' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
 'Search for creators': 'Поиск создателей'
-'No matches.': null
+'No matches.': 'Совпадений не найдено.'
 Searching...: 'Идет поиск...'
-'Minimum input of characters: $1': null
+'Minimum input of characters: $1': 'Минимальный ввод знаков: $1'

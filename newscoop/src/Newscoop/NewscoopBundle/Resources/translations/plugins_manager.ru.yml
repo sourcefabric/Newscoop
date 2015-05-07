@@ -1,35 +1,35 @@
-newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.manager: 'Менеджер плагинов'
 newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
-newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.public_plugins: 'Открытые плагины'
+newscoop.plugins_manager.private_plugins: 'Закрытые плагины'
+newscoop.plugins_manager.install.public: 'Установить новые плагины'
 newscoop.plugins_manager.installed_table.name: Название
 newscoop.plugins_manager.installed_table.description: Описание
 newscoop.plugins_manager.installed_table.enabled: Разрешено
 newscoop.plugins_manager.installed_table.version: Версия
 newscoop.plugins_manager.installed_table.license: Лицензия
-newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.installed_at: Установлено
 newscoop.plugins_manager.installed_table.updated_at: Обновлено
 newscoop.plugins_manager.installed_table.actions: Операции
-newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.update_plugin: Обновить
 newscoop.plugins_manager.installed_table.remove_plugin: Удалить
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.installed_table.install_plugin: Установить
+newscoop.plugins_manager.installed_table.plugin_installed: Установлено
 newscoop.plugins_manager.upload.private: 'Загрузить закрытый плагин'
 newscoop.plugins_manager.search_for_plugins: 'Поиск плагинов'
-newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.package: 'Обязательный формат загружаемого файла zip'
 newscoop.plugins_manager.form.submit: Загрузить
-newscoop.plugins_manager.runcommand: null
-newscoop.plugins_manager.openterminal: null
+newscoop.plugins_manager.runcommand: 'Выполнять команду'
+newscoop.plugins_manager.openterminal: 'Открыть терминал и выполнить команду'
 newscoop.plugins_manager.installassets: null
-newscoop.plugins_manager.done: null
-newscoop.plugins_manager.close: null
-newscoop.plugins_manager.update: null
-newscoop.plugins_manager.install: null
-newscoop.plugins_manager.remove: null
-newscoop.plugins_manager.installed: null
-newscoop.plugins_manager.clipboard: null
-newscoop.plugins_manager.downloads: null
+newscoop.plugins_manager.done: 'Готово. Закройте окно и обновите страницу.'
+newscoop.plugins_manager.close: Закрыть
+newscoop.plugins_manager.update: 'Как обновить этот плагин?'
+newscoop.plugins_manager.install: 'Как установить этот плагин?'
+newscoop.plugins_manager.remove: 'Как удалить этот плагин?'
+newscoop.plugins_manager.installed: 'Готово. Обновите страницу. Плагин должен отобразиться в списке установленных плагинов.'
+newscoop.plugins_manager.clipboard: 'Копировать в буфер обмена: Ctrl+C (Cmd + C для Mac), Enter'
+newscoop.plugins_manager.downloads: загрузки
 newscoop.plugins_manager.favers: null
 newscoop:
     datatable:

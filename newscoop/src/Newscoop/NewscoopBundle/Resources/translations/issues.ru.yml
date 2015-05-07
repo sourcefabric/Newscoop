@@ -4,7 +4,7 @@
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Предварительный просмотр выпуска невозможен. Пожалуйста, убедитесь, что выбран шаблон главной страницы. '
 'Publish all articles:': 'Опубликовать все статьи:'
 'Publish all articles': 'Опубликовать все статьи'
-'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': null
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 'Принудительное опубликование всех статей. Если выбрано Нет, будут опубликованы только статьи со статусом Опубликовать с номером.'
 default: 'по умолчанию'
 'The publishing/unpublishing can not be set the same time': 'Настройки Опубликовать/Отменить публикацию одновременно не работают'
 'The publishing schedule can not be set in the past': 'Невозможно настроить расписания публикации в прошедшем времени'

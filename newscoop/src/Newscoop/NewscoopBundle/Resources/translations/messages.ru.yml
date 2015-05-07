@@ -119,7 +119,7 @@ Status: Состояние
 Published: Опубликовано
 'Not published': 'Не опубликовано'
 Submitted: Отправлено
-New: Новая
+New: Новый
 Article: Статья
 Publish: Опубликовать
 Unpublish: Убрать
@@ -148,7 +148,7 @@ Localizer: Локализатор
 'Add new publication': 'Добавить новое издание'
 'Upload new template': 'Загрузить новый шаблон'
 'Add new staff member': 'Добавление нового члена персонала'
-'Staff member deleted.': null
+'Staff member deleted.': 'Удалена учетная запись сотрудника'
 'Add new subscriber': 'Добавление нового подписчика'
 'Add new user type': 'Добавить новый тип пользователей'
 'Add new article type': 'Добавить новый тип статей'
@@ -259,31 +259,31 @@ Reads: 'Количество просмотров'
 'Invalid security token!': 'Неверный маркер безопасности!'
 Authors: Авторы
 Title: Заголовок
-'Edit country': null
-'Entry $1 prepared for publishing': null
-'Entry deleted': null
+'Edit country': 'Редактировать страну'
+'Entry $1 prepared for publishing': 'Запись $1 подготовлена к публикации'
+'Entry deleted': 'Запись удалена'
 'Feed saved': null
-'Item published': null
-'Settings saved': null
-'Self-delete is not permitted.': null
-'Edit staff member $1': null
-'Delete staff member $1': null
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
-'Changing user type would prevent you to manage users. Aborted.': null
-'Staff member saved.': null
-'Permissions: $1': null
-'Change user account information': null
-'Staff management': null
+'Item published': Опубликовано
+'Settings saved': 'Настройки сохранены'
+'Self-delete is not permitted.': 'Удаление собственного аккаунта не разрешено.'
+'Edit staff member $1': 'Редактировать данные сотрудника $1'
+'Delete staff member $1': 'Удалить учетную запись сотрудника $1'
+'Could not save user $1. Please make sure it does not already exist': 'Не удалось сохранить пользователя $1. Проверьте, возможно, такой аккаунт уже существует.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Не удалось сохранить пользователя с e-mail адресом $1. Проверьте, возможно, такой адрес уже существует.'
+'Changing user type would prevent you to manage users. Aborted.': 'Изменение типа пользователя лишит вас права управлять пользователями. Отменено.'
+'Staff member saved.': 'Учетная запись сотрудника сохранена.'
+'Permissions: $1': 'Права: $1'
+'Change user account information': 'Изменить информацию учетной записи пользователя'
+'Staff management': 'Управление сотрудниками'
 Updated: Обновлено
-Options: null
-Verified: null
-Confirm: null
+Options: Варианты
+Verified: Подтвержденный
+Confirm: Подтвердить
 at: на
-published: null
-unpublished: null
-nopermissions: null
-importantmessage: null
-anonymous: null
+published: опубликовано
+unpublished: 'публикация отменена'
+nopermissions: 'У вас нет прав доступа к этому элементу.'
+importantmessage: 'Важная информация'
+anonymous: Анонимный
 'Successfully refreshed authentication token.': null
 'Failed to refresh authentication token.': null

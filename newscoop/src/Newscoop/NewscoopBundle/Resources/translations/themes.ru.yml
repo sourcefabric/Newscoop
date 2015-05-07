@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Дублировать задание'
 Templates: Шаблоны
 'Import theme': 'Импорт тем (шаблонов)'
-'Import succeeded!': null
+'Import succeeded!': 'Импорт прошел успешно'
 'Import failed!': 'Импорт не удался'
 'Edit template: $1': 'Редактировать шаблон: $1'
 'Set new name to': 'Назначить новое имя для'

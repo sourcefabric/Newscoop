@@ -1,6 +1,6 @@
 list: список
 filter: фильтр
-'In Lists?': null
+'In Lists?': 'В списках?'
 'Are you sure you want to $1 articles of article type $2?': 'Вы действительно хотите $1 статьи типа $2?'
 '$1 articles of article type $2': '$1 статьи типа $2'
 'Hide human-readable field names': 'Скрыть названия полей удобные для восприятия человеком'

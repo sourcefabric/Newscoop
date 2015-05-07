@@ -185,33 +185,33 @@ Comments: Комментарии
 'No such section.': 'Нет такой рубрики.'
 Characters: Знаки
 Snippet: Фрагмент
-'This list is already in a different state than the one in which it was loaded.': null
+'This list is already in a different state than the one in which it was loaded.': 'Список на данный момент отличается от загруженного изначально. '
 'List name should not be longer than 40 chars': 'Название списка не должно содержать более 40 знаков'
 'Not valid number': 'Недействующий номер'
-'List limit': null
-'The last article of this list has been removed.': null
-Revert: null
-'Could not automatically refresh the list': null
+'List limit': 'Ограничение списка'
+'The last article of this list has been removed.': 'Последняя статья списка удалена.'
+Revert: Восстановить
+'Could not automatically refresh the list': 'Автоматическое обновление списка не удалось'
 articles:
     playlists:
-        namechanged: null
-        alert: null
+        namechanged: 'Вы действительно хотите изменить название списка? Название может использоваться в шаблонах Newscoop для воспроизведения списка во внешнем интерфейсе. Если не уверены, проконсультируйтесь с администратором сайта.'
+        alert: 'Вы действительно хотите изменить максимальное число для списка избранных статей? В случае его уменьшения все, что превысит границу, будет удалено. Например, если вы снизите границу с 50 до 30, все 20 статей с номерами от 31 до 50 будут удалены из списка.'
     images:
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Редактировать метаданные изображения'
+            save: Сохранить
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
-                photographer_url: null
-                place: null
-                date: null
+                use: Использовать
+                number: Номер
+                caption: Подпись
+                status_approved: Утверждено
+                status_unapproved: 'Не утверждено'
+                status: Состояние
+                description: Описание
+                photographer: Фотограф
+                photographer_url: 'URL фотографа'
+                place: Место
+                date: Дата
                 article_specific: null
-                global: null
-                other_captions: null
+                global: Всеобщий
+                other_captions: 'Другие подписи'

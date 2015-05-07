@@ -1,4 +1,4 @@
-'Display newsfeed images': null
+'Display newsfeed images': 'Отобразить изображения ленты новостей'
 'Mark image': 'Отметить изображение'
 'Add selected images to slideshow': 'Добавить выбранные изображения в слайдшоу'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'К сожалению, это изображение слишком мало. Размер изображений должен быть по меньшей мере %dx%d.'
@@ -69,8 +69,8 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(гггг-мм-дд)</SM
 'You must select an image file to upload.': 'Вы должны выбрать графический файл для загрузки.'
 'Change image information': 'Измениить информацию об изображении'
 'You do not have the right to add images': 'Вы не имеете прав доступа к добавлению изображения'
-'Filter by uploader...': null
-'Slideshow images': null
-'Add items to slideshow': null
-'Attached Slideshows': null
-'Value is required and can''t be empty': null
+'Filter by uploader...': 'Фильтр по загрузке...'
+'Slideshow images': 'Изображения в слайд-шоу'
+'Add items to slideshow': 'Добавить в слайд-шоу'
+'Attached Slideshows': 'Прикрепленные слайд-шоу'
+'Value is required and can''t be empty': 'Поле значения нельзя оставить пустым'
