@@ -81,7 +81,7 @@ try {
         } else {
             $conn = $app['orm.em']->getConnection();
             $conn->executeUpdate("UPDATE OAuthClient SET redirect_uris = ? WHERE name = ?", array(
-                serialize(array('http://'.$alias.'/oauth/authentication/result')),
+                serialize(array('/oauth/authentication/result')),
                 $defaultClientName,
             ));
         }
