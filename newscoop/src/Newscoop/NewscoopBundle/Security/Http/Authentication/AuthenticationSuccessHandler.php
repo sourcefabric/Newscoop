@@ -6,14 +6,13 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
-use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * Custom authentication success handler
  */
-class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
+class AuthenticationSuccessHandler extends AbstractAuthenticationHandler
 {
     protected $authAdapter;
 
@@ -22,10 +21,10 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
     protected $userService;
 
     /**
-    * Constructor
-    *
-    * @param Zend_Auth   $zendAuth
-    */
+     * Constructor
+     *
+     * @param Zend_Auth $zendAuth
+     */
     public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $em, $userService)
     {
         $this->authAdapter = $authAdapter;
@@ -36,19 +35,23 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
     }
 
     /**
-    * This is called when an interactive authentication attempt succeeds. This
-    * is called by authentication listeners inheriting from AbstractAuthenticationListener.
-    * @param Request        $request
-    * @param TokenInterface $token
-    * @return Response The response to return
-    */
-    function onAuthenticationSuccess(Request $request, TokenInterface $token)
+     * This is called when an interactive authentication attempt succeeds. This
+     * is called by authentication listeners inheriting from AbstractAuthenticationListener.
+     * @param  Request        $request
+     * @param  TokenInterface $token
+     * @return Response       The response to return
+     */
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         $user = $token->getUser();
 
         // This should actually be handle by the AuthenticationFailedHandler
         if (!$user->isAdmin()) { // can't go into admin
-            $request->getSession()->set(SecurityContextInterface::AUTHENTICATION_ERROR, new AuthenticationException('User is not an admin.'));
+            $request->getSession()->set(
+                SecurityContextInterface::AUTHENTICATION_ERROR,
+                new AuthenticationException('User is not an admin.')
+            );
+
             return $this->httpUtils->createRedirectResponse($request, 'admin_login');
         }
 
@@ -66,8 +69,7 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         \Article::UnlockByUser($user->getId());
 
         $request->setLocale($request->request->get('login_language'));
-        setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
-
+        $this->setNoCacheCookie($request);
         $user->setLastLogin(new \DateTime());
         $this->em->flush();
 
@@ -77,14 +79,5 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         }
 
         return parent::onAuthenticationSuccess($request, $token);
-    }
-
-    private function extractDomain($domain)
-    {
-        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
-            return $matches['domain'];
-        } else {
-            return $domain;
-        }
     }
 }

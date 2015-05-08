@@ -5,19 +5,17 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
-use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 
 /**
  * Custom authentication success handler for frontend
  */
-class AuthenticationFrontendSuccessHandler extends DefaultAuthenticationSuccessHandler
+class AuthenticationFrontendSuccessHandler extends AbstractAuthenticationHandler
 {
     protected $authAdapter;
 
@@ -57,6 +55,7 @@ class AuthenticationFrontendSuccessHandler extends DefaultAuthenticationSuccessH
         $OAuthtoken = $this->userService->loginUser($user, 'oauth_authorize');
         $session = $request->getSession();
         $session->set('_security_oauth_authorize', serialize($OAuthtoken));
+        $this->setNoCacheCookie($request);
 
         return parent::onAuthenticationSuccess($request, $token);
     }

@@ -12,17 +12,15 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
-use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 
 /**
  * Custom authentication success handler for OAuth.
  * It sings in to the Symfony frontend firewall and also to the Zend,
  * when signing in via OAuth firewall.
  */
-class OAuthSuccessHandler extends DefaultAuthenticationSuccessHandler
+class OAuthSuccessHandler extends AbstractAuthenticationHandler
 {
     protected $authAdapter;
-
     protected $userService;
 
     /**
@@ -61,6 +59,7 @@ class OAuthSuccessHandler extends DefaultAuthenticationSuccessHandler
         $frontendToken = $this->userService->loginUser($user, 'frontend_area');
         $session = $request->getSession();
         $session->set('_security_frontend_area', serialize($frontendToken));
+        $this->setNoCacheCookie($request);
 
         return parent::onAuthenticationSuccess($request, $token);
     }
