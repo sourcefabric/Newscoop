@@ -23,7 +23,7 @@ $newSectionNumber = Section::GetUnusedSectionNumber($f_publication_id, $f_issue_
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top($translator->trans('Add new section', array(), 'sections'), $topArray, true, true, array($translator->trans("Sections") => "/$ADMIN/sections/?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id"));
-
+$controller->view->headTitle($translator->trans('Add new section', array(), 'sections').' - Newscoop Admin', 'SET');
 $languageObj = new Language($f_language_id);
 if (!is_object($languageObj)) {
     $languageObj = new Language(1);

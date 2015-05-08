@@ -134,6 +134,8 @@ if (!$id || $id == -1) {
     }
 }
 
+$controller->view->headTitle($translator->trans('Authors').' - Newscoop Admin', 'SET');
+
 $crumbs = array();
 $crumbs[] = array($translator->trans("Configure"), "");
 $crumbs[] = array($translator->trans("Authors"), "");

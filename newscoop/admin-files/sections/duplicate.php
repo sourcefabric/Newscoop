@@ -68,6 +68,7 @@ if ($f_dest_issue_number > 0) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top($translator->trans('Duplicate section', array(), 'sections'), $topArray, true, true);
+$controller->view->headTitle($translator->trans('Duplicate section', array(), 'sections').' - Newscoop Admin', 'SET');
 ?>
 <script>
 function CustomValidator_DuplicateSection(form) {

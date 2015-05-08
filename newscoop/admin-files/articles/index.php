@@ -115,6 +115,8 @@ $pager = new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top($translator->trans('Article List', array(), 'articles') . ': ' . $this->view->escape($sectionObj->getName()), $topArray);
+
+$controller->view->headTitle($translator->trans('Article List', array(), 'articles').': '.$this->view->escape($sectionObj->getName()).' - Newscoop Admin', 'SET');
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>

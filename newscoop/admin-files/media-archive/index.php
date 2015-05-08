@@ -3,6 +3,8 @@ require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
 $translator = \Zend_Registry::get('container')->getService('translator');
 
+$controller->view->headTitle($translator->trans('Media Archive', array(), 'media_archive').' - Newscoop Admin', 'SET');
+
 camp_html_content_top($translator->trans('Media Archive', array(), 'media_archive'), NULL);
 ?>
 <script>

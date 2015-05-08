@@ -16,6 +16,8 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 camp_html_content_top($translator->trans('Search'), NULL);
 
+$controller->view->headTitle($translator->trans('Search').' - Newscoop Admin', 'SET');
+
 // set up
 $articlelist = new ArticleList();
 $articlelist->setPublication($f_publication_id);

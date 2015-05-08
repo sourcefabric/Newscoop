@@ -23,6 +23,8 @@ $pager = new SimplePager($totalIssues, $ItemsPerPage, "IssOffs_$Pub", "index.php
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top($translator->trans('Issue List'), array('Pub' => $publicationObj));
+
+$controller->view->headTitle($translator->trans('Issue List').' - Newscoop Admin', 'SET');
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>

@@ -1,7 +1,7 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "new_comments" %}
 
-{% block admin_title %}{{ parent() }} - {{ 'comments.label.comments'|trans }}{% endblock %}
+{% block admin_title %}{{ 'comments.label.comments'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_content %}{{ 'comments.label.comments'|trans }}{% endblock %}
 
 {% block admin_stylesheets %}

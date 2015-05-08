@@ -1,7 +1,7 @@
 <html lang="{{ localeFromCookie }}" dir="ltr">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'Password Recovery'|trans({},'home') }}{% endblock %}</title>
+  <title>{% block admin_title %}{{ 'Password Recovery'|trans({},'home') }} - {{ parent() }}{% endblock %}</title>
   <link rel="shortcut icon" href="{{ Newscoop['ADMIN_IMAGE_BASE_URL'] }}/7773658c3ccbf03954b4dacb029b2229.ico" />
   <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet.css" />

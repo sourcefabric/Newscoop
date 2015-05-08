@@ -1,5 +1,5 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Add new user type')); ?>
+$this->headTitle($translator->trans('Add new user type').' - Newscoop Admin', 'SET'); ?>
 
 <?php echo $this->form; ?>

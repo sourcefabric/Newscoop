@@ -96,6 +96,8 @@ if ($g_user->hasPermission('ChangeImage')) {
 $crumbs[] = array($label_text, '');
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($label_text.' - Newscoop Admin', 'SET');
+
 echo $breadcrumbs;
 ?>
 <p></p>

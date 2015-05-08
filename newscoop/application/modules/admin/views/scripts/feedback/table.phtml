@@ -10,7 +10,7 @@
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.version.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/feedback.js')); ?>
 
-<?php $this->placeholder('title')->set($translator->trans('Feedback Messages', array(), 'feedback')); ?>
+<?php $this->headTitle($translator->trans('Feedback Messages', array(), 'feedback').' - Newscoop Admin', 'SET'); ?>
 <script>
     function putGS(str) {
         var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]

@@ -1,6 +1,6 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans("Rename user $1", array('$1' => $this->user->username), 'users')); 
+$this->headTitle($translator->trans("Rename user $1", array('$1' => $this->user->username), 'users').' - Newscoop Admin', 'SET'); 
 ?>
 
 <?php echo $this->form->setAttrib('id', 'edit-form'); ?>

@@ -40,7 +40,7 @@ $newArticles = $em->getRepository('Newscoop\Entity\Article')
     ))
     ->getQuery()
     ->getSingleScalarResult();
-
+$controller->view->headTitle($translator->trans('Dashboard', array(), 'home').' - Newscoop Admin', 'SET');
 echo '<div class="toolbar clearfix"><span class="article-title">';
 echo $translator->trans('Dashboard', array(), 'home');
 echo '</span>';

@@ -57,7 +57,7 @@ $allArticleTypes = ArticleType::GetArticleTypes();
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top($translator->trans('Add new article'), $topArray, true, false, array($translator->trans("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
-
+$controller->view->headTitle($translator->trans('Add new article').' - Newscoop Admin', 'SET');
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>

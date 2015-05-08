@@ -1,6 +1,6 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans("Edit user $1", array('$1' => $this->user->getUsername()), 'users')); ?>
+$this->headTitle($translator->trans("Edit user $1", array('$1' => $this->user->getUsername()), 'users').' - Newscoop Admin', 'SET'); ?>
 
 <div class="form-div-container">
 <form id="edit-form" enctype="application/x-www-form-urlencoded" action="" method="post">

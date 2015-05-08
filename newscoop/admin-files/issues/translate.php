@@ -25,6 +25,8 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top($translator->trans('Add new translation', array(), 'issues'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
+$controller->view->headTitle($translator->trans('Add new translation', array(), 'issues').' - Newscoop Admin', 'SET');
+
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
