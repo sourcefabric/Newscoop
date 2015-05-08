@@ -44,6 +44,10 @@
                 return $window.sessionStorage.getItem('newscoop.token');
             };
 
+            self.setToken = function (token) {
+                return $window.sessionStorage.setItem('newscoop.token', token);
+            };
+
             /**
             * Returns true if the current user is authenticated (=has a token),
             * otherwise false.
@@ -54,6 +58,27 @@
             self.isAuthenticated = function () {
                 return !!$window.sessionStorage.getItem('newscoop.token');
             };
+
+            self.obtainToken = function () {
+                var deferredGet = $q.defer();
+
+                // TODO dont pass Authentication header when geting access_token
+                // so we wont get "invalid_token" when token expired but instead
+                // we can get the new token or modal login form popup when
+                // session will expire, to get new token.
+                $http.get(Routing.generate("newscoop_gimme_users_getuseraccesstoken", {
+                    clientId: clientId
+                }), {IS_RETRY: true})
+                .success(function(response) {
+                    self.setToken(response.access_token);
+                    deferredGet.resolve(response);
+                })
+                .error(function (response) {
+                    deferredGet.reject(response);
+                });
+
+                return deferredGet.promise;
+            }
 
             /**
             * Opens a modal with Newscoop login form. On successful login it
