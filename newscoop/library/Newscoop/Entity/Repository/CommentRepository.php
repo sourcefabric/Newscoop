@@ -40,7 +40,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      *
      * @return Doctrine\ORM\Query Query
      */
-    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true)
+    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true, $showHidden = true)
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -64,6 +64,11 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 ->setParameter('status', Comment::STATUS_DELETED);
         }
 
+        if (!$showHidden) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_HIDDEN);
+        }
+
         $query = $queryBuilder->getQuery();
 
         return $query;
@@ -74,7 +79,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      *
      * @return Query
      */
-    public function getComments($getDeleted = true)
+    public function getComments($getDeleted = true, $showHidden = true)
     {
         $em = $this->getEntityManager();
 
@@ -84,6 +89,11 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         if (!$getDeleted) {
             $queryBuilder->andWhere('c.status != :status')
                 ->setParameter('status', Comment::STATUS_DELETED);
+        }
+
+        if (!$showHidden) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_HIDDEN);
         }
 
         $query = $queryBuilder->getQuery();

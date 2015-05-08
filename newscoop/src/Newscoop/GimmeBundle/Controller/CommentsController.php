@@ -46,8 +46,16 @@ class CommentsController extends FOSRestController
     {
         $em = $this->container->get('em');
 
+        $showHidden = false;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $showHidden = true;
+            }
+        } catch (AuthenticationException $e) {}
+
         $comments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getComments(false);
+            ->getComments(false, $showHidden);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $comments = $paginator->paginate($comments, array(
@@ -137,8 +145,16 @@ class CommentsController extends FOSRestController
             $recommended = true;
         }
 
+        $showHidden = false;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $showHidden = true;
+            }
+        } catch (AuthenticationException $e) {}
+
         $articleComments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getArticleComments($number, $language, $recommended, false)
+            ->getArticleComments($number, $language, $recommended, false, $showHidden)
             ->getResult();
 
         if ($order == 'nested' && $articleComments) {
