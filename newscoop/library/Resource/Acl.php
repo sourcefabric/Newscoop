@@ -114,12 +114,8 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     private function addRules(Zend_Acl $acl, Zend_Acl_Role_Interface $role)
     {
         foreach ($this->getStorage()->getRules($role) as $rule) {
-            if (!$rule instanceof Resource\Acl\RuleInterface) {
-                throw new InvalidArgumentException;
-            }
-
-            $type = $rule->getType();
-            $acl->$type($role, $rule->getResource(), $rule->getAction());
+            $type = $rule['type'];
+            $acl->$type($role, $rule['resource'], $rule['action']);
         }
     }
 
