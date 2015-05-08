@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
 
 /**
- * Abstract success handler
+ * Abstract authentication success handler
  */
 abstract class AbstractAuthenticationHandler extends DefaultAuthenticationSuccessHandler
 {

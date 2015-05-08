@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
 
 /**
- * Abstract success handler
+ * Abstract logout success handler
  */
 abstract class AbstractLogoutHandler extends DefaultLogoutSuccessHandler
 {
