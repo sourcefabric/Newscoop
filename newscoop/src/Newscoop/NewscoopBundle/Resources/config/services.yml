@@ -73,6 +73,16 @@ services:
         public: false
         arguments:  ['@security.http_utils', '/', '@security.context']
 
+    newscoop_newscoop.security.oauth.success_handler:
+        class: %newscoop_newscoop.security.oauth.success_handler.class%
+        public: false
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@user']
+
+    newscoop_newscoop.security.oauth.logout.success_handler:
+        class: %newscoop_newscoop.security.oauth.logout.success_handler.class%
+        public: false
+        arguments:  ['@security.http_utils', '@security.context']
+
     newscoop_newscoop.publication_service:
         class: Newscoop\Services\PublicationService
         arguments:  ["@em", "@newscoop.cache"]
@@ -197,3 +207,5 @@ parameters:
     newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"
     ewz_recaptcha.form.type.class: "Newscoop\\NewscoopBundle\\Form\\Type\\RecaptchaType"
     security.authentication.rememberme.services.simplehash.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\InteractiveLogin"
+    newscoop_newscoop.security.oauth.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\OAuthSuccessHandler"
+    newscoop_newscoop.security.oauth.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\OAuthLogoutSuccessHandler"
