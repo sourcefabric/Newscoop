@@ -97,7 +97,7 @@
             </thead>
             <tbody>
                 {% for row in commentsArray %}
-                <tr id="use-hover">
+                <tr id="use-hover" class="comment_{{ row.comment.id }} {% if row.comment.status == 'hidden' %} status-hidden{% endif %}">
                     <td style="width: 3%; ">
                         <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{% if pagination.getCurrentPageNumber == 1 %}
                             {{ row.index }}.
@@ -193,7 +193,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr id="hoverBtns">
+                <tr id="hoverBtns" class="comment_{{ row.comment.id }} {% if row.comment.status == 'hidden' %} status-hidden{% endif %}">
                     <td colspan="1"></td>
                     <td colspan="6">
                         <div class="commentBtns" id="{{ row.comment.id }}" style="display: none; visibility: visible;">
@@ -334,10 +334,13 @@
                         location.href = Routing.generate('newscoop_newscoop_comments_index');
                     } else if (status == 'pending') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
+                        $('.comment_'+ids).removeClass('status-hidden');
                     } else if (status == 'approved') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.approved'|trans }}');
+                        $('.comment_'+ids).removeClass('status-hidden');
                     } else if (status == 'hidden') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.hidden'|trans }}');
+                        $('.comment_'+ids).addClass('status-hidden');
                     }
                 },
                 error: function (rq, status, error) {
