@@ -28,7 +28,7 @@ services:
         factory_method: getInstance
     user:
         class:      Newscoop\Services\UserService
-        arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory"]
+        arguments:  ["@em", "@zend_auth", "@security.context"]
         tags:
             - { name: kernel.event_listener, event: user.set_points, method: updateUserPoints }
     user.manager:
