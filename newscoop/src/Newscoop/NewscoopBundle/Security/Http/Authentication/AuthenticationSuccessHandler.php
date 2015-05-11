@@ -60,7 +60,7 @@ class AuthenticationSuccessHandler extends AbstractAuthenticationHandler
 
         $zendAuth = \Zend_Auth::getInstance();
         $this->authAdapter->setUsername($user->getUsername())->setPassword($request->request->get('_password'))->setAdmin(true);
-        $result = $zendAuth->authenticate($this->authAdapter);
+        $zendAuth->authenticate($this->authAdapter);
 
         $OAuthtoken = $this->userService->loginUser($user, 'oauth_authorize');
         $session = $request->getSession();

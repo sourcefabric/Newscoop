@@ -75,7 +75,9 @@ services:
 
     newscoop_newscoop.security.oauth.success_handler:
         class: %newscoop_newscoop.security.oauth.success_handler.class%
-        public: false
+        public: true
+        calls:
+            - [ setProviderKey, [ 'oauth_authorize' ]]
         arguments:  ['@security.http_utils', {}, '@auth.adapter', '@user']
 
     newscoop_newscoop.security.oauth.logout.success_handler:

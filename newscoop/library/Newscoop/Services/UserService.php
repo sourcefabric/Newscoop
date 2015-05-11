@@ -72,7 +72,7 @@ class UserService
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
                     $currentUser = $this->security->getToken()->getUser();
-                    if ($this->security->isGranted('IS_AUTHENTICATED_FULLY') || 
+                    if ($this->security->isGranted('IS_AUTHENTICATED_FULLY') ||
                         $this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')
                     ) {
                         $this->currentUser = $currentUser;
