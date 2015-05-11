@@ -132,9 +132,11 @@ class TemplatesService
         $this->smarty->setTemplateDir(array_reverse($this->smarty->getTemplateDir()));
 
         $publicationMetadata = $this->publicationService->getPublicationMetadata();
-        $this->smarty->campsiteVector = array(
-            'publication' => $publicationMetadata['alias']['publication_id'],
-            'language' => $publicationMetadata['publication']['id_default_language']
-        );
+        if (count($publicationMetadata) > 0) {
+            $this->smarty->campsiteVector = array(
+                'publication' => $publicationMetadata['alias']['publication_id'],
+                'language' => $publicationMetadata['publication']['id_default_language']
+            );
+        }
     }
 }
