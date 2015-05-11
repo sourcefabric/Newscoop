@@ -114,12 +114,8 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     private function addRules(Zend_Acl $acl, Zend_Acl_Role_Interface $role)
     {
         foreach ($this->getStorage()->getRules($role) as $rule) {
-            if (!$rule instanceof Resource\Acl\RuleInterface) {
-                throw new InvalidArgumentException;
-            }
-
-            $type = $rule->getType();
-            $acl->$type($role, $rule->getResource(), $rule->getAction());
+            $type = $rule['type'];
+            $acl->$type($role, $rule['resource'], $rule['action']);
         }
     }
 
@@ -210,15 +206,14 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
      */
     private function scan()
     {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $options = $this->getOptions() + array(
-            'cache' => 'Doctrine\Common\Cache\ArrayCache',
             'cache_ttl' => 300,
         );
 
-        // try to fetch from cache
-        $cache = new $options['cache'];
-        if ($cache->contains(self::CACHE_NAMESPACE)) {
-            list($this->resources, $this->access) = json_decode($cache->fetch(self::CACHE_NAMESPACE), TRUE);
+        $cacheKey = $cacheService->getCacheKey(self::CACHE_NAMESPACE);
+        if ($cacheService->contains($cacheKey)) {
+            list($this->resources, $this->access) = json_decode($cacheService->fetch($cacheKey), TRUE);
             return;
         }
 
@@ -327,7 +322,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
         $this->resources = $resources;
         $this->access = $access;
 
-        $cache->save(self::CACHE_NAMESPACE, json_encode(array($resources, $access)), (int) $options['cache_ttl']);
+        $cacheService->save($cacheKey, json_encode(array($resources, $access)), (int) $options['cache_ttl']);
     }
 
     /**

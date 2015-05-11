@@ -35,16 +35,18 @@ class Storage implements StorageInterface
     public function getRules(\Zend_Acl_Role_Interface $role)
     {
         $em = $this->doctrine->getManager();
-        $repository = $em->getRepository('Newscoop\Entity\Acl\Rule');
-        $criteria = array(
-            'role' => $role->getRoleId(),
-        );
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Acl\Rule')
+            ->createQueryBuilder('r')
+            ->select('r.resource, r.action, r.type')
+            ->where('r.role = :role')
+            ->setParameter('role', $role->getRoleId());
 
         if (is_a($role, '\Newscoop\Entity\User\Group')) { // @fix WOBS-568: ignore deny rules for roles
-            $criteria['type'] = 'allow';
+            $queryBuilder->andWhere('r.type = :allow')
+                ->setParameter('allow', 'allow');
         }
 
-        return $repository->findBy($criteria);
+        return $queryBuilder->getQuery()->getArrayResult();
     }
 
     /**
@@ -55,12 +57,16 @@ class Storage implements StorageInterface
     public function getResources()
     {
         $em = $this->doctrine->getManager();
-        $repository = $em->getRepository('Newscoop\Entity\Acl\Permission');
+        $permissions = $em->getRepository('Newscoop\Entity\Acl\Permission')
+            ->createQueryBuilder('p')
+            ->select('p.name')
+            ->getQuery()
+            ->getArrayResult();
 
         $resources = array();
-        foreach ($repository->findAll() as $permission) {
+        foreach ($permissions as $permission) {
             try {
-                list($resource, $action) = PermissionToAcl::translate($permission);
+                list($resource, $action) = PermissionToAcl::translate($permission['name']);
             } catch (\InvalidArgumentException $e) { // ignore obsolete permissions
                 continue;
             }
