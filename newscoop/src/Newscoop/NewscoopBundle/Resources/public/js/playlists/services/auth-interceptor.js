@@ -23,7 +23,7 @@ angular.module('playlistsApp').factory('authInterceptor', [
 
                 config.headers = config.headers || {};
                 token = userAuth.token();
-                if (token) {
+                if (token && !config.IS_AUTHORIZATION_HEADER) {
                     config.headers.Authorization = 'Bearer ' + token;
                 }
 
@@ -65,7 +65,6 @@ angular.module('playlistsApp').factory('authInterceptor', [
 
                     userAuth.obtainToken()
                     .then(function (response) {
-                        console.log(response)
                         $http = $injector.get('$http');
 
                         configToRepeat = angular.copy(failedRequestConfig);

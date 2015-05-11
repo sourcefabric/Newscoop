@@ -44,8 +44,13 @@
                 return $window.sessionStorage.getItem('newscoop.token');
             };
 
+            /**
+            * Sets the current oAuth token in sessionStorage.
+            *
+            * @method setToken
+            */
             self.setToken = function (token) {
-                return $window.sessionStorage.setItem('newscoop.token', token);
+                $window.sessionStorage.setItem('newscoop.token', token);
             };
 
             /**
@@ -59,16 +64,20 @@
                 return !!$window.sessionStorage.getItem('newscoop.token');
             };
 
+            /**
+            * Gets access token by client id. Opening a modal when user session
+            * in Newscoop is still valid, is not needed then. Instead a new token
+            * is obtained directly from the API.
+            *
+            * @method obtainToken
+            * @return {Object} promise object
+            */
             self.obtainToken = function () {
                 var deferredGet = $q.defer();
 
-                // TODO dont pass Authentication header when geting access_token
-                // so we wont get "invalid_token" when token expired but instead
-                // we can get the new token or modal login form popup when
-                // session will expire, to get new token.
                 $http.get(Routing.generate("newscoop_gimme_users_getuseraccesstoken", {
                     clientId: clientId
-                }), {IS_RETRY: true})
+                }), {IS_RETRY: true, IS_AUTHORIZATION_HEADER: true})
                 .success(function(response) {
                     self.setToken(response.access_token);
                     deferredGet.resolve(response);

@@ -540,7 +540,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
         $scope.playlist.selected.id = Playlist.getListId();
 
-        if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
+        if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
             $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
         }
     }
