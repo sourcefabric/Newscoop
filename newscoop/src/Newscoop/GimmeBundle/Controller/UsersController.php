@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Exception\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
 use Newscoop\Entity\User;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -243,16 +242,9 @@ class UsersController extends FOSRestController
      */
     public function logoutAction(Request $request)
     {
-        $token = new AnonymousToken(null, 'anon.');
         $response = new Response();
-        $session = $request->getSession();
-        $request->getSession()->invalidate();
-        $session->set('_security_frontend_area', serialize($token));
-        $session->set('_security_oauth_authorize', serialize($token));
-        $this->get('security.context')->setToken($token);
-        $zendAuth = \Zend_Auth::getInstance();
-        $zendAuth->clearIdentity();
-        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+        $logoutHandler = $this->container->get('newscoop_newscoop.security.oauth.logout.success_handler');
+        $logoutHandler->onLogoutSuccess($request);
 
         return $response;
     }
