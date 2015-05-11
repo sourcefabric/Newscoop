@@ -63,6 +63,7 @@ class ErrorController extends Zend_Controller_Action
         if (in_array($errors->type, $notFound)) {
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(true);
+            $this->getResponse()->setHttpResponseCode(404);
             $templatesService = \Zend_Registry::get('container')->get('newscoop.templates.service');
             $templatesService->renderTemplate('404.tpl');
 
