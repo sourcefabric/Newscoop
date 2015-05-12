@@ -21,8 +21,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $q,
         $timeout,
         $activityIndicator
-        ) {
-
+    ) {
     $scope.isViewing = false;
     $scope.playlist = {};
     $scope.playlists = [];
@@ -155,10 +154,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
     $scope.loadAllPlaylists = function () {
         if (_.isEmpty($scope.playlists)) {
-            Playlist.getAll().$promise.then(function (response) {
-                console.log(response);
-                $scope.playlists = response.items;
-            });
+            $scope.playlists = Playlist.getAll();
         }
     }
 

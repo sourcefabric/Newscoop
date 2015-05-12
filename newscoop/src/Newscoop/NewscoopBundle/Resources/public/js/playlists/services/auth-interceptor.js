@@ -67,7 +67,6 @@ angular.module('playlistsApp').factory('authInterceptor', [
                     .then(function (responseBody) {
                         $http = $injector.get('$http');
 
-                        //retryDeferred.resolve(response);
                         configToRepeat = angular.copy(failedRequestConfig);
                         configToRepeat.IS_RETRY = true;
 
@@ -79,8 +78,6 @@ angular.module('playlistsApp').factory('authInterceptor', [
                         .catch(function () {
                             retryDeferred.reject(responseBody);
                         });
-
-                        retryDeferred.resolve(response);
                     }, function (response) {
                         userAuth.newTokenByLoginModal()
                         .then(function () {
@@ -104,8 +101,6 @@ angular.module('playlistsApp').factory('authInterceptor', [
                             retryDeferred.reject(response);
                         });
                     });
-
-                    //retryDeferred.reject(response);
 
                     return retryDeferred.promise;
                 } else {
