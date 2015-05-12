@@ -65,6 +65,9 @@ class AuthenticationSuccessHandler extends AbstractAuthenticationHandler
         $OAuthtoken = $this->userService->loginUser($user, 'oauth_authorize');
         $session = $request->getSession();
         $session->set('_security_oauth_authorize', serialize($OAuthtoken));
+        $frontendToken = $this->userService->loginUser($user, 'frontend_area');
+        $session = $request->getSession();
+        $session->set('_security_frontend_area', serialize($frontendToken));
 
         \Article::UnlockByUser($user->getId());
 
