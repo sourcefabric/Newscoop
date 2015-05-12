@@ -127,7 +127,7 @@ echo $breadcrumbs;
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px; max-width: 800px">
 <P>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
-<FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data" onSubmit="<?php
+<FORM style="float:left;" NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data" onSubmit="<?php
     if ($preferencesService->MediaRichTextCaptions  == 'Y') {
         echo 'return validateTinyMCEEditors();';
     }
@@ -303,7 +303,6 @@ if ($imageObj->getLocation() == 'remote') {
 </TR>
 </TABLE>
 </FORM>
-<P>
 <script>
 document.forms.image_edit.f_image_description.focus();
 </script>
@@ -313,37 +312,27 @@ document.forms.image_edit.f_image_description.focus();
 if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
 	?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="370px" class="table_list">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="370px" class="table_list" style="float:left; margin-top: 5px;">
 	<tr class="table_list_header">
 		<td><?php echo $translator->trans('Used in articles', array(), 'media_archive'); ?>:</td>
 		<td><?php echo $translator->trans('Language'); ?></td>
 	</tr>
 	<?php
 	$color = 0;
-	$previousArticleNumber = -1;
 	foreach ($articles as $article) {
-		$translations = $article->getTranslations();
-		foreach ($translations as $translation) {
-			echo '<tr ';
-			if ($color) {
-				$color=0;
-				echo 'class="list_row_even"';
-			} else {
-				$color=1;
-				echo 'class="list_row_odd"';
-			}
-			echo '>';
-			if ($translation->getArticleNumber() == $previousArticleNumber) {
-				echo '<td class="translation_indent">';
-			}
-			else {
-				echo '<td>';
-			}
-			echo "<a href=\"".camp_html_article_url($translation, $translation->getLanguageId(), "edit.php").'">'.$this->view->escape($translation->getTitle()).'</a></td>';
-			echo "<td>".$this->view->escape($translation->getLanguageName())."</td>";
-			echo "</tr>";
-			$previousArticleNumber = $translation->getArticleNumber();
+		echo '<tr ';
+		if ($color) {
+			$color=0;
+			echo 'class="list_row_even"';
+		} else {
+			$color=1;
+			echo 'class="list_row_odd"';
 		}
+		echo '>';
+	    echo '<td>';
+		echo "<a href=\"".camp_html_article_url($article, $article->getLanguageId(), "edit.php").'">'.$this->view->escape($article->getTitle()).'</a></td>';
+		echo "<td>".$this->view->escape($article->getLanguageName())."</td>";
+		echo "</tr>";
 	}
 	?>
 	</table>
