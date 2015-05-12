@@ -155,7 +155,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
     $scope.loadAllPlaylists = function () {
         if (_.isEmpty($scope.playlists)) {
-            $scope.playlists = Playlist.getAll();
+            Playlist.getAll().$promise.then(function (response) {
+                console.log(response);
+                $scope.playlists = response.items;
+            });
         }
     }
 
