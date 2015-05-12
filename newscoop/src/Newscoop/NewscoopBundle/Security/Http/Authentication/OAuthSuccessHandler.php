@@ -35,7 +35,6 @@ class OAuthSuccessHandler extends AbstractAuthenticationHandler
     {
         $this->authAdapter = $authAdapter;
         $this->userService = $userService;
-        $options['target_path_parameter'] = '_failure_path';
 
         parent::__construct($httpUtils, $options);
     }
