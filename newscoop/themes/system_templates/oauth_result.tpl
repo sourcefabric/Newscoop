@@ -20,15 +20,18 @@
             max-width: 320px;
             padding: 15px;
             margin: 0 auto;
+            margin-top: 60px;
         }
     </style>
   </head>
 
   <body>
     <div id="container">
+        <center>
         <img src="/themes/system_templates/img/newscoop_logo_big.png" />
-        <h1 class="form-signin-heading text-muted">Authentication finished.</h1>
+        <h1 class="form-signin-heading text-muted"><b>Authentication finished.</b></h1>
         <p>Check result in this page url (with javascript) and continue with returned data</p>
+        </center>
     </div>
     <script type="text/javascript">
         var tokenRegex = new RegExp('access_token=(\\w+)'),
