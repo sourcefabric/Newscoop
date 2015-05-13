@@ -319,6 +319,7 @@ if (count($articles) > 0) {
 	</tr>
 	<?php
 	$color = 0;
+    $editorService = \Zend_Registry::get('container')->getService('newscoop.editor');
 	foreach ($articles as $article) {
 		echo '<tr ';
 		if ($color) {
@@ -330,7 +331,7 @@ if (count($articles) > 0) {
 		}
 		echo '>';
 	    echo '<td>';
-		echo "<a href=\"".camp_html_article_url($article, $article->getLanguageId(), "edit.php").'">'.$this->view->escape($article->getTitle()).'</a></td>';
+		echo "<a href=\"".$articleLink = $editorService->getLink($article).'">'.$this->view->escape($article->getTitle()).'</a></td>';
 		echo "<td>".$this->view->escape($article->getLanguageName())."</td>";
 		echo "</tr>";
 	}
