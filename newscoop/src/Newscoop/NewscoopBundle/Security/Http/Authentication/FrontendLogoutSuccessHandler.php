@@ -5,19 +5,16 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\HttpUtils;
-use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
 /**
  * Custom authentication success handler
  */
-class FrontendLogoutSuccessHandler extends DefaultLogoutSuccessHandler
+class FrontendLogoutSuccessHandler extends AbstractLogoutHandler
 {
     protected $securityContext;
 
@@ -49,17 +46,8 @@ class FrontendLogoutSuccessHandler extends DefaultLogoutSuccessHandler
         $session->set('_security_oauth_authorize', serialize($token));
         $this->securityContext->setToken($token);
 
-        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+        $this->unsetNoCacheCookie($request);
 
         return parent::onLogoutSuccess($request);
-    }
-
-    private function extractDomain($domain)
-    {
-        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
-            return $matches['domain'];
-        } else {
-            return $domain;
-        }
     }
 }

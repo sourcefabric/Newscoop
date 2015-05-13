@@ -224,6 +224,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
         $toolbar2[] = "fontsizeselect";
     }
 
+    $toolbar3 = array();
     if ($p_user->hasPermission('EditorTable')) {
         $toolbar3[] = "tablecontrols";
         $toolbar3[] = 'textbox';

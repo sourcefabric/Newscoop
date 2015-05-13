@@ -43,11 +43,15 @@ security:
         oauth_authorize:
             pattern:    ^/oauth/v2/auth
             provider: backend_db
-            context: shared_with_api
             form_login:
                 use_forward: true
                 login_path: /oauth/v2/auth_login
                 check_path: /oauth/v2/auth_login_check
+                success_handler: newscoop_newscoop.security.oauth.success_handler
+            logout:
+                path:   /oauth/v2/auth/logout
+                target: /oauth/v2/auth
+                success_handler: newscoop_newscoop.security.oauth.logout.success_handler
 
         api:
             pattern:    ^/(api|content\-api)
@@ -77,7 +81,6 @@ security:
         frontend_area:
             pattern:    ^/
             provider: frontend_db
-            context: shared_with_api
             form_login:
                 login_path:  /auth
                 check_path:  /auth/login_check

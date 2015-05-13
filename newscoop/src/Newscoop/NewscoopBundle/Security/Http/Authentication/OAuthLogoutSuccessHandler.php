@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @package Newscoop\NewscoopBundle
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
+ * @copyright 2014 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -7,9 +12,9 @@ use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
 /**
- * Custom authentication success handler
+ * OAuth logout success handler
  */
-class LogoutSuccessHandler extends AbstractLogoutHandler
+class OAuthLogoutSuccessHandler extends AbstractLogoutHandler
 {
     protected $securityContext;
 
@@ -17,9 +22,9 @@ class LogoutSuccessHandler extends AbstractLogoutHandler
      * @param HttpUtils $httpUtils
      * @param string    $targetUrl
      */
-    public function __construct(HttpUtils $httpUtils, $targetUrl, $securityContext)
+    public function __construct(HttpUtils $httpUtils, $securityContext)
     {
-        parent::__construct($httpUtils, $targetUrl);
+        parent::__construct($httpUtils);
         $this->securityContext = $securityContext;
     }
 
@@ -32,20 +37,18 @@ class LogoutSuccessHandler extends AbstractLogoutHandler
      */
     public function onLogoutSuccess(Request $request)
     {
-        // Clear Zend auth
+        // logout from zend
         $zendAuth = \Zend_Auth::getInstance();
         $zendAuth->clearIdentity();
-
-        $referer = $request->headers->get('referer');
-        // logout from OAuth
+        // logout from frontend
         $token = new AnonymousToken(null, 'anon.');
         $session = $request->getSession();
         $request->getSession()->invalidate();
-        $session->set('_security_oauth_authorize', serialize($token));
+        $session->set('_security_frontend_area', serialize($token));
         $this->securityContext->setToken($token);
 
         $this->unsetNoCacheCookie($request);
 
-        return $this->httpUtils->createRedirectResponse($request, $referer);
+        return parent::onLogoutSuccess($request);
     }
 }

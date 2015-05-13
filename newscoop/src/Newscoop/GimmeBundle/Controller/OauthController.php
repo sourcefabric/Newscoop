@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,7 +21,7 @@ class OauthController extends Controller
      * Login user with oauth v2
      *
      * Find out more informations about Newscoop REST API authentiocation here: [click me][1]
-     * 
+     *
      * [1]: http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/tutorial.html
      * @ApiDoc(
      *     statusCodes={
