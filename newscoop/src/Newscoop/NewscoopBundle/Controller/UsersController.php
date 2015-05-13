@@ -70,7 +70,7 @@ class UsersController extends Controller
         $registered = $userService->countBy(array('status' => User::STATUS_ACTIVE));
         $pending = $userService->countBy(array('status' => User::STATUS_INACTIVE));
 
-        $cacheKey = array('users__'.md5(serialize($criteria)), $registered, $pending);
+        $cacheKey = $cacheService->getCacheKey(array('users__'.md5(serialize($criteria)), $registered, $pending));
 
         if ($cacheService->contains($cacheKey)) {
             $responseArray =  $cacheService->fetch($cacheKey);

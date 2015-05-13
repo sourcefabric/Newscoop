@@ -89,7 +89,7 @@ class BackendJournalistDashboardController extends Controller
         }
 
         $criteria = $this->getCriteria($request);
-        $cacheKey = array('author_articles__'.md5(serialize($criteria)), $author->getId());
+        $cacheKey = $cacheService->getCacheKey(array('author_articles__'.md5(serialize($criteria)), $author->getId()));
 
         if ($cacheService->contains($cacheKey)) {
             $responseArray =  $cacheService->fetch($cacheKey);
