@@ -98,7 +98,7 @@ class CacheService
         }
 
         // make cache key short
-        $id = base64_encode($id.'|'.$this->systemPreferences->installation_id);
+        $id = base64_encode($id.'|'.$this->systemPreferences->SiteSecretKey);
 
         if ($namespace) {
             $namespace = $this->getNamespace($namespace);
@@ -115,7 +115,7 @@ class CacheService
             return $this->getCacheDriver()->fetch($namespace);
         }
 
-        $value = $namespace .'|'.time().'|'.$this->systemPreferences->installation_id;
+        $value = $namespace .'|'.time().'|'.$this->systemPreferences->SiteSecretKey;
         $this->getCacheDriver()->save($namespace, $value);
 
         return $value;
