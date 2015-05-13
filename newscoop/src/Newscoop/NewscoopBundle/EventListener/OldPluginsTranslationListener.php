@@ -43,7 +43,7 @@ class OldPluginsTranslationListener
         }
 
         $locale = $event->getRequest()->getLocale();
-        $cacheKey = 'oldPlugins_translations_'.count($this->pluginsService->getEnabledPlugins());
+        $cacheKey = $cacheService->getCacheKey('oldPlugins_translations_'.count($this->pluginsService->getEnabledPlugins()));
         if ($this->cacheService->contains($cacheKey)) {
             $files = $this->cacheService->fetch($cacheKey);
         } else {
