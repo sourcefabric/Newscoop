@@ -34,12 +34,15 @@ class TemplatesService
      */
     protected $publicationService;
 
+    protected $originalVector;
+
     public function __construct(ThemesService $themesService, PublicationService $publicationService)
     {
         $this->smarty = \CampTemplate::singleton();
         $this->smarty->assign('gimme', $this->smarty->context());
         $this->themesService = $themesService;
         $this->publicationService = $publicationService;
+        $this->originalVector = $this->smarty->campsiteVector;
         $this->preconfigureSmarty();
     }
 
@@ -54,7 +57,10 @@ class TemplatesService
      */
     public function fetchTemplate($file, $params = array(), $lifetime = 1400)
     {
-        return $this->renderTemplate($file, $params, $lifetime, false);
+        $content = $this->renderTemplate($file, $params, $lifetime, false);
+        $this->preconfigureVector();
+
+        return $content;
     }
 
     /**
@@ -131,12 +137,17 @@ class TemplatesService
         // reverse templates dir order
         $this->smarty->setTemplateDir(array_reverse($this->smarty->getTemplateDir()));
 
+        $this->preconfigureVector();
+    }
+
+    private function preconfigureVector()
+    {
         $publicationMetadata = $this->publicationService->getPublicationMetadata();
         if (count($publicationMetadata) > 0) {
-            $this->smarty->campsiteVector = array(
+            $this->smarty->campsiteVector = array_merge($this->originalVector, array(
                 'publication' => $publicationMetadata['alias']['publication_id'],
                 'language' => $publicationMetadata['publication']['id_default_language']
-            );
+            ));
         }
     }
 }
