@@ -29,15 +29,15 @@ function smarty_function_set_topic($p_params, &$p_smarty)
     } elseif (isset($p_params['name'])) {
         $attrName = 'name';
         $attrValue = $p_params['name'];
-        $topicService = \Zend_Registry::get('container')->getService('newscoop_newscoop.topic_service');
-        $topic = $topicService->getTopicByFullName($p_params['name']);
-        if (!is_null($topic) && $topic) {
-            $topicId = $topic->getId();
-        } else {
+        $topicService = \Zend_Registry::get('container')->getService('topic');
+        $topic = $topicService->getTopicBy($attrValue, $campsite->language->code);
+        if (!$topic) {
             $campsite->topic->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
 
             return false;
         }
+
+        $topicId = $topic->getId();
     } else {
         $property = array_shift(array_keys($p_params));
         CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_topic");
