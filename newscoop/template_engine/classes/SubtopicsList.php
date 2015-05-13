@@ -8,11 +8,11 @@ require_once 'ListObject.php';
  */
 class SubtopicsList extends ListObject
 {
-        private static $s_orderFields = array(
-            'default',
-            'bynumber',
-            'byname',
-        );
+    private static $s_orderFields = array(
+        'default',
+        'bynumber',
+        'byname',
+    );
 
     /**
      * Creates the list of objects. Sets the parameter $p_hasNextElements to
