@@ -15,9 +15,9 @@
     <link href="/themes/system_templates/css/main.css" rel="stylesheet">
     <style type="text/css" media="screen">
         body {
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #eee;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            background-color: transparent;
         }
         .fullscreen_bg {
             position: fixed;
@@ -29,7 +29,7 @@
             background-position: 50% 50%;
         }
         .form-signin {
-            max-width: 280px;
+            max-width: 100%;
             padding: 15px;
             margin: 0 auto;
         }
@@ -48,30 +48,8 @@
         .form-signin .form-control:focus {
             z-index: 2;
         }
-        .form-signin input[type="text"] {
-            margin-bottom: -1px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            border-top-style: solid;
-            border-right-style: solid;
-            border-bottom-style: none;
-            border-left-style: solid;
-            border-color: #000;
-        }
-        .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            border-top-style: none;
-            border-right-style: solid;
-            border-bottom-style: solid;
-            border-left-style: solid;
-            border-color: #000;
-        }
         .form-signin-heading {
-            color: #fff;
             text-align: center;
-            text-shadow: 0 2px 2px rgba(0,0,0,0.5);
         }
 
         .login_error {
@@ -96,7 +74,7 @@
 
             <input type="text" class="form-control" placeholder="Login" value="{{ $lastUsername }}" name="_username" required="" autofocus="">
             <input type="password" class="form-control" placeholder="Password" name="_password" required="">
-            <input type="hidden" name="_failure_path" value="{{ $targetPath }}" />
+            <input type="hidden" name="_target_path" value="{{ $targetPath }}" />
             <a class="forgot-password pull-left" href="{{ $view->url(['controller' => 'auth', 'action' => 'password-restore']) }}">Forgot password?</a>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Sign In

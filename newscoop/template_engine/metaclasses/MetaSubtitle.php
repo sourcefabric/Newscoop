@@ -297,14 +297,22 @@ final class MetaSubtitle
 
         try {
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $smarty = $templatesService->getSmarty();
-            $uri->uri_parameter = "image $imageOptions";
-            $smarty->assign('imageDetails', $detailsArray);
-            $smarty->assign('MediaRichTextCaptions', $preferencesService->MediaRichTextCaptions);
-            $smarty->assign('uri', $uri);
-            $smarty->assign('imgZoomLink', $imgZoomLink);
+            $templatesService->setVector(array(
+                'publication' => $request->attributes->get('_newscoop_publication_metadata[alias][publication_id]', null, true), 
+                'language' => $request->attributes->get('_newscoop_publication_metadata[publication][id_default_language]', null, true),
+                'params' => implode('__', array(
+                    $uri->article->number,
+                    $imageNumber,
+                    $articleImage->getImageId()
+                ))
+            ));
 
-            return $templatesService->fetchTemplate("editor_image.tpl");
+            return $templatesService->fetchTemplate("editor_image.tpl", array(
+                'imageDetails' => $detailsArray,
+                'MediaRichTextCaptions' => $preferencesService->MediaRichTextCaptions,
+                'uri' => $uri,
+                'imgZoomLink' => $imgZoomLink
+            ));
         } catch (\Exception $e) {
             return $e->getMessage();
         }

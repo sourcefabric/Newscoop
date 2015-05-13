@@ -16,10 +16,9 @@
             max-width: 420px;
             padding: 35px;
             margin: 20px auto;
-            background:#f6f6f6;
+            background:#f2f2f2;
             text-align:center;
             overflow:hidden;
-            border:1px solid #eee;
         }
         .form-signin .form-signin-heading, .form-signin {
             margin-bottom: 10px;
@@ -37,20 +36,16 @@
             z-index: 2;
         }
         .form-signin input[type="text"] {
-            margin-bottom: -1px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
+            margin-bottom: 20px;
             border-top-style: solid;
             border-right-style: solid;
-            border-bottom-style: none;
+            border-bottom-style: solid;
             border-left-style: solid;
             border-color: #aaa;
         }
         .form-signin input[type="password"] {
             margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            border-top-style: none;
+            border-top-style: solid;
             border-right-style: solid;
             border-bottom-style: solid;
             border-left-style: solid;
@@ -59,13 +54,12 @@
         .form-signin-heading {
             color: #444;
             text-align: center;
-            font-size:24px;
-            font-weight:bold;
+            font-size:18px;
+            font-weight: normal;
         }
-        .form-signin img { max-width: 200px; margin-bottom: 20px; margin-left: 10px; }
+        .form-signin img { max-width: 200px; margin-bottom: 20px; margin-left: 10px; margin-top: 20px; }
         .login_error {
             padding: 10px;
         }
         .forgot-password {margin-bottom: 10px; margin-top: 10px; text-align: left;}
         .pull-left, .pull-right {width:49%;}
-    

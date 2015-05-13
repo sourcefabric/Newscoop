@@ -80,7 +80,6 @@ services:
 
     newscoop_newscoop.security.oauth.logout.success_handler:
         class: %newscoop_newscoop.security.oauth.logout.success_handler.class%
-        public: false
         arguments:  ['@security.http_utils', '@security.context']
 
     newscoop_newscoop.publication_service:
