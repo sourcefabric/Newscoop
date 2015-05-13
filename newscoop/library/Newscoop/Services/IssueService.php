@@ -149,28 +149,29 @@ class IssueService implements IssueServiceInterface
             return;
         }
 
-        $issues = $publication->getIssues();
-        if (!$issues) {
+        $publicationId = $publication->getId();
+        $cacheKey = $this->cacheService->getCacheKey(array(
+            'latest_published',
+            $publicationId,
+        ), 'issue');
+
+        if ($this->cacheService->contains($cacheKey)) {
+            $issue = $this->cacheService->fetch($cacheKey);
+        } else {
+            $issue = $this->em
+                ->getRepository('Newscoop\Entity\Issue')
+                ->getLastPublishedByPublication($publicationId)
+                ->getArrayResult();
+
+            $this->cacheService->save($cacheKey, $issue);
+        }
+
+        if (empty($issue)) {
             return;
         }
 
-        $issues = $issues->toArray();
-        usort($issues, function ($x, $y) {
-            return $y->getId() - $x->getId();
-        });
-
-        $latestPublished = false;
-        $latestPublishedIssue = null;
-        foreach ($issues as $key => $issue) {
-            if ($issue->getWorkflowStatus() === 'Y' && !$latestPublished) {
-                $latestPublishedIssue = $issue;
-                $latestPublished = true;
-            }
-        }
-
-        if (null !== $latestPublishedIssue) {
-            $this->setIssue($latestPublishedIssue);
-        }
+        $latestPublishedIssue = $this->em->getReference('Newscoop\Entity\Issue', $issue[0]['id']);
+        $this->setIssue($latestPublishedIssue);
 
         return $latestPublishedIssue;
     }

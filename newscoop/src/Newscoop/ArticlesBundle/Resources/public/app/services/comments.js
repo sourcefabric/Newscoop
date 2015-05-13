@@ -5,7 +5,7 @@
 *
 * @class Comments
 */
-angular.module('editorialCommentsApp').factory('Comments', function($http, $activityIndicator) {
+angular.module('editorialCommentsApp').factory('Comments', function($http, $activityIndicator, $window) {
   var Comments = function() {
     this.items = [];
     this.busy = false;
@@ -117,17 +117,19 @@ angular.module('editorialCommentsApp').factory('Comments', function($http, $acti
       order: 'nested'
     });
 
-    if (!$http.defaults.headers.common.Authorization) {
+    if (!$window.sessionStorage.getItem('newscoop.token')) {
       $http.get(Routing.generate("newscoop_gimme_users_getuseraccesstoken", {
         clientId: clientId
       })).success(function(data, status, headers, config) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
+        $window.sessionStorage.setItem('newscoop.token', data.access_token);
         $http.get(url).success(function (data) {
           this.items = data.items;
           this.busy = false;
         }.bind(this));
-      }.bind(this));
+      });
     } else {
+      $http.defaults.headers.common.Authorization = 'Bearer ' + $window.sessionStorage.getItem('newscoop.token');
       $http.get(url).success(function (data) {
         this.items = data.items;
         this.busy = false;

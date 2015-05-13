@@ -35,7 +35,6 @@ class OAuthSuccessHandler extends AbstractAuthenticationHandler
     {
         $this->authAdapter = $authAdapter;
         $this->userService = $userService;
-        $options['target_path_parameter'] = '_failure_path';
 
         parent::__construct($httpUtils, $options);
     }
@@ -52,10 +51,10 @@ class OAuthSuccessHandler extends AbstractAuthenticationHandler
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         $user = $token->getUser();
-        $zendAuth = \Zend_Auth::getInstance();
-        $this->authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
-        $zendAuth->authenticate($this->authAdapter);
 
+        $zendAuth = \Zend_Auth::getInstance();
+        $this->authAdapter->setUsername($user->getUsername())->setPassword($request->request->get('_password'));
+        $zendAuth->authenticate($this->authAdapter);
         $frontendToken = $this->userService->loginUser($user, 'frontend_area');
         $session = $request->getSession();
         $session->set('_security_frontend_area', serialize($frontendToken));

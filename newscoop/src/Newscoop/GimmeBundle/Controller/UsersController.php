@@ -14,11 +14,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Newscoop\Exception\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
 use Newscoop\Entity\User;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -218,12 +216,6 @@ class UsersController extends FOSRestController
         $loginSuccessHandler = $this->container->get('newscoop_newscoop.security.authentication.frontend.success_handler');
         $loginSuccessHandler->onAuthenticationSuccess($request, $token);
 
-        $zendAuth = \Zend_Auth::getInstance();
-        $authAdapter = $this->get('auth.adapter');
-        $authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
-        $zendAuth->authenticate($authAdapter);
-        setcookie('NO_CACHE', '1', null, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
-
         $response->setStatusCode($targetPath ? 302 : 200);
         $response->headers->set(
             'X-Location',
@@ -250,16 +242,9 @@ class UsersController extends FOSRestController
      */
     public function logoutAction(Request $request)
     {
-        $token = new AnonymousToken(null, 'anon.');
         $response = new Response();
-        $session = $request->getSession();
-        $request->getSession()->invalidate();
-        $session->set('_security_frontend_area', serialize($token));
-        $session->set('_security_oauth_authorize', serialize($token));
-        $this->get('security.context')->setToken($token);
-        $zendAuth = \Zend_Auth::getInstance();
-        $zendAuth->clearIdentity();
-        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+        $logoutHandler = $this->container->get('newscoop_newscoop.security.oauth.logout.success_handler');
+        $logoutHandler->onLogoutSuccess($request);
 
         return $response;
     }
@@ -389,15 +374,7 @@ class UsersController extends FOSRestController
             throw new NotFoundHttpException("Client {$clientId} is not found.");
         }
 
-        $user = $this->container->get('user')->getCurrentUser();
-        if (!$user instanceof User) {
-            /**
-             * TODO Throw AccessDeniedException instead of Exception (related to bug which redirects to Auth controller
-             *  when AccessDeniedException is used.)
-             */
-            throw new \Exception('You do not have the necessary permissions.');
-        }
-
+        $this->container->get('user')->getCurrentUser();
         $redirectUris = $client->getRedirectUris();
         $authUrl = $request->getUriForPath('/oauth/v2/auth');
         $tokenUrl = $request->getUriForPath('/oauth/v2/token');

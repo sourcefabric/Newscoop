@@ -37,10 +37,13 @@ angular.module('playlistsApp').factory('Playlist', [
 
             $http.get(url)
             .success(function (response) {
-                response.items.forEach(function (item) {
-                    playlists.push(item);
-                });
-                deferredGet.resolve();
+                if (response.items !== undefined) {
+                    response.items.forEach(function (item) {
+                        playlists.push(item);
+                    });
+
+                    deferredGet.resolve(response);
+                }
             }).error(function (responseBody) {
                 deferredGet.reject(responseBody);
             });
