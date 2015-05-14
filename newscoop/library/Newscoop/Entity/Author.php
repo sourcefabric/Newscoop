@@ -94,6 +94,21 @@ class Author
     protected $image;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Article")
+     * @ORM\JoinTable(name="ArticleAuthors",
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      },
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     * )
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $articles;
+
+    /**
      * @param string $firstName
      * @param string $lastName
      */
@@ -393,5 +408,15 @@ class Author
             'name' => $this->getFullName(),
             'imageId' => $this->getImage()
         ));
+    }
+
+    /**
+     * Gets the articles
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

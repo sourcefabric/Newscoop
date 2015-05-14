@@ -296,6 +296,7 @@ final class MetaSubtitle
         }
 
         try {
+            $uri->uri_parameter = "image $imageOptions";
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
             $templatesService->setVector(array_merge($templatesService->getSmarty()->campsiteVector, array(
                 'params' => implode('__', array(
