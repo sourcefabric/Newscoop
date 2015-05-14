@@ -8,6 +8,8 @@
 
 namespace Newscoop\Services;
 
+use Newscoop\Cache\CacheKey;
+
 /**
  * Cache service
  */
@@ -18,7 +20,12 @@ class CacheService
      *
      * @var \Doctrine\Common\Cache\CacheProvider
      */
-    protected $cacheDriver;
+    protected $cacheDriver = null;
+
+    /**
+     * @var \Newscoop\NewscoopBundle\Services\SystemPreferencesService
+     */
+    protected $systemPreferences;
 
     /**
      * Initialize cache driver (based on system preferences settings, default is array)
@@ -27,56 +34,7 @@ class CacheService
      */
     public function __construct($systemPreferences)
     {
-        if (php_sapi_name() === 'cli') {
-            $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
-
-            return;
-        }
-
-        try {
-            switch ($systemPreferences->get('DBCacheEngine', 'Array')) {
-                case 'apc':
-                    $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache();
-                    break;
-                case 'memcache':
-                    $memcache = new \Memcache();
-                    $memcache->connect(
-                        $systemPreferences->get('DBCacheEngineHost', '127.0.0.1'), 
-                        $systemPreferences->get('DBCacheEnginePort', '11211')
-                    );
-
-                    $this->cacheDriver = new \Doctrine\Common\Cache\MemcacheCache();
-                    $this->cacheDriver->setMemcache($memcache);
-                    break;
-                case 'memcached':
-                    $memcached = new \Memcached();
-                    $memcached->addServer(
-                        $systemPreferences->get('DBCacheEngineHost', '127.0.0.1'), 
-                        $systemPreferences->get('DBCacheEnginePort', '11211')
-                    );
-
-                    $this->cacheDriver = new \Doctrine\Common\Cache\MemcachedCache();
-                    $this->cacheDriver->setMemcached($memcached);
-                    break;
-                case 'xcache':
-                    $this->cacheDriver = new \Doctrine\Common\Cache\XcacheCache();
-                    break;
-                case 'redis':
-                    $redis = new \Redis();
-                    $redis->connect(
-                        $systemPreferences->get('DBCacheEngineHost', '127.0.0.1'), 
-                        $systemPreferences->get('DBCacheEnginePort', '6379')
-                    );
-                    $this->cacheDriver = new \Doctrine\Common\Cache\RedisCache();
-                    $this->cacheDriver->setRedis($redis);
-                    break;
-                default:
-                    $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
-                    break;
-            }
-        } catch (\Exception $e) {
-            $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
-        }
+        $this->systemPreferences = $systemPreferences;
     }
 
     /**
@@ -88,7 +46,7 @@ class CacheService
      */
     public function fetch($id)
     {
-        return $this->cacheDriver->fetch($this->getCacheKey($id));
+        return $this->getCacheDriver()->fetch($this->getCacheKey($id));
     }
 
     /**
@@ -100,7 +58,7 @@ class CacheService
      */
     public function contains($id)
     {
-        return $this->cacheDriver->contains($this->getCacheKey($id));
+        return $this->getCacheDriver()->contains($this->getCacheKey($id));
     }
 
     /**
@@ -114,7 +72,7 @@ class CacheService
      */
     public function save($id, $data, $lifeTime = 1400)
     {
-        return $this->cacheDriver->save($this->getCacheKey($id), $data, $lifeTime);
+        return $this->getCacheDriver()->save($this->getCacheKey($id), $data, $lifeTime);
     }
 
     /**
@@ -126,14 +84,21 @@ class CacheService
      */
     public function delete($id)
     {
-        return $this->cacheDriver->delete($this->getCacheKey($id));
+        return $this->getCacheDriver()->delete($this->getCacheKey($id));
     }
 
     public function getCacheKey($id, $namespace = null)
     {
+        if (is_a($id, 'Newscoop\CacheKey')) {
+            return $id->key;
+        }
+
         if (is_array($id)) {
             $id = implode('__', $id);
         }
+
+        // make cache key short
+        $id = base64_encode($id.'|'.$this->systemPreferences->installation_id);
 
         if ($namespace) {
             $namespace = $this->getNamespace($namespace);
@@ -141,24 +106,24 @@ class CacheService
             return $namespace.'__'.$id;
         }
 
-        return $id;
+        return new CacheKey(array('key' => $id));
     }
 
     public function getNamespace($namespace)
     {
-        if ($this->cacheDriver->contains($namespace)) {
-            return $this->cacheDriver->fetch($namespace);
+        if ($this->getCacheDriver()->contains($namespace)) {
+            return $this->getCacheDriver()->fetch($namespace);
         }
 
-        $value = $namespace .'|'.time();
-        $this->cacheDriver->save($namespace, $value);
+        $value = $namespace .'|'.time().'|'.$this->systemPreferences->installation_id;
+        $this->getCacheDriver()->save($namespace, $value);
 
         return $value;
     }
 
     public function clearNamespace($namespace)
     {
-        $this->cacheDriver->save($namespace, time());
+        $this->getCacheDriver()->save($namespace, time());
     }
 
     /**
@@ -200,6 +165,59 @@ class CacheService
      */
     public function getCacheDriver()
     {
+        if (!is_null($this->cacheDriver)) {
+            return $this->cacheDriver;
+        }
+
+        if (php_sapi_name() === 'cli') {
+            return $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
+        }
+
+        try {
+            switch ($this->systemPreferences->get('DBCacheEngine', 'Array')) {
+                case 'apc':
+                    $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache();
+                    break;
+                case 'memcache':
+                    $memcache = new \Memcache();
+                    $memcache->connect(
+                        $this->systemPreferences->get('DBCacheEngineHost', '127.0.0.1'), 
+                        $this->systemPreferences->get('DBCacheEnginePort', '11211')
+                    );
+
+                    $this->cacheDriver = new \Doctrine\Common\Cache\MemcacheCache();
+                    $this->cacheDriver->setMemcache($memcache);
+                    break;
+                case 'memcached':
+                    $memcached = new \Memcached();
+                    $memcached->addServer(
+                        $this->systemPreferences->get('DBCacheEngineHost', '127.0.0.1'), 
+                        $this->systemPreferences->get('DBCacheEnginePort', '11211')
+                    );
+
+                    $this->cacheDriver = new \Doctrine\Common\Cache\MemcachedCache();
+                    $this->cacheDriver->setMemcached($memcached);
+                    break;
+                case 'xcache':
+                    $this->cacheDriver = new \Doctrine\Common\Cache\XcacheCache();
+                    break;
+                case 'redis':
+                    $redis = new \Redis();
+                    $redis->connect(
+                        $this->systemPreferences->get('DBCacheEngineHost', '127.0.0.1'), 
+                        $this->systemPreferences->get('DBCacheEnginePort', '6379')
+                    );
+                    $this->cacheDriver = new \Doctrine\Common\Cache\RedisCache();
+                    $this->cacheDriver->setRedis($redis);
+                    break;
+                default:
+                    $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
+                    break;
+            }
+        } catch (\Exception $e) {
+            $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
+        }
+
         return $this->cacheDriver;
     }
 }
