@@ -8,7 +8,7 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\CacheKey;
+use Newscoop\Cache\CacheKey;
 
 /**
  * Cache service
