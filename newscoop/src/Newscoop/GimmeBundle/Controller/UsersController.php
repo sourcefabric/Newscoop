@@ -410,13 +410,4 @@ class UsersController extends FOSRestController
 
         return json_decode($tokenResponse->getContent(), true);
     }
-
-    private function extractDomain($domain)
-    {
-        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
-            return $matches['domain'];
-        } else {
-            return $domain;
-        }
-    }
 }

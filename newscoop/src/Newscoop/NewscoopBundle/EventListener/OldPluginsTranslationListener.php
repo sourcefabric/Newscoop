@@ -5,7 +5,6 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -43,7 +42,7 @@ class OldPluginsTranslationListener
         }
 
         $locale = $event->getRequest()->getLocale();
-        $cacheKey = $cacheService->getCacheKey('oldPlugins_translations_'.count($this->pluginsService->getEnabledPlugins()));
+        $cacheKey = $this->cacheService->getCacheKey('oldPlugins_translations_'.count($this->pluginsService->getEnabledPlugins()));
         if ($this->cacheService->contains($cacheKey)) {
             $files = $this->cacheService->fetch($cacheKey);
         } else {
@@ -51,7 +50,7 @@ class OldPluginsTranslationListener
             $extension = $locale.'.yml';
             $files = array();
             try {
-                $finder->files()->in( __DIR__.'/../../../../plugins/*/admin-files/translations');
+                $finder->files()->in(__DIR__.'/../../../../plugins/*/admin-files/translations');
                 $finder->files()->name('*.'.$locale.'.yml');
             } catch (\InvalidArgumentException $e) {
                 return;
