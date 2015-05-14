@@ -297,15 +297,13 @@ final class MetaSubtitle
 
         try {
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $templatesService->setVector(array(
-                'publication' => $request->attributes->get('_newscoop_publication_metadata[alias][publication_id]', null, true), 
-                'language' => $request->attributes->get('_newscoop_publication_metadata[publication][id_default_language]', null, true),
+            $templatesService->setVector(array_merge($templatesService->getSmarty()->campsiteVector, array(
                 'params' => implode('__', array(
                     $uri->article->number,
                     $imageNumber,
                     $articleImage->getImageId()
                 ))
-            ));
+            )));
 
             return $templatesService->fetchTemplate("editor_image.tpl", array(
                 'imageDetails' => $detailsArray,
