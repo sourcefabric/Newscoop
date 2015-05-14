@@ -6,12 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop;
+namespace Newscoop\Cache;
 
 /**
  * Cache key
  */
-class CacheKey extends ValueObject
+class CacheKey extends \Newscoop\ValueObject
 {
     public $key;
 
