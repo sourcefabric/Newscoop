@@ -32,6 +32,7 @@ doctrine:
         charset: UTF8
         types:
             point: Newscoop\NewscoopBundle\ORM\PointType
+            utcdatetime: Newscoop\NewscoopBundle\ORM\UTCDateTimeType
     orm:
         dql:
             numeric_functions:

@@ -6,7 +6,7 @@
  */
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Playlist entity
@@ -15,8 +15,8 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class Playlist extends AbstractEntity
 {
-	/**
-     * @ORM\Id 
+    /**
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="id_playlist")
      * @var int
@@ -42,8 +42,8 @@ class Playlist extends AbstractEntity
     protected $maxItems;
 
     /**
-     * @ORM\Column(type="datetime", name="modification_time", nullable=true)
-     * @var datetime
+     * @ORM\Column(type="utcdatetime", name="modification_time", nullable=true)
+     * @var utcdatetime
      */
     protected $articlesModificationTime;
 
@@ -90,7 +90,7 @@ class Playlist extends AbstractEntity
 
         return $this;
     }
-    
+
     /**
      * Set link to topic articles resource
      * @param string $articlesLink Link to topic articles resource
@@ -115,20 +115,20 @@ class Playlist extends AbstractEntity
      * Returns the name of the playlist
      */
     public function getName()
-	{
-		return $this->name;
-	}
+    {
+        return $this->name;
+    }
 
-	/**
+    /**
      * Returns the name of the playlist
      * @var string $name
      */
     public function setName($name)
-	{
-	    $this->name = $name;
+    {
+        $this->name = $name;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * Gets the value of notes.
