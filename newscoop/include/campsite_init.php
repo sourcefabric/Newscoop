@@ -35,9 +35,10 @@ require_once($GLOBALS['g_campsiteDir'].'/admin-files/lib_campsite.php');
 $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 $timeZone = $preferencesService->TimeZone;
 if (!empty($timeZone)) {
-    $g_ado_db->Execute("SET SESSION time_zone = '" . $timeZone . ":00'");
-    $timeZone[0] = $timeZone[0] == '-' ? '+' : '-';
-    date_default_timezone_set('Etc/GMT' . $timeZone);
+    date_default_timezone_set($timeZone);
+    $sqlTimeZone = date('P', time());
+    // Better use offsets to UTC/GMT for MySQL because by default named timezones are not installed
+    $g_ado_db->Execute("SET SESSION time_zone = '" . $sqlTimeZone . "'");
 } else {
     // Some people forget to set their timezone in their php.ini,
     // this prevents that from generating warnings
