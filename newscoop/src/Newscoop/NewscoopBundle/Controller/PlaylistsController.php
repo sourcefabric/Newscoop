@@ -40,6 +40,11 @@ class PlaylistsController extends Controller
         $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($clientName);
 
         $editorView = false;
+        $publicationMetadata = $request->get('_newscoop_publication_metadata');
+        $publicationId = $publicationMetadata['alias']['publication_id'];
+        $issueService = $this->get('newscoop_newscoop.issue_service');
+        $languagesList = $issueService->getIssuesLanguagesBy($publicationId);
+
         if ($request->get('_route') === "newscoop_newscoop_playlists_editor") {
             $editorView = true;
         }
@@ -50,6 +55,7 @@ class PlaylistsController extends Controller
             'editorView' => $editorView,
             'articleNumber' => $articleNumber,
             'language' => $language,
+            'languagesList' => $languagesList,
         ));
     }
 

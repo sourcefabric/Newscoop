@@ -283,6 +283,10 @@ angular.module('playlistsApp').factory('Playlist', [
             	formData.playlist.maxItems = playlist.maxItems;
             }
 
+            if (playlist.language !== undefined) {
+                formData.playlist.language = playlist.language;
+            }
+
             $http({
 	            method: "POST",
 	            url: url,

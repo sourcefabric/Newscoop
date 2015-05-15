@@ -19,6 +19,9 @@
 {% endblock %}
 {% block admin_scripts %}
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
+<script>
+    var languagesList = {{ languagesList|json_encode|raw }};
+</script>
 {% endblock %}
 {% block admin_page_menu_bar %}
   {% if editorView == false %}
@@ -68,6 +71,14 @@
             <input name="playlistName" ng-minlength="1" ng-maxlength="60" ng-model="formData.title" required value="{[{ formData.title }]}" class="form-control" style="float: left;" id="playlist-name" ng-change="validateListName(this)">
         </span>
         </form>
+    </li>
+    <li ng-if="!playlist.selected.id && playlist.selected">
+        <label id="playlist-name-label">{{ 'List language'|trans }}:</label>
+    </li>
+    <li ng-if="!playlist.selected.id && playlist.selected">
+        <select ng-model="languageSelected" ng-options='language.id as (language.name + " [" + language.code + "]") for language in languagesList' ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
+            <option value="">{{ 'Choose...'|trans }}</option>
+        </select>
     </li>
     <li ng-if="playlist.selected.id">
         <label id="playlist-id-label">{{ 'List ID'|trans }}:</label>
@@ -325,7 +336,6 @@
                 $(document).ready(function() {
                     $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
                 });
-
             </script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/lodash.min.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>

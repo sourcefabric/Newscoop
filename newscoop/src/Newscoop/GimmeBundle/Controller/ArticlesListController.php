@@ -425,7 +425,7 @@ class ArticlesListController extends FOSRestController
         $em = $this->container->get('em');
         $playlist = new Playlist();
 
-        $form = $this->createForm(new PlaylistType(), $playlist);
+        $form = $this->createForm(new PlaylistType(), $playlist, array('em' => $em));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -487,6 +487,7 @@ class ArticlesListController extends FOSRestController
 
         $form = $this->createForm(new PlaylistType(), $playlist, array(
             'method' => $request->getMethod(),
+            'em' => $em,
         ));
         $form->handleRequest($request);
         if ($form->isValid()) {

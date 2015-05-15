@@ -125,4 +125,16 @@ class IssueRepository extends EntityRepository
 
         return $query->getQuery();
     }
+
+    public function getIssuesLanguagesBy($publicationId)
+    {
+        $queryBuilder = $this->createQueryBuilder('i')
+            ->select('i', 'l.id', 'l.name', 'l.code')
+            ->join('i.language', 'l')
+            ->where('i.publication = :publication')
+            ->setParameter('publication', $publicationId)
+            ->groupBy('i.language');
+
+        return $queryBuilder->getQuery();
+    }
 }

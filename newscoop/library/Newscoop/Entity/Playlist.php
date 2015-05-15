@@ -64,6 +64,13 @@ class Playlist extends AbstractEntity
     protected $themes;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id", nullable=true)
+     * @var Language
+     */
+    protected $language;
+
+    /**
      * Provides the themes attached to playlist.
      *
      * @return string
@@ -198,6 +205,42 @@ class Playlist extends AbstractEntity
     public function setArticlesModificationTime(\DateTime $articlesModificationTime)
     {
         $this->articlesModificationTime = $articlesModificationTime;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of language.
+     *
+     * @return Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Gets the language identifier.
+     *
+     * @return Language
+     */
+    public function getLanguageId()
+    {
+        if ($this->language) {
+            return $this->language->getId();
+        }
+    }
+
+    /**
+     * Sets the value of language.
+     *
+     * @param Language $language the language
+     *
+     * @return self
+     */
+    public function setLanguage(Language $language)
+    {
+        $this->language = $language;
 
         return $this;
     }

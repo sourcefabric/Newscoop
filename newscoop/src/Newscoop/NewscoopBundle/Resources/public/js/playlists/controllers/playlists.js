@@ -39,6 +39,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     // array of the articles,
     // that will be removed or added to the list
     $scope.logList = [];
+    $scope.languagesList = languagesList;
+
+    var languageSelected = null;
 
     $scope.sortableConfig = {
         group: {
@@ -90,6 +93,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 }
             }
         }());
+    }
+
+    /**
+     * Sets selected playlist language, so it can be saved in database.
+     *
+     * @method onLanguageChange
+     * @param language {String} language id
+     */
+    $scope.onLanguageChange = function(languageId) {
+        languageSelected = languageId;
+        $scope.playlist.selected.language = languageId;
     }
 
     /**
