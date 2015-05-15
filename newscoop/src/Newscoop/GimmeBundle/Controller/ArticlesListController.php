@@ -130,7 +130,6 @@ class ArticlesListController extends FOSRestController
         $playlist = $em->getRepository('Newscoop\Entity\Playlist')
             ->findOneBy(array(
                 'id' => $id,
-                'language' => $languageId,
             ));
 
         if (!$playlist) {
@@ -155,7 +154,10 @@ class ArticlesListController extends FOSRestController
         }
 
         $criteria = new ArticleSearchCriteria();
-        $criteria->language = $languageId;
+        if ($playlist->getLanguage()) {
+            $criteria->language = $playlist->getLanguage()->getId();
+        }
+
         $articles = $em->getRepository('Newscoop\Entity\Article')
             ->getArticlesByCriteria($criteria, $articlesIds, $onlyPublished, false)
             ->getResult();

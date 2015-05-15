@@ -67,8 +67,7 @@ angular.module('playlistsApp').factory('Playlist', [
                 url;
 
             var params = {
-                id: playlist.id,
-                language: playlist.language
+                id: playlist.id
             };
 
             if ((playlist.maxItems !== null) && playlist.maxItems > 0) {
