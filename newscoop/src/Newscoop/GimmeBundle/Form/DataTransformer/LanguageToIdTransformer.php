@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @package Newscoop\GimmeBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2015 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -17,54 +16,55 @@ class LanguageToIdTransformer implements DataTransformerInterface
     /**
      * @var ObjectManager
      */
-    private $om;
+    private $objectManager;
 
     /**
-     * @param ObjectManager $om
+     * @param ObjectManager $objectManager
      */
-    public function __construct(ObjectManager $om)
+    public function __construct(ObjectManager $objectManager)
     {
-        $this->om = $om;
+        $this->objectManager = $objectManager;
     }
 
     /**
-     * Transforms an object (language) to a string (id).
+     * Transforms an object (language) to a string (identifier).
      *
-     * @param  Newscoop\Entity\Language|null $language
+     * @param Newscoop\Entity\Language|null $language
+     *
      * @return string
      */
     public function transform($language = null)
     {
         if (null === $language) {
-            return "";
+            return '';
         }
 
         return $language->getId();
     }
 
     /**
-     * Transforms a string (id) to an object (language).
+     * Transforms a string (identifier) to an object (language).
      *
-     * @param string $id
+     * @param string $identifier
      *
      * @return Newscoop\Entity\Language|null
      *
      * @throws TransformationFailedException if object (language) is not found.
      */
-    public function reverseTransform($id)
+    public function reverseTransform($identifier)
     {
-        if (!$id) {
+        if (!$identifier) {
             return;
         }
 
-        $language = $this->om
-            ->getReference('Newscoop\Entity\Language', (int) $id)
+        $language = $this->objectManager
+            ->getReference('Newscoop\Entity\Language', $identifier)
         ;
 
         if (null === $language) {
             throw new TransformationFailedException(sprintf(
                 'Language with id "%s" does not exist!',
-                $id
+                $identifier
             ));
         }
 

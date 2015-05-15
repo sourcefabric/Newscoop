@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2015 Sourcefabric z.ú.
@@ -45,7 +45,7 @@ class PlaylistType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection'   => false,
+            'csrf_protection' => false,
         ))
         ->setRequired(array(
             'em',
