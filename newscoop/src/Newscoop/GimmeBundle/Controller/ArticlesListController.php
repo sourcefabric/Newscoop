@@ -323,7 +323,10 @@ class ArticlesListController extends FOSRestController
         $lastArtclesModificationTime = $request->request->get('articlesModificationTime');
         if (!$lastArtclesModificationTime && $playlist->getArticlesModificationTime() != null) {
             throw new InvalidParametersException('articlesModificationTime parameter is required');
-        } elseif (new \DateTime($lastArtclesModificationTime) != $playlist->getArticlesModificationTime() && $playlist->getArticlesModificationTime() != null) {
+        } elseif (new \DateTime($lastArtclesModificationTime, new \DateTimeZone('UTC')) !=
+            $playlist->getArticlesModificationTime() &&
+            $playlist->getArticlesModificationTime() != null
+        ) {
             throw new ResourcesConflictException("This list is already in a different state than the one in which it was loaded.", 409);
         }
 

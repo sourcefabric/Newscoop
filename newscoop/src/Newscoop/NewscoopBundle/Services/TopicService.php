@@ -374,6 +374,32 @@ class TopicService
     }
 
     /**
+     * Gets the topic by id, its title or title
+     * combined with the language and language code.
+     * $string parameter value can be: "test", 20, "test:en".
+     *
+     * @param string $string Topic search phrase
+     * @param string $locale Locale
+     *
+     * @return Topic|null
+     */
+    public function getTopicBy($string, $locale)
+    {
+        $topic = $this->getTopicRepository()
+            ->getTopicByIdOrName($string, $locale)
+            ->getOneOrNullResult();
+
+        if (!$topic) {
+            $topic = $this->getTopicByFullName($string);
+            if (!$topic) {
+                return;
+            }
+        }
+
+        return $topic;
+    }
+
+    /**
      * Wrapper method for setting translatable hint.
      * When for instance getting topic with German name
      * $locale should be set to "de".

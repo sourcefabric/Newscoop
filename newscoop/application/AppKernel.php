@@ -11,6 +11,18 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    protected function initializeContainer()
+    {
+        parent::initializeContainer();
+
+        try {
+            $timeZone = $this->getContainer()->get('system_preferences_service')->TimeZone;
+            if (!empty($timeZone)) {
+                date_default_timezone_set($timeZone);
+            }
+        } catch (\Exception $e) { }
+    }
+
     public function registerBundles()
     {
         $bundles =  array(

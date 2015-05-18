@@ -10,6 +10,10 @@
     visibility: visible!important;
 }
 
+.status-hidden {
+    background-color: #ccc;
+}
+
 .ban-btn {
     margin-top: 3px;
 }

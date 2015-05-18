@@ -14,46 +14,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PreferencesType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $timeZoneCities = array(
-            0 => 'London, Lisbon, Casablanca',
-            1 => 'Brussels, Copenhagen, Madrid, Paris',
-            2 => 'Athens, Istanbul, Jerusalem',
-            3 => 'Baghdad, Riyadh, Moscow, St. Petersburg',
-            4 => 'Abu Dhabi, Muscat, Baku, Tbilisi',
-            5 => 'Ekaterinburg, Islamabad, Karachi, Tashkent',
-            6 => 'Almaty, Dhaka, Colombo',
-            7 => 'Bangkok, Hanoi, Jakarta',
-            8 => 'Beijing, Perth, Singapore, Hong Kong',
-            9 => 'Tokyo, Seoul, Osaka, Sapporo, Yakutsk',
-            10 => 'Eastern Australia, Guam, Vladivostok',
-            11 => 'Magadan, Solomon Islands, New Caledonia',
-            12 => 'Auckland, Wellington, Fiji, Kamchatka',
-            -1 => 'Azores, Cape Verde Islands',
-            -2 => 'Mid-Atlantic',
-            -3 => 'Brazil, Buenos Aires, Georgetown',
-            -4 => 'Atlantic Time (Canada), Caracas, La Paz',
-            -5 => 'Eastern Time (US & Canada), Bogota, Lima',
-            -6 => 'Central Time (US & Canada), Mexico City',
-            -7 => 'Mountain Time (US & Canada)',
-            -8 => 'Pacific Time (US & Canada)',
-            -9 => 'Alaska',
-            -10 => 'Hawaii',
-            -11 => 'Midway Island, Samoa',
-            -12 => 'Eniwetok, Kwajalein',
-        );
-
-        $timezones = array();
-        for ($k = -12; $k < 13; $k++) {
-            $v = $k < 0 ? $k : '+' . $k;
-            if ($timeZoneCities[$k] != '') {
-                $timezones[$v] = "GMT $v:00 ({$timeZoneCities[$k]})";
-            } else {
-                $timezones[$v] = "GMT $v:00";
-            }
-        }
+        $timeZones = array();
+        array_walk(timezone_identifiers_list(), function($timeZone) use (&$timeZones) {
+            $timeZoneGroup = (strpos($timeZone, '/') !== false) ? substr($timeZone, 0, strpos($timeZone, '/')) : $timeZone;
+            $value = (strpos($timeZone, '/') !== false) ? substr($timeZone, strpos($timeZone, '/')+1) : $timeZone;
+            $value = str_replace('_', ' ', $value);
+            $value = str_replace('/', ' - ', $value);
+            $timeZones[$timeZoneGroup][$timeZone] = $value;
+        });
 
         $availableCacheEngines = $options['cacheService']->getAvailableCacheEngines();
         $availableTemplateCacheHandlers = \CampTemplateCache::availableHandlers();
@@ -129,7 +99,7 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('timezone', 'choice', array(
-            'choices'   => $timezones,
+            'choices'   => $timeZones,
             'empty_value' => 'newscoop.preferences.label.disabled',
             'required' => false
         ))

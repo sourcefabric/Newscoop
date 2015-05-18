@@ -12,7 +12,6 @@ use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Newscoop\Exception\AuthenticationException;
@@ -39,9 +38,6 @@ class UserService
     /** @var SecurityContext */
     protected $security;
 
-    /** @var EncoderFactory */
-    protected $factory;
-
     /** @var $userIp */
     protected $userIp;
 
@@ -49,14 +45,12 @@ class UserService
      * @param Doctrine\ORM\EntityManager $em
      * @param Zend_Auth                  $auth
      * @param SecurityContext            $security
-     * @param EncoderFactory             $factory
      */
-    public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security, EncoderFactory $factory)
+    public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security)
     {
         $this->em = $em;
         $this->auth = $auth;
         $this->security = $security;
-        $this->factory = $factory;
     }
 
     /**

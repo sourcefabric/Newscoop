@@ -95,10 +95,7 @@ class WebcodeFacade
     {
         for ($length = 5; $length < 10; $length++) {
             for ($i = 0; $i < 10; $i++) {
-                $webcode = $this->random->getRandomString(5);
-                if ($this->isUnique($webcode)) {
-                    return $webcode;
-                }
+                return $this->random->getRandomString(5);
             }
         }
     }

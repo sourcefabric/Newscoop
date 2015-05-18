@@ -28,7 +28,7 @@ services:
         factory_method: getInstance
     user:
         class:      Newscoop\Services\UserService
-        arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory"]
+        arguments:  ["@em", "@zend_auth", "@security.context"]
         tags:
             - { name: kernel.event_listener, event: user.set_points, method: updateUserPoints }
     user.manager:
@@ -193,7 +193,7 @@ services:
         arguments: ["@dispatcher", "@em"]
     newscoop.templates.service:
         class: Newscoop\Services\TemplatesService
-        arguments: ["@newscoop_newscoop.themes_service"]
+        arguments: ["@newscoop_newscoop.themes_service", "@newscoop.publication_service"]
     newscoop.placeholders.service:
         class: Newscoop\Services\PlaceholdersService
     newscoop.listpaginator.service:

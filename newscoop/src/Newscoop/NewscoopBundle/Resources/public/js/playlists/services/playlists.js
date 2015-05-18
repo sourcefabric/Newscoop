@@ -172,9 +172,19 @@ angular.module('playlistsApp').factory('Playlist', [
             var deferred = $q.defer(),
                 postParams,
                 now,
+                date,
                 playlistDateTime = undefined;
 
-            now = new Date();
+            date = new Date();
+            now = new Date(
+                date.getUTCFullYear(),
+                date.getUTCMonth(),
+                date.getUTCDate(),
+                date.getUTCHours(),
+                date.getUTCMinutes(),
+                date.getUTCSeconds()
+            );
+
             postParams = parseAndBuildParams(logList);
 
             if (playlist.articlesModificationTime !== undefined) {

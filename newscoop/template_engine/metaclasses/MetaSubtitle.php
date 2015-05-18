@@ -296,15 +296,22 @@ final class MetaSubtitle
         }
 
         try {
-            $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $smarty = $templatesService->getSmarty();
             $uri->uri_parameter = "image $imageOptions";
-            $smarty->assign('imageDetails', $detailsArray);
-            $smarty->assign('MediaRichTextCaptions', $preferencesService->MediaRichTextCaptions);
-            $smarty->assign('uri', $uri);
-            $smarty->assign('imgZoomLink', $imgZoomLink);
+            $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
+            $templatesService->setVector(array_merge($templatesService->getSmarty()->campsiteVector, array(
+                'params' => implode('__', array(
+                    $uri->article->number,
+                    $imageNumber,
+                    $articleImage->getImageId()
+                ))
+            )));
 
-            return $templatesService->fetchTemplate("editor_image.tpl");
+            return $templatesService->fetchTemplate("editor_image.tpl", array(
+                'imageDetails' => $detailsArray,
+                'MediaRichTextCaptions' => $preferencesService->MediaRichTextCaptions,
+                'uri' => $uri,
+                'imgZoomLink' => $imgZoomLink
+            ));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
