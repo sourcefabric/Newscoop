@@ -552,7 +552,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
 
         $scope.playlist.selected.id = Playlist.getListId();
-        if (response && response[0].object != undefined &&
+        if (response && response[0] != undefined &&
             (typeof response[0].object == 'string'
             || response[0].object instanceof String)
         ) {
