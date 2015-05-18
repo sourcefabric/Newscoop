@@ -444,13 +444,17 @@ angular.module('playlistsApp').factory('Playlist', [
         /**
          * Removes article from logList by number and method
          *
-         * @param  {Integer} articleNumber Article's number
+         * @param  {Article} article Article object
          * @param  {String} method         method type (e.g. "unlink" or "link")
          */
-        Playlist.removeItemFromLogList = function (articleNumber, method) {
+        Playlist.removeItemFromLogList = function (article, method) {
         	_.remove(
                 logList,
-                {number: articleNumber, _method: method}
+                {
+                    number: article.number,
+                    language: article.language,
+                    _method: method
+                }
             );
         }
 

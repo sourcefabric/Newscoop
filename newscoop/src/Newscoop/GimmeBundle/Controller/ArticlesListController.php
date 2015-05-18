@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\Gimme
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -17,7 +17,6 @@ use FOS\RestBundle\View as FOSView;
 use Newscoop\GimmeBundle\Form\Type\PlaylistType;
 use Newscoop\Entity\Playlist;
 use Newscoop\Entity\Article;
-use Newscoop\Criteria\ArticleSearchCriteria;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Newscoop\Exception\ResourcesConflictException;
@@ -27,11 +26,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Newscoop\Exception\AuthenticationException;
+use Newscoop\Criteria\ArticleSearchCriteria;
 
 class ArticlesListController extends FOSRestController
 {
     /**
-     * Get Articles Lists
+     * Get Articles Lists.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -43,6 +43,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("/articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -66,7 +67,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Get Articles List
+     * Get Articles List.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -79,6 +80,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("/articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_lists_getlist")
+     *
      * @Method("GET")
      * @View(serializerGroups={"details"})
      */
@@ -98,7 +100,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Get list of articles from "playlist"
+     * Get list of articles from "playlist".
      *
      * Returns array with articles under "items" key and requested list "id" and "title"
      *
@@ -112,6 +114,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("/articles-lists/{id}/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -141,17 +144,16 @@ class ArticlesListController extends FOSRestController
         }
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, null, false, null, null, $onlyPublished, true)->getResult();
+            ->articles($playlist, array(), true, null, null, $onlyPublished, true)->getResult();
 
         $articlesIds = array();
         foreach ($playlistArticles as $playlistArticle) {
-            $articlesIds[] = $playlistArticle['articleId'];
+            $articles[] = $playlistArticle->getArticle();
         }
 
-        $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesByCriteria(new ArticleSearchCriteria(), $articlesIds, $onlyPublished, false)
-            ->getResult();
-
+        /*$articles = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticlesByCriteria(new ArticleSearchCriteria(), $articlesIds, $onlyPublished, false);
+*/
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
             'distinct' => false,
@@ -169,7 +171,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Link article to playlist
+     * Link article to playlist.
      *
      * ** articles headers**:
      *
@@ -194,6 +196,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_lists_linkarticle")
+     *
      * @Method("LINK")
      * @View(statusCode=201)
      */
@@ -202,7 +205,7 @@ class ArticlesListController extends FOSRestController
         $em = $this->container->get('em');
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('ManagePlaylist')) {
-            throw new AccessDeniedException("You do not have the right to manage playlists.");
+            throw new AccessDeniedException('You do not have the right to manage playlists.');
         }
 
         $playlist = $em->getRepository('Newscoop\Entity\Playlist')
@@ -219,7 +222,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Unlink article to playlist
+     * Unlink article to playlist.
      *
      * ** articles headers**:
      *
@@ -240,6 +243,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_lists_unlinkarticle")
+     *
      * @Method("UNLINK")
      * @View(statusCode=204)
      */
@@ -248,7 +252,7 @@ class ArticlesListController extends FOSRestController
         $em = $this->container->get('em');
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('ManagePlaylist')) {
-            throw new AccessDeniedException("You do not have the right to manage playlists.");
+            throw new AccessDeniedException('You do not have the right to manage playlists.');
         }
 
         $playlist = $em->getRepository('Newscoop\Entity\Playlist')
@@ -265,7 +269,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Save many changes for playlist items
+     * Save many changes for playlist items.
      *
      * example post data:
      *```
@@ -281,6 +285,7 @@ class ArticlesListController extends FOSRestController
      *   ]
      * ]
      *```
+     *
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when successful",
@@ -295,6 +300,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("articles-lists/{id}/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("POST")
      * @View(statusCode=200)
      */
@@ -302,7 +308,7 @@ class ArticlesListController extends FOSRestController
     {
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('ManagePlaylist')) {
-            throw new AccessDeniedException("You do not have the right to manage playlists.");
+            throw new AccessDeniedException('You do not have the right to manage playlists.');
         }
 
         $em = $this->container->get('em');
@@ -327,7 +333,7 @@ class ArticlesListController extends FOSRestController
             $playlist->getArticlesModificationTime() &&
             $playlist->getArticlesModificationTime() != null
         ) {
-            throw new ResourcesConflictException("This list is already in a different state than the one in which it was loaded.", 409);
+            throw new ResourcesConflictException('This list is already in a different state than the one in which it was loaded.', 409);
         }
 
         $playlist->setArticlesModificationTime(new \DateTime('now'));
@@ -399,7 +405,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Create new playlist
+     * Create new playlist.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -413,13 +419,14 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function createPlaylistAction(Request $request)
     {
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('ManagePlaylist')) {
-            throw new AccessDeniedException("You do not have the right to manage playlists.");
+            throw new AccessDeniedException('You do not have the right to manage playlists.');
         }
 
         $em = $this->container->get('em');
@@ -434,7 +441,7 @@ class ArticlesListController extends FOSRestController
                 ->getOneOrNullResult();
 
             if ($existingPlaylist) {
-                throw new ResourcesConflictException("Playlist with that name already exists", 409);
+                throw new ResourcesConflictException('Playlist with that name already exists', 409);
             }
 
             $em->persist($playlist);
@@ -452,7 +459,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Update playlist
+     * Update playlist.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -466,13 +473,14 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("PATCH|POST")
      */
     public function updatePlaylistAction(Request $request, $id)
     {
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('ManagePlaylist')) {
-            throw new AccessDeniedException("You do not have the right to manage playlists.");
+            throw new AccessDeniedException('You do not have the right to manage playlists.');
         }
 
         $em = $this->container->get('em');
@@ -513,7 +521,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * Delete playlist
+     * Delete playlist.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -528,6 +536,7 @@ class ArticlesListController extends FOSRestController
      * )
      *
      * @Route("articles-lists/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("DELETE")
      * @View(statusCode=204)
      *
@@ -537,7 +546,7 @@ class ArticlesListController extends FOSRestController
     {
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('ManagePlaylist')) {
-            throw new AccessDeniedException("You do not have the right to manage playlists.");
+            throw new AccessDeniedException('You do not have the right to manage playlists.');
         }
 
         $em = $this->container->get('em');
@@ -604,10 +613,10 @@ class ArticlesListController extends FOSRestController
                 $resourceType = null;
                 if (count($linkParams) > 1) {
                     $resourceType = trim(preg_replace('/<|>/', '', $linkParams[1]));
-                    $resourceType = str_replace("\"", "", str_replace("rel=", "", $resourceType));
+                    $resourceType = str_replace('"', '', str_replace('rel=', '', $resourceType));
                 }
-                $resource   = array_shift($linkParams);
-                $resource   = preg_replace('/<|>/', '', $resource);
+                $resource = array_shift($linkParams);
+                $resource = preg_replace('/<|>/', '', $resource);
 
                 $links[] = array(
                     'resource' => $resource,

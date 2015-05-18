@@ -10,7 +10,7 @@ if (empty($userIsBlogger)) : ?>
           try {
               $playlists = Zend_Registry::get('container')->getService('em')
                   ->getRepository('Newscoop\Entity\Playlist')
-                  ->getArticlePlaylists(Input::Get('f_article_number', 'int', 1));
+                  ->getArticlePlaylists(Input::Get('f_article_number', 'int', 1), Input::Get('f_language_id', 'int', 1));
 
               $playlistsData = array();
               foreach ($playlists as $playlist) {

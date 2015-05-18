@@ -202,6 +202,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                        <span class="label label-default">{[{ ::article.language}]}</span>
                                                     </div>
                                                     <a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">{{ 'View article'|trans }}</a>
                                                 </div>
@@ -261,6 +262,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                            <span class="label label-default">{[{ ::article.language}]}</span>
                                                         </div>
                                                         <a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
                                                             <span class="ui-icon ui-icon-closethick"></span>
