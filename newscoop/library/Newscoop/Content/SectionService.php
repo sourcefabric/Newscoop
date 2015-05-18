@@ -1,16 +1,15 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Content;
 
 use Doctrine\ORM\EntityManager;
 
 /**
- * Section Service
+ * Section Service.
  */
 class SectionService
 {
@@ -26,7 +25,7 @@ class SectionService
     }
 
     /**
-     * Get options
+     * Get options.
      *
      * @return array
      */
@@ -47,14 +46,15 @@ class SectionService
     }
 
     /**
-     * Get name
+     * Get name.
      *
-     * @param int $number
+     * @param int                         $number
      * @param Newscoop\Entity\Publication $publication
-     * @param Newscoop\Entity\Language $language
+     * @param Newscoop\Entity\Language    $language
+     *
      * @return string
      */
-    public function getName($number, \Newscoop\Entity\Publication $publication, \Newscoop\Entity\Langauge $language = null)
+    public function getName($number, \Newscoop\Entity\Publication $publication, \Newscoop\Entity\Language $language = null)
     {
         foreach ($publication->getIssues() as $issue) {
             if ($language !== null && $issue->getLanguage() !== $language) {
@@ -68,6 +68,6 @@ class SectionService
             }
         }
 
-        return null;
+        return;
     }
 }
