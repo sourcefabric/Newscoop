@@ -243,6 +243,18 @@ class Playlist extends AbstractEntity
     }
 
     /**
+     * Gets the language code.
+     *
+     * @return Language
+     */
+    public function getLanguageCode()
+    {
+        if ($this->language) {
+            return $this->language->getCode();
+        }
+    }
+
+    /**
      * Sets the value of language.
      *
      * @param Language $language the language

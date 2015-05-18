@@ -73,10 +73,10 @@
         </span>
         </form>
     </li>
-    <li ng-if="!playlist.selected.id && languagesList.length > 0">
+    <li ng-if="playlist.selected && !playlist.selected.id && languagesList.length > 0">
         <label id="playlist-name-label">{{ 'List language'|trans }}:</label>
     </li>
-    <li ng-if="!playlist.selected.id && languagesList.length > 0">
+    <li ng-if="playlist.selected && !playlist.selected.id && languagesList.length > 0">
         <select ng-model="languageSelected" ng-options='language.code as (language.name + " [" + language.code + "]") for language in languagesList' ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
             <option value="">{{ 'Choose...'|trans({}, 'messages') }}</option>
         </select>
@@ -214,6 +214,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                    <span ng-if="languagesList.length > 0" class="label label-default">{[{ ::article.languageData.code}]}</span>
                                                     </div>
                                                     <a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">{{ 'View article'|trans }}</a>
                                                 </div>
@@ -273,6 +274,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                        <span ng-if="languagesList.length > 0" class="label label-default">{[{ ::article.languageData.code}]}</span>
                                                         </div>
                                                         <a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
                                                             <span class="ui-icon ui-icon-closethick"></span>

@@ -539,7 +539,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved', {}, 'articles'));
         $scope.loadingSpinner = true;
-        console.log($scope.playlist.selected)
         Playlist.getArticlesByListId($scope.playlist.selected).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
@@ -553,6 +552,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
 
         $scope.playlist.selected.id = Playlist.getListId();
+        if (response && response[0].object != undefined &&
+            (typeof response[0].object == 'string'
+            || response[0].object instanceof String)
+        ) {
+            flashMessage(response[0].object, 'error');
+            return false;
+        }
 
         if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
             $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;

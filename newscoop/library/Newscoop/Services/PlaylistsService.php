@@ -83,9 +83,9 @@ class PlaylistsService
      */
     public function addArticle($playlist, $articleToAdd, $position = false)
     {
-        /*if ($articleToAdd->getLanguageCode() !== $playlist->getLanguageCode()) {
-            throw new ResourcesConflictException('Article language is different than playlist\'s language');
-        }*/
+        if ($playlist->getLanguageCode() && $articleToAdd->getLanguageCode() !== $playlist->getLanguageCode()) {
+            throw new ResourcesConflictException('Article language is different than the language of selected playlist.');
+        }
 
         $playlistArticle = $this->em->getRepository('Newscoop\Entity\PlaylistArticle')
             ->getPlaylistArticle($playlist, $articleToAdd)

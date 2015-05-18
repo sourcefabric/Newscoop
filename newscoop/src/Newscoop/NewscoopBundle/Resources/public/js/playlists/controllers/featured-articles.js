@@ -39,6 +39,15 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 return true;
             }
 
+            if ($scope.$parent.playlist.selected.language !== undefined &&
+                item.languageData.code !== $scope.$parent.playlist.selected.language
+            ) {
+                $scope.$parent.featuredArticles.splice(evt.newIndex, 1);
+                flashMessage(Translator.trans('Article language is different than the language of selected playlist.', {}, 'articles'), 'error');
+
+                return true;
+            }
+
             limit = $scope.$parent.playlist.selected.maxItems;
             // show alert with revert button
             if (limit && limit != 0 && $scope.$parent.featuredArticles.length > limit) {
