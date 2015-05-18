@@ -290,8 +290,12 @@ foreach ($fields as $field) {
     </TD>
 
     <TD ALIGN="CENTER">
+        <?php if ($field->getType() == ArticleTypeField::TYPE_SWITCH ) { ?>
+        <?php echo $translator->trans('N/A'); ?>
+        <?php } else { ?> 
         <input type="checkbox" title="<?php echo $translator->trans('Show field in article edit screen', array(), 'article_type_fields'); ?>" <?php if ($field->showInEditor()) { ?>checked<?php } ?> id="set_show_in_editor_<?php echo $i; ?>" name="set_show_in_editor_<?php echo $i; ?>" 
         onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make $1 a $2 field?', array('$1' => $field->getPrintName(), '$2' => $editorType), 'article_type_fields'); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_show_in_editor.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_show_in_editor=<?php print $setShowInEditor; ?>&<?php echo SecurityToken::URLParameter(); ?>' } else { document.getElementById('set_show_in_editor_<?php echo $i; ?>').checked = <?php echo $showInEditor; ?> }">
+        <?php } ?>
     </TD>
 
 <TD>
