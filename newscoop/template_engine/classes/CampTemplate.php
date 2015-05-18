@@ -9,7 +9,6 @@
  * @version $Revision$
  * @link http://www.sourcefabric.org
  */
-
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Filesystem\Filesystem;
@@ -70,34 +69,34 @@ final class CampTemplate extends SmartyBC
         }
 
         // define dynamic uncached block
-        require_once APPLICATION_PATH . self::PLUGINS . '/block.dynamic.php';
+        require_once APPLICATION_PATH.self::PLUGINS.'/block.dynamic.php';
         $this->registerPlugin('block', 'dynamic', 'smarty_block_dynamic', false);
 
         // define render function
-        require_once APPLICATION_PATH . self::PLUGINS . '/function.render.php';
+        require_once APPLICATION_PATH.self::PLUGINS.'/function.render.php';
         $this->registerPlugin('function', 'render', 'smarty_function_render', false);
 
         // define translate modifier
-        require_once APPLICATION_PATH . self::PLUGINS . '/modifier.translate.php';
+        require_once APPLICATION_PATH.self::PLUGINS.'/modifier.translate.php';
         $this->registerPlugin('modifier', 'translate', 'smarty_modifier_translate', false);
 
         $this->left_delimiter = '{{';
         $this->right_delimiter = '}}';
         $this->auto_literal = false;
 
-        $this->cache_dir = APPLICATION_PATH . '/../cache';
-        $this->compile_dir = APPLICATION_PATH . '/../cache';
+        $this->cache_dir = APPLICATION_PATH.'/../cache';
+        $this->compile_dir = APPLICATION_PATH.'/../cache';
 
         $this->plugins_dir = array_merge(
             (array) $this->plugins_dir,
-            array(APPLICATION_PATH . self::PLUGINS),
+            array(APPLICATION_PATH.self::PLUGINS),
             self::getPluginsPluginsDir()
         );
 
         $this->setTemplateDir(array(
-            APPLICATION_PATH . '/../themes/',
-            APPLICATION_PATH . '/../themes/system_templates/',
-            APPLICATION_PATH . self::SCRIPTS,
+            APPLICATION_PATH.'/../themes/',
+            APPLICATION_PATH.'/../themes/system_templates/',
+            APPLICATION_PATH.self::SCRIPTS,
         ));
 
         $this->assign('view', \Zend_Registry::get('container')->get('view'));
@@ -109,7 +108,9 @@ final class CampTemplate extends SmartyBC
             'description' => $preferencesService->SiteMetaDescription,
         ));
 
-        $this->getTemplateTranslationsFiles();
+        if (php_sapi_name() !== 'cli') {
+            $this->getTemplateTranslationsFiles();
+        }
     }
 
     /**
@@ -119,12 +120,10 @@ final class CampTemplate extends SmartyBC
      */
     private function getTemplateTranslationsFiles()
     {
-        $request = \Zend_Registry::get('container')->getService('request');
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $translator = \Zend_Registry::get('container')->getService('translator');
         $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
-        $locale = $request->getLocale();
-
+        $locale = $translator->getLocale();
         $cacheKey = $cacheService->getCacheKey(array('templates_translations', $themesService->getThemePath(), $locale), 'templates_translations');
         $templateTranslations = array();
         if ($cacheService->contains($cacheKey)) {
@@ -137,7 +136,7 @@ final class CampTemplate extends SmartyBC
         }
 
         $filesystem = new Filesystem();
-        $dir = __DIR__.'/../../themes/' . $themesService->getThemePath() . 'translations';
+        $dir = __DIR__.'/../../themes/'.$themesService->getThemePath().'translations';
         if ($filesystem->exists($dir)) {
             $finder = new Finder();
             $translator->addLoader('yaml', new YamlFileLoader());
@@ -167,7 +166,7 @@ final class CampTemplate extends SmartyBC
         $dirs = array();
         foreach ($availablePlugins as $plugin) {
             $pluginPath = explode('\\', $plugin);
-            $directoryPath = realpath(__DIR__ . '/../../plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/Resources/smartyPlugins');
+            $directoryPath = realpath(__DIR__.'/../../plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/Resources/smartyPlugins');
             if ($directoryPath) {
                 $dirs[] = $directoryPath;
             }
@@ -175,11 +174,11 @@ final class CampTemplate extends SmartyBC
 
         //legacy plugins
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-            $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
+            $dirs[] = CS_PATH_SITE."/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
         }
 
         //comunity ticker
-        $dirs[] = __DIR__ . '/../../src/Newscoop/CommunityTickerBundle/Resources/smartyPlugins';
+        $dirs[] = __DIR__.'/../../src/Newscoop/CommunityTickerBundle/Resources/smartyPlugins';
 
         return $dirs;
     }
