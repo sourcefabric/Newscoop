@@ -28,9 +28,9 @@ Newscoop\Entity\Playlist:
         language:
             expose: true
             read_only: true
-            type: integer
+            type: string
             accessor:
-                getter: getLanguageId
+                getter: getLanguageCode
             groups: ["list", "details"]
             serialized_name: language
         articlesModificationTime:

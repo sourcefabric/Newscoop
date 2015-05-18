@@ -11,14 +11,14 @@ namespace Newscoop\GimmeBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Newscoop\GimmeBundle\Form\DataTransformer\LanguageToIdTransformer;
+use Newscoop\GimmeBundle\Form\DataTransformer\LanguageToCodeTransformer;
 
 class PlaylistType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $entityManager = $options['em'];
-        $transformer = new LanguageToIdTransformer($entityManager);
+        $transformer = new LanguageToCodeTransformer($entityManager);
 
         $builder
             ->add('name', 'text', array(

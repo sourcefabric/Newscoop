@@ -59,6 +59,7 @@
                 <ui-select-match placeholder="{{ 'Select a list'|trans }}">{[{$select.selected.title}]}</ui-select-match>
                 <ui-select-choices repeat="playlist in playlists | listsFilter: {title: $select.search}">
                 <div ng-bind-html="playlist.title | highlight: $select.search"></div>
+                <small ng-if="playlist.language">{{ 'Language'|trans({}, 'messages') }}: {[{ playlist.language }]}</small>
             </ui-select-choices>
         </ui-select>
     </li>
@@ -72,12 +73,12 @@
         </span>
         </form>
     </li>
-    <li ng-if="!playlist.selected.id && playlist.selected">
+    <li ng-if="!playlist.selected.id && languagesList.length > 0">
         <label id="playlist-name-label">{{ 'List language'|trans }}:</label>
     </li>
-    <li ng-if="!playlist.selected.id && playlist.selected">
-        <select ng-model="languageSelected" ng-options='language.id as (language.name + " [" + language.code + "]") for language in languagesList' ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
-            <option value="">{{ 'Choose...'|trans }}</option>
+    <li ng-if="!playlist.selected.id && languagesList.length > 0">
+        <select ng-model="languageSelected" ng-options='language.code as (language.name + " [" + language.code + "]") for language in languagesList' ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
+            <option value="">{{ 'Choose...'|trans({}, 'messages') }}</option>
         </select>
     </li>
     <li ng-if="playlist.selected.id">

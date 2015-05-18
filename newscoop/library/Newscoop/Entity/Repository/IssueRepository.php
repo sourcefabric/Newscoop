@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Newscoop\Entity\Publication;
 
 /**
- * Issie repository
+ * Issie repository.
  */
 class IssueRepository extends EntityRepository
 {
@@ -19,9 +19,9 @@ class IssueRepository extends EntityRepository
      * specified. Think of parameters: Publication, Languages, published or not,
      * etc.
      *
-     * @param array       $parameters Array containing filter options
-     * @param boolean|int $maxResults Max results to show
-     * @param boolean     $leftJoins  Adds left joins to the query to get section and language
+     * @param array    $parameters Array containing filter options
+     * @param bool|int $maxResults Max results to show
+     * @param bool     $leftJoins  Adds left joins to the query to get section and language
      *
      * @return \Newscoop\Entity\Issue|null
      */
@@ -131,6 +131,17 @@ class IssueRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('i')
             ->select('i', 'l.id', 'l.name', 'l.code')
             ->join('i.language', 'l')
+            ->where('i.publication = :publication')
+            ->setParameter('publication', $publicationId)
+            ->groupBy('i.language');
+
+        return $queryBuilder->getQuery();
+    }
+
+    public function getIssuesLanguagesCountBy($publicationId)
+    {
+        $queryBuilder = $this->createQueryBuilder('i')
+            ->select('count(i)')
             ->where('i.publication = :publication')
             ->setParameter('publication', $publicationId)
             ->groupBy('i.language');

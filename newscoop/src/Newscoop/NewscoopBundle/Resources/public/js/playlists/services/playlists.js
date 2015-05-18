@@ -246,7 +246,7 @@ angular.module('playlistsApp').factory('Playlist', [
 	                    {number: article.number, language: article.language},
 	                    false
 	                ),
-	                '; rel="article">'].join('');;
+	                '; rel="article">'].join('');
 
 	            if (article._method == 'link') {
 	            	var position = [',<',

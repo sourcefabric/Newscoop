@@ -11,7 +11,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LanguageToIdTransformer implements DataTransformerInterface
+class LanguageToCodeTransformer implements DataTransformerInterface
 {
     /**
      * @var ObjectManager
@@ -27,7 +27,7 @@ class LanguageToIdTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms an object (language) to a string (identifier).
+     * Transforms an object (language) to a string (code).
      *
      * @param Newscoop\Entity\Language|null $language
      *
@@ -39,31 +39,31 @@ class LanguageToIdTransformer implements DataTransformerInterface
             return '';
         }
 
-        return $language->getId();
+        return $language->getCode();
     }
 
     /**
-     * Transforms a string (identifier) to an object (language).
+     * Transforms a string (code) to an object (language).
      *
-     * @param string $identifier
+     * @param string $code
      *
      * @return Newscoop\Entity\Language|null
      *
      * @throws TransformationFailedException if object (language) is not found.
      */
-    public function reverseTransform($identifier)
+    public function reverseTransform($code)
     {
-        if (!$identifier) {
+        if (!$code) {
             return;
         }
 
         $language = $this->objectManager
-            ->getReference('Newscoop\Entity\Language', $identifier)
-        ;
+            ->getRepository('Newscoop\Entity\Language')
+            ->findOneByCode($code);
 
         if (null === $language) {
             throw new TransformationFailedException(sprintf(
-                'Language with id "%s" does not exist!',
+                'Language with code "%s" does not exist!',
                 $identifier
             ));
         }

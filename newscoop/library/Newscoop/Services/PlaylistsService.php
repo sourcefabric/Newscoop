@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2015 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -12,9 +12,10 @@ use Newscoop\Entity\Playlist;
 use Newscoop\Entity\PlaylistArticle;
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\Events\GenericEvent;
+use Newscoop\Exception\ResourcesConflictException;
 
 /**
- * Manage playlists
+ * Manage playlists.
  */
 class PlaylistsService
 {
@@ -34,7 +35,7 @@ class PlaylistsService
     }
 
     /**
-     * Get articles for playlist
+     * Get articles for playlist.
      *
      * @param \Newscoop\Entity\Playlist $playlist
      */
@@ -48,12 +49,12 @@ class PlaylistsService
     }
 
     /**
-     * Remove article from playlist
+     * Remove article from playlist.
      *
      * @param Playlist $playlist
      * @param Article  $articleToRemove
      *
-     * @return boolean
+     * @return bool
      */
     public function removePlaylistArticle($playlist, $articleToRemove)
     {
@@ -72,16 +73,20 @@ class PlaylistsService
     }
 
     /**
-     * Add new related article to related articles container
+     * Add new related article to related articles container.
      *
      * @param Article $article
      * @param Article $articleToAdd
-     * @param integer $position
+     * @param int     $position
      *
-     * @return boolean
+     * @return bool
      */
     public function addArticle($playlist, $articleToAdd, $position = false)
     {
+        /*if ($articleToAdd->getLanguageCode() !== $playlist->getLanguageCode()) {
+            throw new ResourcesConflictException('Article language is different than playlist\'s language');
+        }*/
+
         $playlistArticle = $this->em->getRepository('Newscoop\Entity\PlaylistArticle')
             ->getPlaylistArticle($playlist, $articleToAdd)
             ->getOneOrNullResult();
@@ -200,7 +205,7 @@ class PlaylistsService
     }
 
     /**
-     * Remove items above the limit on playlist
+     * Remove items above the limit on playlist.
      *
      * @param Playlist $playlist
      */
@@ -216,7 +221,7 @@ class PlaylistsService
     }
 
     /**
-     * Load articlesLists from xml file
+     * Load articlesLists from xml file.
      *
      * example template articles lists schema:
      *
@@ -244,12 +249,12 @@ class PlaylistsService
     }
 
     /**
-     * Check if playlists have current theme lists definitions
+     * Check if playlists have current theme lists definitions.
      *
      * @param Theme $theme
      * @param array $themePlaylists
      *
-     * @return boolean
+     * @return bool
      */
     public function checkIfThemePlaylistsAreUpToDate($theme, $themePlaylists)
     {
@@ -282,12 +287,12 @@ class PlaylistsService
     }
 
     /**
-     * Update playists with current theme playlists definitions
+     * Update playists with current theme playlists definitions.
      *
      * @param Theme $theme
      * @param array $themePlaylists
      *
-     * @return boolean
+     * @return bool
      */
     public function updateThemePlaylists($theme, $themePlaylists)
     {
@@ -314,12 +319,12 @@ class PlaylistsService
     }
 
     /**
-     * Clear playlists themes definitions on unassign action
+     * Clear playlists themes definitions on unassign action.
      *
      * @param Theme $theme
      * @param array $themePlaylists
      *
-     * @return boolean
+     * @return bool
      */
     public function removeThemeFromPlaylists($theme, $themePlaylists)
     {
@@ -347,7 +352,7 @@ class PlaylistsService
     }
 
     /**
-     * Clear cache for all temlates assigned to playlist
+     * Clear cache for all temlates assigned to playlist.
      *
      * @param Playlist $playlist
      */

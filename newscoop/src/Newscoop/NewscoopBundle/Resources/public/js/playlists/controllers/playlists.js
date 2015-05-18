@@ -99,11 +99,11 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      * Sets selected playlist language, so it can be saved in database.
      *
      * @method onLanguageChange
-     * @param language {String} language id
+     * @param language {String} language code
      */
-    $scope.onLanguageChange = function(languageId) {
-        languageSelected = languageId;
-        $scope.playlist.selected.language = languageId;
+    $scope.onLanguageChange = function (languageCode) {
+        languageSelected = languageCode;
+        $scope.playlist.selected.language = languageCode;
     }
 
     /**
@@ -539,6 +539,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved', {}, 'articles'));
         $scope.loadingSpinner = true;
+        console.log($scope.playlist.selected)
         Playlist.getArticlesByListId($scope.playlist.selected).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
