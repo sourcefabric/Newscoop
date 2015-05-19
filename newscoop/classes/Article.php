@@ -732,7 +732,7 @@ class Article extends DatabaseObject
             // Delete the article from playlists
             $em = Zend_Registry::get('container')->getService('em');
             $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
-            $repository->deleteArticle($this->m_data['Number']);
+            $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
             $em->flush();
 
             // Delete indexes
@@ -759,6 +759,15 @@ class Article extends DatabaseObject
         $tmpObj = clone $this; // for log
         $tmpData = $this->m_data;
         $tmpData['languageName'] = $this->getLanguageName();
+        //delete webcode
+        $connection = $em->getConnection();
+        $connection->executeUpdate(
+            'DELETE FROM webcode WHERE article_number = :number AND language_id = :language',
+            array(
+                'number' => $this->m_data['Number'],
+                'language' => $this->m_data['IdLanguage']
+            )
+        );
         // Delete row from Articles table.
         $deleted = parent::delete();
 

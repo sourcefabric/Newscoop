@@ -6,7 +6,6 @@
  */
 namespace Newscoop\Entity\Repository;
 
-use Newscoop\Entity\Language;
 use Newscoop\Entity\Playlist;
 use Doctrine\ORM\EntityRepository;
 use Newscoop\Entity\Article;
@@ -40,22 +39,26 @@ class PlaylistArticleRepository extends EntityRepository
      *
      * @param int $articleId
      */
-    public function deleteArticle($articleId)
+    public function deleteArticle($articleId, $languageId)
     {
         $em = $this->getEntityManager();
-        // $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId, 'language' => $p_language));
-        $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.article = ?1");
-        $query->setParameters(array('1' => $articleId));
-        try {
-            $query->execute();
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-            // TODO log here
-            return array();
-        }
-        $rows = $query->getResult();
+        $article = $em->getRepository('Newscoop\Entity\PlaylistArticle')
+            ->findOneBy(array(
+                'articleNumber' => $articleId,
+                'articleLanguage' => $languageId,
+        ));
 
-        return $rows;
+        try {
+            $em->remove($article);
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            $em->close();
+
+            return $e;
+        }
+
+        return $article;
     }
 
     public function getPlaylistArticle($playlist, $article)

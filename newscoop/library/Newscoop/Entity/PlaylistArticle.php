@@ -12,8 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Playlist entity.
  *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistArticleRepository")
- * @ORM\Table(name="playlist_article",
- * 	uniqueConstraints={@ORM\UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no", "article_language"})})
+ * @ORM\Table(name="playlist_article")
  */
 class PlaylistArticle extends AbstractEntity
 {
@@ -200,5 +199,38 @@ class PlaylistArticle extends AbstractEntity
         $this->articleLanguage = $articleLanguage;
 
         return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set idPlaylist
+     *
+     * @param integer $idPlaylist
+     * @return PlaylistArticle
+     */
+    public function setIdPlaylist($idPlaylist)
+    {
+        $this->idPlaylist = $idPlaylist;
+
+        return $this;
+    }
+
+    /**
+     * Get idPlaylist
+     *
+     * @return integer 
+     */
+    public function getIdPlaylist()
+    {
+        return $this->idPlaylist;
     }
 }
