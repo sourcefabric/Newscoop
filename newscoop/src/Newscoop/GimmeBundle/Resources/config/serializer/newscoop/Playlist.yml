@@ -25,6 +25,14 @@ Newscoop\Entity\Playlist:
             type: integer
             groups: ["list", "details"]
             serialized_name: maxItems
+        language:
+            expose: true
+            read_only: true
+            type: string
+            accessor:
+                getter: getLanguageCode
+            groups: ["list", "details"]
+            serialized_name: language
         articlesModificationTime:
             expose: true
             read_only: true

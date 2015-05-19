@@ -39,6 +39,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
     // array of the articles,
     // that will be removed or added to the list
     $scope.logList = [];
+    $scope.languagesList = languagesList;
+
+    var languageSelected = null;
 
     $scope.sortableConfig = {
         group: {
@@ -90,6 +93,17 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 }
             }
         }());
+    }
+
+    /**
+     * Sets selected playlist language, so it can be saved in database.
+     *
+     * @method onLanguageChange
+     * @param language {String} language code
+     */
+    $scope.onLanguageChange = function (languageCode) {
+        languageSelected = languageCode;
+        $scope.playlist.selected.language = languageCode;
     }
 
     /**
@@ -525,7 +539,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved', {}, 'articles'));
         $scope.loadingSpinner = true;
-        Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
+        Playlist.getArticlesByListId($scope.playlist.selected).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
             $scope.isEmpty = false;
@@ -538,6 +552,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
 
         $scope.playlist.selected.id = Playlist.getListId();
+        if (response && response[0] != undefined &&
+            (typeof response[0].object == 'string'
+            || response[0].object instanceof String)
+        ) {
+            flashMessage(response[0].object, 'error');
+            return false;
+        }
 
         if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
             $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;

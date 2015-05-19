@@ -192,6 +192,7 @@ Comments: Comments
 'The last article of this list has been removed.': 'The last article of this list has been removed.'
 'Revert': 'Revert'
 'Could not automatically refresh the list': 'Could not automatically refresh the list'
+'Article language is different than the language of selected playlist.': 'Article language is different than the language of selected playlist.'
 articles:
     playlists:
         namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'

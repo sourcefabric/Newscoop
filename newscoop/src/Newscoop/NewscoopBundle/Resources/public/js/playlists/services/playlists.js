@@ -66,7 +66,9 @@ angular.module('playlistsApp').factory('Playlist', [
                 deferredGet = $q.defer(),
                 url;
 
-            var params = {id: playlist.id};
+            var params = {
+                id: playlist.id
+            };
 
             if ((playlist.maxItems !== null) && playlist.maxItems > 0) {
                 params.items_per_page = 9999;
@@ -244,7 +246,7 @@ angular.module('playlistsApp').factory('Playlist', [
 	                    {number: article.number, language: article.language},
 	                    false
 	                ),
-	                '; rel="article">'].join('');;
+	                '; rel="article">'].join('');
 
 	            if (article._method == 'link') {
 	            	var position = [',<',
@@ -281,6 +283,10 @@ angular.module('playlistsApp').factory('Playlist', [
 
             if (playlist.maxItems !== undefined) {
             	formData.playlist.maxItems = playlist.maxItems;
+            }
+
+            if (playlist.language !== undefined) {
+                formData.playlist.language = playlist.language;
             }
 
             $http({
@@ -350,6 +356,10 @@ angular.module('playlistsApp').factory('Playlist', [
 
             if (playlist.maxItems !== undefined) {
             	formData.playlist.maxItems = playlist.maxItems == null ? 0 : playlist.maxItems;
+            }
+
+            if (playlist.language !== undefined) {
+                formData.playlist.language = playlist.language;
             }
 
             $http({

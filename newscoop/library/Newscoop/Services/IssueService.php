@@ -175,4 +175,26 @@ class IssueService implements IssueServiceInterface
 
         return $latestPublishedIssue;
     }
+
+    /**
+     * Gets all issues languages.
+     *
+     * @param integer $publicationId Publication identifier
+     *
+     * @return array Array of languages
+     */
+    public function getIssuesLanguagesBy($publicationId)
+    {
+        $issues = $this->em->getRepository('Newscoop\Entity\Issue')
+            ->getIssuesLanguagesBy($publicationId)
+            ->getArrayResult();
+
+        $languagesList = array();
+        foreach ($issues as $key => $issue) {
+            unset($issue[0]);
+            $languagesList[] = $issue;
+        }
+
+        return $languagesList;
+    }
 }
