@@ -912,6 +912,20 @@ class Article implements DocumentInterface
     }
 
     /**
+     * Get webcode object
+     *
+     * @return string
+     */
+    public function getWebcodeEntity()
+    {
+        if (!$this->webcode) {
+            return null;
+        }
+
+        return $this->webcode;
+    }
+
+    /**
      * Test if article has webcode
      *
      * @return bool

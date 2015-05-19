@@ -472,6 +472,12 @@ class Article extends DatabaseObject
             }
             $values['Name'] = $articleCopy->getUniqueName($copyMe->m_data['Name']);
 
+            // for internall relations in entity we need also to keep sectionId and issueId
+            $issueObj = new Issue($articleCopy->m_data['IdPublication'], $articleCopy->m_data['IdLanguage'], $articleCopy->m_data['NrIssue']);
+            $sectionObj = new Section($articleCopy->m_data['IdPublication'], $articleCopy->m_data['NrIssue'], $articleCopy->m_data['IdLanguage'], $articleCopy->m_data['NrSection']);
+            $values['issue_id'] = $issueObj->getIssueId();
+            $values['section_id'] = $sectionObj->getSectionId();
+
             $articleCopy->__create($values);
             $articleCopy->setProperty('UploadDate', 'NOW()', true, true);
             $articleCopy->setProperty('LockUser', 'NULL', true, true);
@@ -657,6 +663,12 @@ class Article extends DatabaseObject
         $values['IsIndexed'] = 'N';
         $values['IdUser'] = $p_userId;
 
+        // for internall relations in entity we need also to keep sectionId and issueId
+        $issueObj = new Issue($this->m_data['IdPublication'], $p_languageId, $this->m_data['NrIssue']);
+        $sectionObj = new Section($this->m_data['IdPublication'], $this->m_data['NrIssue'], $p_languageId, $this->m_data['NrSection']);
+        $values['issue_id'] = $issueObj->getIssueId();
+        $values['section_id'] = $sectionObj->getSectionId();
+
         // Create the record
         $success = $articleCopy->__create($values);
         if (!$success) {
@@ -756,9 +768,20 @@ class Article extends DatabaseObject
             $this->m_data['IdLanguage']);
         $articleData->delete();
 
+        // Delete webcode
+        $em = Zend_Registry::get('container')->getService('em');
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->find(array(
+                'number' => $this->getArticleNumber(),
+                'language' => $this->getLanguageId(),
+            ));
+        $webcode = $article->getWebcodeEntity($article);
+
+        $em->remove($webcode);
+        $em->flush();
+        $em->detach($article);
+
         $tmpObj = clone $this; // for log
-        $tmpData = $this->m_data;
-        $tmpData['languageName'] = $this->getLanguageName();
         // Delete row from Articles table.
         $deleted = parent::delete();
 
