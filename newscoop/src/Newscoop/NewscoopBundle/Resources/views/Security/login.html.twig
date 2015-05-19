@@ -49,7 +49,7 @@
                     <td align="right"><strong>{{ "Password"|trans }}:</strong></td>
                     <td>
                         <input type="password" name="_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="{{ "Please enter your password."|trans({},'home') }}" />
-                        <input type="hidden" name="_target_path" value="{% if app.request.server.get('REDIRECT_URL') != path('admin_login') %}{{ app.request.server.get('REDIRECT_URL') }}?{{ app.request.server.get('REDIRECT_QUERY_STRING') }}{% else %}/admin{% endif %}" />
+                        <input type="hidden" name="_target_path" value="{% if app.request.server.get('REDIRECT_URL') != path('admin_login') and app.request.server.get('REDIRECT_URL') != "" %}{{ app.request.server.get('REDIRECT_URL') }}?{{ app.request.server.get('REDIRECT_QUERY_STRING') }}{% else %}/admin{% endif %}" />
                     </td>
                 </tr>
                 <tr>
