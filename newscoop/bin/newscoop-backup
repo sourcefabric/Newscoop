@@ -73,9 +73,9 @@ $usage =
         Save the backup archive in the backup default directory:
             $CAMPSITE_DIR/backup/
         By default the backup file is saved in the current directory.
-        
+
     --skip-static
-        Don't backup any static files (images/documents/etc).
+        Don't backup any static files (images/files/pdf/etc).
 
   See also:
       newscoop-restore
@@ -175,36 +175,36 @@ if (!$skip_static) {
 		echo " * Backing up images...";
 		flush_output($flush);
 	}
-	camp_copy_files("$html_dir/images", $backupDirFullPath);
+	camp_copy_files("$html_dir/images", $backupDirFullPath, "Unable to copy file/dir $html_dir/images to $backupDirFullPath. Please create the folder images/ or use the --skip-static option.");
 	if (!$silent) {
 		echo "done.\n";
 	}
-	
+
 	if (!$silent) {
 		echo " * Backing up file attachments...";
 		flush_output($flush);
 	}
-	
-	camp_copy_files("$html_dir/public/files", $backupDirFullPath);
+
+	camp_copy_files("$html_dir/public/files", $backupDirFullPath, "Unable to copy file/dir $html_dir/public/file to $backupDirFullPath. Please create the folder public/files/ or use the --skip-static option.");
 	if (!$silent) {
 		echo "done.\n";
 	}
-	
+
 	if (!$silent) {
 	    echo " * Backing up videos...";
 	    flush_output($flush);
 	}
-	
-	camp_copy_files("$html_dir/public/videos", $backupDirFullPath);
+
+	camp_copy_files("$html_dir/public/videos", $backupDirFullPath, "Unable to copy file/dir $html_dir/public/video to $backupDirFullPath. Please create the folder public/video/ or use the --skip-static option.");
 	if (!$silent) {
 	    echo "done.\n";
 	}
-	
+
 	if (!$silent) {
 	    echo " * Backing up PDFs...";
 	    flush_output($flush);
 	}
-	camp_copy_files("$html_dir/public/pdf", $backupDirFullPath);
+	camp_copy_files("$html_dir/public/pdf", $backupDirFullPath, "Unable to copy file/dir $html_dir/public/pdf to $backupDirFullPath. Please create the folder public/pdf/ or use the --skip-static option.");
 	if (!$silent) {
 	    echo "done.\n";
 	}
