@@ -371,10 +371,10 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
-$fileSrcDir = "$tempDirName/files";
-$imagesSrcDir = "$tempDirName/images";
-$videosSrcDir = "$tempDirName/videos";
-$pdfSrcDir = "$tempDirName/pdf";
+$fileSrcDir = "$tempDirName/files/.";
+$imagesSrcDir = "$tempDirName/images/.";
+$videosSrcDir = "$tempDirName/videos/.";
+$pdfSrcDir = "$tempDirName/pdf/.";
 $configDestDir = $ETC_DIR;
 $filesDestDir = $CAMPSITE_DIR.'/public/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
@@ -492,21 +492,21 @@ echo "done.\n";
 echo " * Restoring images...";
 flush_output($flush);
 if (is_dir($imagesSrcDir)) {
-	camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
+    camp_copy_files($imagesSrcDir, $imagesDestDir);
 }
 echo "done.\n";
 
 echo " * Restoring videos...";
 flush_output($flush);
 if (is_dir($videosSrcDir)) {
-    camp_copy_files($videosSrcDir, $destination);
+    camp_copy_files($videosSrcDir, $videosDestDir);
 }
 echo "done.\n";
 
 echo " * Restoring file attachments...";
 flush_output($flush);
 if (is_dir($fileSrcDir)) {
-	camp_copy_files($fileSrcDir, $destination);
+    camp_copy_files($fileSrcDir, $filesDestDir);
 }
 echo "done.\n";
 //flush_output($flush);
@@ -514,7 +514,7 @@ echo "done.\n";
 echo " * Restoring PDFs...";
 flush_output($flush);
 if (is_dir($pdfSrcDir)) {
-    camp_copy_files($pdfSrcDir, $destination);
+    camp_copy_files($pdfSrcDir, $pdfDir);
 }
 
 echo "done.\n";
@@ -612,7 +612,7 @@ echo "done.\n";
 
 	if ($convertToUTF) {
 	    echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
-	
+
 	    $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
 	    if (camp_backup_database($destDbName, $dumpFile, $output,
 	    array("--default-character-set=$fromCharset")) != 0) {
@@ -624,7 +624,7 @@ echo "done.\n";
 	    camp_restore_database($outDumpFile);
 	    unlink($dumpFile);
 	    unlink($outDumpFile);
-	
+
 	    echo "   done.\n";
 	}
 //}
