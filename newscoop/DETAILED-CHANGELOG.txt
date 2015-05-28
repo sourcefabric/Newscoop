@@ -3,6 +3,82 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      26/05/2015 16:49  4.4.3  Newscoop 4.4.3 minor release
+         8c71179 add missing update sql, fix useForAll js function with tinymce
+         49c5d01 CS-5790: Fixes issue when images/files/videos/pdf folder is symlink
+         875aabd CS-5791:  Adds more clear error messages when direcotires dont exist
+         626b349 translations fixes
+         0ab991f small fixes in default templates
+         5238fb2 updated translation resources
+         385a835 get locale from translator
+         8efc6a0 CS-5724: Improves upgrade script for TimeZOne
+         992fd17 hide the "show in editor" option in the article type fields for switches
+         15da820 CS-5724: Adds proper time zone setting for Newscoop
+         ea73a2d add articles relation to Author table, fix comments api user checking, fix uri parameters in metaSubtitle (editor_image.tpl)
+         79e7d49 added ORM UTC datetime type and fixed playlists saving
+         9cbb0f4 fix metaSubtitle missing $request object, fix cacheKey usage
+         d4b5c58 fixed typo
+         1af69e9 removed unused method
+         8411516 improved and fixed set_topic function
+         1487df2 use site secret key instead installation_id
+         51087c5 use new getLink method to create article edit links in admin
+         bc43bb1 spaces format
+         716a2ae CS-5754 - Problem with topics
+         3f35817 clear vector after rendering
+         7291a14 add unique per instance installation_id to database cache keys
+         4189790 prettify oauth result page
+         d9dd32e update main.css
+         928b491 added oauth login-modal style
+         a6d77f4 fixed obtaining a new token
+         bbe93bd wip playlists oauth
+         0b91820 improve connected articles listing on edit image view
+         e2b40ff authorize user on frontend when signing in to backend
+         417d39a remove custom target path
+         9862d31 improved issue service
+         a74aada remove 'parent' from password recovery template
+         d18ac74 oauth token handling
+         d2e75ec disable issue listener for api
+         504e392 users logout api - simplified the code
+         8a87d32 revert services.yml
+         076a55e fixed custom handlers
+         87f4303 simplyfy and fix webcode (re)generate command
+         5fba74d check if $publicationMetadata is filled
+         5fcec47 improve rendering templates from templates service
+         c5843c1 add 404 response code for not found pages
+         a0e47a5 remove unused encoder factory from UserService
+         7923750 use cacheService for acl resources scan
+         646d3c5 remove findBy and findAll methods
+         f9ff851 ignore authentication oauth modal when session is valid
+         1dba319 fix comments
+         ff13efd added no_cache cookie handling also on frontend
+         a675ecb CS5777 - Create OAuth custom login & logout handlers
+         df1553c by default hide hidden comments for not admins on api
+         2828d5c fix broken html source view in chrome
+         de84a99 CS-5771 - Handle relative redirect uris for oauth clients
+         6b33911 CS-5658: add title for dashboard
+         d125772 CS-5658: improve admin pages titles
+         b6118f2 updated translation resources
+         96c291d S-5773: Fixes issue with upgrade which doesn't take mixed returned entities in account.
+         42987da fix login page title
+         5d6673f add and fix admin pages titles
+         7f53486 set attachment translations per language
+         08f294c CS-5761 - "The last article of this list has been removed" is not translated.
+         aad55b0 Buttons "Add this article" and "Close" is not translated in Playlist management
+         416eea5 AENV-462 - Change name of button "Done" to "Save" in Attach/Detach slideshows
+         5375aa1 use tagged vendors, clone default_url for url property
+         02e30c8 share security context between api and frontend, update somposer.json
+         06a5375 TW-176: Fixes issue with unserialized array in cache key
+         82a8bdd removed check for token
+         b080d76 added image width support
+         b06d29e AENV-452 - Big image is not resized on front-end
+         ca0da21 updated translation resources
+         459cd21 updated translation resources
+         5128a2f added upgrade script - update redirect_uris for defaultoauth client
+         06e3828 use real renditions url, add some details
+         5982184 move InteractiveDoctrineAuthService to onw file, fix multiple keywords search on api
+         b93420f simplify oauth obtaining process
+         e4b97fa override TokenBasedRememberMeServices and authenticate user also in zend_auth
+         8fecf4d updated translation resources
       22/04/2015 09:35  4.4.2  Newscoop 4.4.2 minor release
          921408c improve rmt config
          73b3495 identations to spaces
