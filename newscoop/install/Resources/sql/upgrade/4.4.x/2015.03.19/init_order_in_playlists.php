@@ -19,46 +19,49 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
-        'driver'    => 'pdo_mysql',
-        'host'      => $Campsite['db']['host'],
-        'dbname'    => $Campsite['db']['name'],
-        'user'      => $Campsite['db']['user'],
-        'password'  => $Campsite['db']['pass'],
-        'port'      => $Campsite['db']['port'],
-        'charset'   => 'utf8',
+        'driver' => 'pdo_mysql',
+        'host' => $Campsite['db']['host'],
+        'dbname' => $Campsite['db']['name'],
+        'user' => $Campsite['db']['user'],
+        'password' => $Campsite['db']['pass'],
+        'port' => $Campsite['db']['port'],
+        'charset' => 'utf8',
     ),
 ));
 
 $app->register(new DoctrineOrmServiceProvider(), array(
-    "orm.proxies_dir" => $newscoopDir."/library/Proxy",
-    "orm.auto_generate_proxies" => true,
-    "orm.proxies_namespace" => "Proxy",
-    "orm.em.options" => array(
-        "mappings" => array(
+    'orm.proxies_dir' => $newscoopDir.'/library/Proxy',
+    'orm.auto_generate_proxies' => true,
+    'orm.proxies_namespace' => 'Proxy',
+    'orm.em.options' => array(
+        'mappings' => array(
             array(
-                "type" => "annotation",
-                "namespace" => "Newscoop\Entity",
-                "path" => $newscoopDir."/library/Newscoop/Entity",
-                "use_simple_annotation_reader" => false,
+                'type' => 'annotation',
+                'namespace' => "Newscoop\Entity",
+                'path' => $newscoopDir.'/library/Newscoop/Entity',
+                'use_simple_annotation_reader' => false,
             ),
             array(
-                "type" => "annotation",
-                "namespace" => "Newscoop\NewscoopBundle\Entity",
-                "path" => $newscoopDir."/src/Newscoop/NewscoopBundle/Entity",
-                "use_simple_annotation_reader" => false,
+                'type' => 'annotation',
+                'namespace' => "Newscoop\NewscoopBundle\Entity",
+                'path' => $newscoopDir.'/src/Newscoop/NewscoopBundle/Entity',
+                'use_simple_annotation_reader' => false,
             ),
             array(
-                "type" => "annotation",
-                "namespace" => "Newscoop\Package",
-                "path" => $newscoopDir."/library/Newscoop/Package",
-                "use_simple_annotation_reader" => false,
+                'type' => 'annotation',
+                'namespace' => "Newscoop\Package",
+                'path' => $newscoopDir.'/library/Newscoop/Package',
+                'use_simple_annotation_reader' => false,
             ),
             array(
-                "type" => "annotation",
-                "namespace" => "Newscoop\Image",
-                "path" => $newscoopDir."/library/Newscoop/Image",
-                "use_simple_annotation_reader" => false,
+                'type' => 'annotation',
+                'namespace' => "Newscoop\Image",
+                'path' => $newscoopDir.'/library/Newscoop/Image',
+                'use_simple_annotation_reader' => false,
             ),
+        ),
+        'types' => array(
+            'utcdatetime' => 'Newscoop\NewscoopBundle\ORM\UTCDateTimeType',
         ),
     ),
 ));
