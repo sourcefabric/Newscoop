@@ -178,7 +178,7 @@ services:
         arguments: ["@webcode", "@image.rendition", "@article.link", "@em"]
     search.comment:
         class: Newscoop\Comment\SearchService
-        arguments: ["@article.link"]
+        arguments: ["@article.link", "@em"]
     search.user:
         class: Newscoop\User\SearchService
         arguments: ["@image"]
