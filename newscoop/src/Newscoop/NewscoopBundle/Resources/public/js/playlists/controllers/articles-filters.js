@@ -22,6 +22,7 @@ angular.module('playlistsApp').controller('FiltersController', [
         $scope.section = {};
         // article statuses
         $scope.statuses = [
+            {code: null, name: Translator.trans("All", {}, 'messages')},
             {code: 'Y', name: Translator.trans("Published", {}, 'messages')},
             {code: 'S', name: Translator.trans("Submitted", {}, 'messages')},
             {code: 'N', name: Translator.trans("New", {}, 'messages')}
@@ -115,6 +116,8 @@ angular.module('playlistsApp').controller('FiltersController', [
     $scope.author = {};
     $scope.user = {};
     $scope.topic = {};
+    $scope.language = {};
+    $scope.languages = [];
 
 
     $scope.loadAuthors = function (term) {
@@ -251,6 +254,30 @@ angular.module('playlistsApp').controller('FiltersController', [
      $scope.loadByTopicOnSelect = function (item) {
         var filters = {
             topic: item.id
+        };
+
+        mergeFilters(filters);
+    }
+
+    /**
+     * Loads all languages
+     *
+     * @param {Object} item Language object
+     */
+     $scope.loadLanguages = function () {
+        if ($scope.languages.length == 0) {
+            $scope.languages = Filter.getLanguages();
+        }
+    }
+
+    /**
+     * Loads all articles by language
+     *
+     * @param {Object} item Language object
+     */
+     $scope.loadByLanguageOnSelect = function (item) {
+        var filters = {
+            language: item.code
         };
 
         mergeFilters(filters);

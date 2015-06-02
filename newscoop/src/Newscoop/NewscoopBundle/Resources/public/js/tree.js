@@ -25,7 +25,7 @@ app.factory('TopicsFactory',  function($http) {
             });
         },
         getLanguages: function() {
-            return $http.get(Routing.generate("newscoop_newscoop_topics_getlanguages"));
+            return $http.get(Routing.generate("newscoop_newscoop_language_getlanguages"));
         },
         isAttached: function(id) {
             return $http.get(Routing.generate("newscoop_newscoop_topics_isattached", {id: id}));

@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -63,22 +63,8 @@ class TopicsController extends Controller
     }
 
     /**
-     * @Route("/admin/topics/get-languages", options={"expose"=true})
-     */
-    public function getLanguages(Request $request)
-    {
-        $languages = $this->get('em')
-            ->getRepository('Newscoop\Entity\Language')
-            ->getAllLanguages()
-            ->getArrayResult();
-
-        return new JsonResponse(array(
-            'languages' => $languages,
-        ));
-    }
-
-    /**
      * @Route("/admin/topics/tree/", options={"expose"=true})
+     *
      * @Method("GET")
      */
     public function treeAction(Request $request)
@@ -112,7 +98,7 @@ class TopicsController extends Controller
     }
 
     /**
-     * Adds "attached" and "hasAttachedSubtopic" keys with values to the array of the topic;
+     * Adds "attached" and "hasAttachedSubtopic" keys with values to the array of the topic;.
      *
      * @param array  $nodes         Array of topics
      * @param string $articleNumber Article number
@@ -162,7 +148,7 @@ class TopicsController extends Controller
      * @param array $node          Currently checked topic
      * @param array $attachedTopic Attached topic
      *
-     * @return boolean
+     * @return bool
      */
     private function hasAttachedSubtopic($node, $attachedTopic)
     {
@@ -215,6 +201,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/add/", options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function addAction(Request $request)
@@ -271,6 +258,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/add/translation/{id}", requirements={"id" = "\d+"}, options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function addTranslation(Request $request, $id)
@@ -338,6 +326,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/delete/{id}", options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
@@ -360,7 +349,7 @@ class TopicsController extends Controller
         $em->flush();
         $cacheService->clearNamespace('topic');
 
-        $this->get('dispatcher')->dispatch("topic.delete", new GenericEvent($this, array(
+        $this->get('dispatcher')->dispatch('topic.delete', new GenericEvent($this, array(
             'title' => $node->getTitle(),
             'id' => array(
                 'id' => $id,
@@ -379,6 +368,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/is-attached/{id}", options={"expose"=true})
+     *
      * @Method("GET")
      */
     public function isAttachedAction(Request $request, $id)
@@ -406,6 +396,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/translations/delete/{id}", options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function deleteTranslationAction(Request $request, $id)
@@ -444,6 +435,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/edit/{id}", options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function editAction(Request $request, $id)
@@ -502,6 +494,7 @@ class TopicsController extends Controller
 
     /**
      * @Route("/admin/topics/detach", options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function detachTopicAction(Request $request)
@@ -514,7 +507,7 @@ class TopicsController extends Controller
         if (!$user->hasPermission('AttachTopicToArticle')) {
             return new JsonResponse(array(
                 'status' => false,
-                'message' => $translator->trans("You do not have the right to detach topics from articles.", array(), 'article_topics'),
+                'message' => $translator->trans('You do not have the right to detach topics from articles.', array(), 'article_topics'),
             ), 403);
         }
 
@@ -546,12 +539,13 @@ class TopicsController extends Controller
 
         return new JsonResponse(array(
             'status' => true,
-            'message' => $translator->trans("The topic $1 has been removed from article.", array('$1' => $topicObj->getTitle()), 'article_topics'),
+            'message' => $translator->trans('The topic $1 has been removed from article.', array('$1' => $topicObj->getTitle()), 'article_topics'),
         ));
     }
 
     /**
      * @Route("/admin/topics/attach", options={"expose"=true})
+     *
      * @Method("POST")
      */
     public function attachTopicAction(Request $request)
@@ -564,7 +558,7 @@ class TopicsController extends Controller
         if (!$user->hasPermission('AttachTopicToArticle')) {
             return new JsonResponse(array(
                 'status' => false,
-                'message' => $translator->trans("You do not have the right to attach topics to articles.", array(), 'article_topics'),
+                'message' => $translator->trans('You do not have the right to attach topics to articles.', array(), 'article_topics'),
             ), 403);
         }
 
@@ -626,7 +620,7 @@ class TopicsController extends Controller
     }
 
     /**
-     * Get Article Topics
+     * Get Article Topics.
      *
      * @param string $articleNumber Article number
      *
