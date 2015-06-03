@@ -27,7 +27,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
             number = item.number;
             occurences = 0;
             angular.forEach($scope.$parent.featuredArticles, function(value, key) {
-                if (value.number == number) {
+                if (value.number == number && value.language == item.language) {
                     occurences++;
                 }
             });
@@ -55,7 +55,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
 
             isInLogList = _.some(
                 Playlist.getLogList(),
-                {number: number, _method: 'unlink'}
+                {number: number, language: item.language, _method: 'unlink'}
             );
 
             if (!isInLogList) {
@@ -65,7 +65,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 // insert the same value to the log list
                 isInLogList = _.some(
                     Playlist.getLogList(),
-                    {number: number}
+                    {number: number, language: item.language}
                     );
 
                 if (!isInLogList) {
@@ -75,18 +75,18 @@ angular.module('playlistsApp').controller('FeaturedController', [
                     Playlist.addItemToLogList(item);
                 }
             } else {
-                Playlist.removeItemFromLogList(number, 'unlink');
+                Playlist.removeItemFromLogList(item, 'unlink');
             }
         },
         onSort: function (evt/**Event*/){
             var article = evt.model;
             var articleInList = _.find(
                 $scope.$parent.featuredArticles,
-                {number: article.number}
+                {number: article.number, language: article.language}
             );
 
             if (articleInList !== undefined && evt.newIndex !== evt.oldIndex) {
-                Playlist.removeItemFromLogList(articleInList.number, 'link');
+                Playlist.removeItemFromLogList(articleInList, 'link');
                 article._order = evt.newIndex + 1;
                 article._method = "link";
                 Playlist.addItemToLogList(article);
@@ -102,7 +102,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
             $scope.$parent.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
             $scope.$parent.showLimitAlert = false;
             $scope.$parent.isCounting = false;
-            Playlist.removeItemFromLogList($scope.$parent.articleOverLimitNumber, 'link');
+            Playlist.removeItemFromLogList($scope.$parent.articleNotToRemove, 'link');
         }
     }
 
@@ -142,7 +142,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
         featuredArticles = $scope.$parent.featuredArticles;
         exists = _.some(
             availablArticles,
-            {number: article.number}
+            {number: article.number, language: article.language}
         );
 
         if (!exists) {
@@ -151,7 +151,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
 
         _.remove(
             featuredArticles,
-            {number: article.number}
+            {number: article.number, language: article.language}
         );
 
         // check if the article exists in the logList,
@@ -162,7 +162,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
         // the playlist.
         isInLogList = _.some(
             Playlist.getLogList(),
-            {number: article.number, _method: 'link'}
+            {number: article.number, language: article.language, _method: 'link'}
         );
 
         if (!isInLogList) {
@@ -171,7 +171,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
             article._method = "unlink";
             Playlist.addItemToLogList(article);
         } else {
-            Playlist.removeItemFromLogList(article.number, 'link');
+            Playlist.removeItemFromLogList(article, 'link');
         }
 
         Playlist.setCurrentPlaylistArticles(featuredArticles);

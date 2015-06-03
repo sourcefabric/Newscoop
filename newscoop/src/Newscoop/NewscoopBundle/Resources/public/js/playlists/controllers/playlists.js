@@ -116,7 +116,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         articleToRemove._method = "unlink";
         _.remove(
             $scope.featuredArticles,
-            {number: articleToRemove.number}
+            {number: articleToRemove.number, language: articleToRemove.language}
         );
 
         Playlist.addItemToLogList(articleToRemove);
@@ -181,13 +181,18 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      $scope.addArticleToListFromPreview = function () {
         var exists = _.some(
             $scope.featuredArticles,
-            {number: $scope.articlePreview.number}
-            );
+            {
+                number: $scope.articlePreview.number,
+                language: $scope.articlePreview.language
+            });
 
         if (!exists) {
             var isInLogList = _.some(
                 Playlist.getLogList(),
-                {number: $scope.articlePreview.number}
+                {
+                    number: $scope.articlePreview.number,
+                    language: $scope.articlePreview.language
+                }
             );
 
             if (isLimitReached()) {
@@ -215,8 +220,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      $scope.addArticleToListFromEditor = function (number, language) {
         var exists = _.some(
             $scope.featuredArticles,
-            {number: number}
-            );
+            {
+                number: number,
+                language: language
+            });
 
         if (!exists) {
             var article = undefined,
@@ -224,7 +231,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.processing = true;
             isInLogList = _.some(
                 Playlist.getLogList(),
-                {number: number}
+                {
+                    number: number,
+                    language: languages
+                }
             );
 
             if (!isInLogList) {

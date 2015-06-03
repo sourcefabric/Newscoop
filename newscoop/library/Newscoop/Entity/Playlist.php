@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
@@ -9,7 +9,8 @@ namespace Newscoop\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Playlist entity
+ * Playlist entity.
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistRepository")
  * @ORM\Table(name="playlist")
  */
@@ -19,30 +20,35 @@ class Playlist extends AbstractEntity
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="id_playlist")
+     *
      * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(length=256, name="name")
+     *
      * @var string
      */
     protected $name;
 
     /**
      * @ORM\Column(length=1024, name="notes", nullable=true)
+     *
      * @var string
      */
     protected $notes;
 
     /**
      * @ORM\Column(type="integer", name="max_items", nullable=true)
+     *
      * @var int
      */
     protected $maxItems;
 
     /**
      * @ORM\Column(type="utcdatetime", name="modification_time", nullable=true)
+     *
      * @var utcdatetime
      */
     protected $articlesModificationTime;
@@ -53,7 +59,8 @@ class Playlist extends AbstractEntity
     protected $articles;
 
     /**
-     * Link to topic articles resource
+     * Link to topic articles resource.
+     *
      * @var string
      */
     protected $articlesLink;
@@ -92,7 +99,8 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Set link to topic articles resource
+     * Set link to topic articles resource.
+     *
      * @param string $articlesLink Link to topic articles resource
      */
     public function setArticlesLink($articlesLink)
@@ -103,7 +111,8 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Get link to topic articles resource
+     * Get link to topic articles resource.
+     *
      * @return string Link to topic articles resource
      */
     public function getArticlesLink()
@@ -112,7 +121,7 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Returns the name of the playlist
+     * Returns the name of the playlist.
      */
     public function getName()
     {
@@ -120,8 +129,9 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Returns the name of the playlist
-     * @var string $name
+     * Returns the name of the playlist.
+     *
+     * @var string
      */
     public function setName($name)
     {

@@ -744,7 +744,7 @@ class Article extends DatabaseObject
             // Delete the article from playlists
             $em = Zend_Registry::get('container')->getService('em');
             $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
-            $repository->deleteArticle($this->m_data['Number']);
+            $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
             $em->flush();
 
             // Delete indexes

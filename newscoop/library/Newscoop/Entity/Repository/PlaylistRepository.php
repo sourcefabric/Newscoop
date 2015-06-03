@@ -1,23 +1,19 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity\Repository;
 
-use Newscoop\Entity\PlaylistArticle,
-    Newscoop\Entity\Language,
-    Newscoop\Entity\Playlist,
-    Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Theme,
-    Newscoop\Entity\Theme\Loader,
-    Newscoop\Entity\Article;
+use Newscoop\Entity\PlaylistArticle;
+use Newscoop\Entity\Language;
+use Newscoop\Entity\Playlist;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Article;
 
 class PlaylistRepository extends EntityRepository
 {
-
     public function getPlaylists()
     {
         $em = $this->getEntityManager();
@@ -25,7 +21,7 @@ class PlaylistRepository extends EntityRepository
             ->createQueryBuilder('p');
 
         $query = $queryBuilder->getQuery();
-        
+
         return $query;
     }
 
@@ -38,7 +34,7 @@ class PlaylistRepository extends EntityRepository
             ->setParameter('id', $id);
 
         $query = $queryBuilder->getQuery();
-        
+
         return $query;
     }
 
@@ -56,34 +52,42 @@ class PlaylistRepository extends EntityRepository
     }
 
     /**
-     * Returns articles for a given playlist
+     * Returns articles for a given playlist.
+     *
      * @param Newscoop\Entity\Playlist $playlist
      * @param Newscoop\Entity\Language $lang
-     * @param bool $fullArticle
-     * @param int $limit
-     * @param int $offset
-     * @param bool $publishedOnly
+     * @param bool                     $fullArticle
+     * @param int                      $limit
+     * @param int                      $offset
+     * @param bool                     $publishedOnly
      */
-    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false, $orderBy = "order")
+    public function articles(Playlist $playlist, array $languages = array(), $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false, $orderBy = 'order')
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("
-            SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.updated date, a.workflowStatus workflowStatus, a.type type" )
-        .   " FROM Newscoop\Entity\PlaylistArticle pa
-            LEFT JOIN Newscoop\Entity\Article a WITH pa.articleNumber = a.number  
-            WHERE pa.playlist = ?1 "
-        .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
-        .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
-        .       " ORDER BY pa.$orderBy "
-        );
-
-        $query->setParameter(1, $playlist);
-        if (!is_null($lang)) {
-            $query->setParameter(2, $lang->getId());
+        $query = $em->createQueryBuilder();
+        if (!$fullArticle) {
+            $query->select('a.number articleId, l.id languageId, a.name title, a.updated date, a.workflowStatus workflowStatus, a.type type');
+        } else {
+            $query->select('p, a');
         }
 
-        if ($onlyQuery) {
-            return $query;
+        $query
+            ->from('Newscoop\Entity\PlaylistArticle', 'p')
+            ->join('p.article', 'a')
+            ->join('a.language', 'l')
+            ->where('p.playlist = ?1');
+
+        if ($publishedOnly) {
+            $query->andWhere('a.workflowStatus = \'Y\'');
+        }
+
+        $query->setParameter(1, $playlist);
+        if (!empty($languages)) {
+            $query
+                ->andWhere('l.code IN(?2)')
+                ->setParameter(2, $languages);
+        } else {
+            $query->groupBy('p.articleNumber, p.articleLanguage');
         }
 
         if (!is_null($limit)) {
@@ -93,34 +97,52 @@ class PlaylistRepository extends EntityRepository
             $query->setFirstResult($offset);
         }
 
-        $rows = $query->getResult();
+        $query->orderBy("p.$orderBy");
+        if ($onlyQuery) {
+            return $query->getQuery();
+        }
+
+        $rows = $query->getQuery()->getArrayResult();
+
         return $rows;
     }
 
     /**
-     * Returns the total count of articles for a given playlist
+     * Returns the total count of articles for a given playlist.
+     *
      * @param Newscoop\Entity\Playlist $playlist
-     * @param Language $lang
-     * @param bool $publishedOnly
+     * @param Language                 $lang
+     * @param bool                     $publishedOnly
      */
-    public function articlesCount(Playlist $playlist, Language $lang = null, $publishedOnly = true)
+    public function articlesCount(Playlist $playlist, array $languages = array(), $publishedOnly = true)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery("
-            SELECT COUNT(DISTINCT pa.articleNumber) FROM Newscoop\Entity\PlaylistArticle pa
-            LEFT JOIN Newscoop\Entity\Article a WITH pa.articleNumber = a.number  
-            WHERE pa.playlist = ?1 "
-        .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
-        .       (is_null($lang) ? "" : " AND a.language = ?2")
-        .       " ORDER BY pa.id"
-        );
+        $query = $em->createQueryBuilder();
+        $query
+            ->select('count(distinct pa.articleNumber)')
+            ->from('Newscoop\Entity\PlaylistArticle', 'pa')
+            ->innerJoin('pa.article', 'a', 'WITH', 'pa.articleNumber = a.number')
+            ->leftJoin('a.language', 'l')
+            ->where('pa.playlist = ?1')
+            ->orderBy('pa.id');
+
+        if (!empty($languages)) {
+            $query
+                ->andWhere('l.code IN(?2)')
+                ->setParameter(2, $languages);
+        }
+
+        if ($publishedOnly) {
+            $query->andWhere('a.workflowStatus = \'Y\'');
+        }
 
         $query->setParameter(1, $playlist);
         if (!is_null($lang)) {
             $query->setParameter(2, $lang->getId());
         }
 
-        $count = $query->getSingleScalarResult();
+        $count = $query->getQuery()->getSingleScalarResult();
+
         return $count;
     }
 
@@ -128,12 +150,16 @@ class PlaylistRepository extends EntityRepository
      * Gets the list of playlist the given article belongs to.
      *
      * @param int $articleId
+     *
      * @return array
      */
-    public function getArticlePlaylists($articleId)
+    public function getArticlePlaylists($articleId, $languageId)
     {
         $playlistArticles = $this->getEntityManager()->getRepository('Newscoop\Entity\PlaylistArticle')
-            ->findBy(array('articleNumber' => $articleId));
+            ->findBy(array(
+                'articleNumber' => $articleId,
+                'articleLanguage' => $languageId,
+            ));
 
         $playlists = array();
         foreach ((array) $playlistArticles as $playlistArticle) {
@@ -144,16 +170,16 @@ class PlaylistRepository extends EntityRepository
     }
 
     /**
-     * Save playlist with articles
+     * Save playlist with articles.
+     *
      * @param Newscoop\Entity\Playlist $playlist $playlist
-     * @param array $articles
+     * @param array                    $articles
      */
     public function save(Playlist $playlist = null, $articles = null)
     {
         $em = $this->getEntityManager();
 
-        try
-        {
+        try {
             $em->getConnection()->beginTransaction();
 
             $em->persist($playlist);
@@ -167,11 +193,10 @@ class PlaylistRepository extends EntityRepository
 
             if (!is_null($articles) && is_array($articles)) {
                 $ar = $this->getEntityManager()->getRepository('Newscoop\Entity\Article');
-                foreach ($articles as $articleId)
-                {
+                foreach ($articles as $articleId) {
                     $article = new PlaylistArticle();
                     $article->setPlaylist($playlist);
-                    if (($a = current($ar->findBy(array("number" => $articleId)))) instanceof \Newscoop\Entity\Article) {
+                    if (($a = current($ar->findBy(array('number' => $articleId)))) instanceof \Newscoop\Entity\Article) {
                         $article->setArticle($a);
                     }
 
@@ -180,18 +205,19 @@ class PlaylistRepository extends EntityRepository
             }
             $em->flush();
             $em->getConnection()->commit();
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $em->getConnection()->rollback();
             $em->close();
+
             return $e;
         }
+
         return $playlist;
     }
 
     /**
-     * Delete playlist
+     * Delete playlist.
+     *
      * @param Newscoop\Entity\Playlist $playlist
      */
     public function delete(Playlist $playlist)

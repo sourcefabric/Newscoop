@@ -2660,17 +2660,17 @@ CREATE TABLE playlist (
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `playlist_article`;
-CREATE TABLE playlist_article (
-  id_playlist_article INT AUTO_INCREMENT NOT NULL, 
-  id_playlist INT NOT NULL, 
-  article_no INT NOT NULL, 
-  order_number INT NOT NULL, 
-  INDEX IDX_BD05197C8759FDB8 (id_playlist), 
-  INDEX IDX_BD05197CAA07C9D3 (article_no), 
-  UNIQUE INDEX playlist_article (id_playlist, article_no), 
+CREATE TABLE `playlist_article` (
+  `id_playlist_article` int(11) NOT NULL,
+  `id_playlist` int(11) NOT NULL,
+  `article_no` int(11) NOT NULL,
+  `article_language` int(11) NOT NULL,
+  `order_number` int(11) NOT NULL,
   PRIMARY KEY(id_playlist_article)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
+ALTER TABLE `playlist_article`
+ ADD KEY `IDX_BD05197C8759FDB8` (`id_playlist`), ADD KEY `IDX_BD05197CAA07C9D3813385DE` (`article_no`,`article_language`);
 
 --
 -- Table structure for table `plugin_blog_blog`

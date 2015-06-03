@@ -215,6 +215,33 @@ angular.module('playlistsApp').factory('Filter', [
             return items;
         };
 
+        Filter.getLanguages = function () {
+            var items = [],
+                deferredGet = $q.defer(),
+                url;
+
+            items.$promise = deferredGet.promise;
+
+            url = Routing.generate(
+                'newscoop_newscoop_language_getlanguages',
+                {},
+                true
+            );
+
+            $http.get(url)
+            .success(function (response) {
+                response.languages.forEach(function (item) {
+                    items.push(item);
+                });
+                items.unshift({"code": null, "name": Translator.trans("All", {}, 'messages')});
+                deferredGet.resolve();
+            }).error(function (responseBody) {
+                deferredGet.reject(responseBody);
+            });
+
+            return items;
+        };
+
         return Filter;
     }
 ]);

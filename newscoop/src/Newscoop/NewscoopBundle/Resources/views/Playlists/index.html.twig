@@ -181,6 +181,14 @@
                                         </ui-select-choices>
                                     </ui-select>
                               </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="language.selected" theme="select2" ng-click="loadLanguages()" on-select="loadByLanguageOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Language'|trans({}, 'messages') }}...">{[{$select.selected.name}]}</ui-select-match>
+                                        <ui-select-choices repeat="language in languages | filter:$select.search">
+                                            <div ng-bind-html="language.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
                             </ul>
                         </div>
                     </div>
@@ -202,6 +210,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                        <span class="label label-default">{[{ ::article.language}]}</span>
                                                     </div>
                                                     <a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">{{ 'View article'|trans }}</a>
                                                 </div>
@@ -261,6 +270,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                            <span class="label label-default">{[{ ::article.language}]}</span>
                                                         </div>
                                                         <a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
                                                             <span class="ui-icon ui-icon-closethick"></span>
