@@ -233,7 +233,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 Playlist.getLogList(),
                 {
                     number: number,
-                    language: languages
+                    language: language
                 }
             );
 
