@@ -94,11 +94,17 @@ class CacheService
         }
 
         if (is_array($id)) {
+            foreach ($id as $key => $value) {
+                if (is_object($value)) {
+                    $id[$key] = serialize($value);
+                }
+            }
+
             $id = implode('__', $id);
         }
 
         // make cache key short
-        $id = base64_encode($id.'|'.$this->systemPreferences->SiteSecretKey);
+        $id = md5($id.'|'.$this->systemPreferences->SiteSecretKey);
 
         if ($namespace) {
             $namespace = $this->getNamespace($namespace);
