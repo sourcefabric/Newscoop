@@ -46,10 +46,6 @@ function smarty_function_set_article($p_params, &$p_smarty)
         return false;
     }
 
-    if ($campsite->article->defined && $campsite->article->number == $attrValue) {
-        return;
-    }
-
     $articleObj = new MetaArticle($campsite->language->number, $articleNumber);
     if ($articleObj->defined) {
         $campsite->article = $articleObj;
