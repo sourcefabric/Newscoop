@@ -42,6 +42,8 @@ class PlaylistArticleRepository extends EntityRepository
     public function deleteArticle($articleId, $languageId)
     {
         $em = $this->getEntityManager();
+        $em->getConnection()->beginTransaction();
+
         $article = $em->getRepository('Newscoop\Entity\PlaylistArticle')
             ->findOneBy(array(
                 'articleNumber' => $articleId,
