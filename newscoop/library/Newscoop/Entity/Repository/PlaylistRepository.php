@@ -178,9 +178,9 @@ class PlaylistRepository extends EntityRepository
     public function save(Playlist $playlist = null, $articles = null)
     {
         $em = $this->getEntityManager();
+        $em->getConnection()->beginTransaction();
 
         try {
-            $em->getConnection()->beginTransaction();
 
             $em->persist($playlist);
             if (is_null($playlist->getId())) {
