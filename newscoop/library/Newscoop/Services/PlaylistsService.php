@@ -207,9 +207,20 @@ class PlaylistsService
     public function removeLeftItems($playlist)
     {
         if ($playlist->getMaxItems() != null) {
+            $allowedArticles = $this->em
+                ->createQuery('SELECT pa.id FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.idPlaylist = :playlistId AND pa.order >= 0 ORDER BY pa.order ASC')
+                ->setParameter('playlistId', $playlist->getId())
+                ->setMaxResults($playlist->getMaxItems())
+                ->getArrayResult();
+
+            $ids = array();
+            foreach ($allowedArticles as $article) {
+                $ids[] = $article['id'];
+            }
+
             $this->em
-                ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.order > :maxPosition AND pa.idPlaylist = :playlistId')
-                ->setParameter('maxPosition', $playlist->getMaxItems() + 1)
+                ->createQuery('DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.id NOT IN (:ids) AND pa.idPlaylist = :playlistId')
+                ->setParameter('ids', $ids)
                 ->setParameter('playlistId', $playlist->getId())
                 ->execute();
         }
@@ -354,8 +365,10 @@ class PlaylistsService
     public function clearPlaylistTemplates($playlist)
     {
         foreach ($playlist->getThemes() as $theme) {
-            foreach ($theme as $file) {
-                \TemplateCacheHandler_DB::clean($file);
+            if (is_array($theme)) {
+                foreach ($theme as $file) {
+                    \TemplateCacheHandler_DB::clean($file);
+                }
             }
         }
     }

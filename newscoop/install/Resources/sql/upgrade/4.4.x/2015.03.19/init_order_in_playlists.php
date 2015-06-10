@@ -74,7 +74,7 @@ try {
 
     foreach ($playlists as $playlist) {
         $playlistArticles = $app['orm.em']->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, null, true, null, null, false, true, 'id')
+            ->articles($playlist, array(), true, null, null, false, true, 'id')
             ->getResult();
 
         $index = 0;
