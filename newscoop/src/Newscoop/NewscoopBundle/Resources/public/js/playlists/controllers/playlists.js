@@ -329,28 +329,25 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
      $scope.loadArticlesOnScrollDown = function () {
         if ($scope.playlist.selected) {
-            if ($scope.playlist.selected.maxItems === undefined ||
-                $scope.playlist.selected.maxItems === 0) {
-                if (!$scope.isEmpty && !$scope.isRunning) {
-                    $scope.isRunning = true;
-                    Playlist.getArticlesByListId($scope.playlist.selected, $scope.page)
-                    .then(function (response) {
-                        if (response.items.length == 0) {
-                            $scope.isEmpty = true;
-                        } else {
-                            $scope.page++;
-                            $scope.isEmpty = false;
-                            angular.forEach(response.items, function(value, key) {
-                                if (value.number !== undefined) {
-                                    $scope.featuredArticles.push(value);
-                                }
-                            });
-                        }
-                        $scope.isRunning = false;
-                    }, function(response) {
-                        flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
-                    });
-                }
+            if (!$scope.isEmpty && !$scope.isRunning) {
+                $scope.isRunning = true;
+                Playlist.getArticlesByListId($scope.playlist.selected, $scope.page)
+                .then(function (response) {
+                    if (response.items.length == 0) {
+                        $scope.isEmpty = true;
+                    } else {
+                        $scope.page++;
+                        $scope.isEmpty = false;
+                        angular.forEach(response.items, function(value, key) {
+                            if (value.number !== undefined) {
+                                $scope.featuredArticles.push(value);
+                            }
+                        });
+                    }
+                    $scope.isRunning = false;
+                }, function(response) {
+                    flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
+                });
             }
         }
     }
