@@ -67,8 +67,11 @@ angular.module('playlistsApp').factory('Playlist', [
                 url;
 
             var params = {id: playlist.id};
-
-            if ((playlist.maxItems !== null) && playlist.maxItems > 0) {
+            if (playlist.maxItems !== null && playlist.maxItems >= 0 ||
+                playlist.maxItems == undefined
+            ) {
+                params.items_per_page = 10;
+            } else {
                 params.items_per_page = 9999;
             }
 
