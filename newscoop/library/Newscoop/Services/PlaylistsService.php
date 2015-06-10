@@ -64,8 +64,6 @@ class PlaylistsService
         if ($playlistArticle) {
             $this->em->remove($playlistArticle);
             $this->em->flush();
-
-            $this->reorderAfterRemove($playlist, $playlistArticle->getOrder());
         }
 
         return true;
@@ -86,117 +84,20 @@ class PlaylistsService
             ->getPlaylistArticle($playlist, $articleToAdd)
             ->getOneOrNullResult();
 
-        if ($playlistArticle) {
-            $this->positionPlaylistArticle($playlist, $playlistArticle, $position);
-
-            return true;
+        if (!$playlistArticle) {
+            $playlistArticle = new PlaylistArticle($playlist, $articleToAdd);
+            $this->em->persist($playlistArticle);
         }
 
-        $playlistArticle = new PlaylistArticle($playlist, $articleToAdd);
-        $this->em->persist($playlistArticle);
-        $this->em->flush();
-
-        $this->positionPlaylistArticle($playlist, $playlistArticle, $position);
-
-        return true;
-    }
-
-    private function reorderAfterRemove($playlist, $removedArticlePosition)
-    {
-        try {
-            $this->em->getConnection()->exec('LOCK TABLES playlist_article WRITE;');
-
-            // move all bigger than old position up (-1)
-            $this->em
-                ->createQuery('UPDATE Newscoop\Entity\PlaylistArticle pa SET pa.order = pa.order-1 WHERE pa.order > :oldPosition')
-                ->setParameter('oldPosition', $removedArticlePosition)
-                ->execute();
-
-            $this->em->getConnection()->exec('UNLOCK TABLES;');
-        } catch (\Exception $e) {
-            $this->em->getConnection()->exec('UNLOCK TABLES;');
-        }
-
-        $this->clearPlaylistTemplates($playlist);
-
-        return true;
-    }
-
-    private function initOrderOnPlaylist($playlist)
-    {
-        $articles = $this->getPlaylistArticles($playlist, false);
-
-        $index = 0;
-        foreach ($articles as $article) {
-            if (is_int($article->getOrder()) && $article->getOrder() > 0 && $index == 0) {
-                return;
-            }
-            $index++;
-
-            $article->setOrder($index);
-        }
-
-        $this->em->flush();
-
-        return true;
-    }
-
-    private function positionPlaylistArticle($playlist, $playlistArticle, $position)
-    {
-        if ($position == false) {
-            $position = 1;
-        } else {
-            $position = (int) $position;
-        }
-
-        try {
-            $this->em->getConnection()->exec('LOCK TABLES playlist_article WRITE, playlist_article as p0_ WRITE;');
-
-            // check if position isn't bigger that max one;
-            $maxPosition = $this->em
-                ->createQuery('SELECT COUNT(pa) FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.idPlaylist = :playlistId AND pa.order >= 0 ORDER BY pa.order ASC')
-                ->setParameter('playlistId', $playlist->getId())
-                ->getSingleScalarResult();
-
-            if ($position > ((int) $maxPosition)) {
-                $position = (int) $maxPosition;
-            }
-
-            // get article - move to position 0
-            $oldOrder = $playlistArticle->getOrder();
-            // it's not new element and we need to pull down bigger elements on it place
-            if ($oldOrder > 0) {
-                // move all bigger than old position up (-1)
-                $this->em
-                    ->createQuery('UPDATE Newscoop\Entity\PlaylistArticle pa SET pa.order = pa.order-1 WHERE pa.order > :oldPosition AND pa.idPlaylist = :playlistId')
-                    ->setParameter('oldPosition', $oldOrder)
-                    ->setParameter('playlistId', $playlist->getId())
-                    ->execute();
-            }
-
-            // move all bigger than new position down (+1)
-            $this->em
-                ->createQuery('UPDATE Newscoop\Entity\PlaylistArticle pa SET pa.order = pa.order+1 WHERE pa.order >= :newPosition AND pa.idPlaylist = :playlistId')
-                ->setParameter('newPosition', $position)
-                ->setParameter('playlistId', $playlist->getId())
-                ->execute();
-
-            // move changed element from position 0 to new position
+        if ($position) {
             $playlistArticle->setOrder($position);
-            $this->em->flush();
-
-            $this->removeLeftItems($playlist);
-
-            $this->em->getConnection()->exec('UNLOCK TABLES;');
-        } catch (\Exception $e) {
-            $this->em->getConnection()->exec('UNLOCK TABLES;');
         }
 
-        $this->dispatcher->dispatch('playlist.save', new GenericEvent($this, array(
-            'id' => $playlist->getId(),
-        )));
-        $this->cacheService->clearNamespace('boxarticles');
-        $this->clearPlaylistTemplates($playlist);
+        $this->em->flush();
+
+        $this->removeLeftItems($playlist);
+
+        return true;
     }
 
     /**

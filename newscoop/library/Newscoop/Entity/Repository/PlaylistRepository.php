@@ -61,7 +61,7 @@ class PlaylistRepository extends EntityRepository
      * @param int                      $offset
      * @param bool                     $publishedOnly
      */
-    public function articles(Playlist $playlist, array $languages = array(), $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false, $orderBy = 'order')
+    public function articles(Playlist $playlist, array $languages = array(), $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false, $orderBy = 'order', $orderDir = 'ASC')
     {
         $em = $this->getEntityManager();
         $query = $em->createQueryBuilder();
@@ -97,7 +97,8 @@ class PlaylistRepository extends EntityRepository
             $query->setFirstResult($offset);
         }
 
-        $query->orderBy("p.$orderBy");
+        $query->orderBy("p.$orderBy", $orderDir);
+        
         if ($onlyQuery) {
             return $query->getQuery();
         }

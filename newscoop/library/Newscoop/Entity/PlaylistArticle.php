@@ -7,6 +7,7 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Playlist entity.
@@ -32,6 +33,7 @@ class PlaylistArticle extends AbstractEntity
     protected $idPlaylist;
 
     /**
+     * @Gedmo\SortableGroup
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Playlist")
      * @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
      *
@@ -65,6 +67,7 @@ class PlaylistArticle extends AbstractEntity
     protected $articleLanguage;
 
     /**
+     * @Gedmo\SortablePosition
      * @ORM\Column(type="integer", name="order_number")
      *
      * @var int
@@ -75,7 +78,7 @@ class PlaylistArticle extends AbstractEntity
     {
         $this->setPlaylist($playlist);
         $this->setArticle($article);
-        $this->setOrder(0);
+        $this->setOrder(1);
     }
 
     /**

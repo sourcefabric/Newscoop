@@ -7,10 +7,10 @@
 namespace Newscoop\Entity\Repository;
 
 use Newscoop\Entity\Playlist;
-use Doctrine\ORM\EntityRepository;
 use Newscoop\Entity\Article;
+use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-class PlaylistArticleRepository extends EntityRepository
+class PlaylistArticleRepository extends SortableRepository
 {
     /**
      * Delete playlist.
