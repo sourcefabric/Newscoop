@@ -140,32 +140,21 @@ class ArticlesListController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (AuthenticationException $e) {
-        }
+        } catch (AuthenticationException $e) {}
 
-        // get playlistArticles (only few keys)
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, array(), false, null, null, $onlyPublished, true)->getArrayResult();
-
-        $ids = array();
-        foreach ($playlistArticles as $playlistArticle) {
-            $ids[] = $playlistArticle['articleId'];
-        }
-
-        // get real articles
-        $articleSearchCriteria = new ArticleSearchCriteria();
-        $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesByCriteria(
-                $articleSearchCriteria,
-                $ids,
-                $onlyPublished,
-                false
-            );
+            ->articles($playlist, array(), true, null, null, $onlyPublished, true);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $articles = $paginator->paginate($articles, array(
+        $articles = $paginator->paginate($playlistArticles, array(
             'distinct' => false,
         ));
+
+        foreach ($articles['items'] as $key => $playlistArticle) {
+            $articles['items'][$key] = $em->getRepository('Newscoop\Entity\Article')
+                ->getArticle($playlistArticle->getArticleNumber(), $playlistArticle->getArticleLanguage())->getSingleResult();
+        }
+
 
         $allItems = array_merge(array(
             'id' => $playlist->getId(),

@@ -105,8 +105,9 @@ class ArticlesController extends FOSRestController
             $this->postAddUpdate($article);
 
             $view = FOSView\View::create($article, 201);
-            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_getarticle', array(
+            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_getarticle_language', array(
                 'number' => $article->getId(),
+                'language' => $article->getLanguageCode()
             ), true));
 
             return $view;
