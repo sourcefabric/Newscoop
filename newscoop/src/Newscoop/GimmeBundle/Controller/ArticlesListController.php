@@ -145,11 +145,11 @@ class ArticlesListController extends FOSRestController
 
         // get playlistArticles (only few keys)
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
-            ->articles($playlist, array(), true, null, null, $onlyPublished, true)->getArrayResult();
+            ->articles($playlist, array(), false, null, null, $onlyPublished, true)->getArrayResult();
 
         $ids = array();
         foreach ($playlistArticles as $playlistArticle) {
-            $ids[] = $playlistArticle['articleNumber'];
+            $ids[] = $playlistArticle['articleId'];
         }
 
         // get real articles
@@ -158,7 +158,8 @@ class ArticlesListController extends FOSRestController
             ->getArticlesByCriteria(
                 $articleSearchCriteria,
                 $ids,
-                $onlyPublished
+                $onlyPublished,
+                false
             );
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
