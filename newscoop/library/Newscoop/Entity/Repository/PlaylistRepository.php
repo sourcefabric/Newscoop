@@ -101,7 +101,17 @@ class PlaylistRepository extends EntityRepository
         $query->orderBy("p.$orderBy", $orderDir);
 
         if ($onlyQuery) {
-            return $query->getQuery();
+            $countQueryBuilder = $em->createQueryBuilder();
+            $countQueryBuilder->select('count(p)')
+                ->from('Newscoop\Entity\PlaylistArticle', 'p')
+                ->where('p.playlist = ?1')
+                ->setParameter(1, $playlist);
+
+            $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+            $query = $query->getQuery();
+            $query->setHint('knp_paginator.count', $count);
+
+            return $query;
         }
 
         $rows = $query->getQuery()->getArrayResult();
