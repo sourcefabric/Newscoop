@@ -204,5 +204,5 @@ stof_doctrine_extensions:
             tree: true
             sluggable: false
             translatable: true
-            sortable: false
+            sortable: true
             loggable: false

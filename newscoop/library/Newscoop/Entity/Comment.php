@@ -461,7 +461,7 @@ class Comment implements DocumentInterface
     }
 
     /**
-     * Get thread
+     * Get forum
      *
      * @return Newscoop\Entity\Publication
      */
