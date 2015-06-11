@@ -82,6 +82,7 @@ class PlaylistRepository extends EntityRepository
         }
 
         $query->setParameter(1, $playlist);
+
         if (!empty($languages)) {
             $query
                 ->andWhere('l.code IN(?2)')
@@ -98,7 +99,7 @@ class PlaylistRepository extends EntityRepository
         }
 
         $query->orderBy("p.$orderBy", $orderDir);
-        
+
         if ($onlyQuery) {
             return $query->getQuery();
         }
