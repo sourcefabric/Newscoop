@@ -66,6 +66,7 @@ class PlaylistsService
             $this->em->flush();
         }
 
+        $this->clearPlaylistTemplates($playlist);
         return true;
     }
 
@@ -96,6 +97,7 @@ class PlaylistsService
         $this->em->flush();
 
         $this->removeLeftItems($playlist);
+        $this->clearPlaylistTemplates($playlist);
 
         return true;
     }
