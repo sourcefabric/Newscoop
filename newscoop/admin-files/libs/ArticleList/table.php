@@ -305,7 +305,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
 }).css('position', 'relative').css('width', '100%').fnSetFilteringDelay(500);
 
 <?php if ($this->items === null && !isset($this->type)) { ?>
-$('<input type="checkbox" name="showtype" value="with_filtered" id="display_filtered_types_<?php echo $this->id; ?>" /> <label for="display_filtered_types_<?php echo $this->id; ?>"><?php echo $translator->trans("Display articles of filtered types", array(), 'library'); ?></label>')
+$('<input type="checkbox" name="showtype" value="with_filtered" id="display_filtered_types_<?php echo $this->id; ?>" /> <label for="display_filtered_types_<?php echo $this->id; ?>"><?php echo $translator->trans("Show hidden Article Types?", array(), 'library'); ?></label>')
     .appendTo('#filter_type_<?php echo $this->id; ?>');
 $('#filter_type_<?php echo $this->id; ?>').css('float', 'right');
 $('#filter_type_<?php echo $this->id; ?>').css('margin-right', '20px');
