@@ -159,7 +159,7 @@ class MetaTopic extends MetaDbObject
     protected function getParent()
     {
         if (isset($this->topic['id']) && isset($this->topic['parent'])) {
-            return new MetaTopic($this->topic['parent']['id']);
+            return new MetaTopic($this->topic['parent']['id'], $this->topic['locale']);
         }
 
         return;
