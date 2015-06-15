@@ -4,7 +4,6 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Package;
 
 use Newscoop\Criteria\SlideshowCriteria;
@@ -19,8 +18,8 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
      *
      * @param array $criteria
      * @param array $orderBy
-     * @param int $limit
-     * @param int $offset
+     * @param int   $limit
+     * @param int   $offset
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
@@ -64,25 +63,41 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.items', 'i')
             ->leftJoin('i.image', 'ii');
 
-        if ($criteria->publication) {
-            $publicationPackages = $this->_em->getRepository('Newscoop\Package\ArticlePackage')
-                ->createQueryBuilder('ap')
-                ->select('ap')
-                ->leftJoin('ap.article', 'a')
-                ->where('a.publication = :publication')
-                ->setParameter('publication', $criteria->publication)
-                ->getQuery()
-                ->getArrayResult();
+        $fetchResult = false;
+        $qbArticles = $this->_em->getRepository('Newscoop\Package\ArticlePackage')
+            ->createQueryBuilder('ap')
+            ->select('ap', 'a')
+            ->leftJoin('ap.article', 'a');
 
+        if ($criteria->publication) {
+            $qbArticles
+                ->where('a.publication = :publication')
+                ->setParameter('publication', $criteria->publication);
+
+            $fetchResult = true;
+        }
+
+        if ($criteria->articleNumber && $criteria->articleLanguage) {
+            $qbArticles
+                ->where('ap.article = :article')
+                ->andWhere('a.language = :language')
+                ->setParameters(array(
+                    'article' => $criteria->articleNumber,
+                    'language' => $criteria->articleLanguage,
+                ));
+
+            $fetchResult = true;
+        }
+
+        if ($fetchResult) {
+            $articlePackages = $qbArticles->getQuery()->getArrayResult();
             $packagesIds = array();
-            foreach ($publicationPackages as $package) {
+            foreach ($articlePackages as $package) {
                 $packagesIds[] = $package['package_id'];
             }
 
             $qb->andWhere('p.id IN (:packagesIds)')
                     ->setParameter('packagesIds', $packagesIds);
-
-            $criteria->publication = null;
         }
 
         foreach ($criteria->perametersOperators as $key => $operator) {
@@ -95,11 +110,12 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
         $metadata = $this->getClassMetadata();
         foreach ($criteria->orderBy as $key => $order) {
             if (array_key_exists($key, $metadata->columnNames)) {
-                $key = 'p.' . $key;
+                $key = 'p.'.$key;
             }
 
             $qb->orderBy($key, $order);
         }
+
         $query = $qb->getQuery();
 
         return $query;
@@ -108,7 +124,7 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Get count of packages by a set of criteria
      *
-     * @param array $criteria
+     * @param  array $criteria
      * @return int
      */
     public function getCountBy(array $criteria)
@@ -124,25 +140,26 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Find available for article
      *
-     * @param Newscoop\Package\Article $article
+     * @param  Newscoop\Package\Article $article
      * @return array
      */
     public function findAvailableForArticle(Article $article)
     {
         $queryBuilder = $this->createQueryBuilder('p');
-        $attachedIds = array_map(function($package) { return $package->getId(); }, $article->getPackages()->toArray());
+        $attachedIds = array_map(function ($package) { return $package->getId(); }, $article->getPackages()->toArray());
         if (!empty($attachedIds)) {
             $queryBuilder->where($queryBuilder->expr()->notIn('p.id', implode(', ', $attachedIds)));
         }
         $queryBuilder->orderBy('p.id', 'desc');
+
         return $queryBuilder->getQuery()->getResult();
     }
 
     /**
      * Set criteria for query builder
      *
-     * @param Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param array $criteria
+     * @param  Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param  array                     $criteria
      * @return void
      */
     private function setCriteria(\Doctrine\ORM\QueryBuilder $queryBuilder, array $criteria)

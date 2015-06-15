@@ -13,7 +13,7 @@ $this->placeholder('bodyClass')->set('iframe expanded');
     <h1>
         <?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->slideshow->getRendition()->getInfo(); ?></small>
         <span style="float: right;">
-            <input type="submit" style="margin: 0;" value="<?php echo $translator->trans('Save and Close'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
+            <input type="submit" style="margin: 0; display: none;" id="modal-close-btn" value="<?php echo $translator->trans('Save and Close'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
         </span>
     </h1>
     </div>
@@ -168,3 +168,8 @@ $(function() {
     </div>
 </div>
 </div>
+<script>
+    if (parent !== undefined && parent.$('div.renditionsModal').length == 0) {
+        $('#modal-close-btn').show();
+    }
+</script>

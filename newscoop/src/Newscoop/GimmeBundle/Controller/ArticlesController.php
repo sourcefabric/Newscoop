@@ -592,10 +592,15 @@ class ArticlesController extends FOSRestController
      * **related articles headers**:
      *
      *     header name: "link"
-     *     header value: "</api/articles/1; rel="topic">"
+     *     header value: "</api/articles/1; rel="article">"
      * or with specific language
      *
      *     header value: "</api/articles/1?language=en; rel="article">"
+     *
+     * **slideshows headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/slideshows/1; rel="slideshow">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -631,6 +636,7 @@ class ArticlesController extends FOSRestController
         $matched = false;
         foreach ($request->attributes->get('links', array()) as $key => $objectArray) {
             $resourceType = $objectArray['resourceType'];
+
             $object = $objectArray['object'];
 
             if ($object instanceof \Exception) {
@@ -702,6 +708,15 @@ class ArticlesController extends FOSRestController
             if ($object instanceof \Newscoop\Entity\Article) {
                 $relatedArticlesService = $this->get('related_articles');
                 $relatedArticlesService->removeRelatedArticle($article, $object);
+
+                $matched = true;
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\Package\Package) {
+                $packageService = $this->get('package');
+                $packageService->removeFromArticle($object, $article->getNumber());
 
                 $matched = true;
 

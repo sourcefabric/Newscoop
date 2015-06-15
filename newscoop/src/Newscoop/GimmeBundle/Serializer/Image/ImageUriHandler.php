@@ -5,7 +5,6 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\Serializer\Image;
 
 use JMS\Serializer\JsonSerializationVisitor;
@@ -25,6 +24,10 @@ class ImageUriHandler
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, array $type)
     {
+        if (property_exists($data, 'videoUrl') && is_string($data->getVideoUrl())) {
+            return $data->getVideoUrl();
+        }
+
         if (!property_exists($data, 'imageId') && !property_exists($data, 'image')) {
             return;
         }
@@ -32,7 +35,7 @@ class ImageUriHandler
         if (property_exists($data, 'image') && is_string($data->image)) {
             $imageUri = $this->linkService->getBaseUrl($this->zendRouter->assemble(array(
                 'controller' => 'images',
-                'action' => null
+                'action' => null,
             )).'/'.$data->image);
 
             return $imageUri;
@@ -40,7 +43,7 @@ class ImageUriHandler
             $image = $this->imageService->find($data->imageId);
             $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
             $imageUri = $this->linkService->getBaseUrl($this->zendRouter->assemble(array(
-                'src' => $imageSrc
+                'src' => $imageSrc,
             ), 'image', true, false));
 
             return $imageUri;
@@ -48,7 +51,7 @@ class ImageUriHandler
             $image = $data->image;
             $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
             $imageUri = $this->linkService->getBaseUrl($this->zendRouter->assemble(array(
-                'src' => $imageSrc
+                'src' => $imageSrc,
             ), 'image', false, false));
 
             return $imageUri;

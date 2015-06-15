@@ -12,11 +12,33 @@ Newscoop\Package\Package:
             type: string
             groups: ["details", "list"]
             serialized_name: title
+        items:
+            expose: true
+            read_only: true
+            type: ArrayCollection<string, Newscoop\Package\Item>
+            groups: ["details", "list"]
+            serialized_name: items
+        description:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: summary
+        itemsCount:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: itemsCount
+            accessor:
+                getter: getItemsCount
+            since_version: 1.2
         itemsLink:
             expose: true
             read_only: true
             type: items_link
             groups: ["details", "list"]
             serialized_name: itemsLink
+            until_version: 1.2
             accessor:
                 getter: getView
