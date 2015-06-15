@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `Aliases`;
 CREATE TABLE IF NOT EXISTS `Aliases` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` char(128) NOT NULL DEFAULT '',
-  `IdPublication` int(10) unsigned DEFAULT '0',
+  `IdPublication` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

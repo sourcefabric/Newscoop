@@ -133,15 +133,6 @@ INSERT INTO `Attachments` VALUES (1,NULL,'sourcefabric-jingle.mp3','mp3','audio/
 UNLOCK TABLES;
 
 --
--- Dumping data for table `AuthorAliases`
---
-
-LOCK TABLES `AuthorAliases` WRITE;
-/*!40000 ALTER TABLE `AuthorAliases` DISABLE KEYS */;
-/*!40000 ALTER TABLE `AuthorAliases` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `AuthorAssignedTypes`
 --
 
