@@ -1,0 +1,1 @@
+ALTER TABLE  `Aliases` CHANGE  `IdPublication`  `IdPublication` INT( 10 ) UNSIGNED NULL DEFAULT  '0'
