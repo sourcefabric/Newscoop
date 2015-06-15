@@ -304,7 +304,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false)
+    public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false, $order = null)
     {
         $em = $this->getEntityManager();
 
@@ -314,6 +314,10 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->where('att.id = :topicId')
             ->join('a.topics', 'att')
             ->setParameter('topicId', $topicId);
+
+        if ($order !== null) {
+            $queryBuilder->orderBy('a.published', $order);
+        }
 
         $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
