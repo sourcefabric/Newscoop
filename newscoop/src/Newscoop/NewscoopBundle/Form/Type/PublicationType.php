@@ -70,8 +70,8 @@ class PublicationType extends AbstractType
         ->add('seoChoices', 'choice', array(
             'choices'   => array(
                 'name' => 'publications.form_type.label.seo_article_title',
-                'topics' => 'publications.form_type.label.seo_article_keywords',
-                'keywords' => 'publications.form_type.label.seo_article_topics',
+                'keywords' => 'publications.form_type.label.seo_article_keywords',
+                'topics' => 'publications.form_type.label.seo_article_topics'
             ),
             'label' => 'publications.form_type.label.seo',
             'expanded' => true,
