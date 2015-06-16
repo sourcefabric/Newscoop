@@ -122,6 +122,7 @@ final class CampTemplate extends SmartyBC
         $themesService = \Zend_Registry::get('container')->getService('newscoop_newscoop.themes_service');
         $locale = $translator->getLocale();
 
+        $translator->addLoader('yaml', new YamlFileLoader());
         $cacheKey = $cacheService->getCacheKey(array('templates_translations', $themesService->getThemePath(), $locale), 'templates_translations');
         $templateTranslations = array();
         if ($cacheService->contains($cacheKey)) {
@@ -137,7 +138,6 @@ final class CampTemplate extends SmartyBC
         $dir = __DIR__.'/../../themes/'.$themesService->getThemePath().'translations';
         if ($filesystem->exists($dir)) {
             $finder = new Finder();
-            $translator->addLoader('yaml', new YamlFileLoader());
             $extension = $locale.'.yml';
             $finder->files()->in($dir);
             $finder->files()->name('*.'.$locale.'.yml');
