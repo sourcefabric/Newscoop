@@ -1,6 +1,6 @@
 list: lista
 filter: szűrő
-'In Lists?': 'Listákon?'
+'Show in Article Lists?': 'Show in Article Lists?'
 'Are you sure you want to $1 articles of article type $2?': 'Biztosan $1 akarod a/z $2 cikktípusú cikkeket?'
 '$1 articles of article type $2': '$1 cikkei a/z $2 cikktípusnak'
 'Hide human-readable field names': 'Az ember által olvasható mezőnevek elrejtése'
@@ -46,7 +46,7 @@ activate: aktiválás
 'The translation could not be added.': 'Nem lehetett hozzáadni a fordítást.'
 'The article type $1 does not exist.': 'A/z $1 cikktípus nem létezik.'
 'Template Type Name': 'Sablontípus neve'
-Show/Hide: Megjelenítés/Elrejtés
+'Show to Authors?': 'Show to Authors?'
 'Show article on section page': 'A cikk megjelenítése a rovatlapon'
 'Show article on front page': 'A cikk megjelenítése a címlapon'
 'Publish date': 'Közzététel dátuma'
@@ -58,7 +58,7 @@ Merge!: Egyesítsd!
 'Go to Step 2': 'Ugrás a 2. lépésre'
 'Display Name': 'Megjelenítendő név'
 'Delete article type $1.': 'A/z $1 cikktípus törlése.'
-'Comments enabled?': 'A hozzászólás engedélyezése'
+'Comments Enabled?': 'Comments Enabled?'
 'Back to Step 2': 'Vissza a 2. lépésre'
 'Back to Step 1': 'Vissza az 1. lépésre'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Biztosan törölni akarod a/z $1 cikktípust? FIGYELMEZTETÉS: A cikktípus törlése az ehhez a cikktípushoz társított összes cikket törölni fogja.'

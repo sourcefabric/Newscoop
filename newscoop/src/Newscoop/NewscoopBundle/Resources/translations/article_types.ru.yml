@@ -1,6 +1,6 @@
 list: список
 filter: фильтр
-'In Lists?': 'В списках?'
+'Show in Article Lists?': 'Show in Article Lists?'
 'Are you sure you want to $1 articles of article type $2?': 'Вы действительно хотите $1 статьи типа $2?'
 '$1 articles of article type $2': '$1 статьи типа $2'
 'Hide human-readable field names': 'Скрыть названия полей удобные для восприятия человеком'
@@ -46,7 +46,7 @@ activate: активировать
 'The translation could not be added.': 'Перевод не может быть добавлен.'
 'The article type $1 does not exist.': 'Тип статьи $1 не существует.'
 'Template Type Name': 'Название типа шаблона'
-Show/Hide: Показать/Спрятать
+'Show to Authors?': 'Show to Authors?'
 'Show article on section page': 'Показать статью на странице рубрики'
 'Show article on front page': 'Показать статью на титульной странице'
 'Publish date': 'Дата публикации'
@@ -58,7 +58,7 @@ Merge!: Объединить!
 'Go to Step 2': 'Перейти к шагу 2'
 'Display Name': 'Отображаемое название'
 'Delete article type $1.': 'Удалить тип статей $1.'
-'Comments enabled?': 'Комментарии разрещены?'
+'Comments Enabled?': 'Comments Enabled?'
 'Back to Step 2': 'Назад к шагу 2'
 'Back to Step 1': 'Назад к шагу 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Вы уверены, что хотите удалить тип статьи $1? ПРЕДУПРЕЖДЕНИЕ: удаление этого типа статей удалит повлечет за собой удаление всех статей, ассоциированные с этим типом.'

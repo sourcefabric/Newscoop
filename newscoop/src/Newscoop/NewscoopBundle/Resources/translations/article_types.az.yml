@@ -1,6 +1,6 @@
 list: siyahı
 filter: filtr
-'In Lists?': 'Siyahılarda?'
+'Show in Article Lists?': 'Show in Article Lists?'
 'Are you sure you want to $1 articles of article type $2?': '$2 məqalə növünün məqalələrini $1 istədiyinə əminsən?'
 '$1 articles of article type $2': '$2 məqalə növünün $1 məqalələri'
 'Hide human-readable field names': 'İnsanın oxuya biləcəyi sahə adlarını gizlə'
@@ -46,7 +46,7 @@ activate: aktivləşdir
 'The translation could not be added.': 'Tərcümə əlavə edilə bilmədi.'
 'The article type $1 does not exist.': '$1 məqalə növü mövcud deyil.'
 'Template Type Name': 'Nümunə Növü Adı'
-Show/Hide: Göstər/Gizlə
+'Show to Authors?': 'Show to Authors?'
 'Show article on section page': 'Bölmə səhifəsində məqalə göstər'
 'Show article on front page': 'Ön səhifədə məqalə göstər'
 'Publish date': 'Nümayiş tarixi'
@@ -58,7 +58,7 @@ Merge!: Birləşdir!
 'Go to Step 2': 'Addım 2-ə keç'
 'Display Name': 'Adı Nümayiş Et'
 'Delete article type $1.': '$1 məqalə növünü sil.'
-'Comments enabled?': 'Şərhə icazə var?'
+'Comments Enabled?': 'Comments Enabled?'
 'Back to Step 2': 'Addım 2-ə qayıt'
 'Back to Step 1': 'Addım 1-ə qayıt'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': '$1 məqalə növünü silmək istədiyinə əminsən? DİQQƏT: Bu məqalə növünü silsən, onunla əlaqəli olan bütün məqalələr də silinəcək.'

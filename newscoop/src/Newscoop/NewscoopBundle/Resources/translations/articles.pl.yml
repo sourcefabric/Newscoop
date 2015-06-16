@@ -189,7 +189,7 @@ Snippet: Fragment
 'List name should not be longer than 40 chars': 'Nazwa listy nie może być dłuższa niż 40 znaków'
 'Not valid number': 'Podana wartość nie jest liczbą'
 'List limit': 'Limit artykułów na liście'
-'The last article of this list has been removed.': 'Ostatni artykuł z tej listy został usunięty.'
+'The last article of this list has been removed.': null
 Revert: Cofnij
 'Could not automatically refresh the list': 'Nie można odświeżyć tej listy'
 articles:
