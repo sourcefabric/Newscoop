@@ -1,6 +1,6 @@
 list: null
 filter: null
-'In Lists?': null
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': null
 '$1 articles of article type $2': null
 'Hide human-readable field names': 'Приховати назву полів зручні для сприйняття людиною'
@@ -46,7 +46,7 @@ activate: активувати
 'The translation could not be added.': 'Переклад не може бути додан.'
 'The article type $1 does not exist.': 'Тип статті $1 не існує'
 'Template Type Name': 'Назва типу шаблону'
-Show/Hide: 'Показати / Приховати'
+'Show to Authors?': null
 'Show article on section page': 'Показати статтю у цьому розділі'
 'Show article on front page': 'Показати статтю на головній'
 'Publish date': 'Дата опублікування'
@@ -58,7 +58,7 @@ Merge!: Об’єднання!
 'Go to Step 2': 'Їти до кроку 2'
 'Display Name': 'Відображена назва'
 'Delete article type $1.': 'Видалити тип статті $1.'
-'Comments enabled?': 'Дозволити коментувати?'
+'Comments Enabled?': null
 'Back to Step 2': 'Назад до кроку 2'
 'Back to Step 1': 'Назад до кроку 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Ви впевнені, що хочете видалити статтю типу $1? ПОПЕРЕДЖЕННЯ: Видалення цього типу статтей призведе до видалення всіх статтей, повязані з статтею цього типу.'

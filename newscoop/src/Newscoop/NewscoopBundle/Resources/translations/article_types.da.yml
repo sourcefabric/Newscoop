@@ -1,6 +1,6 @@
 list: liste
 filter: filter
-'In Lists?': 'I lister?'
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': 'Vil du $1 artikler af type $2?'
 '$1 articles of article type $2': '$1 artikler af type $2'
 'Hide human-readable field names': 'Skjul læsevenlige feltnavne'
@@ -46,7 +46,7 @@ activate: aktiver
 'The translation could not be added.': 'Oversættelsen kunne ikke tilføjes.'
 'The article type $1 does not exist.': 'Artikel typen $1 findes ikke.'
 'Template Type Name': 'Skabelon type navn'
-Show/Hide: Vis/Skjul
+'Show to Authors?': null
 'Show article on section page': 'Vis artiklen på sektions siden'
 'Show article on front page': 'Vis artiklen på forsiden'
 'Publish date': 'Udgivelses dato'
@@ -58,7 +58,7 @@ Merge!: Flet!
 'Go to Step 2': 'Gå til trin 2'
 'Display Name': 'Vist navn'
 'Delete article type $1.': 'Slet artikel type $1.'
-'Comments enabled?': 'Slå kommentarer til?'
+'Comments Enabled?': null
 'Back to Step 2': 'Tilbage til trin 2'
 'Back to Step 1': 'Tilbage til trin 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Vil du slette artikeltypen $1? ADVARSEL: Hvis du sletter artikeltypen bliver alle artikler af denne type slettet.'
