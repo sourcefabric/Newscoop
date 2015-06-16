@@ -1,6 +1,6 @@
 list: null
 filter: null
-'Show in Article Lists?': 'Show in Article Lists?'
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': null
 '$1 articles of article type $2': null
 'Hide human-readable field names': 'Απόκρυψη ανθρωπίνως αναγνώσιμων ονομάτων πεδίων'
@@ -46,7 +46,7 @@ activate: ενεργοποίηση
 'The translation could not be added.': 'Η μετάφραση δεν μπόρεσε να προστεθεί.'
 'The article type $1 does not exist.': 'Ο τύπος άρθρου $1 δεν υπάρχει.'
 'Template Type Name': 'Όνομα Τύπου Προτύπου'
-'Show to Authors?': 'Show to Authors?'
+'Show to Authors?': null
 'Show article on section page': 'Εμφάνιση άρθρου στην σελίδα ενότητας'
 'Show article on front page': 'Εμφάνιση άρθρου στην αρχική σελίδα'
 'Publish date': 'Δημοσίευση ημερομηνίας'
@@ -58,7 +58,7 @@ Merge!: Συγχώνευση!
 'Go to Step 2': 'Πήγαινε στο Βήμα 2'
 'Display Name': 'Εμφανιζόμενο Όνομα'
 'Delete article type $1.': 'Διαγραφή τύπου άρθρου $1.'
-'Comments Enabled?': 'Comments Enabled?'
+'Comments Enabled?': null
 'Back to Step 2': 'Πίσω στο Βήμα 2'
 'Back to Step 1': 'Πίσω στο Βήμα 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε τον τύπο άρθρου $1; ΠΡΟΣΟΧΗ: Με την διαγραφή του συγκεκριμένου τύπου άρθρου, θα διαγραφούν και όλα τα σχετιζόμενα με αυτόν άρθρα.'

@@ -1,6 +1,6 @@
 list: null
 filter: null
-'Show in Article Lists?': 'Show in Article Lists?'
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': null
 '$1 articles of article type $2': null
 'Hide human-readable field names': 'Verberge von Menschen lesbare Feldnamen'
@@ -46,7 +46,7 @@ activate: aktivieren
 'The translation could not be added.': 'Die Übersetzung konnte nicht hinzugefügt werden.'
 'The article type $1 does not exist.': 'Der Artikeltyp $1 existiert nicht.'
 'Template Type Name': 'Templatetyp Name'
-'Show to Authors?': 'Show to Authors?'
+'Show to Authors?': null
 'Show article on section page': 'Artikel in der Rubrik anzeigen'
 'Show article on front page': 'Artikel auf der Startseite anzeigen'
 'Publish date': Veröffentlichungsdatum
@@ -58,7 +58,7 @@ Merge!: Zusammenführen!
 'Go to Step 2': 'Zu Schritt 2 gehen'
 'Display Name': Anzeigename
 'Delete article type $1.': 'Artikeltyp $1 löschen.'
-'Comments Enabled?': 'Comments Enabled?'
+'Comments Enabled?': null
 'Back to Step 2': 'Zurück zu Schritt 2'
 'Back to Step 1': 'Zurück zu Schritt 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Wirklich Artikeltyp $1 löschen? WARNUNG: Wenn dieser Artikeltyp gelöscht wird, werden alle verknüpften Artikel ebenfalls gelöscht.'

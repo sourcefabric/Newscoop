@@ -1,6 +1,6 @@
 list: list
 filter: filter
-'Show in Article Lists?': 'Show in Article Lists?'
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': 'Are you sure you want to $1 articles of article type $2?'
 '$1 articles of article type $2': '$1 articles of article type $2'
 'Hide human-readable field names': 'Hide human-readable field names'
@@ -46,7 +46,7 @@ activate: activate
 'The translation could not be added.': 'The translation could not be added.'
 'The article type $1 does not exist.': 'The article type $1 does not exist.'
 'Template Type Name': 'Template Type Name'
-'Show to Authors?': 'Show to Authors?'
+'Show to Authors?': null
 'Show article on section page': 'Show article on section page'
 'Show article on front page': 'Show article on front page'
 'Publish date': 'Publish date'
@@ -58,7 +58,7 @@ Merge!: Merge!
 'Go to Step 2': 'Go to Step 2'
 'Display Name': 'Display Name'
 'Delete article type $1.': 'Delete article type $1.'
-'Comments Enabled?': 'Comments Enabled?'
+'Comments Enabled?': null
 'Back to Step 2': 'Back to Step 2'
 'Back to Step 1': 'Back to Step 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.'
