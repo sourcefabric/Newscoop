@@ -582,21 +582,22 @@ VALUES
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `Required`, `TemplateId`)
 VALUES
     (1, 'URL', 'url', 'frontend', 1, 1),
-    (2, 'maxwidth', 'integer', 'frontend', 0, 1),
-    (3, 'provider_url', 'url', 'backend', 0, 1),
-    (4, 'description', 'textarea', 'backend', 0, 1),
-    (5, 'title', 'text', 'backend', 0, 1),
-    (6, 'type', 'text', 'backend', 0, 1),
-    (7, 'thumbnail_width', 'integer', 'backend', 0, 1),
-    (8, 'height', 'integer', 'backend', 0, 1),
-    (9, 'width', 'integer', 'backend', 0, 1),
-    (10, 'html', 'textarea', 'backend', 0, 1),
-    (11, 'author_name', 'text', 'backend', 0, 1),
-    (12, 'version', 'text', 'backend', 0, 1),
-    (13, 'provider_name', 'text', 'backend', 0, 1),
-    (14, 'thumbnail_url', 'url', 'backend', 0, 1),
-    (15, 'thumbnail_height', 'integer', 'backend', 0, 1),
-    (16, 'author_url', 'url', 'backend', 0, 1);
+    (2, 'Endpoint', 'text', 'frontend', 0, 1),
+    (3, 'maxwidth', 'integer', 'frontend', 0, 1),
+    (4, 'provider_url', 'url', 'backend', 0, 1),
+    (5, 'description', 'textarea', 'backend', 0, 1),
+    (6, 'title', 'text', 'backend', 0, 1),
+    (7, 'type', 'text', 'backend', 0, 1),
+    (8, 'thumbnail_width', 'integer', 'backend', 0, 1),
+    (9, 'height', 'integer', 'backend', 0, 1),
+    (10, 'width', 'integer', 'backend', 0, 1),
+    (11, 'html', 'textarea', 'backend', 0, 1),
+    (12, 'author_name', 'text', 'backend', 0, 1),
+    (13, 'version', 'text', 'backend', 0, 1),
+    (14, 'provider_name', 'text', 'backend', 0, 1),
+    (15, 'thumbnail_url', 'url', 'backend', 0, 1),
+    (16, 'thumbnail_height', 'integer', 'backend', 0, 1),
+    (17, 'author_url', 'url', 'backend', 0, 1);
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES
     (2, 'Youtube', NULL, '<iframe width=\"{{ width }}\" height=\"{{ height }}\" src=\"//www.youtube.com/embed/{{ ID }}\" frameborder=\"0\" allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
