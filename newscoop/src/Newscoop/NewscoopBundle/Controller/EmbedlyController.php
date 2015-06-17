@@ -98,10 +98,7 @@ class EmbedlyController implements SnippetControllerInterface
     private function getEmbedlyApiKey()
     {
         if (!$this->apiKey) {
-            $parameter = \Zend_Registry::get('container')->getParameter('embedly');
-            if (isset($parameter['api_key'])) {
-                return $parameter['api_key'];
-            }
+            return \Zend_Registry::get('container')->getParameter('embedly.api_key');
         }
 
         return $this->apiKey;
