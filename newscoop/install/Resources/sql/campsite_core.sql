@@ -3388,6 +3388,53 @@ CREATE TABLE SnippetTemplates (
 
 ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
 
+DROP TABLE IF EXISTS `SnippetTemplateField`;
+
+CREATE TABLE SnippetTemplateField (
+  `Id` int AUTO_INCREMENT NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Type` VARCHAR(255) NOT NULL,
+  `Scope` varchar(255) NOT NULL, 
+  `Required` tinyint(1) NOT NULL,
+  `TemplateId` int NOT NULL,
+  INDEX IDX_2060662F846113F (TemplateId),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE SnippetTemplateField ADD CONSTRAINT FK_2060662F846113F FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
+
+DROP TABLE IF EXISTS `SnippetFields`;
+
+CREATE TABLE SnippetFields (
+  `Id` int AUTO_INCREMENT NOT NULL,
+  `Data` longtext DEFAULT NULL,
+  `Name` varchar(255) NOT NULL,
+  `SnippetId` int NOT NULL,
+  `TemplateFieldId` int NOT NULL,
+  INDEX IDX_1F835121B00DA91C (SnippetId),
+  INDEX IDX_1F835121EBCA9337 (TemplateFieldId),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE SnippetFields ADD CONSTRAINT FK_1F835121B00DA91C FOREIGN KEY (SnippetId) REFERENCES Snippets (Id);
+ALTER TABLE SnippetFields ADD CONSTRAINT FK_1F835121EBCA9337 FOREIGN KEY (TemplateFieldId) REFERENCES SnippetTemplateField (Id);
+
+
+DROP TABLE IF EXISTS `SnippetFields`;
+
+CREATE TABLE Snippets (
+  `Id` int AUTO_INCREMENT NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Enabled` tunyint(1) NOT NULL,
+  `Created` datetime NOT NULL,
+  `Modified` datetime NOT NULL,
+  `TemplateId` int DEFAULT NULL,
+  INDEX IDX_1457978AF846113F (TemplateId),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE Snippets ADD CONSTRAINT FK_1457978AF846113F FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
+
 DROP TABLE IF EXISTS `ArticleSnippets`;
 
 CREATE TABLE ArticleSnippets (
