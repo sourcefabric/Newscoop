@@ -21,6 +21,9 @@ class AppKernel extends Kernel
                 date_default_timezone_set($timeZone);
             }
         } catch (\Exception $e) { }
+
+        // Set temp dir for Newscoop to project cache directory
+        putenv(sprintf('TMPDIR=%s/../cache', __DIR__));
     }
 
     public function registerBundles()
