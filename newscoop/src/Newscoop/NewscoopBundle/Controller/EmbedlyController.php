@@ -1,14 +1,13 @@
 <?php
+
 /**
- * @package Newscoop\Newscoop
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Controller;
+
 use Newscoop\Entity\Snippet;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 
 // Use this SnippetTemplate creation code to use the Embed.ly Controller.
@@ -18,6 +17,7 @@ class EmbedlyController implements SnippetControllerInterface
 {
     private $snippet;
     private $endpoints = array('oEmbed', 'Extract', 'Display', 'Preview', 'Objectify');
+    private $apiKey;
 
     public function __construct(Snippet $snippet, $update = false)
     {
@@ -35,14 +35,14 @@ class EmbedlyController implements SnippetControllerInterface
 
     public function update($parameters)
     {
-		return $parameters;
+        return $parameters;
     }
 
     public function preProcess($parameters)
     {
         $parameters['param']['url'] = $this->snippet->getFields()->get('URL')->getData();
         if (is_null($parameters['param']['url'])) {
-            throw new Exception('URL cannot be empty');
+            throw new \Exception('URL cannot be empty');
         }
         $parameters['endpoint'] = $this->snippet->getFields()->get('Endpoint')->getData();
         if (is_null($parameters['endpoint']) || !in_array($parameters['endpoint'], $this->endpoints)) {
@@ -61,24 +61,30 @@ class EmbedlyController implements SnippetControllerInterface
         // set the URL parameters
         $content = '';
         $count = count($parameters['param']);
-        foreach($parameters['param'] as $paramName=>$param) {
+        foreach ($parameters['param'] as $paramName => $param) {
             $content .= $paramName.'='.rawurlencode($param);
             if (--$count > 0) {
                 $content .= '&';
             }
         }
 
-        $request = new \Buzz\Message\Request('GET', '/1/oembed?'.$content, 'http://api.embed.ly'); 
+        $request = new \Buzz\Message\Request('GET', '/1/oembed?'.$content.'&key='.$this->getEmbedlyApiKey(), 'http://api.embed.ly');
         $response = new \Buzz\Message\Response();
 
         $client = new \Buzz\Client\FileGetContents();
         $client->send($request, $response);
+        $json = $response->getContent();
+        $decoder = new JsonDecode(true);
+        $result = $decoder->decode($json, 'json');
         if ($response->getStatusCode() == '200') {
-            $json = $response->getContent();
-            $decoder = new JsonDecode(true);
-            $parameters['response'] = $decoder->decode($json, 'json');
+            $parameters['response'] = $result;
         } else {
-            throw new Exception('Something went wrong');
+            $msg = 'Something went wrong';
+            if (isset($result['error_message'])) {
+                $msg = $result['error_message'];
+            }
+
+            throw new \Exception($msg);
         }
 
         return $parameters;
@@ -86,12 +92,21 @@ class EmbedlyController implements SnippetControllerInterface
 
     public function postProcess($parameters)
     {
-        foreach($this->snippet->getFields()->getKeys() as $fieldName) {
+        foreach ($this->snippet->getFields()->getKeys() as $fieldName) {
             if (array_key_exists($fieldName, $parameters['response'])) {
                 $this->snippet->setData($fieldName, $parameters['response'][$fieldName]);
             }
         }
 
         return $parameters;
+    }
+
+    private function getEmbedlyApiKey()
+    {
+        if (!$this->apiKey) {
+            return \Zend_Registry::get('container')->getParameter('embedly.api_key');
+        }
+
+        return $this->apiKey;
     }
 }
