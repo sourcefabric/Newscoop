@@ -110,7 +110,7 @@
 
 <?php echo $this->render('admin_menu.phtml'); ?>
 
-<?php echo $this->legacy ? '' : $this->placeholder('title'); ?>
+<?php echo $this->legacy ? '' : '<h1>'.str_replace(' - Newscoop Admin', '', $this->placeholder('Zend_View_Helper_HeadTitle')).'</h1>'; ?>
 
 <?php if ($this->placeholder('sidebar') != '') { ?>
 <div class="content-sidebar">
