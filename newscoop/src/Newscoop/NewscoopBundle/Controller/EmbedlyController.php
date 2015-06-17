@@ -73,12 +73,18 @@ class EmbedlyController implements SnippetControllerInterface
 
         $client = new \Buzz\Client\FileGetContents();
         $client->send($request, $response);
+        $json = $response->getContent();
+        $decoder = new JsonDecode(true);
+        $result = $decoder->decode($json, 'json');
         if ($response->getStatusCode() == '200') {
-            $json = $response->getContent();
-            $decoder = new JsonDecode(true);
-            $parameters['response'] = $decoder->decode($json, 'json');
+            $parameters['response'] = $result;
         } else {
-            throw new \Exception('Something went wrong');
+            $msg = 'Something went wrong';
+            if (isset($result['error_message'])) {
+                $msg = $result['error_message'];
+            }
+
+            throw new \Exception($msg);
         }
 
         return $parameters;
