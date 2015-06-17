@@ -722,6 +722,9 @@ class Builder
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'edit',
+                'params' => array (
+                    'user' => $this->container->get('zend_router')->getFrontController()->getRequest()->getParam('user')
+                ),
                 'reset_params' => false,
             ),
         ));
