@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Encoder\JsonDecode;
 class EmbedlyController implements SnippetControllerInterface
 {
     private $snippet;
-    private $endpoints = array('oEmbed', 'Extract', 'Display', 'Preview', 'Objectify');
+    private $endpoints = array('oembed', 'extract');
     private $apiKey;
 
     public function __construct(Snippet $snippet, $update = false)
@@ -46,7 +46,7 @@ class EmbedlyController implements SnippetControllerInterface
         }
         $parameters['endpoint'] = $this->snippet->getFields()->get('Endpoint')->getData();
         if (is_null($parameters['endpoint']) || !in_array($parameters['endpoint'], $this->endpoints)) {
-            $parameters['endpoint'] = 'oEmbed';
+            $parameters['endpoint'] = 'oembed';
         }
         $parameters['param']['maxwidth'] = $this->snippet->getFields()->get('maxwidth')->getData();
         if ($parameters['param']['maxwidth'] <= 1) {
@@ -68,7 +68,11 @@ class EmbedlyController implements SnippetControllerInterface
             }
         }
 
-        $request = new \Buzz\Message\Request('GET', '/1/oembed?'.$content.'&key='.$this->getEmbedlyApiKey(), 'http://api.embed.ly');
+        $request = new \Buzz\Message\Request(
+            'GET',
+            '/1/'.$parameters['endpoint'].'?'.$content.'&key='.$this->getEmbedlyApiKey(),
+            'http://api.embed.ly'
+        );
         $response = new \Buzz\Message\Response();
 
         $client = new \Buzz\Client\FileGetContents();
