@@ -711,6 +711,7 @@ class Builder
 
     private function prepareUsersMenu($menu)
     {
+        $zendRequest = $this->container->get('zend_router')->getFrontController()->getRequest();
         $translator = $this->container->get('translator');
         $this->addChild(
             $menu,
@@ -723,7 +724,7 @@ class Builder
                 'controller' => 'user',
                 'action' => 'edit',
                 'params' => array (
-                    'user' => $this->container->get('zend_router')->getFrontController()->getRequest()->getParam('user')
+                    'user' => $zendRequest ? $zendRequest->getParam('user') : null,
                 ),
                 'reset_params' => false,
             ),
