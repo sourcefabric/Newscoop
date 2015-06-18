@@ -111,6 +111,8 @@ angular.module('editorialCommentsApp').factory('Comments', function($http, $acti
     if (this.busy) return;
     this.busy = true;
 
+    var that = this;
+
     var url = Routing.generate("newscoop_gimme_articles_get_editorial_comments", {
       language: this.articleLanguage,
       number: this.articleNumber,
@@ -124,8 +126,8 @@ angular.module('editorialCommentsApp').factory('Comments', function($http, $acti
         $http.defaults.headers.common.Authorization = 'Bearer ' + data.access_token;
         $window.sessionStorage.setItem('newscoop.token', data.access_token);
         $http.get(url).success(function (data) {
-          this.items = data.items;
-          this.busy = false;
+          that.items = data.items;
+          that.busy = false;
         }.bind(this));
       });
     } else {
