@@ -3361,12 +3361,13 @@ CREATE TABLE `OAuthPublicApiResources` (
 DROP TABLE IF EXISTS `Snippets`;
 
 CREATE TABLE Snippets (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Name VARCHAR(255) NOT NULL,
-  Parameters LONGTEXT NOT NULL,
-  Snippet LONGTEXT NOT NULL,
-  TemplateId INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_1457978AF846113F (TemplateId),
+  `Id` int AUTO_INCREMENT NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Enabled` tinyint(1) NOT NULL,
+  `Created` datetime NOT NULL,
+  `Modified` datetime NOT NULL,
+  `TemplateId` int DEFAULT NULL,
+  INDEX IDX_1457978AF846113F (TemplateId),
   PRIMARY KEY(Id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
@@ -3418,22 +3419,6 @@ CREATE TABLE SnippetFields (
 
 ALTER TABLE SnippetFields ADD CONSTRAINT FK_1F835121B00DA91C FOREIGN KEY (SnippetId) REFERENCES Snippets (Id);
 ALTER TABLE SnippetFields ADD CONSTRAINT FK_1F835121EBCA9337 FOREIGN KEY (TemplateFieldId) REFERENCES SnippetTemplateField (Id);
-
-
-DROP TABLE IF EXISTS `SnippetFields`;
-
-CREATE TABLE Snippets (
-  `Id` int AUTO_INCREMENT NOT NULL,
-  `Name` varchar(255) NOT NULL,
-  `Enabled` tunyint(1) NOT NULL,
-  `Created` datetime NOT NULL,
-  `Modified` datetime NOT NULL,
-  `TemplateId` int DEFAULT NULL,
-  INDEX IDX_1457978AF846113F (TemplateId),
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-ALTER TABLE Snippets ADD CONSTRAINT FK_1457978AF846113F FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
 
 DROP TABLE IF EXISTS `ArticleSnippets`;
 
