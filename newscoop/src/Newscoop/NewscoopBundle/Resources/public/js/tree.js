@@ -495,7 +495,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     }
 
     $scope.formData = {};
-    $scope.subtopicForm = {};
 
     /**
      * Adds a new topic
@@ -509,22 +508,22 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
             _csrf_token: token
         }
 
-      var topicId;
+      var topic;
       if (scope !== undefined) {
-        topicId = scope.$parent.$nodeScope.$modelValue.id;
+        topic = scope.$parent.$nodeScope.$modelValue;
       }
 
-      if (topicId !== undefined) {
-          addFormData.topic["title"] = $scope.subtopicForm.title;
-          addFormData.topic["parent"] = topicId;
-      } else {
-        addFormData.topic["title"] = $scope.formData.title;
+      addFormData.topic["title"] = topic.newChild[topic.id];
+      if (topic !== undefined) {
+          addFormData.topic["parent"] = topic.id;
       }
+
+      topic.newChild = {};
 
       TopicsFactory.addTopic(addFormData, languageCode).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
-          if (topicId == undefined) {
+          if (topic == undefined) {
               $scope.data.unshift({
                 id: response.topicId,
                 title: response.topicTitle,
@@ -533,10 +532,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
               });
 
           } else {
-            updateAfterAddSubtopic($scope.data, topicId, response);
+            updateAfterAddSubtopic($scope.data, topic.id, response);
             scope.$parent.$nodeScope.collapsed = true;
           }
-          $scope.subtopicForm.title = undefined;
           $scope.formData = null;
         } else {
           flashMessage(response.message, 'error');
@@ -630,29 +628,28 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         });
     }
 
-    $scope.translationForm = {};
-
     /**
-     * It adds a new translation for given topic id
+     * It adds a new translation for given topic object.
      *
      * @method addTranslation
-     * @param topicId {integer} topic's id
+     * @param topicId {integer} topic object
      */
-    $scope.addTranslation = function(topicId) {
+    $scope.addTranslation = function(topic) {
       var postData = {
           topicTranslation: {
-              title: $scope.translationForm.title,
+              title: topic.newTranslation[topic.id],
               locale: languageSelected
           },
           _csrf_token: token
       };
 
-      TopicsFactory.addTranslation(postData, topicId).success(function (response) {
+      topic.newTranslation = {};
+      TopicsFactory.addTranslation(postData, topic.id).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
           $scope.languageCode = null;
           languageCode = null;
-          updateAfterAddTranslation($scope.data, topicId, response);
+          updateAfterAddTranslation($scope.data, topic.id, response);
         } else {
           flashMessage(response.message, 'error');
         }
