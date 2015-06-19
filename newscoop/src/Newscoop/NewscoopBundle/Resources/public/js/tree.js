@@ -168,6 +168,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.treeFilter = $filter('uiTreeFilter');
     $scope.availableFields = ['content', 'title'];
     $scope.supportedFields = ['content', 'title'];
+    $scope.deleteDisabled = false;
     var languageCode = null;
     var languageSelected = null;
 
@@ -371,6 +372,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
      * @method removeTopic
      */
     $scope.removeTopic = function() {
+      $scope.deleteDisabled = true;
       TopicsFactory.deleteTopic(removeTopicId).success(function (response) {
         if (response.status) {
           $('#removeAlert').modal('hide');
@@ -379,7 +381,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         } else {
           flashMessage(response.message, 'error');
         }
+        $scope.deleteDisabled = false;
       }).error(function(response, status){
+        $scope.deleteDisabled = false;
           flashMessage(response.message, 'error');
       });
     };

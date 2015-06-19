@@ -189,7 +189,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'topics.btn.close'|trans }}</button>
-                    <button type="button" ng-click="removeTopic()" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
+                    <button type="button" ng-click="removeTopic()" ng-disabled="deleteDisabled" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
                   </div>
                 </div>
               </div>
