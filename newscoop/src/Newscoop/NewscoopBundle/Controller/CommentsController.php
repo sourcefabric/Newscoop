@@ -18,6 +18,7 @@ use Newscoop\NewscoopBundle\Form\Type\CommentsFilterType;
 use Newscoop\NewscoopBundle\Form\Type\CommentSearchType;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Entity\Section;
 
 /**
  * Comments controller.
@@ -480,13 +481,18 @@ class CommentsController extends Controller
             foreach ($pagination as $comment) {
                 $comment = $comment[0];
                 $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
+                $threadSection = $thread->getSection();
+
+                if (!$threadSection) {
+                    $thread->setSection(new Section(0, 'No section'));
+                }
 
                 $commentsArray[] = array(
                     'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
                     'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
                     'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
                     'issueNumber' => $thread->getIssueId(),
-                    'section' => $thread->getSection()->getName(),
+                    'section' => $threadSection ? $threadSection->getName() : '',
                     'comment' => $comment,
                     'index' => $counter,
                     'article' => $thread
