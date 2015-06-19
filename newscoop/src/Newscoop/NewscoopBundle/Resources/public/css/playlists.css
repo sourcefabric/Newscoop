@@ -18,6 +18,10 @@
     font-size: 12px;
 }
 
+.select2-results {
+    min-height: 60px;
+}
+
 .content .actions {
     margin: 0 auto;
     width: 500px;

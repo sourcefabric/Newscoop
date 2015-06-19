@@ -485,6 +485,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 logList = Playlist.getLogList();
                 if (logList.length == 0) {
                     afterSave(response);
+                    $scope.playlists = Playlist.getAll();
                     flash.fadeOut();
                     return;
                 }
