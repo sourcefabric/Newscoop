@@ -34,7 +34,7 @@
 {% endblock %}
 {% block admin_content %}
 
-<div class="system_pref topics" ng-app="treeApp" ng-controller="treeCtrl">
+<div class="system_pref topics" ng-app="treeApp" ng-controller="treeCtrl" ng-cloak>
 {% if compactView %}
 <div class="fixed-top topics-top">
   <button class="button right-floated with-margin-top" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>

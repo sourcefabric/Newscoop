@@ -26,7 +26,7 @@
   {% endif %}
 {% endblock %}
 {% block admin_content %}
-<div ng-app="playlistsApp" ng-controller="PlaylistsController">
+<div ng-app="playlistsApp" ng-controller="PlaylistsController" ng-cloak>
     <div class="system_pref" {% if editorView %}style="margin: -20px -24px; padding: 14px;"{% endif %}>
         {% if editorView %}
         <div class="toolbar" style="background: #fff;box-shadow: none;margin-bottom: 13px;border: none;padding: 0;">
