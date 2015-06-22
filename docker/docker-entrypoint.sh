@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 
 if [ "$1" = 'newscoop' ]; then
     # install composer and install PHP dependencies
@@ -20,7 +19,7 @@ if [ "$1" = 'newscoop' ]; then
     #/usr/sbin/apachectl -D FOREGROUND
     /usr/sbin/apachectl start
 
-    tail -f /var/www/newscoop/log/prod.log
+    tail -F /var/www/newscoop/log/prod.log
 
     echo "[hit enter key to exit] or run docker stop <container>'"
     read
