@@ -1330,7 +1330,7 @@ final class CampContext
     {
         $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
 
-        if ($pluginsService->isInstalled($pluginName) && $pluginsService->isEnabled($pluginName)) {
+        if ($pluginsService->isEnabled($pluginName)) {
             return true;
         }
 
