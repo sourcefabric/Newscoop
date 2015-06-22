@@ -2,9 +2,46 @@
   'use strict';
 
 var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight', 'checklist-model'])
-  .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, uiTreeFilterSettingsProvider) {
+  .config(function($interpolateProvider, $httpProvider, uiTreeFilterSettingsProvider) {
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
       uiTreeFilterSettingsProvider.descendantCollection = "__children";
+      $httpProvider.interceptors.push(function($q, $injector) {
+        return {
+          'responseError': function(response) {
+            var configToRepeat,
+                failedRequestConfig,
+                retryDeferred,
+                $http;
+
+            if (response.config.IS_RETRY) {
+                return $q.reject(response);
+            }
+
+            if (response.status === 401) {
+                failedRequestConfig = response.config;
+                retryDeferred = $q.defer();
+                $http = $injector.get('$http');
+                configToRepeat = angular.copy(failedRequestConfig);
+                configToRepeat.IS_RETRY = true;
+
+                callServer('ping', [], function(json) {
+                    $http(configToRepeat)
+                      .then(function (newResponse) {
+                          delete newResponse.config.IS_RETRY;
+                          retryDeferred.resolve(newResponse);
+                      })
+                      .catch(function () {
+                          retryDeferred.reject(response);
+                      });
+                });
+
+                return retryDeferred.promise;
+            } else {
+              return $q.reject(response);
+            }
+          }
+        };
+      });
   });
 
 /**
@@ -168,6 +205,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     $scope.treeFilter = $filter('uiTreeFilter');
     $scope.availableFields = ['content', 'title'];
     $scope.supportedFields = ['content', 'title'];
+    $scope.deleteDisabled = false;
     var languageCode = null;
     var languageSelected = null;
 
@@ -180,14 +218,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       TopicsFactory.getTopics().success(function (data) {
          $scope.data = data.tree;
       }).error(function(data, status){
-          flashMessage(response.message, 'error');
+          flashMessage(data.message, 'error');
       });
     }
 
     TopicsFactory.getLanguages().success(function (data) {
-       $scope.languageList = data.languages;
+        $scope.languageList = data.languages;
     }).error(function(data, status){
-        flashMessage(response.message, 'error');
+        flashMessage(data.message, 'error');
     });
 
     /**
@@ -371,6 +409,7 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
      * @method removeTopic
      */
     $scope.removeTopic = function() {
+      $scope.deleteDisabled = true;
       TopicsFactory.deleteTopic(removeTopicId).success(function (response) {
         if (response.status) {
           $('#removeAlert').modal('hide');
@@ -379,7 +418,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         } else {
           flashMessage(response.message, 'error');
         }
+        $scope.deleteDisabled = false;
       }).error(function(response, status){
+        $scope.deleteDisabled = false;
           flashMessage(response.message, 'error');
       });
     };
@@ -491,7 +532,6 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
     }
 
     $scope.formData = {};
-    $scope.subtopicForm = {};
 
     /**
      * Adds a new topic
@@ -505,22 +545,22 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
             _csrf_token: token
         }
 
-      var topicId;
+      var topic;
       if (scope !== undefined) {
-        topicId = scope.$parent.$nodeScope.$modelValue.id;
+        topic = scope.$parent.$nodeScope.$modelValue;
       }
 
-      if (topicId !== undefined) {
-          addFormData.topic["title"] = $scope.subtopicForm.title;
-          addFormData.topic["parent"] = topicId;
-      } else {
-        addFormData.topic["title"] = $scope.formData.title;
+      addFormData.topic["title"] = topic.newChild[topic.id];
+      if (topic !== undefined) {
+          addFormData.topic["parent"] = topic.id;
       }
+
+      topic.newChild = {};
 
       TopicsFactory.addTopic(addFormData, languageCode).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
-          if (topicId == undefined) {
+          if (topic == undefined) {
               $scope.data.unshift({
                 id: response.topicId,
                 title: response.topicTitle,
@@ -529,10 +569,9 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
               });
 
           } else {
-            updateAfterAddSubtopic($scope.data, topicId, response);
+            updateAfterAddSubtopic($scope.data, topic.id, response);
             scope.$parent.$nodeScope.collapsed = true;
           }
-          $scope.subtopicForm.title = undefined;
           $scope.formData = null;
         } else {
           flashMessage(response.message, 'error');
@@ -618,37 +657,37 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         languageCode = langCode;
         $scope.languageCode = langCode;
         TopicsFactory.getTopics(langCode, articleNumber).success(function (data) {
-           $scope.data = data.tree;
-           $scope.pattern = undefined;
+          $scope.data = data.tree;
+          $scope.pattern = undefined;
           getSelectedTopics(data.tree);
         }).error(function(data, status){
+                  console.log(data, status)
             flashMessage(data.message, 'error');
         });
     }
 
-    $scope.translationForm = {};
-
     /**
-     * It adds a new translation for given topic id
+     * It adds a new translation for given topic object.
      *
      * @method addTranslation
-     * @param topicId {integer} topic's id
+     * @param topicId {integer} topic object
      */
-    $scope.addTranslation = function(topicId) {
+    $scope.addTranslation = function(topic) {
       var postData = {
           topicTranslation: {
-              title: $scope.translationForm.title,
+              title: topic.newTranslation[topic.id],
               locale: languageSelected
           },
           _csrf_token: token
       };
 
-      TopicsFactory.addTranslation(postData, topicId).success(function (response) {
+      topic.newTranslation = {};
+      TopicsFactory.addTranslation(postData, topic.id).success(function (response) {
         if (response.status) {
           flashMessage(response.message);
           $scope.languageCode = null;
           languageCode = null;
-          updateAfterAddTranslation($scope.data, topicId, response);
+          updateAfterAddTranslation($scope.data, topic.id, response);
         } else {
           flashMessage(response.message, 'error');
         }

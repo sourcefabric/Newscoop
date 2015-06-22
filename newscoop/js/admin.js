@@ -396,7 +396,7 @@ function callServer(p_callback, p_args, p_handle, p_direct, p_custom_url)
         					open: function(evt, ui) {
         						$(this).width(500);
         						var parentDiv = $(this).parents('.ui-dialog').eq(0)
-        						parentDiv.css('z-index', parseInt( parentDiv.siblings('.ui-widget-overlay').css('z-index'))+1)
+        						parentDiv.css('z-index', parseInt( parentDiv.siblings('.ui-widget-overlay').css('z-index'))+100)
         					},
         					close: function(evt, ui) {
         						$(document.body).removeData('loginDialog')
