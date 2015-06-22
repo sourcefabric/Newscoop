@@ -519,7 +519,7 @@ final class MetaArticle extends MetaDbObject
     protected function getCommentsEnabled()
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('are_comments_enabled', $this->m_dbObject->getProperty('IdPublication'), $this->m_dbObject->getProperty('Type'), $this->m_dbObject->getProperty('Number')), 'publication');
+        $cacheKey = $cacheService->getCacheKey(array('are_comments_enabled', $this->m_dbObject->getProperty('IdPublication'), $this->m_dbObject->getProperty('Type'), $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'publication');
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         }

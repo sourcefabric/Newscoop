@@ -153,6 +153,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
         }
     }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 // Update the article.
 $articleObj->setTitle($f_article_title);
 $articleObj->setIsIndexed(false);
@@ -173,6 +174,8 @@ if (!empty($f_comment_status)) {
 	    $repository->flush();
     }
     $articleObj->setCommentsLocked($f_comment_status == "locked");
+    $cacheKey = $cacheService->getCacheKey(array('are_comments_enabled', $articleObj->getProperty('IdPublication'), $articleObj->getProperty('Type'), $articleObj->getArticleNumber(), $articleObj->getLanguageId()), 'publication');
+    $cacheService->delete($cacheKey);
 }
 
 // Make sure that the time stamp is updated.
@@ -207,7 +210,6 @@ if (CampTemplateCache::factory()) {
     ), !($articleObj->isPublished() || $articleObj->m_published));
 }
 
-$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 $cacheService->clearNamespace('authors');
 $cacheService->clearNamespace('article');
 $cacheService->clearNamespace('article_type');
