@@ -4,6 +4,8 @@ newscoop:
         service: newscoop
     links:
         - mysql
+    environment:
+        - APPLICATION_ENVIRONMENT=dev
 
 mysql:
     extends:
