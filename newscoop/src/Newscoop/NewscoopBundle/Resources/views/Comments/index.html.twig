@@ -596,10 +596,12 @@
                 url: that.attr('href'),
                 success: function (data) {
                     data = $.parseJSON(data);
-                    var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
+                    var content = '<h3>' + $(that).html() + '</h3>';
                     for (i in data) {
-                        content += '<h4>' + i + '</h4>';
-                        content += '<p>' + data[i] + '</p>';
+                        if (i != 'date' && i != 'title' && i != 'authorsLabel') {
+                            content += '<h4>' + i + '</h4>';
+                            content += '<p>' + data[i] + '</p>';
+                        }
                     }
                     $('.dialogPopup').html(content);
                     $('.dialogPopup').dialog('open');
