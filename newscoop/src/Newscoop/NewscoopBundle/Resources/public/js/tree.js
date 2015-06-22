@@ -2,9 +2,46 @@
   'use strict';
 
 var app = angular.module('treeApp', ['ui.tree', 'ui.tree-filter', 'ui.highlight', 'checklist-model'])
-  .config(function($interpolateProvider, $sceProvider, $sceDelegateProvider, uiTreeFilterSettingsProvider) {
+  .config(function($interpolateProvider, $httpProvider, uiTreeFilterSettingsProvider) {
       $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
       uiTreeFilterSettingsProvider.descendantCollection = "__children";
+      $httpProvider.interceptors.push(function($q, $injector) {
+        return {
+          'responseError': function(response) {
+            var configToRepeat,
+                failedRequestConfig,
+                retryDeferred,
+                $http;
+
+            if (response.config.IS_RETRY) {
+                return $q.reject(response);
+            }
+
+            if (response.status === 401) {
+                failedRequestConfig = response.config;
+                retryDeferred = $q.defer();
+                $http = $injector.get('$http');
+                configToRepeat = angular.copy(failedRequestConfig);
+                configToRepeat.IS_RETRY = true;
+
+                callServer('ping', [], function(json) {
+                    $http(configToRepeat)
+                      .then(function (newResponse) {
+                          delete newResponse.config.IS_RETRY;
+                          retryDeferred.resolve(newResponse);
+                      })
+                      .catch(function () {
+                          retryDeferred.reject(response);
+                      });
+                });
+
+                return retryDeferred.promise;
+            } else {
+              return $q.reject(response);
+            }
+          }
+        };
+      });
   });
 
 /**
@@ -181,14 +218,14 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
       TopicsFactory.getTopics().success(function (data) {
          $scope.data = data.tree;
       }).error(function(data, status){
-          flashMessage(response.message, 'error');
+          flashMessage(data.message, 'error');
       });
     }
 
     TopicsFactory.getLanguages().success(function (data) {
-       $scope.languageList = data.languages;
+        $scope.languageList = data.languages;
     }).error(function(data, status){
-        flashMessage(response.message, 'error');
+        flashMessage(data.message, 'error');
     });
 
     /**
@@ -620,10 +657,11 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         languageCode = langCode;
         $scope.languageCode = langCode;
         TopicsFactory.getTopics(langCode, articleNumber).success(function (data) {
-           $scope.data = data.tree;
-           $scope.pattern = undefined;
+          $scope.data = data.tree;
+          $scope.pattern = undefined;
           getSelectedTopics(data.tree);
         }).error(function(data, status){
+                  console.log(data, status)
             flashMessage(data.message, 'error');
         });
     }
