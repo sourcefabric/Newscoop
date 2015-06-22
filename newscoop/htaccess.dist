@@ -61,3 +61,8 @@ AddType application/font-woff            .woff
 # Uncomment it for gui backup/restore process
 # NOTE: It can be incompatible on some shared hosting
 #php_value output_buffering Off
+
+# Uncomment for large file uploads with docker
+# containers (to install private plugins) for example
+php_value upload_max_filesize 100M
+php_value post_max_size 100M
