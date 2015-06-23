@@ -217,7 +217,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->author) {
-            $queryBuilder->join('a.authors', 'au');
             $queryBuilder->andWhere('au.id = :author')
                 ->setParameter('author', $articleSearchCriteria->author);
         }
@@ -233,8 +232,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->topic) {
-            $queryBuilder->join('a.topics', 'att');
-            $queryBuilder->andWhere('att.id = :topic')
+            $queryBuilder->andWhere('t.id = :topic')
                 ->setParameter('topic', $articleSearchCriteria->topic);
         }
 
