@@ -22,7 +22,7 @@ if [ "$1" = 'newscoop' ]; then
     # catch signlas
     trap "echo 'caught signal'" HUP INT QUIT KILL TERM
 
-    start cron
+    cron start
 
     #/usr/sbin/apachectl -D FOREGROUND
     /usr/sbin/apachectl start
