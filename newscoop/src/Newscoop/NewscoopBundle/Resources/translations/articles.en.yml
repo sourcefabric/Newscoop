@@ -192,6 +192,7 @@ Comments: Comments
 'The last article of this list has been removed.': 'The last article of this list has been removed.'
 'Revert': 'Revert'
 'Could not automatically refresh the list': 'Could not automatically refresh the list'
+'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
 articles:
     playlists:
         namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'

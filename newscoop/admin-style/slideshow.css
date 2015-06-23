@@ -578,7 +578,7 @@
     padding: 10px 20px 8px 0;
     min-height: initial;
     background: #fff;
-    z-index: 100000
+    z-index: 1049;
 }
 .slideshow-headline {
     position: fixed;
@@ -724,4 +724,11 @@
     #next .editarea {
         left: 175px
     }
+}
+.btn-disabled {
+    cursor: not-allowed !important;
+    filter: alpha(opacity=55);
+    -webkit-box-shadow: none;
+    box-shadow: none !important;
+    opacity: .55;
 }
