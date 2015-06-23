@@ -8,9 +8,11 @@
 angular.module('playlistsApp').controller('FeaturedController', [
     '$scope',
     'Playlist',
+    'modalFactory',
     function (
         $scope,
-        Playlist
+        Playlist,
+        modalFactory
     ) {
 
     var countDownTimeInSeconds = 11;
@@ -66,11 +68,11 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 isInLogList = _.some(
                     Playlist.getLogList(),
                     {number: number, language: item.language}
-                    );
+                );
 
                 if (!isInLogList) {
                     // add article to log list, so we can save it later using batch save
-                    item._method = "link";
+                    item._method = 'link';
                     item._order = evt.newIndex + 1;
                     Playlist.addItemToLogList(item);
                 }
@@ -178,12 +180,35 @@ angular.module('playlistsApp').controller('FeaturedController', [
     }
 
     /**
-     * Updates parent controller's playlistLimit variable, so it can disable save button
-     * when limit is incorrect, i.e. is string not number
+     * Updates parent controller's playlistLimit variable, so save button
+     * can be disabled when limit is incorrect, i.e. is string not number.
+     * It also shows the limit modal when list limit has been changed.
      *
      * @param  {Object} scope Current scope
      */
     $scope.updateParentLimit = function (scope) {
+        var newLimit = $scope.$parent.playlist.selected.maxItems,
+        oldLimit = $scope.$parent.playlist.selected.oldLimit;
+
         $scope.$parent.playlistLimit = scope.limitForm.$valid;
+
+        if (newLimit && newLimit != 0 && newLimit < oldLimit ||
+            ((oldLimit === null || oldLimit === 0) && newLimit > oldLimit)
+        ) {
+            var title = Translator.trans('Info', {}, 'articles'),
+                text = Translator.trans('articles.playlists.alert', {}, 'articles'),
+                okText = Translator.trans('OK', {}, 'messages'),
+                cancelText = Translator.trans('Cancel', {}, 'messages'),
+                modal;
+
+            modal = modalFactory.confirmLight(title, text, okText, cancelText);
+            modal.result.then(function () {
+                var sliced = $scope.$parent.featuredArticles.slice(0, newLimit);
+                $scope.$parent.featuredArticles = sliced;
+                Playlist.setCurrentPlaylistArticles(sliced);
+            }, function () {
+                $scope.$parent.playlist.selected.maxItems = oldLimit;
+            });
+        }
     }
 }]);

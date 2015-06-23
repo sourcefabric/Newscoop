@@ -123,11 +123,16 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         var logList = Playlist.getLogList();
 
         // we have to now replace last element with one before last in log list
-        // so it can be save in API in a proper order, actually we first add a
+        // so it can be saved in API in a proper order, actually we firstly add a
         // new article to the featured articles list and then we unlink the last one.
         // We need to do it in a reverse way, so we first unlink, and then add a new one.
         var lastElement = logList[logList.length - 1];
         var beforeLast = logList[logList.length - 2];
+
+        // also decrease the order for a new item only when it is last on the list
+        if (beforeLast._order > $scope.featuredArticles.length) {
+            beforeLast._order = beforeLast._order - 1;
+        }
 
         logList[logList.length - 1] = beforeLast;
         logList[logList.length - 2] = lastElement;
@@ -406,7 +411,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     /**
      * It makes a proper API calls (create, update, link, unlink) based on
-     * performed actions. If the list's limit will be change, popup will be displayed.
+     * performed actions. If the list's limit will be changed, popup will be displayed.
      */
     $scope.savePlaylist = function () {
         var newLimit = $scope.playlist.selected.maxItems,
@@ -417,38 +422,22 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             okText,
             cancelText;
 
-        okText = Translator.trans('OK', {}, 'messages');
-        cancelText = Translator.trans('Cancel', {}, 'messages');
         if ($scope.playlist.selected.title !== $scope.formData.title && $scope.playlist.selected.id !== undefined) {
             title = Translator.trans('Info', {}, 'articles');
             text = Translator.trans('articles.playlists.namechanged', {}, 'articles');
+            okText = Translator.trans('OK', {}, 'messages');
+            cancelText = Translator.trans('Cancel', {}, 'messages');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
 
             modal.result.then(function () {
-                showLimitPopupAndSave(newLimit, oldLimit, modal, okText, cancelText);
+                saveList();
 
                 return true;
             });
         } else {
-            showLimitPopupAndSave(newLimit, oldLimit, modal, okText, cancelText);
-        }
-    };
-
-    var showLimitPopupAndSave = function (newLimit, oldLimit, modal, okText, cancelText) {
-        if (newLimit && newLimit != 0 && newLimit != oldLimit) {
-            var title = Translator.trans('Info', {}, 'articles');
-            var text = Translator.trans('articles.playlists.alert', {}, 'articles');
-            modal = modalFactory.confirmLight(title, text, okText, cancelText);
-            modal.result.then(function () {
-                saveList();
-                $scope.playlist.selected.oldLimit = $scope.playlist.selected.maxItems;
-            }, function () {
-                return false;
-            });
-        } else {
             saveList();
         }
-    }
+    };
 
     /**
      * Saves, updates playlist with all articles on server side.
@@ -546,6 +535,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
 
         $scope.playlist.selected.id = Playlist.getListId();
+        $scope.playlist.selected.oldLimit = $scope.playlist.selected.maxItems;
 
         if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
             $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
