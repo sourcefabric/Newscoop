@@ -61,8 +61,7 @@ $controller->view->headTitle($articleObj->getName().' - '.$translator->trans('Ed
 
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->getUserDefinedColumns(FALSE, TRUE);
-
+$dbColumns = $articleData->getUserDefinedColumns();
 $articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);

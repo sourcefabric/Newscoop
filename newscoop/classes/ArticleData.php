@@ -164,8 +164,13 @@ class ArticleData extends DatabaseObject
         }
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey('article_type_user_defined_columns_'.$this->m_articleTypeName, 'article_type');
-        if ($cacheService->contains($cacheKey)) {
+        $cacheKey = $cacheService->getCacheKey(array(
+            'article_type_user_defined_columns',
+            $this->m_articleTypeName,
+            $p_showAll
+        ), 'article_type');
+
+        if ($cacheService->contains($cacheKey) && !$p_skipCache) {
             return $cacheService->fetch($cacheKey);
         } else {
             $articleTypeObject = new ArticleType($this->m_articleTypeName);
