@@ -143,7 +143,7 @@ li:after {content: none;}
                 </fieldset>
                 {% else %}
                 <div class="uploaded-plugins" style="margin-bottom: 50px; padding: 10px 10px 30px 10px; border: 1px solid #ccc; background-color: #FFF;">
-                <div class="alert alert-danger" style="font-size: 14px;" role="alert">{{ 'newscoop.plugins_manager.private_plugins_not_writable'|trans }}</div>
+                <div class="alert alert-danger" style="font-size: 14px;" role="alert">{{ 'newscoop.plugins_manager.private_plugins_not_writable'|trans({'%privatePluginsPath%': privatePluginsPath}) }}</div>
                 <p>{{ 'newscoop.plugins_manager.private_plugins_not_writable_commands'|trans }}</p>
                 <pre>chgrp www-data {{ privatePluginsPath }}
 chmod g+w {{ privatePluginsPath }}</pre>
