@@ -3434,13 +3434,13 @@ VALUES
     (15, 'thumbnail_url', 'url', 'backend', 0, 1),
     (16, 'thumbnail_height', 'integer', 'backend', 0, 1),
     (17, 'author_url', 'url', 'backend', 0, 1),
-	(18, 'ID', 'text', 'frontend', 1, 2),
-	(19, 'width', 'integer', 'frontend', 1, 2),
-	(20, 'height', 'integer', 'frontend', 1, 2),
-	(21, 'ID', 'text', 'frontend', 1, 3),
-	(22, 'width', 'integer', 'frontend', 1, 3),
-	(23, 'height', 'integer', 'frontend', 1, 3),
-	(24, 'Generic', 'textarea', 'frontend', 1, 4);
+    (18, 'ID', 'text', 'frontend', 1, 2),
+    (19, 'width', 'integer', 'frontend', 1, 2),
+    (20, 'height', 'integer', 'frontend', 1, 2),
+    (21, 'ID', 'text', 'frontend', 1, 3),
+    (22, 'width', 'integer', 'frontend', 1, 3),
+    (23, 'height', 'integer', 'frontend', 1, 3),
+    (24, 'Generic', 'textarea', 'frontend', 1, 4);
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `SnippetFields`;
@@ -3462,23 +3462,23 @@ ALTER TABLE SnippetFields ADD CONSTRAINT FK_1F835121EBCA9337 FOREIGN KEY (Templa
 LOCK TABLES `SnippetFields` WRITE;
 INSERT INTO `SnippetFields` (`Id`, `Data`, `SnippetId`, `TemplateFieldId`, `Name`)
 VALUES
-	(1, 'https://www.youtube.com/watch?v=AYVUPem_jaM', 1, 1, 'URL'),
+    (1, 'https://www.youtube.com/watch?v=AYVUPem_jaM', 1, 1, 'URL'),
     (2, NULL, 1, 2, 'Endpoint'),
-	(3, '0', 1, 3, 'maxwidth'),
-	(4, 'http://www.youtube.com/', 1, 4, 'provider_url'),
-	(5, 'Sourcefabric builds open source software to support independent media worldwide. On February 14th, we\'ll announce our tool to help people and organisations write and publish great multi-platform books. Write and publish great books ready for iPad, Kindle, Nook or print within minutes.', 1, 5, 'description'),
-	(6, 'The future of the book is in your hands', 1, 6, 'title'),
-	(7, 'video', 1, 7, 'type'),
-	(8, '480', 1, 8, 'thumbnail_width'),
-	(9, '309', 1, 9, 'height'),
-	(10, '550', 1, 10, 'width'),
-	(11, '<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAYVUPem_jaM&src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FAYVUPem_jaM%3Ffeature%3Doembed&image=http%3A%2F%2Fi1.ytimg.com%2Fvi%2FAYVUPem_jaM%2Fhqdefault.jpg&type=text%2Fhtml&schema=youtube\" width=\"550\" height=\"309\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>', 1, 11, 'html'),
-	(12, 'Sourcefabric', 1, 12, 'author_name'),
-	(13, '1.0', 1, 13, 'version'),
-	(14, 'YouTube', 1, 14, 'provider_name'),
-	(15, 'http://i1.ytimg.com/vi/AYVUPem_jaM/hqdefault.jpg', 1, 15, 'thumbnail_url'),
-	(16, '360', 1, 16, 'thumbnail_height'),
-	(17, 'http://www.youtube.com/user/Sourcefabric', 1, 17, 'author_url');
+    (3, '0', 1, 3, 'maxwidth'),
+    (4, 'http://www.youtube.com/', 1, 4, 'provider_url'),
+    (5, 'Sourcefabric builds open source software to support independent media worldwide. On February 14th, we\'ll announce our tool to help people and organisations write and publish great multi-platform books. Write and publish great books ready for iPad, Kindle, Nook or print within minutes.', 1, 5, 'description'),
+    (6, 'The future of the book is in your hands', 1, 6, 'title'),
+    (7, 'video', 1, 7, 'type'),
+    (8, '480', 1, 8, 'thumbnail_width'),
+    (9, '309', 1, 9, 'height'),
+    (10, '550', 1, 10, 'width'),
+    (11, '<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?url=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DAYVUPem_jaM&src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FAYVUPem_jaM%3Ffeature%3Doembed&image=http%3A%2F%2Fi1.ytimg.com%2Fvi%2FAYVUPem_jaM%2Fhqdefault.jpg&type=text%2Fhtml&schema=youtube\" width=\"550\" height=\"309\" scrolling=\"no\" frameborder=\"0\" allowfullscreen></iframe>', 1, 11, 'html'),
+    (12, 'Sourcefabric', 1, 12, 'author_name'),
+    (13, '1.0', 1, 13, 'version'),
+    (14, 'YouTube', 1, 14, 'provider_name'),
+    (15, 'http://i1.ytimg.com/vi/AYVUPem_jaM/hqdefault.jpg', 1, 15, 'thumbnail_url'),
+    (16, '360', 1, 16, 'thumbnail_height'),
+    (17, 'http://www.youtube.com/user/Sourcefabric', 1, 17, 'author_url');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ArticleSnippets`;
