@@ -192,6 +192,7 @@ Snippet: Фрагмент
 'The last article of this list has been removed.': 'Последняя статья списка удалена.'
 Revert: Восстановить
 'Could not automatically refresh the list': 'Автоматическое обновление списка не удалось'
+'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
 articles:
     playlists:
         namechanged: 'Вы действительно хотите изменить название списка? Название может использоваться в шаблонах Newscoop для воспроизведения списка во внешнем интерфейсе. Если не уверены, проконсультируйтесь с администратором сайта.'

@@ -1,5 +1,5 @@
-'Does serving this field count as a page read for statistics?': null
-'Is this field intended for the reader to view? If not, it is metadata.': null
+'Does serving this field count as a page read for statistics?': 'Does serving this field count as a page read for statistics?'
+'Is this field intended for the reader to view? If not, it is metadata.': 'Is this field intended for the reader to view? If not, it is metadata.'
 'Event Color': 'Event Colour'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'You must input a number greater than $1 and less than $2 into the $3 field.'
 'You do not have the right to translate article types.': 'You do not have the right to translate article types.'
@@ -22,8 +22,8 @@ Custom: Custom
 Precision: Precision
 'Can not convert the field $1 from $2 to type $3.': 'Can not convert the field $1 from $2 to type $3.'
 'Are you sure you want to make $1 a $2 field?': 'Are you sure you want to make $1 a $2 field?'
-'Page Read Count?': null
-'Editorial Content?': null
+'Page Read Count?': 'Page Read Count?'
+'Editorial Content?': 'Editorial Content?'
 'Back to Article Types List': 'Back to Article Types List'
 show: show
 hide: hide
