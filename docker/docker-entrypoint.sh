@@ -19,10 +19,17 @@ if [ "$1" = 'newscoop' ]; then
         /usr/share/newscoop/import-newscoop.sh
     fi
 
+    # restore default newscoop crontab
+    if [ "$(sudo -u www-data crontab -l)" = "" ]; then
+        touch /var/spool/cron/crontabs/www-data
+        echo "* * * * * php /var/www/newscoop/application/console scheduler:run" | tee -a /var/spool/cron/crontabs/www-data
+        chown www-data:crontab /var/spool/cron/crontabs/www-data
+    fi
+
     # catch signlas
     trap "echo 'caught signal'" HUP INT QUIT KILL TERM
 
-    start cron
+    cron start
 
     #/usr/sbin/apachectl -D FOREGROUND
     /usr/sbin/apachectl start

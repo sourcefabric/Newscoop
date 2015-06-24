@@ -37,6 +37,23 @@ For more details run:
 
 	php application/console newscoop:install --help
 
+**Using docker**
+
+Make sure docker and docker compose are installed (boot2docker or docker machine on OSX as well). Add the line ```127.0.0.1 newscoop.docker``` to your ```/etc/hosts``` file. OSX users should use the ip of their virtualbox (e.g. ```boot2docker ip```).
+
+For running Newscoop in production mode:
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+For running Newscoop in development mode:
+
+```bash
+docker-compose -f docker-compose-dev.yml build
+docker-compose -f docker-compose-dev.yml up
+```
 
 ## Requirements
 
