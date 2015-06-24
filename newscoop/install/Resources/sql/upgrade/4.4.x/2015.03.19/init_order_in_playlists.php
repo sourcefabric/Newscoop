@@ -69,6 +69,14 @@ $app->register(new DoctrineOrmServiceProvider(), array(
 $logger = $app['monolog'];
 
 try {
+    $app['db']->query('ALTER TABLE playlist_article DROP INDEX id_playlist');
+    $app['db']->query('ALTER TABLE `playlist_article` ADD KEY `IDX_BD05197C8759FDB8` (`id_playlist`), ADD KEY `IDX_BD05197CAA07C9D3813385DE` (`article_no`,`article_language`)');
+    $app['db']->query('UPDATE `playlist_article` AS pa LEFT JOIN Articles AS a ON pa.`article_no` = a.`Number` SET pa.`article_language` = a.`IdLanguage`');
+} catch (\Exception $e) {
+    // ignore when already exist
+}
+
+try {
     $playlists = $app['orm.em']->getRepository('\Newscoop\Entity\Playlist')
         ->findAll();
 
