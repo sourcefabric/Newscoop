@@ -310,9 +310,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
      $scope.setPlaylistInfoOnChange = function (list) {
         $scope.loadingSpinner = true;
+        scrollTop();
         Playlist.getArticlesByListId(list).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
+
+            $scope.isEmpty = false;
+            $scope.page = 2;
             $activityIndicator.stopAnimating();
         }, function(response) {
             flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
@@ -325,7 +329,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
         $scope.formData = {title: list.title}
-        $scope.page = 2;
         $scope.isRunning = false;
     };
 
@@ -522,6 +525,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved', {}, 'articles'));
         $scope.loadingSpinner = true;
+        scrollTop();
         Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
@@ -564,5 +568,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         }
 
         $scope.processing = false;
+    }
+
+    /**
+     * Scrolls the featured list articles to the top.
+     */
+    var scrollTop = function () {
+        var el = angular.element('ul#context_list');
+        el.scrollTop(0);
     }
 }]);
