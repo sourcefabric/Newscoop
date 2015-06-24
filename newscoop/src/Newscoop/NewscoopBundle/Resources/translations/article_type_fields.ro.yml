@@ -1,5 +1,5 @@
-'Usage at automatic statistics': null
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': null
 'You must input a number greater than $1 and less than $2 into the $3 field.': null
 'You do not have the right to translate article types.': null
@@ -22,7 +22,8 @@ Custom: null
 Precision: null
 'Can not convert the field $1 from $2 to type $3.': null
 'Are you sure you want to make $1 a $2 field?': null
-'Is Content': null
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Înapoi la lista tipurilor de articole'
 show: arată
 hide: ascunde
@@ -35,7 +36,7 @@ hide: ascunde
 'The field $1 does not exist.': 'Câmpul $1 nu există.'
 'The $1 field may only contain letters and underscore (_) character.': 'Câmpul $1 poate conţine doar litere sau caracterul underscore (_).'
 'Template Field Name': 'Numele câmpului şablonului'
-Show/Hide: Arată/Ascunde
+'Show to Authors?': null
 'Renaming article type field': 'Se redenumeşte câmpul tipului de articol'
 'Rename field': 'Redenumeşte câmpul'
 'Reassign a field type': 'Realocă un tip de câmp'

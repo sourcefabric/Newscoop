@@ -31,6 +31,8 @@ newscoop.plugins_manager.installed: null
 newscoop.plugins_manager.clipboard: null
 newscoop.plugins_manager.downloads: null
 newscoop.plugins_manager.favers: null
+newscoop.plugins_manager.private_plugins_not_writable: null
+newscoop.plugins_manager.private_plugins_not_writable_commands: null
 newscoop:
     datatable:
         table:

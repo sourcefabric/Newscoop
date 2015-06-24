@@ -1,5 +1,5 @@
-'Usage at automatic statistics': null
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': null
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Morate uneti broj veći od $1 i manji od $2 u polje $3.'
 'You do not have the right to translate article types.': 'Nemate pravo da prevodite tipove tekstova'
@@ -22,7 +22,8 @@ Custom: Slobodno
 Precision: Preciznost
 'Can not convert the field $1 from $2 to type $3.': 'Nije moguće konvertovati polje $1 iz $2 u tip $3.'
 'Are you sure you want to make $1 a $2 field?': 'Da li ste sigurni da želite da od $1 napravite $2 polje'
-'Is Content': Sadržaj
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Nazad na listu tipova članaka'
 show: prikaži
 hide: sakri
@@ -35,7 +36,7 @@ hide: sakri
 'The field $1 does not exist.': 'Polje $1 ne postoji.'
 'The $1 field may only contain letters and underscore (_) character.': 'Polje $1 može sadržati isključivo slova i donju crtu (_).'
 'Template Field Name': 'Ime polja šablona'
-Show/Hide: prikaži/sakri
+'Show to Authors?': null
 'Renaming article type field': 'Preimenovanje polja tipa članka'
 'Rename field': 'Preimenuj polje'
 'Reassign a field type': 'Ponovo dodeli tip polja'

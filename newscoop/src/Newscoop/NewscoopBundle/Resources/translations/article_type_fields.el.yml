@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Χρήση αυτόματων στατιστικών'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Χρώμα Εκδήλωσης'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Πρέπει να εισάγετε έναν αριθμό μεγαλύτερο από $1 και μικρότερο από $2 στο πεδίο $3.'
 'You do not have the right to translate article types.': 'Δεν έχετε το δικαίωμα μετάφρασης τύπων άρθρου.'
@@ -22,7 +22,8 @@ Custom: Προσαρμογή
 Precision: Ακρίβεια
 'Can not convert the field $1 from $2 to type $3.': 'Αδύνατη η μετατροπή του πεδίου $1 από $2 σε τύπο $3.'
 'Are you sure you want to make $1 a $2 field?': 'Είστε σίγουρος/η ότι θέλετε να μετατρέψετε το  πεδίο $1 σε $2;'
-'Is Content': 'Είναι Περιεχόμενο'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Πίσω στην Λίστα Τύπων Άρθρου'
 show: εμφάνιση
 hide: απόκρυψη
@@ -35,7 +36,7 @@ hide: απόκρυψη
 'The field $1 does not exist.': 'Το πεδίο $1 δεν υπάρχει.'
 'The $1 field may only contain letters and underscore (_) character.': 'Το πεδίο $1 μπορεί να περιέχει μόνο γράμματα και τον χαρακτήρα υπογράμμισης (_).'
 'Template Field Name': 'Όνομα Πεδίου Προτύπων'
-Show/Hide: Εμφάνιση/Απόκρυψη
+'Show to Authors?': null
 'Renaming article type field': 'Μετονομασία πεδίου τύπου άρθρου'
 'Rename field': 'Μετονομασία πεδίου'
 'Reassign a field type': 'Εκ νέου εκχώριση ενός τύπου πεδίου'

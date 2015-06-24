@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Использование в автоматической статистике'
-'Show field in article edit screen': 'Показывать поле в окне редактирования статьи'
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Цвет события'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'В поле $3 нужно ввести число большее, чем $1 и меньшее, чем $2.'
 'You do not have the right to translate article types.': 'У вас нет прав на перевод типов статей. '
@@ -22,7 +22,8 @@ Custom: Пользовательский
 Precision: Точность
 'Can not convert the field $1 from $2 to type $3.': 'Невозможно конвертировать поле $1 из $2 в поле $3.'
 'Are you sure you want to make $1 a $2 field?': 'Вы уверены, что хотите сделать $1 полем $2?'
-'Is Content': Контент
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Вернуться к списку типов статей'
 show: Показывать
 hide: Спрятать
@@ -35,7 +36,7 @@ hide: Спрятать
 'The field $1 does not exist.': 'Поле $1 не существует.'
 'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 может содержать только буквы и символ подчеркивания (_).'
 'Template Field Name': 'Название поля шаблона'
-Show/Hide: Показать/Спрятать
+'Show to Authors?': null
 'Renaming article type field': 'Переименование поля типа статей'
 'Rename field': 'Переименовать поле'
 'Reassign a field type': 'Переназначить тип поля'

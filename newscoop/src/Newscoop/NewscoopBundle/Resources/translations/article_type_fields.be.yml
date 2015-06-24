@@ -1,5 +1,5 @@
-'Usage at automatic statistics': null
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': null
 'You must input a number greater than $1 and less than $2 into the $3 field.': null
 'You do not have the right to translate article types.': null
@@ -22,7 +22,8 @@ Custom: null
 Precision: Дакладнасць
 'Can not convert the field $1 from $2 to type $3.': 'Немагчыма канвертаваць поле $1 з $2 у поле $3.'
 'Are you sure you want to make $1 a $2 field?': 'Вы ўпэўненыя, што жадаеце зрабіць $1 полем $2'
-'Is Content': 'Зяўляецца змесцівам'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Вярнуцца да спісу тыпаў артыкулаў'
 show: Паказаць
 hide: Схаваць
@@ -35,7 +36,7 @@ hide: Схаваць
 'The field $1 does not exist.': 'Поле $1 не iснуе.'
 'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 можа зьмяшчаць толькi лiтары i сымбаль падкрэсьлiваньня (_).'
 'Template Field Name': 'Назва поля шаблёну'
-Show/Hide: Паказаць/Схаваць
+'Show to Authors?': null
 'Renaming article type field': 'Перайменаваньне поля тыпа артыкулаў'
 'Rename field': 'Перайменаваць поле'
 'Reassign a field type': 'Перапрызначыць тып поля'

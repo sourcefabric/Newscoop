@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Použít na automatický sběr statistikých dat'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Barva události'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Musíte vložit číslo větší než  $1 a menší než  $2 do políčka  $3.'
 'You do not have the right to translate article types.': 'Nemáte oprávnění k překladání těchto typů článků.'
@@ -22,7 +22,8 @@ Custom: Zvyk
 Precision: Přesnost
 'Can not convert the field $1 from $2 to type $3.': 'Nelze konvertovat pole $1 z $2 do typu $3.'
 'Are you sure you want to make $1 a $2 field?': 'Jste si jistí, že chcete udělat z $1 $2 pole?'
-'Is Content': 'Je Obsah'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Zpět na Přehled Typů Článků'
 show: zobrazit
 hide: skrýt
@@ -35,7 +36,7 @@ hide: skrýt
 'The field $1 does not exist.': 'Pole $1 neexistuje.'
 'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 smí obsahovat pouze písmena a podtržítko (_).'
 'Template Field Name': 'Název Pole Šablony'
-Show/Hide: Zobrazit/Skrýt
+'Show to Authors?': null
 'Renaming article type field': 'Přejmenovává se pole typu článku'
 'Rename field': 'Přejmenovat pole'
 'Reassign a field type': 'Přeřadit typ pole'

@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'استخدام الإحصائيات الأوتوماتية'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'لون الحدث'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'يجب عليك إدخال رقم أكبر من $1 وأقل من $2 في الخانة $3.'
 'You do not have the right to translate article types.': 'ليس لديك الحق في ترجمة أنواع المقال.'
@@ -22,7 +22,8 @@ Custom: 'الصناعة حسب الطلب'
 Precision: الدقة
 'Can not convert the field $1 from $2 to type $3.': 'لا يمكن تحويل الخانة $1 من $2 إلى نوع $3.'
 'Are you sure you want to make $1 a $2 field?': 'هل أنت متأكد أنك تريد أن تجعل $1 في الخانة $2؟'
-'Is Content': محتوى
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'الرجوع إلى القائمة لأنواع المقال'
 show: أظهر
 hide: أخف
@@ -35,7 +36,7 @@ hide: أخف
 'The field $1 does not exist.': 'الخانة $1 غير موجودة.'
 'The $1 field may only contain letters and underscore (_) character.': 'يسمح للخانة $1 فقط ان تحتوي على الحروف والحرف (_) ـ'
 'Template Field Name': 'اسم خانة النموذج'
-Show/Hide: 'إعرض / أخف'
+'Show to Authors?': null
 'Renaming article type field': 'إعادة تسمية خانة لنوع المقال'
 'Rename field': 'إعادة تسمية الخانة'
 'Reassign a field type': 'إعادة تعيين نوع الخانة'

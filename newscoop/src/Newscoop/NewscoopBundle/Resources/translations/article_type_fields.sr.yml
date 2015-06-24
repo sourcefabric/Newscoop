@@ -1,5 +1,5 @@
-'Usage at automatic statistics': null
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': null
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Морате унети број већи од $1 и мањи од $2 у поље $3.'
 'You do not have the right to translate article types.': 'Немате право да преводите типове текстова'
@@ -22,7 +22,8 @@ Custom: Слободно
 Precision: Прецизност
 'Can not convert the field $1 from $2 to type $3.': 'Није могуће конвертовати поље $1 из $2 у тип $3'
 'Are you sure you want to make $1 a $2 field?': 'Да ли сте сигурни да желите да од $1 направите $2 поље'
-'Is Content': Садржај
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Назад на листу типова текстова'
 show: прикажи
 hide: сакри
@@ -35,7 +36,7 @@ hide: сакри
 'The field $1 does not exist.': 'Поље $1 не постоји'
 'The $1 field may only contain letters and underscore (_) character.': 'Поље $1 може садржати искључиво слова и доњу црту (_)'
 'Template Field Name': 'Име поља шаблона'
-Show/Hide: прикажи/сакри
+'Show to Authors?': null
 'Renaming article type field': 'Преименовање поља типа тикста'
 'Rename field': 'Преименуј поље'
 'Reassign a field type': 'Поново додели тип поља'
