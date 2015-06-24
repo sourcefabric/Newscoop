@@ -76,6 +76,9 @@ class PluginsController extends Controller
             }
         }
 
+        // check if private plugins is writable 
+        $privatePluginsPathWritable = is_writable($pluginService->getPluginsDir().self::PRIVATE_PLUGINS_DIR);
+
         // search for private plugins
         $privatePackages = $this->searchForPrivatePlugins($pluginService);
 
@@ -94,7 +97,9 @@ class PluginsController extends Controller
             'allAvailablePlugins' => $allAvailablePlugins,
             'privatePackages' => $privatePackages,
             'form' => $form->createView(),
-            'newscoopPath' => realpath($pluginService->getPluginsDir() .'/../')
+            'newscoopPath' => realpath($pluginService->getPluginsDir() .'/../'),
+            'privatePluginsPath' => $pluginService->getPluginsDir().self::PRIVATE_PLUGINS_DIR,
+            'privatePluginsPathWritable' => $privatePluginsPathWritable,
         );
     }
 

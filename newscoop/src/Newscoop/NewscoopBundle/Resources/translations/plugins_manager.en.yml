@@ -32,6 +32,8 @@
 'newscoop.plugins_manager.clipboard': 'Copy to clipboard: Ctrl+C (Cmd + C for Mac), Enter'
 'newscoop.plugins_manager.downloads': 'downloads'
 'newscoop.plugins_manager.favers': 'favers'
+'newscoop.plugins_manager.private_plugins_not_writable': '%privatePluginsPath% is not writable by your web server.'
+'newscoop.plugins_manager.private_plugins_not_writable_commands': 'On a Linux server you can fix this with the commands:'
 newscoop:
     datatable:
         table:
