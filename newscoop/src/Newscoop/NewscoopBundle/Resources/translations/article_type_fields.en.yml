@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Usage at automatic statistics'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': 'Does serving this field count as a page read for statistics?'
+'Is this field intended for the reader to view? If not, it is metadata.': 'Is this field intended for the reader to view? If not, it is metadata.'
 'Event Color': 'Event Color'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'You must input a number greater than $1 and less than $2 into the $3 field.'
 'You do not have the right to translate article types.': 'You do not have the right to translate article types.'
@@ -22,7 +22,8 @@ Custom: Custom
 Precision: Precision
 'Can not convert the field $1 from $2 to type $3.': 'Can not convert the field $1 from $2 to type $3.'
 'Are you sure you want to make $1 a $2 field?': 'Are you sure you want to make $1 a $2 field?'
-'Is Content': 'Is Content'
+'Page Read Count?': 'Page Read Count?'
+'Editorial Content?': 'Editorial Content?'
 'Back to Article Types List': 'Back to Article Types List'
 show: show
 hide: hide
@@ -35,7 +36,7 @@ hide: hide
 'The field $1 does not exist.': 'The field $1 does not exist.'
 'The $1 field may only contain letters and underscore (_) character.': 'The $1 field may only contain letters and underscore (_) character.'
 'Template Field Name': 'Template Field Name'
-Show/Hide: Show/Hide
+'Show to Authors?': 'Show to Authors?'
 'Renaming article type field': 'Renaming article type field'
 'Rename field': 'Rename field'
 'Reassign a field type': 'Reassign a field type'

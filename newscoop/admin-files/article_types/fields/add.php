@@ -226,7 +226,7 @@ $color_list = array(
 
 </tr>
 <tr style="display: none;" id="is_content">
-    <td align="right"><?php echo $translator->trans('Is Content', array(), 'article_type_fields'); ?>:</td>
+    <td align="right"><?php echo $translator->trans('Page Read Count?', array(), 'article_type_fields'); ?>:</td>
     <td><input type="checkbox" name="f_is_content"></td>
 </tr>
 <tr style="display: none;" id="editor_size">
