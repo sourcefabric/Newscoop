@@ -192,7 +192,7 @@ Snippet: Fragment
 'The last article of this list has been removed.': null
 Revert: Cofnij
 'Could not automatically refresh the list': 'Nie można odświeżyć tej listy'
-'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
+'The article slideshows have been successfully updated, please close the window.': null
 articles:
     playlists:
         namechanged: 'Jesteś pewien że chcesz zmienić nazwę tej listy? Nazwa może być używana w szablonach twojego motywu do wyświetlania zawartości tej listy. Jeśli masz wątpliwości zapytaj osobę odpowiedzialną za używany motyw.'

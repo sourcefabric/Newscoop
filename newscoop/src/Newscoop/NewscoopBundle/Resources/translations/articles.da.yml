@@ -192,7 +192,7 @@ Snippet: Uddrag
 'The last article of this list has been removed.': null
 Revert: null
 'Could not automatically refresh the list': null
-'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
+'The article slideshows have been successfully updated, please close the window.': null
 articles:
     playlists:
         namechanged: 'Er du sikker på du vil ændre lsitens navn? Navnet bruges muligvis i Newscoop skabeloner for at vise listen på hjemmesiden. Spørg hjemmesidens administrator hvis du er i tvivl.'

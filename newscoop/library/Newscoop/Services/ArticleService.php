@@ -238,7 +238,7 @@ class ArticleService
         $article->setCommentsLocked($attributes['comments_locked']);
         $article->setOnFrontPage($attributes['onFrontPage']);
         $article->setOnSection($attributes['onSection']);
-        $article->setKeywords($attributes['keywords']);
+        $article->setKeywords($attributes['keywords']? $attributes['keywords'] : '');
 
         return $article;
     }
