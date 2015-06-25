@@ -98,9 +98,8 @@ class ArticleTopicRepository extends EntityRepository
      */
     public function countBy(array $criteria = array())
     {
-        $queryBuilder = $this->getQueryBuilder()
-            ->select('COUNT(t)')
-            ->from($this->getEntityName(), 't');
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('COUNT(t)');
 
         foreach ($criteria as $property => $value) {
             if (!is_array($value)) {

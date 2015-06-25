@@ -76,7 +76,7 @@ class TopicsController extends Controller
         $cacheService = $this->get('newscoop.cache');
         $topicsCount = $topicService->countBy();
         $attachedCount = $topicService->countArticleTopicsBy();
-        $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount, $attachedCount), 'topic');
+        $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount, $attachedCount, $articleNumber), 'topic');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
         if ($cacheService->contains($cacheKey)) {
             $nodes = $cacheService->fetch($cacheKey);
