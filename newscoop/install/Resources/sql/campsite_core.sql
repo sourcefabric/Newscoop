@@ -3486,9 +3486,9 @@ DROP TABLE IF EXISTS `ArticleSnippets`;
 CREATE TABLE ArticleSnippets (
   ArticleNr int(11) NOT NULL,
   SnippetId int(11) NOT NULL,
-  INDEX IDX_5080CDE7C53224D (ArticleId),
+  INDEX IDX_5080CDE7C53224D (ArticleNr),
   INDEX IDX_5080CDEB00DA91C (SnippetId),
-  PRIMARY KEY(ArticleId, SnippetId)
+  PRIMARY KEY(ArticleNr, SnippetId)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `user_oauth_clients`;
