@@ -275,8 +275,7 @@ class ArticlesController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (AuthenticationException $e) {
-        }
+        } catch (AuthenticationException $e) {/* User is not logged in */}
 
         $articleSearchCriteria = new ArticleSearchCriteria();
         $articleSearchCriteria->fillFromRequest($request);

@@ -106,6 +106,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     public function searchArticles($articleSearchCriteria, $onlyPublished = true, $order = 'desc')
     {
         $em = $this->getEntityManager();
+        $getLastArticles = true;
         $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
             ->select('DISTINCT(a.article) as number');
 
@@ -119,21 +120,25 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         if (count($keywords) > 0) {
             $queryBuilder->leftJoin('a.keyword', 'k')
                 ->andWhere($orX);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->publication) {
             $queryBuilder->andWhere('a.publication = :publication')
                 ->setParameter('publication', $articleSearchCriteria->publication);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->section) {
             $queryBuilder->andWhere('a.sectionNumber = :section')
                 ->setParameter('section', $articleSearchCriteria->section);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->issue) {
             $queryBuilder->andWhere('a.issueNumber = :issue')
                 ->setParameter('issue', $articleSearchCriteria->issue);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->language) {
@@ -142,7 +147,15 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             if ($languageId) {
                 $queryBuilder->andWhere('a.language = :language')
                     ->setParameter('language', $languageId);
+                $getLastArticles = false;
             }
+        }
+
+        if ($getLastArticles) {
+            $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+                ->createQueryBuilder('a')
+                ->select('a.number as number')
+                ->orderBy('a.uploaded', 'DESC');
         }
 
         $queryBuilder->setMaxResults(80);
@@ -217,6 +230,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->author) {
+            $queryBuilder->join('a.authors', 'au');
             $queryBuilder->andWhere('au.id = :author')
                 ->setParameter('author', $articleSearchCriteria->author);
         }
@@ -232,7 +246,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->topic) {
-            $queryBuilder->andWhere('t.id = :topic')
+            $queryBuilder->join('a.topics', 'att');
+            $queryBuilder->andWhere('att.id = :topic')
                 ->setParameter('topic', $articleSearchCriteria->topic);
         }
 
