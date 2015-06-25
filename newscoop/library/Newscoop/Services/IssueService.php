@@ -136,23 +136,30 @@ class IssueService implements IssueServiceInterface
             }
         }
 
+        // TODO: Check if we should add locale from request here
         return $this->getLatestPublishedIssue();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getLatestPublishedIssue()
+    public function getLatestPublishedIssue($language = null)
     {
         $publication = $this->publicationService->getPublication();
         if (!$publication) {
             return;
         }
 
+        if (!($language instanceof \Newscoop\Entity\Language)) {
+            $language = $publication->getDefaultLanguage();
+        }
+
         $publicationId = $publication->getId();
+        $languageId = $language->getId();
         $cacheKey = $this->cacheService->getCacheKey(array(
             'latest_published',
             $publicationId,
+            $languageId,
         ), 'issue');
 
         if ($this->cacheService->contains($cacheKey)) {
@@ -160,19 +167,18 @@ class IssueService implements IssueServiceInterface
         } else {
             $issue = $this->em
                 ->getRepository('Newscoop\Entity\Issue')
-                ->getLastPublishedByPublication($publicationId)
-                ->getArrayResult();
+                ->getLastPublishedByPublicationAndLanguage($publicationId, $languageId)
+                ->getSingleResult();
 
             $this->cacheService->save($cacheKey, $issue);
         }
 
-        if (empty($issue)) {
+        if (!$issue) {
             return;
         }
 
-        $latestPublishedIssue = $this->em->getReference('Newscoop\Entity\Issue', $issue[0]['id']);
-        $this->setIssue($latestPublishedIssue);
+        $this->setIssue($issue);
 
-        return $latestPublishedIssue;
+        return $issue;
     }
 }
