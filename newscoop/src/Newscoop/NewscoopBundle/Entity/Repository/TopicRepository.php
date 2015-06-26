@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -20,7 +20,7 @@ class TopicRepository extends NestedTreeRepository
     public $onChildrenQuery;
 
     /**
-     * Get all topics
+     * Get all topics.
      *
      * @param $languageCode Language code
      *
@@ -53,7 +53,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Get all parent choices
+     * Get all parent choices.
      *
      * @param Topic|null $node Topic object
      *
@@ -84,7 +84,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Will do reordering based on current translations
+     * Will do reordering based on current translations.
      */
     public function childrenQuery($node = null, $direct = false, $sortByField = null, $direction = 'ASC', $include = false)
     {
@@ -111,7 +111,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Gets the single topic's query by id
+     * Gets the single topic's query by id.
      *
      * @param int    $id     Topic id
      * @param string $locale Language code
@@ -135,7 +135,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Get topics query and set translatable hints
+     * Get topics query and set translatable hints.
      *
      * @param Query $query Query object
      */
@@ -156,7 +156,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Add hints to the query
+     * Add hints to the query.
      *
      * @param Query       $query  Query
      * @param string|null $locale Lecale to which fallback
@@ -186,11 +186,11 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Get all articles for given topic by topic id and language code
+     * Get all articles for given topic by topic id and language code.
      *
-     * @param int     $topicId         Topic id
-     * @param string  $languageCode    Language code
-     * @param boolean $defaultFallback Sets the language of the topic to the default one
+     * @param int    $topicId         Topic id
+     * @param string $languageCode    Language code
+     * @param bool   $defaultFallback Sets the language of the topic to the default one
      *
      * @return Query
      */
@@ -216,7 +216,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Search topic by given query
+     * Search topic by given query.
      *
      * @param string $query
      * @param array  $sort
@@ -253,7 +253,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Find topic options
+     * Find topic options.
      *
      * @return array
      */
@@ -273,7 +273,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Gets topic's path
+     * Gets topic's path.
      *
      * @param Topic $topic Topic
      *
@@ -306,7 +306,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Get Topics for Article
+     * Get Topics for Article.
      *
      * Returns all the associated Topics to an Article.
      *
@@ -316,7 +316,7 @@ class TopicRepository extends NestedTreeRepository
      *
      * @return Doctrine\ORM\Query Query
      */
-    public function getArticleTopics($articleNr, $languageCode, $order = "asc")
+    public function getArticleTopics($articleNr, $languageCode, $order = 'asc')
     {
         $em = $this->getEntityManager();
         $articleTopicsIds = $em->getRepository('Newscoop\Entity\ArticleTopic')->getArticleTopicsIds($articleNr, true);
@@ -345,11 +345,11 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * Count topics by given criteria
+     * Count topics by given criteria.
      *
      * @param array $criteria
      *
-     * @return integer
+     * @return int
      */
     public function countBy(array $criteria = array())
     {
@@ -359,45 +359,41 @@ class TopicRepository extends NestedTreeRepository
 
         foreach ($criteria as $property => $value) {
             if (!is_array($value)) {
-                $queryBuilder->andWhere("t.$property = :$property");
+                $queryBuilder->andWhere("t.$property = :$property")
+                    ->setParameter($property, $value);
             }
         }
 
         $query = $queryBuilder->getQuery();
-        foreach ($criteria as $property => $value) {
-            if (!is_array($value)) {
-                $query->setParameter($property, $value);
-            }
-        }
 
         return (int) $query->getSingleScalarResult();
     }
 
     /**
-     * Gets topic by given id or name
+     * Gets topic by given id or name.
      *
-     * @param string|integer $topicIdOrName Topicid or name
-     * @param string|integer $locale        Current locale, language code or id
+     * @param string|int $topicIdOrName Topicid or name
+     * @param string|int $locale        Current locale, language code or id
      *
      * @return Query
      */
-    public function getTopicByIdOrName($topicIdOrName, $locale)
+    public function getTopicByIdOrName($topicIdOrName, $locale = null)
     {
         $qb = $this->getQueryBuilder()
-            ->select('t', 'tt', "p")
+            ->select('t', 'tt', 'p')
             ->from($this->getEntityName(), 't')
-            ->leftJoin("t.translations", "tt")
-            ->leftJoin("t.parent", "p")
+            ->leftJoin('t.translations', 'tt')
+            ->leftJoin('t.parent', 'p')
             ->where("tt.field = 'title'");
 
         if (is_numeric($topicIdOrName)) {
             $qb
-                 ->andWhere("t.id = :id")
-                 ->setParameter("id", $topicIdOrName);
+                 ->andWhere('t.id = :id')
+                 ->setParameter('id', $topicIdOrName);
         } else {
             $qb
-                ->andWhere("t.title = :title")
-                ->setParameter("title", $topicIdOrName);
+                ->andWhere('t.title = :title')
+                ->setParameter('title', $topicIdOrName);
         }
 
         if (is_numeric($locale)) {
@@ -435,7 +431,7 @@ class TopicRepository extends NestedTreeRepository
             if ($node instanceof $meta->name) {
                 $wrapped = new EntityWrapper($node, $this->_em);
                 if (!$wrapped->hasValidIdentifier()) {
-                    throw new InvalidArgumentException("Node is not managed by UnitOfWork");
+                    throw new InvalidArgumentException('Node is not managed by UnitOfWork');
                 }
                 if ($direct) {
                     $id = $wrapped->getIdentifier();
@@ -466,7 +462,7 @@ class TopicRepository extends NestedTreeRepository
                     $qb->setParameter('rootNode', $node);
                 }
             } else {
-                throw new \InvalidArgumentException("Node is not related to this repository");
+                throw new \InvalidArgumentException('Node is not related to this repository');
             }
         } else {
             if ($direct) {

@@ -103,16 +103,12 @@ class ArticleTopicRepository extends EntityRepository
 
         foreach ($criteria as $property => $value) {
             if (!is_array($value)) {
-                $queryBuilder->andWhere("t.$property = :$property");
+                $queryBuilder->andWhere("t.$property = :$property")
+                    ->setParameter($property, $value);
             }
         }
 
         $query = $queryBuilder->getQuery();
-        foreach ($criteria as $property => $value) {
-            if (!is_array($value)) {
-                $query->setParameter($property, $value);
-            }
-        }
 
         return (int) $query->getSingleScalarResult();
     }
