@@ -1,11 +1,10 @@
 <?php
+
 /**
- * @package Newscoop
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -13,10 +12,10 @@ use Doctrine\ORM\EntityRepository;
 class ArticleTopicRepository extends EntityRepository
 {
     /**
-     * Get all topics for an Article - Topic and article objects
+     * Get all topics for an Article - Topic and article objects.
      *
      * @param int|string $articleNumber Article number
-     * @param boolean    $topicsOnly    If get only topics in the result
+     * @param bool       $topicsOnly    If get only topics in the result
      *
      * @return Doctrine\ORM\Query
      */
@@ -37,7 +36,7 @@ class ArticleTopicRepository extends EntityRepository
     }
 
     /**
-     * Get all topics for an Article
+     * Get all topics for an Article.
      *
      * @param int|string $articleNumber Article number
      * @param string     $languageCode  Article's language code
@@ -58,7 +57,7 @@ class ArticleTopicRepository extends EntityRepository
             ->andWhere('a.language = :languageId')
             ->setParameters(array(
                 'articleNumber' => $articleNumber,
-                'languageId' => $languageId
+                'languageId' => $languageId,
             ));
 
         $countQueryBuilder = clone $qb;
@@ -73,7 +72,7 @@ class ArticleTopicRepository extends EntityRepository
     }
 
     /**
-     * Gets the occurence of the topic
+     * Gets the occurence of the topic.
      *
      * @param string|int $topicId Topic id
      *
@@ -88,5 +87,29 @@ class ArticleTopicRepository extends EntityRepository
             ->getQuery();
 
         return $query;
+    }
+
+    /**
+     * Count article topics by given criteria.
+     *
+     * @param array $criteria
+     *
+     * @return int
+     */
+    public function countBy(array $criteria = array())
+    {
+        $queryBuilder = $this->createQueryBuilder('t')
+            ->select('COUNT(t)');
+
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $queryBuilder->andWhere("t.$property = :$property")
+                    ->setParameter($property, $value);
+            }
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        return (int) $query->getSingleScalarResult();
     }
 }
