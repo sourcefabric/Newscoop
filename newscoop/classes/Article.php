@@ -1443,7 +1443,7 @@ class Article extends DatabaseObject
     /**
      * Return the current workflow state of the article:
      *   'Y' = "Published"
-     *	 'S' = "Submitted"
+     *   'S' = "Submitted"
      *   'N' = "New"
      *
      * @return string
@@ -1488,7 +1488,7 @@ class Article extends DatabaseObject
 
     /**
      * Set the workflow state of the article.
-     * 	   'Y' = 'Published'
+     *     'Y' = 'Published'
      *     'S' = 'Submitted'
      *     'N' = 'New'
      *
@@ -2579,7 +2579,6 @@ class Article extends DatabaseObject
         $languageId = null;
 
         $em = Zend_Registry::get('container')->getService('em');
-        $request = Zend_Registry::get('container')->getService('request');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
 
         // parses the given parameters in order to build the WHERE part of
@@ -2621,7 +2620,7 @@ class Article extends DatabaseObject
             } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
-                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'])->getOneOrNullResult();
                 if ($topic) {
                     $topicIds = array();
                     foreach($topic->getChildren() as $child) {
@@ -2636,7 +2635,7 @@ class Article extends DatabaseObject
                     }
                 }
             } elseif ($leftOperand == 'topic_strict') {
-                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'])->getOneOrNullResult();
                 if ($topic) {
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
