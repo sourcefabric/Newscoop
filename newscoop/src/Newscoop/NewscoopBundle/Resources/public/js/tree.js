@@ -550,12 +550,13 @@ app.controller('treeCtrl', function($scope, TopicsFactory, $filter) {
         topic = scope.$parent.$nodeScope.$modelValue;
       }
 
-      addFormData.topic["title"] = topic.newChild[topic.id];
       if (topic !== undefined) {
+          addFormData.topic["title"] = topic.newChild[topic.id];
           addFormData.topic["parent"] = topic.id;
+          topic.newChild = {};
+      } else {
+        addFormData.topic["title"] = $scope.formData.title;
       }
-
-      topic.newChild = {};
 
       TopicsFactory.addTopic(addFormData, languageCode).success(function (response) {
         if (response.status) {

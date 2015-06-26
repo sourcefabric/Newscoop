@@ -192,7 +192,7 @@ Snippet: null
 'The last article of this list has been removed.': null
 Revert: null
 'Could not automatically refresh the list': null
-'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
+'The article slideshows have been successfully updated, please close the window.': null
 articles:
     playlists:
         namechanged: null

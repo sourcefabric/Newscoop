@@ -233,6 +233,7 @@ class ArticleService
      */
     private function updateArticleMeta($article, $attributes)
     {
+
         if (array_key_exists('name', $attributes)) {
             $article->setName($attributes['name']);
         }
@@ -255,7 +256,7 @@ class ArticleService
         
         if (array_key_exists('keywords', $attributes)) {
            $article->setKeywords($attributes['keywords']? $attributes['keywords'] : '');
-        }      
+        }
 
         return $article;
     }
