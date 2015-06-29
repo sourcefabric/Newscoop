@@ -70,6 +70,12 @@ contextListFilters = {}
         <?php }
 } ?>
 </select>
+
+<div>
+    <input type="checkbox" name="showtype" value="with_filtered" id="display_filtered_types" />
+    <label for="display_filtered_types"><?php echo $translator->trans("Show hidden Article Types?", array(), 'library'); ?></label>
+</div>
+
 <?php foreach ($this->filters as $filterName => $filterValue) : ?>
     <?php switch ($filterName) :
         case 'type' :
@@ -227,7 +233,6 @@ function refreshFilterSections()
 $(document).ready(function () {
 //handle language change first
 $('#filter_name').change(function () {
-
     refreshFilterIssues();
     refreshFilterSections();
 })
@@ -254,6 +259,9 @@ $('.smartlist .filters select, .smartlist .filters input').change(function () {
     if ($(this).attr('id') == 'filter_name' || $(this).attr('id') == 'publication_filter' ) {
         filters[smartlistId]['issue'] = 0;
         filters[smartlistId]['section'] = 0;
+    }
+    if ($(this).attr('id') == 'display_filtered_types') {
+        filters[smartlistId]['showtype'] = $(this).attr('checked') ? 'with_filtered' : '';
     }
     tables[smartlistId].fnDraw(true);
 
@@ -327,6 +335,8 @@ $('fieldset.filters').each(function () {
 
             // reset main filters
             $('> select', fieldset).val('0').change();
+
+            $('input:checkbox, input:radio', fieldset).removeAttr('checked');
 
             // redraw table
             filters[smartlistId] = {};
