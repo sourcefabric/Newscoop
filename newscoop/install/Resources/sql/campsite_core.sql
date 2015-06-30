@@ -283,7 +283,7 @@ CREATE TABLE `Articles` (
   `ArticleOrder` int(10) unsigned NOT NULL DEFAULT '0',
   `comments_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_locked` tinyint(1) NOT NULL DEFAULT '0',
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `object_id` int(11) DEFAULT NULL,
   `webcode` varchar(10) DEFAULT NULL,
   `indexed` timestamp NULL DEFAULT NULL,
