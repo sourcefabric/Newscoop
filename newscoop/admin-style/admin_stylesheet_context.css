@@ -62,3 +62,9 @@ fieldset.closed {
     color: #CCCCCC;
     font-size: 20px;	
 }
+
+/* Fix for author and creator filter in content search */
+.smartlist fieldset div.select2 {
+    margin-right: 13px;
+    width: 256px;
+}

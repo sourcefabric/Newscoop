@@ -29,6 +29,7 @@ function toggleDragZonePlaceHolder()
         $('#drag-here-to-add-to-list').css('display', 'block');
     }
 }
+
 function fnLoadContextList(data)
 {
     if (data.code == 200) {

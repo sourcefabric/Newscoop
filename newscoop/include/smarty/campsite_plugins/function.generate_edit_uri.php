@@ -7,23 +7,23 @@
  */
 
 /**
- * Generate edit url for article (to current assigned to user editor)
+ * Generate edit uri for article (to current assigned to user editor)
  * 
  * Result of that that function should be cached in template (as it fetch article object for every call).
  *
  * examle:
- *     {{ generate_edit_url articleNumber="1" language="en" }}
+ *     {{ generate_edit_uri articleNumber="1" language="en" }}
  *
  * Type:     function
- * Name:     generate_edit_url
- * Purpose:  Get article edit url (for backend editor)
+ * Name:     generate_edit_uri
+ * Purpose:  Get article edit uri (for backend editor)
  *
  * @param array
  *     $params Parameters
  * @param object
  *     $smarty The Smarty object
  */
-function smarty_function_generate_edit_url($params, &$smarty)
+function smarty_function_generate_edit_uri($params, &$smarty)
 {
     $editorService = \Zend_Registry::get('container')->get('newscoop.editor');
     $em = \Zend_Registry::get('container')->get('em');

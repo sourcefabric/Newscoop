@@ -45,6 +45,7 @@ final class MetaArticle extends MetaDbObject
     'mon_name'=>'getCreationMonthName',
     'wday_name'=>'getCreationWeekDayName',
     'template'=>'getTemplate',
+    'rating_enabled'=>'getRatingEnabled',
     'comments_enabled'=>'getCommentsEnabled',
     'on_front_page'=>'getOnFrontPage',
     'on_section_page'=>'getOnSectionPage',
@@ -516,6 +517,11 @@ final class MetaArticle extends MetaDbObject
         return new MetaMap($map);
     }
 
+    protected function getRatingEnabled()
+    {
+        return (bool) ($this->m_dbObject->ratingEnabled() == '1');
+    }
+
     protected function getCommentsEnabled()
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
@@ -523,7 +529,7 @@ final class MetaArticle extends MetaDbObject
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         }
-        
+
         $publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
         $articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
 
