@@ -44,7 +44,7 @@ $this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js'));
     <% if (!itemsCount) { %>
     <span class="blank"></span>
     <% } else if (item) { %>
-    <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt=""/>
+    <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" />
     <% } else { %>
     <span class="video"></span>
     <% } %>
