@@ -216,7 +216,7 @@ class ContextList extends BaseList
                     <a href="javascript:void(0)" class="corner-button" style="display: none" onClick="removeFromContext($(this).parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));removeFromContext($(this).parents(\'.item:eq(0)\').attr(\'id\'));toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>
                     <div class="context-item-summary">%s</div>
                     </div>
-            ', $article->getLanguageId(), $article->getLastModified(), $article->getWorkflowDisplayString(), $article->getType(), $translator->trans('View article', array(), 'library'), $article->getName()),
+            ', $article->getLanguageId(), $article->getCreationDate(), $article->getWorkflowDisplayString(), $article->getType(), $translator->trans('View article', array(), 'library'), $article->getName()),
         );
     }
 
