@@ -198,6 +198,7 @@ articles:
         namechanged: null
         alert: null
     images:
+        see_original: null
         edit:
             edit_image_metadata: 'Kép metaadatainak szerkesztése'
             save: Mentés
