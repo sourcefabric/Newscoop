@@ -36,7 +36,7 @@ class CommentsController extends Controller
         $blogService = $this->get('blog');
         $user = $userService->getCurrentUser();
 
-        if ($blogService->isBlogger($user)) {
+        if (!$user->hasPermission('ModerateComment')) {
             throw new AccessDeniedException();
         }
 
