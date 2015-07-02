@@ -276,7 +276,7 @@ class ArticleTopic extends DatabaseObject
         }
 
         if (count($rootTopicIds) > 0) {
-            $subtopicsQuery = self::buildSubtopicsQueryWithoutDepth($rootTopicIds);
+            $subtopicsQuery = self::buildSubtopicsArray($rootTopicIds);
             if (!empty($subtopicsQuery)) {
                 $whereCondition = 'TopicId IN ('.implode(',', $subtopicsQuery).')';
                 $selectClauseObj->addWhere($whereCondition);
@@ -335,7 +335,7 @@ class ArticleTopic extends DatabaseObject
      *
      * @return array
      */
-    private static function buildSubtopicsQueryWithoutDepth($p_parentIds = 0)
+    private static function buildSubtopicsArray($p_parentIds = 0)
     {
         $p_parentIds = is_array($p_parentIds)? $p_parentIds: array($p_parentIds);
         $em = \Zend_Registry::get('container')->getService('em');
