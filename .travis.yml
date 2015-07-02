@@ -23,7 +23,7 @@ before_script:
 - "./application/console newscoop:install --fix --database_name newscoop --database_user root --no-client"
 - sudo php upgrade.php
 - "./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test"
-- "./application/console user:create test@example.org testpassword testuser 'Test Name' 'Test Surname' true 1 1"
+- "./application/console user:create test@example.org testpassword testuser 'Test Name' 'Test Surname' true 1 1 --isAdmin"
 - cd ..
 - sudo php newscoop/scripts/fixer.php
 script:
