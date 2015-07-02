@@ -17,8 +17,8 @@ Support: Поддержка
 'Manage Users': 'Управление пользователями'
 'Manage User Types': 'Управление типами пользователей'
 'Manage User Points System': 'Управление системой пользовательских точек'
-Last: Последний
-First: Первый
+Last: Последняя
+First: Первая
 Feedback: 'Обратная связь'
 'Edit your password': 'Редактировать пароль'
 'Edit user': 'Редактировать аккаунт пользователя'
@@ -126,7 +126,7 @@ Download: Загрузить
 'Clear system cache': 'Очистить систему кеширования'
 'The system was unable to upload the file $1. ': 'Система не может загрузить файл $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Пожалуйста проверьте, какой файл Вы пытаетесь загрузить. Файл может быть запорчен.'
-'An error occurred in session management. Please reload the login page.': null
+'An error occurred in session management. Please reload the login page.': 'Произошла ошибка при управлении сеансом. Пожалуйста, перезагрузите страницу входа.'
 'This file is stored on disk as $1.': 'Этот файл сохранен на диске как $1.'
 'The system is unable to write to the directory $1.': 'Система не может записать в папку $1.'
 'The system was unable to read the file $1.': 'Система не может прочитать файл $1.'
@@ -152,12 +152,12 @@ Help: Помощь
 'Please make sure that you typed the correct user name and password.': 'Пожалуйста, убедитесь в правильности ввода логина и пароля.'
 'If your problem persists please contact the site administrator $1': 'Если проблема не решена, обратитесь к администратору сайта $1'
 Backup/Restore: 'Резервное копирование'
-'Step 2': null
-'Step 3': null
-'Add new user': null
-'Bad credentials': null
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
-'Change password': null
+'Step 2': 'Шаг 2'
+'Step 3': 'Шаг 3'
+'Add new user': 'Создать новый аккаунт'
+'Bad credentials': 'Неверные учетные данные'
+'Active users': 'Активные пользователи'
+'New comments': 'Новые комментарии'
+'Published articles': 'Опубликованные статьи'
+'Last 7 days statistics': 'Статистика за последние 7 дней'
+'Change password': 'Изменить пароль'

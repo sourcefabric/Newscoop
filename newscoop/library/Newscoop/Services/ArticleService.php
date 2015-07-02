@@ -233,12 +233,30 @@ class ArticleService
      */
     private function updateArticleMeta($article, $attributes)
     {
-        $article->setName($attributes['name']);
-        $article->setCommentsEnabled($attributes['comments_enabled']);
-        $article->setCommentsLocked($attributes['comments_locked']);
-        $article->setOnFrontPage($attributes['onFrontPage']);
-        $article->setOnSection($attributes['onSection']);
-        $article->setKeywords($attributes['keywords']);
+
+        if (array_key_exists('name', $attributes)) {
+            $article->setName($attributes['name']);
+        }
+
+        if (array_key_exists('comments_enabled', $attributes)) {
+            $article->setCommentsEnabled($attributes['comments_enabled']);
+        }
+
+        if (array_key_exists('comments_locked', $attributes)) {
+            $article->setCommentsLocked($attributes['comments_locked']);
+        }
+
+        if (array_key_exists('onFrontPage', $attributes)) {
+            $article->setOnFrontPage($attributes['onFrontPage']);
+        }
+
+        if (array_key_exists('onSection', $attributes)) {
+           $article->setOnSection($attributes['onSection']);
+        }
+        
+        if (array_key_exists('keywords', $attributes)) {
+           $article->setKeywords($attributes['keywords']? $attributes['keywords'] : '');
+        }
 
         return $article;
     }

@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Használat az automatikus statisztikánál'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Esemény színe'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Meg kell adnod egy számot, amely nagyobb, mint $1 és kisebb, mint $2 a/z $3 mezőben.'
 'You do not have the right to translate article types.': 'Nincs jogod a cikktípusok lefordításához.'
@@ -22,7 +22,8 @@ Custom: Egyéni
 Precision: Pontosság
 'Can not convert the field $1 from $2 to type $3.': 'A/z $1 mező nem alakítható át $2 típusról $3 típusra.'
 'Are you sure you want to make $1 a $2 field?': 'Biztosan $1 mezővé akarsz tenni egy $2 mezőt?'
-'Is Content': 'A tartalom'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Vissza a Cikktípusok listájához'
 show: megjelenítés
 hide: elrejtés
@@ -35,7 +36,7 @@ hide: elrejtés
 'The field $1 does not exist.': 'A/z $1 mező nem létezik.'
 'The $1 field may only contain letters and underscore (_) character.': 'A/z $1 mező csak betűket és aláhúzásjelet (_) tartalmazhat.'
 'Template Field Name': 'Sablonmező neve'
-Show/Hide: Megjelenítés/Elrejtés
+'Show to Authors?': null
 'Renaming article type field': 'Cikktípusmező átnevezése'
 'Rename field': 'Mező átnevezése'
 'Reassign a field type': 'Mezőtípus ismételt hozzárendelése'

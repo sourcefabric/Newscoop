@@ -8,10 +8,11 @@ require_once 'ListObject.php';
  */
 class SubtopicsList extends ListObject
 {
-    private static $s_orderFields = array('default',
-                                          'bynumber',
-                                          'byname',
-                                    );
+    private static $s_orderFields = array(
+        'default',
+        'bynumber',
+        'byname',
+    );
 
     /**
      * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -30,12 +31,21 @@ class SubtopicsList extends ListObject
         $rootTopicId = $p_parameters['topic_identifier'];
         $start = null;
         $limit = null;
+        $order = array();
         if ($p_start > 0) {
             $start = $p_start;
         }
 
         if ($p_limit > 0) {
             $limit = $p_limit;
+        }
+
+        if (!isset($p_parameters['direct'])) {
+            $p_parameters['direct'] = true;
+        }
+
+        if (!empty($this->m_order)) {
+            $order = $this->m_order[0];
         }
 
         $em = \Zend_Registry::get('container')->getService('em');
@@ -56,9 +66,9 @@ class SubtopicsList extends ListObject
                 $subtopics = $repository->childrenWithTranslations(
                     $topic,
                     $language ? $language->getCode() : null,
-                    false,
-                    null,
-                    isset($p_parameters['order']) ? $p_parameters['order'] : null,
+                    $p_parameters['direct'],
+                    isset($order['field']) ? $order['field'] : null,
+                    isset($order['dir']) ? $order['dir'] : null,
                     $start,
                     $limit
                 )->getArrayResult();
@@ -101,13 +111,18 @@ class SubtopicsList extends ListObject
     {
         $order = array();
         $state = 1;
+        $aliases = array(
+            'byname' => 'title',
+            'bynumber' => 'id',
+        );
+
         foreach ($p_order as $word) {
             switch ($state) {
                 case 1: // reading the order field
                     if (array_search(strtolower($word), SubtopicsList::$s_orderFields) === false) {
                         CampTemplate::singleton()->trigger_error("invalid order field $word in list_subtopics, order parameter");
                     } else {
-                        $orderField = $word;
+                        $orderField = $aliases[$word];
                         $state = 2;
                     }
                     break;
@@ -155,6 +170,9 @@ class SubtopicsList extends ListObject
                     } else {
                         $parameters[$parameter] = $value;
                     }
+                    break;
+                case 'direct':
+                    $parameters[$parameter] = filter_var($value, FILTER_VALIDATE_BOOLEAN);
                     break;
                 default:
                     CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_subtopics", $p_smarty);

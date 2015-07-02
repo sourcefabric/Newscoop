@@ -8,9 +8,11 @@
 angular.module('playlistsApp').controller('FeaturedController', [
     '$scope',
     'Playlist',
+    'modalFactory',
     function (
         $scope,
-        Playlist
+        Playlist,
+        modalFactory
     ) {
 
     var countDownTimeInSeconds = 11;
@@ -27,7 +29,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
             number = item.number;
             occurences = 0;
             angular.forEach($scope.$parent.featuredArticles, function(value, key) {
-                if (value.number == number) {
+                if (value.number == number && value.language == item.language) {
                     occurences++;
                 }
             });
@@ -55,7 +57,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
 
             isInLogList = _.some(
                 Playlist.getLogList(),
-                {number: number, _method: 'unlink'}
+                {number: number, language: item.language, _method: 'unlink'}
             );
 
             if (!isInLogList) {
@@ -65,28 +67,28 @@ angular.module('playlistsApp').controller('FeaturedController', [
                 // insert the same value to the log list
                 isInLogList = _.some(
                     Playlist.getLogList(),
-                    {number: number}
-                    );
+                    {number: number, language: item.language}
+                );
 
                 if (!isInLogList) {
                     // add article to log list, so we can save it later using batch save
-                    item._method = "link";
+                    item._method = 'link';
                     item._order = evt.newIndex + 1;
                     Playlist.addItemToLogList(item);
                 }
             } else {
-                Playlist.removeItemFromLogList(number, 'unlink');
+                Playlist.removeItemFromLogList(item, 'unlink');
             }
         },
         onSort: function (evt/**Event*/){
             var article = evt.model;
             var articleInList = _.find(
                 $scope.$parent.featuredArticles,
-                {number: article.number}
+                {number: article.number, language: article.language}
             );
 
             if (articleInList !== undefined && evt.newIndex !== evt.oldIndex) {
-                Playlist.removeItemFromLogList(articleInList.number, 'link');
+                Playlist.removeItemFromLogList(articleInList, 'link');
                 article._order = evt.newIndex + 1;
                 article._method = "link";
                 Playlist.addItemToLogList(article);
@@ -102,7 +104,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
             $scope.$parent.featuredArticles.splice($scope.$parent.articleOverLimitIndex, 1);
             $scope.$parent.showLimitAlert = false;
             $scope.$parent.isCounting = false;
-            Playlist.removeItemFromLogList($scope.$parent.articleOverLimitNumber, 'link');
+            Playlist.removeItemFromLogList($scope.$parent.articleNotToRemove, 'link');
         }
     }
 
@@ -142,7 +144,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
         featuredArticles = $scope.$parent.featuredArticles;
         exists = _.some(
             availablArticles,
-            {number: article.number}
+            {number: article.number, language: article.language}
         );
 
         if (!exists) {
@@ -151,7 +153,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
 
         _.remove(
             featuredArticles,
-            {number: article.number}
+            {number: article.number, language: article.language}
         );
 
         // check if the article exists in the logList,
@@ -162,7 +164,7 @@ angular.module('playlistsApp').controller('FeaturedController', [
         // the playlist.
         isInLogList = _.some(
             Playlist.getLogList(),
-            {number: article.number, _method: 'link'}
+            {number: article.number, language: article.language, _method: 'link'}
         );
 
         if (!isInLogList) {
@@ -171,19 +173,42 @@ angular.module('playlistsApp').controller('FeaturedController', [
             article._method = "unlink";
             Playlist.addItemToLogList(article);
         } else {
-            Playlist.removeItemFromLogList(article.number, 'link');
+            Playlist.removeItemFromLogList(article, 'link');
         }
 
         Playlist.setCurrentPlaylistArticles(featuredArticles);
     }
 
     /**
-     * Updates parent controller's playlistLimit variable, so it can disable save button
-     * when limit is incorrect, i.e. is string not number
+     * Updates parent controller's playlistLimit variable, so save button
+     * can be disabled when limit is incorrect, i.e. is string not number.
+     * It also shows the limit modal when list limit has been changed.
      *
      * @param  {Object} scope Current scope
      */
     $scope.updateParentLimit = function (scope) {
+        var newLimit = $scope.$parent.playlist.selected.maxItems,
+        oldLimit = $scope.$parent.playlist.selected.oldLimit;
+
         $scope.$parent.playlistLimit = scope.limitForm.$valid;
+
+        if (newLimit && newLimit != 0 && newLimit < oldLimit ||
+            ((oldLimit === null || oldLimit === 0) && newLimit > oldLimit)
+        ) {
+            var title = Translator.trans('Info', {}, 'articles'),
+                text = Translator.trans('articles.playlists.alert', {}, 'articles'),
+                okText = Translator.trans('OK', {}, 'messages'),
+                cancelText = Translator.trans('Cancel', {}, 'messages'),
+                modal;
+
+            modal = modalFactory.confirmLight(title, text, okText, cancelText);
+            modal.result.then(function () {
+                var sliced = $scope.$parent.featuredArticles.slice(0, newLimit);
+                $scope.$parent.featuredArticles = sliced;
+                Playlist.setCurrentPlaylistArticles(sliced);
+            }, function () {
+                $scope.$parent.playlist.selected.maxItems = oldLimit;
+            });
+        }
     }
 }]);

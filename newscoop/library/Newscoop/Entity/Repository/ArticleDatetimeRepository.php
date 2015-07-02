@@ -70,17 +70,17 @@ class ArticleDatetimeRepository extends EntityRepository
             $em->remove($article);
         }
     }
-    
+
     public function deleteById($id)
     {
         $em = $this->getEntityManager();
         if(is_numeric($id)) {
             //$entry = $this->findBy(array('id' => $id));
             $entry = $this->find($id);
-            $em->remove($entry); 
+            $em->remove($entry);
             $em->flush();
         }
-        
+
     }
 
     /**
@@ -122,9 +122,9 @@ class ArticleDatetimeRepository extends EntityRepository
             return false;
         };
 
+        $em->getConnection()->beginTransaction();
         try // delete all entries and add new ones
         {
-            $em->getConnection()->beginTransaction();
             if ($overwrite)
             {
                 $this->deleteByArticle($articleId);
@@ -147,7 +147,7 @@ class ArticleDatetimeRepository extends EntityRepository
             return $e;
         }
     }
-    
+
     public function getEmpty() {
         $articleDatetime = new ArticleDatetime();
         return($articleDatetime);
@@ -178,9 +178,9 @@ class ArticleDatetimeRepository extends EntityRepository
 
         $insertValues = $this->buildInsertValues($timeSet, $recurring);
 
+        $em->getConnection()->beginTransaction();
         try
         {
-            $em->getConnection()->beginTransaction();
             $em->remove($entry);
             foreach ($insertValues as $dateValue) {
                 foreach (array_merge(array($dateValue), $dateValue->getSpawns()) as $dateValue)

@@ -7,7 +7,7 @@
         "publication"
     ],
     "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
-    "version": "4.4.0",
+    "version": "4.4.3",
     "license":"GPL-3.0",
     "authors":[
         
@@ -38,12 +38,12 @@
         "kriswallsmith\/buzz":">=0.7",
         "knplabs\/knp-paginator-bundle":"2.4.0",
         "knplabs\/knp-components":"1.2.4",
-        "jms\/serializer-bundle":"0.12.0",
-        "hybridauth\/hybridauth":"dev-master",
+        "jms\/serializer-bundle":"0.13.0",
+        "jms\/serializer":"0.16.0",
+        "hybridauth\/hybridauth":"v2.4.1",
         "smarty\/smarty":"3.1.21",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
         "knplabs\/knp-menu":"2.0.1",
-        "raulfraile\/ladybug-bundle":"v1.0.6",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
         "willdurand\/js-translation-bundle":"2.2.0",
         "recaptcha\/php5":"v1.0.0",
@@ -53,8 +53,8 @@
         "newscoop\/recaptcha-bundle":"2.2",
         "friendsofsymfony\/oauth-server-bundle":"1.4.0",
         "newscoop\/plugins-installer":"v0.2",
-        "nelmio\/api-doc-bundle":"dev-master",
-        "hellogerard\/jobby":"dev-master",
+        "nelmio\/api-doc-bundle":"2.8.0",
+        "hellogerard\/jobby":"v2.0.12",
         "dflydev\/doctrine-orm-service-provider":"1.0.4",
         "pimple\/pimple":"1.1.*@dev",
         "raven\/raven":"0.9.0",
@@ -70,7 +70,8 @@
         "behat\/mink-extension":"*",
         "behat\/mink-goutte-driver":"v1.0.9",
         "behat\/mink-selenium2-driver":"*",
-        "fzaninotto\/faker":"1.5.*@dev"
+        "fzaninotto\/faker":"1.5.*@dev",
+        "raulfraile\/ladybug-bundle":"v1.0.6"
     },
     "autoload":{
         "psr-0":{

@@ -42,6 +42,7 @@ class WebcodeRedirectController extends Controller
         }
 
         $response->setContent($templatesService->fetchTemplate('404.tpl'));
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
         return $response;
     }

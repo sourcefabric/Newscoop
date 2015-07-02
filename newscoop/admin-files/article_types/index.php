@@ -21,6 +21,8 @@ $crumbs = array();
 $crumbs[] = array($translator->trans("Configure"), "");
 $crumbs[] = array($translator->trans("Article Types"), "");
 
+$controller->view->headTitle($translator->trans('Article Types').' - Newscoop Admin', 'SET');
+
 echo camp_html_breadcrumbs($crumbs);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
@@ -96,9 +98,9 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Fields"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Display Name", array(), 'article_types'); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Translate"); ?></B></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show/Hide", array(), 'article_types'); ?></B></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("In Lists?", array(), 'article_types'); ?></B></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Comments enabled?", array(), 'article_types'); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show to Authors?", array(), 'article_types'); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show in Article Lists?", array(), 'article_types'); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Comments Enabled?", array(), 'article_types'); ?></B></TD>
 	<?php  if ($g_user->hasPermission("DeleteArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  echo $translator->trans("Delete"); ?></B></TD>
 	<?php  } ?>

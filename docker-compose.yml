@@ -1,0 +1,12 @@
+newscoop:
+    extends:
+        file: docker/docker-newscoop.yml
+        service: newscoop
+    links:
+        - mysql
+
+mysql:
+    extends:
+        file: docker/docker-newscoop.yml
+        service: mysql
+

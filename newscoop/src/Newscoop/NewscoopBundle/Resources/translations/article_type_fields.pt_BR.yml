@@ -1,5 +1,5 @@
-'Usage at automatic statistics': null
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Cor do evento'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Você tem que digitar um número maior que $1 e menor que $2 no campo $3.'
 'You do not have the right to translate article types.': 'Você não tem o direito de traduzir tipos de artigos.'
@@ -22,7 +22,8 @@ Custom: Customisado
 Precision: Precisão
 'Can not convert the field $1 from $2 to type $3.': 'Não é possível converter o campo $1 de $2 para o tipo $3'
 'Are you sure you want to make $1 a $2 field?': 'Tem certeza que quer transformar $1 em campo do tipo $2?'
-'Is Content': null
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Voltar para a lista de tipos de artigos'
 show: mostrar
 hide: esconder
@@ -35,7 +36,7 @@ hide: esconder
 'The field $1 does not exist.': 'Campo $1 não existe.'
 'The $1 field may only contain letters and underscore (_) character.': 'O campo $1 pode ter apenas letras e o underscore (_).'
 'Template Field Name': 'Nome do campo de template'
-Show/Hide: Mostrar/esconder
+'Show to Authors?': null
 'Renaming article type field': 'Renomeando o campo de tipo de artigo'
 'Rename field': 'Mude o nome do campo'
 'Reassign a field type': 'Reatribuir o tipo de campo'

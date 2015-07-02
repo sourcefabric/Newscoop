@@ -113,4 +113,16 @@ class IssueRepository extends EntityRepository
 
         return $qb->getQuery();
     }
+
+    public function getLastPublishedByPublication($publicationId)
+    {
+        $query = $this->createQueryBuilder('i')
+            ->select('i.id')
+            ->where('i.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->setMaxResults(1)
+            ->orderBy('i.id', 'DESC');
+
+        return $query->getQuery();
+    }
 }

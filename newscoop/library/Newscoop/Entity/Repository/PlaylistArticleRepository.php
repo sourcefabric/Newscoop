@@ -1,24 +1,20 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\Entity\Repository;
 
-use Newscoop\Entity\PlaylistArticle,
-    Newscoop\Entity\Language,
-    Newscoop\Entity\Playlist,
-    Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Theme,
-    Newscoop\Entity\Theme\Loader,
-    Newscoop\Entity\Article;
+use Newscoop\Entity\Playlist;
+use Newscoop\Entity\Article;
+use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-class PlaylistArticleRepository extends EntityRepository
+class PlaylistArticleRepository extends SortableRepository
 {
     /**
-     * Delete playlist
+     * Delete playlist.
+     *
      * @param Newscoop\Entity\Playlist $playlist
      */
     public function onPlaylistDelete(Newscoop\Entity\Playlist $playlist)
@@ -26,42 +22,45 @@ class PlaylistArticleRepository extends EntityRepository
         $em = $this->getEntityManager();
         $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.playlist = ?1");
         $query->setParameter(1, $playlist);
-        try
-        {
+        try {
             $query->execute();
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             echo $e->getMessage();
             // TODO log here
             return array();
         }
         $rows = $query->getResult();
+
         return $rows;
     }
 
     /**
-     * Delete article from playlists
+     * Delete article from playlists.
+     *
      * @param int $articleId
      */
-    public function deleteArticle($articleId)
+    public function deleteArticle($articleId, $languageId)
     {
         $em = $this->getEntityManager();
-        // $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId, 'language' => $p_language));
-        $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.article = ?1");
-        $query->setParameters( array('1' => $articleId));
-        try
-        {
-            $query->execute();
+        $em->getConnection()->beginTransaction();
+
+        $article = $em->getRepository('Newscoop\Entity\PlaylistArticle')
+            ->findOneBy(array(
+                'articleNumber' => $articleId,
+                'articleLanguage' => $languageId,
+        ));
+
+        if (!is_null($article)) {
+            try {
+                $em->remove($article);
+                $em->getConnection()->commit();
+            } catch (\Exception $e) {
+                $em->getConnection()->rollback();
+                $em->close();
+            }
         }
-        catch (\Exception $e)
-        {
-            echo $e->getMessage();
-            // TODO log here
-            return array();
-        }
-        $rows = $query->getResult();
-        return $rows;
+
+        return $article;
     }
 
     public function getPlaylistArticle($playlist, $article)
@@ -72,9 +71,11 @@ class PlaylistArticleRepository extends EntityRepository
 
         $queryBuilder->where('pa.playlist = :playlist')
             ->andWhere('pa.articleNumber = :articleNumber')
+            ->andWhere('pa.articleLanguage = :articleLanguage')
             ->setParameters(array(
                 'playlist' => $playlist,
-                'articleNumber' => $article->getNumber()
+                'articleNumber' => $article->getNumber(),
+                'articleLanguage' => $article->getLanguageId(),
             ));
 
         $query = $queryBuilder->getQuery();

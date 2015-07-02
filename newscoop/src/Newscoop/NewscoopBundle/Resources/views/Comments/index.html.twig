@@ -1,7 +1,7 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "new_comments" %}
 
-{% block admin_title %}{{ parent() }} - {{ 'comments.label.comments'|trans }}{% endblock %}
+{% block admin_title %}{{ 'comments.label.comments'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_content %}{{ 'comments.label.comments'|trans }}{% endblock %}
 
 {% block admin_stylesheets %}
@@ -92,12 +92,12 @@
                   <th><input class="toggle-checkbox" type="checkbox"></th>
                   <th >{{ knp_pagination_sortable(pagination, 'comments.label.author'|trans, 'cm.name') }}</th>
                   <th>{{ knp_pagination_sortable(pagination, 'comments.label.date'|trans, 'c.time_created') }}</th>
-                  <th>{{ knp_pagination_sortable(pagination, 'comments.label.article'|trans, 't.name') }}</th>
+                  <th>{{ 'comments.label.article'|trans }}</th>
               </tr>
             </thead>
             <tbody>
                 {% for row in commentsArray %}
-                <tr id="use-hover">
+                <tr id="use-hover" class="comment_{{ row.comment.id }} {% if row.comment.status == 'hidden' %} status-hidden{% endif %}">
                     <td style="width: 3%; ">
                         <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{% if pagination.getCurrentPageNumber == 1 %}
                             {{ row.index }}.
@@ -133,7 +133,7 @@
                             {% endif %}
                             <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
                             <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
-                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread.number }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> {{ 'comments.label.ban'|trans }}</a>
+                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> {{ 'comments.label.ban'|trans }}</a>
                             <p></p>
                         </div>
                     </td>
@@ -186,14 +186,14 @@
                     <td>
                         <div class="commentArticleHolder">
                             <p>
-                                <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
-                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.section }}</span>
+                                <a href="/admin/articles/get.php?f_publication_id={{ row.article.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.article.section.number }}&amp;f_article_number={{ row.article.number }}&amp;f_language_id={{ row.article.language.id }}&amp;f_language_selected={{ row.article.language.id }}" class="articleLink">{{ row.article.name }}</a><br>
+                                <span>{{ row.article.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.section }}</span>
                             </p>
-                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a>
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.article.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.article.section.number }}&amp;f_article_number={{ row.article.number }}&amp;f_language_id={{ row.article.language.id }}&amp;f_language_selected={{ row.article.language.id }}">{{ 'comments.label.editarticle'|trans }}</a>
                         </div>
                     </td>
                 </tr>
-                <tr id="hoverBtns">
+                <tr id="hoverBtns" class="comment_{{ row.comment.id }} {% if row.comment.status == 'hidden' %} status-hidden{% endif %}">
                     <td colspan="1"></td>
                     <td colspan="6">
                         <div class="commentBtns" id="{{ row.comment.id }}" style="display: none; visibility: visible;">
@@ -334,10 +334,13 @@
                         location.href = Routing.generate('newscoop_newscoop_comments_index');
                     } else if (status == 'pending') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
+                        $('.comment_'+ids).removeClass('status-hidden');
                     } else if (status == 'approved') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.approved'|trans }}');
+                        $('.comment_'+ids).removeClass('status-hidden');
                     } else if (status == 'hidden') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.hidden'|trans }}');
+                        $('.comment_'+ids).addClass('status-hidden');
                     }
                 },
                 error: function (rq, status, error) {
@@ -593,10 +596,12 @@
                 url: that.attr('href'),
                 success: function (data) {
                     data = $.parseJSON(data);
-                    var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
+                    var content = '<h3>' + $(that).html() + '</h3>';
                     for (i in data) {
-                        content += '<h4>' + i + '</h4>';
-                        content += '<p>' + data[i] + '</p>';
+                        if (i != 'date' && i != 'title' && i != 'authorsLabel') {
+                            content += '<h4>' + i + '</h4>';
+                            content += '<p>' + data[i] + '</p>';
+                        }
                     }
                     $('.dialogPopup').html(content);
                     $('.dialogPopup').dialog('open');

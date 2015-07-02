@@ -246,7 +246,10 @@ class LinkService
 
         $seo = trim(implode('-', array_filter($seo)), '-');
         $seo = preg_replace('/[\\\\,\/\.\?"\+&%:#]/', '', $seo);
-        $seo = str_replace(' ', '-', $seo) . '.htm';
+        if (strlen($seo) > 0) {
+            $seo = str_replace(' ', '-', $seo) . '.htm';
+        }
+        
         return $this->encode($seo);
     }
 

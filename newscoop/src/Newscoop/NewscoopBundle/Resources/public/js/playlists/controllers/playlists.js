@@ -21,8 +21,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $q,
         $timeout,
         $activityIndicator
-        ) {
-
+    ) {
     $scope.isViewing = false;
     $scope.playlist = {};
     $scope.playlists = [];
@@ -117,18 +116,23 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         articleToRemove._method = "unlink";
         _.remove(
             $scope.featuredArticles,
-            {number: articleToRemove.number}
+            {number: articleToRemove.number, language: articleToRemove.language}
         );
 
         Playlist.addItemToLogList(articleToRemove);
         var logList = Playlist.getLogList();
 
         // we have to now replace last element with one before last in log list
-        // so it can be save in API in a proper order, actually we first add a
+        // so it can be saved in API in a proper order, actually we firstly add a
         // new article to the featured articles list and then we unlink the last one.
         // We need to do it in a reverse way, so we first unlink, and then add a new one.
         var lastElement = logList[logList.length - 1];
         var beforeLast = logList[logList.length - 2];
+
+        // also decrease the order for a new item only when it is last on the list
+        if (beforeLast._order > $scope.featuredArticles.length) {
+            beforeLast._order = beforeLast._order - 1;
+        }
 
         logList[logList.length - 1] = beforeLast;
         logList[logList.length - 2] = lastElement;
@@ -182,13 +186,18 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      $scope.addArticleToListFromPreview = function () {
         var exists = _.some(
             $scope.featuredArticles,
-            {number: $scope.articlePreview.number}
-            );
+            {
+                number: $scope.articlePreview.number,
+                language: $scope.articlePreview.language
+            });
 
         if (!exists) {
             var isInLogList = _.some(
                 Playlist.getLogList(),
-                {number: $scope.articlePreview.number}
+                {
+                    number: $scope.articlePreview.number,
+                    language: $scope.articlePreview.language
+                }
             );
 
             if (isLimitReached()) {
@@ -216,8 +225,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      $scope.addArticleToListFromEditor = function (number, language) {
         var exists = _.some(
             $scope.featuredArticles,
-            {number: number}
-            );
+            {
+                number: number,
+                language: language
+            });
 
         if (!exists) {
             var article = undefined,
@@ -225,7 +236,10 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             $scope.processing = true;
             isInLogList = _.some(
                 Playlist.getLogList(),
-                {number: number}
+                {
+                    number: number,
+                    language: language
+                }
             );
 
             if (!isInLogList) {
@@ -296,9 +310,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
      $scope.setPlaylistInfoOnChange = function (list) {
         $scope.loadingSpinner = true;
+        scrollTop();
         Playlist.getArticlesByListId(list).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
+
+            $scope.isEmpty = false;
+            $scope.page = 2;
             $activityIndicator.stopAnimating();
         }, function(response) {
             flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
@@ -311,7 +329,6 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         $scope.playlistInfo = list;
         $scope.playlist.selected.oldLimit = list.maxItems;
         $scope.formData = {title: list.title}
-        $scope.page = 2;
         $scope.isRunning = false;
     };
 
@@ -320,28 +337,25 @@ angular.module('playlistsApp').controller('PlaylistsController', [
      */
      $scope.loadArticlesOnScrollDown = function () {
         if ($scope.playlist.selected) {
-            if ($scope.playlist.selected.maxItems === undefined ||
-                $scope.playlist.selected.maxItems === 0) {
-                if (!$scope.isEmpty && !$scope.isRunning) {
-                    $scope.isRunning = true;
-                    Playlist.getArticlesByListId($scope.playlist.selected, $scope.page)
-                    .then(function (response) {
-                        if (response.items.length == 0) {
-                            $scope.isEmpty = true;
-                        } else {
-                            $scope.page++;
-                            $scope.isEmpty = false;
-                            angular.forEach(response.items, function(value, key) {
-                                if (value.number !== undefined) {
-                                    $scope.featuredArticles.push(value);
-                                }
-                            });
-                        }
-                        $scope.isRunning = false;
-                    }, function(response) {
-                        flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
-                    });
-                }
+            if (!$scope.isEmpty && !$scope.isRunning) {
+                $scope.isRunning = true;
+                Playlist.getArticlesByListId($scope.playlist.selected, $scope.page)
+                .then(function (response) {
+                    if (response.items.length == 0) {
+                        $scope.isEmpty = true;
+                    } else {
+                        $scope.page++;
+                        $scope.isEmpty = false;
+                        angular.forEach(response.items, function(value, key) {
+                            if (value.number !== undefined) {
+                                $scope.featuredArticles.push(value);
+                            }
+                        });
+                    }
+                    $scope.isRunning = false;
+                }, function(response) {
+                    flashMessage(Translator.trans('Could not refresh the list', {}, 'articles'), 'error');
+                });
             }
         }
     }
@@ -400,7 +414,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
 
     /**
      * It makes a proper API calls (create, update, link, unlink) based on
-     * performed actions. If the list's limit will be change, popup will be displayed.
+     * performed actions. If the list's limit will be changed, popup will be displayed.
      */
     $scope.savePlaylist = function () {
         var newLimit = $scope.playlist.selected.maxItems,
@@ -411,38 +425,22 @@ angular.module('playlistsApp').controller('PlaylistsController', [
             okText,
             cancelText;
 
-        okText = Translator.trans('OK', {}, 'messages');
-        cancelText = Translator.trans('Cancel', {}, 'messages');
         if ($scope.playlist.selected.title !== $scope.formData.title && $scope.playlist.selected.id !== undefined) {
             title = Translator.trans('Info', {}, 'articles');
             text = Translator.trans('articles.playlists.namechanged', {}, 'articles');
+            okText = Translator.trans('OK', {}, 'messages');
+            cancelText = Translator.trans('Cancel', {}, 'messages');
             modal = modalFactory.confirmLight(title, text, okText, cancelText);
 
             modal.result.then(function () {
-                showLimitPopupAndSave(newLimit, oldLimit, modal, okText, cancelText);
+                saveList();
 
                 return true;
             });
         } else {
-            showLimitPopupAndSave(newLimit, oldLimit, modal, okText, cancelText);
-        }
-    };
-
-    var showLimitPopupAndSave = function (newLimit, oldLimit, modal, okText, cancelText) {
-        if (newLimit && newLimit != 0 && newLimit != oldLimit) {
-            var title = Translator.trans('Info', {}, 'articles');
-            var text = Translator.trans('articles.playlists.alert', {}, 'articles');
-            modal = modalFactory.confirmLight(title, text, okText, cancelText);
-            modal.result.then(function () {
-                saveList();
-                $scope.playlist.selected.oldLimit = $scope.playlist.selected.maxItems;
-            }, function () {
-                return false;
-            });
-        } else {
             saveList();
         }
-    }
+    };
 
     /**
      * Saves, updates playlist with all articles on server side.
@@ -479,6 +477,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
                 logList = Playlist.getLogList();
                 if (logList.length == 0) {
                     afterSave(response);
+                    $scope.playlists = Playlist.getAll();
                     flash.fadeOut();
                     return;
                 }
@@ -526,6 +525,7 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         Playlist.clearLogList();
         flashMessage(Translator.trans('List saved', {}, 'articles'));
         $scope.loadingSpinner = true;
+        scrollTop();
         Playlist.getArticlesByListId({id: Playlist.getListId(), maxItems: $scope.playlist.selected.maxItems}).then(function (data) {
             $scope.featuredArticles = data.items;
             $scope.loadingSpinner = false;
@@ -539,8 +539,9 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         });
 
         $scope.playlist.selected.id = Playlist.getListId();
+        $scope.playlist.selected.oldLimit = $scope.playlist.selected.maxItems;
 
-        if (response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
+        if (response && response[0] !== undefined && response[0].object.articlesModificationTime !== undefined) {
             $scope.playlist.selected.articlesModificationTime = response[0].object.articlesModificationTime;
         }
     }
@@ -567,5 +568,13 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         }
 
         $scope.processing = false;
+    }
+
+    /**
+     * Scrolls the featured list articles to the top.
+     */
+    var scrollTop = function () {
+        var el = angular.element('ul#context_list');
+        el.scrollTop(0);
     }
 }]);

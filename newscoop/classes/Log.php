@@ -110,7 +110,7 @@ class Log extends DatabaseObject {
         echo $translator->trans('Action') . ': ', $p_text;
 
         $message = ob_get_clean();
-        self::Message($message, $p_userId, $p_eventId);
+        self::Message(substr($message, 0, 254), $p_userId, $p_eventId);
     }
 
 

@@ -8,6 +8,8 @@
 
 namespace Newscoop\Services;
 
+use Newscoop\Cache\CacheKey;
+
 /**
  * Cache service
  */
@@ -87,9 +89,22 @@ class CacheService
 
     public function getCacheKey($id, $namespace = null)
     {
+        if (is_a($id, 'Newscoop\CacheKey')) {
+            return $id->key;
+        }
+
         if (is_array($id)) {
+            foreach ($id as $key => $value) {
+                if (is_object($value)) {
+                    $id[$key] = serialize($value);
+                }
+            }
+
             $id = implode('__', $id);
         }
+
+        // make cache key short
+        $id = md5($id.'|'.$this->systemPreferences->SiteSecretKey);
 
         if ($namespace) {
             $namespace = $this->getNamespace($namespace);
@@ -97,7 +112,7 @@ class CacheService
             return $namespace.'__'.$id;
         }
 
-        return $id;
+        return new CacheKey(array('key' => $id));
     }
 
     public function getNamespace($namespace)
@@ -106,7 +121,7 @@ class CacheService
             return $this->getCacheDriver()->fetch($namespace);
         }
 
-        $value = $namespace .'|'.time();
+        $value = $namespace .'|'.time().'|'.$this->systemPreferences->SiteSecretKey;
         $this->getCacheDriver()->save($namespace, $value);
 
         return $value;

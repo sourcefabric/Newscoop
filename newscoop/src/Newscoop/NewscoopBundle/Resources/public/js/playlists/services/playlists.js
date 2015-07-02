@@ -37,10 +37,13 @@ angular.module('playlistsApp').factory('Playlist', [
 
             $http.get(url)
             .success(function (response) {
-                response.items.forEach(function (item) {
-                    playlists.push(item);
-                });
-                deferredGet.resolve();
+                if (response.items !== undefined) {
+                    response.items.forEach(function (item) {
+                        playlists.push(item);
+                    });
+
+                    deferredGet.resolve(response);
+                }
             }).error(function (responseBody) {
                 deferredGet.reject(responseBody);
             });
@@ -64,8 +67,11 @@ angular.module('playlistsApp').factory('Playlist', [
                 url;
 
             var params = {id: playlist.id};
-
-            if ((playlist.maxItems !== null) && playlist.maxItems > 0) {
+            if (playlist.maxItems !== null && playlist.maxItems >= 0 ||
+                playlist.maxItems == undefined
+            ) {
+                params.items_per_page = 10;
+            } else {
                 params.items_per_page = 9999;
             }
 
@@ -169,13 +175,23 @@ angular.module('playlistsApp').factory('Playlist', [
             var deferred = $q.defer(),
                 postParams,
                 now,
+                date,
                 playlistDateTime = undefined;
 
-            now = new Date();
+            date = new Date();
+            now = new Date(
+                date.getUTCFullYear(),
+                date.getUTCMonth(),
+                date.getUTCDate(),
+                date.getUTCHours(),
+                date.getUTCMinutes(),
+                date.getUTCSeconds()
+            );
+
             postParams = parseAndBuildParams(logList);
 
             if (playlist.articlesModificationTime !== undefined) {
-            	playlistDateTime = new Date(playlist.articlesModificationTime);
+                playlistDateTime = playlist.articlesModificationTime;
             }
 
             $http({
@@ -196,7 +212,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
 			        // send also datetime to see if playlist is locked by diffrent user
 			        if (playlistDateTime !== undefined) {
-			    		str.push("articlesModificationTime=" + $filter('date')(playlistDateTime, 'yyyy-MM-ddTHH:mm:ss'));
+			    		str.push("articlesModificationTime=" + encodeURIComponent(playlistDateTime));
 			    	} else {
 			    		str.push("articlesModificationTime=" + $filter('date')(now, 'yyyy-MM-ddTHH:mm:ss'));
 			    	}
@@ -431,13 +447,17 @@ angular.module('playlistsApp').factory('Playlist', [
         /**
          * Removes article from logList by number and method
          *
-         * @param  {Integer} articleNumber Article's number
+         * @param  {Article} article Article object
          * @param  {String} method         method type (e.g. "unlink" or "link")
          */
-        Playlist.removeItemFromLogList = function (articleNumber, method) {
+        Playlist.removeItemFromLogList = function (article, method) {
         	_.remove(
                 logList,
-                {number: articleNumber, _method: method}
+                {
+                    number: article.number,
+                    language: article.language,
+                    _method: method
+                }
             );
         }
 

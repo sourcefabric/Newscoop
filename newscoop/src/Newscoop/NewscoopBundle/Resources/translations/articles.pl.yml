@@ -192,11 +192,13 @@ Snippet: Fragment
 'The last article of this list has been removed.': null
 Revert: Cofnij
 'Could not automatically refresh the list': 'Nie można odświeżyć tej listy'
+'The article slideshows have been successfully updated, please close the window.': null
 articles:
     playlists:
         namechanged: 'Jesteś pewien że chcesz zmienić nazwę tej listy? Nazwa może być używana w szablonach twojego motywu do wyświetlania zawartości tej listy. Jeśli masz wątpliwości zapytaj osobę odpowiedzialną za używany motyw.'
-        alert: 'Jesteś pewien że chcesz zmienić maksymalną liczbę artykułów na tej liści? Jeśli zmniejszasz limit, to artykuły poza limitem zostaną automatycznie usunięte. Na przykład: jeśli zmieniasz limit z 50 na 30 artykułów, to wszystkie 20 artykułów zaczynając od pozycji 31 do 50 zostaną usunięte z tej listy.'
+        alert: null
     images:
+        see_original: null
         edit:
             edit_image_metadata: 'Edytuj metadane zdjęcia'
             save: Zapisz

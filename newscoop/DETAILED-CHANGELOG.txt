@@ -3,6 +3,190 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      26/05/2015 16:49  4.4.3  Newscoop 4.4.3 minor release
+         8c71179 add missing update sql, fix useForAll js function with tinymce
+         49c5d01 CS-5790: Fixes issue when images/files/videos/pdf folder is symlink
+         875aabd CS-5791:  Adds more clear error messages when direcotires dont exist
+         626b349 translations fixes
+         0ab991f small fixes in default templates
+         5238fb2 updated translation resources
+         385a835 get locale from translator
+         8efc6a0 CS-5724: Improves upgrade script for TimeZOne
+         992fd17 hide the "show in editor" option in the article type fields for switches
+         15da820 CS-5724: Adds proper time zone setting for Newscoop
+         ea73a2d add articles relation to Author table, fix comments api user checking, fix uri parameters in metaSubtitle (editor_image.tpl)
+         79e7d49 added ORM UTC datetime type and fixed playlists saving
+         9cbb0f4 fix metaSubtitle missing $request object, fix cacheKey usage
+         d4b5c58 fixed typo
+         1af69e9 removed unused method
+         8411516 improved and fixed set_topic function
+         1487df2 use site secret key instead installation_id
+         51087c5 use new getLink method to create article edit links in admin
+         bc43bb1 spaces format
+         716a2ae CS-5754 - Problem with topics
+         3f35817 clear vector after rendering
+         7291a14 add unique per instance installation_id to database cache keys
+         4189790 prettify oauth result page
+         d9dd32e update main.css
+         928b491 added oauth login-modal style
+         a6d77f4 fixed obtaining a new token
+         bbe93bd wip playlists oauth
+         0b91820 improve connected articles listing on edit image view
+         e2b40ff authorize user on frontend when signing in to backend
+         417d39a remove custom target path
+         9862d31 improved issue service
+         a74aada remove 'parent' from password recovery template
+         d18ac74 oauth token handling
+         d2e75ec disable issue listener for api
+         504e392 users logout api - simplified the code
+         8a87d32 revert services.yml
+         076a55e fixed custom handlers
+         87f4303 simplyfy and fix webcode (re)generate command
+         5fba74d check if $publicationMetadata is filled
+         5fcec47 improve rendering templates from templates service
+         c5843c1 add 404 response code for not found pages
+         a0e47a5 remove unused encoder factory from UserService
+         7923750 use cacheService for acl resources scan
+         646d3c5 remove findBy and findAll methods
+         f9ff851 ignore authentication oauth modal when session is valid
+         1dba319 fix comments
+         ff13efd added no_cache cookie handling also on frontend
+         a675ecb CS5777 - Create OAuth custom login & logout handlers
+         df1553c by default hide hidden comments for not admins on api
+         2828d5c fix broken html source view in chrome
+         de84a99 CS-5771 - Handle relative redirect uris for oauth clients
+         6b33911 CS-5658: add title for dashboard
+         d125772 CS-5658: improve admin pages titles
+         b6118f2 updated translation resources
+         96c291d S-5773: Fixes issue with upgrade which doesn't take mixed returned entities in account.
+         42987da fix login page title
+         5d6673f add and fix admin pages titles
+         7f53486 set attachment translations per language
+         08f294c CS-5761 - "The last article of this list has been removed" is not translated.
+         aad55b0 Buttons "Add this article" and "Close" is not translated in Playlist management
+         416eea5 AENV-462 - Change name of button "Done" to "Save" in Attach/Detach slideshows
+         5375aa1 use tagged vendors, clone default_url for url property
+         02e30c8 share security context between api and frontend, update somposer.json
+         06a5375 TW-176: Fixes issue with unserialized array in cache key
+         82a8bdd removed check for token
+         b080d76 added image width support
+         b06d29e AENV-452 - Big image is not resized on front-end
+         ca0da21 updated translation resources
+         459cd21 updated translation resources
+         5128a2f added upgrade script - update redirect_uris for defaultoauth client
+         06e3828 use real renditions url, add some details
+         5982184 move InteractiveDoctrineAuthService to onw file, fix multiple keywords search on api
+         b93420f simplify oauth obtaining process
+         e4b97fa override TokenBasedRememberMeServices and authenticate user also in zend_auth
+         8fecf4d updated translation resources
+      22/04/2015 09:35  4.4.2  Newscoop 4.4.2 minor release
+         921408c improve rmt config
+         73b3495 identations to spaces
+         1095f71 tabs fix in service
+         5193be8 tabs fix
+         327fad1 removed comments
+         d3045ea CS-5751 - Editorial comments improvements
+         18d3552 remove not used files in 4.4.2
+         46912ea keep orginal order in search by ids
+         bc127ac pass $onlyPublished to articles repository
+         730df98 one more relation usage replace
+         b8c32cf check if smarty_function_uri before initializing
+         3a273b1 fix comments management and remove article relation from playlist_article entity
+      16/04/2015 10:27  4.4.1  Newscoop 4.4.1 minor release
+         7945847 add cacheId parameter for display method in render smarty function
+         89218e6 context_articles table change, cache key change
+         83d99f3 playlist order fix - new upgrade script
+         5be4796 playlist order fix - upgrade script
+         cdfca8e fixed theme deletion
+         80d1f53 fixed redirect uri for oauth
+         1348379 fixed redirect uri handling when creating oauth user
+         541d3ca fixed path to login modal
+         2d7467c improve issue service
+         12f81bb expand info block by default and icon fix
+         a00d8f6 fixed multiple images in edito mode - slideshows
+         efe7795 fixed iframe width ofr support popup
+         0cdfaa8 removed duplicates from themes.en.yml
+         1b09f70 fixed playlist cache bugs
+         a460d43 remove logs from travis
+         0b65524 fix section_id and issue_id handling in Article entity.
+         1dcafa0 fixed fancybox border
+         93baaba revert section/issue relation change
+         40b373c add dev.log to end of tests
+         f5cfbf2 [big change] fix article issue/section relation, fix comments manager after change on thread property
+         f71d3a2 fix comments ussage after change for thread property
+         c2a7be5 fix handling xml content  with single items, add comments
+         d2b2498 fixed upgrade script related to playlists
+         aea5908 rebuilt create view for slideshows to suit new design
+         9bccb33 improve docblock
+         003902f optimize accessDeniedExceptionListener
+         78a1843 AENV-330 - polish newscoop create/manage slideshow modal
+         8fbf4d9 [AENV-434]: remove endpoint property from embedly snippet template
+         9d1d375 CS-5745: Adds execute bit to scripts
+         88837e1 provide default redirect_uri route with oauth_result.tpl template file rendering
+         91d8c71 fix current cache driver cache flushing
+         dd3976c don't use getArticleNumber from comment entity
+         c9b182f change article_num ussage to thread when work with comment entity
+         abf86a7 remove not needed files
+         7d9d68a allow posting anonymous comments when it's allowed in publication settings
+         c23a160 destroy interval after it stops
+         f6cb020 fixed editrial comments translations
+         e983e1f added handling when token expires - added modal
+         8f4b878 improve editorial comments inicialization
+         4d5d823 optimized system preferences service
+         ea5056c revert singleton for adodb in DatabaseObject
+         071bbb9 implement singleton for adodb in DatabaseObject
+         8944b53 do not use this in static
+         082e83e optimize DatabaseObject - don't fetch adodb in every function
+         c0c07ad encode articlesModificationTime value
+         eecc4ea add missing docblocks
+         61ca702 introduce support for theme playlists configuration, clear defined templates on playlist modification
+         ae1b3d8 display 0 when no playlist limit is set
+         2e35933 added opera support to readme
+         3f3741f changed function comment
+         8076fc0 added handling when token expires - ported from aes plugin
+         7b6ad09 added handling when token expires - ported from aes plugin
+         6a1366e removed unnecessary comment and code form auth interceptor
+         f0ff2e5 fixed bug in playlist modification datetime - ignored timezone
+         0039879 fixed search
+         c06f7bf disable save and add to lists buttons when no playlist selected
+         740b9c1 clear temp list on playlist change
+         877dd9d CS-5707 - Define Newscoop requirements related to supported browsers
+         5473c6f CS-5744 - Move custom DQL functions to config.yml
+         c5a7a73 check for array index before using it it install_conf, replace pear errors with exceptions in image class
+         41ece29 CS-5669 - update the Readme file to tell users about the issue with running Newscoop 4.3 on Debian with PHP version 5.3
+         8fefff5 revert strlower on images extensions
+         5c73ba0 fix endless loop in campcontext with tpid parameter in url
+         a657566 cache seourlend in metaArticle
+         2d0bc76 fix MetaSection preventing caching empty objects
+         ddab515 fix ArticleImage, don't cache empty object in metaSection
+         338f37b changed getArticlesByIds to getArticlesByCriteria function name
+         0cbe5ba AENV-445 - Related articles is not working by API 500 message
+         6124002 improve performance in ArticlesList, reintroduce caching in ArticleImage
+         ccb2508 fixed playlists bugs - auto remove last item etc.
+         b96a672 improve cacheService ussage in ArticleTypeField
+         2188811 remove duplicated code in MetaSection, improve cacheService in ArticleData
+         eb365fa CS-5733 - change UI for the playlist revert alert
+         17ffd70 fixed creating article without issue and section via api
+         85e0d8f added description to article type form
+         df57541 revert cache key parameter for article images list
+         71bc9d6 optimize public resources listener
+         bc52f33 lower images extensions, optimize cache keys, fix articlemodificationtime in playlists
+         e9953cd added authentication exception
+         6adfdce fixed failed authentication handling
+         d9d7892 revert user check
+         c2ea1ed optimize public_resources_listener
+         ef480c6 optimize cacheService ussage
+         3632f0d fixed issue and section relationship in article entity - missing issue, section
+         d618af8 handle current user when not logged in in comments
+         2799d21 Revert "fixed issue and section relationship in article entity - missing issue, ..."
+         9fe8a8e fixed issue and section relationship in article entity - missing issue, section
+         4f4a1a9 Adds support for using old style topic names (with locale appended)
+         83706ed performance fixes - catched on production
+         584f4d6 fixed proxy regeneration in upgrade scripts
+         b35d902 update 4.4 upgrade doc
+         a5809ee fix proxy regeneration for publication entity
+         c9759c8 CS-4863: Removes ingest code from core, code from css and config files  - Removes ingest rules form ACL table  - Adds fake permissions for old auth
+         a868d8e save wip
       24/03/2015 16:08  4.4.0  initial release
          2f8dd0f fixed proxy regeneration when already generated in upgrade scripts
          34783f4 improve rmt config

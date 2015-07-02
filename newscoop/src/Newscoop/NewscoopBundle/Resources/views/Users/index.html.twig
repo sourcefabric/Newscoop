@@ -1,7 +1,7 @@
 {% trans_default_domain "users" %}
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 
-{% block admin_title %}{{ parent() }} - {{ 'users.label.title'|trans }}{% endblock %}
+{% block admin_title %}{{ 'users.label.title'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_box %}
 <div class="toolbar row">
 <span class="article-title">{{ 'users.label.title'|trans }}</span>

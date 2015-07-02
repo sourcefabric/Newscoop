@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'ავტომატური სტატისტიკის გამოყენება'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'მოვლენის ფერი'
 'You must input a number greater than $1 and less than $2 into the $3 field.': '$3 ველში შეიყვანეთ რიცხვი რომელიც $1-ზე მეტია და $2-ზე ნაკლები.'
 'You do not have the right to translate article types.': 'თქვენ არ გაქვთ სტატიის ტიპის თარგმნის უფლება.'
@@ -22,7 +22,8 @@ Custom: პერსონალიზებული
 Precision: სიზუსტე
 'Can not convert the field $1 from $2 to type $3.': '$1 ველის $2-დან $3 ტიპზე კონვერტირება შეუძლებელია'
 'Are you sure you want to make $1 a $2 field?': 'დარწმუნებული ხართ რომ გსურთ $1-ის $2 ველად ქცევა?'
-'Is Content': 'არის კონტენტი'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'სტატიის ტიპების სიაზე დაბრუნება'
 show: ჩვენება
 hide: დამალვა
@@ -35,7 +36,7 @@ hide: დამალვა
 'The field $1 does not exist.': '$1 ველი არ არსებობს'
 'The $1 field may only contain letters and underscore (_) character.': '$1 ველი უნდა შეიცავდე მხოლოდ ასოებს და _ სიმბოლოს.'
 'Template Field Name': 'შაბლონის ველის სახელი'
-Show/Hide: ჩვენება/დამალვა
+'Show to Authors?': null
 'Renaming article type field': 'სტატიის ტიპის ველის სახელის შეცვლა'
 'Rename field': 'ველის სახელის შეცვლა'
 'Reassign a field type': 'ველის ტიპის ხელახლა მინიჭება'

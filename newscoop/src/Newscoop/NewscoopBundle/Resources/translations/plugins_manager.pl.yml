@@ -31,6 +31,8 @@ newscoop.plugins_manager.installed: 'Zakończono. Odśwież tą stronę. Wtyczka
 newscoop.plugins_manager.clipboard: 'Skopiuj do schowka: Ctrl+C (Cmd + C na komputerach Mac), Enter'
 newscoop.plugins_manager.downloads: pobrania
 newscoop.plugins_manager.favers: Ulubione
+newscoop.plugins_manager.private_plugins_not_writable: null
+newscoop.plugins_manager.private_plugins_not_writable_commands: null
 newscoop:
     datatable:
         table:

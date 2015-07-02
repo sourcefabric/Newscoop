@@ -57,10 +57,11 @@ if ($blogService->isBlogger($g_user)) {
     }
 }
 
+$controller->view->headTitle($articleObj->getName().' - '.$translator->trans('Edit article', array(), 'article_files').' - Newscoop Admin', 'SET');
+
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->getUserDefinedColumns(FALSE, TRUE);
-
+$dbColumns = $articleData->getUserDefinedColumns();
 $articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);

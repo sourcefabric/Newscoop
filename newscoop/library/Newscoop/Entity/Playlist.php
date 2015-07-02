@@ -1,49 +1,55 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Playlist entity
+ * Playlist entity.
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistRepository")
  * @ORM\Table(name="playlist")
  */
 class Playlist extends AbstractEntity
 {
-	/**
-     * @ORM\Id 
+    /**
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="id_playlist")
+     *
      * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(length=256, name="name")
+     *
      * @var string
      */
     protected $name;
 
     /**
-     * @ORM\Column(length=1024, name="notes")
+     * @ORM\Column(length=1024, name="notes", nullable=true)
+     *
      * @var string
      */
     protected $notes;
 
     /**
-     * @ORM\Column(type="integer", name="max_items")
+     * @ORM\Column(type="integer", name="max_items", nullable=true)
+     *
      * @var int
      */
     protected $maxItems;
 
     /**
-     * @ORM\Column(type="datetime", name="modification_time", nullable=true)
-     * @var datetime
+     * @ORM\Column(type="utcdatetime", name="modification_time", nullable=true)
+     *
+     * @var utcdatetime
      */
     protected $articlesModificationTime;
 
@@ -53,13 +59,48 @@ class Playlist extends AbstractEntity
     protected $articles;
 
     /**
-     * Link to topic articles resource
+     * Link to topic articles resource.
+     *
      * @var string
      */
     protected $articlesLink;
-    
+
     /**
-     * Set link to topic articles resource
+     * @ORM\Column(type="string", name="themes", nullable=true)
+     */
+    protected $themes;
+
+    /**
+     * Provides the themes attached to playlist.
+     *
+     * @return string
+     */
+    public function getThemes()
+    {
+        if (!$this->themes) {
+            return array();
+        }
+
+        return json_decode($this->themes, true);
+    }
+
+    /**
+     * Set the themes attached to playlist.
+     *
+     * @param string $themes
+     *
+     * @return self
+     */
+    public function setThemes(array $themes)
+    {
+        $this->themes = json_encode($themes);
+
+        return $this;
+    }
+
+    /**
+     * Set link to topic articles resource.
+     *
      * @param string $articlesLink Link to topic articles resource
      */
     public function setArticlesLink($articlesLink)
@@ -70,7 +111,8 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Get link to topic articles resource
+     * Get link to topic articles resource.
+     *
      * @return string Link to topic articles resource
      */
     public function getArticlesLink()
@@ -79,22 +121,24 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Returns the name of the playlist
+     * Returns the name of the playlist.
      */
     public function getName()
-	{
-		return $this->name;
-	}
+    {
+        return $this->name;
+    }
 
-	/**
-     * Returns the name of the playlist
-     * @var string $name
+    /**
+     * Returns the name of the playlist.
+     *
+     * @var string
      */
     public function setName($name)
-	{
-	    $this->name = $name;
-		return $this;
-	}
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 
     /**
      * Gets the value of notes.

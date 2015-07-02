@@ -21,7 +21,7 @@ $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f
 $sectionTranslations = Section::GetSections($f_publication_id, $f_issue_number, null, null, $sectionObj->getName(), null);
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top($translator->trans('Delete section', array(), 'sections'), $topArray);
-
+$controller->view->headTitle($translator->trans('Delete section', array(), 'sections').' - Newscoop Admin', 'SET');
 ?>
 <P>
 <FORM METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/sections/do_del.php">

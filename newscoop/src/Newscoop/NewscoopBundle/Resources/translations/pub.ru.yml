@@ -8,7 +8,7 @@
 'The subscription settings for $1 could not be added.': 'Настройки подписки для $1 не могут быть добавлены.'
 'The publication name you specified conflicts with publication $1.': 'Указанное название издания конфликтует с изданием $1.'
 'The publication alias you specified conflicts with publication $1.': 'Указанный синоним издания конфликтует с изданием $1.'
-'Subscription defaults': 'Умолчания для подписки'
+'Subscription defaults': 'Параметры подписки по умолчанию'
 'Subscription Settings by Country': 'Установки подписки по стране'
 'Set subscription settings for a country': 'Установить настройки подписки для страны'
 'Set subscription settings by country': 'Установить настройки подписки по странам'
@@ -77,62 +77,62 @@ Currency: Валюта
 'Article topics': 'Темы статьи'
 publications:
     title:
-        list: null
-        edit: null
-        add: null
-        remove: null
-    no_publications: null
-    general_settings: null
-    comments_settings: null
-    seo_settings: null
-    publication_removed: null
-    publication_saved: null
+        list: 'Список изданий'
+        edit: 'Редактировать издание'
+        add: 'Добавить новое издание'
+        remove: 'Удалить издание'
+    no_publications: 'Нет изданий.'
+    general_settings: 'Общие настройки'
+    comments_settings: 'Настройки комментариев'
+    seo_settings: 'Настройки SEO'
+    publication_removed: 'Издание удалено.'
+    publication_saved: 'Изменения в данных издания успешно сохранены.'
     remove:
-        cant_be_removed: null
-        can_be_removed: null
+        cant_be_removed: 'Это издание содержит информацию и не может быть удалено.'
+        can_be_removed: 'Это издание не содержит информации и может быть удалено. '
         left_issues: null
         left_sections: null
         left_articles: null
         show_issues: 'показывать номера'
-        before_removing: null
-        you_sure: null
-        remove: null
+        before_removing: 'До удаления издания вы должны удалить/переместить все остающиеся данные. '
+        you_sure: 'Вы действительно хотите удалить издание?'
+        remove: 'Удалить издание '
     buttons:
-        addNew: null
+        addNew: 'Добавить новое издание'
         listPublications: null
         listIssues: null
     table:
-        number: null
+        number: Номер
         name: Название
         default_alias: null
-        default_language: null
-        comments_status: null
-        url_type: null
-        configure: null
-        remove: null
+        default_language: 'Язык по умолчанию'
+        comments_status: 'Статус комментариев'
+        url_type: 'Тип Url '
+        configure: Настройки
+        remove: Удалить
     form_type:
         label:
-            name: null
-            template_path: null
-            short_names: null
+            name: 'Название издания'
+            template_path: 'Путь к шаблону'
+            short_names: 'Сокращенное название'
             alias: null
-            url_type: null
+            url_type: 'Тип Url '
             seo: null
-            seo_article_title: null
-            seo_article_keywords: null
-            seo_article_topics: null
-            edit_aliases: null
-            edit_languages: null
+            seo_article_title: 'Название статьи'
+            seo_article_keywords: 'Ключевые слова статьи'
+            seo_article_topics: 'Темы статьи'
+            edit_aliases: 'Правка псевдонимов'
+            edit_languages: 'Редактировать языки'
             moderator_to: null
             moderator_from: null
-            comments_enabled: null
+            comments_enabled: 'Комментарии разрешены?'
             public_comments_enabled: 'Разрешить публичные (анонимные) комментарии?'
-            comments_article_default_enabled: null
-            comments_subscribers_moderated: null
-            comments_public_moderated: null
-            comments_captcha_enabled: null
-            comments_spam_blocking_enabled: null
-            meta_title: null
-            meta_keywords: null
-            meta_description: null
-    tip1: null
+            comments_article_default_enabled: 'Комментарии к стате разрешены по умолчанию?'
+            comments_subscribers_moderated: 'Комментарии зарегистрированных пользователей подлежат модерации?'
+            comments_public_moderated: 'Открытые (анонимные) комментарии подлежат модерации?'
+            comments_captcha_enabled: 'Captcha активирована?'
+            comments_spam_blocking_enabled: 'Включена ли блокировка спама в комментариях (внутренняя система)? '
+            meta_title: 'Название издания'
+            meta_keywords: 'Ключевые слова издания'
+            meta_description: 'Описание издания'
+    tip1: 'Информационное наполнение в Newscoop структурировано в соответствии с традициями печатных СМИ: Издание, Номер, Рубрика и Статья. Каждое издание имеет номера, в каждом номере имеются рубрики, которые состоят из статей. '

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -16,7 +15,7 @@ use Doctrine\ORM\Query;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
- * Topcis service
+ * Topcis service.
  */
 class TopicService
 {
@@ -34,12 +33,13 @@ class TopicService
     }
 
     /**
-     * Adds topic to the article
+     * Adds topic to the article.
      *
      * @param Topic   $topic   Topic object
      * @param Article $article Article object
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws ResourcesConflictException
      */
     public function addTopicToArticle(Topic $topic, Article $article)
@@ -47,19 +47,20 @@ class TopicService
         $result = $this->attachTopicToArticle($topic, $article);
 
         if (!$result) {
-            throw new ResourcesConflictException("Topic already attached to article", 409);
+            throw new ResourcesConflictException('Topic already attached to article', 409);
         }
 
         return true;
     }
 
     /**
-     * Removes topic from the article
+     * Removes topic from the article.
      *
      * @param Topic   $topic   Topic object
      * @param Article $article Article object
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws ResourcesConflictException
      */
     public function removeTopicFromArticle(Topic $topic, Article $article)
@@ -67,19 +68,19 @@ class TopicService
         $result = $this->detachTopicFromArticle($topic, $article);
 
         if (!$result) {
-            throw new ResourcesConflictException("Topic already removed from the article", 409);
+            throw new ResourcesConflictException('Topic already removed from the article', 409);
         }
 
         return true;
     }
 
     /**
-     * Adds topic to the article
+     * Adds topic to the article.
      *
      * @param Topic   $topic   Topic object
      * @param Article $article Article object
      *
-     * @return boolean
+     * @return bool
      */
     protected function attachTopicToArticle(Topic $topic, Article $article)
     {
@@ -87,19 +88,19 @@ class TopicService
         if ($result) {
             $this->em->flush();
 
-            $this->dispatcher->dispatch("article-topic.attach", new GenericEvent($this, $this->getLogArray($topic, $article)));
+            $this->dispatcher->dispatch('article-topic.attach', new GenericEvent($this, $this->getLogArray($topic, $article)));
         }
 
         return $result;
     }
 
     /**
-     * Removes topic from the article
+     * Removes topic from the article.
      *
      * @param Topic   $topic   Topic object
      * @param Article $article Article object
      *
-     * @return boolean
+     * @return bool
      */
     protected function detachTopicFromArticle(Topic $topic, Article $article)
     {
@@ -107,7 +108,7 @@ class TopicService
         if ($result) {
             $this->em->flush();
 
-            $this->dispatcher->dispatch("article-topic.detach", new GenericEvent($this, $this->getLogArray($topic, $article)));
+            $this->dispatcher->dispatch('article-topic.detach', new GenericEvent($this, $this->getLogArray($topic, $article)));
         }
 
         return $result;
@@ -130,11 +131,11 @@ class TopicService
     }
 
     /**
-     * Removes topic from all articles it is attached to
+     * Removes topic from all articles it is attached to.
      *
      * @param string|int $topicId Topic id
      *
-     * @return boolean
+     * @return bool
      */
     public function removeTopicFromAllArticles($topicId)
     {
@@ -160,12 +161,12 @@ class TopicService
     }
 
     /**
-     * Saves topic position when it was dragged and dropped
+     * Saves topic position when it was dragged and dropped.
      *
      * @param Topic $node   Dragged topic object
      * @param array $params Parameters with positions
      *
-     * @return boolean
+     * @return bool
      */
     public function saveTopicPosition(Topic $node, $params)
     {
@@ -216,12 +217,12 @@ class TopicService
     }
 
     /**
-     * Reorder root topics
+     * Reorder root topics.
      *
      * @param array $rootNodes Root topics
      * @param array $order     Topics ids in order
      *
-     * @return boolean
+     * @return bool
      */
     public function reorderRootNodes($rootNodes, $order = array())
     {
@@ -256,12 +257,13 @@ class TopicService
     }
 
     /**
-     * Saves new topic. Possibility to overwrite AUTO strategy (set custom ids)
+     * Saves new topic. Possibility to overwrite AUTO strategy (set custom ids).
      *
      * @param Topic       $node   Topic object
      * @param string|null $locale Language code
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws ResourcesConflictException When Topic already exists
      */
     public function saveNewTopic(Topic $node, $locale = null)
@@ -280,7 +282,7 @@ class TopicService
             ->getOneOrNullResult();
 
         if ($topicTranslation) {
-            throw new ResourcesConflictException("Topic already exists", 409);
+            throw new ResourcesConflictException('Topic already exists', 409);
         }
 
         if (!$node->getParent()) {
@@ -299,7 +301,7 @@ class TopicService
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
         $this->em->flush();
 
-        $this->dispatcher->dispatch("topic.create", new GenericEvent($this, array(
+        $this->dispatcher->dispatch('topic.create', new GenericEvent($this, array(
             'title' => $node->getTitle(),
             'id' => array('id' => $node->getId()),
             'diff' => (array) $node,
@@ -309,15 +311,15 @@ class TopicService
     }
 
     /**
-     * Checks if topic is attached to any article
+     * Checks if topic is attached to any article.
      *
      * If $attachedCount is set to yes, returns an array with the number of topics attached to articles,
      * else returns boolean. By default set to false.
      *
      * @param string|int $topicId       Topic id
-     * @param boolean    $attachedCount Switch to include/exclude number of topics
+     * @param bool       $attachedCount Switch to include/exclude number of topics
      *
-     * @return boolean|array
+     * @return bool|array
      */
     public function isAttached($topicId, $attachedCount = false)
     {
@@ -343,7 +345,7 @@ class TopicService
 
     /**
      * Returns a topic object identified by the full name in the
-     * format topic_name:language_code
+     * format topic_name:language_code.
      *
      * @param string $fullName Topic's full name
      *
@@ -374,6 +376,32 @@ class TopicService
     }
 
     /**
+     * Gets the topic by id, its title or title
+     * combined with the language and language code.
+     * $string parameter value can be: "test", 20, "test:en".
+     *
+     * @param string $string Topic search phrase
+     * @param string $locale Locale
+     *
+     * @return Topic|null
+     */
+    public function getTopicBy($string, $locale)
+    {
+        $topic = $this->getTopicRepository()
+            ->getTopicByIdOrName($string, $locale)
+            ->getOneOrNullResult();
+
+        if (!$topic) {
+            $topic = $this->getTopicByFullName($string);
+            if (!$topic) {
+                return;
+            }
+        }
+
+        return $topic;
+    }
+
+    /**
      * Wrapper method for setting translatable hint.
      * When for instance getting topic with German name
      * $locale should be set to "de".
@@ -389,7 +417,7 @@ class TopicService
     }
 
     /**
-     * Wrapper method for getting readable topic path
+     * Wrapper method for getting readable topic path.
      *
      * @param Topic       $topic  Topic object
      * @param string|null $locale Locale e.g. "en"
@@ -402,11 +430,11 @@ class TopicService
     }
 
     /**
-     * Count topics by given criteria
+     * Count topics by given criteria.
      *
      * @param array $criteria
      *
-     * @return integer
+     * @return int
      */
     public function countBy(array $criteria = array())
     {
@@ -414,12 +442,24 @@ class TopicService
     }
 
     /**
-     * Check if topic name already exists by given locale
+     * Count article topics by given criteria.
+     *
+     * @param array $criteria
+     *
+     * @return int
+     */
+    public function countArticleTopicsBy(array $criteria = array())
+    {
+        return $this->getArticleTopicRepository()->countBy($criteria);
+    }
+
+    /**
+     * Check if topic name already exists by given locale.
      *
      * @param string $locale Locale
      * @param string $title  Topic name
      *
-     * @return boolean
+     * @return bool
      */
     public function checkTopicName($locale, $title)
     {
@@ -449,7 +489,7 @@ class TopicService
      *
      * @param Topic $topic Topic
      *
-     * @return boolean
+     * @return bool
      */
     public function deleteTopic(Topic $topic)
     {
@@ -465,11 +505,11 @@ class TopicService
     }
 
     /**
-     * Removes topic from all users it is followed by
+     * Removes topic from all users it is followed by.
      *
      * @param string|int $topicId Topic id
      *
-     * @return boolean
+     * @return bool
      */
     public function removeTopicFromAllUsers($topicId)
     {
@@ -485,15 +525,15 @@ class TopicService
     }
 
     /**
-     * Checks if topic is attached to any article
+     * Checks if topic is attached to any article.
      *
      * If $attachedCount is set to yes, returns an array with the number of topics attached to articles,
      * else returns boolean. By default set to false.
      *
      * @param string|int $topicId       Topic id
-     * @param boolean    $attachedCount Switch to include/exclude number of topics
+     * @param bool       $attachedCount Switch to include/exclude number of topics
      *
-     * @return boolean|array
+     * @return bool|array
      */
     public function isFollowed($topicId)
     {
@@ -510,7 +550,7 @@ class TopicService
     }
 
     /**
-     * Get options for forms
+     * Get options for forms.
      *
      * @return array
      */
@@ -520,12 +560,22 @@ class TopicService
     }
 
     /**
-     * Gets Topic Repository
+     * Gets Topic Repository.
      *
      * @return Newscoop\NewscoopBundle\Entity\Repository\TopicRepository
      */
     protected function getTopicRepository()
     {
         return $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+    }
+
+    /**
+     * Gets article topic Repository.
+     *
+     * @return Newscoop\Entity\Repository\ArticleTopicRepository
+     */
+    protected function getArticleTopicRepository()
+    {
+        return $this->em->getRepository('Newscoop\Entity\ArticleTopic');
     }
 }

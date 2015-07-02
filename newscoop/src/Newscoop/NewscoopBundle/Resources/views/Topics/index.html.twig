@@ -1,6 +1,6 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "topics" %}
-{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'topics.title'|trans }}{% endblock %}
+{% block admin_title %}{{ 'topics.title'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_box %}
   {% if compactView == false %}
       <div class="toolbar row"><span class="article-title">
@@ -26,6 +26,7 @@
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
+<script src="/js/admin.js"></script>
 {% endblock %}
 {% block admin_page_menu_bar %}
   {% if compactView == false %}
@@ -34,7 +35,7 @@
 {% endblock %}
 {% block admin_content %}
 
-<div class="system_pref topics" ng-app="treeApp" ng-controller="treeCtrl">
+<div class="system_pref topics" ng-app="treeApp" ng-controller="treeCtrl" ng-cloak>
 {% if compactView %}
 <div class="fixed-top topics-top">
   <button class="button right-floated with-margin-top" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
@@ -118,7 +119,7 @@
                           <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                           <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                           <div class="form-group">
-                            <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="subtopicForm.title" placeholder="{{ 'topics.label.subtopicname'|trans }}">
+                            <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="node.newChild[node.id]" placeholder="{{ 'topics.label.subtopicname'|trans }}">
                             <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(this)">{{ 'topics.btn.add'|trans }}</button>
                           </div>
                         </form>
@@ -141,11 +142,11 @@
                             <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                             <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                             <div class="form-group">
-                              <select ng-model="languageSelected" ng-options="language.name for language in languageList" ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px">
+                              <select ng-model="languageSelected" ng-options="language.name for language in languageList" ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px" required>
                                 <option value="">{{ 'topics.label.choose'|trans }}</option>
                               </select>
-                              <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="translationForm.title" placeholder="{{ 'topics.label.translationstring'|trans }}">
-                              <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node.id)">{{ 'topics.btn.add'|trans }}</button>
+                              <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="node.newTranslation[node.id]" placeholder="{{ 'topics.label.translationstring'|trans }}">
+                              <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node)">{{ 'topics.btn.add'|trans }}</button>
                             </div>
                       </form>
                       <h3>{{ 'topics.label.topictranslations'|trans }}</h3>
@@ -189,7 +190,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'topics.btn.close'|trans }}</button>
-                    <button type="button" ng-click="removeTopic()" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
+                    <button type="button" ng-click="removeTopic()" ng-disabled="deleteDisabled" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
                   </div>
                 </div>
               </div>

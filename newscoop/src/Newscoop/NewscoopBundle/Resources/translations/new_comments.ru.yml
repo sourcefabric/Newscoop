@@ -1,19 +1,19 @@
 comments:
     label:
-        comments: null
+        comments: 'Управление комментариями'
         menu: Комментарии
-        banned: null
-        anonymous: null
+        banned: Запрещено
+        anonymous: Анонимный
         at: в
-        noentries: null
+        noentries: 'Записей не найдено.'
         showing: Показано
         of: из
         to: до
-        entries: null
+        entries: записи
         fullarticle: 'Полный текст статьи'
         hidden: Скрытый
         approved: Утвержденный
-        new: Новая
+        new: Новый
         editarticle: 'Перейти к редактируемой статье'
         section: Рубрика
         comment: Комментарий
@@ -21,13 +21,13 @@ comments:
         subject: Тема
         ban: 'Запретить/разрешить пользователю комментировать'
         author: Автор
-        date: null
+        date: 'Дата / Комментарий'
         article: Статья
         search: Поиск
         show: Показывать
         recommended: Рекомендовано
         unrecommended: 'Не рекомендовано'
-        editcomment: null
+        editcomment: 'Быстрое редактирование комментария'
         actions: Операции
         selectstatus: 'Выбрать статус'
         deleted: 'Удалено '
@@ -42,25 +42,25 @@ comments:
         reply: Ответ
         edit: 'Быстрое редактирование'
         close: Закрыть
-        okay: null
+        okay: OK
         filter: Фильтр
     msg:
         deleted: 'Комментарий удален.'
         commentinarticle: 'Комментарий $4 пользователя $1 в статье $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: новый
+            approved: утвержденный
+            hidden: скрыто
+            single: 'Статус комментария изменяется на'
+            all: 'Статус комментариев изменяется на'
         error:
             reach: 'Невозможно связаться с Newscoop. Пожалуйста, проверьте ваше интернет-соединение.'
             deletefromarticle: 'Комментарий удален пользователем $1 из статьи $2 ($3)'
-            statuschange: null
-            delete: null
-            update: null
+            statuschange: 'Ошибка при изменении статуса комментария'
+            delete: 'Не удалось удалить комментарий'
+            update: 'Поля должны быть заполнены'
         sure: 'Вы собираетесь окончательно удалить комментарий.'
-        suremultiple: null
-        first: null
+        suremultiple: 'Вы собираетесь удалить этот комментарий без возможности восстановления.'
+        first: 'Прежде всего, пожалуйста, выберите комментарий/ии.'
         surequestion: 'Вы уверены, что хотите это сделать?'
         updated: 'Комментарий обновлен.'

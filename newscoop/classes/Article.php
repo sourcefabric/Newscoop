@@ -77,7 +77,10 @@ class Article extends DatabaseObject
         'comments_locked',
         'time_updated',
         'object_id',
-        'rating_enabled');
+        'rating_enabled',
+        'section_id',
+        'issue_id'
+    );
 
     public $m_languageName = null;
 
@@ -298,9 +301,17 @@ class Article extends DatabaseObject
             && is_numeric($p_sectionNumber)
             && ($p_publicationId > 0)
             && ($p_issueNumber > 0)
-            && ($p_sectionNumber > 0) ) {
+            && ($p_sectionNumber > 0) )
+        {
+            $issueObj = new Issue($p_publicationId, $this->m_data['IdLanguage'], $p_issueNumber);
+            $sectionObj = new Section($p_publicationId, $p_issueNumber, $this->m_data['IdLanguage'], $p_sectionNumber);
+
             $values['NrIssue'] = (int) $p_issueNumber;
             $values['NrSection'] = (int) $p_sectionNumber;
+
+            // for internall relations in entity we need also to keep sectionId and issueId
+            $values['issue_id'] = $issueObj->getIssueId();
+            $values['section_id'] = $sectionObj->getSectionId();
         }
         $values['ShortName'] = $this->m_data['Number'];
         $values['Type'] = $p_articleType;
@@ -461,6 +472,12 @@ class Article extends DatabaseObject
             }
             $values['Name'] = $articleCopy->getUniqueName($copyMe->m_data['Name']);
 
+            // for internall relations in entity we need also to keep sectionId and issueId
+            $issueObj = new Issue($articleCopy->m_data['IdPublication'], $articleCopy->m_data['IdLanguage'], $articleCopy->m_data['NrIssue']);
+            $sectionObj = new Section($articleCopy->m_data['IdPublication'], $articleCopy->m_data['NrIssue'], $articleCopy->m_data['IdLanguage'], $articleCopy->m_data['NrSection']);
+            $values['issue_id'] = $issueObj->getIssueId();
+            $values['section_id'] = $sectionObj->getSectionId();
+
             $articleCopy->__create($values);
             $articleCopy->setProperty('UploadDate', 'NOW()', true, true);
             $articleCopy->setProperty('LockUser', 'NULL', true, true);
@@ -540,10 +557,16 @@ class Article extends DatabaseObject
             $columns["IdPublication"] = (int) $p_destPublicationId;
         }
         if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
+            $issueObj = new Issue($p_destPublicationId, $this->m_data['IdLanguage'], $p_destIssueNumber);
             $columns["NrIssue"] = (int) $p_destIssueNumber;
+            // for internall relations in entity we need also to keep issueId
+            $columns['issue_id'] = $issueObj->getIssueId();
         }
         if ($this->m_data["NrSection"] != $p_destSectionNumber) {
+            $sectionObj = new Section($p_destPublicationId, $p_destIssueNumber, $this->m_data['IdLanguage'], $p_destSectionNumber);
             $columns["NrSection"] = (int) $p_destSectionNumber;
+            // for internall relations in entity we need also to keep sectionId
+            $columns['section_id'] = $sectionObj->getSectionId();
         }
         $success = false;
         if (count($columns) > 0) {
@@ -640,6 +663,12 @@ class Article extends DatabaseObject
         $values['IsIndexed'] = 'N';
         $values['IdUser'] = $p_userId;
 
+        // for internall relations in entity we need also to keep sectionId and issueId
+        $issueObj = new Issue($this->m_data['IdPublication'], $p_languageId, $this->m_data['NrIssue']);
+        $sectionObj = new Section($this->m_data['IdPublication'], $this->m_data['NrIssue'], $p_languageId, $this->m_data['NrSection']);
+        $values['issue_id'] = $issueObj->getIssueId();
+        $values['section_id'] = $sectionObj->getSectionId();
+
         // Create the record
         $success = $articleCopy->__create($values);
         if (!$success) {
@@ -715,7 +744,7 @@ class Article extends DatabaseObject
             // Delete the article from playlists
             $em = Zend_Registry::get('container')->getService('em');
             $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
-            $repository->deleteArticle($this->m_data['Number']);
+            $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
             $em->flush();
 
             // Delete indexes
@@ -739,9 +768,20 @@ class Article extends DatabaseObject
             $this->m_data['IdLanguage']);
         $articleData->delete();
 
+        // Delete webcode
+        $em = Zend_Registry::get('container')->getService('em');
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->find(array(
+                'number' => $this->getArticleNumber(),
+                'language' => $this->getLanguageId(),
+            ));
+        $webcode = $article->getWebcodeEntity($article);
+
+        $em->remove($webcode);
+        $em->flush();
+        $em->detach($article);
+
         $tmpObj = clone $this; // for log
-        $tmpData = $this->m_data;
-        $tmpData['languageName'] = $this->getLanguageName();
         // Delete row from Articles table.
         $deleted = parent::delete();
 
@@ -1403,7 +1443,7 @@ class Article extends DatabaseObject
     /**
      * Return the current workflow state of the article:
      *   'Y' = "Published"
-     *	 'S' = "Submitted"
+     *   'S' = "Submitted"
      *   'N' = "New"
      *
      * @return string
@@ -1448,7 +1488,7 @@ class Article extends DatabaseObject
 
     /**
      * Set the workflow state of the article.
-     * 	   'Y' = 'Published'
+     *     'Y' = 'Published'
      *     'S' = 'Submitted'
      *     'N' = 'New'
      *
@@ -1742,7 +1782,9 @@ class Article extends DatabaseObject
             }
         }
         $urlEnd = preg_replace('/[\\\\,\/\.\?"\+&%:#]/', '', trim($urlEnd));
-        $urlEnd = str_replace(' ', '-', $urlEnd) . '.htm';
+        if (strlen($urlEnd) > 0) {
+            $urlEnd = str_replace(' ', '-', $urlEnd) . '.htm';
+        }
 
         return $urlEnd;
     }
@@ -2539,7 +2581,6 @@ class Article extends DatabaseObject
         $languageId = null;
 
         $em = Zend_Registry::get('container')->getService('em');
-        $request = Zend_Registry::get('container')->getService('request');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
 
         // parses the given parameters in order to build the WHERE part of
@@ -2581,7 +2622,7 @@ class Article extends DatabaseObject
             } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
-                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'])->getOneOrNullResult();
                 if ($topic) {
                     $topicIds = array();
                     foreach($topic->getChildren() as $child) {
@@ -2596,7 +2637,7 @@ class Article extends DatabaseObject
                     }
                 }
             } elseif ($leftOperand == 'topic_strict') {
-                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'], $request->getLocale())->getOneOrNullResult();
+                $topic = $repository->getTopicByIdOrName($comparisonOperation['right'])->getOneOrNullResult();
                 if ($topic) {
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {

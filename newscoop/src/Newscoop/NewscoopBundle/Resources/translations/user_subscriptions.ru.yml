@@ -55,7 +55,7 @@ E-Mail: E-mail
 'Change subscriber information': 'Изменить информацию о подписчике'
 'Add new IP address': 'Добавить новый IP адрес'
 'Add new IP Address': 'Добавит новый IP адрес'
-'Account Name': null
+'Account Name': 'Имя учетной записи'
 '%value% must be greater than %min%': 'значение %value% должно быть больше, чем %min%'
 '%value% is not a valid IP Address': '%value%  не является действительным IP адресом'
 'Regardless of the language': 'Независимо от языка'

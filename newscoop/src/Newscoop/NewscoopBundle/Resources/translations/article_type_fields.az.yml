@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Avtomatik statistikadakı istifadə'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Tədbirin Rəngi'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Sən $3 adlı sahəyə $1-dan çox, $2-dan az rəqəmi daxil etməlisən. '
 'You do not have the right to translate article types.': 'Məqalə növlərini tərcümə etməyə ixtiyarın yoxdur.'
@@ -22,7 +22,8 @@ Custom: Xüsusi
 Precision: Dəqiqlik
 'Can not convert the field $1 from $2 to type $3.': '$1 sahəsi $2 halından $3 halına çevrilə bilmir.'
 'Are you sure you want to make $1 a $2 field?': '$1-i $2 sahəsi etmək istədiyinə əminsən?'
-'Is Content': 'Bu Tərkibdir'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'Məqalə Növü Siyahısına qayıt'
 show: göstər
 hide: gizlə
@@ -35,7 +36,7 @@ hide: gizlə
 'The field $1 does not exist.': '$1 sahəsi mövcud deyil.'
 'The $1 field may only contain letters and underscore (_) character.': '$1 sahə adı yalnız hərf və alt xətt (_) işarəsindən ibarət ola bilər.'
 'Template Field Name': 'Nümunə Sahəsinin Adı'
-Show/Hide: Göstər/Gizlə
+'Show to Authors?': null
 'Renaming article type field': 'Məqalə növü sahəsinin adını dəyişilməsi'
 'Rename field': 'Sahənin adını dəyiş'
 'Reassign a field type': 'Sahə növünü yenidən təyin et'

@@ -25,33 +25,33 @@ $logger = $app['monolog'];
 $app['debug'] = true;
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
-        'driver'    => 'pdo_mysql',
-        'host'      => $Campsite["db"]["host"],
-        'dbname'    => $Campsite["db"]["name"],
-        'user'      => $Campsite["db"]["user"],
-        'password'  => $Campsite["db"]["pass"],
-        'port'      => $Campsite["db"]["port"],
-        'charset'   => 'utf8',
+        'driver' => 'pdo_mysql',
+        'host' => $Campsite['db']['host'],
+        'dbname' => $Campsite['db']['name'],
+        'user' => $Campsite['db']['user'],
+        'password' => $Campsite['db']['pass'],
+        'port' => $Campsite['db']['port'],
+        'charset' => 'utf8',
         ),
     ));
 
 $app->register(new DoctrineOrmServiceProvider(), array(
-    "orm.proxies_dir" => $newscoopDir."/library/Proxy",
-    "orm.auto_generate_proxies" => true,
-    "orm.proxies_namespace" => "Proxy",
-    "orm.em.options" => array(
-        "mappings" => array(
+    'orm.proxies_dir' => $newscoopDir.'/library/Proxy',
+    'orm.auto_generate_proxies' => true,
+    'orm.proxies_namespace' => 'Proxy',
+    'orm.em.options' => array(
+        'mappings' => array(
             array(
-                "type" => "annotation",
-                "namespace" => "Newscoop\Entity",
-                "path" => $newscoopDir."library/Newscoop/Entity",
-                "use_simple_annotation_reader" => false,
+                'type' => 'annotation',
+                'namespace' => "Newscoop\Entity",
+                'path' => $newscoopDir.'library/Newscoop/Entity',
+                'use_simple_annotation_reader' => false,
                 ),
             array(
-                "type" => "annotation",
-                "namespace" => "Newscoop\NewscoopBundle\Entity",
-                "path" => $newscoopDir."src/Newscoop/NewscoopBundle/Entity",
-                "use_simple_annotation_reader" => false,
+                'type' => 'annotation',
+                'namespace' => "Newscoop\NewscoopBundle\Entity",
+                'path' => $newscoopDir.'src/Newscoop/NewscoopBundle/Entity',
+                'use_simple_annotation_reader' => false,
                 ),
             ),
         ),
@@ -70,19 +70,19 @@ try {
     $app['orm.em']->getEventManager()->addEventSubscriber($translatableListener);
 
     try {
-        $tablesCount = "SELECT COUNT(*) AS count FROM Topics";
+        $tablesCount = 'SELECT COUNT(*) AS count FROM Topics';
         $app['db']->fetchAll($tablesCount);
     } catch (\Exception $e) {
         return;
     }
 
-    $sqlTopics = "SELECT node.id, (COUNT( parent.id) -1) AS depth
+    $sqlTopics = 'SELECT node.id, (COUNT( parent.id) -1) AS depth
     FROM Topics AS node, Topics AS parent
     WHERE node.node_left
     BETWEEN parent.node_left
     AND parent.node_right
     GROUP BY node.id
-    ORDER BY node.node_left";
+    ORDER BY node.node_left';
 
     $rows = $app['db']->fetchAll($sqlTopics);
 
@@ -110,7 +110,7 @@ try {
         $tree[] = $currentPath;
     }
 
-    $topicSql = "SELECT `fk_topic_id` as id, `fk_language_id` as languageId, `name` FROM `TopicNames` WHERE `fk_topic_id` = ?";
+    $topicSql = 'SELECT `fk_topic_id` as id, `fk_language_id` as languageId, `name` FROM `TopicNames` WHERE `fk_topic_id` = ?';
 
     foreach ($tree as $key => $row) {
         // if root
@@ -220,11 +220,11 @@ if (count($upgradeErrors) > 0) {
 
 try {
     $connection = $app['orm.em']->getConnection();
-    $stmt = $connection->prepare("DROP TABLE Topics; DROP TABLE TopicNames; DROP TABLE TopicFields;");
+    $stmt = $connection->prepare('DROP TABLE Topics; DROP TABLE TopicNames;');
     $stmt->execute();
 } catch (\Exception $e) {
     $msg = "Script could not drop old topics tables. \n"
     ."You can execute SQL command manually in your database: \n"
-    ."DROP TABLE Topics; DROP TABLE TopicNames; DROP TABLE TopicFields;";
+    .'DROP TABLE Topics; DROP TABLE TopicNames;';
     $logger->addError($msg);
 }

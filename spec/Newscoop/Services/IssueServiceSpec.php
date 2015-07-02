@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Repository\IssueRepository;
 use Newscoop\Entity\Publication;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\AbstractQuery;
 
 class IssueServiceSpec extends ObjectBehavior
@@ -39,19 +38,24 @@ class IssueServiceSpec extends ObjectBehavior
 
         $publicationService->getPublication()->willReturn($publication);
 
-        $repository->findOneBy(array(
-            'publication' => $publication,
-            'shortName' => 'may2014'
-        ))->willReturn($issue);
-
-        $repository->getIssue('en', $publication, 'may2014')->willReturn($query);
-        $query->getOneOrNullResult()->willReturn($issue);
-
         $this->beConstructedWith($em, $publicationService, $cacheService);
     }
 
-    public function it_resolves_issue_from_request_data(Request $request, Issue $issue, ParameterBag $attributes)
+    public function it_resolves_issue_from_request_data(
+        Request $request,
+        Issue $issue,
+        ParameterBag $attributes,
+        $repository,
+        $publication,
+        $query)
     {
+        $repository->findOneBy(array(
+            'publication' => $publication,
+            'shortName' => 'may2014',
+        ))->willReturn($issue);
+        $repository->getIssue('en', $publication, 'may2014')->willReturn($query);
+        $query->getOneOrNullResult()->willReturn($issue);
+
         $request->getRequestUri()->willReturn('/en/may2014/60/test-article.htm');
         $issue->getId()->willReturn(1);
         $issue->getNumber()->willReturn(10);
@@ -70,17 +74,29 @@ class IssueServiceSpec extends ObjectBehavior
             "name" => "May 2014",
             "shortName" => "may2014",
             "code_default_language" => "en",
-            "id_default_language" => "1"
+            "id_default_language" => "1",
         ));
     }
 
-    public function it_gets_the_latest_issue_for_current_publication(Issue $issue, Publication $publication)
+    public function it_gets_the_latest_issue_for_current_publication(
+        Issue $issue,
+        Publication $publication,
+        $query,
+        $repository,
+        $em)
     {
-        $pub = new Publication();
-        $pub->setId(1);
-        $issue = new Issue(1, $pub);
-        $issue->setWorkflowStatus('Y');
-        $publication->getIssues()->willReturn(new ArrayCollection(array($issue)));
+        $publication->getId()->willReturn(1);
+        $em
+            ->getReference('Newscoop\Entity\Issue', 7)
+            ->willReturn($issue);
+        $repository->getLastPublishedByPublication(1)->willReturn($query);
+        $issueResult = array(array(
+            'id' => 7,
+            'number' => 12,
+            'workflowStatus' => 'Y',
+        ));
+        $query->getArrayResult()->willReturn($issueResult);
+
         $this->getLatestPublishedIssue()->shouldReturn($issue);
     }
 }

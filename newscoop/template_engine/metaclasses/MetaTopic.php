@@ -66,7 +66,7 @@ class MetaTopic extends MetaDbObject
      *
      * @param string $topicIdOrName
      */
-    public function __construct($topicIdOrName = null)
+    public function __construct($topicIdOrName = null, $languageCode = null)
     {
         if (!$topicIdOrName) {
             return;
@@ -79,7 +79,12 @@ class MetaTopic extends MetaDbObject
         } else {
             $em = \Zend_Registry::get('container')->getService('em');
             $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-            $locale = $this->getLocale();
+            if ($languageCode) {
+                $locale = $languageCode;
+            } else {
+                $locale = $this->getLocale();
+            }
+
             $topic = $repository->getTopicByIdOrName($topicIdOrName, $locale)->getArrayResult();
 
             if (!empty($topic)) {
@@ -154,7 +159,7 @@ class MetaTopic extends MetaDbObject
     protected function getParent()
     {
         if (isset($this->topic['id']) && isset($this->topic['parent'])) {
-            return new MetaTopic($this->topic['parent']['id']);
+            return new MetaTopic($this->topic['parent']['id'], $this->topic['locale']);
         }
 
         return;

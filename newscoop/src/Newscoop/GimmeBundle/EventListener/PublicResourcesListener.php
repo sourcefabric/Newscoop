@@ -15,27 +15,23 @@ use OAuth2\OAuth2AuthenticateException;
 
 class PublicResourcesListener
 {
-    protected $em;
-    protected $serverService;
-    protected $security;
+    protected $container;
 
-    public function __construct($em, $serverService, $security)
+    public function __construct($container)
     {
-        $this->em = $em;
-        $this->serverService = $serverService;
-        $this->security = $security;
+        $this->container = $container;
     }
 
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
         $route = $request->attributes->get('_route');
-        if (strpos($route, 'newscoop_gimme_') === false || $route == 'newscoop_get_img') {
+        if (strpos($route, 'newscoop_gimme_') === false) {
             return;
         }
 
-        $unprotected = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
-        $rootsArray = array(
+        $unprotected = $this->container->get('em')->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
+        $routesArray = array(
             'newscoop_gimme_users_login',
             'newscoop_gimme_users_logout',
             'newscoop_gimme_users_register',
@@ -43,17 +39,26 @@ class PublicResourcesListener
             'newscoop_gimme_users_getuseraccesstoken',
         );
 
-        if (in_array($route, $rootsArray)) {
+        if ($request->getMethod() == 'POST' && $route == 'newscoop_gimme_comments_createcomment') {
+            $publicationService = $this->container->get('newscoop.publication_service');
+            $publication = $publicationService->getPublication();
+            if ($publication->getPublicCommentsEnabled()) {
+                $routesArray[] = 'newscoop_gimme_comments_createcomment';
+            }
+        }
+
+
+        if (in_array($route, $routesArray)) {
             $unprotected = true;
         }
 
         if (!$unprotected &&
             strpos($route, 'newscoop_gimme_') !== false &&
-            false === $this->security->isGranted('IS_AUTHENTICATED_FULLY')
+            false === $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')
          ) {
             throw new OAuth2AuthenticateException(OAuth2::HTTP_UNAUTHORIZED,
                 OAuth2::TOKEN_TYPE_BEARER,
-                $this->serverService->getVariable(OAuth2::CONFIG_WWW_REALM),
+                $this->container->get('fos_oauth_server.server')->getVariable(OAuth2::CONFIG_WWW_REALM),
                 'OAuth2 authentication required'
             );
         }

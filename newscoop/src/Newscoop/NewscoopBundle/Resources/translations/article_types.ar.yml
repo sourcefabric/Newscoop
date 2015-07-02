@@ -1,6 +1,6 @@
 list: null
 filter: null
-'In Lists?': null
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': null
 '$1 articles of article type $2': null
 'Hide human-readable field names': 'أخف أسماء الخانات القابلة مقروئة من الانسان'
@@ -46,7 +46,7 @@ activate: تشغيل
 'The translation could not be added.': 'لم تضف الترجمة.'
 'The article type $1 does not exist.': 'لا يوجد نوع المقال $1.'
 'Template Type Name': 'اسم نوع النموذج'
-Show/Hide: 'إعرض / أخف'
+'Show to Authors?': null
 'Show article on section page': 'عرض المقال في صفحة الأقسام'
 'Show article on front page': 'عرض المقال في الصفحة الأمامية'
 'Publish date': 'تاريخ الصدور'
@@ -58,7 +58,7 @@ Merge!: إدمج!
 'Go to Step 2': 'إذهب إلى الخطوة 2'
 'Display Name': 'اسم العرض'
 'Delete article type $1.': 'إحذف نوع المقال $1.'
-'Comments enabled?': 'تم تفعيل التعليقات؟'
+'Comments Enabled?': null
 'Back to Step 2': 'الرجوع إلى الخطوة 2'
 'Back to Step 1': 'الرجوع إلى الخطوة 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'هل أنت متأكد أنك تريد حذف نوع المقال 1$ ؟ تحذير: حذف هذا النوع من المقال سوف يحذف جميع المقالات المرتبطة بهذا النوع من المقال.'

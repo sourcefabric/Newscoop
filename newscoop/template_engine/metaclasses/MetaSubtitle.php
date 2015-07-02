@@ -257,12 +257,8 @@ final class MetaSubtitle
         }
 
         $articleImage = new ArticleImage($uri->article->number, null, $imageNumber);
-        $imageObj = $articleImage->getImage();
         $image = new MetaImage($articleImage->getImageId());
         $context->image = $image;
-        $imageSize = @getimagesize($imageObj->getImageStorageLocation());
-
-        unset($imageObj);
 
         $imageOptions = '';
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
@@ -280,9 +276,11 @@ final class MetaSubtitle
         foreach (array('ratio', 'width', 'height') as $imageOption) {
             $defaultOption = (int) $preferencesService->get($defaultOptions[$imageOption]);
             if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
-                if (strpos($detailsArray[$imageOption], '%') === false) {
+                if (isset($detailsArray['size']) && strpos($detailsArray['size'], 'px') !== false) {
+                    $detailsArray['percentage'] = '100%';
+                    $imageOptions .= " $imageOption ".rtrim($detailsArray['size'], 'px');
+                } else {
                     $imageOptions .= " $imageOption ".(int) $detailsArray[$imageOption];
-                    $detailsArray[$imageOption] = $detailsArray[$imageOption]."px";
                 }
             } elseif ($imageOption != 'ratio' && $defaultOption > 0) {
                 $imageOptions .= " $imageOption $defaultOption";
@@ -298,15 +296,22 @@ final class MetaSubtitle
         }
 
         try {
-            $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $smarty = $templatesService->getSmarty();
             $uri->uri_parameter = "image $imageOptions";
-            $smarty->assign('imageDetails', $detailsArray);
-            $smarty->assign('MediaRichTextCaptions', $preferencesService->MediaRichTextCaptions);
-            $smarty->assign('uri', $uri);
-            $smarty->assign('imgZoomLink', $imgZoomLink);
+            $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
+            $templatesService->setVector(array_merge($templatesService->getSmarty()->campsiteVector, array(
+                'params' => implode('__', array(
+                    $uri->article->number,
+                    $imageNumber,
+                    $articleImage->getImageId()
+                ))
+            )));
 
-            return $templatesService->fetchTemplate("editor_image.tpl");
+            return $templatesService->fetchTemplate("editor_image.tpl", array(
+                'imageDetails' => $detailsArray,
+                'MediaRichTextCaptions' => $preferencesService->MediaRichTextCaptions,
+                'uri' => $uri,
+                'imgZoomLink' => $imgZoomLink
+            ));
         } catch (\Exception $e) {
             return $e->getMessage();
         }

@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2015 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -40,8 +40,13 @@ class PlaylistsController extends Controller
         $client = $em->getRepository('\Newscoop\GimmeBundle\Entity\Client')->findOneByName($clientName);
 
         $editorView = false;
-        if ($request->get('_route') === "newscoop_newscoop_playlists_editor") {
+        $languageCode = null;
+        if ($request->get('_route') === 'newscoop_newscoop_playlists_editor') {
             $editorView = true;
+            $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($language);
+            if ($language) {
+                $languageCode = $language->getCode();
+            }
         }
 
         return $this->render('NewscoopNewscoopBundle:Playlists:index.html.twig', array(
@@ -49,7 +54,7 @@ class PlaylistsController extends Controller
             'redirectUris' => $client->getRedirectUrisString(),
             'editorView' => $editorView,
             'articleNumber' => $articleNumber,
-            'language' => $language,
+            'language' => $languageCode,
         ));
     }
 
@@ -74,14 +79,14 @@ class PlaylistsController extends Controller
     private function createArticleLegacyPreviewUrl(Article $article)
     {
         $params = array(
-            'f_publication_id'      => $article->getPublicationId(),
-            'f_issue_number'        => $article->getIssueId(),
-            'f_section_number'      => $article->getSectionId(),
-            'f_article_number'      => $article->getNumber(),
-            'f_language_id'         => $article->getLanguageId(),
-            'f_language_selected'   => $article->getLanguageId(),
+            'f_publication_id' => $article->getPublicationId(),
+            'f_issue_number' => $article->getIssueId(),
+            'f_section_number' => $article->getSectionId(),
+            'f_article_number' => $article->getNumber(),
+            'f_language_id' => $article->getLanguageId(),
+            'f_language_selected' => $article->getLanguageId(),
         );
 
-        return "/admin/articles/get.php?".http_build_query($params);
+        return '/admin/articles/get.php?'.http_build_query($params);
     }
 }

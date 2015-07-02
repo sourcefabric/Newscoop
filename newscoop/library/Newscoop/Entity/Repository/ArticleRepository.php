@@ -1,12 +1,11 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Search\RepositoryInterface;
@@ -17,12 +16,12 @@ use Newscoop\Entity\User;
 use Newscoop\NewscoopBundle\Entity\Topic;
 
 /**
- * Article repository
+ * Article repository.
  */
 class ArticleRepository extends DatatableSource implements RepositoryInterface
 {
     /**
-     * Get All Articles from choosen publication (optional: article type and language)
+     * Get All Articles from choosen publication (optional: article type and language).
      *
      * @param int    $publication Publication id
      * @param string $type        Article type name
@@ -93,26 +92,27 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Search fo articles by keyword and filters
+     * Search fo articles by keyword and filters.
      *
      * @param Language $language
      * @param array    $keywords
-     * @param integer  $publication   Publication Id
-     * @param integer  $issue         Issue Number
-     * @param integer  $section       Section Number
-     * @param boolean  $onlyPublished
+     * @param int      $publication   Publication Id
+     * @param int      $issue         Issue Number
+     * @param int      $section       Section Number
+     * @param bool     $onlyPublished
      *
      * @return \Doctrine\ORM\Query
      */
-    public function searchArticles($articleSearchCriteria, $onlyPublished = true, $order = "desc")
+    public function searchArticles($articleSearchCriteria, $onlyPublished = true, $order = 'desc')
     {
         $em = $this->getEntityManager();
+        $getLastArticles = true;
         $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
             ->select('DISTINCT(a.article) as number');
 
         $orX = $queryBuilder->expr()->orx();
 
-        $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
+        $keywords = array_diff(explode(' ', $articleSearchCriteria->query), array(''));
         foreach ($keywords as $keyword) {
             $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
         }
@@ -120,21 +120,25 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         if (count($keywords) > 0) {
             $queryBuilder->leftJoin('a.keyword', 'k')
                 ->andWhere($orX);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->publication) {
             $queryBuilder->andWhere('a.publication = :publication')
                 ->setParameter('publication', $articleSearchCriteria->publication);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->section) {
             $queryBuilder->andWhere('a.sectionNumber = :section')
                 ->setParameter('section', $articleSearchCriteria->section);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->issue) {
             $queryBuilder->andWhere('a.issueNumber = :issue')
                 ->setParameter('issue', $articleSearchCriteria->issue);
+            $getLastArticles = false;
         }
 
         if ($articleSearchCriteria->language) {
@@ -143,7 +147,15 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             if ($languageId) {
                 $queryBuilder->andWhere('a.language = :language')
                     ->setParameter('language', $languageId);
+                $getLastArticles = false;
             }
+        }
+
+        if ($getLastArticles) {
+            $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+                ->createQueryBuilder('a')
+                ->select('a.number as number')
+                ->orderBy('a.uploaded', 'DESC');
         }
 
         $queryBuilder->setMaxResults(80);
@@ -160,17 +172,23 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         return $query;
     }
 
-    public function getArticlesByCriteria($articleSearchCriteria, $ids = array(), $onlyPublished = true, $order = "desc")
+    public function getArticlesByCriteria($articleSearchCriteria, $ids = array(), $onlyPublished = true, $order = 'desc')
     {
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('a, FIELD(a.number, :ids) as HIDDEN field')
+            ->select('a, FIELD(a.number, :ids) as HIDDEN field', 'l', 'u', 'ap', 'p', 'aa', 'au', 't')
             ->andWhere('a.number IN (:ids)')
-            ->leftJoin('a.publication', 'p')
             ->leftJoin('a.issue', 'i')
             ->leftJoin('a.section', 's')
+            ->leftJoin('a.packages', 'p')
+            ->leftJoin('a.language', 'l')
+            ->leftJoin('a.lockUser', 'u')
+            ->leftJoin('a.publication', 'ap')
+            ->leftJoin('a.attachments', 'aa')
+            ->leftJoin('a.authors', 'au')
+            ->leftJoin('a.topics', 't')
             ->orderBy('field')
             ->setParameters(array(
                 'ids' => $ids,
@@ -212,7 +230,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->author) {
-            $queryBuilder->join('a.authors', 'au');
             $queryBuilder->andWhere('au.id = :author')
                 ->setParameter('author', $articleSearchCriteria->author);
         }
@@ -228,8 +245,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         if ($articleSearchCriteria->topic) {
-            $queryBuilder->join('a.topics', 'att');
-            $queryBuilder->andWhere('att.id = :topic')
+            $queryBuilder->andWhere('t.id = :topic')
                 ->setParameter('topic', $articleSearchCriteria->topic);
         }
 
@@ -238,7 +254,9 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->setParameter('workflowStatus', Article::STATUS_PUBLISHED);
         }
 
-        $queryBuilder->orderBy('a.uploaded', $order);
+        if ($order != false) {
+            $queryBuilder->orderBy('a.uploaded', $order);
+        }
 
         $countQueryBuilder = clone $queryBuilder;
         $query = $queryBuilder->getQuery();
@@ -248,7 +266,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Single Article
+     * Get Single Article.
      *
      * @param int               $number   Article number
      * @param mixed[int|string] $language Language id or code
@@ -288,16 +306,16 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Articles for choosen topic
+     * Get Articles for choosen topic.
      *
-     * @param int     $publication
-     * @param int     $topicId
-     * @param int     $language
-     * @param boolean $getResultAndCount
+     * @param int  $publication
+     * @param int  $topicId
+     * @param int  $language
+     * @param bool $getResultAndCount
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false)
+    public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false, $order = null)
     {
         $em = $this->getEntityManager();
 
@@ -307,6 +325,10 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->where('att.id = :topicId')
             ->join('a.topics', 'att')
             ->setParameter('topicId', $topicId);
+
+        if ($order !== null) {
+            $queryBuilder->orderBy('a.published', $order);
+        }
 
         $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
@@ -336,7 +358,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Articles for author
+     * Get Articles for author.
      *
      * @param \Newscoop\Entity\Author $author
      * @param \Newscoop\Criteria      $criteria
@@ -381,7 +403,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Articles for author per day for choosen period back from now
+     * Get Articles for author per day for choosen period back from now.
      *
      * @param \Newscoop\Entity\Author $author
      * @param string                  $range
@@ -410,7 +432,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Articles for chosen section
+     * Get Articles for chosen section.
      *
      * @param int           $publication
      * @param int           $sectionNumber
@@ -441,9 +463,9 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get number of articles assigned to Publication
+     * Get number of articles assigned to Publication.
      *
-     * @param integer $publicationId
+     * @param int $publicationId
      *
      * @return \Doctrine\ORM\Query
      */
@@ -459,7 +481,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Articles for Playlist
+     * Get Articles for Playlist.
      *
      * @param int $publication
      * @param int $playlistId
@@ -493,7 +515,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get Article translations
+     * Get Article translations.
      *
      * @param int $articleNumber
      * @param int $languageId
@@ -520,9 +542,10 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get articles for indexing
+     * Get articles for indexing.
      *
-     * @param  int   $limit
+     * @param int $limit
+     *
      * @return array
      */
     public function getIndexBatch($limit = 50)
@@ -538,7 +561,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get articles for indexing
+     * Get articles for indexing.
      *
      * @param int   $count  Number of articles to index
      * @param array $filter Filter to apply to articles
@@ -554,7 +577,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->orWhere('a.indexed < a.updated')
                 ->orderBy('a.number', 'DESC');
         } else {
-            throw new IndexException("Filter is not implemented yet.");
+            throw new IndexException('Filter is not implemented yet.');
         }
 
         if (is_numeric($count)) {
@@ -568,10 +591,9 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Set indexed now
+     * Set indexed now.
      *
-     * @param  array $articles
-     * @return void
+     * @param array $articles
      */
     public function setIndexedNow(array $articles)
     {
@@ -593,9 +615,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Set indexed null
-     *
-     * @return void
+     * Set indexed null.
      */
     public function setIndexedNull(array $articles = null)
     {
@@ -617,7 +637,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get articles count for user if is author
+     * Get articles count for user if is author.
      *
      * @param Newscoop\Entity\User $user
      *
@@ -647,11 +667,11 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Get new minimal article order value
+     * Get new minimal article order value.
      *
-     * @param integer $publication
-     * @param integer $issue
-     * @param integer $section
+     * @param int $publication
+     * @param int $issue
+     * @param int $section
      *
      * @return \Doctrine\ORM\Query
      */
@@ -681,12 +701,12 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     * Update article order
+     * Update article order.
      *
-     * @param integer $increment
-     * @param integer $publication
-     * @param integer $issue
-     * @param integer $section
+     * @param int $increment
+     * @param int $publication
+     * @param int $issue
+     * @param int $section
      *
      * @return \Doctrine\ORM\Query
      */

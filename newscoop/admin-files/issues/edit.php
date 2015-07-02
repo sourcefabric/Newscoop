@@ -48,7 +48,7 @@ $publish_hour = (date("H") + 1);
 $publish_min = "00";
 
 camp_html_content_top($translator->trans('Change issue details', array(), 'issues'), array('Pub' => $publicationObj, 'Issue' => $issueObj), true, true);
-
+$controller->view->headTitle($translator->trans('Change issue details', array(), 'issues').' - Newscoop Admin', 'SET');
 $url_args1 = "Pub=$Pub";
 $url_args2 = $url_args1."&Issue=$Issue&Language=$Language";
 

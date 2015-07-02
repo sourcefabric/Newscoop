@@ -1,4 +1,4 @@
 <?php echo $this->jQueryUtils() ?>
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Permissions: $1', $this->staff)); ?>
+$this->headTitle($translator->trans('Permissions: $1', $this->staff).' - Newscoop Admin', 'SET'); ?>

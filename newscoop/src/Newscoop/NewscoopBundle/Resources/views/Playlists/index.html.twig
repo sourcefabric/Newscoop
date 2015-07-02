@@ -1,6 +1,6 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "articles" %}
-{% block admin_title %}{{ parent() }} - {{ 'Featured Article Lists'|trans }}{% endblock %}
+{% block admin_title %}{{ 'Featured Article Lists'|trans }} - {{ parent() }}{% endblock %}
 {% block admin_page_title_content %}{{ 'Featured Article Lists'|trans }}{% endblock %}
 {% block admin_page_title_box %}
   {% if editorView == false %}
@@ -26,8 +26,8 @@
   {% endif %}
 {% endblock %}
 {% block admin_content %}
-<div ng-app="playlistsApp" ng-controller="PlaylistsController">
-    <div class="system_pref" {% if editorView %}style="margin: 0; margin: -20px -40px;"{% endif %}>
+<div ng-app="playlistsApp" ng-controller="PlaylistsController" ng-cloak>
+    <div class="system_pref" {% if editorView %}style="margin: -20px -24px; padding: 14px;"{% endif %}>
         {% if editorView %}
         <div class="toolbar" style="background: #fff;box-shadow: none;margin-bottom: 13px;border: none;padding: 0;">
             <div class="select-playlist-bar" style="float: left;">
@@ -181,6 +181,14 @@
                                         </ui-select-choices>
                                     </ui-select>
                               </li>
+                              <li class="list-group-item">
+                                    <ui-select ng-model="language.selected" theme="select2" ng-click="loadLanguages()" on-select="loadByLanguageOnSelect($item)">
+                                        <ui-select-match placeholder="{{ 'Language'|trans({}, 'messages') }}...">{[{$select.selected.name}]}</ui-select-match>
+                                        <ui-select-choices repeat="language in languages | filter:$select.search">
+                                            <div ng-bind-html="language.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                              </li>
                             </ul>
                         </div>
                     </div>
@@ -202,6 +210,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                        <span class="label label-default">{[{ ::article.language}]}</span>
                                                     </div>
                                                     <a href="#" style="text-decoration: none;" ng-click="viewArticle(article)" class="view-article">{{ 'View article'|trans }}</a>
                                                 </div>
@@ -235,7 +244,8 @@
                                 <input ng-change="updateParentLimit(this)" type="number" name="input" ng-model="playlist.selected.maxItems" min="0" max="99" class="form-control input-sm" id="playlistId">
                                 <span class="error-custom" ng-show="limitForm.input.$error.number">{{ 'Not valid number'|trans}}!</span>
                             {% else %}
-                                <span style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
+                                <span ng-if="playlist.selected.maxItems" style="line-height: 28px;">{[{ playlist.selected.maxItems }]}</span>
+                                <span ng-if="!playlist.selected.maxItems" style="line-height: 28px;">0</span>
                             {% endif %}
                             </form>
                             </div>
@@ -260,6 +270,7 @@
                                                                 <span ng-switch-when="S">{{ 'Submitted'|trans({}, 'messages') }}</span>
                                                                 <span ng-switch-default>{{ 'Unknown'|trans({}, 'messages') }}</span>
                                                             </span></span><span class="label label-primary">{[{ ::article.type}]}</span>
+                                                            <span class="label label-default">{[{ ::article.language}]}</span>
                                                         </div>
                                                         <a href="#" ng-click="removeArticle(article)" class="corner-button" style="display: block; padding-right: 19px;">
                                                             <span class="ui-icon ui-icon-closethick"></span>
@@ -292,8 +303,8 @@
                     </div>
                     <div class="context-block plugin-context-block context-preview" ng-if="isViewing">
                         <div class="save-button-bar">
-                        <button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add this article'|trans }}</button>
-                        <button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans }}</button>
+                        <button ng-click="addArticleToListFromPreview()" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
+                        <button ng-click="closeViewArticle()" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
                         </div>
 
                         <div class="context-article-preview" style="overflow-y:auto; height:500px;">

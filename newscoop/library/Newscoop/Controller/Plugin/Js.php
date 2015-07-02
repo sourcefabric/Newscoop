@@ -52,7 +52,7 @@ class Js extends Zend_Controller_Plugin_Abstract
     public function __construct( $p_opts )
     {
         // base path from options - incomplete
-        $this->_baseUrn = trim( $p_opts["resources"]["layout"]["jsUrl"], DIR_SEP ) . DIR_SEP;
+        $this->_baseUrn = trim( $p_opts["resources"]["layout"]["jsUrl"], '/' ) . '/';
         $this->_basePath = ( $p = $p_opts["resources"]["layout"]["jsPath"] ) ? $p . DIR_SEP : false;
         $this->view      = \Zend_Registry::get( 'view' );
     }
@@ -61,12 +61,12 @@ class Js extends Zend_Controller_Plugin_Abstract
     {
         // stick the baseUrl to the basePath because we have a dispatched request now
         // and format those god damn slashes!!
-        $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP );
+        $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), '/' );
 
-        $currentUrn = ( $baseUrl != "" ? DIR_SEP . $baseUrl : "" )
-                    . DIR_SEP
-                    . trim( $this->_baseUrn, DIR_SEP )
-                    . DIR_SEP;
+        $currentUrn = ( $baseUrl != "" ? '/' . $baseUrl : "" )
+                    . '/'
+                    . trim( $this->_baseUrn, '/' )
+                    . '/';
 
         $filesToAppend = array
         (
@@ -76,7 +76,7 @@ class Js extends Zend_Controller_Plugin_Abstract
             "{$this->_basePath}{$p_request->getControllerName()}.{$this->_fileSuffix}" => // controller shared
                 "{$currentUrn}{$p_request->getControllerName()}.{$this->_fileSuffix}",
             "{$this->_basePath}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}" => // action specific
-            	"{$currentUrn}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}"
+            	"{$currentUrn}{$p_request->getControllerName()}".'/'."{$p_request->getActionName()}.{$this->_fileSuffix}"
         );
 
         foreach( $filesToAppend as $path => $urn )

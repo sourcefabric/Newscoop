@@ -11,6 +11,21 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    protected function initializeContainer()
+    {
+        parent::initializeContainer();
+
+        try {
+            $timeZone = $this->getContainer()->get('system_preferences_service')->TimeZone;
+            if (!empty($timeZone)) {
+                date_default_timezone_set($timeZone);
+            }
+        } catch (\Exception $e) { }
+
+        // Set temp dir for Newscoop to project cache directory
+        putenv(sprintf('TMPDIR=%s/../cache', __DIR__));
+    }
+
     public function registerBundles()
     {
         $bundles =  array(
@@ -28,7 +43,6 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
-            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
@@ -44,6 +58,7 @@ class AppKernel extends Kernel
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
+            $bundles[] = new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
         }

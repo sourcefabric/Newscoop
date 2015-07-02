@@ -1,6 +1,6 @@
 list: lista
 filter: filtro
-'In Lists?': '¿En listas?'
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': '¿Está seguro de querer $1 los artículos del tipo $2?'
 '$1 articles of article type $2': '$1 artículos del tipo $2'
 'Hide human-readable field names': 'Ocultar nombres de campo legibles.'
@@ -46,7 +46,7 @@ activate: activar
 'The translation could not be added.': 'No se pudo agregar la traducción.'
 'The article type $1 does not exist.': 'El tipo de artículo $1 no existe.'
 'Template Type Name': 'Nombre del tipo de plantilla'
-Show/Hide: Mostrar/ocultar
+'Show to Authors?': null
 'Show article on section page': 'Mostrar artículo en página de sección'
 'Show article on front page': 'Mostrar artículo en portada'
 'Publish date': 'Publicar fecha'
@@ -58,7 +58,7 @@ Merge!: ¡Combinar!
 'Go to Step 2': 'Ir a Paso 2'
 'Display Name': 'Nombre a mostrar'
 'Delete article type $1.': 'Eliminar tipo de artículo $1'
-'Comments enabled?': '¿Permitir comentarios?'
+'Comments Enabled?': null
 'Back to Step 2': 'De vuelta al paso 2'
 'Back to Step 1': 'De vuelta al paso 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': '¿Está seguro de que quiere eliminar el tipo de artículo $1? ADVERTENCIA:  eliminar este tipo de artículo eliminará todos los artículos asociados con este tipo de artículo'

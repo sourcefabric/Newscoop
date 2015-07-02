@@ -192,11 +192,13 @@ Snippet: Snippet
 'The last article of this list has been removed.': 'The last article of this list has been removed.'
 Revert: Revert
 'Could not automatically refresh the list': 'Could not automatically refresh the list'
+'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
 articles:
     playlists:
         namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'
-        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you decrease the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 till 50 will be deleted from the list.'
+        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you change the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 till 50 will be deleted from the list.'
     images:
+        see_original: 'See original image'
         edit:
             edit_image_metadata: 'Edit image metadata'
             save: Save

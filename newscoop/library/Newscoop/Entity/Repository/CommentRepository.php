@@ -40,7 +40,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      *
      * @return Doctrine\ORM\Query Query
      */
-    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true)
+    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true, $showHidden = true)
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -50,6 +50,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             ->createQueryBuilder('c')
             ->where('c.thread = :thread')
             ->andWhere('c.language = :language')
+            ->orderBy('c.time_created', 'desc')
             ->setParameters(array(
                 'thread' => $article,
                 'language' => $languageId->getId()
@@ -63,6 +64,11 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 ->setParameter('status', Comment::STATUS_DELETED);
         }
 
+        if (!$showHidden) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_HIDDEN);
+        }
+
         $query = $queryBuilder->getQuery();
 
         return $query;
@@ -73,7 +79,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      *
      * @return Query
      */
-    public function getComments($getDeleted = true)
+    public function getComments($getDeleted = true, $showHidden = true)
     {
         $em = $this->getEntityManager();
 
@@ -83,6 +89,11 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         if (!$getDeleted) {
             $queryBuilder->andWhere('c.status != :status')
                 ->setParameter('status', Comment::STATUS_DELETED);
+        }
+
+        if (!$showHidden) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_HIDDEN);
         }
 
         $query = $queryBuilder->getQuery();
@@ -304,7 +315,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                     ->andWhere('c.thread = :thread')
                     ->andWhere('c.language = :language')
                     ->setParameter('parent', $parent)
-                    ->setParameter('thread', $parent->getThread()->getId())
+                    ->setParameter('thread', $parent->getThread())
                     ->setParameter('language', $parent->getLanguage()->getId());
 
             $threadOrder = $threadOrder->getQuery()->getSingleScalarResult();
@@ -324,7 +335,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                ->andWhere('c.thread = :thread')
                ->andWhere('c.language = :language')
                     ->setParameter('language', $parent->getLanguage()->getId())
-                    ->setParameter('thread', $parent->getThread()->getId())
+                    ->setParameter('thread', $parent->getThread())
                     ->setParameter('thread_order', $threadOrder);
             $qb->getQuery()->execute();
             // set the thread level the thread level of the parent plus one the current level
@@ -355,7 +366,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $entity
                 ->setLanguage($language)
                 ->setForum($thread->getPublication())
-                ->setThread($thread);
+                ->setThread($thread->getNumber());
         }
 
         $entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);

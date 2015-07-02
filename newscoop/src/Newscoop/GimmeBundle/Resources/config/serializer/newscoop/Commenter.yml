@@ -53,6 +53,12 @@ Newscoop\Entity\Comment\Commenter:
             groups: ["details", "list"]
             serialized_name: created
             since_version: 1.1
+        user:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: user
+            since_version: 1.2
     virtual_properties:
         getUser:
             type: image_uri

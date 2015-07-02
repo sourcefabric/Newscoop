@@ -29,6 +29,7 @@ $sectionObj = new Section($Pub, $Issue, $Language, $Section);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top($translator->trans("Configure section", array(), 'sections'), $topArray);
+$controller->view->headTitle($translator->trans('Configure section', array(), 'sections').' - Newscoop Admin', 'SET');
 
 $url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
 $url_args2 = $url_args1."&Section=$Section";

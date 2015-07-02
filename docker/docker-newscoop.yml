@@ -1,0 +1,15 @@
+newscoop:
+    build: ../
+    command: newscoop
+    ports:
+        - "80:80"
+    volumes:
+        - ../newscoop:/var/www/newscoop
+
+mysql:
+    image: "mysql:5"
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: newscoop
+    volumes:
+        - ../data/mysqldb:/var/lib/mysql

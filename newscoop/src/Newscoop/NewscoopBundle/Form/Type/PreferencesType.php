@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -11,49 +11,20 @@ namespace Newscoop\NewscoopBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PreferencesType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $timeZoneCities = array(
-            0 => 'London, Lisbon, Casablanca',
-            1 => 'Brussels, Copenhagen, Madrid, Paris',
-            2 => 'Athens, Istanbul, Jerusalem',
-            3 => 'Baghdad, Riyadh, Moscow, St. Petersburg',
-            4 => 'Abu Dhabi, Muscat, Baku, Tbilisi',
-            5 => 'Ekaterinburg, Islamabad, Karachi, Tashkent',
-            6 => 'Almaty, Dhaka, Colombo',
-            7 => 'Bangkok, Hanoi, Jakarta',
-            8 => 'Beijing, Perth, Singapore, Hong Kong',
-            9 => 'Tokyo, Seoul, Osaka, Sapporo, Yakutsk',
-            10 => 'Eastern Australia, Guam, Vladivostok',
-            11 => 'Magadan, Solomon Islands, New Caledonia',
-            12 => 'Auckland, Wellington, Fiji, Kamchatka',
-            -1 => 'Azores, Cape Verde Islands',
-            -2 => 'Mid-Atlantic',
-            -3 => 'Brazil, Buenos Aires, Georgetown',
-            -4 => 'Atlantic Time (Canada), Caracas, La Paz',
-            -5 => 'Eastern Time (US & Canada), Bogota, Lima',
-            -6 => 'Central Time (US & Canada), Mexico City',
-            -7 => 'Mountain Time (US & Canada)',
-            -8 => 'Pacific Time (US & Canada)',
-            -9 => 'Alaska',
-            -10 => 'Hawaii',
-            -11 => 'Midway Island, Samoa',
-            -12 => 'Eniwetok, Kwajalein',
-        );
-
-        $timezones = array();
-        for ($k = -12; $k < 13; $k++) {
-            $v = $k < 0 ? $k : '+' . $k;
-            if ($timeZoneCities[$k] != '') {
-                $timezones[$v] = "GMT $v:00 ({$timeZoneCities[$k]})";
-            } else {
-                $timezones[$v] = "GMT $v:00";
-            }
-        }
+        $timeZones = array();
+        array_walk(timezone_identifiers_list(), function ($timeZone) use (&$timeZones) {
+            $timeZoneGroup = (strpos($timeZone, '/') !== false) ? substr($timeZone, 0, strpos($timeZone, '/')) : $timeZone;
+            $value = (strpos($timeZone, '/') !== false) ? substr($timeZone, strpos($timeZone, '/') + 1) : $timeZone;
+            $value = str_replace('_', ' ', $value);
+            $value = str_replace('/', ' - ', $value);
+            $timeZones[$timeZoneGroup][$timeZone] = $value;
+        });
 
         $availableCacheEngines = $options['cacheService']->getAvailableCacheEngines();
         $availableTemplateCacheHandlers = \CampTemplateCache::availableHandlers();
@@ -69,27 +40,27 @@ class PreferencesType extends AbstractType
 
         $cacheLifetime = array();
         foreach (array(0 => 'newscoop.preferences.label.disabled',
-                       30   => '30 Seconds',
-                       60   => '1 Minute',
-                       300  => '5 Minutes',
-                       900  => '15 Minutes',
+                       30 => '30 Seconds',
+                       60 => '1 Minute',
+                       300 => '5 Minutes',
+                       900 => '15 Minutes',
                        1800 => '30 Minutes',
                        3600 => '1 Hour',
-                       3600*24 => '1 Day',
-                       3600*24*2 => '2 Days',
-                       3600*24*3 => '3 Days',
-                       3600*24*4 => '4 Days',
-                       3600*24*5 => '5 Days',
-                       3600*24*6 => '6 Days',
-                       3600*24*7 => '1 Week',
-                       3600*24*14 => '2 Weeks',
-                       3600*24*21 => '3 Weeks',
-                       3600*24*31 => '1 Month',
-                       3600*24*61 => '2 Months',
-                       3600*24*91 => '3 Months',
-                       3600*24*183 => '6 Months',
-                       3600*24*365 => '1 Year',
-                       -1          => 'Infinite') as $k => $v) {
+                       3600 * 24 => '1 Day',
+                       3600 * 24 * 2 => '2 Days',
+                       3600 * 24 * 3 => '3 Days',
+                       3600 * 24 * 4 => '4 Days',
+                       3600 * 24 * 5 => '5 Days',
+                       3600 * 24 * 6 => '6 Days',
+                       3600 * 24 * 7 => '1 Week',
+                       3600 * 24 * 14 => '2 Weeks',
+                       3600 * 24 * 21 => '3 Weeks',
+                       3600 * 24 * 31 => '1 Month',
+                       3600 * 24 * 61 => '2 Months',
+                       3600 * 24 * 91 => '3 Months',
+                       3600 * 24 * 183 => '6 Months',
+                       3600 * 24 * 365 => '1 Year',
+                       -1 => 'Infinite', ) as $k => $v) {
             $cacheLifetime[$k] = $v;
         }
 
@@ -104,29 +75,45 @@ class PreferencesType extends AbstractType
 
         $builder
         ->add('siteonline', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('title', null, array(
-            'attr' => array('maxlength'=>'100', 'size' => '64'),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => '64'),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 100,
+                )),
+            ),
         ))
         ->add('meta_keywords', null, array(
-            'attr' => array('maxlength'=>'100', 'size' => '64'),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => '64'),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 100,
+                )),
+            ),
         ))
         ->add('meta_description', null, array(
-            'attr' => array('maxlength' => '100', 'size' => '64'),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => '64'),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 100,
+                )),
+            ),
         ))
         ->add('timezone', 'choice', array(
             'choices'   => $timezones,
@@ -152,349 +139,557 @@ class PreferencesType extends AbstractType
             'required' => false
         ))
         ->add('cache_image', 'choice', array(
-            'choices'   => $cacheLifetime,
-            'required' => true
+            'choices' => $cacheLifetime,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('allow_recovery', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('secret_key', null, array(
-            'attr' => array('maxlength' => '32', 'size' => '64'),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => '64'),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 32,
+                )),
+            ),
         ))
         ->add('session_lifetime', 'integer', array(
-            'attr' => array('maxlength' => '5', 'max' => '86400', 'min' => 0),
-            'error_bubbling' => true,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 86400,
+                )),
+            ),
         ))
         ->add('separator', null, array(
-            'attr' => array('maxlength' => '2', 'size' => '5'),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => '5'),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 2,
+                )),
+            ),
         ))
         ->add('captcha', 'integer', array(
-            'attr' => array('max' => 99, 'min' => 0),
-            'error_bubbling' => true,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 99,
+                )),
+            ),
         ))
         ->add('max_upload_size', null, array(
-            'attr' => array('maxlength' => '12', 'size' => '5'),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => '5'),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 12,
+                )),
+            ),
         ))
         ->add('automatic_collection', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('smtp_host', null, array(
-            'attr' => array('maxlength' => 100, 'size' => 64),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => 64),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 100,
+                )),
+            ),
         ))
         ->add('smtp_port', 'integer', array(
-            'attr' => array('max' => 999999, 'min' => 1),
-            'error_bubbling' => true,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 1,
+                    'max' => 999999,
+                )),
+            ),
         ))
         ->add('email_from', 'email', array(
-            'attr' => array('maxlength' => 100, 'size' => 64),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => 64),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Email(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 100,
+                )),
+            ),
         ))
         ->add('image_ratio', 'integer', array(
             'attr' => array('max' => 100, 'min' => 1),
-            'error_bubbling' => true,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 1,
+                    'max' => 100,
+                )),
+            ),
         ))
         ->add('image_width', 'integer', array(
-            'attr' => array('max' => 999999, 'min' => 0),
-            'error_bubbling' => true,
-            'required' => false
+            'constraints' => array(
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999999,
+                )),
+            ),
         ))
         ->add('image_height', 'integer', array(
-            'attr' => array('max' => 999999, 'min' => 0),
-            'error_bubbling' => true,
-            'required' => false
+            'constraints' => array(
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999999,
+                )),
+            ),
         ))
         ->add('zoom', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('mediaRichTextCaptions', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
          ->add('mediaCaptionLength', 'integer', array(
-            'attr' => array('max' <= 999999, 'min' => 0),
-            'error_bubbling' => true,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999999,
+                )),
+            ),
         ))
         ->add('use_replication', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('use_replication_host', null, array(
-            'attr' => array('maxlength' => 60, 'size' => 30),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 30),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 60,
+                )),
+            ),
         ))
         ->add('use_replication_user', null, array(
-            'attr' => array('maxlength' => 20, 'size' => 30),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 30),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 20,
+                )),
+            ),
         ))
         ->add('use_replication_password', null, array(
-            'attr' => array('maxlength' => 20, 'size' => 30),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 30),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 20,
+                )),
+            ),
         ))
         ->add('use_replication_port', 'integer', array(
-            'attr' => array('max' => 999999, 'min' => 0),
-            'required' => false
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999999,
+                )),
+            ),
         ))
         ->add('template_filter', 'text', array(
-            'attr' => array('maxlength' => 50, 'size' => 30),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => 30),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 50,
+                )),
+            ),
         ))
         ->add('mysql_client_command_path', 'text', array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 200,
+                )),
+            ),
         ))
         ->add('center_latitude_default', 'number', array(
             'attr' => array('size' => 10),
-            'error_bubbling' => true,
-            'invalid_message' => 'newscoop.preferences.error.latitude',
             'precision' => 6,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'float')),
+            ),
         ))
         ->add('center_longitude_default', 'number', array(
             'attr' => array('size' => 10),
-            'error_bubbling' => true,
-            'invalid_message' => 'newscoop.preferences.error.longitude',
             'precision' => 6,
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'float')),
+            ),
         ))
         ->add('map_display_resolution_default', 'integer', array(
-            'attr' => array('max' => 99, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 99,
+                )),
+            ),
         ))
         ->add('map_view_width_default', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_view_height_default', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_auto_cSS_file', null, array(
-            'attr' => array('maxlength' => 80, 'size' => 50),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => 50),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 80,
+                )),
+            ),
         ))
-        ->add('map_auto_focus_default', 'checkbox', array(
-            'required' => false
-        ))
+        ->add('map_auto_focus_default', 'checkbox')
         ->add('map_auto_focus_max_zoom', 'integer', array(
-            'attr' => array('max' => 18, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 18,
+                )),
+            ),
         ))
         ->add('map_auto_focus_border', 'integer', array(
-            'attr' => array('max' => 999, 'min' => -99),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => -99,
+                    'max' => 999,
+                )),
+            ),
         ))
-        ->add('map_provider_available_google_v3', 'checkbox', array(
-            'required' => false
-        ))
-        ->add('map_provider_available_map_quest', 'checkbox', array(
-            'required' => false
-        ))
-        ->add('map_provider_available_oSM', 'checkbox', array(
-            'required' => false
-        ))
+        ->add('map_provider_available_google_v3', 'checkbox')
+        ->add('map_provider_available_map_quest', 'checkbox')
+        ->add('map_provider_available_oSM', 'checkbox')
         ->add('map_provider_default', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'GoogleV3' => 'Google Maps',
                 'MapQuest' => 'MapQuest Open',
                 'OSM' => 'OpenStreetMap',
             ),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('geo_search_local_geonames', 'checkbox', array(
-            'required' => false
+            'required' => false,
         ))
         ->add('geo_search_mapquest_nominatim', 'checkbox', array(
-            'required' => false
+            'required' => false,
         ))
         ->add('geo_search_preferred_language', 'choice', array(
-            'choices'   => $languages,
-            'required' => true
+            'choices' => $languages,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('map_marker_directory', null, array(
-            'attr' => array('maxlength' => 80, 'size' => 50),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => 50),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'string')),
+                new Assert\Length(array(
+                    'max' => 80,
+                )),
+            ),
         ))
-        ->add('map_marker_source_default', null, array(
-            'required' => false
-        ))
+        ->add('map_marker_source_default', null, array())
         ->add('map_popup_width_min', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_popup_height_min', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_video_width_you_tube', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_video_height_you_tube', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_video_width_vimeo', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_video_height_vimeo', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_video_width_flash', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('map_video_height_flash', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 0),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 0,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('geo_flash_server', null, array(
-            'attr' => array('maxlength' => 80, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 80,
+                )),
+            ),
         ))
         ->add('geo_flash_directory', null, array(
-            'attr' => array('maxlength' => 80, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 200,
+                )),
+            ),
         ))
         ->add('facebook_appid', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 200,
+                )),
+            ),
         ))
         ->add('facebook_appsecret', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 200,
+                )),
+            ),
         ))
         ->add('recaptchaPublicKey', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 200,
+                )),
+            ),
         ))
         ->add('recaptchaPrivateKey', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 40),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 200,
+                )),
+            ),
         ))
         ->add('recaptchaSecure', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
             'data' => 'N',
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('userGarbageActive', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('userGarbageDays', 'integer', array(
-            'attr' => array('max' => 999, 'min' => 1),
-            'required' => true
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Type(array('type' => 'integer')),
+                new Assert\Range(array(
+                    'min' => 1,
+                    'max' => 999,
+                )),
+            ),
         ))
         ->add('smartyUseProtocol', 'choice', array(
-            'choices'   => array(
+            'choices' => array(
                 'Y' => 'newscoop.preferences.label.yesoption',
-                'N' => 'newscoop.preferences.label.nooption'
+                'N' => 'newscoop.preferences.label.nooption',
             ),
-            'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
-            'required' => true,
+            'constraints' => array(
+                new Assert\NotBlank(),
+            ),
         ))
         ->add('cronJobNotificationEmail', 'email', array(
-            'attr' => array('maxlength' => 255, 'size' => 64),
-            'error_bubbling' => true,
-            'required' => true
+            'attr' => array('size' => 64),
+            'constraints' => array(
+                new Assert\NotBlank(),
+                new Assert\Email(),
+                new Assert\Length(array(
+                    'max' => 255,
+                )),
+            ),
         ))
         ->add('cronJobSmtpSender', 'email', array(
-            'attr' => array('maxlength' => 100, 'size' => 64),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => 64),
+            'constraints' => array(
+                new Assert\Email(),
+                new Assert\Length(array(
+                    'max' => 255,
+                )),
+            ),
         ))
         ->add('cronJobSmtpSenderName', null, array(
-            'attr' => array('maxlength'=>'100', 'size' => '64'),
-            'error_bubbling' => true,
-            'required' => false
+            'attr' => array('size' => '64'),
+            'constraints' => array(
+                new Assert\Length(array(
+                    'max' => 100,
+                )),
+            ),
         ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'translation_domain' => 'system_pref'
+            'translation_domain' => 'system_pref',
         ));
 
         $resolver->setRequired(array(
             'cacheService',
         ));
-
     }
 
     public function getName()

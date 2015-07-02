@@ -1,11 +1,12 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Help', array(), 'help')); ?>
+$this->headTitle($translator->trans('Help', array(), 'help').' - Newscoop Admin', 'SET'); ?>
 
 <img src="<?php echo $this->baseUrl('/admin-style/images/newscoop_logo_big.png') ?>" style="float:left;">
 
 <dl class="metadata">
   <dt><?php echo $translator->trans('Version', array(), 'help'); ?>:</dt> <dd><?php echo $this->version; ?></dd>
+  <dt><?php echo $translator->trans('REST API Version', array(), 'help'); ?>:</dt> <dd><?php echo $this->api_version; ?></dd>
   <dt><?php echo $translator->trans('Release date', array(), 'help'); ?>:</dt> <dd><?php echo $this->date; ?></dd>
 </dl>
 

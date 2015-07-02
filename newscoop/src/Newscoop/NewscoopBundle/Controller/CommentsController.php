@@ -18,6 +18,7 @@ use Newscoop\NewscoopBundle\Form\Type\CommentsFilterType;
 use Newscoop\NewscoopBundle\Form\Type\CommentSearchType;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Newscoop\Entity\Section;
 
 /**
  * Comments controller.
@@ -49,10 +50,9 @@ class CommentsController extends Controller
             ->createQueryBuilder('c');
 
         $queryBuilder
-            ->select('c', 'cm.name', 't.name')
+            ->select('c', 'cm.name')
             ->leftJoin('c.commenter', 'cm')
-            ->leftJoin('c.thread', 't')
-            ->where($queryBuilder->expr()->isNotNull('c.article_num'))
+            ->where($queryBuilder->expr()->isNotNull('c.thread'))
             ->andWhere('c.status != :deleted')
             ->setParameter('deleted', array_search('deleted', $statusMap))
             ->orderBy('c.time_created', 'desc');
@@ -223,12 +223,13 @@ class CommentsController extends Controller
             try {
                 foreach ($comments as $id) {
                     $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
+                    $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
                     if ($status == "deleted") {
                         $message = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
-                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), ), 'new_comments');
+                            '$2' => $thread->getName(), '$3' => $comment->getLanguage()->getCode(), ), 'new_comments');
                     } else {
                         $message = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
-                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status, ), 'new_comments');
+                            '$2' => $thread->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status, ), 'new_comments');
                     }
                 }
 
@@ -299,11 +300,11 @@ class CommentsController extends Controller
                 continue;
             }
             $comment = $em->getRepository('Newscoop\Entity\Comment')->find($commentId);
-
+            $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
             $this->container->get('dispatcher')->dispatch('comment.recommended', new GenericEvent($this, array(
                     'id' => $comment->getId(),
                     'subject' => $comment->getSubject(),
-                    'article' => $comment->getThread()->getName(),
+                    'article' => $thread->getName(),
                     'commenter' => $comment->getCommenterName(),
                 )));
         }
@@ -470,8 +471,7 @@ class CommentsController extends Controller
             $qb = $em->createQueryBuilder();
             $comments = $qb
                 ->from('Newscoop\Entity\Comment', 'c', 'c.id')
-                ->select('c', 't', 'cc', 'u')
-                ->leftJoin('c.thread', 't')
+                ->select('c', 'cc', 'u')
                 ->leftJoin('c.commenter', 'cc')
                 ->leftJoin('cc.user', 'u')
                 ->where($qb->expr()->in('c.id', $commentIds))
@@ -480,14 +480,22 @@ class CommentsController extends Controller
 
             foreach ($pagination as $comment) {
                 $comment = $comment[0];
+                $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
+                $threadSection = $thread->getSection();
+
+                if (!$threadSection) {
+                    $thread->setSection(new Section(0, 'No section'));
+                }
+
                 $commentsArray[] = array(
                     'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
                     'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
                     'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
-                    'issueNumber' => $comments[$comment->getId()]->getThread()->getIssueId(),
-                    'section' => $comments[$comment->getId()]->getThread()->getSection()->getName(),
+                    'issueNumber' => $thread->getIssueId(),
+                    'section' => $threadSection ? $threadSection->getName() : '',
                     'comment' => $comment,
                     'index' => $counter,
+                    'article' => $thread
                 );
 
                 $counter++;

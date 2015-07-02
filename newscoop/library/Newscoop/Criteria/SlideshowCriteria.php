@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Criteria;
 
 use Newscoop\Criteria;
@@ -16,33 +15,33 @@ use Newscoop\Criteria;
 class SlideshowCriteria extends Criteria
 {
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $id;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     public $headline;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     public $description;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     public $rendition;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     public $slug;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     public $itemsCount;
 
     /**
@@ -50,6 +49,16 @@ class SlideshowCriteria extends Criteria
      * @var integer
      */
     public $publication;
+
+    /**
+     * @var int
+     */
+    public $articleNumber;
+
+    /**
+     * @var int
+     */
+    public $articleLanguage;
 
     /**
      * @var array

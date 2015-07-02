@@ -1,6 +1,6 @@
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set('Renditions'); 
+$this->headTitle($translator->trans('Reload renditions', array(), 'article_images').' - Newscoop Admin', 'SET'); 
 ?>
 
 <?php if (count($this->renditions) === 0) {

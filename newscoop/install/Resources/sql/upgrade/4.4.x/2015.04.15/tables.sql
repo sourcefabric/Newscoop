@@ -1,0 +1,1 @@
+ALTER TABLE `context_articles` CHANGE `order_number` `order_number` INT(11) NOT NULL DEFAULT '0';

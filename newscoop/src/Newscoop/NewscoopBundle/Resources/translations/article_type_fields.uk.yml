@@ -1,5 +1,5 @@
-'Usage at automatic statistics': 'Використовувати в автоматичній статистиці'
-'Show field in article edit screen': null
+'Does serving this field count as a page read for statistics?': null
+'Is this field intended for the reader to view? If not, it is metadata.': null
 'Event Color': 'Колір дії'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'У полі $3 потрібно ввести число більше ніж $1 та менше ніж $2'
 'You do not have the right to translate article types.': 'У Вас не має прав на переклад статей.'
@@ -22,7 +22,8 @@ Custom: Користувацький
 Precision: Точність
 'Can not convert the field $1 from $2 to type $3.': 'Неможливо ковертувати поле $1 з $2 у $3.'
 'Are you sure you want to make $1 a $2 field?': 'Ви впевнені що хочете зробити $1 поля $2'
-'Is Content': 'У контексті'
+'Page Read Count?': null
+'Editorial Content?': null
 'Back to Article Types List': 'До списку типів статей'
 show: Показати
 hide: Приховати
@@ -35,7 +36,7 @@ hide: Приховати
 'The field $1 does not exist.': 'Поле $1 не існує.'
 'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 може містити тільки літери та символ підкреслення (_)'
 'Template Field Name': 'Назва поля шаблону'
-Show/Hide: 'Показати / Приховати'
+'Show to Authors?': null
 'Renaming article type field': 'Перейменування поля типів статей'
 'Rename field': 'Перейменувати поле'
 'Reassign a field type': 'Перевизначити тип поля'

@@ -1,4 +1,4 @@
-'No attachment': null
+'No attachment': 'Нет приложений'
 at: на
 'With no attachment': 'Без вложения'
 'With image attachment': 'С приложенным изображением'
@@ -19,9 +19,9 @@ Processed: Обработанное
 'Message status change to $1.': 'Статус сообщения изменен на $1.'
 'Message deleted.': 'Сообщение удалено.'
 Message: Сообщение
-Last: Последний
+Last: Последняя
 'Full article': 'Полный текст статьи'
-First: Первый
+First: Первая
 'Feedback Messages': 'Ответ на сообщения '
 'Display _MENU_ records': 'Отобразить _MENU_ записи'
 Deleted: 'Удалено '
@@ -29,7 +29,7 @@ Deleted: 'Удалено '
 Attachment: 'Прикрепленный файл'
 Approved.: Утверждено
 Approve: Утвердить
-Anonymous: null
+Anonymous: Анонимный
 ' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
 'You are about to permanently delete multiple messages.': 'Вы пришли на страницу, чтобы навсегда удалить множественные сообщения.'
 'You are about to permanently delete a message.': 'Вы пришли на страницу, чтобы удалить сообщение.'
@@ -100,21 +100,21 @@ Ban: Запретить
 'Acceptance $1 deleted.': 'Критерий $1 удален.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Слишком длинное сообщение.'
+        added: 'Комментарий успешно добавлен.'
+        edited: 'Комментарий успешно отредактирован.'
+        resolved: 'Замечание успешно устранено.'
+        deleted: 'Комментарий успешно удален.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Отправить
+        cancel: Отменить
+        resolve: Устранить
+        save: Сохранить
+        edit: Правка
+        delete: Удалить
+        reply: Ответ
     label:
         title: null
-        post: null
-        reply: null
-        nocomments: null
+        post: 'Отправить новый комментарий'
+        reply: Ответить...
+        nocomments: 'Нет комментариев.'

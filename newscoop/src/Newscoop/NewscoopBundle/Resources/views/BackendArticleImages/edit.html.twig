@@ -32,6 +32,7 @@
     <div id="article-image-edit-thumbnail">
         {% set thumbnail = imageService.thumbnail(image, 400, 400, 'fit' ) %}
         <img src="{{ generateZendUrl('image', 'cache', 'default', {'src': thumbnail.src}, 'image', false) }}" width="{{thumbnail.width}}" height="{{thumbnail.height}}" />
+        <a target="_blank" href="/{{image.getPath()}}" style="display: block;font-size: 12px;padding: 10px 0px;" >{{ 'articles.images.see_original'|trans }}</a>
     </div>
 
     <div id="article-image-edit-form" style="margin: 13px 10px;background-color: #fff;padding: 10px; width: 450px;">

@@ -14,6 +14,8 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 camp_html_content_top($translator->trans('Pending articles', array(), 'articles'), NULL);
 
+$controller->view->headTitle($translator->trans('Pending articles', array(), 'articles').' - Newscoop Admin', 'SET');
+
 // set up
 $articlelist = new ArticleList();
 $articlelist->setPublication($f_publication_id);

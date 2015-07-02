@@ -70,3 +70,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 일자<BR><SAMLL>(년-월-일)</SMALL>
 'Change image information': '이미지 정보 수정'
 'You do not have the right to add images': '이미지를 추가할 권한이 없습니다. '
 'Filter by uploader...': null
+'Slideshow images': null
+'Add items to slideshow': null
+'Attached Slideshows': null
+'Value is required and can''t be empty': null

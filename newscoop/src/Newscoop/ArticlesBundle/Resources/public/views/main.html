@@ -1,6 +1,7 @@
 <section ng-controller="EditorialCommentsCtrl" class="tab-content chat" style="display: block;">
+<div ng-show="comments.busy" class="spinner ai-circled ai-indicator ai-grey-spin"></div>
   <div ng-init="refresher()" id="main_block_with_scroll" class="notification-list-box">
-    <div ng-if="comments.items.length == 0 && !comments.busy">{[{ trans('editorial.label.nocomments') }]}</div>
+    <div ng-if="comments.items.length == 0" style="padding: 10px;">{[{ trans('editorial.label.nocomments') }]}</div>
     <ul infinite-scroll="comments.nextPage()" infinite-scroll-container="'#main_block_with_scroll'" infinite-scroll-parent class="notification-list">
       <li class="personal" ng-class="{'comment-reply': comment.parent}" ng-repeat="comment in comments.items" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
         <button ng-if="!comment.parent" type="button" ng-click="resolveComment(comment.id);" ng-show="hover" class="btn btn-xs btn-primary resolve-btn">
@@ -54,7 +55,6 @@
       </li>
     </ul>
   </div>
-  <div ng-show="comments.busy" style="margin-left:45%;" class="ai-circled ai-indicator ai-grey-spin"></div>
   <div ng-class="{'typing-active': enableTyping}">
     <div class="notification-write-box">
       <form name="addForm" class="form-inline" role="form" novalidate>

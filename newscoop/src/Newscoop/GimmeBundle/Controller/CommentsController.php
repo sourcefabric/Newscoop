@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Newscoop\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Doctrine\ORM\EntityNotFoundException;
@@ -46,8 +47,16 @@ class CommentsController extends FOSRestController
     {
         $em = $this->container->get('em');
 
+        $showHidden = false;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $showHidden = true;
+            }
+        } catch (AuthenticationException $e) {}
+
         $comments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getComments(false);
+            ->getComments(false, $showHidden);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $comments = $paginator->paginate($comments, array(
@@ -108,7 +117,7 @@ class CommentsController extends FOSRestController
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
      *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
-     *         {"name"="order", "dataType"="string", "required"=false, "description"="Ordering type"}
+     *         {"name"="order", "dataType"="string", "required"=false, "description"="Ordering type. Possible values: [chrono, nested]"}
      *     }
      * )
      *
@@ -137,8 +146,16 @@ class CommentsController extends FOSRestController
             $recommended = true;
         }
 
+        $showHidden = false;
+        try {
+            $user = $this->container->get('user')->getCurrentUser();
+            if ($user && $user->isAdmin()) {
+                $showHidden = true;
+            }
+        } catch (AuthenticationException $e) {}
+
         $articleComments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getArticleComments($number, $language, $recommended, false)
+            ->getArticleComments($number, $language, $recommended, false, $showHidden)
             ->getResult();
 
         if ($order == 'nested' && $articleComments) {
@@ -185,7 +202,7 @@ class CommentsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
-     * @Route("/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_comments_createcomment")
      * @Method("POST")
      * @View()
      *

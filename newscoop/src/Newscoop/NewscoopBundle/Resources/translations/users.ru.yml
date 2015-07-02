@@ -1,34 +1,34 @@
-'Password confirmation does not match your password.': null
-'Password Confirmation': null
+'Password confirmation does not match your password.': 'Пароль при подтверждении не совпадает с вашим паролем.'
+'Password Confirmation': 'Подтвердить пароль'
 Website: Web-сайт
-Twitter: null
-'Save profile': null
-'Profile image': null
-Organisation: null
-'Last Name Public': null
-Google+: null
+Twitter: Twitter
+'Save profile': 'Сохранить профиль'
+'Profile image': 'Фото профиля'
+Organisation: Организация
+'Last Name Public': 'Фамилия открытая информация'
+Google+: Google+
 Geolocation: Геопозиционирование
-Gender: null
-'First Name Public': null
-Facebook: null
-'Date of birth': null
-'Allow sending emails': null
-'About me': null
+Gender: Пол
+'First Name Public': 'Имя открытая информация'
+Facebook: Facebook
+'Date of birth': 'Дата рождения'
+'Allow sending emails': 'Разрешить электронную почту'
+'About me': 'Обо мне'
 'User with email %s is registered already.': 'Пользователь с email %s уже зарегистрирован.'
-'Username is used. Please use another one.': null
-Continue: null
-'Accepting terms of use': null
-'send confirmation email': null
-'edit user': null
-'delete user': null
-'Verified profile': null
+'Username is used. Please use another one.': 'Данное имя уже используется. Пожалуйста, выберите другое имя. '
+Continue: Продолжить
+'Accepting terms of use': 'Принять условия пользования'
+'send confirmation email': 'отослать подтверждение по email'
+'edit user': 'редактировать данные пользователя'
+'delete user': 'удалить аккаунт'
+'Verified profile': 'Подтвержденный профиль'
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Показано _START_ до _END_ / _TOTAL_ записей'
-'Send email to user:': null
-'No users found.': null
+'Send email to user:': 'Послать email пользователю:'
+'No users found.': 'Аккаунт не найден.'
 'No records found.': 'Не выбрана ни одна из записей'
 'No entries to show': 'Нет записей для просмотра'
 'Display _MENU_ records': 'Отобразить _MENU_ записи'
-'Are you sure you want to {action}?': null
+'Are you sure you want to {action}?': 'Вы уверены, что хотите {action}?'
 'Active Logins': 'Активные логины'
 ' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
 'User renamed.': 'Пользователь переименован.'
@@ -184,12 +184,12 @@ Miscellaneous: Разное
 'User will be notified on several events': 'Пользователь будет уведомляться о некоторых событиях'
 'Editor Miscellaneous Settings': 'Прочие настройки редактора'
 'No such user account.': 'Нет такой учетной записи пользователя.'
-'User image (full-size)': null
+'User image (full-size)': 'Фото пользователя (полноразмерное)'
 'User account is highlighted as "featured account"': 'Пользователь отмечен как избранный'
 'Custom attribute...': 'Настраиваемый атрибут'
 users:
     label:
-        title: null
+        title: 'Поиск пользователей'
     menu:
         manage: 'Управление пользователями'
     created: Создана
@@ -204,21 +204,21 @@ users:
         actions:
             actions: Операции
             edit: Правка
-            resend_email: null
+            resend_email: 'Повторить отправку email об активизации'
             rename: Переименовать
             remove: Удалить
-        confirm_remove: null
+        confirm_remove: 'Подтвердите удаление данного аккаунта? '
         table_messages:
-            page: null
-            perPageText: null
-            pageText: null
-            recordCountPageBoundTemplate: null
-            recordCountPageUnboundedTemplate: null
-            recordCountTotalTemplate: null
-            recordCountFilteredTemplate: null
-            recordCountText: null
-            recordCountTextTemplate: null
-            recordCountTemplate: null
+            page: страница
+            perPageText: 'Показать:'
+            pageText: 'Страницы:'
+            recordCountPageBoundTemplate: '{pageLowerBound} to {pageUpperBound} of'
+            recordCountPageUnboundedTemplate: '{recordsShown} of'
+            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
+            recordCountFilteredTemplate: ' (filtered from {recordsTotal} total records)'
+            recordCountText: Показано
+            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
+            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
             processingText: Обработка...
     chart:
-        title: null
+        title: 'Активные логины'

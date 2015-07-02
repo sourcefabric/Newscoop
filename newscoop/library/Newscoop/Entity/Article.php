@@ -1,15 +1,13 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
@@ -17,7 +15,7 @@ use Newscoop\View\ArticleView;
 use Newscoop\Search\DocumentInterface;
 
 /**
- * Article entity
+ * Article entity.
  *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
  * @ORM\Table(name="Articles")
@@ -32,6 +30,7 @@ class Article implements DocumentInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     *
      * @var Newscoop\Entity\Language
      */
     protected $language;
@@ -39,6 +38,7 @@ class Article implements DocumentInterface
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id", nullable=true)
+     *
      * @var Newscoop\Entity\Publication
      */
     protected $publication;
@@ -46,6 +46,7 @@ class Article implements DocumentInterface
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
      * @ORM\JoinColumn(name="issue_id", referencedColumnName="id")
+     *
      * @var Newscoop\Entity\Issue
      */
     protected $issue;
@@ -53,20 +54,25 @@ class Article implements DocumentInterface
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+     *
      * @var Newscoop\Entity\Section
      */
     protected $section;
 
     /**
      * TODO: Fix this bug. It's not section Id - it's sectionNumber!
+     *
      * @ORM\Column(name="NrSection", nullable=true)
+     *
      * @var int
      */
     protected $sectionId;
 
     /**
      * TODO: Fix this bug. It's not Issue Id - it's issueNumber!
+     *
      * @ORM\Column(name="NrIssue", nullable=true)
+     *
      * @var int
      */
     protected $issueId;
@@ -74,18 +80,21 @@ class Article implements DocumentInterface
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
+     *
      * @var Newscoop\Entity\User
      */
     protected $creator;
 
     /**
-     * Article fields used by Newscoop API
+     * Article fields used by Newscoop API.
+     *
      * @var array
      */
     protected $fields;
 
     /**
-     * Article Authors for Newscoop\Gimme
+     * Article Authors for Newscoop\Gimme.
+     *
      * @var object
      */
     protected $articleAuthors;
@@ -93,42 +102,49 @@ class Article implements DocumentInterface
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="Number")
+     *
      * @var int
      */
     protected $number;
 
     /**
      * @ORM\Column(name="Name", nullable=True)
+     *
      * @var string
      */
     protected $name;
 
     /**
      * @ORM\Column(name="ShortName", nullable=True)
+     *
      * @var string
      */
     protected $shortName;
 
     /**
      * @ORM\Column(type="datetime", name="time_updated", nullable=true)
+     *
      * @var DateTime
      */
     protected $updated;
 
     /**
      * @ORM\Column(type="datetime", name="indexed", nullable=true)
+     *
      * @var DateTime
      */
     protected $indexed;
 
     /**
      * @ORM\Column(name="comments_enabled", nullable=True)
+     *
      * @var int
      */
     protected $comments_enabled;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread", indexBy="language")
+     *
      * @var Newscoop\Entity\Comments
      */
     protected $comments;
@@ -150,60 +166,70 @@ class Article implements DocumentInterface
 
     /**
      * @ORM\Column(name="Type", nullable=True)
+     *
      * @var string
      */
     protected $type;
 
     /**
      * @ORM\Column(type="datetime", name="PublishDate", nullable=true)
+     *
      * @var DateTime
      */
     protected $published;
 
     /**
      * @ORM\Column(name="Published", nullable=true)
+     *
      * @var string
      */
     protected $workflowStatus;
 
     /**
      * @ORM\Column(type="integer", name="ArticleOrder", nullable=True)
+     *
      * @var int
      */
     protected $articleOrder;
 
     /**
      * @ORM\Column(name="Public", nullable=True)
+     *
      * @var string
      */
     protected $public;
 
     /**
      * @ORM\Column(name="OnFrontPage", nullable=True)
+     *
      * @var string
      */
     protected $onFrontPage;
 
     /**
      * @ORM\Column(name="OnSection", nullable=True)
+     *
      * @var string
      */
     protected $onSection;
 
     /**
      * @ORM\Column(type="datetime", name="UploadDate", nullable=True)
+     *
      * @var DateTime
      */
     protected $uploaded;
 
     /**
      * @ORM\Column(name="Keywords", nullable=True)
+     *
      * @var string
      */
     protected $keywords;
 
     /**
      * @ORM\Column(name="IsIndexed", nullable=True)
+     *
      * @var string
      */
     protected $isIndexed;
@@ -211,6 +237,7 @@ class Article implements DocumentInterface
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id", nullable=true)
+     *
      * @var Newscoop\Entity\User
      */
     protected $lockUser;
@@ -225,6 +252,7 @@ class Article implements DocumentInterface
      *          @ORM\JoinColumn(name="TopicId", referencedColumnName="id")
      *      }
      *  )
+     *
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $topics;
@@ -233,30 +261,35 @@ class Article implements DocumentInterface
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Playlist")
      * @ORM\JoinTable(name="playlist_article",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
+     *          @ORM\JoinColumn(name="article_no", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="article_language", referencedColumnName="IdLanguage")
      *      },
      *      inverseJoinColumns={
      *          @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
      *      }
      *  )
+     *
      * @var Newscoop\Entity\Playlist
      */
     protected $playlists;
 
     /**
      * @ORM\Column(type="datetime", name="LockTime", nullable=true)
+     *
      * @var DateTime
      */
     protected $lockTime;
 
     /**
      * @ORM\Column(type="integer", name="comments_locked", nullable=True)
+     *
      * @var int
      */
     protected $commentsLocked;
 
     /**
      * @ORM\Column(type="integer", name="object_id", nullable=True)
+     *
      * @var int
      */
     protected $objectId;
@@ -271,18 +304,21 @@ class Article implements DocumentInterface
      *          @ORM\JoinColumn(name="package_id", referencedColumnName="id")
      *      }
      *  )
+     *
      * @var Newscoop\Package\Package
      */
     protected $packages;
 
     /**
-     * Article renditions used by Newscoop API
+     * Article renditions used by Newscoop API.
+     *
      * @var array
      */
     protected $renditions;
 
     /**
-     * Article translations used by Newscoop API
+     * Article translations used by Newscoop API.
+     *
      * @var array
      */
     protected $translations;
@@ -290,12 +326,14 @@ class Article implements DocumentInterface
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
      * @ORM\JoinColumn(name="webcode", referencedColumnName="webcode")
+     *
      * @var Newscoop\Entity\Webcode
      */
     protected $webcode;
 
     /**
-     * Article reads number used by Newscoop API
+     * Article reads number used by Newscoop API.
+     *
      * @var int
      */
     protected $reads;
@@ -311,6 +349,7 @@ class Article implements DocumentInterface
      *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
      *      }
      * )
+     *
      * @var Doctrine\Common\Collections\Collection
      */
     protected $authors;
@@ -325,6 +364,7 @@ class Article implements DocumentInterface
      *          @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id")
      *      }
      *  )
+     *
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $attachments;
@@ -335,6 +375,7 @@ class Article implements DocumentInterface
      *      joinColumns={@ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="IdImage", referencedColumnName="Id")}
      * )
+     *
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $images;
@@ -345,6 +386,7 @@ class Article implements DocumentInterface
      *      joinColumns={@ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")}
      *  )
+     *
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $snippets;
@@ -371,9 +413,10 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set article id
+     * Set article id.
      *
-     * @param  int     $p_id
+     * @param int $p_id
+     *
      * @return Article
      */
     public function setId($p_id)
@@ -384,7 +427,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get article id
+     * Get article id.
      *
      * @return int
      */
@@ -394,7 +437,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get article name
+     * Get article name.
      *
      * @return string
      */
@@ -418,9 +461,10 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set publication
+     * Set publication.
      *
-     * @param  Publication $p_publication
+     * @param Publication $p_publication
+     *
      * @return Article
      */
     public function setPublication(Publication $p_publication)
@@ -431,7 +475,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get publication
+     * Get publication.
      *
      * @return Newscoop\Entity\Publication
      */
@@ -441,7 +485,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get publication id
+     * Get publication id.
      *
      * @return int
      */
@@ -451,7 +495,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for issue
+     * Getter for issue.
      *
      * @return \Newscoop\Entity\Issue
      */
@@ -461,7 +505,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Setter for issue
+     * Setter for issue.
      *
      * @param \Newscoop\Entity\Issue $issue Value to set
      *
@@ -475,7 +519,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get section
+     * Get section.
      *
      * @return \Newscoop\Entity\Section
      */
@@ -485,7 +529,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Setter for section
+     * Setter for section.
      *
      * @param Newscoop\Entity\Section $section
      *
@@ -499,10 +543,9 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set workflowStatus
+     * Set workflowStatus.
      *
-     * @param  string $status
-     * @return void
+     * @param string $status
      */
     public function setWorkflowStatus($workflowStatus)
     {
@@ -512,7 +555,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get workflowStatus
+     * Get workflowStatus.
      *
      * @return string
      */
@@ -533,9 +576,10 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set language
+     * Set language.
      *
-     * @param  Newscoop\Entity\Language $p_language
+     * @param Newscoop\Entity\Language $p_language
+     *
      * @return Newscoop\Entity\Article
      */
     public function setLanguage(Language $p_language)
@@ -546,7 +590,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get language
+     * Get language.
      *
      * @return Newscoop\Entity\Language
      */
@@ -556,7 +600,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get language id
+     * Get language id.
      *
      * @return int
      */
@@ -566,7 +610,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get language code
+     * Get language code.
      *
      * @return int
      */
@@ -576,7 +620,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get number
+     * Get number.
      *
      * @return int
      */
@@ -586,7 +630,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set number
+     * Set number.
      *
      * @return int
      */
@@ -598,7 +642,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -608,7 +652,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      */
@@ -620,7 +664,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return string
      */
@@ -630,10 +674,9 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set date
+     * Set date.
      *
-     * @param  DateTime $updated
-     * @return void
+     * @param DateTime $updated
      */
     public function setDate(DateTime $date)
     {
@@ -641,10 +684,9 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set data
+     * Set data.
      *
-     * @param  array $data
-     * @return void
+     * @param array $data
      */
     public function setData(array $data)
     {
@@ -652,9 +694,10 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get article type field data
+     * Get article type field data.
      *
-     * @param  string $field
+     * @param string $field
+     *
      * @return mixed
      */
     public function getData($field)
@@ -675,10 +718,11 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set article type field data
+     * Set article type field data.
      *
-     * @param  string $field
-     * @param  string $value
+     * @param string $field
+     * @param string $value
+     *
      * @return mixed
      */
     public function setFieldData($field, $value)
@@ -692,14 +736,14 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get all field names for this article type
+     * Get all field names for this article type.
      *
      * @return mixed Returns array with field names or null
      */
     public function getFieldNames()
     {
         if ($this->data === null) {
-            return null;
+            return;
         }
 
         if (is_array($this->data)) {
@@ -710,7 +754,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get whether commenting is enabled
+     * Get whether commenting is enabled.
      *
      * @return int
      */
@@ -720,7 +764,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get whether commenting is enabled
+     * Get whether commenting is enabled.
      *
      * @return int
      */
@@ -730,7 +774,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set commenting en/disabled
+     * Set commenting en/disabled.
      *
      * @param int $comments_enabled
      */
@@ -742,7 +786,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for commentsLocked
+     * Getter for commentsLocked.
      *
      * @return mixed
      */
@@ -752,7 +796,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for commentsLocked
+     * Getter for commentsLocked.
      *
      * @return mixed
      */
@@ -762,7 +806,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Setter for commentsLocked
+     * Setter for commentsLocked.
      *
      * @param mixed $commentsLocked Value to set
      *
@@ -776,7 +820,8 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set comments_link
+     * Set comments_link.
+     *
      * @param string $link uri for comments resource in Newscoop API
      */
     public function setCommentsLink($link)
@@ -785,7 +830,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -795,7 +840,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for updated
+     * Getter for updated.
      *
      * @return mixed
      */
@@ -805,7 +850,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Setter for updated
+     * Setter for updated.
      *
      * @param DateTime $updated Value to set
      *
@@ -819,7 +864,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get publishDate
+     * Get publishDate.
      *
      * @return string
      */
@@ -829,7 +874,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get published
+     * Get published.
      *
      * @return string
      */
@@ -839,7 +884,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set published
+     * Set published.
      *
      * @param \Datetime|null $published
      *
@@ -853,7 +898,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Test if article is published
+     * Test if article is published.
      *
      * @return bool
      */
@@ -863,9 +908,10 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set creator
+     * Set creator.
      *
-     * @param  User    $p_user
+     * @param User $p_user
+     *
      * @return Article
      */
     public function setCreator(User $p_user)
@@ -876,7 +922,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get creator
+     * Get creator.
      *
      * @return Newscoop\Entity\User
      */
@@ -886,11 +932,9 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set webcode
+     * Set webcode.
      *
      * @param Newscoop\Entity\Webcode $webcode
-     *
-     * @return void
      */
     public function setWebcode($webcode)
     {
@@ -898,21 +942,35 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get webcode
+     * Get webcode.
      *
      * @return string
      */
     public function getWebcode()
     {
         if (!$this->webcode) {
-            return null;
+            return;
         }
 
         return $this->webcode->getWebcode();
     }
 
     /**
-     * Test if article has webcode
+     * Get webcode object.
+     *
+     * @return string
+     */
+    public function getWebcodeEntity()
+    {
+        if (!$this->webcode) {
+            return;
+        }
+
+        return $this->webcode;
+    }
+
+    /**
+     * Test if article has webcode.
      *
      * @return bool
      */
@@ -922,21 +980,21 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get keywords
+     * Get keywords.
      *
      * @return string
      */
     public function getKeywords()
     {
         if (!$this->keywords) {
-            return null;
+            return;
         }
 
         return (string) $this->keywords;
     }
 
     /**
-     * Set Keywords
+     * Set Keywords.
      *
      * $keywords
      */
@@ -949,7 +1007,7 @@ class Article implements DocumentInterface
 
     /**
      * Set articleAuthors
-     * $articleAuthors
+     * $articleAuthors.
      */
     public function setArticleAuthors($articleAuthors)
     {
@@ -957,7 +1015,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get articleAuthors
+     * Get articleAuthors.
      *
      * @return object
      */
@@ -972,7 +1030,7 @@ class Article implements DocumentInterface
 
     /**
      * Set Packages
-     * $packages
+     * $packages.
      */
     public function setPackages($packages)
     {
@@ -980,14 +1038,14 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get packages
+     * Get packages.
      *
      * @return object
      */
     public function getPackages()
     {
         if (count($this->packages) == 0) {
-            return null;
+            return;
         }
 
         return $this->packages;
@@ -995,7 +1053,7 @@ class Article implements DocumentInterface
 
     /**
      * Set Topics
-     * $topics
+     * $topics.
      */
     public function setTopics($topics)
     {
@@ -1003,29 +1061,28 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get topics
+     * Get topics.
      *
      * @return object
      */
     public function getTopics()
     {
         if (count($this->topics) == 0) {
-            return null;
+            return;
         }
 
         return $this->topics;
     }
 
     /**
-     * Add Topic to the Article
+     * Add Topic to the Article.
      *
      * @param Topic $topic the Topic to attach
      *
-     * @return boolean
+     * @return bool
      */
     public function addTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
-
         if (!$this->topics->contains($topic)) {
             $this->topics->add($topic);
             $topic->addArticleTopic($this);
@@ -1037,11 +1094,11 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Remove a Topic from the Article
+     * Remove a Topic from the Article.
      *
      * @param Topic $topic the Topic to remove
      *
-     * @return boolean
+     * @return bool
      */
     public function removeTopic(\Newscoop\NewscoopBundle\Entity\Topic $topic)
     {
@@ -1056,7 +1113,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get topic names
+     * Get topic names.
      *
      * @return array
      */
@@ -1072,7 +1129,7 @@ class Article implements DocumentInterface
 
     /**
      * Set Fields
-     * $fields
+     * $fields.
      */
     public function setFields($fields)
     {
@@ -1080,14 +1137,14 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get fields
+     * Get fields.
      *
      * @return object
      */
     public function getFields()
     {
         if (count($this->fields) == 0) {
-            return null;
+            return;
         }
 
         return $this->fields;
@@ -1095,7 +1152,7 @@ class Article implements DocumentInterface
 
     /**
      * Set translations
-     * $translations
+     * $translations.
      */
     public function setTranslations($translations)
     {
@@ -1103,14 +1160,14 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get translations
+     * Get translations.
      *
      * @return object
      */
     public function getTranslations()
     {
         if (count($this->translations) == 0) {
-            return null;
+            return;
         }
 
         return $this->translations;
@@ -1118,7 +1175,7 @@ class Article implements DocumentInterface
 
     /**
      * Set renditions
-     * $renditions
+     * $renditions.
      */
     public function setRenditions($renditions)
     {
@@ -1126,21 +1183,22 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get renditions
+     * Get renditions.
      *
      * @return object
      */
     public function getRenditions()
     {
         if (count($this->renditions) == 0) {
-            return null;
+            return;
         }
 
         return $this->renditions;
     }
 
     /**
-     * Get reads
+     * Get reads.
+     *
      * @param int $reads
      */
     public function setReads($reads)
@@ -1151,7 +1209,8 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set reads
+     * Set reads.
+     *
      * @return int
      */
     public function getReads()
@@ -1173,7 +1232,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get indexed
+     * Get indexed.
      *
      * @return DateTime
      */
@@ -1183,7 +1242,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set indexed
+     * Set indexed.
      *
      * @param DateTime $indexed
      *
@@ -1197,11 +1256,10 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Author article
+     * Author article.
      *
-     * @param  string $title
-     * @param  array  $fields
-     * @return void
+     * @param string $title
+     * @param array  $fields
      */
     public function author($title, array $fields)
     {
@@ -1213,21 +1271,21 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for attachments
+     * Getter for attachments.
      *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
     public function getAttachments()
     {
         if (count($this->attachments) == 0) {
-            return null;
+            return;
         }
 
         return $this->attachments;
     }
 
     /**
-     * Setter for attachments
+     * Setter for attachments.
      *
      * @param Doctrine\Common\Collections\ArrayCollection|null $attachments Value to set
      *
@@ -1241,7 +1299,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Setter for attachments
+     * Setter for attachments.
      *
      * @param Attachment $attachment
      *
@@ -1255,7 +1313,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for images
+     * Getter for images.
      *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
@@ -1265,7 +1323,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get article first image
+     * Get article first image.
      *
      * @return Newscoop\Image\LocalImage
      */
@@ -1275,7 +1333,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Setter for images
+     * Setter for images.
      *
      * @param Doctrine\Common\Collections\ArrayCollection $images Value to set
      *
@@ -1289,7 +1347,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get view
+     * Get view.
      *
      * @return object
      */
@@ -1329,20 +1387,19 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Set article type field value
+     * Set article type field value.
      *
-     * @param  string $field
-     * @param  string $value
-     * @return void
+     * @param string $field
+     * @param string $value
      */
     private function setFieldValue($field, $value)
     {
         $this->initArticleData();
-        $this->data->setProperty('F' . $field, $value);
+        $this->data->setProperty('F'.$field, $value);
     }
 
     /**
-     * Add field properties to view
+     * Add field properties to view.
      *
      * @return array
      */
@@ -1358,7 +1415,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Init ArticleData
+     * Init ArticleData.
      *
      * @return ArticleData
      */
@@ -1378,7 +1435,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get Article Snippets
+     * Get Article Snippets.
      *
      * @var Doctrine\Common\Collections\ArrayCollection
      */
@@ -1388,7 +1445,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Add a Snippet to the Article
+     * Add a Snippet to the Article.
      *
      * @param Snippet $snippet the Snippet to attach
      *
@@ -1405,7 +1462,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Remove a Snippet from the Article
+     * Remove a Snippet from the Article.
      *
      * @param Snippet $snippet the Snippet to remove
      *
@@ -1422,7 +1479,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Get language object
+     * Get language object.
      *
      * @return Newscoop\Entity\Language
      */
@@ -1432,9 +1489,9 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Checks if article is locked or not
+     * Checks if article is locked or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function isLocked()
     {
@@ -1477,7 +1534,7 @@ class Article implements DocumentInterface
     public function getLockTime()
     {
         if (null === $this->lockTime) {
-            return null;
+            return;
         }
 
         return $this->lockTime;
@@ -1498,7 +1555,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Gets the time difference between current and article lock time
+     * Gets the time difference between current and article lock time.
      *
      * @return array
      */
@@ -1511,7 +1568,7 @@ class Article implements DocumentInterface
             'days' => $sinceStart->d,
             'hours' => $sinceStart->h,
             'minutes' => $sinceStart->i,
-            'seconds' => $sinceStart->s
+            'seconds' => $sinceStart->s,
         );
     }
 
@@ -1590,7 +1647,7 @@ class Article implements DocumentInterface
     /**
      * Sets the value of public.
      *
-     * @param boolean $public the public
+     * @param bool $public the public
      *
      * @return self
      */
@@ -1628,10 +1685,10 @@ class Article implements DocumentInterface
             }
 
             return $this;
-        } else if (is_string($onFrontPage)) {
+        } elseif (is_string($onFrontPage)) {
             $this->onFrontPage = $onFrontPage;
         } else {
-            $this->onFrontPage = "N";
+            $this->onFrontPage = 'N';
         }
 
         return $this;
@@ -1664,12 +1721,11 @@ class Article implements DocumentInterface
             }
 
             return $this;
-        } else if (is_string($onSection)) {
+        } elseif (is_string($onSection)) {
             $this->onSection = $onFrontPage;
         } else {
-            $this->onSection = "N";
+            $this->onSection = 'N';
         }
-
 
         return $this;
     }
@@ -1711,7 +1767,7 @@ class Article implements DocumentInterface
     /**
      * Sets the value of isIndexed.
      *
-     * @param boolean $isIndexed the is indexed
+     * @param bool $isIndexed the is indexed
      *
      * @return self
      */

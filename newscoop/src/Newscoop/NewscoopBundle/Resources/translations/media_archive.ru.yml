@@ -58,6 +58,6 @@ Size: Размер
 'Used in articles': 'Использована в статьях'
 'View image': 'Просмотр картинки'
 'Change image information': 'Измениить информацию об изображении'
-'Photographer URL': null
-'Add website url starting with http://': null
-'An error occured while uploading the file $1': null
+'Photographer URL': 'URL фотографа'
+'Add website url starting with http://': 'Добавьте url сайте, начиная с http://'
+'An error occured while uploading the file $1': 'При загрузке файла $1 произошла ошибка'

@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\Gimme
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
  * @copyright 2014 Sourcefabric o.p.s.
@@ -26,12 +26,12 @@ use Newscoop\Criteria\ArticleSearchCriteria;
 use Newscoop\Exception\AuthenticationException;
 
 /**
- * Articles controller
+ * Articles controller.
  */
 class ArticlesController extends FOSRestController
 {
     /**
-     * Create Article
+     * Create Article.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -43,13 +43,14 @@ class ArticlesController extends FOSRestController
      *
      * @Route("/articles/create.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
      * @Route("/articles/.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle_clear")
+     *
      * @Method("POST")
      */
     public function createArticleAction(Request $request)
     {
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('AddArticle')) {
-            throw new AccessDeniedException("You do not have the right to add articles.");
+            throw new AccessDeniedException('You do not have the right to add articles.');
         }
 
         $form = $this->createForm(new ArticleType(), array());
@@ -62,17 +63,17 @@ class ArticlesController extends FOSRestController
             $attributes = $form->getData();
             $language = $em->getRepository('Newscoop\Entity\Language')->findOneBy(array('id' => $attributes['language']));
             if (!$language) {
-                throw new EntityNotFoundException("Language was not found");
+                throw new EntityNotFoundException('Language was not found');
             }
 
             $articleType = $em->getRepository('Newscoop\Entity\ArticleType')->findOneBy(array('name' => $attributes['type']));
             if (!$articleType) {
-                throw new EntityNotFoundException("Article type was not found");
+                throw new EntityNotFoundException('Article type was not found');
             }
 
             $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneBy(array('id' => $attributes['publication']));
             if (!$publication) {
-                throw new EntityNotFoundException("Publication was not found");
+                throw new EntityNotFoundException('Publication was not found');
             }
 
             $issue = $em->getRepository('Newscoop\Entity\Issue')
@@ -104,8 +105,9 @@ class ArticlesController extends FOSRestController
             $this->postAddUpdate($article);
 
             $view = FOSView\View::create($article, 201);
-            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_getarticle', array(
+            $view->setHeader('X-Location', $this->generateUrl('newscoop_gimme_articles_getarticle_language', array(
                 'number' => $article->getId(),
+                'language' => $article->getLanguageCode()
             ), true));
 
             return $view;
@@ -115,7 +117,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Update Article
+     * Update Article.
      *
      * Additional form aparameters:
      *
@@ -135,6 +137,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_patcharticle")
+     *
      * @Method("PATCH|POST")
      */
     public function patchArticleAction(Request $request, $number, $language)
@@ -142,7 +145,7 @@ class ArticlesController extends FOSRestController
         $em = $this->container->get('em');
         $user = $this->container->get('user')->getCurrentUser();
         if (!$user->hasPermission('AddArticle')) {
-            throw new AccessDeniedException("You do not have the right to add articles.");
+            throw new AccessDeniedException('You do not have the right to add articles.');
         }
 
         $article = $em->getRepository('Newscoop\Entity\Article')
@@ -186,7 +189,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Get Articles
+     * Get Articles.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -203,6 +206,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticles")
+     *
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -225,7 +229,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Search for articles
+     * Search for articles.
      *
      * Parameter 'query' contains keywords seperated with ",". Example: test,article,keyword3
      *
@@ -254,6 +258,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/search/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     *
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -270,8 +275,7 @@ class ArticlesController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (AuthenticationException $e) {
-        }
+        } catch (AuthenticationException $e) {/* User is not logged in */}
 
         $articleSearchCriteria = new ArticleSearchCriteria();
         $articleSearchCriteria->fillFromRequest($request);
@@ -290,7 +294,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Get related articles
+     * Get related articles.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -303,6 +307,7 @@ class ArticlesController extends FOSRestController
      *
      * @Route("/articles/{number}/related.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_related_default_lang")
      * @Route("/articles/{number}/{language}/related.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_related")
+     *
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -336,7 +341,7 @@ class ArticlesController extends FOSRestController
 
         $ids = array();
         foreach ($relatedArticles as $relatedArticle) {
-            $ids[]  = $relatedArticle->getArticleNumber();
+            $ids[] = $relatedArticle->getArticleNumber();
         }
 
         $articleSearchCriteria = new ArticleSearchCriteria();
@@ -358,7 +363,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Get article
+     * Get article.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -374,13 +379,14 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle")
-     * @Route("/articles/{number}/{langauge}.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language")
+     * @Route("/articles/{number}/{language}.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language")
+     *
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return Form
      */
-    public function getArticleAction(Request $request, $number, $langauge = null)
+    public function getArticleAction(Request $request, $number, $language = null)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication();
@@ -397,7 +403,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Link resource with Article entity
+     * Link resource with Article entity.
      *
      * **article authors headers**:
      *
@@ -446,6 +452,7 @@ class ArticlesController extends FOSRestController
      *
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_linkarticle")
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_linkarticle_default_lang")
+     *
      * @Method("LINK")
      * @View(statusCode=201)
      *
@@ -559,7 +566,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Unlink resource from Article
+     * Unlink resource from Article.
      *
      * **article authors headers**:
      *
@@ -584,10 +591,15 @@ class ArticlesController extends FOSRestController
      * **related articles headers**:
      *
      *     header name: "link"
-     *     header value: "</api/articles/1; rel="topic">"
+     *     header value: "</api/articles/1; rel="article">"
      * or with specific language
      *
      *     header value: "</api/articles/1?language=en; rel="article">"
+     *
+     * **slideshows headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/slideshows/1; rel="slideshow">"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -601,6 +613,7 @@ class ArticlesController extends FOSRestController
      *
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_unlinkarticle")
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_unlinkarticle_default_lang")
+     *
      * @Method("UNLINK")
      * @View(statusCode=204)
      *
@@ -622,6 +635,7 @@ class ArticlesController extends FOSRestController
         $matched = false;
         foreach ($request->attributes->get('links', array()) as $key => $objectArray) {
             $resourceType = $objectArray['resourceType'];
+
             $object = $objectArray['object'];
 
             if ($object instanceof \Exception) {
@@ -698,6 +712,15 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+            if ($object instanceof \Newscoop\Package\Package) {
+                $packageService = $this->get('package');
+                $packageService->removeFromArticle($object, $article->getNumber());
+
+                $matched = true;
+
+                continue;
+            }
         }
 
         if ($matched === false) {
@@ -708,7 +731,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Change Article status
+     * Change Article status.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -722,6 +745,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}/{language}/{status}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlestatus")
+     *
      * @Method("PATCH")
      */
     public function changeArticleStatus(Request $request, $number, $language, $status)
@@ -746,7 +770,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * Lock or unlock article
+     * Lock or unlock article.
      *
      * @ApiDoc(
      *     statusCodes={
@@ -761,6 +785,7 @@ class ArticlesController extends FOSRestController
      * )
      *
      * @Route("/articles/{number}/{language}/lock.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlelockstatus")
+     *
      * @Method("POST|DELETE")
      */
     public function lockUnlockArticle(Request $request, $number, $language)
@@ -776,7 +801,7 @@ class ArticlesController extends FOSRestController
 
         $response = new Response();
         $response->setStatusCode(403);
-        if ($request->getMethod() === "POST") {
+        if ($request->getMethod() === 'POST') {
             if (!$article->isLocked()) {
                 $article->setLockUser($this->getUser());
                 $article->setLockTime(new \DateTime());
@@ -784,7 +809,7 @@ class ArticlesController extends FOSRestController
             }
         }
 
-        if ($request->getMethod() === "DELETE") {
+        if ($request->getMethod() === 'DELETE') {
             if ($article->isLocked()) {
                 $article->setLockUser();
                 $article->setLockTime();
@@ -806,10 +831,10 @@ class ArticlesController extends FOSRestController
                 $resourceType = null;
                 if (count($linkParams) > 1) {
                     $resourceType = trim(preg_replace('/<|>/', '', $linkParams[1]));
-                    $resourceType = str_replace("\"", "", str_replace("rel=", "", $resourceType));
+                    $resourceType = str_replace('"', '', str_replace('rel=', '', $resourceType));
                 }
-                $resource   = array_shift($linkParams);
-                $resource   = preg_replace('/<|>/', '', $resource);
+                $resource = array_shift($linkParams);
+                $resource = preg_replace('/<|>/', '', $resource);
 
                 $links[] = array(
                     'resource' => $resource,
@@ -840,9 +865,9 @@ class ArticlesController extends FOSRestController
         // Only users with a lock on the article can change it.
         if ($articleObj->isLocked() && ($user->getUserId() != $articleObj->getLockedByUser())) {
             $lockTime = new \DateTime($articleObj->getLockTime());
-            $now = new \DateTime("now");
+            $now = new \DateTime('now');
             $difference = $now->diff($lockTime);
-            $ago = $difference->format("%R%H:%I:%S");
+            $ago = $difference->format('%R%H:%I:%S');
             $lockUser = new \User($articleObj->getLockedByUser());
 
             throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));

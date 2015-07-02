@@ -14,18 +14,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AccessDeniedExceptionListener
 {
-    /**
-     * @var Symfony\Component\Templating
-     */
-    private $templatingService;
+    private $container;
 
     /**
      * Construct
-     * @param Templating $templatingService
+     * @param Service Container
      */
-    public function __construct($templatingService)
+    public function __construct($container)
     {
-        $this->templatingService = $templatingService;
+        $this->container = $container;
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -37,7 +34,7 @@ class AccessDeniedExceptionListener
             $response = new JsonResponse(array('message' => $exception->getMessage()));
 
             if ($request->getRequestFormat() === 'html') {
-                $response = $this->templatingService->renderResponse('NewscoopNewscoopBundle:Exception:exception.html.twig', array(
+                $response = $this->container->get('templating')->renderResponse('NewscoopNewscoopBundle:Exception:exception.html.twig', array(
                     'message' => $exception->getMessage()
                 ));
             }

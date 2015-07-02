@@ -55,8 +55,8 @@ Numeric: Числовой
 'template path': 'путь к шаблону'
 'short names': 'короткие имена'
 'Unable to fetch image from remote server.': 'Невозможно извлечь изображение из удаленного сервера.'
-Last: Последний
-First: Первый
+Last: Последняя
+First: Первая
 'Single-line Text': Текст
 'Multi-line Text with WYSIWYG': 'Тело статьи'
 'URL $1 is invalid or is not an image.': 'URL $1 неверен или не является изображением.'
@@ -66,13 +66,13 @@ client:
     notfound: 'Клиент не найден'
     removed: 'Клиент удален'
 publicresources:
-    updated: null
+    updated: 'Открытые элементы обновлены'
 api:
     configure:
         title: null
         title_content: null
         tabs:
-            resources: null
+            resources: 'Открытые элементы'
             clients: Клиенты
         resources:
             info: 'По умолчанию все элементы защищены файрволом, но вы можете выбрать те из них, доступ к которым хотите открыть'
@@ -102,5 +102,5 @@ api:
                 save: Сохранить
         PublicResources:
             label:
-                routes: null
+                routes: 'Выберите элементы, доступ к которым хотите открыть:'
                 save: Сохранить

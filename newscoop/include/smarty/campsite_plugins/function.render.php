@@ -7,6 +7,28 @@
 /**
  * Campsite render function plugin
  *
+ * Newscoop caching save cached template file content with special vector parameters.
+ * By default vector is filled with 5 parameters:
+ *  * language
+ *  * publication
+ *  * issue
+ *  * section
+ *  * article
+ *
+ * There is also "params" parameter where we can save  array of custom parameters (serialized into string) or string.
+ *
+ * To ignore one or more parameters (to make cached template this same for many articles, sections, issues etc) just set it value to "off"
+ *
+ * You can also provide custom cache lifetime (or set it in admin themes management) - use "cache" parameter. Setting "cache" to off will not cache this rendered file.
+ *
+ * Examples: 
+ *
+ * {{ render file="_tpl/_html-head.tpl" cache="3200" }} - cache "_tpl/_html-head.tpl" file for 3200 seconds with current context vector
+ *
+ * {{ render file="_tpl/_html-head.tpl" publication="2" }} - change default publication value in vector to 2
+ * 
+ * {{ render file="_tpl/_html-head.tpl" article="off" cache="3200" }} - cache "_tpl/_html-head.tpl" file for 3200 seconds for all articles in current vector (section, issue, publication and language)
+ *
  * Type:     function
  * Name:     render
  * Purpose:  template rendering
@@ -81,7 +103,8 @@ function smarty_function_render($p_params, &$p_smarty)
         }
     }
 
-    $smarty->display($p_params['file']);
+    // make sure that every diffirent set of parameters will get his own cache instance
+    $smarty->display($p_params['file'], sha1(serialize($smarty->campsiteVector)));
 
     // clear assigned variables
     foreach ($p_params as $key => $value) {

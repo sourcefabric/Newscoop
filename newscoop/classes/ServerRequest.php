@@ -1,18 +1,17 @@
 <?php
+
 /**
- * @package Campsite
- *
  * @author Petr Jasek <petr.jasek@sourcefabric.org>
  * @copyright 2010 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
+ *
  * @link http://www.sourcefabric.org
  */
-
-require_once dirname(__FILE__) . '/User.php';
-require_once dirname(__FILE__) . '/SecurityToken.php';
+require_once dirname(__FILE__).'/User.php';
+require_once dirname(__FILE__).'/SecurityToken.php';
 
 /**
- * Server request class
+ * Server request class.
  */
 class ServerRequest
 {
@@ -22,7 +21,7 @@ class ServerRequest
     const ERROR_PERMISSION = 3;
 
     /** @var callback */
-    private $callback = NULL;
+    private $callback = null;
 
     /** @var string */
     private $callable_name = '';
@@ -35,7 +34,7 @@ class ServerRequest
 
     /**
      * @param callback $callback
-     * @param array $args
+     * @param array    $args
      */
     public function __construct($callback, $args = array())
     {
@@ -45,26 +44,30 @@ class ServerRequest
         // check if callable
         if (!is_callable($this->callback, false, $this->callable_name)) {
             throw new InvalidArgumentException(
-                "Callback $1 is not callable.", array('$1' => $this->callable_name),
+                "Callback {$this->callable_name} is not callable.",
                 self::ERROR_NOT_CALLABLE
             );
         }
     }
 
     /**
-     * Allow certain callback
+     * Allow certain callback.
+     *
      * @param string $callable_name
      * @param string $permissions_required
+     *
      * @return ServerRequest
      */
     public function allow($callable_name, $permission_required = '')
     {
         $this->rules[(string) $callable_name] = (string) $permission_required;
+
         return $this;
     }
 
     /**
-     * Execute callback
+     * Execute callback.
+     *
      * @return mixed
      */
     public function execute()
@@ -107,11 +110,13 @@ class ServerRequest
 
         // call instance method
         $args = array_slice($this->args, $cargsNum);
+
         return $methodRef->invokeArgs($instance, $args);
     }
 
     /**
-     * Check permission
+     * Check permission.
+     *
      * @return bool
      */
     public function checkPermission()
@@ -119,19 +124,20 @@ class ServerRequest
         global $g_user;
 
         if (!isset($this->rules[$this->callable_name])) {
-            return FALSE;
+            return false;
         }
 
         $permission = $this->rules[$this->callable_name];
         if (!empty($permission) && !$g_user->hasPermission($permission)) {
-            return FALSE;
+            return false;
         }
 
-        return TRUE;
+        return true;
     }
 
     /**
-     * Check token
+     * Check token.
+     *
      * @return bool
      */
     public function checkToken()

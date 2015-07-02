@@ -191,10 +191,10 @@ $color_list = array(
 	<?php  if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Display Name", array(), 'article_type_fields'); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Translate"); ?></B></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Is Content", array(), 'article_type_fields'); ?></B></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show in Editor", array(), 'article_type_fields'); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Page Read Count?", array(), 'article_type_fields'); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Editorial Content?", array(), 'article_type_fields'); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Event Color", array(), 'article_type_fields'); ?></B></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show/Hide", array(), 'article_type_fields'); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Show to Authors?", array(), 'article_type_fields'); ?></B></TD>
 
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php echo $translator->trans("Delete"); ?></B></TD>
 	<?php  } ?>
@@ -283,7 +283,7 @@ foreach ($fields as $field) {
 
     <TD ALIGN="CENTER">
         <?php if ($field->getType() == ArticleTypeField::TYPE_BODY) { ?>
-        <input type="checkbox" title="<?php echo $translator->trans('Usage at automatic statistics', array(), 'article_type_fields'); ?>" <?php if ($field->isContent()) { ?>checked<?php } ?> id="set_is_content_<?php echo $i; ?>" name="set_is_content_<?php echo $i; ?>" 
+        <input type="checkbox" title="<?php echo $translator->trans('Does serving this field count as a page read for statistics?', array(), 'article_type_fields'); ?>" <?php if ($field->isContent()) { ?>checked<?php } ?> id="set_is_content_<?php echo $i; ?>" name="set_is_content_<?php echo $i; ?>" 
         onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make $1 a $2 field?', array('$1' => $field->getPrintName(), '$2' => $contentType), 'article_type_fields'); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_is_content.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_is_content=<?php print $setContentField; ?>&<?php echo SecurityToken::URLParameter(); ?>' } else { document.getElementById('set_is_content_<?php echo $i; ?>').checked = <?php echo $isContentField; ?> }">
         <?php } else { ?>
         <?php echo $translator->trans('N/A'); ?>
@@ -291,8 +291,12 @@ foreach ($fields as $field) {
     </TD>
 
     <TD ALIGN="CENTER">
-        <input type="checkbox" title="<?php echo $translator->trans('Show field in article edit screen', array(), 'article_type_fields'); ?>" <?php if ($field->showInEditor()) { ?>checked<?php } ?> id="set_show_in_editor_<?php echo $i; ?>" name="set_show_in_editor_<?php echo $i; ?>" 
+        <?php if ($field->getType() == ArticleTypeField::TYPE_SWITCH ) { ?>
+        <?php echo $translator->trans('N/A'); ?>
+        <?php } else { ?> 
+        <input type="checkbox" title="<?php echo $translator->trans('Is this field intended for the reader to view? If not, it is metadata.', array(), 'article_type_fields'); ?>" <?php if ($field->showInEditor()) { ?>checked<?php } ?> id="set_show_in_editor_<?php echo $i; ?>" name="set_show_in_editor_<?php echo $i; ?>" 
         onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make $1 a $2 field?', array('$1' => $field->getPrintName(), '$2' => $editorType), 'article_type_fields'); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_show_in_editor.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_show_in_editor=<?php print $setShowInEditor; ?>&<?php echo SecurityToken::URLParameter(); ?>' } else { document.getElementById('set_show_in_editor_<?php echo $i; ?>').checked = <?php echo $showInEditor; ?> }">
+        <?php } ?>
     </TD>
 
 <TD>

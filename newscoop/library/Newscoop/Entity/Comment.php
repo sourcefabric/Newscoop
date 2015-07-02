@@ -83,27 +83,8 @@ class Comment implements DocumentInterface
     protected $parent;
 
     /**
-     * TODO get rid of this when the composite key stuff is done.
-     *
      * @ORM\Column(type="integer", name="fk_thread_id")
      * @var int
-     */
-    protected $article_num;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
-     *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     *      })
-     * @var Newscoop\Entity\Article
-     */
-    protected $article;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article", inversedBy="comments")
-     * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
-     * @var Newscoop\Entity\Article
      */
     protected $thread;
 
@@ -220,39 +201,6 @@ class Comment implements DocumentInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * TODO get rid of this when the composite key stuff is done.
-     *
-     * @return int
-     */
-    public function getArticleNumber()
-    {
-        return $this->article_num;
-    }
-
-    /**
-     * Set article
-     *
-     * @param  Newscoop\Entity\Article $article
-     * @return void
-     */
-    public function setArticle(Article $article)
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
-    /**
-     * Get article
-     *
-     * @return Newscoop\Entity\Article
-     */
-    public function getArticle()
-    {
-        return $this->article;
     }
 
     /**
@@ -513,7 +461,7 @@ class Comment implements DocumentInterface
     }
 
     /**
-     * Get thread
+     * Get forum
      *
      * @return Newscoop\Entity\Publication
      */
@@ -527,7 +475,7 @@ class Comment implements DocumentInterface
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setThread(Article $thread)
+    public function setThread($thread)
     {
         $this->thread = $thread;
 
@@ -537,7 +485,7 @@ class Comment implements DocumentInterface
     /**
      * Get thread
      *
-     * @return Newscoop\Entity\Articles
+     * @return int
      */
     public function getThread()
     {

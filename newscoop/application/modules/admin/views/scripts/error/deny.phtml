@@ -1,5 +1,5 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->placeholder('title')->set($translator->trans('Access denied')); ?>
+$this->headTitle($translator->trans('Access denied').' - Newscoop Admin', 'SET'); ?>
 
 <p><?php echo $this->escape($this->message); ?></p>

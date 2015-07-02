@@ -1,6 +1,6 @@
 list: null
 filter: null
-'In Lists?': null
+'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': null
 '$1 articles of article type $2': null
 'Hide human-readable field names': null
@@ -46,7 +46,7 @@ activate: activează
 'The translation could not be added.': 'Traducerea nu a putut fi adăugată.'
 'The article type $1 does not exist.': 'Tipul $1 al articolului nu există.'
 'Template Type Name': 'Numele tipului şablonului'
-Show/Hide: Arată/Ascunde
+'Show to Authors?': null
 'Show article on section page': 'Afişează articolul pe pagina secţiunii'
 'Show article on front page': 'Afişează articolul pe prima pagină'
 'Publish date': 'Data publicării'
@@ -58,7 +58,7 @@ Merge!: Combină!
 'Go to Step 2': 'Mergi la pasul 2'
 'Display Name': 'Nume public'
 'Delete article type $1.': 'Şterge tipul de articol $1.'
-'Comments enabled?': 'Activezi comentariile?'
+'Comments Enabled?': null
 'Back to Step 2': 'Înapoi la pasul 2'
 'Back to Step 1': 'Înapoi la pasul 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Eşti sigur că vrei să ştergi tipul de articol $1? ATENŢIE: Dacă ştergi acest tip de articol, toate articolele asociate cu acest tip vor fi şterse.'

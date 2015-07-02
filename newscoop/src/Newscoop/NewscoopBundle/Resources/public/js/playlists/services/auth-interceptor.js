@@ -23,7 +23,7 @@ angular.module('playlistsApp').factory('authInterceptor', [
 
                 config.headers = config.headers || {};
                 token = userAuth.token();
-                if (token) {
+                if (token && !config.IS_AUTHORIZATION_HEADER) {
                     config.headers.Authorization = 'Bearer ' + token;
                 }
 
@@ -50,7 +50,6 @@ angular.module('playlistsApp').factory('authInterceptor', [
                     $http;
 
                 userAuth = $injector.get('userAuth');
-
                 if (response.config.IS_RETRY) {
                     // Tried to retry the initial failed request but failed
                     // again --> forward the error without another retry (to
@@ -58,25 +57,19 @@ angular.module('playlistsApp').factory('authInterceptor', [
                     return $q.reject(response);
                 }
 
-                // NOTE: The API is not perfect yet and does not always return
-                // 401 on authentication errors, thus we must also rely on the
-                // error message (for now at least).
-                if (response.status === 401 ||
+                 if (response.status === 401 ||
                     response.statusText === 'OAuth2 authentication required'
                 ) {
                     // Request failed due to invalid oAuth token - try to
                     // obtain a new token and then repeat the failed request.
                     failedRequestConfig = response.config;
                     retryDeferred = $q.defer();
+                    $http = $injector.get('$http');
+                    configToRepeat = angular.copy(failedRequestConfig);
+                    configToRepeat.IS_RETRY = true;
 
-                    userAuth.newTokenByLoginModal()
-                    .then(function () {
-                        // new token successfully obtained, repeat the request
-                        $http = $injector.get('$http');
-
-                        configToRepeat = angular.copy(failedRequestConfig);
-                        configToRepeat.IS_RETRY = true;
-
+                    userAuth.obtainToken()
+                    .then(function (responseBody) {
                         $http(configToRepeat)
                         .then(function (newResponse) {
                             delete newResponse.config.IS_RETRY;
@@ -85,10 +78,24 @@ angular.module('playlistsApp').factory('authInterceptor', [
                         .catch(function () {
                             retryDeferred.reject(response);
                         });
-                    })
-                    .catch(function () {
-                        // obtaining new token failed, reject the request
-                        retryDeferred.reject(response);
+                    }, function (responseBody) {
+                        userAuth.newTokenByLoginModal()
+                        .then(function () {
+                            // new token successfully obtained,
+                            // repeat the request
+                            $http(configToRepeat)
+                            .then(function (newResponse) {
+                                delete newResponse.config.IS_RETRY;
+                                retryDeferred.resolve(newResponse);
+                            })
+                            .catch(function () {
+                                retryDeferred.reject(response);
+                            });
+                        })
+                        .catch(function () {
+                            // obtaining new token failed, reject the request
+                            retryDeferred.reject(response);
+                        });
                     });
 
                     return retryDeferred.promise;

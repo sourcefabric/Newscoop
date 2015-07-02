@@ -31,6 +31,8 @@ $crumbs[] = array($translator->trans('Media Archive', array(), 'media_archive'),
 $crumbs[] = array($translator->trans('Edit files', array(), 'media_archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($translator->trans('Edit files', array(), 'media_archive').' - Newscoop Admin', 'SET');
+
 echo $breadcrumbs;
 
 camp_html_display_msgs();

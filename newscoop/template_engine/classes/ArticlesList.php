@@ -1,8 +1,8 @@
 <?php
 
 require_once 'ListObject.php';
-require_once($GLOBALS['g_campsiteDir'] . '/classes/CampCache.php');
-require_once($GLOBALS['g_campsiteDir'] . '/classes/Article.php');
+require_once $GLOBALS['g_campsiteDir'].'/classes/CampCache.php';
+require_once $GLOBALS['g_campsiteDir'].'/classes/Article.php';
 
 /**
  * ArticlesList class
@@ -10,37 +10,37 @@ require_once($GLOBALS['g_campsiteDir'] . '/classes/Article.php');
  */
 class ArticlesList extends ListObject
 {
-    private static $s_parameters = array('number'=>array('field'=>'Number', 'type'=>'integer'),
-                                         'name'=>array('field'=>'Name', 'type'=>'string'),
-                                         'keyword'=>array('field'=>null, 'type'=>'string'),
-                                         'onfrontpage'=>array('field'=>'OnFrontPage',
-                                                              'type'=>'switch'),
-                                         'onsection'=>array('field'=>'OnSection',
-                                                            'type'=>'switch'),
-                                         'upload_date'=>array('field'=>'UploadDate',
-                                                              'type'=>'date'),
-                                         'publish_date'=>array('field'=>'PublishDate',
-                                                              'type'=>'date'),
+    private static $s_parameters = array('number' => array('field' => 'Number', 'type' => 'integer'),
+                                         'name' => array('field' => 'Name', 'type' => 'string'),
+                                         'keyword' => array('field' => null, 'type' => 'string'),
+                                         'onfrontpage' => array('field' => 'OnFrontPage',
+                                                              'type' => 'switch', ),
+                                         'onsection' => array('field' => 'OnSection',
+                                                            'type' => 'switch', ),
+                                         'upload_date' => array('field' => 'UploadDate',
+                                                              'type' => 'date', ),
+                                         'publish_date' => array('field' => 'PublishDate',
+                                                              'type' => 'date', ),
                                          'publish_datetime' => array(
                                              'field' => 'PublishDate',
                                              'type' => 'datetime',
                                          ),
-                                         'public'=>array('field'=>'Public',
-                                                         'type'=>'switch'),
-                                         'type'=>array('field'=>'Type',
-                                                       'type'=>'string'),
-                                         'matchalltopics'=>array('field'=>null,
-                                                                 'type'=>'void'),
-                                         'matchanytopic'=>array('field'=>null,
-                                                                'type'=>'void'),
-                                         'topic'=>array('field'=>null,
-                                                        'type'=>'topic'),
+                                         'public' => array('field' => 'Public',
+                                                         'type' => 'switch', ),
+                                         'type' => array('field' => 'Type',
+                                                       'type' => 'string', ),
+                                         'matchalltopics' => array('field' => null,
+                                                                 'type' => 'void', ),
+                                         'matchanytopic' => array('field' => null,
+                                                                'type' => 'void', ),
+                                         'topic' => array('field' => null,
+                                                        'type' => 'topic', ),
                                          'topic_strict' => array('field' => null,
-                                                                 'type' => 'topic'),
-                                         'reads'=>array('field'=>null, 'type'=>'integer'),
-                                         'author'=>array('field'=>null, 'type'=>'string'),
-                                         'section'=>array('field'=>'NrSection', 'type'=>'integer'),
-                                         'issue'=>array('field'=>'NrIssue', 'type'=>'integer'),
+                                                                 'type' => 'topic', ),
+                                         'reads' => array('field' => null, 'type' => 'integer'),
+                                         'author' => array('field' => null, 'type' => 'string'),
+                                         'section' => array('field' => 'NrSection', 'type' => 'integer'),
+                                         'issue' => array('field' => 'NrIssue', 'type' => 'integer'),
                                          'insection' => array(
                                              'field' => 'insection',
                                              'type' => 'string',
@@ -78,7 +78,7 @@ class ArticlesList extends ListObject
 
     private $m_ignoreSection = false;
 
-  /**
+    /**
      * Creates the list of objects. Sets the parameter $p_hasNextElements to
      * true if this list is limited and elements still exist in the original
      * list (from which this was truncated) after the last element of this
@@ -117,7 +117,8 @@ class ArticlesList extends ListObject
         $value = null;
         $switchTypeHint = false;
         $context = CampTemplate::singleton()->context();
-        for ($index = 0; $index < count($p_constraints); $index++) {
+        $constraintsCount = count($p_constraints);
+        for ($index = 0; $index < $constraintsCount; $index++) {
             $word = $p_constraints[$index];
 
             switch ($state) {
@@ -217,7 +218,7 @@ class ArticlesList extends ListObject
                 case self::CONSTRAINT_VALUE: // reading the value to compare against
                     if ($attribute == 'publish_datetime' && $index + 1 < count($p_constraints)) { // add time to date
                         if (preg_match('/^[0-2][0-9]:[0-5][0-9](:[0-5][0-9])?$/', $p_constraints[$index + 1])) {
-                            $word .= ' ' . $p_constraints[$index + 1];
+                            $word .= ' '.$p_constraints[$index + 1];
                             $index++; // skip next value
                         }
                     }
@@ -231,36 +232,32 @@ class ArticlesList extends ListObject
                         return false;
                     }
                        if ($attribute == 'type') {
-                        $word = trim($word);
+                           $word = trim($word);
                            $articleType = new ArticleType($word);
                            if (!$articleType->exists()) {
-                            CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
+                               CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
 
-                            return false;
-                        }
-                        $value = $word;
-                    } elseif ($attribute == 'topic') {
-                        $em = \Zend_Registry::get('container')->getService('em');
-                        $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
-                        $context = CampTemplate::singleton()->context();
-                        $locale = $context->language->code;
-                        $topicObj = $repository->getTopicByIdOrName($word, $locale)->getOneOrNullResult();
-                        if (!$topicObj) {
-                            $topicService = \Zend_Registry::get('container')->getService('topic');
-                            $topicObj = $topicService->getTopicByFullName($word);
-                            if (!$topicObj) {
-                                CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
+                               return false;
+                           }
+                           $value = $word;
+                       } elseif ($attribute == 'topic') {
+                           $context = CampTemplate::singleton()->context();
+                           $locale = $context->language->code;
+                           $topicService = \Zend_Registry::get('container')->getService('topic');
+                           $topic = $topicService->getTopicBy($word, $locale);
+                           if (!$topic) {
+                               CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_articles");
 
-                                return false;
-                            }
-                        }
-                        $value = $topicObj->getTopicId();
-                    } elseif ($attribute == 'author') {
-                        if (strtolower($word) == '__current') {
-                            $value = $context->article->author->name;
-                        } else {
-                            $value = $word;
-                        }
+                               return false;
+                           }
+
+                           $value = $topic->getTopicId();
+                       } elseif ($attribute == 'author') {
+                           if (strtolower($word) == '__current') {
+                               $value = $context->article->author->name;
+                           } else {
+                               $value = $word;
+                           }
                        } elseif ($type == 'switch') {
                            $value = (int) (strtolower($word) == 'on');
                        } else {
@@ -330,7 +327,7 @@ class ArticlesList extends ListObject
                     break;
                 case 2: // reading the order direction
                     if (MetaOrder::IsValid($word)) {
-                        $order[] = array('field'=>$orderField, 'dir'=>$word);
+                        $order[] = array('field' => $orderField, 'dir' => $word);
                     } else {
                         CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_articles, order parameter");
                     }
@@ -361,7 +358,7 @@ class ArticlesList extends ListObject
         $parameters['ignore_issue'] = false;
         $parameters['ignore_section'] = false;
         $parameters['ignore_language'] = false;
-        foreach ($p_parameters as $parameter=>$value) {
+        foreach ($p_parameters as $parameter => $value) {
             $parameter = strtolower($parameter);
             switch ($parameter) {
                 case 'length':
@@ -408,7 +405,7 @@ class ArticlesList extends ListObject
                     }
                     switch ($foundField) {
                         case 'complex_date' :
-                            $this->m_constraints[] = new ComparisonOperation('complex_date', new Operator('is', 'string'), array($parameter=>$value));
+                            $this->m_constraints[] = new ComparisonOperation('complex_date', new Operator('is', 'string'), array($parameter => $value));
                         break;
                         default: break;
                     }
@@ -447,7 +444,7 @@ class ArticlesList extends ListObject
     private static function ReadArticleTypes()
     {
         if (is_null(self::$s_articleTypes)) {
-            require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+            require_once $GLOBALS['g_campsiteDir'].'/classes/ArticleType.php';
             $articleTypes = ArticleType::GetArticleTypes(true);
             self::$s_articleTypes = array();
             foreach ($articleTypes as $articleType) {
@@ -459,7 +456,7 @@ class ArticlesList extends ListObject
     private static function ReadDynamicFields()
     {
         if (is_null(self::$s_dynamicFields)) {
-            require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
+            require_once $GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php';
             self::$s_dynamicFields = ArticleTypeField::FetchFields();
         }
     }

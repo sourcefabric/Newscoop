@@ -44,15 +44,26 @@ class RenditionsHandler
             }
 
             $image = $this->imageService->find($articleRenditions[$rendition]->getImage()->getId());
-            $imageSrc = $this->imageService->getSrc($image->getPath(), $rendition->getWidth(), $rendition->getHeight(), 'crop');
-            $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
-                'src' => $imageSrc
+            $articleRenditionImage = $this->renditionService->getArticleRenditionImage($data->number, $renditionName);
+
+            $articleRenditionImage['original']->src = $this->publicationAliasName . $this->zendRouter->assemble(array(
+                'src' => $articleRenditionImage['original']->src
             ), 'image');
 
             $media[] = array(
                 'caption' => $renditionName,
                 'type' => 'image',
-                'link' => $imageUri
+                'link' => $this->publicationAliasName . $this->zendRouter->assemble(array(
+                    'src' => $articleRenditionImage['src']
+                ), 'image'),
+                'details' => array(
+                    'width' => $articleRenditionImage['width'],
+                    'height' => $articleRenditionImage['height'],
+                    'caption' => $articleRenditionImage['caption'],
+                    'photographer' => $articleRenditionImage['photographer'],
+                    'photographer_url' => $articleRenditionImage['photographer_url'],
+                    'original' => $articleRenditionImage['original']
+                )
             );
         }
 

@@ -224,6 +224,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
         $toolbar2[] = "fontsizeselect";
     }
 
+    $toolbar3 = array();
     if ($p_user->hasPermission('EditorTable')) {
         $toolbar3[] = "tablecontrols";
         $toolbar3[] = 'textbox';
@@ -270,7 +271,7 @@ $().ready(function() {
         file_browser_callback : "campsitemedia",
         relative_urls : false,
         onchange_callback : function() { $('form#article-main').change(); },
-        extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth|style|id|class]",
+        extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth|style|id|class|allowfullscreen]",
 
         // Theme options
         theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",

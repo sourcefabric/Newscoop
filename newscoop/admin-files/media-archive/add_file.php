@@ -26,6 +26,8 @@ $crumbs[] = array($translator->trans('Media Archive', array(), 'home'), "/$ADMIN
 $crumbs[] = array($translator->trans('Add new file', array(), 'media_archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+$controller->view->headTitle($translator->trans('Add new file', array(), 'media_archive').' - Newscoop Admin', 'SET');
+
 echo $breadcrumbs;
 
 camp_html_display_msgs();

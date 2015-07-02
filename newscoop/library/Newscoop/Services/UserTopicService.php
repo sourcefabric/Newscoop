@@ -96,7 +96,9 @@ class UserTopicService
 
         $topics = array();
         foreach ($userTopics as $userTopic) {
-            $topics[] = $userTopic->getTopic();
+            $topic = $userTopic->getTopic();
+            $topic->setTranslatableLocale($locale);
+            $topics[] = $topic;
         }
 
         return $topics;

@@ -8,6 +8,7 @@
 
 namespace Newscoop\Comment;
 
+use Doctrine\ORM\EntityManager;
 use Newscoop\Search\ServiceInterface;
 use Newscoop\Search\DocumentInterface;
 use Newscoop\Article\LinkService;
@@ -23,12 +24,18 @@ class SearchService implements ServiceInterface
     protected $articleLinkService;
 
     /**
-     * @param Newscoop\Article\LinkService $articleLinkService
-     * @param array $config
+     * @var Doctrine\ORM\EntityManager
      */
-    public function __construct(LinkService $articleLinkService)
+    protected $em;
+
+    /**
+     * @param Newscoop\Article\LinkService $articleLinkService
+     * @param Doctrine\ORM\EntityManager $em
+     */
+    public function __construct(LinkService $articleLinkService, EntityManager $em)
     {
         $this->articleLinkService = $articleLinkService;
+        $this->em = $em;
     }
 
     /**
@@ -81,6 +88,11 @@ class SearchService implements ServiceInterface
      */
     public function getDocument(DocumentInterface $comment)
     {
+        $articleNumber = $comment->getThread();
+        $language = $comment->getLanguage();
+        $article = $this->em->getRepository('Newscoop\Entity\Article')
+            ->find(array('number' => $articleNumber, 'language' => $language->getId()));
+
         return array(
             'id' => $this->getDocumentId($comment),
             'number' => $comment->getId(),
@@ -88,7 +100,7 @@ class SearchService implements ServiceInterface
             'subject' => $comment->getSubject(),
             'message' => $comment->getMessage(),
             'published' => gmdate(self::DATE_FORMAT, $comment->getTimeCreated()->getTimestamp()),
-            'link' => sprintf('%s#comment_%d', $this->articleLinkService->getLink($comment->getArticle()), $comment->getId()),
+            'link' => sprintf('%s#comment_%d', $this->articleLinkService->getLink($article), $comment->getId()),
         );
     }
 

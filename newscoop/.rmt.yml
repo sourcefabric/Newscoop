@@ -29,6 +29,6 @@ _default:
             format: semantic
             dump-commits: true
             exclude-merge-commits: true
-    post-release-actions:
         vcs-commit: ~              # Commit the CHANGELOG
+    post-release-actions:
         vcs-publish: ~

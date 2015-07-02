@@ -26,53 +26,53 @@ Top: Верх
 'There are $1 articles using the topic.': 'Тема используется в $1 статье(-ях).'
 'Search for topics': 'Искать темы'
 topics:
-    tip: null
+    tip: 'В Newscoop темы привязываются редакторами и журналистами к статьям, чтобы связанные статьи могли определяться и отображаться вместе. Основная тема может иметь много вложенных тем, н-р: для темы спорт вложенными темами будут футбол, баскетбол, водное поло. К статье можно привязать несколько основных или вложенных тем. '
     label:
-        all: null
-        filterbylang: null
+        all: Все
+        filterbylang: 'Показать темы на языке'
         search: Поиск
-        filterplaceholder: null
-        addroot: null
-        topicname: null
-        expandcollapse: null
-        changename: null
+        filterplaceholder: 'Наберите часть названия темы...'
+        addroot: 'Добавить основную тему'
+        topicname: 'Название темы'
+        expandcollapse: развернуть/свернуть
+        changename: 'Переименовать тему'
         for: null
-        addsubtopic: null
-        subtopicname: null
-        addtranslation: null
-        topictranslations: null
-        choose: null
+        addsubtopic: 'Добавить вложенную тему'
+        subtopicname: 'Название вложенной темы'
+        addtranslation: 'Добавить перевод:'
+        topictranslations: 'Переводы темы'
+        choose: Выбрать...
         translationstring: 'Строка перевода'
-        tree: null
-    title: null
+        tree: 'Структура тем'
+    title: Темы
     btn:
-        hide: null
-        remove: null
-        edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
-        removetrans: null
+        hide: Скрыть
+        remove: 'Удалить тему'
+        edit: 'Редактировать тему'
+        close: Закрыть
+        add: Добавить
+        save: Сохранить
+        saveandclose: 'Сохранить и закрыть'
+        removetrans: 'Удалить перевод темы'
     alerts:
         languagenotfound: 'Не удалось найти язык по коду : %locale%'
-        translationadded: null
-        translationexists: null
-        beforedelete: null
+        translationadded: 'Добавлен перевод'
+        translationexists: 'Перевод на  %locale% уже существует!'
+        beforedelete: 'Вы действительно хотите удалить эту тему?'
         wrongparams: null
-        ordersaved: null
-        saved: null
+        ordersaved: 'Порядок сохранен.'
+        saved: 'Сохранение завершено.'
         beforedeleteinfo: 'При удалении тем, имеющих вложенные темы, все вложенные вместе с переводами будут безвозвратно удалены. Вы уверены, что хотите этого?'
-    added: null
+    added: 'Тема добавлена'
     failedfind: 'Не удалось найти тему по id: %id%'
     failedfindTranslation: 'Не удалось найти перевод темы по id: %id%'
-    removed: null
-    exists: null
-    existsname: null
-    removedTranslation: null
-    failedremoveTranslation: null
-    updated: null
-    error: null
+    removed: 'Тема %title% удалена'
+    exists: 'Такая тема уже существует'
+    existsname: 'Название темы уже существует'
+    removedTranslation: 'Перевод темы удален'
+    failedremoveTranslation: 'Невозможно удалить основной перевод темы. Удалите саму тему.'
+    updated: 'Тема обновлена'
+    error: 'Произошла ошибка, повторите позже.'
     csrfinvalid: null
     tooshort: 'Название темы слишком короткое.'
     toolong: 'Название темы слишком длинное.'

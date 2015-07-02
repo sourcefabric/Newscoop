@@ -6,6 +6,9 @@
 
     <link rel="shortcut icon" href="<?php echo $this->baseUrl('/admin-style/images/7773658c3ccbf03954b4dacb029b2229.ico'); ?>" />
 
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet_new.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/app.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
@@ -15,15 +18,17 @@
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/lists.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/modal-window.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/slideshow-list.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/jquery-ui-1.8.6.custom.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/slideshow.css'); ?>" />
     <?php echo $this->headStyle(); ?>
 
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-
+    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>
     <?php echo $this->headScript(); ?>
 </head>
-<body class="modal-window">
+<body id="next" class="iframe expanded">
     <?php echo $this->layout()->content; ?>
 </body>
 </html>
