@@ -4,13 +4,13 @@
  * @license  MIT license
  */
 
+define('BEHAT_ERROR_REPORTING', E_ALL & ~E_USER_DEPRECATED);
+
 use Behat\Behat\Context\ClosuredContextInterface;
 use Behat\Behat\Context\BehatContext;
 use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/RestContext.php';
-
-define('BEHAT_ERROR_REPORTING', E_ALL & ~E_USER_DEPRECATED);
 
 /**
  * Features context.
