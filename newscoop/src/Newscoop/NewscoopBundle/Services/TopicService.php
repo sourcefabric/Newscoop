@@ -5,6 +5,7 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\NewscoopBundle\Services;
 
 use Newscoop\NewscoopBundle\Entity\Topic;
@@ -239,7 +240,7 @@ class TopicService
                 foreach ($rootNodes as $rootNode) {
                     if ($rootNode->getId() == $item) {
                         $rootNode->setOrder($counter + 1);
-                        $counter++;
+                        ++$counter;
                     }
                 }
             }
@@ -247,7 +248,7 @@ class TopicService
             $counter = 1;
             foreach ($rootNodes as $rootNode) {
                 $rootNode->setOrder($counter);
-                $counter++;
+                ++$counter;
             }
         }
 
@@ -361,7 +362,6 @@ class TopicService
 
         $name = substr($fullName, 0, $lastColon);
         $languageCode = substr($fullName, $lastColon + 1);
-
         $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')->findOneBy(array(
             'content' => $name,
             'locale' => $languageCode,
@@ -380,12 +380,12 @@ class TopicService
      * combined with the language and language code.
      * $string parameter value can be: "test", 20, "test:en".
      *
-     * @param string $string Topic search phrase
-     * @param string $locale Locale
+     * @param string      $string Topic search phrase
+     * @param string|null $locale Locale
      *
      * @return Topic|null
      */
-    public function getTopicBy($string, $locale)
+    public function getTopicBy($string, $locale = null)
     {
         $topic = $this->getTopicRepository()
             ->getTopicByIdOrName($string, $locale)
