@@ -87,7 +87,7 @@
 }
 
 .system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .btn-group {
-    margin-top: 4px;
+    margin-top: -6px;
     display: none;
 }
 
@@ -100,6 +100,11 @@
     margin-bottom: 5px;
     width: 85%;
     line-height: 140%;
+}
+
+.system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .default-wrap span {
+    float: left;
+    padding-right: 10px;
 }
 
 .system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .node-edit-div {
@@ -278,7 +283,7 @@
 }
 
 .system_pref.topics .angular-ui-tree .list-group {
-    margin: 6px 0 2px 0;
+    margin: 0;
     overflow: hidden;
 }
 
