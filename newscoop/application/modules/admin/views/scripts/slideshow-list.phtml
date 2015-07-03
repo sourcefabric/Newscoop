@@ -18,7 +18,7 @@
     <% if (!itemsCount) { %>
     <span class="blank"></span>
     <% } else if (item) { %>
-    <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" width="<%= item.thumbnail.width %>" height="<%= item.thumbnail.height %>" />
+    <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" />
     <% } else { %>
     <span class="video"></span>
     <% } %>

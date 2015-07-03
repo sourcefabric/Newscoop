@@ -22,3 +22,11 @@ Newscoop\Package\Item:
             accessor:
                 getter: getItem
             serialized_name: link
+    virtual_properties:
+        getImage:
+            expose: true
+            read_only: true
+            type: thumbnail_uri
+            groups: ["details", "list"]
+            serialized_name: thumbnail
+            since_version: 1.2
