@@ -76,6 +76,7 @@ api:
             clients: null
         resources:
             info: 'وفقاً للإعدادات الإفتراضية فإن جميع الموارد محية بواسطة جدار حماية، ولكن يمكنك إختيار موارد لجعلها متاحة للجميع.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
             add_button: null
         clients:
             table:

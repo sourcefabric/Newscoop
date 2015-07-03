@@ -76,6 +76,7 @@ api:
             clients: Klienti
         resources:
             info: 'Defoltně jsou všechny zdroje chráněné Firewall, ale můžete si vybrat zdroje, které zveřejníte.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
             add_button: 'Přidat klienta'
         clients:
             table:

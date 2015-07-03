@@ -74,3 +74,5 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Data<BR><SMALL>(aaaa-mm-dd)</SMALL>
 'Add items to slideshow': null
 'Attached Slideshows': null
 'Value is required and can''t be empty': null
+'Select all images': 'Select all images'
+'Unselect all images': 'Unselect all images'

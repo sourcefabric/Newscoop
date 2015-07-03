@@ -76,6 +76,7 @@ api:
             clients: Բաժանորդներ
         resources:
             info: null
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
             add_button: 'Ավելացնել բաժանորդ'
         clients:
             table:
