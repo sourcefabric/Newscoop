@@ -76,6 +76,7 @@ api:
       clients: 'Clients'
     resources:
       info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+      api_docs: "A full documentation of the API can be found on your instance (and it's public)"
       add_button: 'Add Client'
     clients:
       table:
