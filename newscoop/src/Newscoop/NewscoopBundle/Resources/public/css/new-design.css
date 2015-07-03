@@ -107,6 +107,13 @@
     padding-right: 10px;
 }
 
+.system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .default-wrap .topic-marker {
+    margin-right: 4px;
+    position: absolute;
+    top: 8px;
+    left: 29px;
+}
+
 .system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .node-edit-div {
     display: inline-block;
     margin: 5px 0 0;

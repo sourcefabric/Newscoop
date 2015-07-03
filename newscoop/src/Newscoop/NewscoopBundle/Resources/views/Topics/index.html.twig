@@ -103,7 +103,7 @@
                 <a data-nodrag ng-click="toggleTopic(this, node)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed, 'glyphicon-chevron-down': collapsed || node.hasAttachedSubtopic || showExpanded}"></span></a>
 
                 <div class="default-wrap" {% if not compactView %}ng-if="!editing"{% endif %}>
-                  {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" style="margin-right: 4px;position: absolute;top: 8px;" />{% endif %}
+                  {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" class="topic-marker" />{% endif %}
                   <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding" {% if compactView %}style="margin-left: 20px;"{% endif %}></span>
                   <ul ng-if="!editing" class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
                       <li class="list-group-item" ng-class="{'active': node.activeLabel, 'fallback': languageCode != node.locale && !node.activeLabel && node.fallback}" ng-repeat="node in node.translations">
