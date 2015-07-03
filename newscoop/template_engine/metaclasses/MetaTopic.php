@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @package Newscoop
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -9,60 +8,68 @@
 require_once __DIR__.'/MetaDbObject.php';
 
 /**
- * Meta topic class
+ * Meta topic class.
  */
 class MetaTopic extends MetaDbObject
 {
     /**
-     * Topic
+     * Topic.
+     *
      * @var Topic object
      */
     private $topic;
 
     /**
-     * Topic id
-     * @var integer
+     * Topic id.
+     *
+     * @var int
      */
     public $identifier;
 
     /**
-     * Topic name
+     * Topic name.
+     *
      * @var string
      */
     public $name;
 
     /**
-     * Topic full name e.g. topic:en
+     * Topic full name e.g. topic:en.
+     *
      * @var string
      */
     public $value;
 
     /**
-     * Is topic root
-     * @var boolean
+     * Is topic root.
+     *
+     * @var bool
      */
     public $is_root;
 
     /**
-     * Parent topic
+     * Parent topic.
+     *
      * @var MetaTopic
      */
     public $parent;
 
     /**
-     * Checks if topic is defined
-     * @var boolean
+     * Checks if topic is defined.
+     *
+     * @var bool
      */
     public $defined;
 
     /**
-     * Alias to identifier
-     * @var integer
+     * Alias to identifier.
+     *
+     * @var int
      */
     public $id;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param string $topicIdOrName
      */
@@ -77,30 +84,28 @@ class MetaTopic extends MetaDbObject
         if ($cacheService->contains($cacheKey)) {
             $this->topic = $cacheService->fetch($cacheKey);
         } else {
-            $em = \Zend_Registry::get('container')->getService('em');
-            $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
             if ($languageCode) {
                 $locale = $languageCode;
             } else {
                 $locale = $this->getLocale();
             }
 
-            $topic = $repository->getTopicByIdOrName($topicIdOrName, $locale)->getArrayResult();
+            $topicService = \Zend_Registry::get('container')->getService('newscoop_newscoop.topic_service');
+            $topic = $topicService->getTopicBy($topicIdOrName, $locale);
+            if ($topic) {
+                $topic->setTranslatableLocale($locale);
+                $this->topic = $topic;
+            }
 
-            if (!empty($topic)) {
-                $this->topic = $topic[0];
-                $this->topic['locale'] = $locale;
+            if (!$this->topic) {
+                return;
             }
 
             $cacheService->save($cacheKey, $this->topic);
         }
 
-        if (empty($this->topic)) {
-            return;
-        }
-
-        $this->id = $this->topic['id'];
-        $this->identifier = $this->topic['id'];
+        $this->id = $this->topic->getId();
+        $this->identifier = $this->topic->getId();
         $this->name = $this->getName();
         $this->value = $this->getValue();
         $this->is_root = $this->isRoot();
@@ -108,22 +113,21 @@ class MetaTopic extends MetaDbObject
         $this->defined = isset($this->topic);
     }
 
-    protected function getName($languageId = null)
+    protected function getName()
     {
-        if ($languageId) {
-            $em = \Zend_Registry::get('container')->getService('em');
-            $locale = $em->getReference('Newscoop\Entity\Language', $languageId)->getCode();
-            $titleByLanguage = null;
-            foreach ($this->topic['translations'] as $translation) {
-                if ($translation['locale'] === $locale) {
-                    $titleByLanguage = $translation['content'];
-                }
-            }
-
-            return $titleByLanguage;
+        if ($this->topic->getTitle() !== '') {
+            return $this->topic->getTitle();
         }
 
-        return $this->topic['title'];
+        $titleByLanguage = null;
+        $currentLocale = \CampTemplate::singleton()->context()->language->code;
+        foreach ($this->topic->getTranslations() as $translation) {
+            if ($translation->getLocale() === $currentLocale) {
+                $titleByLanguage = $translation->getContent();
+            }
+        }
+
+        return $titleByLanguage;
     }
 
     protected function getLocale()
@@ -133,22 +137,17 @@ class MetaTopic extends MetaDbObject
 
     protected function getValue()
     {
-        if (!isset($this->topic) || empty($this->topic)) {
+        if (!$this->topic && !$this->name) {
             return;
         }
 
-        $name = $this->topic['title'];
-        if (empty($name)) {
-            return;
-        }
-
-        return $name.':'.$this->topic['locale'];
+        return $this->name.':'.$this->topic->getTranslatableLocale();
     }
 
     protected function isRoot()
     {
-        if (isset($this->topic['id']) && isset($this->topic['root'])) {
-            if ($this->topic['root'] == $this->topic['id']) {
+        if ($this->topic && $this->topic->getRoot()) {
+            if ($this->topic->getRoot() == $this->id) {
                 return true;
             }
 
@@ -158,8 +157,8 @@ class MetaTopic extends MetaDbObject
 
     protected function getParent()
     {
-        if (isset($this->topic['id']) && isset($this->topic['parent'])) {
-            return new MetaTopic($this->topic['parent']['id'], $this->topic['locale']);
+        if ($this->topic && $this->parent) {
+            return new self($this->parent->getId(), $this->topic->getTranslatableLocale());
         }
 
         return;

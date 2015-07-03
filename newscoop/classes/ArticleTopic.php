@@ -276,10 +276,12 @@ class ArticleTopic extends DatabaseObject
         }
 
         if (count($rootTopicIds) > 0) {
-            $subtopicsQuery = Topic::BuildSubtopicsQueryWithoutDepth($rootTopicIds);
-            $whereCondition = 'TopicId IN ('.$subtopicsQuery->buildQuery().')';
-            $selectClauseObj->addWhere($whereCondition);
-            $countClauseObj->addWhere($whereCondition);
+            $subtopicsQuery = self::buildSubtopicsArray($rootTopicIds);
+            if (!empty($subtopicsQuery)) {
+                $whereCondition = 'TopicId IN ('.implode(',', $subtopicsQuery).')';
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
+            }
         }
 
         // sets the main table and columns to be fetched
@@ -304,6 +306,7 @@ class ArticleTopic extends DatabaseObject
 
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
+
         $topics = $g_ado_db->GetAll($selectQuery);
         if (is_array($topics)) {
             $countQuery = $countClauseObj->buildQuery();
@@ -324,6 +327,31 @@ class ArticleTopic extends DatabaseObject
 
         return $articleTopicsList;
     } // fn GetList
+
+    /**
+     * Retrieves the subtopics of the given parent.
+     *
+     * @param  integer         $p_parentId - parent topic identifier
+     *
+     * @return array
+     */
+    private static function buildSubtopicsArray($p_parentIds = 0)
+    {
+        $p_parentIds = is_array($p_parentIds)? $p_parentIds: array($p_parentIds);
+        $em = \Zend_Registry::get('container')->getService('em');
+        $childrenIds = array();
+        foreach ($p_parentIds as $p_parentId) {
+            $topic = $em->getReference('Newscoop\NewscoopBundle\Entity\Topic', $p_parentId);
+            if ($topic) {
+                $children = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')->childrenWithTranslations($topic);
+                foreach ((array) $children->getArrayResult() as $key => $value) {
+                    $childrenIds[] = $value['id'];
+                }
+            }
+        }
+
+        return $childrenIds;
+    }
 
     /**
      * Processes a paremeter (condition) coming from template tags.
