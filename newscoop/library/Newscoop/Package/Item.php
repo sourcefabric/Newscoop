@@ -1,12 +1,12 @@
 <?php
+
 /**
- * @package Newscoop
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\Package;
 
-use Newscoop\Image\LocalImage;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,12 +19,14 @@ class Item
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     *
      * @var int
      */
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items", fetch="EAGER")
+     *
      * @var Newscoop\Package\Package
      */
     protected $package;
@@ -32,42 +34,49 @@ class Item
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items", fetch="EAGER")
      * @ORM\JoinColumn(referencedColumnName="Id")
+     *
      * @var Newscoop\Image\LocalImage
      */
     public $image;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     protected $offset;
 
     /**
      * @ORM\Column(type="text", nullable=True)
+     *
      * @var text
      */
     protected $caption;
 
     /**
      * @ORM\Column(nullable=True)
+     *
      * @var string
      */
     protected $coords;
 
     /**
      * @ORM\Column(nullable=True, name="video_url")
+     *
      * @var string
      */
     protected $videoUrl;
 
     /**
-     * Item type used by Newscoop API
+     * Item type used by Newscoop API.
+     *
      * @var string
      */
     protected $type;
 
     /**
-     * Item link used by Newscoop API
+     * Item link used by Newscoop API.
+     *
      * @var string
      */
     protected $link;
@@ -91,7 +100,7 @@ class Item
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -101,7 +110,7 @@ class Item
     }
 
     /**
-     * Get image
+     * Get image.
      *
      * @return Newscoop\Image\LocalImage
      */
@@ -111,10 +120,9 @@ class Item
     }
 
     /**
-     * Set offset
+     * Set offset.
      *
-     * @param  int  $offset
-     * @return void
+     * @param int $offset
      */
     public function setOffset($offset)
     {
@@ -122,10 +130,9 @@ class Item
     }
 
     /**
-     * Get offset
+     * Get offset.
      *
-     * @param  int  $offset
-     * @return void
+     * @param int $offset
      */
     public function getOffset()
     {
@@ -133,7 +140,7 @@ class Item
     }
 
     /**
-     * Get rendition
+     * Get rendition.
      *
      * @return Newscoop\Image\Rendition
      */
@@ -146,10 +153,9 @@ class Item
     }
 
     /**
-     * Set caption
+     * Set caption.
      *
-     * @param  string $caption
-     * @return void
+     * @param string $caption
      */
     public function setCaption($caption)
     {
@@ -157,7 +163,7 @@ class Item
     }
 
     /**
-     * Get caption
+     * Get caption.
      *
      * @return string
      */
@@ -167,10 +173,9 @@ class Item
     }
 
     /**
-     * Set crop coordinates
+     * Set crop coordinates.
      *
-     * @param  string $coords
-     * @return void
+     * @param string $coords
      */
     public function setCoords($coords)
     {
@@ -178,7 +183,7 @@ class Item
     }
 
     /**
-     * Test if item is video
+     * Test if item is video.
      *
      * @return bool
      */
@@ -188,7 +193,7 @@ class Item
     }
 
     /**
-     * Test if item is image
+     * Test if item is image.
      *
      * @return bool
      */
@@ -198,10 +203,9 @@ class Item
     }
 
     /**
-     * Set video url
+     * Set video url.
      *
-     * @param  string $url
-     * @return void
+     * @param string $url
      */
     public function setVideoUrl($url)
     {
@@ -209,7 +213,7 @@ class Item
     }
 
     /**
-     * Get video url
+     * Get video url.
      *
      * @return string
      */
@@ -219,7 +223,7 @@ class Item
     }
 
     /**
-     * Get package items
+     * Get package items.
      *
      * @return array
      */
@@ -229,7 +233,7 @@ class Item
     }
 
     /**
-     * Get image specs
+     * Get image specs.
      *
      * @return string
      */
@@ -239,7 +243,7 @@ class Item
     }
 
     /**
-     * Get package id
+     * Get package id.
      *
      * @return int
      */
@@ -249,7 +253,7 @@ class Item
     }
 
     /**
-     * Get package
+     * Get package.
      *
      * @return int
      */
@@ -259,7 +263,8 @@ class Item
     }
 
     /**
-     * Set Item type
+     * Set Item type.
+     *
      * @param string $type "video" or "image"
      */
     public function setType($type)
@@ -268,7 +273,8 @@ class Item
     }
 
     /**
-     * Get Item type
+     * Get Item type.
+     *
      * @return string "video" or "image"
      */
     public function getType()
@@ -283,7 +289,8 @@ class Item
     }
 
     /**
-     * Set link for Item resource
+     * Set link for Item resource.
+     *
      * @param string $link Link to resource
      */
     public function setLink($link)
@@ -292,7 +299,7 @@ class Item
     }
 
     /**
-     * Get link for Item resource
+     * Get link for Item resource.
      *
      * @return string $link Link to resource
      */
@@ -302,7 +309,7 @@ class Item
     }
 
     /**
-     * Get clone of itself - for serializer
+     * Get clone of itself - for serializer.
      *
      * @return self
      */

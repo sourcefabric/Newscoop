@@ -100,10 +100,19 @@ $(function() {
 
     $('#add-sellected-to-gallery').click(function(){
         $('#edit_slideshow_form').submit();
-    })
+    });
 
-    $('#select-all-images').click(function(e){
+    $('#select-all-images').live('click', function(e){
         $('.thumbnails li figure input:checkbox[name=checked-images[]]').attr('checked', true);
+        $(this).attr('id', 'unselect-all-images');
+        $(this).text('<?php echo $translator->trans('Unselect all images', array(), 'article_images'); ?>')
+        e.preventDefault();
+    });
+
+    $('#unselect-all-images').live('click', function(e){
+        $('.thumbnails li figure input:checkbox[name=checked-images[]]').attr('checked', false);
+        $(this).attr('id', 'select-all-images');
+        $(this).text('<?php echo $translator->trans('Select all images', array(), 'article_images'); ?>');
         e.preventDefault();
     });
 
@@ -130,7 +139,9 @@ $(function() {
             <?php foreach ($this->images as $image) { ?>
             <li id="image-<?php echo $image->getId(); ?>">
                 <figure>
+                    <center>
                     <div><?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?></div>
+                    </center>
                     <input type="checkbox" id="default-<?php echo $image->getId(); ?>" name="checked-images[]" value="<?php echo $image->getId(); ?>" title="<?php echo $translator->trans('Mark image', array(), 'article_images'); ?>" />
                     <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
                 </figure>
