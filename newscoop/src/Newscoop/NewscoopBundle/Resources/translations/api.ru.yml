@@ -76,7 +76,7 @@ api:
             clients: Клиенты
         resources:
             info: 'По умолчанию все элементы защищены файрволом, но вы можете выбрать те из них, доступ к которым хотите открыть'
-            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            api_docs: null
             add_button: 'Добавить клиента'
         clients:
             table:

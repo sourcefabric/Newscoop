@@ -198,7 +198,7 @@ articles:
         namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the front end. Please check with your site administrator if you have doubts.'
         alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you change the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 to 50 will be deleted from the list.'
     images:
-        see_original: 'See original image'
+        see_original: null
         edit:
             edit_image_metadata: 'Edit image metadata'
             save: Save

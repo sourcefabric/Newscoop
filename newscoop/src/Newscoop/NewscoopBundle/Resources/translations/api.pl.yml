@@ -76,7 +76,7 @@ api:
             clients: Klienci
         resources:
             info: 'Domyślnie wszystkie zasoby są strzeżone przez firewall, możesz jednak zdecydować które z nich będą publiczne (dostępne bez uwierzytelniania) dla wszystkich. '
-            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            api_docs: null
             add_button: 'Dodaj klienta'
         clients:
             table:
