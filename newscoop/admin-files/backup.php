@@ -166,7 +166,7 @@ $controller->view->headTitle($translator->trans("Backup/Restore", array(), 'home
 <div id="uploader" style="display:none">
 <fieldset class="buttons">
 <form method="POST" enctype="multipart/form-data">
-<input type="submit" class="button right-floated" name="save" value="<?php echo $translator->trans('Save'); ?>" />
+<input type="submit" class="button right-floated" name="Upload" value="<?php echo $translator->trans("Upload", array(), 'home')?>" />
 <input type="hidden" name="action" value="upload" />
 <input type="file" name="archivefile" size="30">
 
@@ -199,7 +199,7 @@ if ($files) {
         }
         print "<tr $tr_class><td>{$file['name']}</td><td align=\"left\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
         print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
-            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.$translator->trans('Download file', array(), 'home').'" title="'.$translator->trans('Download file', array(), 'home').'"></a>';
+            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/download.png" border="0" alt="'.$translator->trans('Download file', array(), 'home').'" title="'.$translator->trans('Download file', array(), 'home').'"></a>';
 ?>
 		<td align="center">
 			<a href="#" onclick="
