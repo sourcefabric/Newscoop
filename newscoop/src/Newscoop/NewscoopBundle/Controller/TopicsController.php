@@ -5,6 +5,7 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\NewscoopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -91,6 +92,7 @@ class TopicsController extends Controller
         }
 
         $tree = $repository->buildTreeArray($nodes);
+
         usort($tree, function ($node1, $node2) {
             return $node2['topicOrder'] - $node1['topicOrder'];
         });
@@ -187,8 +189,8 @@ class TopicsController extends Controller
         }
 
         if (($request->get('last') || $request->get('first') || $request->get('middle')) && !$parent) {
-            $rootNodes = $repository->getRootNodes();
-            $order = explode(',', $request->get('order'));
+            $rootNodes = $repository->getRootNodesQuery()->getResult();
+            $order = array_reverse(explode(',', $request->get('order')));
             $topicService->reorderRootNodes($rootNodes, $order);
         }
 
