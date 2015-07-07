@@ -61,7 +61,6 @@ Section: Section
 Keywords: Keywords
 Topic: Topic
 'URL Name': 'URL Name'
-'Left to pay': 'Left to pay'
 Active: Active
 Trial: Trial
 Next: Next
@@ -99,7 +98,6 @@ Change: Change
 'Section Template': 'Section Template'
 'Article Template': 'Article Template'
 'Default Language': 'Default Language'
-'Paid Period': 'Paid Period'
 Preview: Preview
 'You must fill in the $1 field.': 'You must fill in the $1 field.'
 Error: Error
@@ -149,7 +147,6 @@ Localizer: Localizer
 'Upload new template': 'Upload new template'
 'Add new staff member': 'Add new staff member'
 'Staff member deleted.': 'Staff member deleted.'
-'Add new subscriber': 'Add new subscriber'
 'Add new user type': 'Add new user type'
 'Add new article type': 'Add new article type'
 'Add new country': 'Add new country'
@@ -165,12 +162,6 @@ Logs: Logs
 'There are $1 publication(s) left.': 'There are $1 publication(s) left.'
 'There are $1 countries left.': 'There are $1 countries left.'
 'Name <SMALL>(click to edit)</SMALL>': 'Name <SMALL>(click to edit)</SMALL>'
-'Add new subscription': 'Add new subscription'
-'You do not have the right to add subscriptions.': 'You do not have the right to add subscriptions.'
-'Adding subscription': 'Adding subscription'
-'Delete subscription': 'Delete subscription'
-'You do not have the right to delete subscriptions.': 'You do not have the right to delete subscriptions.'
-'No such subscription.': 'No such subscription.'
 Yes: Yes
 No: No
 Close: Close
@@ -196,7 +187,6 @@ Search: Search
 Unlink: Unlink
 'Are you sure you want to delete the image $1?': 'Are you sure you want to delete the image $1?'
 'No such issue.': 'No such issue.'
-'Are you sure you want to delete the subscription to the publication $1?': 'Are you sure you want to delete the subscription to the publication $1?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.'
 GB: GB
 MB: MB
@@ -240,8 +230,6 @@ Author: Author
 'Log Messages': 'Log Messages'
 'Article Files': 'Article Files'
 'Article Comments': 'Article Comments'
-'Are you sure you want to deactivate the subscription?': 'Are you sure you want to deactivate the subscription?'
-'Are you sure you want to activate the subscription?': 'Are you sure you want to activate the subscription?'
 Other: Other
 'Time:': 'Time:'
 'No events.': 'No events.'
