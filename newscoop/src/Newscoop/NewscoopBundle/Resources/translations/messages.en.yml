@@ -61,7 +61,6 @@ Section: Section
 Keywords: Keywords
 Topic: Topic
 'URL Name': 'URL Name'
-'Left to pay': 'Left to pay'
 Active: Active
 Trial: Trial
 Next: Next
@@ -99,7 +98,6 @@ Change: Change
 'Section Template': 'Section Template'
 'Article Template': 'Article Template'
 'Default Language': 'Default Language'
-'Paid Period': 'Paid Period'
 Preview: Preview
 'You must fill in the $1 field.': 'You must fill in the $1 field.'
 Error: Error
