@@ -77,7 +77,14 @@ class SystemPrefController extends Controller
             }
         }
 
-        $upload_min_filesize = min(ini_get('post_max_size'), ini_get('upload_max_filesize'));
+        $upload_min_filesize = $this->formatBytes(
+            min(
+                $this->convertToBytes(ini_get('post_max_size')),
+                $this->convertToBytes(ini_get('upload_max_filesize'))
+            ),
+            0
+        );
+
         $mysql_client_command_path = $preferencesService->MysqlClientCommandPath;
 
         if (!$locations || !$cities) {
@@ -507,6 +514,14 @@ class SystemPrefController extends Controller
             default:
                 return $from;
         }
+    }
+
+    private function formatBytes($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'k', 'M', 'G');
+
+        return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
     }
 
     /**
