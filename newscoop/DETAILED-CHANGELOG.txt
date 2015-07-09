@@ -3,6 +3,154 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      09/07/2015 08:58  4.4.4  Newscoop 4.4.4 minor release
+         271cc5d CS-5880 - Save of order is not working for root topics in topics management
+         7c15658 comment out php values in htacces and display a proper value
+         4d5077e CS-5878 - Newscoop 4.4.4 allows only 100M even if php.ini allows higher upload max size value
+         0c64d4d updated translation resources
+         a753dfc updated translation resources
+         06e1b8c updated translation resources
+         4945dbf CS-5867 Increase the height of the modals in Newscoop to take almost full height of the browser window
+         f93923f CS-5871 Improve image caption in admin interface
+         77ff032 fixed showing topics checkboxes in Firefox
+         de6a516 improve text
+         a51855d CS-5868- adapt the topic design to show more topics in a window
+         90e61eb [Improvement] Add links to REST API documentation in admin ui
+         525c86f rename method
+         e733e51 CS-5804 - Subtopics list broken
+         572aaff [CS-5863] [Fix] User without user type can edit and delete comments
+         7d4d8a9 CS-5672 - Due to missed several fields in System Preferencies form the Save function doesn't work
+         ae0b88a updated translation resources
+         fb42c17 updated translation resources
+         fcc26ae CS-5861 Update link to user manual
+         52d4c67 improved slideshows
+         83dbc07 added thumbnail handler
+         1e1d3b1 slideshows improvements
+         99e6532 remove old file
+         39b8d2d change function name to uri from url
+         c1360a1 don't update change update_time on article update
+         e4075b3 [CS-5853] [Fix] Date of articles in related articles search in the modal is always current day
+         55bf96a [CS-5851] [Fix] Option to show photos in full size
+         f7ae02b [CS-5822] [Fix] publication management: switching url type does not work
+         f34c9dc CS-5854: Adds css fix so select2 will keep the same width
+         15614ab CS-5461: Implementes $gimme->article->rating_enabled
+         465df6e set fallback translations to english by default in bazinga bundle
+         5cb4bb9 CS-5854: Adds checkbox to search in hidden article types
+         70853e2 added query to upgrade scripts - article_language column
+         8c553f2 fixed articles search by topics
+         e378cf8 TW-250: Adds allowfullscreen attribute as valid
+         dda92ee fixed count by menthods
+         3ff1da0 fixed adding root topic
+         e2fa6c1 [CS-5848] [Fix] Properly save article properties
+         a16341d make cache key aware of the article number
+         b5eeaf5 Changes url seperator to / instead of OS dependant directory seperator
+         4c9ab14 TW-246 - topic-Management
+         7eb197b fix wrong collumn name in indexes
+         eb03ac2 updated translation resources
+         83190f7 updated translation resources
+         3a7b02f remove not needed code (wrong merging)
+         b7f99ae [CS-5846] [Fix] Default order of available articles in featured article lists manager should be by recency
+         3669df6 fix spacing
+         4a35ecd AENV-504: make inputfields for width and height for vimeo/youtube snippets mandatory updated metadata in campsite_core and upgrades sql
+         26e5a3f replaced sql script with silex script
+         639dd39 fixed articles ordering
+         7b8f51c Adds check if article to be deleted actually exists
+         8a3be16 CS-5779 - Scrolling in playlist is not working for the second playlist if playlists are so long
+         ad20e7c updated translation resources
+         7f5c09a updated translation resources
+         83a7d16 AENV-503 - adapt save button behaviour in the attach slideshow modal
+         d17ee14 improve messages
+         a607af7 CS-5825 Better labels and tooltips for Article Type field management
+         318ef74 BN-200 - Search article by author is not working in Playlist management
+         3ca5712 CS-5802 - instantly remove items over limit
+         cbd29fc Adds Docker instructions to README
+         26d0d7e Adds default cron
+         6e56952 [CS-5825] [Fix] Article Type field controls Show in Editor and Show/Hide have no function
+         ebd266b Fixes cron command
+         4560f5a CS-5802 - Featured Article List limits do not work as expected
+         2236933 use public function in cache key, clear chache key on comments status update from article save action
+         fb0e347 CS-5806 - New Topics language filter does not work when session cookie expires
+         099db89 CS-5809 - Translating a subtopic auto-fills the parent topic translation field
+         34a71ea CS-5810 - Clicking a topic delete button twice throws a 'Failed to find topic by ID' error
+         e9a4a7e [TW-243] [Fix] Comment-function doesn't work
+         89bbe1b [CS-5811] [Improvement] Interface for uploading private plugins results in white screen
+         ddd3d7c Adds prod/dev env switch and runs cron server
+         f4f479a [CS-5837] [New Feature] add support for other editors in smarty link function
+         bad60b8 Change indentation for yml, shell to bash and tells tail to keep retrying
+         def602e [CS-5832] [Fix] Comments article preview shows title and date multiple times
+         b9ae549 [CS-5814] [Fix] Article Edit sidebar still has the switch 'Visible to non-subscribers'
+         77f0b8f uncomment volumns
+         ff7641c clean install sql and snipptets queries
+         841c93b [CS-5832] [Fix] deactivate comments ordering by article name, allow showing comments for pending articles.
+         b238644 remove unused entrypoint.sh
+         c5c9a95 latest docker build
+         f87011c CS-5799 - Can't select previously created Featured Article Lists via drop-down menu
+         b2f0612 CS-5803 - Tags shown to user while the Featured Article List page is loading
+         e1088dd fixed exception parameters
+         65079f8 CS-5821 - loading spinner for editorial comments never stops
+         91efe32 make use of only oembed and extract endpoints
+         02bee0e use zend request params only when available
+         0defa79 set a proper jms serializer version
+         92b1d73 remove not needed header
+         3463878 keep breadcrumbs for editing user
+         085fd36 remove jms serializer commit restriction from composer.json
+         194278c get error message from the response
+         fb32afb use black color for active select's
+         5d1c81b use value from head title in page titles again
+         166e735 CS-5606: Changes temp dir to project cache dir
+         fd08e64 change parameter format to string
+         39da243 added api key handling to the embedly controller
+         edfa7cd fix snippets sql for both upgrades and new installs
+         c2e8911 Initialize loader even when translations files are cached
+         40d469a Revert "Aenv 495"
+         99d6650 updated translation resources
+         055e82c add embedly enpoint field to snippets for upgrade
+         6d233b4 updated translation resources
+         3c074da updated translation resources
+         7949c10 add endpoint field back to demo data for embedly snippet
+         9a6f9e7 TW-75: Adds parameter to sort articles by publication date
+         ad29970 fix wrong translations labels
+         4ed0b78 uodate also install sql's
+         b8d1a82 use default NULL instead 0
+         c560163 CS-5819 This capitalization does not appear in Newscoop source code
+         d8474af make IdPublication nullable with default 0
+         76bb862 CS-5819 Update YML files for string modifications
+         a308251 CS-5761 - "The last article of this list has been removed" is not translated.
+         22a6497 Buttons "Add this article" and "Close" is not translated in Playlist management
+         d6931dc improved slideshows handling using API
+         106ac5f When using tpid parameter page can get into an infinite loop
+         13653f9 CS-5819 Clarify labels for Article Types
+         0e21216 reintroduce clearPlaylistTemplates calls
+         6175e3f improve playlists articles fetching with getArticle
+         fde43db use arrayResult for fetching playlist articles ids, fetch real articles with getArticlesByCriteria
+         5400629 manual join needed article relations for api - it takes less time than left joining
+         49f6e8e replace our custom playlists articles ordering with gedmo/sortable
+         7b2b719 set proper limit
+         6381adf fixed articles listing on the playlist with the limit
+         9649dd4 improve removing left nodes, fix clearing Playlist templates, update order initializing script
+         83c2eb3 added script to remove not existing index
+         098f1b8 Adds correct way to update section_id in Articles table
+         d2fc1e7 Fixes issues with missing or wrong positioned beginTransaction calls
+         67fadc9 fixed jms serializer version to work also with php 5.3
+         f67447d serialize objects in cache keys, use md5 instead base64_encode
+         e23105a fix cache key for getArticle in CampURIShortNames
+         806a978 allow resseting article with this same number
+         f50f389 fetch language
+         7185623 fix typo
+         67c92a3 Moves script to folder with date of merging PR to prevent errors
+         f53efed Fixes issue with locale getting lost
+         c25c2a4 TW-203: Fixes error with comment search service
+         8ce3899 added utcdatetime type to the upgrade script
+         e090c8c added articles filtering by language in playlists
+         50d22e7 updated translation resources
+         700033f updated translation resources
+         04fb338 updated translation resources
+         bfb57a0 updated translation resources
+         eaf8808 IM-2792 - some article types are blank pages when opening them from backend after upgrade to 4.4.3
+         d57b96e improved auth-interceptor
+         2761544 improve sql script
+         d1a6fbc remove webcode on article delete
+         fc1c5f1 CS5784 - Playlists don't support many languages
       26/05/2015 16:49  4.4.3  Newscoop 4.4.3 minor release
          8c71179 add missing update sql, fix useForAll js function with tinymce
          49c5d01 CS-5790: Fixes issue when images/files/videos/pdf folder is symlink
