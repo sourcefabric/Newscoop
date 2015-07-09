@@ -528,8 +528,9 @@ class TopicRepository extends NestedTreeRepository
 
     public function getOneByExtractedFullName($name, $languageCode)
     {
-        return $this->_em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')
-            ->createQueryBuilder('tt')
+        return $this
+            ->getQueryBuilder()
+            ->from('Newscoop\NewscoopBundle\Entity\TopicTranslation', 'tt')
             ->select('tt', 'o')
             ->leftJoin('tt.object', 'o')
             ->where('tt.content = :content')

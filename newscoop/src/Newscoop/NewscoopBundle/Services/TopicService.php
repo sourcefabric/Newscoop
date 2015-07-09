@@ -393,13 +393,15 @@ class TopicService
         $name = $extractedData['name'];
         $languageCode = $extractedData['locale'];
 
-        $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')
+        $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
             ->getOneByExtractedFullName($name, $languageCode)
             ->getArrayResult();
 
         if (empty($topicTranslation)) {
             return;
         }
+
+        $topicTranslation[0]['object']['title'] = $topicTranslation[0]['title'];
 
         return $topicTranslation[0]['object'];
     }

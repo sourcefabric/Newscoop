@@ -78,6 +78,7 @@ class MetaTopic extends MetaDbObject
             $this->topic = $cacheService->fetch($cacheKey);
         } else {
             $em = \Zend_Registry::get('container')->getService('em');
+            $topicService = \Zend_Registry::get('container')->getService('newscoop_newscoop.topic_service');
             $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
             if ($languageCode) {
                 $locale = $languageCode;
@@ -86,16 +87,16 @@ class MetaTopic extends MetaDbObject
             }
 
             $topic = $repository->getTopicByIdOrName($topicIdOrName, $locale)->getArrayResult();
-
             if (empty($topic)) {
-                $topic = $repository->getTopicByFullNameAsArray($fullName);
+                $this->topic = $topicService->getTopicByFullNameAsArray($topicIdOrName);
+            } else {
+                $this->topic = $topic[0];
             }
 
-            if (empty($topic)) {
+            if (empty($this->topic)) {
                 return;
             }
 
-            $this->topic = $topic[0];
             $this->topic['locale'] = $locale;
 
             $cacheService->save($cacheKey, $this->topic);
@@ -110,21 +111,8 @@ class MetaTopic extends MetaDbObject
         $this->defined = isset($this->topic);
     }
 
-    protected function getName($languageId = null)
+    protected function getName()
     {
-        if ($languageId) {
-            $em = \Zend_Registry::get('container')->getService('em');
-            $locale = $em->getReference('Newscoop\Entity\Language', $languageId)->getCode();
-            $titleByLanguage = null;
-            foreach ($this->topic['translations'] as $translation) {
-                if ($translation['locale'] === $locale) {
-                    $titleByLanguage = $translation['content'];
-                }
-            }
-
-            return $titleByLanguage;
-        }
-
         return $this->topic['title'];
     }
 
