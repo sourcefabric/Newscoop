@@ -525,4 +525,21 @@ class TopicRepository extends NestedTreeRepository
 
         return $this->setTranslatableHint($qb->getQuery(), $locale);
     }
+
+    public function getOneByExtractedFullName($name, $languageCode)
+    {
+        return $this->_em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')
+            ->createQueryBuilder('tt')
+            ->select('tt', 'o')
+            ->leftJoin('tt.object', 'o')
+            ->where('tt.content = :content')
+            ->andWhere('tt.locale = :locale')
+            ->andWhere('tt.field = :field')
+            ->setParameters(array(
+                'content' => $name,
+                'locale' => $languageCode,
+                'field' => 'title'
+            ))
+            ->getQuery();
+    }
 }
