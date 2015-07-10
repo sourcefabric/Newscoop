@@ -2,7 +2,21 @@
 {% trans_default_domain "new_comments" %}
 
 {% block admin_title %}{{ 'comments.label.comments'|trans }} - {{ parent() }}{% endblock %}
-{% block admin_page_title_content %}{{ 'comments.label.comments'|trans }}{% endblock %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+    <span class="article-title">{{ 'comments.label.comments'|trans }}</span>
+    <div class="pull-right">
+        <form class="navbar-form" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
+            <div class="form-group">
+                {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
+            </div>
+            <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
+            {{ form_rest(searchForm) }}
+        </form>
+    </div>
+</div>
+{% endblock %}
 
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
@@ -55,13 +69,6 @@
             </select>
         </fieldset>
     </div>
-    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
-        <div class="form-group">
-            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
-        </div>
-        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
-        {{ form_rest(searchForm) }}
-    </form>
 
     {% if pagination.getTotalItemCount > 0 %}
     <div class="row" id="paging">
