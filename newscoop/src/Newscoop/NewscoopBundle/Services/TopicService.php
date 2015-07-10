@@ -354,14 +354,14 @@ class TopicService
      */
     public function getTopicByFullName($fullName)
     {
-        $fullName = trim($fullName);
-        $lastColon = strrpos($fullName, ':');
-        if (!$lastColon) {
+        $extractedData = $this->extractNameAndLanguage($fullName);
+        if (empty($extractedData)) {
             return;
         }
 
-        $name = substr($fullName, 0, $lastColon);
-        $languageCode = substr($fullName, $lastColon + 1);
+        $name = $extractedData['name'];
+        $languageCode = $extractedData['locale'];
+
         $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\TopicTranslation')->findOneBy(array(
             'content' => $name,
             'locale' => $languageCode,
@@ -376,6 +376,54 @@ class TopicService
     }
 
     /**
+     * Returns a topic as an array identified by the full name in the
+     * format topic_name:language_code.
+     *
+     * @param string $fullName Topic's full name
+     *
+     * @return array
+     */
+    public function getTopicByFullNameAsArray($fullName)
+    {
+        $extractedData = $this->extractNameAndLanguage($fullName);
+        if (empty($extractedData)) {
+            return;
+        }
+
+        $name = $extractedData['name'];
+        $languageCode = $extractedData['locale'];
+
+        $topicTranslation = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\Topic')
+            ->getOneByExtractedFullName($name, $languageCode)
+            ->getArrayResult();
+
+        if (empty($topicTranslation)) {
+            return;
+        }
+
+        $topicTranslation[0]['object']['title'] = $topicTranslation[0]['title'];
+
+        return $topicTranslation[0]['object'];
+    }
+
+    private function extractNameAndLanguage($fullName)
+    {
+        $fullName = trim($fullName);
+        $lastColon = strrpos($fullName, ':');
+        if (!$lastColon) {
+            return;
+        }
+
+        $name = substr($fullName, 0, $lastColon);
+        $languageCode = substr($fullName, $lastColon + 1);
+
+        return array(
+            'name' => $name,
+            'locale' => $languageCode
+        );
+    }
+
+    /**
      * Gets the topic by id, its title or title
      * combined with the language and language code.
      * $string parameter value can be: "test", 20, "test:en".
@@ -387,6 +435,7 @@ class TopicService
      */
     public function getTopicBy($string, $locale = null)
     {
+
         $topic = $this->getTopicRepository()
             ->getTopicByIdOrName($string, $locale)
             ->getOneOrNullResult();
