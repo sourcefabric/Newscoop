@@ -56,7 +56,7 @@ class BoxArticlesList extends ListObject
             if ($article->defined() && ($preview || $article->is_published)) {
                 $metaBoxArticlesList[] = $article;
             }
-	}
+    	}
 
         return $metaBoxArticlesList;
     }
@@ -174,6 +174,7 @@ class BoxArticlesList extends ListObject
                     case 'columns':
                     case 'name':
                     case 'order':
+                    case 'published':
                     case 'role':
                         if ($parameter == 'length' || $parameter == 'columns') {
                             $intValue = (int)$value;
