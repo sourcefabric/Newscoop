@@ -1351,4 +1351,14 @@ final class CampContext
 
         return $preferencesService->get($preferenceName, $default);
     }
+
+    /**
+     * Set preview mode for context. 
+     *
+     * Setting preview mode allows rendering not published issues and articles. 
+     */
+    public function setPreviewMode($status = true)
+    {
+        $this->m_readonlyProperties['preview'] = $status;
+    }
 }

@@ -35,7 +35,7 @@ class WebcodeRedirectController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (!is_null($article)) {
+        if (!is_null($article) && $article->isPublished()) {
             $link = $linkService->getLink($article);
 
             return $this->redirect($link, 301);
