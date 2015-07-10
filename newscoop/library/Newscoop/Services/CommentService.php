@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Comment;
 use Newscoop\Services\PublicationService;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * Comment service
@@ -268,9 +269,9 @@ class CommentService
             ->createQueryBuilder('c');
 
         $queryBuilder
-            ->select('c', 'cm.name', 't.name')
+            ->select('c', 'cm.name')
             ->leftJoin('c.commenter', 'cm')
-            ->leftJoin('c.thread', 't')
+            ->leftJoin('Newscoop\Entity\Article', 't', Expr\Join::WITH, 'c.thread = t.number AND c.language = t.language')
             ->where($queryBuilder->expr()->orX(
                 $queryBuilder->expr()->like('c.message', $queryBuilder->expr()->literal('%'.$phrase.'%')),
                 $queryBuilder->expr()->like('c.subject', $queryBuilder->expr()->literal('%'.$phrase.'%')),
