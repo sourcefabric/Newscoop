@@ -3,7 +3,13 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
-      09/07/2015 08:58  4.4.4  Newscoop 4.4.4 minor release
+      13/07/2015 12:30  4.4.4  Newscoop 4.4.4 minor release
+         d3150bc CS-5888: Adds parameter published to list_related_articles
+         38de286 use proper left join for thread, move search to header - it shows up mor comments on first screen
+         8b82051 improve MetaTopic class
+         cc5aa8c fixing metatopic class - get results as an array each time
+         4a8de20 fixed displaying subtopics - missing parameter
+         c2de384 improve detecting and updating plylist templates
          271cc5d CS-5880 - Save of order is not working for root topics in topics management
          7c15658 comment out php values in htacces and display a proper value
          4d5077e CS-5878 - Newscoop 4.4.4 allows only 100M even if php.ini allows higher upload max size value
