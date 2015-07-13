@@ -76,6 +76,7 @@ api:
             clients: Sifarişçilər
         resources:
             info: 'Mövcud halda bütün vəsaitlər qoruyucu divar tərəfindən qorunur, amma sən istədiyin vəsaitləri ictimailəşdirmək üçün seçə bilərsən.'
+            api_docs: null
             add_button: 'Sifarişçi Əlavə Et'
         clients:
             table:

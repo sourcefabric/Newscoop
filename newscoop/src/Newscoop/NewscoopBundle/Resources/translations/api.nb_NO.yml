@@ -76,6 +76,7 @@ api:
             clients: null
         resources:
             info: null
+            api_docs: null
             add_button: null
         clients:
             table:

@@ -74,3 +74,5 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(гггг-мм-дд)</SM
 'Add items to slideshow': 'Добавить в слайд-шоу'
 'Attached Slideshows': 'Прикрепленные слайд-шоу'
 'Value is required and can''t be empty': 'Поле значения нельзя оставить пустым'
+'Select all images': null
+'Unselect all images': null

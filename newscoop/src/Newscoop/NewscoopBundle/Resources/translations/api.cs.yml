@@ -76,6 +76,7 @@ api:
             clients: Klienti
         resources:
             info: 'Defoltně jsou všechny zdroje chráněné Firewall, ale můžete si vybrat zdroje, které zveřejníte.'
+            api_docs: null
             add_button: 'Přidat klienta'
         clients:
             table:

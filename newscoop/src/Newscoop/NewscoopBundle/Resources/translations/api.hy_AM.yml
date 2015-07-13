@@ -76,6 +76,7 @@ api:
             clients: Բաժանորդներ
         resources:
             info: null
+            api_docs: null
             add_button: 'Ավելացնել բաժանորդ'
         clients:
             table:

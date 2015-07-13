@@ -26,6 +26,11 @@ function smarty_block_list_related_articles($p_params, $p_content, &$p_smarty, &
 	$p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 	$campContext = $p_smarty->getTemplateVars('gimme');
 
+	// Default to true, but not when previewing
+	if (!isset($p_params['published']) && !$campContext->preview) {
+		$p_params['published'] = 'true';
+	}
+
 	if (!isset($p_content)) {
 		$start = $campContext->next_list_start('BoxArticlesList');
 		$boxArticlesList = new BoxArticlesList($start, $p_params);

@@ -369,8 +369,12 @@ $('#edit-images').fancybox({
     }
 });
 
-$('#topic_box_frame a.iframe').each(function() {
-    $(this).data('fancybox').width = 1200;
+$('#topic_box_frame a.iframe').fancybox({
+    'showCloseButton' : false,
+    'width': '100%',
+    'height': '100%',
+    'scrolling': 'auto',
+    'centerOnScroll': true,
 });
 
 $("#context_box a.iframe").fancybox({
