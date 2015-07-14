@@ -1,5 +1,5 @@
-'Does serving this field count as a page read for statistics?': null
-'Is this field intended for the reader to view? If not, it is metadata.': null
+'Does serving this field count as a page read for statistics?': 'Skal visning af dette felt tælles som en sidelæsning i statistikken?'
+'Is this field intended for the reader to view? If not, it is metadata.': 'Skal dette felt vises til læseren? Ellers er det metadata.'
 'Event Color': 'Farve på begivenhed'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Indtast et tal større end $1 og mindre end $2 i $3 feltet.'
 'You do not have the right to translate article types.': 'Du har ikke rettigheder til at oversætte artikel typer.'
@@ -36,7 +36,7 @@ hide: skjul
 'The field $1 does not exist.': 'Feltet $1 findes ikke.'
 'The $1 field may only contain letters and underscore (_) character.': '$1 feltet må kun indeholde bogstaver og underscore tegnet (_).'
 'Template Field Name': 'Skabelon feltnavn'
-'Show to Authors?': null
+'Show to Authors?': 'Vis til forfattere?'
 'Renaming article type field': 'Omdøber artikel type felt'
 'Rename field': 'Omdøb felt'
 'Reassign a field type': 'Tildel en ny felttype'

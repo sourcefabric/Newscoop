@@ -72,7 +72,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Dato<BR><SMALL>(åååå-mm-dd)</SMALL>
 'Filter by uploader...': 'Filtrer efter uploader...'
 'Slideshow images': null
 'Add items to slideshow': null
-'Attached Slideshows': null
-'Value is required and can''t be empty': null
-'Select all images': null
-'Unselect all images': null
+'Attached Slideshows': 'Vedhæftede gallerier'
+'Value is required and can''t be empty': 'Værdien er påkrævet og kan ikke være tom'
+'Select all images': 'Vælg alle billeder'
+'Unselect all images': 'Fravælg alle billeder'
