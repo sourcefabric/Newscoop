@@ -58,6 +58,8 @@ class PlaylistArticleRepository extends SortableRepository
                 $em->getConnection()->rollback();
                 $em->close();
             }
+        } else {
+            $em->getConnection()->commit();
         }
 
         return $article;
