@@ -91,6 +91,10 @@ class SchedulerService implements SchedulerServiceInterface
         if (array_key_exists('environment', $this->config) && !empty($this->config['environment'])) {
             $config['environment'] = $this->config['environment'];
         }
+        // Allow users to have custom commands, only when fullpaths are defined
+        if (substr($config['command'], 0, 1) !== '/') {
+            $config['command'] = sprintf('%s/%s', realpath(__DIR__.'/../../../'), $config['command']);
+        }
 
         $this->jobby->add($jobName, $config);
     }

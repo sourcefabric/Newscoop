@@ -7,7 +7,8 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 $request = \Zend_Registry::get('container')->get('request');
 $locale = $request->getLocale();
 
-if (!Saas::singleton()->hasPermission('ManageArticleTypes')) {
+// TODO: 4.5 replace this with acl check
+if (false) {
     camp_html_display_error($translator->trans("You do not have the right to manage article types.", array(), 'article_type_fields'));
     exit;
 }
@@ -152,12 +153,12 @@ $color_list = array(
                ONCLICK="if (allShown == 0) {
                             ShowAll(field_ids);
                             allShown = 1;
-                            document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Hide human-readable field names", array(), 'article_type_fields'); ?>';
+                            document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Hide Display Name editor", array(), 'article_types'); ?>';
                             document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagminus.png';
                         } else {
                             HideAll(field_ids);
                             allShown = 0;
-                            document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Edit and translate human-readable field names", array(), 'article_type_fields'); ?>';
+                            document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Edit and translate Display Names", array(), 'article_types'); ?>';
                             document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagplus.png';
                         }">
 		      <IMG NAME="show" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagplus.png" BORDER="0"></A></TD>
@@ -165,14 +166,14 @@ $color_list = array(
                     ONCLICK="if (allShown == 0) {
                                 ShowAll(field_ids);
                                 allShown = 1;
-                                document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Hide human-readable field names", array(), 'article_type_fields'); ?>';
+                                document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Hide Display Name editor", array(), 'article_types'); ?>';
                                 document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagminus.png';
                                 } else {
                                 HideAll(field_ids);
                                 allShown = 0;
-                                document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Edit and translate human-readable field names", array(), 'article_type_fields'); ?>';
+                                document.getElementById('showtext').innerHTML = '<?php echo $translator->trans("Edit and translate Display Names", array(), 'article_types'); ?>';
                                 document['show'].src='<?php print $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/viewmagplus.png';
-                                }"><DIV ID="showtext"><?php echo $translator->trans("Edit and translate human-readable field names", array(), 'article_type_fields'); ?></DIV></A></B></TD>
+                                }"><DIV ID="showtext"><?php echo $translator->trans("Edit and translate Display Names", array(), 'article_types'); ?></DIV></A></B></TD>
 
 
 

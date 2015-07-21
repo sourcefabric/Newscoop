@@ -44,7 +44,7 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $resource = $request->getControllerName();
         $action = $request->getActionName();
 
-        $user= Zend_Registry::get('container')->getService('user')->getCurrentUser();
+        $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
         $blogService = Zend_Registry::get('container')->getService('blog');
         if ($blogService->isBlogger($user)) {
             // f_article_edit condition should be removed once file upload is moved to a final place where bloggers can access.
@@ -60,12 +60,6 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         if (in_array($resource, $this->ignore)) {
             return; // ignore
         }
-
-        if (!\SaaS::singleton()->hasPrivilege($resource, $action)) {
-            $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-			/* @var $redirector Zend_Controller_Action_Helper_Redirector */
-			$redirector->direct("index", "index", "admin");
-		}
 
         $acl = Zend_Registry::get('acl');
         list($resource, $action) = $acl->getAccess($request->getControllerName(), $request->getActionName());

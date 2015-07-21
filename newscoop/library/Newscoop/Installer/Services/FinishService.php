@@ -126,8 +126,8 @@ class FinishService
      */
     public function saveCronjobs(SchedulerServiceInterface $scheduler)
     {
-        $binDirectory = realpath($this->newscoopDir.'/bin');
-        $appDirectory = realpath($this->newscoopDir.'/application/console');
+        $binDirectory = 'bin';
+        $appDirectory = 'application/console';
 
         $scheduler->registerJob("Autopublish pending issues and articles", array(
             'command' => $binDirectory.'/newscoop-autopublish',
@@ -175,7 +175,7 @@ class FinishService
 
         $job = new Job();
         $job->setMinute('*')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand('php '.$appDirectory.' scheduler:run');
+            ->setCommand(sprintf('php %s/%s scheduler:run', realpath($this->newscoopDir), $appDirectory));
         $crontab->addJob($job);
         $crontab->write();
 

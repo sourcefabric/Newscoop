@@ -4,7 +4,7 @@ namespace {{ namespace }}\EventListener;
 
 {% block use_statements %}
 use Newscoop\NewscoopBundle\Event\ConfigureMenuEvent;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 {% endblock use_statements %}
 
 {% block class_definition %}
@@ -17,7 +17,7 @@ class ConfigureMenuListener
     /**
      * @param Translator $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

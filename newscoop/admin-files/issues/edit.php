@@ -211,7 +211,8 @@ if($themePath != null && $themePath != '0'){
 		</TR>
 		<?php
             }
-			if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+            // TODO: 4.5 replace this with acl check
+			if(true) {
 		?>
 		<TR>
 			<TD COLSPAN="2" style="padding-top: 20px;">

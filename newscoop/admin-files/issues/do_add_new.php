@@ -113,7 +113,8 @@ if (is_array($publicationThemes) && count($publicationThemes) > 0) {
     $outSetIssue->setSectionPage(null);
     $outSetIssue->setArticlePage(null);
 
-    if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+    // TODO: 4.5 replace this with acl check
+    if (true) {
         if($newOutputSetting){
             $outputSettingIssueService->insert($outSetIssue);
         } else {
