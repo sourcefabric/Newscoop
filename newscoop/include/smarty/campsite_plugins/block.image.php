@@ -60,11 +60,17 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
     }
 
     $imageService = \Zend_Registry::get('container')->getService('image');
+    $preferencesService = \Zend_Registry::get('container')->getService('preferences');
+    $caption = $imageService->getCaption($articleRendition->getImage(), $article->number, $article->language->number);
+    if ($preferencesService->get('MediaRichTextCaptions', 'N') == 'N') {
+        $caption = MetaDbObject::htmlFilter($caption);
+    }
+
     $smarty->assign('image', (object) array(
         'src' => \Zend_Registry::get('view')->url(array('src' => $image['src']), 'image', true, false),
         'width' => $image['width'],
         'height' => $image['height'],
-        'caption' => $imageService->getCaption($articleRendition->getImage(), $article->number, $article->language->number),
+        'caption' => $caption,
         'description' => $articleRendition->getImage()->getDescription(),
         'photographer' => $articleRendition->getImage()->getPhotographer(),
         'original' => $image['original'],
