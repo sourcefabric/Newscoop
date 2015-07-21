@@ -126,6 +126,9 @@ class RegisterController extends Zend_Controller_Action
                     $session->set('_security_frontend_area', serialize($token));
                     $OAuthtoken = $this->_helper->service('user')->loginUser($user, 'oauth_authorize');
                     $session->set('_security_oauth_authorize', serialize($OAuthtoken));
+                    if (isset($values['_target_path']) && !empty($values['_target_path'])) {
+                        $this->_helper->redirector->gotoUrl($values['_target_path']);
+                    }
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
             } catch (InvalidArgumentException $e) {
