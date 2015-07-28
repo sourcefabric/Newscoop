@@ -85,7 +85,7 @@ class ContextBoxArticle extends DatabaseObject
         }
 
         if (isset($params['role']) && $params['role'] == 'child') {
-            $sql = 'SELECT b.fk_article_no FROM context_boxes b, Articles a0'
+            $sql = 'SELECT DISTINCT b.fk_article_no FROM context_boxes b, Articles a0'
                 . ' WHERE a0.Number = b.fk_article_no AND '
                 . ' a0.Type = "dossier" AND '
                 . ' b.id IN (SELECT c.fk_context_id '
@@ -98,7 +98,7 @@ class ContextBoxArticle extends DatabaseObject
             $sql .= ' ORDER BY a0.PublishDate DESC';
         } else {
             if (isset($params['published']) && $params['published'] == 'true') {
-                $sql = 'SELECT b.fk_article_no FROM context_articles b, Articles a0'
+                $sql = 'SELECT DISTINCT b.fk_article_no FROM context_articles b, Articles a0'
                 . ' WHERE b.fk_context_id = ' . $params['context_box'] .' AND '
                 . ' b.fk_article_no = a0.Number AND '
                 . ' a0.Published = "Y"'
