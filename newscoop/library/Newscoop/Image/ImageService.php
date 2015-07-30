@@ -145,7 +145,9 @@ class ImageService
 
             $imagine->open($imagePath)
                 ->resize(new Box($newImageWidth, $newImageHeight))
-                ->save($thumbnailPath, array());
+                ->save($thumbnailPath, array(
+                    'quality' => 90, //from 0 to 100
+                ));
             $filesystem->chmod($thumbnailPath, 0644);
         } catch (\Exceptiom $e) {
             $filesystem->remove($imagePath);
@@ -266,7 +268,9 @@ class ImageService
         $rendition = new Rendition($width, $height, $specs);
         
         $image = $rendition->generateImage($this->decodePath($imagePath));
-        $image->save($destFolder . '/' . $imagePath);
+        $image->save($destFolder . '/' . $imagePath, array(
+            'quality' => 90, //from 0 to 100
+        ));
 
         return $image;
     }
