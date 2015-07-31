@@ -8,7 +8,6 @@
 namespace Newscoop\Image;
 
 use Imagine\Image\Box;
-use Imagine\Gd\Imagine;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -65,6 +64,17 @@ class ImageService
         $this->cacheService = $cacheService;
     }
 
+    public static function getImagine()
+    {
+        try {
+            $imagine = new \Imagine\Imagick\Imagine();
+        } catch (\Imagine\Exception\RuntimeException $e) {
+            $imagine = new \Imagine\Gd\Imagine();
+        }
+        
+        return $imagine;
+    }
+
     /**
      * Upload image and create entity
      *
@@ -77,7 +87,7 @@ class ImageService
     public function upload(UploadedFile $file, array $attributes, ImageInterface $image = null, $keepRatio = true)
     {
         $filesystem = new Filesystem();
-        $imagine = new Imagine();
+        $imagine = self::getImagine();
 
         $mimeType = $file->getClientMimeType();
         if (!in_array($mimeType, $this->supportedTypes)) {
