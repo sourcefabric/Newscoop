@@ -4,6 +4,6 @@ type_publications:
     metaDescription:
         max: null
     metaTitle:
-        max: null
+        max: 'Publication title must be shorter than {{ limit }} characters.'
     metaKeywords:
         max: null
