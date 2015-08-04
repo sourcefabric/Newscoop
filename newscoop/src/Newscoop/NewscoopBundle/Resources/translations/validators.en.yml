@@ -6,4 +6,4 @@ type_publications:
     metaTitle:
         max: "Publication title must be shorter than {{ limit }} characters."
     metaKeywords:
-        max: "Publication keywords must not have than {{ limit }} characters."    
+        max: "Publication keyword total must be shorter than {{ limit }} characters."    
