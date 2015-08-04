@@ -83,16 +83,25 @@ class PublicationType extends AbstractType
             'label' => 'publications.form_type.label.meta_title',
             'error_bubbling' => true,
             'required' => false,
+            'constraints' => array(
+               new Length(array('max' => 255, 'maxMessage' => 'type_publications.metaTitle.max')),
+            )
         ))
         ->add('metaKeywords', null, array(
             'label' => 'publications.form_type.label.meta_keywords',
             'error_bubbling' => true,
             'required' => false,
+            'constraints' => array(
+               new Length(array('max' => 255, 'maxMessage' => 'type_publications.metaKeywords.max')),
+            )
         ))
         ->add('metaDescription', 'textarea', array(
             'label' => 'publications.form_type.label.meta_description',
             'required' => false,
             'error_bubbling' => true,
+            'constraints' => array(
+               new Length(array('max' => 255, 'maxMessage' => 'type_publications.metaDescription.max')),
+            )
         ))
         ->add('moderator_to', 'email', array(
             'label' => 'publications.form_type.label.moderator_to',
