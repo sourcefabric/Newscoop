@@ -362,7 +362,7 @@ class UserService
      * @param string  $lastName
      * @param integer $publication
      */
-    public function createUser($email, $password, $username, $firstName = null, $lastName = null, $publication = 0, $public = true, $userTypes = array())
+    public function createUser($email, $password, $username, $firstName = null, $lastName = null, $publication = 0, $public = true, $userTypes = array(), $isAdmin = false)
     {
         $users = $this->findBy(array('email' => $email));
         if (!empty($users)) {
@@ -377,6 +377,7 @@ class UserService
         $user->setFirstName($firstName);
         $user->setLastName($lastName);
         $user->setPublication($publication);
+        $user->setAdmin($isAdmin);
 
         foreach ($userTypes as $type) {
             $user->addUserType($this->em->getReference('Newscoop\Entity\User\Group', $type));
