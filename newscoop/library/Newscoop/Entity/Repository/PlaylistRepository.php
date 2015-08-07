@@ -162,6 +162,7 @@ class PlaylistRepository extends EntityRepository
      * Gets the list of playlist the given article belongs to.
      *
      * @param int $articleId
+     * @param int $languageId
      *
      * @return array
      */
