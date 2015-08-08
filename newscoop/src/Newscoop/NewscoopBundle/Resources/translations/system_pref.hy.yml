@@ -147,8 +147,8 @@ newscoop:
             separator: null
             stats: null
             zoom: null
-            richtext_status: 'Enable rich text editing for image captions.'
-            richtext_length: 'By default set to 255 (also when rich text captions are disabled). Use 0 for no limit.'
+            richtext_status: 'Enables a HTML editor for captions. Disabling rich text will escape, but not remove, any HTML present in the caption source. If disabled, the character limit will be fixed to 255, and any longer captions will be truncated the next time they are edited.'
+            richtext_length: 'The limit includes any HTML and defaults to 255 characters. Set 0 here to have unlimited caption lengths, if your theme supports them.'
             ratio: null
             replication: null
             filter: null
