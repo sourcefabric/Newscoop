@@ -2,7 +2,7 @@ type_publications:
     name:
         min: 'Publication name must be longer than {{ limit }} characters.'
     metaDescription:
-        max: null
+        max: 'Publication description must be shorter than {{ limit }} characters.'
     metaTitle:
         max: 'Publication title must be shorter than {{ limit }} characters.'
     metaKeywords:
