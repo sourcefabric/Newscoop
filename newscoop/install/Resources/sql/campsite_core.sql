@@ -2661,7 +2661,7 @@ CREATE TABLE playlist (
 
 DROP TABLE IF EXISTS `playlist_article`;
 CREATE TABLE `playlist_article` (
-  `id_playlist_article` int(11) NOT NULL,
+  `id_playlist_article` int(11) AUTO_INCREMENT NOT NULL,
   `id_playlist` int(11) NOT NULL,
   `article_no` int(11) NOT NULL,
   `article_language` int(11) NOT NULL,
