@@ -55,7 +55,7 @@ if ($f_dest_publication_id > 0) {
     $sqlOptions = array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC"));
 	$allIssues = Issue::GetIssues($f_dest_publication_id, $f_language_id, null, null, null, false, $sqlOptions, true);
 	if (count($allIssues) == 1) {
-		$f_dest_issue_number = $f_src_issue_number;
+		$f_dest_issue_number = $allIssues[0]->getIssueNumber();
 	}
 }
 

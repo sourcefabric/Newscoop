@@ -384,7 +384,7 @@ class ArticlesController extends FOSRestController
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
-     * @return Form
+     * @return Article
      */
     public function getArticleAction(Request $request, $number, $language = null)
     {
@@ -400,6 +400,52 @@ class ArticlesController extends FOSRestController
         }
 
         return $article;
+    }
+
+    /**
+     * Gets the list of playlist the given article belongs to..
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the article is not found",
+     *         }
+     *     },
+     *     filters={
+     *          {"name"="language", "dataType"="string", "description"="Language code"}
+     *     },
+     *     output="\Newscoop\Entity\Article"
+     * )
+     *
+     * @Route("/articles/{number}/{language}/playlists.{_format}", requirements={"number" = "\d+"}, defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle_language_playlists")
+     *
+     * @Method("GET")
+     * @View(serializerGroups={"details"})
+     *
+     * @return array
+     */
+    public function getArticlePlaylistsAction(Request $request, $number, $language = null)
+    {
+        $em = $this->container->get('em');
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication();
+
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Article was not found');
+        }
+
+        $playlists = $em->getRepository('Newscoop\Entity\Playlist')
+            ->getArticlePlaylists($article->getNumber(), $article->getLanguageId());
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $paginator->setUsedRouteParams(array('number' => $number, 'language' => $article->getLanguage()->getCode()));
+        $playlists = $paginator->paginate($playlists);
+
+        return $playlists;
     }
 
     /**

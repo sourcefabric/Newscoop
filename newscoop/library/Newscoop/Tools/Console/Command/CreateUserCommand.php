@@ -34,7 +34,8 @@ class CreateUserCommand extends Console\Command\Command
             ->addArgument('lastName', InputArgument::OPTIONAL, 'User last name')
             ->addArgument('is_public', InputArgument::OPTIONAL, 'User is public', true)
             ->addArgument('publication', InputArgument::OPTIONAL, 'Publication number assigned to user')
-            ->addArgument('roles', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'User roles (separate multiple names with a space)');
+            ->addArgument('roles', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'User roles (separate multiple names with a space)')
+            ->addOption('isAdmin', null, InputOption::VALUE_NONE, 'If user should have access to admin interface');
     }
 
     /**
@@ -52,7 +53,8 @@ class CreateUserCommand extends Console\Command\Command
             $input->getArgument('lastName'),
             $input->getArgument('publication'),
             $input->getArgument('is_public'),
-            $input->getArgument('roles')
+            $input->getArgument('roles'),
+            $input->getOption('isAdmin')
         );
     }
 }

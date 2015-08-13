@@ -1,3 +1,9 @@
 type_publications:
     name:
         min: 'Название издания должно содержать более {{ limit }} знаков.'
+    metaDescription:
+        max: null
+    metaTitle:
+        max: null
+    metaKeywords:
+        max: null

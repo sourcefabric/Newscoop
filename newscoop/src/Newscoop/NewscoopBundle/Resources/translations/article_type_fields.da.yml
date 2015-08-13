@@ -22,8 +22,8 @@ Custom: Brugerdefineret
 Precision: Præcision
 'Can not convert the field $1 from $2 to type $3.': 'Feltet $1 kan ikke konverteres fra type $2 til type $3.'
 'Are you sure you want to make $1 a $2 field?': 'Vil du lave $1 til et $2 felt?'
-'Page Read Count?': null
-'Editorial Content?': null
+'Page Read Count?': 'Besøgstæller?'
+'Editorial Content?': 'Redaktionelt indhold?'
 'Back to Article Types List': 'Tilbage til artikel type liste'
 show: vis
 hide: skjul

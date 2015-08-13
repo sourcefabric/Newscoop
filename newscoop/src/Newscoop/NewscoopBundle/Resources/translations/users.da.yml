@@ -185,8 +185,8 @@ Miscellaneous: Diverse
 'Editor Miscellaneous Settings': 'Diverse editor indstillinger'
 'No such user account.': 'Bruger konto findes ikke.'
 'User image (full-size)': 'Brugerfoto (fuld størrelse)'
-'User account is highlighted as "featured account"': null
-'Custom attribute...': null
+'User account is highlighted as "featured account"': 'Brugerkontoen er en "fremhævet konto"'
+'Custom attribute...': 'Brugerdefinerede egenskaber'
 users:
     label:
         title: 'Bruger søgning'

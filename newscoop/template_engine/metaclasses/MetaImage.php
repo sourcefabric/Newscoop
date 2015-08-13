@@ -56,6 +56,11 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['photographer_url'] = 'getPhotographerUrl';
         $this->m_customProperties['caption'] = 'getCaption';
+
+        $preferencesService = \Zend_Registry::get('container')->getService('preferences');
+        if ($preferencesService->MediaRichTextCaptions == 'Y') {
+            $this->m_skipFilter = array('caption');
+        }
     } // fn __construct
 
 

@@ -347,6 +347,7 @@ class RestContext extends BehatContext
             strtolower($this->requestMethod),
             $this->headers
         );
+        $this->headers = array();
         $this->response = $this->client->getLastResponse();
     }
 
@@ -372,13 +373,19 @@ class RestContext extends BehatContext
             $this->headers
         );
 
+        $this->headers = array();
         $this->response = $this->client->getLastResponse();
     }
 
     public function processPageUrl($pageUrl)
     {
         if (strpos($pageUrl, '<<') !== false) {
-            $locationIndex = str_replace('>>', '', str_replace('<<', '', $pageUrl));
+            $urlParts = explode('>>', $pageUrl);
+            $locationIndex = str_replace('>>', '', str_replace('<<', '', $urlParts[0]));
+
+            if (strlen($urlParts[1]) > 0){
+                return $this->locations[$locationIndex].$urlParts[1];
+            }
 
             return $this->locations[$locationIndex];
         }
@@ -547,6 +554,8 @@ class RestContext extends BehatContext
 
             return $this->locations[$locationIndex];
         }
+
+        return $this->locations[$fieldValue];
     }
 
     /**
@@ -636,6 +645,39 @@ class RestContext extends BehatContext
             throw new \Exception(
                 sprintf("Unexpected response.\nExpected response:%s\nActual response:\n%s".$string, $data)
             );
+        }
+    }
+
+     /**
+     * @Then /^items should be in this order: "([^"]*)"$/
+     * @param  string     $order
+     * @return void
+     * @throws \Exception
+     */
+    public function checkItemsOrder($order)
+    {
+        if ($this->responseIsJson) {
+            $order = explode(',', $order);
+            foreach ($order as $key => $value) {
+                $order[$key] = $this->extractValueByGivenLocation($value);
+            }
+            
+            $actualOrder = array();
+            foreach($this->responseData['items'] as $key => $item) {
+                $actualOrder[] = $item['number'];
+            }
+
+            if ($order !== $actualOrder) {
+                throw new \Exception(
+                    sprintf(
+                        "Unexpected order.\nExpected order:\n%s\nActual response:\n%s", 
+                        json_encode($order), 
+                        json_encode($actualOrder)
+                    )
+                );
+            }
+        } else {
+            return new Step\Then('the response isn\'t JSON');
         }
     }
 

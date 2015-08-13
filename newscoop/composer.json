@@ -7,7 +7,7 @@
         "publication"
     ],
     "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
-    "version": "4.4.4",
+    "version": "4.4.5",
     "license":"GPL-3.0",
     "authors":[
         
@@ -64,7 +64,7 @@
         "phpunit\/phpunit":"~4.0",
         "phpspec\/phpspec":"2.0.*@dev",
         "liip\/rmt":"1.1.4",
-        "behat\/behat":"2.5.1",
+        "behat\/behat":"2.5.5",
         "behat\/common-contexts":"1.2.*@dev",
         "behat\/mink":"1.5.*@stable",
         "behat\/mink-extension":"*",

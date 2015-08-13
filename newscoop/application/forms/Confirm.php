@@ -82,6 +82,11 @@ class Application_Form_Confirm extends Zend_Form
             'ignore' => true,
         ));
         $this->getElement('submit')->setOrder(8);
+
+        $this->addElement('hidden', '_target_path', array(
+            'decorators' => array('ViewHelper')
+        ));
+        $this->getElement('_target_path')->setOrder(9);
     }
 
     /**

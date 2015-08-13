@@ -147,8 +147,8 @@ newscoop:
             separator: 'Add meg a Kulcsszavak elválasztóját (vessző vagy kötőjel) a Cikkszerkesztés oldalon.'
             stats: 'Ez a beállítás teszi lehetővé statisztika gyűjtését a kiszolgálón a kiadványok olvasói eléréséről. Ha külső statisztikai szolgáltatást használ, kattinthat a Nem gombra, ugyanis a statisztikagyűjtés letiltása csökkentheti a Newscoop-kiszolgáló leterheltségét.'
             zoom: 'Igenre állításakor az olvasók rákattintással felnagyíthatják a cikkek képeit a kiadványok oldalain. Ez a nagyítás funkció a cikk szövegébe beszúrt bármilyen képhez használható.'
-            richtext_status: 'A rich text szerkesztés engedélyezése a képaláírásokhoz.'
-            richtext_length: 'Alapértelmezésként 255 van megadva (a rich text képaláírások letiltásakor is). Adj meg 0-t, ha nincs korlátozás.'
+            richtext_status: null
+            richtext_length: null
             ratio: 'Az átméretezési arány elsőbbséget élvez bármely, itt megadott átméretezendő szélesség vagy átméretezendő magasság értékéhez képest. Ha az arány nincs megadva, csak a szélesség és a magasság, akkor a Newscoop azt az értéket fogja használni, mely kisebb képméretet eredményez. Az itt megadott alapértelmezett beállításokat az arány felülbírálhatja, egy konkrét sorközi kép szélessége vagy magassága a Cikkszerkesztés lapon van beállítva.'
             replication: 'A Newscoop egyszerre két kiszolgálón való működésének beállítását teszi lehetővé, ami hardver- vagy hálózati problémák esetén biztonsági funkció.'
             filter: 'Írd be azoknak a sablonoknak a kulcsszavait, melyeket el akarsz rejteni a Témakezelés lapról elérhető sablonszerkesztőből. Olyan sablonokét például, melyek már nincsenek használatban, viszont nem kívánod őket törölni a kiszolgálóról.'

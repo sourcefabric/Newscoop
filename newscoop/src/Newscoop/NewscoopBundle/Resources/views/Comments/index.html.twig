@@ -104,7 +104,7 @@
             </thead>
             <tbody>
                 {% for row in commentsArray %}
-                <tr id="use-hover" class="comment_{{ row.comment.id }} {% if row.comment.status == 'hidden' %} status-hidden{% endif %}">
+                <tr id="use-hover" class="js-comment-body comment_{{ row.comment.id }} {% if row.comment.status == 'hidden' %} status-hidden{% endif %}">
                     <td style="width: 3%; ">
                         <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{% if pagination.getCurrentPageNumber == 1 %}
                             {{ row.index }}.
@@ -112,7 +112,7 @@
                            {{ (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber - 1)) +  row.index }}.
                         {% endif %}</span>
                     </td>
-                    <td>
+                    <td class="clickable">
                         <div class="commentUserHolder">
                             <div>
                                 {% if row.user is empty %}
@@ -144,7 +144,7 @@
                             <p></p>
                         </div>
                     </td>
-                    <td style="width: 40%;">
+                    <td style="width: 40%;" class="clickable">
                         <div class="dateCommentHolder" id="comment-section_{{ row.comment.id }}">
                             <h4>
                                 <span>{{ row.comment.timeCreated|date("Y.m.d") }} {{ 'comments.label.at'|trans }} {{ row.comment.timeCreated|date("H:i:s") }}</span>
@@ -190,7 +190,7 @@
                             </fieldset>
                         </div>
                     </td>
-                    <td>
+                    <td class="clickable">
                         <div class="commentArticleHolder">
                             <p>
                                 <a href="/admin/articles/get.php?f_publication_id={{ row.article.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.article.section.number }}&amp;f_article_number={{ row.article.number }}&amp;f_language_id={{ row.article.language.id }}&amp;f_language_selected={{ row.article.language.id }}" class="articleLink">{{ row.article.name }}</a><br>
@@ -304,6 +304,10 @@
             $('input[data=hidden_'+value+']').prop('checked', false);
             $('input[data=pending_'+value+']').prop('checked', true);
         }
+
+        if (status == 'deleted') {
+            $('.comment_'+value).remove();
+        }
     };
 
     $("tr#use-hover").hover(function() {
@@ -336,9 +340,12 @@
                     "status": status
                 },
                 success: function (data) {
+                    $.each(data.comments, function(index, value) {
+                        changeCommentStatus(data.status, value);
+                    });
+
                     if ('deleted' == status) {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.deleted'|trans }}');
-                        location.href = Routing.generate('newscoop_newscoop_comments_index');
                     } else if (status == 'pending') {
                         flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
                         $('.comment_'+ids).removeClass('status-hidden');
@@ -410,6 +417,11 @@
         });
 
         $('.content-reply_'+el.attr('id')).slideToggle("slow");
+    });
+
+    $('.js-comment-body td.clickable').live('click', function () {
+        var commentCheckbox = $('.table-checkbox', $(this).parent());
+        commentCheckbox.attr('checked', !commentCheckbox.attr("checked"));
     });
 
     $('.action-edit').live('click', function () {
@@ -562,7 +574,6 @@
 
                         if ('deleted' == status) {
                             flashMessage(translationComment+' {{ 'comments.msg.deleted'|trans }}');
-                            location.href = Routing.generate('newscoop_newscoop_comments_index');
                         } else if (status == 'pending') {
                             flashMessage(translationComment+' {{ 'comments.msg.status.new'|trans }}');
                         } else if (status == 'approved') {
