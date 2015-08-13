@@ -584,8 +584,6 @@ function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
     <script type="text/javascript"><!--
         $('#<?php echo htmlspecialchars($p_fieldName); ?>').each(function () {
             var settings = {
-                minDate: 1990,
-                maxDate: 2020,
                 dateFormat: 'yy-mm-dd',
                 timeFormat: 'hh:mm:ss',
             };
