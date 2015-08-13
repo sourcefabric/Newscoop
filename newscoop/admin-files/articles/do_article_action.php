@@ -150,6 +150,9 @@ if (!is_null($f_action_workflow)) {
 
 		$articleObj->setWorkflowStatus($f_action_workflow);
 
+		// Make sure that the time stamp is updated.
+		$articleObj->setProperty('time_updated', 'NOW()', true, true);
+
 		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 		$cacheService->clearNamespace('article');
 

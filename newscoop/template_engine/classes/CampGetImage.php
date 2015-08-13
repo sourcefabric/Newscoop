@@ -635,7 +635,7 @@ class CampGetImage
             return $function($t);
         }
         else {
-            $function($t, $p_target);
+            $function($t, $p_target, 90);
             imagedestroy($t);
             return $this->sendCachedImage();
         }

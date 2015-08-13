@@ -116,6 +116,7 @@ case "workflow_publish":
     foreach ($articleCodes as $articleCode) {
         $articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
         if ($articleObj->setWorkflowStatus('Y')) {
+            $articleObj->setProperty('time_updated', 'NOW()', true, true);
             $success = true;
             $affectedArticles += 1;
         } else {
@@ -132,6 +133,7 @@ case 'workflow_submit':
         $articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
         if ($g_user->hasPermission("Publish") || $articleObj->userCanModify($g_user)) {
             if ($articleObj->setWorkflowStatus('S')) {
+                $articleObj->setProperty('time_updated', 'NOW()', true, true);
                 $success = true;
                 $affectedArticles += 1;
             } else {
@@ -152,6 +154,7 @@ case 'workflow_new':
         if ($g_user->hasPermission("Publish")
                 || ($g_user->hasPermission('ChangeArticle') && ($articleObj->getWorkflowStatus() == 'S'))) {
             if ($articleObj->setWorkflowStatus('N')) {
+                $articleObj->setProperty('time_updated', 'NOW()', true, true);
                 $success = true;
                 $affectedArticles += 1;
             } else {

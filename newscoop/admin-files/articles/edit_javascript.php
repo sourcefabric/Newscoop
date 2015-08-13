@@ -369,12 +369,13 @@ $('#edit-images').fancybox({
     }
 });
 
-$('#topic_box_frame a.iframe').fancybox({
-    'showCloseButton' : false,
-    'width': '100%',
-    'height': '100%',
-    'scrolling': 'auto',
-    'centerOnScroll': true,
+$('#topic_box_frame a.iframe').each(function() {
+    var fancyBox = $(this).data('fancybox');
+    fancyBox.width = '100%';
+    fancyBox.height = '100%';
+    fancyBox.showCloseButton = false;
+    fancyBox.scrolling = 'auto';
+    fancyBox.centerOnScroll = true;
 });
 
 $("#context_box a.iframe").fancybox({

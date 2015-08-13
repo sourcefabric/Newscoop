@@ -80,6 +80,7 @@ case "workflow_new":
 		if ($g_user->hasPermission('Publish')
 			|| ($g_user->hasPermission('ChangeArticle') && ($articleObj->getWorkflowStatus() == 'S'))) {
 			$articleObj->setWorkflowStatus('N');
+			$articleObj->setProperty('time_updated', 'NOW()', true, true);
 		}
 	}
 	camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $translator->trans("New")), 'articles'), "ok");
@@ -90,6 +91,7 @@ case "workflow_submit":
 		// A user who owns the article may submit it.
 		if ($g_user->hasPermission("Publish") || $articleObj->userCanModify($g_user)) {
 			$articleObj->setWorkflowStatus('S');
+			$articleObj->setProperty('time_updated', 'NOW()', true, true);
 		}
 	}
 	camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $translator->trans("Submitted")), 'articles'), "ok");
@@ -98,6 +100,7 @@ case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->setWorkflowStatus('Y');
+		$articleObj->setProperty('time_updated', 'NOW()', true, true);
 
         \Zend_Registry::get('container')->getService('dispatcher')
             ->dispatch('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
