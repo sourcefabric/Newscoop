@@ -70,6 +70,11 @@ $last_name = Input::Get('last_name');
 $can_save = false;
 if ($id > -1 && strlen($first_name) > 0 && strlen($last_name) > 0) {
     $can_save = true;
+    $tmpAuthor = new Author(implode(' ', array($first_name, $last_name)));
+    if ($id == 0 && $tmpAuthor->exists()) {
+        $can_save = false;
+        camp_html_add_msg($translator->trans('An author with the same full name already exists.', array(), 'users'));
+    }
 }
 if ($can_save) {
     $author = new Author();
