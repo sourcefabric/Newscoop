@@ -73,7 +73,7 @@ if ($id > -1 && strlen($first_name) > 0 && strlen($last_name) > 0) {
     $tmpAuthor = new Author(implode(' ', array($first_name, $last_name)));
     if ($id == 0 && $tmpAuthor->exists()) {
         $can_save = false;
-        camp_html_add_msg($translator->trans('An author with the same full name already exists.', array(), 'users'));
+        camp_html_add_msg($translator->trans('An author with the same full name (combination of first and last name) already exists.', array(), 'users'));
     }
 }
 if ($can_save) {
