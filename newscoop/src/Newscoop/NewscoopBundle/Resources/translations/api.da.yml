@@ -76,6 +76,7 @@ api:
             clients: Klienter
         resources:
             info: 'Som standard er alle resourcer beskyttet af firewall, men du kan vælge resourcer der skal være offentligt tilgængelige.'
+            api_docs: 'Fuld dokumentation for APIen kan findes på din server (det er offentligt)'
             add_button: 'Tilføj klient'
         clients:
             table:

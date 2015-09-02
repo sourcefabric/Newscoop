@@ -37,7 +37,7 @@ class OldPluginsTranslationListener
     {
         $request = $event->getRequest();
         $route = $request->attributes->get('_route');
-        if (strpos($route, 'newscoop_gimme_') === false || $route == 'newscoop_get_img') {
+        if (strpos($route, 'newscoop_gimme_') !== false || $route == 'newscoop_get_img') {
             return;
         }
 

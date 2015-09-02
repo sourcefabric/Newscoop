@@ -11,5 +11,3 @@ mysql:
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: newscoop
-    volumes:
-        - ../data/mysqldb:/var/lib/mysql

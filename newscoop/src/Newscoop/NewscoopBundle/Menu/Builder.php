@@ -224,7 +224,11 @@ class Builder
         $this->addChild(
             $menu,
             $translator->trans('comments.label.menu', array(), 'new_comments'),
-            array('uri' => $this->container->get('router')->generate('newscoop_newscoop_comments_index'))
+            array(
+                'uri' => $this->container->get('router')->generate('newscoop_newscoop_comments_index'),
+                'resource' => 'comment',
+                'privilege' => 'moderate',
+            )
         );
 
         $this->addChild($menu, $translator->trans('Feedback', array(), 'home'), array('zend_route' => array(

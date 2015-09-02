@@ -36,7 +36,7 @@ class CommentsController extends Controller
         $blogService = $this->get('blog');
         $user = $userService->getCurrentUser();
 
-        if ($blogService->isBlogger($user)) {
+        if (!$user->hasPermission('ModerateComment')) {
             throw new AccessDeniedException();
         }
 
@@ -72,8 +72,16 @@ class CommentsController extends Controller
             if ($request->isMethod('POST')) {
                 if ($searchForm->isValid()) {
                     $data = $searchForm->getData();
-                    $comments = $commentService->searchByPhrase($data['search'])->getQuery();
-                    $pagination = $paginator->paginate($comments, $pageNumber, $displayPerPage);
+
+                    $commentsQueryBuilder = $commentService->searchByPhrase($data['search']);
+                    $countQueryBuilder = clone $commentsQueryBuilder;
+                    $countQueryBuilder->select('COUNT(c)');
+                    $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+                    $comments = $commentsQueryBuilder->getQuery();
+                    $comments->setHint('knp_paginator.count', $count);
+
+                    $pagination = $paginator->paginate($comments, $pageNumber, $displayPerPage, array('distinct' => false));
                     $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
 
                     return array(

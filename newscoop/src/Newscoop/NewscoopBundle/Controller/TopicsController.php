@@ -5,6 +5,7 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\NewscoopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -75,7 +76,8 @@ class TopicsController extends Controller
         $topicService = $this->get('newscoop_newscoop.topic_service');
         $cacheService = $this->get('newscoop.cache');
         $topicsCount = $topicService->countBy();
-        $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount), 'topic');
+        $attachedCount = $topicService->countArticleTopicsBy();
+        $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount, $attachedCount, $articleNumber), 'topic');
         $repository = $em->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
         if ($cacheService->contains($cacheKey)) {
             $nodes = $cacheService->fetch($cacheKey);
@@ -90,6 +92,7 @@ class TopicsController extends Controller
         }
 
         $tree = $repository->buildTreeArray($nodes);
+
         usort($tree, function ($node1, $node2) {
             return $node2['topicOrder'] - $node1['topicOrder'];
         });
@@ -186,8 +189,8 @@ class TopicsController extends Controller
         }
 
         if (($request->get('last') || $request->get('first') || $request->get('middle')) && !$parent) {
-            $rootNodes = $repository->getRootNodes();
-            $order = explode(',', $request->get('order'));
+            $rootNodes = $repository->getRootNodesQuery()->getResult();
+            $order = array_reverse(explode(',', $request->get('order')));
             $topicService->reorderRootNodes($rootNodes, $order);
         }
 
@@ -502,6 +505,7 @@ class TopicsController extends Controller
         $translator = $this->get('translator');
         $em = $this->get('em');
         $userService = $this->get('user');
+        $cacheService = $this->get('newscoop.cache');
         $user = $userService->getCurrentUser();
         $topicService = $this->get('newscoop_newscoop.topic_service');
         if (!$user->hasPermission('AttachTopicToArticle')) {
@@ -536,6 +540,7 @@ class TopicsController extends Controller
         }
 
         $topicService->removeTopicFromArticle($topicObj, $articleObj);
+        $cacheService->clearNamespace('topic');
 
         return new JsonResponse(array(
             'status' => true,
@@ -554,6 +559,7 @@ class TopicsController extends Controller
         $em = $this->get('em');
         $userService = $this->get('user');
         $user = $userService->getCurrentUser();
+        $cacheService = $this->get('newscoop.cache');
         $topicService = $this->get('newscoop_newscoop.topic_service');
         if (!$user->hasPermission('AttachTopicToArticle')) {
             return new JsonResponse(array(
@@ -585,7 +591,6 @@ class TopicsController extends Controller
         $ids = $request->get('ids');
         $topicsIds = $this->getArticleTopicsIds($articleNumber);
         $idsDiff = array_merge(array_diff($ids, $topicsIds), array_diff($topicsIds, $ids));
-
         foreach ($idsDiff as $key => $topicId) {
             $topicObj = $em->getReference("Newscoop\NewscoopBundle\Entity\Topic", $topicId);
             if (in_array($topicId, $topicsIds)) {
@@ -594,6 +599,8 @@ class TopicsController extends Controller
                 $topicService->addTopicToArticle($topicObj, $articleObj);
             }
         }
+
+        $cacheService->clearNamespace('topic');
 
         return new JsonResponse(array(
             'status' => true,

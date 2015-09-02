@@ -62,7 +62,11 @@ class BackendPublicationsController extends Controller
         $form = $this->createForm(new PublicationType(), $publication, array('publication_id' => $publication->getId()));
 
         if ($request->getMethod() === 'POST') {
-            return $this->processRequest($request, $form, $publication);
+            $form = $this->processRequest($request, $form, $publication);
+
+            if ($form instanceof RedirectResponse) {
+                return $form;
+            }
         }
 
         return $this->render(

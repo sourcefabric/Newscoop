@@ -370,7 +370,12 @@ $('#edit-images').fancybox({
 });
 
 $('#topic_box_frame a.iframe').each(function() {
-    $(this).data('fancybox').width = 1200;
+    var fancyBox = $(this).data('fancybox');
+    fancyBox.width = '100%';
+    fancyBox.height = '100%';
+    fancyBox.showCloseButton = false;
+    fancyBox.scrolling = 'auto';
+    fancyBox.centerOnScroll = true;
 });
 
 $("#context_box a.iframe").fancybox({

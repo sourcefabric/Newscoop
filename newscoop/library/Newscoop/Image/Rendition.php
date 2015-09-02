@@ -215,11 +215,9 @@ class Rendition
     public function generateImage($imagePath)
     {
         $path = is_file(APPLICATION_PATH . '/../' . $imagePath) ? APPLICATION_PATH . '/../' . $imagePath : $imagePath;
-
-        $imagine = new \Imagine\Gd\Imagine();
+        $imagine = ImageService::getImagine();
         $image = $imagine->open($path);
         $imageSize = $image->getSize();
-
 
         if ($this->isCrop()) {
              $cropSpecs = explode('_', $this->getSpecs());

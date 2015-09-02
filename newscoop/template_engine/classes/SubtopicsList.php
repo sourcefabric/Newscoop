@@ -29,17 +29,7 @@ class SubtopicsList extends ListObject
     protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
     {
         $rootTopicId = $p_parameters['topic_identifier'];
-        $start = null;
-        $limit = null;
         $order = array();
-        if ($p_start > 0) {
-            $start = $p_start;
-        }
-
-        if ($p_limit > 0) {
-            $limit = $p_limit;
-        }
-
         if (!isset($p_parameters['direct'])) {
             $p_parameters['direct'] = true;
         }
@@ -69,6 +59,7 @@ class SubtopicsList extends ListObject
                     $p_parameters['direct'],
                     isset($order['field']) ? $order['field'] : null,
                     isset($order['dir']) ? $order['dir'] : null,
+                    false,
                     $start,
                     $limit
                 )->getArrayResult();

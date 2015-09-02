@@ -85,18 +85,29 @@ class ContextBoxArticle extends DatabaseObject
         }
 
         if (isset($params['role']) && $params['role'] == 'child') {
-            $sql = 'SELECT b.fk_article_no FROM context_boxes b, Articles a0'
+            $sql = 'SELECT DISTINCT b.fk_article_no FROM context_boxes b, Articles a0'
                 . ' WHERE a0.Number = b.fk_article_no AND '
                 . ' a0.Type = "dossier" AND '
                 . ' b.id IN (SELECT c.fk_context_id '
                 . '     FROM Articles a, context_articles c '
                 . '     WHERE c.fk_article_no = ' . $params['article']
-                . '     AND a.Number = c.fk_article_no)'
-                . ' ORDER BY a0.PublishDate DESC';
+                . '     AND a.Number = c.fk_article_no)';
+            if (isset($params['published']) && $params['published'] == 'true') {
+                $sql .= ' AND a0.Published = "Y"';
+            }
+            $sql .= ' ORDER BY a0.PublishDate DESC';
         } else {
-            $sql = 'SELECT fk_article_no FROM context_articles'
+            if (isset($params['published']) && $params['published'] == 'true') {
+                $sql = 'SELECT DISTINCT b.fk_article_no FROM context_articles b, Articles a0'
+                . ' WHERE b.fk_context_id = ' . $params['context_box'] .' AND '
+                . ' b.fk_article_no = a0.Number AND '
+                . ' a0.Published = "Y"'
+                . ' ORDER BY b.id';
+            } else {
+                $sql = 'SELECT fk_article_no FROM context_articles'
                 . ' WHERE fk_context_id = ' . $params['context_box']
                 . ' ORDER BY id';
+            }
         }
         if ($p_limit > 0) {
             $sql .= ' LIMIT ' . $p_limit;

@@ -78,7 +78,7 @@ foreach ($filters as $name => $opts) {
     }
 }
 
-if (empty($_REQUEST['show_filtered']) || $_REQUEST['show_filtered'] == "false") {
+if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] == "false") {
 
     foreach((array) \ArticleType::GetArticleTypes(true) as $one_art_type_name) {
         $one_art_type = new \ArticleType($one_art_type_name);

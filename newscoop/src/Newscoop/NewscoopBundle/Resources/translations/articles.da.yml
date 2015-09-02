@@ -188,16 +188,17 @@ Snippet: Uddrag
 'This list is already in a different state than the one in which it was loaded.': 'Listen er allerede ændret siden den blev åbnet.'
 'List name should not be longer than 40 chars': 'Listens navn må ikke være længere end 40 tegn'
 'Not valid number': 'Ikke et gyldigt tal'
-'List limit': null
-'The last article of this list has been removed.': null
-Revert: null
-'Could not automatically refresh the list': null
-'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
+'List limit': 'Liste begrænsning'
+'The last article of this list has been removed.': 'Den sidste artikel på denne liste er blevet fjernet.'
+Revert: Fortryd
+'Could not automatically refresh the list': 'Listen kunne ikke opdateres automatisk'
+'The article slideshows have been successfully updated, please close the window.': 'Artiklens gallerier blev opdateret. Luk vinduet.'
 articles:
     playlists:
         namechanged: 'Er du sikker på du vil ændre lsitens navn? Navnet bruges muligvis i Newscoop skabeloner for at vise listen på hjemmesiden. Spørg hjemmesidens administrator hvis du er i tvivl.'
-        alert: null
+        alert: "Vil du ændre det maksimale antal artikler på listen? Hvis du reducerer grænsen vil alle yderligere artikler blive fjernet fra listen.\nEksempel: Hvis du ændrer grænsen fra 50 til 30 vil de 20 artikler fra nummer 31 til 50 blive fjernet fra listen."
     images:
+        see_original: 'Se billeder i fuld størrelse på en ny fane'
         edit:
             edit_image_metadata: 'Rediger billedets metadata'
             save: Gem

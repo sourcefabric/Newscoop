@@ -614,6 +614,7 @@ class CampGetImage
     {
         $func_ending = $this->GetEnding();
         $t = $this->ReadImage($func_ending);
+        $quality = 90;
 
         if ($this->m_crop == null) {
             $t = $this->ResizeImage($t);
@@ -626,6 +627,9 @@ class CampGetImage
         }
 
         $function = 'image'.$func_ending;
+        if ($func_ending == 'png') {
+            $quality = 9;
+        }
 
         if (!$p_target) {
             header('Content-type: ' . $this->m_image->getContentType());
@@ -635,7 +639,7 @@ class CampGetImage
             return $function($t);
         }
         else {
-            $function($t, $p_target);
+            $function($t, $p_target, $quality);
             imagedestroy($t);
             return $this->sendCachedImage();
         }

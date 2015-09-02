@@ -285,5 +285,5 @@ unpublished: 'træk tilbage'
 nopermissions: 'Du har ikke tilladelser til at tilgå denne ressource.'
 importantmessage: 'Vigtig information'
 anonymous: Anonym
-'Successfully refreshed authentication token.': null
-'Failed to refresh authentication token.': null
+'Successfully refreshed authentication token.': 'Godkendelses token blev opdateret'
+'Failed to refresh authentication token.': 'Godkendelses token kunne ikke opdateres'

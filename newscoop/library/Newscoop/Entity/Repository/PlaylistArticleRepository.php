@@ -50,14 +50,16 @@ class PlaylistArticleRepository extends SortableRepository
                 'articleLanguage' => $languageId,
         ));
 
-        try {
-            $em->remove($article);
+        if (!is_null($article)) {
+            try {
+                $em->remove($article);
+                $em->getConnection()->commit();
+            } catch (\Exception $e) {
+                $em->getConnection()->rollback();
+                $em->close();
+            }
+        } else {
             $em->getConnection()->commit();
-        } catch (\Exception $e) {
-            $em->getConnection()->rollback();
-            $em->close();
-
-            return $e;
         }
 
         return $article;

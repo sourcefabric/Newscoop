@@ -21,7 +21,7 @@ newscoop.plugins_manager.form.package: 'Pakken skal være en zip fil.'
 newscoop.plugins_manager.form.submit: Upload
 newscoop.plugins_manager.runcommand: 'Kør kommando'
 newscoop.plugins_manager.openterminal: 'Åben terminal og kør kommando'
-newscoop.plugins_manager.installassets: null
+newscoop.plugins_manager.installassets: 'Installer aktiver'
 newscoop.plugins_manager.done: 'Færdig. Luk dette vindue og opdater siden.'
 newscoop.plugins_manager.close: Luk
 newscoop.plugins_manager.update: 'Hvordan opdateres denne plugin?'
@@ -30,9 +30,9 @@ newscoop.plugins_manager.remove: 'Hvordan fjernes denne plugin?'
 newscoop.plugins_manager.installed: 'Færdig. Opdater denne side for at se pluginet i listen med installerede plugins.'
 newscoop.plugins_manager.clipboard: 'Kopier: Ctrl + C (Cmd + C på Mac), Enter'
 newscoop.plugins_manager.downloads: downloads
-newscoop.plugins_manager.favers: null
-newscoop.plugins_manager.private_plugins_not_writable: null
-newscoop.plugins_manager.private_plugins_not_writable_commands: null
+newscoop.plugins_manager.favers: fans
+newscoop.plugins_manager.private_plugins_not_writable: 'Din webserver kan ikke skrive til %privatePluginsPath%.'
+newscoop.plugins_manager.private_plugins_not_writable_commands: 'På en Linux server kan du løse det med kommandoerne:'
 newscoop:
     datatable:
         table:

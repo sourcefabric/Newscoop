@@ -1,6 +1,6 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -57,7 +57,7 @@ class SystemPrefController extends Controller
         }
 
         $max_upload_filesize = $preferencesService->MaxUploadFileSize;
-        if (empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
+        if (empty($max_upload_filesize) || $this->convertToBytes($max_upload_filesize) == 0) {
             $preferencesService->MaxUploadFileSize = ini_get('upload_max_filesize');
         }
 
@@ -77,7 +77,14 @@ class SystemPrefController extends Controller
             }
         }
 
-        $upload_min_filesize = min(ini_get('post_max_size'), ini_get('upload_max_filesize'));
+        $upload_min_filesize = $this->formatBytes(
+            min(
+                $this->convertToBytes(ini_get('post_max_size')),
+                $this->convertToBytes(ini_get('upload_max_filesize'))
+            ),
+            0
+        );
+
         $mysql_client_command_path = $preferencesService->MysqlClientCommandPath;
 
         if (!$locations || !$cities) {
@@ -174,9 +181,8 @@ class SystemPrefController extends Controller
             'cronJobNotificationEmail' => $preferencesService->CronJobsNotificationEmail,
             'cronJobSmtpSender' => $preferencesService->CronJobsSenderEmail,
             'cronJobSmtpSenderName' => $preferencesService->CronJobsSenderName,
-        )
-        , array(
-            'cacheService' => $this->container->get('newscoop.cache')
+        ), array(
+            'cacheService' => $this->container->get('newscoop.cache'),
         ));
 
         if ($request->isMethod('POST')) {
@@ -295,7 +301,7 @@ class SystemPrefController extends Controller
             'mysql_client_command_path' => $mysql_client_command_path,
             'map_marker_source_default' => $default_marker_source,
             'map_marker_source_selected' => $preferencesService->MapMarkerSourceDefault,
-            'jobs' => $jobs
+            'jobs' => $jobs,
         );
     }
 
@@ -388,7 +394,7 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets database caching
+     * Sets database caching.
      *
      * @param string $cache_engine
      * @param string $cache_engine_host
@@ -405,7 +411,7 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets templates caching
+     * Sets templates caching.
      *
      * @param string                                   $cache_template Values 1 or 0
      * @param Symfony\Component\Translation\Translator $translator     Translator
@@ -435,7 +441,7 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets replication settings
+     * Sets replication settings.
      *
      * @param string                                   $user            Replication server user
      * @param string                                   $host            Replication server hostname
@@ -474,7 +480,7 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Defines and sets max upload file size
+     * Defines and sets max upload file size.
      *
      * @param string                                   $max_size   Max upload file size
      * @param Symfony\Component\Translation\Translator $translator Translator
@@ -483,11 +489,10 @@ class SystemPrefController extends Controller
      */
     private function maxUpload($max_size, $translator)
     {
-        $max_upload_filesize_bytes = trim($max_size);
+        $max_upload_filesize_bytes = $this->convertToBytes($max_size);
         $preferencesService = $this->container->get('system_preferences_service');
-
         if ($max_upload_filesize_bytes > 0 &&
-            $max_upload_filesize_bytes <= min(trim(ini_get('post_max_size')), trim(ini_get('upload_max_filesize')))) {
+            $max_upload_filesize_bytes <= min($this->convertToBytes(ini_get('post_max_size')), $this->convertToBytes(ini_get('upload_max_filesize')))) {
             $preferencesService->MaxUploadFileSize = strip_tags($max_size);
         } else {
             $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.maxupload', array(), 'system_pref'));
@@ -496,8 +501,31 @@ class SystemPrefController extends Controller
         }
     }
 
+    private function convertToBytes($from)
+    {
+        $number = substr(trim($from), 0, -1);
+        switch (strtoupper(substr($from, -1))) {
+            case 'K':
+                return $number * 1024;
+            case 'M':
+                return $number * pow(1024, 2);
+            case 'G':
+                return $number * pow(1024, 3);
+            default:
+                return $from;
+        }
+    }
+
+    private function formatBytes($size, $precision = 2)
+    {
+        $base = log($size, 1024);
+        $suffixes = array('', 'k', 'M', 'G');
+
+        return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
+    }
+
     /**
-     * Sets geolocation options
+     * Sets geolocation options.
      *
      * @param point                                    $latitude    Latitude
      * @param point                                    $longitude   Longitude
@@ -512,7 +540,6 @@ class SystemPrefController extends Controller
 
         if ($latitude > 90 || $latitude < -90 ||
             $longitude > 180 || $longitude < -180) {
-
             $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.geolocation', array(), 'system_pref'));
 
             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -531,12 +558,10 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets facebook options
+     * Sets facebook options.
      *
      * @param string $appId  Facebook application ID
      * @param string $secret Facebook Secret key
-     *
-     * @return void
      */
     private function facebook($appId, $secret)
     {
@@ -546,13 +571,11 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets recaptcha options
+     * Sets recaptcha options.
      *
      * @param string $publicKey  ReCaptcha public key
      * @param string $privateKey ReCaptcha private key
      * @param string $secure     Secure ReCaptcha
-     *
-     * @return void
      */
     private function recaptcha($publicKey, $privateKey, $secure)
     {
@@ -563,11 +586,9 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets automatic statistics collection options
+     * Sets automatic statistics collection options.
      *
      * @param string $automatic_collection Values Y or N
-     *
-     * @return void
      */
     private function collectStats($automatic_collection)
     {
@@ -576,12 +597,10 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets SMTP options
+     * Sets SMTP options.
      *
      * @param string $host SMTP host
      * @param int    $port SMTP port
-     *
-     * @return void
      */
     private function smtpConfiguration($host, $port)
     {
@@ -591,14 +610,12 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets images resizing options
+     * Sets images resizing options.
      *
      * @param string $ratio        Image ratio
      * @param int    $image_width  Image width
      * @param int    $image_height Image height
      * @param int    $zoom         Image zoom
-     *
-     * @return void
      */
     private function imageResizing($ratio, $image_width, $image_height, $zoom)
     {
@@ -610,11 +627,9 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets template filter
+     * Sets template filter.
      *
      * @param string $template_filter Template filter
-     *
-     * @return void
      */
     private function templateFilter($template_filter)
     {
@@ -623,7 +638,7 @@ class SystemPrefController extends Controller
     }
 
     /**
-     * Sets general options
+     * Sets general options.
      *
      * @param string $siteOnline                Website status
      * @param string $title                     Website title
@@ -637,12 +652,10 @@ class SystemPrefController extends Controller
      * @param string $separator                 Keyword separator
      * @param int    $captcha                   Number of failed login attempts before showing CAPTCHA
      * @param string $mysql_client_command_path MySQL client command path
-     *
-     * @return void
      */
     private function generalSettings($siteOnline, $title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery,
-        $emailFrom, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
-
+        $emailFrom, $session_lifetime, $separator, $captcha, $mysql_client_command_path)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->SiteOnline = strip_tags($siteOnline);
         $preferencesService->SiteTitle = strip_tags($title);

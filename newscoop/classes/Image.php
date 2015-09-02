@@ -408,7 +408,10 @@ class Image extends DatabaseObject
 
             $imageHandler = $createMethodName($target);
             $thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
-            $thumbnailImage->save($thumbnail, array('format' => $extension));
+            $thumbnailImage->save($thumbnail, array(
+                'format' => $extension,
+                'quality' => 90, //from 0 to 100
+            ));
 
             self::chmod($thumbnail, 0644);
         } catch (Exception $ex) {
@@ -620,7 +623,10 @@ class Image extends DatabaseObject
             }
 
             $thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
-            $thumbnailImage->save($thumbnail, array('format' => $extension));
+            $thumbnailImage->save($thumbnail, array(
+                'format' => $extension,
+                'quality' => 90, //from 0 to 100
+            ));
 
             self::chmod($thumbnail, 0644);
         } catch (Exception $ex) {

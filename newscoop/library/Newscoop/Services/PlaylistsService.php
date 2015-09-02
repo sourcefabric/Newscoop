@@ -171,8 +171,7 @@ class PlaylistsService
             return false;
         }
 
-        $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
-        foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
+        foreach ($themePlaylists as $playlistName => $themePlaylist) {
             $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
             if (!$playlist) {
                 return false;
@@ -276,8 +275,12 @@ class PlaylistsService
         }
     }
 
-    private function buildNewThemePlaylists($themePlaylists)
+    public function buildNewThemePlaylists($themePlaylists)
     {
+        if (!array_key_exists('list', $themePlaylists)) {
+            return null;
+        }
+
         $newThemePlaylists = array();
         if (array_key_exists('template', $themePlaylists['list'])) {
             $bakThemePlaylists = $themePlaylists;
@@ -286,7 +289,8 @@ class PlaylistsService
         }
 
         foreach ($themePlaylists['list'] as $themePlaylist) {
-            $newThemePlaylists[$themePlaylist['@attributes']['name']] = array();
+            $playlistName = $themePlaylist['@attributes']['name'];
+            $newThemePlaylists[$playlistName] = array();
             if (array_key_exists('@attributes', $themePlaylist['template'])) {
                 $bakThemePlaylist = $themePlaylist;
                 $themePlaylist = array();
@@ -294,7 +298,7 @@ class PlaylistsService
             }
 
             foreach ($themePlaylist['template'] as $template) {
-                $newThemePlaylists[$themePlaylist['@attributes']['name']]['templates'][] = $template['@attributes']['file'];
+                $newThemePlaylists[$playlistName]['templates'][] = $template['@attributes']['file'];
             }
         }
 

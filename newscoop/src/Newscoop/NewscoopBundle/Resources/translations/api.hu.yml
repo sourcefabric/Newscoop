@@ -76,6 +76,7 @@ api:
             clients: Ügyfelek
         resources:
             info: 'Alapértelmezésként az összes erőforrást tűzfal védi, viszont kiválaszthatod azokat az erőforrásokat, melyeket mindenki számára nyilvánossá akarsz tenni.'
+            api_docs: null
             add_button: 'Ügyfél hozzáadása'
         clients:
             table:

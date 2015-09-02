@@ -76,6 +76,7 @@ api:
             clients: Clientes
         resources:
             info: 'Por defecto todos los recursos están protegidos por un cortafuegos, pero puede elegir los recursos que desee hacer públicos para todo el mundo.'
+            api_docs: null
             add_button: 'Añadir cliente'
         clients:
             table:

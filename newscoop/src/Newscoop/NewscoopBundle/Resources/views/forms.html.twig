@@ -1,0 +1,23 @@
+{% extends 'form_div_layout.html.twig' %}
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group{% if errors|length > 0 %} has-error{% endif %}" id="has-error">
+        <div {% if label %}class="col-lg-10"{% endif %}>
+        {% if errors|length > 0 %}
+        {{ form_widget(form, {'attr' : {'style' : 'border: 1px solid #b94a48; background-color: #FFF7F7;' }}) }}
+        {% else %}
+        {{ form_widget(form) }}
+        {% endif %}
+        {% for error in errors %}
+            <span class="help-block form-error">
+                {{
+                    error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                }}
+            </span>
+        {% endfor %}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
