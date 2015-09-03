@@ -2650,12 +2650,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE playlist (
-  id_playlist INT AUTO_INCREMENT NOT NULL, 
-  name VARCHAR(256) NOT NULL, 
-  notes VARCHAR(1024) DEFAULT NULL, 
-  max_items INT DEFAULT NULL, 
-  modification_time DATETIME DEFAULT NULL, 
-  themes VARCHAR(255) DEFAULT NULL, 
+  id_playlist INT AUTO_INCREMENT NOT NULL,
+  name VARCHAR(256) NOT NULL,
+  notes VARCHAR(1024) DEFAULT NULL,
+  max_items INT DEFAULT NULL,
+  modification_time DATETIME DEFAULT NULL,
+  themes text DEFAULT NULL,
   PRIMARY KEY(id_playlist)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
@@ -3391,7 +3391,7 @@ ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REF
 
 LOCK TABLES `SnippetTemplates` WRITE;
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
-VALUES 
+VALUES
 	(1, 'Embed.ly', 'Newscoop\\NewscoopBundle\\Controller\\EmbedlyController', '<a class=\"embedly-card\" href=\"{{ URL }}\">{{ title }}</a><script>!function(a){var b=\"embedly-platform\",c=\"script\";if(!a.getElementById(b)){var d=a.createElement(c);d.id=b,d.src=(\"https:\"===document.location.protocol?\"https\":\"http\")+\"://cdn.embedly.com/widgets/platform.js\";var e=document.getElementsByTagName(c)[0];e.parentNode.insertBefore(d,e)}}(document);</script>', 0, 1, NULL, NULL, '2014-05-12 13:19:43', '2014-05-12 13:19:43'),
 	(2, 'Youtube', NULL, '<iframe width=\"{{ width }}\" height=\"{{ height }}\" src=\"//www.youtube.com/embed/{{ ID }}\" frameborder=\"0\" allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(3, 'Vimeo', NULL, '<iframe src=\"//player.vimeo.com/video/{{ ID }}\" width=\"{{ width }}\" height=\"{{ height }}\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -3405,7 +3405,7 @@ CREATE TABLE SnippetTemplateField (
   `Id` int AUTO_INCREMENT NOT NULL,
   `Name` varchar(255) NOT NULL,
   `Type` VARCHAR(255) NOT NULL,
-  `Scope` varchar(255) NOT NULL, 
+  `Scope` varchar(255) NOT NULL,
   `Required` tinyint(1) NOT NULL,
   `TemplateId` int NOT NULL,
   INDEX IDX_2060662F846113F (TemplateId),
