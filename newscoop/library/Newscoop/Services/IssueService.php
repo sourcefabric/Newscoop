@@ -137,19 +137,21 @@ class IssueService implements IssueServiceInterface
         }
 
         // TODO: Check if we should add locale from request here
-        return $this->getLatestPublishedIssue();
+        return $this->getLatestPublishedIssue($request->getLocale());
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getLatestPublishedIssue($language = null)
+    public function getLatestPublishedIssue($languageCode = null)
     {
         $publication = $this->publicationService->getPublication();
         if (!$publication) {
             return;
         }
 
+        $language = $this->em->getRepository('Newscoop\Entity\Language')
+            ->findOneByCode($languageCode);
         if (!($language instanceof \Newscoop\Entity\Language)) {
             $language = $publication->getDefaultLanguage();
         }
@@ -165,10 +167,14 @@ class IssueService implements IssueServiceInterface
         if ($this->cacheService->contains($cacheKey)) {
             $issue = $this->cacheService->fetch($cacheKey);
         } else {
-            $issue = $this->em
-                ->getRepository('Newscoop\Entity\Issue')
-                ->getLastPublishedByPublicationAndLanguage($publicationId, $languageId)
-                ->getSingleResult();
+            try {
+                $issue = $this->em
+                    ->getRepository('Newscoop\Entity\Issue')
+                    ->getLastPublishedByPublicationAndLanguage($publicationId, $languageId)
+                    ->getSingleResult();
+            } catch(\Doctrine\ORM\NoResultException $e) {
+                throw new \Newscoop\NewscoopException("There is no published issue for this language.");
+            }
 
             $this->cacheService->save($cacheKey, $issue);
         }

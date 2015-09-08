@@ -142,6 +142,14 @@
                   {{ form_widget(form.metaDescription, {'attr': {'class': 'form-control input-sm'}}) }}
                 </div>
             </div>
+            <h3>Template settings</h3>
+            {% for setting in publication.outputSettingsPublication %}
+                {{ setting.language.name }} -
+                {% if setting.themepath %}
+                    {{ setting.themepath.getPath() }}
+                {% endif %}
+                <hr>
+            {% endfor %}
         </div>
         <div class="clearfix"></div>
         <button type="submit" class="save-button pull-right">{{ 'Save'|trans({}, 'messages') }}</button>

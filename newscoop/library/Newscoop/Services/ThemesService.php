@@ -66,16 +66,31 @@ class ThemesService implements ThemesServiceInterface
     /**
      * {@inheritDoc}
      */
-    public function getThemePath()
+    public function getThemePath($frontpage = false, $language = null)
     {
+        // TODO: Check if we should take this into account when we are on the frontpage
+        // not sure if it should be required to have an issue
         $issue = $this->issueService->getIssue();
         if (!$issue) {
             return;
         }
+        $languageId = null;
 
-        $languageId = $issue->getLanguageId();
+        if (!($language instanceof \Newscoop\Entity\Language)) {
+            $language = $this->em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
+        }
+        if ($language instanceof \Newscoop\Entity\Language) {
+            $languageId = $language->getId();
+        }
+        if (is_null($languageId)) {
+            // ladybug_dump($language); echo '<hr>';
+            $languageId = $issue->getLanguageId();
+        }
+        // ladybug_dump($languageId); echo '<hr>';
+
         $publication = $this->publicationService->getPublication();
-        $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $languageId, $publication->getId(), $issue->getNumber()), 'issue');
+        $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $frontpage, $languageId, $publication->getId(), $issue->getNumber()), 'issue');
 
         $themePath = null;
         if ($this->cacheService->contains($cacheKeyThemePath)) {
@@ -91,16 +106,24 @@ class ThemesService implements ThemesServiceInterface
                 $this->cacheService->save($cacheKeyWebOutput, $webOutput);
             }
 
-            $outSetIssues = $this->findByIssueAndOutput($issue->getId(), $webOutput);
-            if (!is_null($outSetIssues)) {
-                $themePath = $outSetIssues->getThemePath()->getPath();
+            if ($frontpage) {
+                $outSetPublication = $this->findByPublicationAndLanguageAndOuput($publication, $language, $webOutput);
+                // ladybug_dump($outSetPublication); echo '<hr>';
+                if (!is_null($outSetPublication)) {
+                    $themePath = $outSetPublication->getThemePath()->getPath();
+                }
+            }
+            if (!$frontpage || ($frontpage && $themePath === null)) {
+                $outSetIssues = $this->findByIssueAndOutput($issue->getId(), $webOutput);
+                if (!is_null($outSetIssues)) {
+                    $themePath = $outSetIssues->getThemePath()->getPath();
+                }
             }
 
             $this->cacheService->save($cacheKeyThemePath, $themePath);
-
         }
 
-       return $themePath;
+        return $themePath;
     }
 
     /**
@@ -151,6 +174,56 @@ class ThemesService implements ThemesServiceInterface
             'issue' => $issueId,
             'output' => $outputId
         ));
+
+        if (!empty($resources)) {
+            return $resources[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds output for publication by publication, language and output.
+     *
+     * @param  Newscoop\Entity\Publication $publication
+     * @param  Newscoop\Entity\Language    $language
+     * @param  Newscoop\Entity\Output      $ouput
+     *
+     * @return Newscoop\Entity\Resource|null
+     */
+    public function findByPublicationAndLanguageAndOuput(
+        $publication,
+        $language,
+        $output
+    ) {
+
+        // ladybug_dump($publication); echo '<hr>';
+        // ladybug_dump($language); echo '<hr>';
+        // ladybug_dump($output); echo '<hr>';
+
+        $outputId = $output;
+        if ($output instanceof Output) {
+            $outputId = $output->getId();
+        }
+
+        $languageId = $language;
+        if ($language instanceof Language) {
+            $languageId = $language->getId();
+        }
+
+        $publicationId = $publication;
+        if ($publication instanceof Publication) {
+            $publicationId = $publication->getId();
+        }
+
+        $resources = $this->em
+            ->getRepository('Newscoop\Entity\Output\OutputSettingsPublication')
+            ->findBy(array(
+                'output' => $outputId,
+                'publication' => $publicationId,
+                'language' => $languageId,
+            )
+        );
 
         if (!empty($resources)) {
             return $resources[0];
