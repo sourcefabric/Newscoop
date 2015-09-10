@@ -63,6 +63,24 @@ angular.module('playlistsApp').controller('PlaylistsController', [
         }
     });
 
+    // preload featured article list when selectedListId variable
+    // is given.
+    // selectedListId variable is set globally in twig template. Its value
+    // is filled with the data from the url parameter.
+    // Preloads all featured article lists when value of selectedListId is
+    // not found in existing lists, fetched from the server.
+    // When selectedListId is empty it will do nothing.
+    if (_.isEmpty($scope.playlists) && selectedListId) {
+        Playlist.getAll().$promise.then(function (data) {
+            $scope.playlists = data.items;
+            var selectedList = _.find(data.items, { 'id': parseInt(selectedListId) });
+            if (selectedList !== undefined) {
+                $scope.playlist.selected = selectedList;
+                $scope.setPlaylistInfoOnChange(selectedList);
+            }
+        });
+    }
+
     // stops, starts counter
     $scope.isCounting = false;
 
