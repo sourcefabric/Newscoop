@@ -116,7 +116,7 @@ class PreferencesType extends AbstractType
             ),
         ))
         ->add('timezone', 'choice', array(
-            'choices'   => $timezones,
+            'choices'   => $timeZones,
             'placeholder' => 'newscoop.preferences.label.disabled',
             'required' => false
         ))
