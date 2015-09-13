@@ -446,11 +446,13 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->where('a.section = :sectionNumber')
+            ->where('a.sectionId = :sectionNumber')
             ->andWhere('a.language = :sectionLanguage')
+            ->andWhere('a.publication = :publicationId')
             ->setParameters(array(
                 'sectionNumber' => $sectionNumber,
                 'sectionLanguage' => $sectionLanguage,
+                'publicationId' => $publication,
             ));
 
         $qbCount = clone $queryBuilder;
