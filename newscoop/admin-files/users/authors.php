@@ -65,8 +65,9 @@ if ($del_id_alias > -1) {
     }
 }
 
-$first_name =Input::Get('first_name');
-$last_name = Input::Get('last_name');
+// Important! Trim spaces and replace multiple ones by space
+$first_name = preg_replace('/\s+/', ' ', trim(Input::Get('first_name')));
+$last_name = preg_replace('/\s+/', ' ', trim(Input::Get('last_name')));
 $can_save = false;
 if ($id > -1 && strlen($first_name) > 0 && strlen($last_name) > 0) {
     $can_save = true;

@@ -467,6 +467,10 @@ class Author extends DatabaseObject
             }
         }
 
-        return array('first_name' => $firstName, 'last_name' => $lastName);
+        // Important! Trim spaces and replace multiple ones by space
+        return array(
+            'first_name' => preg_replace('/\s+/', ' ', trim($firstName)),
+            'last_name' => preg_replace('/\s+/', ' ', trim($lastName))
+        );
     }
 }
