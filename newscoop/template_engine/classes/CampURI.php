@@ -1020,6 +1020,26 @@ abstract class CampURI
 // fn isSSL
 
     /**
+     * Returns whether the current url is the home page or not. Support for
+     * language homepages (/cz, /en, etc.) is also built in via a parameters.
+     *
+     * @param  boolean $withLanguageHomepage Whether to include language homepages
+     *                                       in the resulsts.
+     *
+     * @return boolean
+     */
+    public function isHomepage($withLanguageHomepage = false)
+    {
+        if ($this->path === '/') {
+            return true;
+        } elseif ($withLanguageHomepage && preg_match('@^/[a-z]{2}(?:_[A-Z]{2})?$@', $this->path)) {
+            // TODO: Check if we need to validate language here
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Sets the URI path and query values based on given parameters.
      *
      * @param array   $p_params

@@ -73,7 +73,8 @@ class BackendPublicationsController extends Controller
             'NewscoopNewscoopBundle:BackendPublications:edit.html.twig',
             array(
                 'form' => $form->createView(),
-                'pageTitle' => $translator->trans('publications.title.edit', array(), 'pub')
+                'pageTitle' => $translator->trans('publications.title.edit', array(), 'pub'),
+                'publication' => $publication
             )
         );
     }
