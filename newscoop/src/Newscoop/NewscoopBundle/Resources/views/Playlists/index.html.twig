@@ -330,8 +330,10 @@
             </div>
 
             <script type="text/javascript">
-                var clientId = '{{ clientId }}';
-                var redirectUris = '{{ redirectUris }}';
+                var clientId = '{{ clientId }}',
+                    redirectUris = '{{ redirectUris }}',
+                    selectedListId = '{{ selectedListId }}';
+
                 $(document).ready(function() {
                     $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
                 });

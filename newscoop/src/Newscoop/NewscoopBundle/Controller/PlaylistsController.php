@@ -22,12 +22,12 @@ class PlaylistsController extends Controller
 {
     /**
      * @Route("/admin/playlists/")
-     * @Route("/admin/playlists/{articleNumber}/{language}/editor-view/",
+     * @Route("/admin/playlists/{articleNumber}/{language}/editor-view/{listId}",
      * 		options={"expose"=true},
      * 		name="newscoop_newscoop_playlists_editor"
      * )
      */
-    public function indexAction(Request $request, $articleNumber = null, $language = null)
+    public function indexAction(Request $request, $articleNumber = null, $language = null, $listId = null)
     {
         $preferencesService = $this->get('preferences');
         $em = $this->get('em');
@@ -55,6 +55,7 @@ class PlaylistsController extends Controller
             'editorView' => $editorView,
             'articleNumber' => $articleNumber,
             'language' => $languageCode,
+            'selectedListId' => $listId,
         ));
     }
 
