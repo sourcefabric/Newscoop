@@ -187,6 +187,7 @@ Miscellaneous: Разное
 'User image (full-size)': 'Фото пользователя (полноразмерное)'
 'User account is highlighted as "featured account"': 'Пользователь отмечен как избранный'
 'Custom attribute...': 'Настраиваемый атрибут'
+'An author with the same full name (combination of first and last name) already exists.': null
 users:
     label:
         title: 'Поиск пользователей'

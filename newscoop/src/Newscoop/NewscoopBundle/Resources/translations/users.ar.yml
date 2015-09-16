@@ -187,6 +187,7 @@ Miscellaneous: متفرقات
 'User image (full-size)': null
 'User account is highlighted as "featured account"': null
 'Custom attribute...': null
+'An author with the same full name (combination of first and last name) already exists.': null
 users:
     label:
         title: 'البحث الخاص بالمستخدمين'
