@@ -37,6 +37,7 @@ final class MetaLanguage extends MetaDbObject {
         $this->m_properties['number'] = 'Id';
         $this->m_properties['english_name'] = 'Name';
         $this->m_properties['code'] = 'Code';
+        $this->m_properties['rfc_code'] = 'RFC3066bis';
         $this->m_properties['month1'] = 'Month1';
         $this->m_properties['month2'] = 'Month2';
         $this->m_properties['month3'] = 'Month3';
