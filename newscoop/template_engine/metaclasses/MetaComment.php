@@ -51,6 +51,7 @@ final class MetaComment extends MetaDbObject
         $this->m_customProperties['parent'] = 'getParent';
         $this->m_customProperties['has_parent'] = 'hasParent';
         $this->m_customProperties['thread_level'] = 'threadLevel';
+        $this->m_customProperties['status'] = 'getStatus';
 
         $this->m_skipFilter = array('content_real');
     } // fn __construct
@@ -162,5 +163,10 @@ final class MetaComment extends MetaDbObject
     public function threadLevel()
     {
         return $this->m_dbObject->getThreadLevel();
+    }
+
+    protected function getStatus()
+    {
+        return $this->m_dbObject->getStatus();
     }
 }
