@@ -168,12 +168,12 @@ class ArticleService
         $article->setIssueId(0);
         $article->setSectionId(0);
         if (!is_null($issue)) {
-            $article->setIssueId($issue->getId());
+            $article->setIssueId($issue->getNumber());
             $article->setIssue($issue);
         }
 
         if (!is_null($section)) {
-            $article->setSectionId($section->getId());
+            $article->setSectionId($section->getNumber());
             $article->setSection($section);
         }
 
@@ -186,7 +186,7 @@ class ArticleService
         $article->setPublished(new \Datetime());
         $article->setUploaded(new \Datetime());
         $article->setLockUser();
-        $article->setPublic(true);
+        $article->setPublic('Y');
         $article->setIsIndexed('N');
 
         $this->em->persist($article);
@@ -253,7 +253,7 @@ class ArticleService
         if (array_key_exists('onSection', $attributes)) {
            $article->setOnSection($attributes['onSection']);
         }
-        
+
         if (array_key_exists('keywords', $attributes)) {
            $article->setKeywords($attributes['keywords']? $attributes['keywords'] : '');
         }
