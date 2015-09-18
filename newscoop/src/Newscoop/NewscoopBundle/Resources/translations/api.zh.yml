@@ -1,107 +1,107 @@
-'No such article type': 没有这种文章类型
-'Multi-line Text': 多行文本
-'Filter saved': null
-'Filter not saved': null
-'Not a color': 不是一种颜色
-'No such field': 没有该领域
-'Color saved': 保存颜色设置
-'Color not saved': 颜色设置未保存
-'Topic created': 创建话题
-'The topic name is already in use by another topic.': 该话题名已被其他话题使用
-'Complex Date': 完整日期
-vertices: null
-'There was a problem trying to execute the XML RPC function.': null
-'The Campcaster server configuration is invalid.': 该Campcaster服务器配置无效
-'Pan Map': null
-'Open large map': 打开大地图
-'No news available.': 没有新闻。
-'Edit Polygon': null
-'Create Polygon': null
-'Communication error: ': '通讯错误:'
-'Cant fetch news from $1': null
-Loading...: 加载中...
-Version: 版本
-License: 许可证
-Homepage: 主页
-'Show original map': 显示起始地图
-'The uploaded archive does not contain an valid newscoop plugin.': 上载的文档不包含有效的newscoop插件。
-Map: 地图
-Center: 中心
-Title: 标题
-'Invalid security token.': 无效的安全令牌
-'Callback $1 is not callable.': null
-'Article translated to $4 ($5)': null
-'Article status changed from $1 to $2.': null
-'Article deleted.': 文章删除。
-'Article created.': 文章创建。
-'Article copied to Article $4 (publication $5, issue $6, section $7).': null
-'Article URL': 文章网址链接
-'Article Number': 文章编号
-'Access denied.': '拒绝访问。 '
-'Publish with issue': null
-unknown: 未知
-Switch: null
-Numeric: null
-'The uploaded file format is unsupported.': null
-'The following fields are mandatory:': null
-'Missing value for $1': null
-'Manage Plugins': null
-'* Marked fields are mandatory.': null
-'$1 is of type $2': null
-'Invalid resize width/height.': null
-'Image type $1 is not supported.': null
-'The file uploaded is not an image.': '上传的文件不是图像。 '
-'Could not delete record from the database.': 无法从数据库中删除记录。
-'template path': '模板路径 '
-'short names': '短名字 '
-'Unable to fetch image from remote server.': '无法从远程服务器获取图像。 '
-Last: 最后
-First: '最初 '
-'Single-line Text': 单行文本
-'Multi-line Text with WYSIWYG': '所见即所得的多行文本 '
-'URL $1 is invalid or is not an image.': 'URL $1 无效或不是图像。'
-'URL $1 is not an image.': 'URL $1 不是图像。'
+'No such article type': 'No such article type'
+'Multi-line Text': 'Multi-line Text'
+'Filter saved': 'Filter saved'
+'Filter not saved': 'Filter not saved'
+'Not a color': 'Not a color'
+'No such field': 'No such field'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
+'Topic created': 'Topic created'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'Complex Date': 'Complex Date'
+vertices: vertices
+'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
+'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
+'Pan Map': 'Pan Map'
+'Open large map': 'Open large map'
+'No news available.': 'No news available.'
+'Edit Polygon': 'Edit Polygon'
+'Create Polygon': 'Create Polygon'
+'Communication error: ': 'Communication error: '
+'Cant fetch news from $1': 'Cant fetch news from $1'
+Loading...: Loading...
+Version: Version
+License: License
+Homepage: Homepage
+'Show original map': 'Show original map'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
+Map: Map
+Center: Center
+Title: Title
+'Invalid security token.': 'Invalid security token.'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
+'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
+'Article URL': 'Article URL'
+'Article Number': 'Article Number'
+'Access denied.': 'Access denied.'
+'Publish with issue': 'Publish with issue'
+unknown: unknown
+Switch: Switch
+Numeric: Numeric
+'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
+'The following fields are mandatory:': 'The following fields are mandatory:'
+'Missing value for $1': 'Missing value for $1'
+'Manage Plugins': 'Manage Plugins'
+'* Marked fields are mandatory.': '* Marked fields are mandatory.'
+'$1 is of type $2': '$1 is of type $2'
+'Invalid resize width/height.': 'Invalid resize width/height.'
+'Image type $1 is not supported.': 'Image type $1 is not supported.'
+'The file uploaded is not an image.': 'The file uploaded is not an image.'
+'Could not delete record from the database.': 'Could not delete record from the database.'
+'template path': 'template path'
+'short names': 'short names'
+'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
+Last: Last
+First: First
+'Single-line Text': 'Single-line Text'
+'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
+'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-    added: '加入客户 '
-    notfound: 找不到客户
-    removed: 客户被删除
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
 publicresources:
-    updated: '公共资源已更新 '
+    updated: 'Public resources was updated'
 api:
     configure:
-        title: '配置API - 公共资源 '
-        title_content: '配置API - 公共资源 '
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
         tabs:
-            resources: ' 公共资源'
-            clients: 客户
+            resources: 'Public Resources'
+            clients: Clients
         resources:
-            info: null
-            api_docs: null
-            add_button: null
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            add_button: 'Add Client'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: 是否信任？
-                redirect: null
-                publication: 出版物
-                actions: null
+                name: 'Client name'
+                id: 'Client id'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect Uris'
+                publication: Publication
+                actions: Actions
                 actions_buttons:
-                    remove: null
+                    remove: Remove
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'You sure that you want remove this client?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
-                trusted: 是否信任？
-                save: 保存
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
+                trusted: 'Trusted?'
+                save: Save
         PublicResources:
             label:
-                routes: null
-                save: 保存
+                routes: 'Choose resources to make public:'
+                save: Save

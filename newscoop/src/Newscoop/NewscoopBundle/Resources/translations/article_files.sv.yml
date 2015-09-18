@@ -1,38 +1,38 @@
-'Files attached.': null
-'File $1 unattached.': null
-'Attach new file': null
-'Attach existing file': null
-'$1 file/s attached to article': null
-'File attached.': null
-'The maximum file upload size was not configured in Newscoop.': null
-'File $1 $2 unattached': null
-'File $1 $2 attached to article': null
-'Unable to add attachment.': null
-'There was a problem uploading the file.': null
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
-'The file exceeds the allowed max file size.': null
-'Please make sure you upgraded the database correctly: run $1 in a shell.': null
-'Maximum Upload Size': null
-'File Size': null
-'File Name': null
-Download: null
-'File $1 updated.': null
-'Edit article': 'Redigera artikel'
-'You do not have the right to delete file attachments.': 'Du har inte rättighet att radera bifogade filer.'
-'You must select a file to upload.': 'Du måste välja en fil att ladda upp.'
-'You do not have the right to delete files.': 'Du har inte rätt att radera filer.'
-'You do not have the right to change the article.': 'Du har inte rätt att ändra artikeln.'
-'You do not have the right to change files.': 'Du har inte rätt att ändra filer.'
-'You do not have the right to add files.': 'Du har inte rätt att lägga till filer.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Ska den här filen bara vara tillgänglig för den här översättningen av artikeln eller för alla översättningar?'
-'Please enter a description for the file.': 'Var god skriv in en beskrivning för filen.'
-'Open in the browser': 'Öppna i webbläsaren'
-'Only this translation': 'Bara i denna översättning'
-'File information': Filinformation
-'Do you want this file to open in the users browser, or to automatically download?': 'Vill du att den här filen ska öppnas i användarens webbläsare eller automatiskt laddas ner?'
-'Change file information': 'Ändra filinformation'
-'Automatically download': 'Automatiskt laddas ner'
-Attachments: Bilagor
-'Attachment does not exist.': 'Bilagan finns inte.'
-'Attach File to Article': 'Bifoga fil till artikel'
-'All translations': 'Alla översättningar'
+'Files attached.': 'Files attached.'
+'File $1 unattached.': 'File $1 unattached.'
+'Attach new file': 'Attach new file'
+'Attach existing file': 'Attach existing file'
+'$1 file/s attached to article': '$1 file/s attached to article'
+'File attached.': 'File attached.'
+'The maximum file upload size was not configured in Newscoop.': 'The maximum file upload size was not configured in Newscoop.'
+'File $1 $2 unattached': 'File $1 $2 unattached'
+'File $1 $2 attached to article': 'File $1 $2 attached to article'
+'Unable to add attachment.': 'Unable to add attachment.'
+'There was a problem uploading the file.': 'There was a problem uploading the file.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini'
+'The file exceeds the allowed max file size.': 'The file exceeds the allowed max file size.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Please make sure you upgraded the database correctly: run $1 in a shell.'
+'Maximum Upload Size': 'Maximum Upload Size'
+'File Size': 'File Size'
+'File Name': 'File Name'
+Download: Download
+'File $1 updated.': 'File $1 updated.'
+'Edit article': 'Edit article'
+'You do not have the right to delete file attachments.': 'You do not have the right to delete file attachments.'
+'You must select a file to upload.': 'You must select a file to upload.'
+'You do not have the right to delete files.': 'You do not have the right to delete files.'
+'You do not have the right to change the article.': 'You do not have the right to change the article.'
+'You do not have the right to change files.': 'You do not have the right to change files.'
+'You do not have the right to add files.': 'You do not have the right to add files.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Should this file only be available for this translation of the article, or for all translations?'
+'Please enter a description for the file.': 'Please enter a description for the file.'
+'Open in the browser': 'Open in the browser'
+'Only this translation': 'Only this translation'
+'File information': 'File information'
+'Do you want this file to open in the users browser, or to automatically download?': 'Do you want this file to open in the users browser, or to automatically download?'
+'Change file information': 'Change file information'
+'Automatically download': 'Automatically download'
+Attachments: Attachments
+'Attachment does not exist.': 'Attachment does not exist.'
+'Attach File to Article': 'Attach File to Article'
+'All translations': 'All translations'

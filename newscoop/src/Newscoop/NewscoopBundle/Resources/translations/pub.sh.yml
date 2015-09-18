@@ -1,138 +1,138 @@
-'Make sure to enter the Moderator Address below': 'Obavezno unesite adresu moderatora dole'
-'click to see issues': 'kliknite da vidite izdanja'
-'Moderator Address': 'Adresa moderatora'
-'From Address': 'Adresa sa koje se šalje'
-'Use CAPTCHA to prevent spam?': 'Koristi CAPTCHA za prevenciju spama?'
-'Public allowed to comment?': 'Opšte pravo komentarisanja?'
-'Enable spam blocking?': 'Omogući blokiranje spama?'
-'The subscription settings for $1 could not be added.': 'Podešavanja pretplate za $1 ne mogu biti dodata'
-'The publication name you specified conflicts with publication $1.': 'Ime publikacije koji ste naveli je u konfliktu sa publikacijom $1.'
-'The publication alias you specified conflicts with publication $1.': 'Alias publikacije koji ste naveli je u konfliktu sa publikacijom $1.'
-'Subscription defaults': 'Podrazumevane vrednosti za pretplatu'
-'Subscription Settings by Country': 'Podešavanja pretplate po državama'
-'Set subscription settings for a country': 'Postavi podešavanja pretplate za državu'
-'Set subscription settings by country': 'Podesi podatke o pretplati po državama'
-'Default time periods:': 'Podrazumevani vremenski period:'
-'Country subscription settings updated.': 'Promenjena su podešavanja pretplate za državu.'
-'Country subscription settings deleted.': 'Obrisana su podešavanja pretplate za državu.'
-'Change country subscription settings': 'Promeni podešavanja pretplate za državu'
-'Are you sure you want to delete the subscription settings for $1?': 'Da li ste sigurni da želite da obrišete podešavanja pretplate za $1?'
-'Publication updated': 'Publikacija izmenjena'
-'Subscriber comments moderated?': 'Komentari pretplatnika se moraju prvo odobriti?'
-'Public comments moderated?': 'Komentari se prvo moraju odobriti?'
-'Comments enabled?': 'Komentari dozvoljeni?'
-'Comments enabled': 'Komentari omogućeni'
-'Article comments default to enabled?': 'Podrazumevaj da su komentari na tekstove omogućeni?'
-'trial subscription': 'probna pretplata'
-'paid subscription': 'plaćena pretplata'
-'time units': 'vremenske jedinice'
-'one language': 'jedan jezik'
-'all languages': 'svi jezici'
-'Trial subscriptions': 'Probne pretplate'
-'Time unit cost per one section': 'Cena po vremenskoj jedinici za rubriku'
-'Paid subscriptions': 'Plaćene pretplate'
-'Default time period': 'Podrazumevani vremenski period'
-'Go To Issues': 'Idi na izdanja'
-'Delete publication $1': 'Obriši publikaciju $1'
-'No publications.': 'Nema publikacija'
-'Default Site Alias': 'Osnovni sajt alias'
-'URL Type': 'Tip URLa'
-'Country<BR><SMALL>(click to edit)</SMALL>': 'Država<br><small>(kliknite za uređivanje)</small>'
-'Delete alias $1': 'Obriši alias $1'
-'Configure publication': 'Podesi publikaciju'
-'You do not have the right to edit publication information.': 'Nemate pravo dа uređuјеtе podatkе o publikaciji.'
-'General attributes': 'Opšti atributi'
-'You do not have the right to change publication information.': 'Nemate pravo izmene podataka o publikaciji.'
-'The publication information could not be updated.': 'Podaci o publikaciji ne mogu biti izmenjeni.'
-'You do not have the right to delete publications.': 'Nemate pravo da brišete publikacije'
-'Are you sure you want to delete the publication $1?': 'Sigurni ste da želite da obrišete publikaciju $1?'
-'Deleting publication': 'Brisanje publikacije'
-'There are $1 subscription(s) left.': 'Preostalo je $1 pretplata.'
-'The publication $1 could not be deleted.': 'Publikacija $1 ne može biti obrisana.'
-'The publication could not be added.': 'Publikacija ne može biti dodata.'
-'You do not have the right to manage publications.': 'Nemate pravo da administrirate publikacijama.'
-'You must select a country.': 'Morate izabrati državu.'
-'Add new alias': 'Dodaj novi alias'
-'Alias (click to edit)': 'Alias (klik za uređivanje)'
-'Edit aliases': 'Uredi aliase'
-'Publication Aliases': 'Aliasi za publikaciju'
-'Adding new alias': 'Dodavanje novih aliasa'
-'The site alias $1 could not be added.': 'Sajt alias $1 ne može biti dodat.'
-'Another alias with the same name exists already.': 'Takav alias već postoji.'
-'Edit alias': 'Uredi alias'
-'Editing alias': 'Uređivanje aliasa'
-'The site alias $1 could not be modified.': 'Sajt alias $1 ne može biti promenjen.'
-'Are you sure you want to delete the alias $1?': 'Sigurni ste da želite da obrišete alias $1?'
-'Deleting alias': 'Brisanje aliasa'
-'The alias $1 could not be deleted.': 'Alias $1  ne može biti obrisan.'
-'$1 is the default publication alias, it can not be deleted.': '$1 je osnovni alias publikacije i ne može biti obrisan!'
-'You do not have the right to add publications.': 'Nemate pravo da dodajete publikacije.'
-'There are $1 issue(s) left.': 'Preostalo je $1 izdanja.'
-'Time Unit': 'Vremenska jedinica'
-Currency: Valuta
-'Edit languages': 'Uredi jezike'
-'Search engine optimization': 'Optimizacija pretraživača'
-'Article title': 'Naslov teksta'
-'Article keywords': 'Ključne reči'
-'Article topics': Teme
+'Make sure to enter the Moderator Address below': 'Make sure to enter the Moderator Address below'
+'click to see issues': 'click to see issues'
+'Moderator Address': 'Moderator Address'
+'From Address': 'From Address'
+'Use CAPTCHA to prevent spam?': 'Use CAPTCHA to prevent spam?'
+'Public allowed to comment?': 'Public allowed to comment?'
+'Enable spam blocking?': 'Enable spam blocking?'
+'The subscription settings for $1 could not be added.': 'The subscription settings for $1 could not be added.'
+'The publication name you specified conflicts with publication $1.': 'The publication name you specified conflicts with publication $1.'
+'The publication alias you specified conflicts with publication $1.': 'The publication alias you specified conflicts with publication $1.'
+'Subscription defaults': 'Subscription defaults'
+'Subscription Settings by Country': 'Subscription Settings by Country'
+'Set subscription settings for a country': 'Set subscription settings for a country'
+'Set subscription settings by country': 'Set subscription settings by country'
+'Default time periods:': 'Default time periods:'
+'Country subscription settings updated.': 'Country subscription settings updated.'
+'Country subscription settings deleted.': 'Country subscription settings deleted.'
+'Change country subscription settings': 'Change country subscription settings'
+'Are you sure you want to delete the subscription settings for $1?': 'Are you sure you want to delete the subscription settings for $1?'
+'Publication updated': 'Publication updated'
+'Subscriber comments moderated?': 'Subscriber comments moderated?'
+'Public comments moderated?': 'Public comments moderated?'
+'Comments enabled?': 'Comments enabled?'
+'Comments enabled': 'Comments enabled'
+'Article comments default to enabled?': 'Article comments default to enabled?'
+'trial subscription': 'trial subscription'
+'paid subscription': 'paid subscription'
+'time units': 'time units'
+'one language': 'one language'
+'all languages': 'all languages'
+'Trial subscriptions': 'Trial subscriptions'
+'Time unit cost per one section': 'Time unit cost per one section'
+'Paid subscriptions': 'Paid subscriptions'
+'Default time period': 'Default time period'
+'Go To Issues': 'Go To Issues'
+'Delete publication $1': 'Delete publication $1'
+'No publications.': 'No publications.'
+'Default Site Alias': 'Default Site Alias'
+'URL Type': 'URL Type'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Country<BR><SMALL>(click to edit)</SMALL>'
+'Delete alias $1': 'Delete alias $1'
+'Configure publication': 'Configure publication'
+'You do not have the right to edit publication information.': 'You do not have the right to edit publication information.'
+'General attributes': 'General attributes'
+'You do not have the right to change publication information.': 'You do not have the right to change publication information.'
+'The publication information could not be updated.': 'The publication information could not be updated.'
+'You do not have the right to delete publications.': 'You do not have the right to delete publications.'
+'Are you sure you want to delete the publication $1?': 'Are you sure you want to delete the publication $1?'
+'Deleting publication': 'Deleting publication'
+'There are $1 subscription(s) left.': 'There are $1 subscription(s) left.'
+'The publication $1 could not be deleted.': 'The publication $1 could not be deleted.'
+'The publication could not be added.': 'The publication could not be added.'
+'You do not have the right to manage publications.': 'You do not have the right to manage publications.'
+'You must select a country.': 'You must select a country.'
+'Add new alias': 'Add new alias'
+'Alias (click to edit)': 'Alias (click to edit)'
+'Edit aliases': 'Edit aliases'
+'Publication Aliases': 'Publication Aliases'
+'Adding new alias': 'Adding new alias'
+'The site alias $1 could not be added.': 'The site alias $1 could not be added.'
+'Another alias with the same name exists already.': 'Another alias with the same name exists already.'
+'Edit alias': 'Edit alias'
+'Editing alias': 'Editing alias'
+'The site alias $1 could not be modified.': 'The site alias $1 could not be modified.'
+'Are you sure you want to delete the alias $1?': 'Are you sure you want to delete the alias $1?'
+'Deleting alias': 'Deleting alias'
+'The alias $1 could not be deleted.': 'The alias $1 could not be deleted.'
+'$1 is the default publication alias, it can not be deleted.': '$1 is the default publication alias, it can not be deleted.'
+'You do not have the right to add publications.': 'You do not have the right to add publications.'
+'There are $1 issue(s) left.': 'There are $1 issue(s) left.'
+'Time Unit': 'Time Unit'
+Currency: Currency
+'Edit languages': 'Edit languages'
+'Search engine optimization': 'Search engine optimization'
+'Article title': 'Article title'
+'Article keywords': 'Article keywords'
+'Article topics': 'Article topics'
 publications:
     title:
-        list: null
-        edit: null
-        add: 'Dodaj novu publikaciju'
-        remove: null
-    no_publications: 'Nema publikacija'
-    general_settings: 'Opšta podešavanja'
-    comments_settings: null
-    seo_settings: null
-    publication_removed: null
-    publication_saved: null
+        list: 'List of publications'
+        edit: 'Edit publication'
+        add: 'Add new publication'
+        remove: 'Remove publication'
+    no_publications: 'No publications.'
+    general_settings: 'General Settings'
+    comments_settings: 'Comments Settings'
+    seo_settings: 'SEO Settings'
+    publication_removed: 'Publication was removed.'
+    publication_saved: 'Publication changes were saved successfully.'
     remove:
-        cant_be_removed: null
-        can_be_removed: null
-        left_issues: null
-        left_sections: null
-        left_articles: null
-        show_issues: null
-        before_removing: null
-        you_sure: null
-        remove: null
+        cant_be_removed: 'This publication isn''t empty - and can''t be removed.'
+        can_be_removed: 'This publication is empty and can be removed.'
+        left_issues: 'Left issues'
+        left_sections: 'Left sections'
+        left_articles: 'Left articles'
+        show_issues: 'show issues'
+        before_removing: 'Before removing publication you need to remove/move all remaining elements.'
+        you_sure: 'Are you sure that you want to remove publication'
+        remove: 'Remove publication'
     buttons:
-        addNew: 'Dodaj novu publikaciju'
-        listPublications: null
-        listIssues: null
+        addNew: 'Add new publication'
+        listPublications: 'List publications'
+        listIssues: 'List publication issues'
     table:
-        number: Broj
-        name: Naslov
-        default_alias: null
-        default_language: 'Osnovni jezik'
-        comments_status: null
-        url_type: null
-        configure: Podešavanja
-        remove: Ukloni
+        number: Number
+        name: Name
+        default_alias: 'Default Alias'
+        default_language: 'Default Language'
+        comments_status: 'Comments status'
+        url_type: 'Url type'
+        configure: Configure
+        remove: Remove
     form_type:
         label:
-            name: null
-            template_path: null
-            short_names: null
-            alias: null
-            url_type: null
-            seo: null
-            seo_article_title: 'Naslov teksta'
-            seo_article_keywords: 'Ključne reči'
-            seo_article_topics: Teme
-            edit_aliases: 'Uredi aliase'
-            edit_languages: 'Uredi jezike'
-            moderator_to: null
-            moderator_from: null
-            comments_enabled: null
-            public_comments_enabled: null
-            comments_article_default_enabled: null
-            comments_subscribers_moderated: null
-            comments_public_moderated: null
-            comments_captcha_enabled: null
-            comments_spam_blocking_enabled: null
-            meta_title: null
-            meta_keywords: null
-            meta_description: null
-    tip1: null
+            name: 'Publication Name'
+            template_path: 'Template path'
+            short_names: 'Short name'
+            alias: 'Default alias'
+            url_type: 'Url type'
+            seo: 'Article url parts'
+            seo_article_title: 'Article title'
+            seo_article_keywords: 'Article keywords'
+            seo_article_topics: 'Article topics'
+            edit_aliases: 'Edit aliases'
+            edit_languages: 'Edit languages'
+            moderator_to: 'Moderator address'
+            moderator_from: 'Moderation emails from addres'
+            comments_enabled: 'Comments are enabled?'
+            public_comments_enabled: 'Public (anonymous) comments are enabled?'
+            comments_article_default_enabled: 'Comments for article are enabled by default?'
+            comments_subscribers_moderated: 'Registered users'' comments are moderated?'
+            comments_public_moderated: 'Public (anonymous) comments are moderated?'
+            comments_captcha_enabled: 'Captcha is enabled?'
+            comments_spam_blocking_enabled: 'Comments spam (internal system) blocking is enabled?'
+            meta_title: 'Publication title'
+            meta_keywords: 'Publication keywords'
+            meta_description: 'Publication description'
+    tip1: 'Newscoop content is organized in a hierarchical structure, which conforms to the tradition of newspapers and magazines: Publications, Issues, Sections and Articles. Each publication is made up of issues, each issue is in turn made up of sections, which are comprised of articles.'

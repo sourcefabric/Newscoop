@@ -1,76 +1,76 @@
-'Show hidden Article Types?': null
-Webcode: Web-код
-'View article': 'Перегляд статті'
-Source: Джерело
-'Select type': 'Виберіть тип'
-On: Вкл.
-Off: Викл.
-Title: Заголовок
-'No video playback capabilities, please download the video below': 'Немає можливості відтворення відео, будь ласка, завантажити відео нижче'
-'Article status set to $1 for $2 articles': 'Статус статті встановлений в з  $1 на $2'
-'Article status not set to $1 for $2 articles': 'Статус статті не встановлений з  $1 for $2'
-'$1 toggled for $2 articles.': '$1 перемикається з статею $2 '
-'$1 not toggled for $2 articles.': '$1 не перемикається зі статею $2 '
-'$1 not toggled for $2  articles.': '$ 1 не перемикається на $ 2 статті.'
-'$1 articles have not been removed': 'стаття $1 не була видалена'
-'$1 Article(s) unlocked': 'стаття $1 розблокована'
-'$1 Article(s) not unlocked': 'стаття $1 не була розблокована'
-'$1 Article(s) duplicated': 'стаття $1 продубльована'
-'Download file': 'Завантажити файл'
-'You do not have the right to delete articles.': 'Ви не маєте права видаляти статті.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Ви не маєте права змінювати стан статті. Відправлена стаття може бути змінена тільки уповноваженим користувачем.'
-'Use Map': 'Використовуйте мапу'
-'Toggle: On Section Page': 'Селектор: На секцію Сторінки'
-'Toggle: On Front Page': 'Селектор: На Головну'
-'Toggle: Comments': 'Селектор: Коментарі'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Ця стаття була заблокована $1 ($2) $3 хвилин тому.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Ця стаття була заблокована $1 ($2) $3 годин та $4 хвилин тому.'
-'Status: Submit': 'Статус: Відіслано'
-'Status: Set New': 'Статус: Встановити Нове'
-'Status: Publish': 'Статус: Публікації'
-Size: Розмір
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Показані від початку до кінця, від загального числа записів'
-'Show / hide columns': 'Показати / Приховати колонки'
-'Select some article first.': 'Поперше виберіть будь-яку статтю.'
-'Select action': 'Виберіть дію'
-'Save order': 'Зберегти порядок'
-'Reset all filters': 'Не використовувати фільти'
-'Published before': 'Опубліковані до'
-'Published after': 'Опубліковані після'
-'Publish date': 'Дата опублікування'
-'Publish Schedule': 'Розклад публікацій'
-'Publish Date': 'Дата публікації'
-'Order updated.': 'Порядок оновлено'
-'Open in browser': 'Відкити у браузері'
-'No sections found': 'Не вибрано секцію'
-'No records found.': 'Немає записів'
-'No publications found': 'Публікацій не знайдено'
-'No issues found': 'Випусків не знайдено'
-'No entries to show': 'Немає записів для відображення'
-Locations: Місця
-'Loading data': 'Завантаження даних'
-'Last modified': 'Останні зміни'
-'Last Modified': 'Змінено:'
-Last: Останнє
-First: Перше
-'Filter by...': 'Сортувати за...'
-Filter: Фільтр
-Filename: 'Ім’я файлу'
-'Duplicate to another section': 'Дублювання в інший розділ'
-'Display _MENU_ records': 'Показати _MENU_ записи'
-Creator: Автор
-'Create Date': 'Дата створення'
-'Article status set to $1': 'Статус статті встановлено в $1'
-'Are you sure you want to delete selected articles?': 'Ви впевнені що хочете видалити вибрані статті'
-'All Sections': 'Всі секції'
-'All Publications': 'Всі публікації'
-'All Issues': 'Всі випуски'
-Added: Додано
-'Access denied.': 'Доступ заборонено'
-'$1 toggled.': '$1 змінено.'
-'$1 articles have been removed': ' $1 стаття була видалена.'
-' - filtering from _MAX_ records': 'фільтрація від _MAX_ записів'
-'Search for creators': null
-'No matches.': null
-Searching...: null
-'Minimum input of characters: $1': null
+'Show hidden Article Types?': 'Show hidden Article Types?'
+Webcode: Webcode
+'View article': 'View article'
+Source: Source
+'Select type': 'Select type'
+On: On
+Off: Off
+Title: Title
+'No video playback capabilities, please download the video below': 'No video playback capabilities, please download the video below'
+'Article status set to $1 for $2 articles': 'Article status set to $1 for $2 articles'
+'Article status not set to $1 for $2 articles': 'Article status not set to $1 for $2 articles'
+'$1 toggled for $2 articles.': '$1 toggled for $2 articles.'
+'$1 not toggled for $2 articles.': '$1 not toggled for $2 articles.'
+'$1 not toggled for $2  articles.': '$1 not toggled for $2  articles.'
+'$1 articles have not been removed': '$1 articles have not been removed'
+'$1 Article(s) unlocked': '$1 Article(s) unlocked'
+'$1 Article(s) not unlocked': '$1 Article(s) not unlocked'
+'$1 Article(s) duplicated': '$1 Article(s) duplicated'
+'Download file': 'Download file'
+'You do not have the right to delete articles.': 'You do not have the right to delete articles.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.'
+'Use Map': 'Use Map'
+'Toggle: On Section Page': 'Toggle: On Section Page'
+'Toggle: On Front Page': 'Toggle: On Front Page'
+'Toggle: Comments': 'Toggle: Comments'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'The article has been locked by $1 ($2) $3 minute(s) ago.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.'
+'Status: Submit': 'Status: Submit'
+'Status: Set New': 'Status: Set New'
+'Status: Publish': 'Status: Publish'
+Size: Size
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Show / hide columns': 'Show / hide columns'
+'Select some article first.': 'Select some article first.'
+'Select action': 'Select action'
+'Save order': 'Save order'
+'Reset all filters': 'Reset all filters'
+'Published before': 'Published before'
+'Published after': 'Published after'
+'Publish date': 'Publish date'
+'Publish Schedule': 'Publish Schedule'
+'Publish Date': 'Publish Date'
+'Order updated.': 'Order updated.'
+'Open in browser': 'Open in browser'
+'No sections found': 'No sections found'
+'No records found.': 'No records found.'
+'No publications found': 'No publications found'
+'No issues found': 'No issues found'
+'No entries to show': 'No entries to show'
+Locations: Locations
+'Loading data': 'Loading data'
+'Last modified': 'Last modified'
+'Last Modified': 'Last Modified'
+Last: Last
+First: First
+'Filter by...': 'Filter by...'
+Filter: Filter
+Filename: Filename
+'Duplicate to another section': 'Duplicate to another section'
+'Display _MENU_ records': 'Display _MENU_ records'
+Creator: Creator
+'Create Date': 'Create Date'
+'Article status set to $1': 'Article status set to $1'
+'Are you sure you want to delete selected articles?': 'Are you sure you want to delete selected articles?'
+'All Sections': 'All Sections'
+'All Publications': 'All Publications'
+'All Issues': 'All Issues'
+Added: Added
+'Access denied.': 'Access denied.'
+'$1 toggled.': '$1 toggled.'
+'$1 articles have been removed': '$1 articles have been removed'
+' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+'Search for creators': 'Search for creators'
+'No matches.': 'No matches.'
+Searching...: Searching...
+'Minimum input of characters: $1': 'Minimum input of characters: $1'

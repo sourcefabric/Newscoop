@@ -1,11 +1,11 @@
-show: Показати
-hide: Приховати
-Title: Заголовок
-'Resource Type:': 'Тип джерела:'
-'Resource Type': 'Тип джерела'
-Resource: Джерело
-Diff: Різниця
-'Broken data': 'Неповні дані'
-'Action Type:': 'Тип дії'
-'No logs.': 'Немає записів у журналі.'
-User: Користувач
+show: show
+hide: hide
+Title: Title
+'Resource Type:': 'Resource Type:'
+'Resource Type': 'Resource Type'
+Resource: Resource
+Diff: Diff
+'Broken data': 'Broken data'
+'Action Type:': 'Action Type:'
+'No logs.': 'No logs.'
+User: User

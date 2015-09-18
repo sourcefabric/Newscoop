@@ -1,67 +1,67 @@
-'Based on GeoNames.org and OpenStreetMap.org data': null
-'selected marker icon': 'значок обраних маркерів'
-'add location to map': 'додати локацію на мапу'
-'Video source': 'Джерело відео'
-'The point will be removed from all translations of the article.': 'Місцезнаходження буде видалено з усіх перекладів статті.'
-'Specify country (optional)': 'Вкажіть країну (за бажанням)'
-'Sorry, that place was not found. Check your spelling or search again.': 'На жаль, це місце не було знайдено. Перевірте правопис або виконати пошук знову.'
-'Show search results': 'Показати результати пошуку'
-'Search for place or coordinate': 'Пошук за місцем або координатами'
-'Return to edit': 'Повернутись до редагування'
-'Really delete this point?': 'Дійсно видалити точку?'
-'Name and describe this location': 'Назва та опис локації'
-'Map size': 'Розмір мапи'
-'Location label': 'Етикетка локації'
-'Location description:': 'Опис локації:'
-'Label url': 'етикетка посилання'
-'Hide search results': 'Приховати результати пошуку'
-Geo-filtering: ГЕО-фільтрація
-'Fill in youtube ID or link, e.g.': 'Заповніть YouTube ID або посилання, наприклад,'
-'Fill in vimeo ID or link, e.g': 'Заповніть vimeo ID або посилання, наприклад,'
-'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Введіть YouTube ID, Vimeo ID, посилання або файл, або флеш-відео'
-'Fill in location label': 'Заповніть етикетку локації'
-'Fill in local swf flash file name or link, e.g.': 'Вкажіть Flash файл (SWF) або посилання, наприклад,'
-'Fill in local flv flash file name or link, e.g.': 'Вкажіть Flash video файл (FLV) або посилання, наприклад,'
-'Fill in image link, like': 'Вкажіть посилання на зображення'
-'Describe the location...': 'Опишіть локацію'
-'Delete location': 'Видалити локацію'
-Coordinates: Координати
-'Change video display size': 'Змінити розмір відеоплеера.'
-'Change image display size': 'Змінити розмір зображення.'
-'Change icon of this location': 'Змінити значок локації'
-'Center map on location': 'Центрувати мапу локації'
-'Advanced editing': 'Розширене редагування'
-'Add an image to this location': 'Додати зображення до цієї локації'
-'Add a video to this location': 'Додат відео до цієї локації'
-'Are you sure you want to quit without saving your changes?': 'Ви впевнені що ви хочете вийти без збереження змін?'
-'Map preview': 'Перегляд мапи'
-'Locations updated.': 'Локація оновлена.'
-'Setting the map name helps with map search': 'Встановлення назви мапи полегшує пошук по ній'
-Longitude: Довгота
-Latitude: Широта
-Center: Центр
-'Last Saved Map View': 'Останній збережений вид мапи'
-'List of locations updated': 'Список локації оновлено.'
-width: ширина
-'show initial map view': 'показати первісний вид мапи'
-'problem at point processing, please send error report': 'проблеми з обробкою точки, будь ласка відправте рапорт про помилку'
-'plain text': 'Звичайний текст'
-'html content': 'HTML контент'
-height: висота
-'fill in map name': 'Вкажіть назву мапи'
-'You do not have the right to remove maps from articles.': 'Ви не маєте прав видаляти мапи з статей.'
-'Video file': 'Відео файл'
-'Video ID': 'Відео ID'
-'The map has been removed from the article.': 'Мапа була видалена зі статті.'
-'Point no.': 'Номер точки'
-'Point markers': 'Маркер точки'
-None: 'Ні один'
-'Map Search Example': 'Приклад пошуку по мапі'
-'Map Preview': 'Попередній перегляд мапи'
-'Image URL': 'Посилання на зображення'
-video: відео
-text: текст
-image: зображення
-icon: значок
-'Setting Map Locations': 'Налаштування локації на мапі'
-Deselect: null
+'Based on GeoNames.org and OpenStreetMap.org data': 'Based on GeoNames.org and OpenStreetMap.org data'
+'selected marker icon': 'selected marker icon'
+'add location to map': 'add location to map'
+'Video source': 'Video source'
+'The point will be removed from all translations of the article.': 'The point will be removed from all translations of the article.'
+'Specify country (optional)': 'Specify country (optional)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Sorry, that place was not found. Check your spelling or search again.'
+'Show search results': 'Show search results'
+'Search for place or coordinate': 'Search for place or coordinate'
+'Return to edit': 'Return to edit'
+'Really delete this point?': 'Really delete this point?'
+'Name and describe this location': 'Name and describe this location'
+'Map size': 'Map size'
+'Location label': 'Location label'
+'Location description:': 'Location description:'
+'Label url': 'Label url'
+'Hide search results': 'Hide search results'
+Geo-filtering: Geo-filtering
+'Fill in youtube ID or link, e.g.': 'Fill in youtube ID or link, e.g.'
+'Fill in vimeo ID or link, e.g': 'Fill in vimeo ID or link, e.g'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.'
+'Fill in location label': 'Fill in location label'
+'Fill in local swf flash file name or link, e.g.': 'Fill in local swf flash file name or link, e.g.'
+'Fill in local flv flash file name or link, e.g.': 'Fill in local flv flash file name or link, e.g.'
+'Fill in image link, like': 'Fill in image link, like'
+'Describe the location...': 'Describe the location...'
+'Delete location': 'Delete location'
+Coordinates: Coordinates
+'Change video display size': 'Change video display size'
+'Change image display size': 'Change image display size'
+'Change icon of this location': 'Change icon of this location'
+'Center map on location': 'Center map on location'
+'Advanced editing': 'Advanced editing'
+'Add an image to this location': 'Add an image to this location'
+'Add a video to this location': 'Add a video to this location'
+'Are you sure you want to quit without saving your changes?': 'Are you sure you want to quit without saving your changes?'
+'Map preview': 'Map preview'
+'Locations updated.': 'Locations updated.'
+'Setting the map name helps with map search': 'Setting the map name helps with map search'
+Longitude: Longitude
+Latitude: Latitude
+Center: Center
+'Last Saved Map View': 'Last Saved Map View'
+'List of locations updated': 'List of locations updated'
+width: width
+'show initial map view': 'show initial map view'
+'problem at point processing, please send error report': 'problem at point processing, please send error report'
+'plain text': 'plain text'
+'html content': 'html content'
+height: height
+'fill in map name': 'fill in map name'
+'You do not have the right to remove maps from articles.': 'You do not have the right to remove maps from articles.'
+'Video file': 'Video file'
+'Video ID': 'Video ID'
+'The map has been removed from the article.': 'The map has been removed from the article.'
+'Point no.': 'Point no.'
+'Point markers': 'Point markers'
+None: None
+'Map Search Example': 'Map Search Example'
+'Map Preview': 'Map Preview'
+'Image URL': 'Image URL'
+video: video
+text: text
+image: image
+icon: icon
+'Setting Map Locations': 'Setting Map Locations'
+Deselect: Deselect

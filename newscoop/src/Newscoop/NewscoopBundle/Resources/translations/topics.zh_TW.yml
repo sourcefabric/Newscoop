@@ -1,80 +1,80 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
-'Delete anyway': null
-'Reset order': null
-'Order changes will be lost. Are you sure you want to continue?': null
-'Topics order saved.': null
-'Show languages': null
-'Save order': null
-'Click to edit': null
-'Add root topic': null
-'Topic was deleted.': null
-'The topic name is already in use by another topic.': null
-'You must enter a name for the topic.': null
-'You must choose a language for the topic.': null
-'This topic has subtopics, therefore it cannot be deleted.': null
-'Add translation:': null
-'Add subtopic:': null
-Top: null
-'You do not have the right to add topics.': null
-'You do not have the right to delete topics.': null
-'Are you sure you want to delete the topic $1?': null
-'You do not have the right to change topic name.': null
-'The topic $1 could not be deleted.': null
-'Adding new topic': null
-'Deleting topic': null
-'Change topic name': null
-'There are $1 articles using the topic.': null
-'Search for topics': null
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'If you continue, topic and all subtopics will be detached from all articles, and deleted.'
+'Delete anyway': 'Delete anyway'
+'Reset order': 'Reset order'
+'Order changes will be lost. Are you sure you want to continue?': 'Order changes will be lost. Are you sure you want to continue?'
+'Topics order saved.': 'Topics order saved.'
+'Show languages': 'Show languages'
+'Save order': 'Save order'
+'Click to edit': 'Click to edit'
+'Add root topic': 'Add root topic'
+'Topic was deleted.': 'Topic was deleted.'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'You must enter a name for the topic.': 'You must enter a name for the topic.'
+'You must choose a language for the topic.': 'You must choose a language for the topic.'
+'This topic has subtopics, therefore it cannot be deleted.': 'This topic has subtopics, therefore it cannot be deleted.'
+'Add translation:': 'Add translation:'
+'Add subtopic:': 'Add subtopic:'
+Top: Top
+'You do not have the right to add topics.': 'You do not have the right to add topics.'
+'You do not have the right to delete topics.': 'You do not have the right to delete topics.'
+'Are you sure you want to delete the topic $1?': 'Are you sure you want to delete the topic $1?'
+'You do not have the right to change topic name.': 'You do not have the right to change topic name.'
+'The topic $1 could not be deleted.': 'The topic $1 could not be deleted.'
+'Adding new topic': 'Adding new topic'
+'Deleting topic': 'Deleting topic'
+'Change topic name': 'Change topic name'
+'There are $1 articles using the topic.': 'There are $1 articles using the topic.'
+'Search for topics': 'Search for topics'
 topics:
-    tip: null
+    tip: 'In Newscoop, topics are the subject matters assigned by editors and journalists to articles, so that related articles can be identified and displayed together. A root topic can have many subtopics; for example: the sports root topic could have the subtopics football, basketball, and water polo. An individual article may have several root topics or subtopics assigned to it.'
     label:
-        all: null
-        filterbylang: null
-        search: null
-        filterplaceholder: null
-        addroot: null
-        topicname: null
-        expandcollapse: null
-        changename: null
-        for: null
-        addsubtopic: null
-        subtopicname: null
-        addtranslation: null
-        topictranslations: null
-        choose: null
-        translationstring: null
-        tree: null
-    title: null
+        all: All
+        filterbylang: 'Show topics in language'
+        search: Search
+        filterplaceholder: 'Type a part of any topic name...'
+        addroot: 'Add root topic'
+        topicname: 'Topic name'
+        expandcollapse: expand/collapse
+        changename: 'Change topic name'
+        for: for
+        addsubtopic: 'Add subtopic'
+        subtopicname: 'Subtopic name'
+        addtranslation: 'Add translation'
+        topictranslations: 'Topic translations'
+        choose: Choose...
+        translationstring: 'Translation string'
+        tree: 'Tree of topics'
+    title: Topics
     btn:
-        hide: null
-        remove: null
-        edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
-        removetrans: null
+        hide: Hide
+        remove: 'Remove topic'
+        edit: 'Edit topic'
+        close: Close
+        add: Add
+        save: Save
+        saveandclose: 'Save and Close'
+        removetrans: 'Remove Topic''s translation'
     alerts:
-        languagenotfound: null
-        translationadded: null
-        translationexists: null
-        beforedelete: null
-        wrongparams: null
-        ordersaved: null
-        saved: null
-        beforedeleteinfo: null
-    added: null
-    failedfind: null
-    failedfindTranslation: null
-    removed: null
-    exists: null
-    existsname: null
-    removedTranslation: null
-    failedremoveTranslation: null
-    updated: null
-    error: null
-    csrfinvalid: null
-    tooshort: null
-    toolong: null
-    attachtopics: null
-    attached: null
+        languagenotfound: 'Could not find language by locale: %locale%'
+        translationadded: 'Translation was added'
+        translationexists: 'Translation for locale %locale% already exists!'
+        beforedelete: 'Are you sure you want to delete this topic?'
+        wrongparams: 'Number of sorted root topics must be the same as number of all root topics'
+        ordersaved: 'Order saved.'
+        saved: 'Successfully saved.'
+        beforedeleteinfo: 'When deleting topic with subtopics, all subtopics together with translations will be removed permanently. Are you sure?'
+    added: 'Topic was added'
+    failedfind: 'Failed to find Topic by id: %id%'
+    failedfindTranslation: 'Failed to find Topic''s translation by id: %id%'
+    removed: 'Topic %title% was removed'
+    exists: 'Topic already exists'
+    existsname: 'Topic name already exists!'
+    removedTranslation: 'Topic''s translation was removed'
+    failedremoveTranslation: 'Can not remove default topic''s translation. Remove topic instead.'
+    updated: 'Topic was updated'
+    error: 'Error occurred, please try again later.'
+    csrfinvalid: 'The CSRF token is invalid. Please try to resubmit the form.'
+    tooshort: 'Topic name is too short!'
+    toolong: 'Topic name is too long!'
+    attachtopics: 'Attach topics'
+    attached: 'This topic is attached to %occurence% article(s). When you remove this topic, it will be automatically detached from all articles it is attached to. If the topic has children topics, they will be also detached.'
