@@ -1,11 +1,11 @@
-show: show
-hide: hide
-Title: Title
-'Resource Type:': 'Resource Type:'
-'Resource Type': 'Resource Type'
-Resource: Resource
-Diff: Diff
-'Broken data': 'Broken data'
-'Action Type:': 'Action Type:'
-'No logs.': 'No logs.'
-User: User
+show: prikaži
+hide: sakri
+Title: Naslov
+'Resource Type:': 'Tip resursa:'
+'Resource Type': 'Tip resursa'
+Resource: Resurs
+Diff: Razlika
+'Broken data': 'Oštećeni podaci'
+'Action Type:': 'Tip radnje:'
+'No logs.': 'Nema logova.'
+User: Korisnik
