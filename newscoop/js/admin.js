@@ -292,7 +292,7 @@ function flashMessage(message, type, fixed)
 
     var flash = $('<div class="flash ui-state-' + messageClass + '">' + message + '</div>')
         .appendTo('body')
-        .css('z-index', '10000')
+        .css('z-index', '100000')
         .css('position', 'fixed')
         .css('top', '13px')
         .css('left', '33%')

@@ -102,9 +102,12 @@
     line-height: 140%;
 }
 
-.system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .default-wrap span {
-    float: left;
-    padding-right: 10px;
+.system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .default-wrap div {
+    display: inline-flex;
+}
+
+.system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .default-wrap div ul {
+    padding-left: 10px;
 }
 
 .system_pref.topics .angular-ui-tree .angular-ui-tree-node .tree-node .default-wrap .topic-marker {

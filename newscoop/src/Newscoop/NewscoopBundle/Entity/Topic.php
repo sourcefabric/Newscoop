@@ -1,11 +1,10 @@
 <?php
+
 /**
- * @package Newscoop\NewscoopBundle
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -55,6 +54,13 @@ class Topic
     protected $parent;
 
     /**
+     * @ORM\Column(type="integer", name="parent_id", nullable=true)
+     *
+     * @var int
+     */
+    protected $parentId;
+
+    /**
      * @Gedmo\TreeRoot
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -99,6 +105,7 @@ class Topic
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     *
      * @var int
      */
     protected $topicOrder;
@@ -118,12 +125,14 @@ class Topic
      *      @ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number"),
      *      @ORM\JoinColumn(name="LanguageId", referencedColumnName="IdLanguage")
      *      })
+     *
      * @var Newscoop\Entity\Article
      */
     protected $articles;
 
     /**
-     * Link to topic articles resource
+     * Link to topic articles resource.
+     *
      * @var string
      */
     protected $articlesLink;
@@ -294,7 +303,7 @@ class Topic
     /**
      * Gets the integer value of parent.
      *
-     * @return integer
+     * @return int
      */
     public function getParentAsInteger()
     {
@@ -318,9 +327,9 @@ class Topic
     }
 
     /**
-     * Checkes if topic is root
+     * Checkes if topic is root.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRoot()
     {
@@ -476,7 +485,7 @@ class Topic
     }
 
     /**
-     * Gets the translations
+     * Gets the translations.
      *
      * @return mixed
      */
@@ -486,7 +495,7 @@ class Topic
     }
 
     /**
-     * Adds the translation
+     * Adds the translation.
      *
      * @param mixed $translations the translations
      *
@@ -501,7 +510,7 @@ class Topic
     }
 
     /**
-     * Checks if there is translation
+     * Checks if there is translation.
      *
      * @param mixed $locale the locale
      *
@@ -513,7 +522,7 @@ class Topic
     }
 
     /**
-     * Gets the translation
+     * Gets the translation.
      *
      * @param mixed $locale the locale
      *
@@ -524,12 +533,12 @@ class Topic
         if ($this->hasTranslation($locale)) {
             return $this->translations[$locale];
         } else {
-            return null;
+            return;
         }
     }
 
     /**
-     * Gets the Used locale to override Translation listener`s locale
+     * Gets the Used locale to override Translation listener`s locale.
      *
      * @return mixed
      */
@@ -539,7 +548,7 @@ class Topic
     }
 
     /**
-     * Sets the Used locale to override Translation listener`s locale
+     * Sets the Used locale to override Translation listener`s locale.
      *
      * @param mixed $locale the locale
      *
@@ -577,7 +586,7 @@ class Topic
     }
 
     /**
-     * Adds Topic to Article
+     * Adds Topic to Article.
      *
      * @param Article $article the Article to attach
      *
@@ -594,7 +603,7 @@ class Topic
     }
 
     /**
-     * Removes Topic from Article
+     * Removes Topic from Article.
      *
      * @param Article $article the Article to deattach topic
      *
@@ -611,7 +620,7 @@ class Topic
     }
 
     /**
-     * Returns topic's title when echo this object
+     * Returns topic's title when echo this object.
      *
      * @return string
      */
@@ -621,7 +630,7 @@ class Topic
     }
 
     /**
-     * Get view
+     * Get view.
      *
      * @return Newscoop\View\TopicView
      */
@@ -637,7 +646,7 @@ class Topic
     }
 
     /**
-     * Gets object
+     * Gets object.
      *
      * @return Topic
      */
@@ -647,7 +656,7 @@ class Topic
     }
 
     /**
-     * Set link to topic articles resource
+     * Set link to topic articles resource.
      *
      * @param string $articlesLink Link to topic articles resource
      */
@@ -659,7 +668,8 @@ class Topic
     }
 
     /**
-     * Get link to topic articles resource
+     * Get link to topic articles resource.
+     *
      * @return string Link to topic articles resource
      */
     public function getArticlesLink()
