@@ -41,7 +41,7 @@
 
             <div class="save-button-bar">
                 <button ng-disabled="!playlist.selected" ng-click="addArticleToListFromEditor('{{ articleNumber }}', '{{ language }}')" class="btn btn-default btn-xs">{{ 'Add to list'|trans }}</button>
-                <button onclick="parent.$.fancybox.close(); parent.location.reload();" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
+                <button onclick="parent.$.fancybox.close(); parent.location.reload();" id="modal-close-btn" style="display: none;" class="btn btn-default btn-xs">{{ 'Close'|trans({}, 'messages') }}</button>
                 <button type="button" ng-disabled="processing || !playlist.selected" ng-click="savePlaylistInEditorMode()" name="save" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-ok"></span> {{ 'Save'|trans({}, 'messages') }}</button>
             </div>
         </div>
@@ -338,6 +338,9 @@
                     $('.input-filter').attr('placeholder', "{{'Search'|trans({}, 'messages') }}...");
                 });
 
+                if (parent !== undefined && parent.$('div.featuredArticlesModal').length == 0) {
+                    $('#modal-close-btn').show();
+                }
             </script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/lodash.min.js') }}"></script>
             <script src="{{ asset('/bundles/newscoopnewscoop/js/sanitize.js') }}"></script>
