@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,16 +49,29 @@ class TopicsController extends Controller
      * @Route("/admin/topics/", options={"expose"=true}, name="newscoop_newscoop_topics_index")
      * @Route("/admin/topics/view/{compactView}/{articleNumber}/{language}", options={"expose"=true}, name="newscoop_newscoop_topics_index_compact")
      */
-    public function indexAction(Request $request, $compactView = false, $articleNumber = null, $language = null)
+    public function indexAction($compactView = false, $articleNumber = null, $language = null)
     {
+        $assignedTopics = array();
         if ($compactView === 'compact') {
             $compactView = true;
+            $entityManager = $this->get('em');
+            $repository = $entityManager->getRepository('Newscoop\NewscoopBundle\Entity\Topic');
+            $assignedTopics = $repository
+                ->getArticleTopics($articleNumber, $language)
+                ->getArrayResult();
+
+            foreach ($assignedTopics as $key => $topic) {
+                $topicObj = $entityManager->getReference('Newscoop\NewscoopBundle\Entity\Topic', $topic['id']);
+                $topic['path'] = $repository->getReadablePath($topicObj, $language);
+                $assignedTopics[$key] = $topic;
+            }
         }
 
         return $this->render('NewscoopNewscoopBundle:Topics:index.html.twig', array(
             'compactView' => $compactView,
             'articleLanguage' => $language,
             'articleNumber' => $articleNumber,
+            'assignedTopics' => $assignedTopics,
         ));
     }
 
@@ -115,51 +127,10 @@ class TopicsController extends Controller
             if (in_array($topic['id'], $topicsIds)) {
                 $topic['attached'] = true;
                 $nodes[$key] = $topic;
-                $nodes = $this->markTopicAsHavingAttachedTopics($nodes, $topic);
             }
         }
 
         return $nodes;
-    }
-
-    /**
-     * Marks topic as having article attached topics by adding
-     * "hasAttachedTopics". This switch is used to expand the whole subtree
-     * which contains attached topic(s) to the place where it is located on.
-     *
-     * @param array $nodes         Array of all topics
-     * @param array $attachedTopic Attached topic details
-     *
-     * @return array
-     */
-    private function markTopicAsHavingAttachedTopics($nodes, $attachedTopic)
-    {
-        foreach ($nodes as $key => $node) {
-            if ($this->hasAttachedSubtopic($node, $attachedTopic)) {
-                $node['hasAttachedSubtopic'] = true;
-                $nodes[$key] = $node;
-            }
-        }
-
-        return $nodes;
-    }
-
-    /**
-     * It checkes if we can add "hasAttachedSubtopic" key set to true, if the "root" value
-     * of the topic (from the array of the topics) equals the "root" value of the attached topic.
-     *
-     * @param array $node          Currently checked topic
-     * @param array $attachedTopic Attached topic
-     *
-     * @return bool
-     */
-    private function hasAttachedSubtopic($node, $attachedTopic)
-    {
-        if ($node['root'] == $attachedTopic['root'] && $attachedTopic['id'] != $node['id'] && !isset($node['hasAttachedSubtopic'])) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -336,20 +307,13 @@ class TopicsController extends Controller
     {
         $translator = $this->get('translator');
         $cacheService = $this->get('newscoop.cache');
-        $em = $this->get('em');
         $node = $this->findOr404($id);
         if (is_array($node)) {
             return new JsonResponse($node, 404);
         }
 
         $topicService = $this->get('newscoop_newscoop.topic_service');
-        $isAttached = $topicService->isAttached($id);
-        if ($isAttached) {
-            $topicService->removeTopicFromAllArticles($id);
-        }
-
-        $em->remove($node);
-        $em->flush();
+        $topicService->deleteTopic($node);
         $cacheService->clearNamespace('topic');
 
         $this->get('dispatcher')->dispatch('topic.delete', new GenericEvent($this, array(
@@ -418,7 +382,7 @@ class TopicsController extends Controller
             ), 404);
         }
 
-        if ($topicTranslation->getObject()->getTitle() === $topicTranslation->getContent()) {
+        if ($topicTranslation->getIsDefault()) {
             return new JsonResponse(array(
                 'status' => false,
                 'message' => $translator->trans('topics.failedremoveTranslation', array(), 'topics'),

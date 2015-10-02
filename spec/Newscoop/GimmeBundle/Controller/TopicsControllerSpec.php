@@ -189,7 +189,8 @@ class TopicsControllerSpec extends ObjectBehavior
             'id' => 1,
         ))->willReturn($topic);
 
-        $topicService->deleteTopic($topic)->willReturn(true);
+        $topicService->deleteTopic($topic)->shouldBeCalled();
+
         $response = $this->deleteTopicAction($request, 1);
         $response->shouldHaveType('Symfony\Component\HttpFoundation\Response');
         $response->getStatusCode()->shouldReturn(204);
