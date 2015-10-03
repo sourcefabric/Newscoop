@@ -77,4 +77,5 @@ topics:
     tooshort: 'Túl rövid a téma neve!'
     toolong: 'Túl hosszú a téma neve!'
     attachtopics: null
+    attachedtopics: null
     attached: null

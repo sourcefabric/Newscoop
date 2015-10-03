@@ -77,4 +77,5 @@ topics:
     tooshort: 'Emnets navn er for kort!'
     toolong: 'Emnets navn er for langt!'
     attachtopics: 'Vedhæft emner'
+    attachedtopics: null
     attached: 'Emnet er tildelt til %occurence% artikler. Hvis du fjerner emnet vil det automatisk blive fjernet fra artiklerne. Hvis emnet har underemner bliver de også fjernet.'
