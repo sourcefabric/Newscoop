@@ -1808,6 +1808,7 @@ CREATE TABLE IF NOT EXISTS `topic_translations` (
   `locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   `field` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci,
+  `isDefault` int(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `lookup_unique_idx` (`locale`,`object_id`,`field`),
   KEY `IDX_98B25D13232D562B` (`object_id`)
