@@ -26,7 +26,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Newscoop\Exception\AuthenticationException;
-use Newscoop\Criteria\ArticleSearchCriteria;
 
 class ArticlesListController extends FOSRestController
 {
@@ -102,7 +101,7 @@ class ArticlesListController extends FOSRestController
     /**
      * Get list of articles from "playlist".
      *
-     * Returns array with articles under "items" key and requested list "id" and "title"
+     * Returns array with articles under "items" key and requested list "id" and "name"
      *
      * @ApiDoc(
      *     statusCodes={
@@ -140,7 +139,8 @@ class ArticlesListController extends FOSRestController
             if ($user && $user->isAdmin()) {
                 $onlyPublished = false;
             }
-        } catch (AuthenticationException $e) {}
+        } catch (AuthenticationException $e) {
+        }
 
         $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
             ->articles($playlist, array(), true, null, null, $onlyPublished, true);
@@ -155,10 +155,9 @@ class ArticlesListController extends FOSRestController
                 ->getArticle($playlistArticle->getArticleNumber(), $playlistArticle->getArticleLanguage())->getSingleResult();
         }
 
-
         $allItems = array_merge(array(
             'id' => $playlist->getId(),
-            'title' => $playlist->getName(),
+            'name' => $playlist->getName(),
             'notes' => $playlist->getNotes(),
             'maxItems' => $playlist->getMaxItems(),
             'articlesModificationTime' => $playlist->getArticlesModificationTime(),

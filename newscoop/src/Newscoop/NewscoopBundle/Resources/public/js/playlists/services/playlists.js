@@ -92,6 +92,7 @@ angular.module('playlistsApp').factory('Playlist', [
                     articles.push(item);
                 });
                 playlistArticles = articles;
+                response.title = response.name;
                 deferredGet.resolve(response);
             }).error(function (responseBody) {
                 deferredGet.reject(responseBody);
