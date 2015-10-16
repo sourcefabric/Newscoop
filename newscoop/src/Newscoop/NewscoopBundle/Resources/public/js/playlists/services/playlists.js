@@ -278,7 +278,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
             var formData = {
             	playlist: {
-            		name: playlist.title
+            		title: playlist.title
             	}
             };
 
@@ -347,7 +347,7 @@ angular.module('playlistsApp').factory('Playlist', [
 
             var formData = {
             	playlist: {
-            		name: playlist.title
+            		title: playlist.title
             	}
             };
 

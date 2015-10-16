@@ -7,7 +7,7 @@ Newscoop\Entity\Playlist:
             type: integer
             groups: ["list", "details"]
             serialized_name: id
-        name:
+        title:
             expose: true
             read_only: true
             type: string

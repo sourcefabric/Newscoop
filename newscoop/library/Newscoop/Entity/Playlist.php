@@ -30,7 +30,7 @@ class Playlist extends AbstractEntity
      *
      * @var string
      */
-    protected $name;
+    protected $title;
 
     /**
      * @ORM\Column(length=1024, name="notes", nullable=true)
@@ -121,21 +121,33 @@ class Playlist extends AbstractEntity
     }
 
     /**
-     * Returns the name of the playlist.
+     * Returns the title of the playlist.
      */
     public function getName()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Returns the name of the playlist.
+     * Returns the title of the playlist.
      *
      * @var string
      */
-    public function setName($name)
+    public function setName($title)
     {
-        $this->name = $name;
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
         return $this;
     }
