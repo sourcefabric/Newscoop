@@ -7,12 +7,12 @@ Newscoop\Entity\Playlist:
             type: integer
             groups: ["list", "details"]
             serialized_name: id
-        title:
+        name:
             expose: true
             read_only: true
             type: string
             groups: ["list", "details"]
-            serialized_name: title
+            serialized_name: name
         notes:
             expose: true
             read_only: true

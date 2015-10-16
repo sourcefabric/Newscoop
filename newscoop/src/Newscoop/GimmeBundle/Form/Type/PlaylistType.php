@@ -16,7 +16,7 @@ class PlaylistType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array(
+            ->add('name', 'text', array(
                 'required' => true,
             ))
             ->add('notes', 'text', array(
