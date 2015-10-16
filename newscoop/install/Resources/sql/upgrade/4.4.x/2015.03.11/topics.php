@@ -65,8 +65,7 @@ try {
     $app['db']->query('ALTER TABLE `topic_translations` ADD `isDefault` INT( 1 ) NULL DEFAULT NULL');
 } catch (\Exception $e) {
     if ($app['db']->errorCode() !== '42000') {
-        $upgradeErrors[] = $e->getMessage();
-        $logger->addError($e->getMessage());
+        $logger->addWarning($e->getMessage());
     }
 }
 
