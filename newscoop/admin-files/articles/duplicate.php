@@ -8,7 +8,6 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
-
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_code = Input::Get('f_article_code', 'array', array(), true);
 $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
@@ -66,6 +65,7 @@ foreach ($_REQUEST as $key => $value) {
 // $articles array:
 // The articles that were initially selected to perform the move or duplicate upon.
 $articles = array();
+$languages = array();
 $firstArticle = null;
 foreach ($f_article_code as $code) {
 	list($articleNumber, $languageId) = explode("_", $code);
@@ -74,6 +74,7 @@ foreach ($f_article_code as $code) {
 		$firstArticle = $tmpArticle;
 	}
 	$articles[$articleNumber][$languageId] = $tmpArticle;
+	$languages[] = $languageId;
 
 	// Initialize the article names on initial page request.
 	// Initialize the $doAction array on initial page request.
@@ -82,7 +83,7 @@ foreach ($f_article_code as $code) {
 		$doAction[$articleNumber][$languageId] = $languageId;
 	}
 }
-
+$languages = array_unique($languages);
 
 // Fill in article names for translations.
 // The user is automatically given the choice to perform actions on translations
@@ -142,7 +143,7 @@ if (count($allPublications) == 1) {
 // Get the most recent issues.
 $allIssues = array();
 if ($f_destination_publication_id > 0) {
-	$allIssues = Issue::GetIssues($f_destination_publication_id, null, null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
+	$allIssues = Issue::GetIssues($f_destination_publication_id, $languages, null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
 	// Automatically select the issue if there is only one.
 	if (count($allIssues) == 1) {
 		$tmpIssue = camp_array_peek($allIssues);
@@ -229,7 +230,7 @@ if (isset($_REQUEST["action_button"])) {
         $ArticleDatetimeRepository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\ArticleDatetime');
         foreach ($doAction as $articleNumber => $languageArray) {
 			$events = $ArticleDatetimeRepository->findBy(array('articleId' => $articleNumber));
-            
+
             $languageArray = array_keys($languageArray);
 			$tmpLanguageId = camp_array_peek($languageArray);
 
@@ -259,7 +260,7 @@ if (isset($_REQUEST["action_button"])) {
                     $commentDefault = $tmpPub->commentsArticleDefaultEnabled();
                     $newArticle->setCommentsEnabled($commentDefault);
             	}
-                
+
                 foreach ($events as $event) {
                     //$repo->add($timeSet, $articleId, 'schedule');
                     $newEvent = $ArticleDatetimeRepository->getEmpty();
@@ -419,7 +420,7 @@ if (isset($_REQUEST["action_button"])) {
                         ->dispatch('article.submit', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                             'article' => $tmpArticle,
                         )));
-                        
+
 					$tmpArticles[] = $tmpArticle;
 				}
 			}
@@ -585,7 +586,7 @@ foreach ($articles as $languageArray) {
 	<td colspan="2" style="padding-left: 17px; padding-bottom: 8px;" align="center">
 		<div style="border: 1px solid #AF2041; background-color: #FFD4E4; font-size: 12pt; padding: 5px; font-weight: bold; color: #AF2041;">
 		<?php
-			$translator->trans("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", array('$1' => ($f_action == "move") ? $translator->trans("move") : $translator->trans("duplicate")), 'articles');
+			echo $translator->trans("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", array('$1' => ($f_action == "move") ? $translator->trans("move") : $translator->trans("duplicate")), 'articles');
 		?>
 		</div>
 	</td>

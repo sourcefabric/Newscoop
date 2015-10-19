@@ -668,7 +668,8 @@ class Issue extends DatabaseObject {
 			$whereClause[] = "Issues.IdPublication=$p_publicationId";
 		}
 		if (!is_null($p_languageId)) {
-			$whereClause[] = "Issues.IdLanguage=$p_languageId";
+			$p_languageId = (is_array($p_languageId)) ? $p_languageId : array($p_languageId);
+			$whereClause[] = "Issues.IdLanguage IN (".implode(',', $p_languageId).")";
 		}
 		if (!is_null($p_issueNumber)) {
 			$whereClause[] = "Issues.Number=$p_issueNumber";
