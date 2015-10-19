@@ -585,7 +585,7 @@ foreach ($articles as $languageArray) {
 	<td colspan="2" style="padding-left: 17px; padding-bottom: 8px;" align="center">
 		<div style="border: 1px solid #AF2041; background-color: #FFD4E4; font-size: 12pt; padding: 5px; font-weight: bold; color: #AF2041;">
 		<?php
-			$translator->trans("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", array('$1' => ($f_action == "move") ? $translator->trans("move") : $translator->trans("duplicate")), 'articles');
+			echo $translator->trans("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", array('$1' => ($f_action == "move") ? $translator->trans("move") : $translator->trans("duplicate")), 'articles');
 		?>
 		</div>
 	</td>
