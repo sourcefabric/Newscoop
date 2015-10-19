@@ -162,6 +162,7 @@ class PlaylistRepository extends EntityRepository
      * Gets the list of playlist the given article belongs to.
      *
      * @param int $articleId
+     * @param int $languageId
      *
      * @return array
      */
@@ -193,7 +194,6 @@ class PlaylistRepository extends EntityRepository
         $em->getConnection()->beginTransaction();
 
         try {
-
             $em->persist($playlist);
             if (is_null($playlist->getId())) {
                 $em->flush();

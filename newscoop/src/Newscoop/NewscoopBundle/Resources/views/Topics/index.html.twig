@@ -49,7 +49,7 @@
 {% endif %}
 <div class="container">
 <div class="row" ng-init="dim=false; highlight=true; {% if compactView %}treeCtrl.onFilterLanguageChange('{{ articleLanguage }}', '{{app.request.locale}}', '{{ articleNumber }}'){% else %}treeCtrl.loadTopicsTree('{{app.request.locale}}'){% endif %}">
-{% if compactView %}
+{% if compactView and assignedTopics|length > 0 %}
 <div class="col-lg-12">
 <h3>{{ 'topics.attachedtopics'|trans }}</h3>
   <div class="list">
