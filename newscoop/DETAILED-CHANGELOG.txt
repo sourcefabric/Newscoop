@@ -3,6 +3,45 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      19/10/2015 19:04  4.4.6  Release of Newscoop 4.4.6
+         aac2ece Adds missing echo
+         8d0cc94 replace addError with addWarning
+         e901088 rename title to name
+         8bb5849 AENV-540 - Make name/title field consistent for playlists api - improvements
+         978cfab AENV-540 - Make name/title field consistent for playlists api
+         3797e0e Added endpoint with the list of playlist the given article belongs to
+         25f39d6 fixed script
+         cea5daf hide label when array is empty
+         cfa7a0e fix upgrade scripts
+         1e7a3c7 updated translation resources
+         6640e3d updated translation resources
+         adb3e92 CS-5429 - Topic list is opening too long in article editor
+         bc39231 hide featured articles modal's close button
+         f644c69 updated translation resources
+         e8bf2e1 updated translation resources
+         0552485 updated translation resources
+         b43389e use Number for Article issueId (bug). Use Y in public.
+         f1a0633 updated translation resources
+         93771b8 updated translation resources
+         ecf2190 CS-5913: Trim and remove duplicate spaces from author names
+         23ecb63 fixed getting articles by section number
+         8db76c6 Revert "fixed getting articles by section number"
+         63ebd0f fixed getting articles by section number
+         d5fa0f5 Fixes languages codes missing for Azerbaijani, Hungarian and Danish
+         a4807e5 Make RFC3066bis field available in templates via rfc_code property
+         0dac142 preload featured article list by providing an extra parameter in url
+         8cbe547 add option to fetch hidden article comments
+         88707e2 added option to override locale from get parameter
+         ecd8b47 CS-5914: Removes reference to non-working composer install command
+         a31d83f Use proper quality for cropped images with png format
+         a4674a0 CS-5913: Update author management page
+         1c659cb CS-5913: Adds translation to yml file
+         f0e9727 CS-5913:  Prevents adding of dplicate authors with the same full name
+         0154395 CS-5913: Implements optimized author ReadName mechanism
+         4c2d527 Changes themes field to text (needed for multiple templates under playlist)
+         b00b9ba updated translation resources
+         4a3d268 CS-5910: Undoes optimization to reanebl in article pagination
+         e0c6455 IM-2915: Removed date limits from search datepicker
       13/08/2015 09:24  4.4.5  Newscoop 4.4.5 minor release
          bb7edfe Adds auto increment to article playlist id
          b40e46d updated translation resources

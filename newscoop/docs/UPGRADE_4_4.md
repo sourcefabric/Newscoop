@@ -2,6 +2,10 @@
 
 **Important!** Remember to backup all your data before performing upgrade.
 
+**Note:**
+
+If you are using [update package](https://dev-blog.sourcefabric.org/en/blogs/newscoop/19/Newscoop-releases-changes.htm) to upgrade Newscoop, please skip step 1.
+
 1. Remove `newscoop/vendor` directory and its content from your current Newscoop instance (`sudo rm -rf newscoop/vendor`).
 2. Copy Newscoop 4.4.x files over the 4.3.x/4.4.x files (e.g. `sudo cp -r /home/user/Newscoop44/newscoop/ /var/www/newscoop/`).
 3. Run `upgrade.php` script. (Go to `http://www.example.com/upgrade.php`)

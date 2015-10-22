@@ -32,7 +32,11 @@ class ArticleCommentsList extends ListObject
 
         $filter = array();
         $filter = $this->m_constraints;
-        $filter['status'] = 'approved';
+        $filter['status'] = array('approved');
+        if ($p_parameters['show_hidden'] === true) {
+            $filter['status'][] = 'hidden';
+        }
+
         $params = array(
             'sFilter' => $filter
         );
@@ -149,6 +153,7 @@ class ArticleCommentsList extends ListObject
 		$parameters = array();
         $parameters['ignore_language'] = false;
         $parameters['ignore_article'] = false;
+        $parameters['show_hidden'] = false;
         foreach ($p_parameters as $parameter=>$value) {
     		$parameter = strtolower($parameter);
     		switch ($parameter) {
@@ -181,6 +186,8 @@ class ArticleCommentsList extends ListObject
                     break;
                 case 'nested':
                     if ($value == 'true') $this->_nested = true;
+                case 'show_hidden':
+                    if ($value == 'true') $parameters[$parameter] = true;
                 default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}

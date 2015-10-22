@@ -5,7 +5,6 @@
  * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\NewscoopBundle\Services;
 
 use Newscoop\NewscoopBundle\Entity\Topic;
@@ -14,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\Exception\ResourcesConflictException;
 use Doctrine\ORM\Query;
 use Newscoop\EventDispatcher\Events\GenericEvent;
+use Newscoop\NewscoopBundle\Entity\TopicTranslation;
 
 /**
  * Topcis service.
@@ -297,6 +297,8 @@ class TopicService
             $node->setOrder((int) $maxOrderValue + 1);
         }
 
+        $node->addTranslation(new TopicTranslation($locale ?: $node->getTranslatableLocale(), 'title', $node->getTitle(), true));
+
         $this->em->persist($node);
         $metadata = $this->em->getClassMetaData(get_class($node));
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
@@ -419,7 +421,7 @@ class TopicService
 
         return array(
             'name' => $name,
-            'locale' => $languageCode
+            'locale' => $languageCode,
         );
     }
 
@@ -435,7 +437,6 @@ class TopicService
      */
     public function getTopicBy($string, $locale = null)
     {
-
         $topic = $this->getTopicRepository()
             ->getTopicByIdOrName($string, $locale)
             ->getOneOrNullResult();
@@ -549,6 +550,7 @@ class TopicService
         $this->removeTopicFromAllUsers($topic->getId());
         $this->em->remove($topic);
         $this->em->flush();
+        $this->em->clear();
 
         return true;
     }

@@ -1041,8 +1041,8 @@ INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `RFC3066b
 (36, 'Kurdish', 'UTF-8', 'کوردی', 'ku', 'ku-TR', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (37, 'German (Austria)', 'ISO_8859-1', 'Deutsch (Österreich)', 'de_AT', 'de-AT', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember', 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez', 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'),
 (38, 'Hungarian', 'ISO_8859-2', 'Magyar', 'hu', 'hu-HU', 'Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December', 'Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Jan', 'Feb', 'Már', 'Ápr', 'Május', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec', 'Va', 'Hé', 'Ke', 'Sze', 'Cs', 'Pé', 'Szu'),
-(39, 'Azerbaijani', 'ISO_8859-9', 'Azərbaycanca', 'az', 'az', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr', 'Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr', 'B', 'B.e', 'Ç.a', 'Ç', 'Ca', 'C', 'Ş'),
-(40, 'Danish', 'ISO_8859-1', 'Dansk', 'da', 'da', 'Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December', 'Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec', 'Søn', 'Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør'),
+(39, 'Azerbaijani', 'ISO_8859-9', 'Azərbaycanca', 'az', 'az-AZ', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr', 'Bazar', 'Bazar ertəsi', 'Çərşənbə axşamı', 'Çərşənbə', 'Cümə axşamı', 'Cümə', 'Şənbə', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr', 'B', 'B.e', 'Ç.a', 'Ç', 'Ca', 'C', 'Ş'),
+(40, 'Danish', 'ISO_8859-1', 'Dansk', 'da', 'da-DK', 'Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December', 'Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec', 'Søn', 'Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør'),
 (41, 'Armenian', 'UTF-8', 'Հայերեն', 'hy_AM', 'hy-AM', 'Հունվար', 'Փետրվար', 'Մարտ', 'Ապրիլ', 'Մայիս', 'Հունիս', 'Հուլիս', 'Օգոստոս', 'Սեպտեմբեր', 'Հոկտեմբեր', 'Նոյեմբեր', 'Դեկտեմբեր', 'Կիրակի', 'Երկուշաբթի', 'Երեքշաբթի', 'Չորեքշաբթի', 'Հինգշաբթի', 'ՈՒրբաթ', 'Շաբաթ', 'Հունվ', 'Փետր', 'Մարտ', 'Ապր', 'Մայ', 'Հուն', 'Հուլ', 'Օգոս', 'Սեպ', 'Հոկտ', 'Նոյ', 'Դեկ', 'Կիր', 'Երկ', 'Երք', 'Չոր', 'Հնգ', 'ՈՒր', 'Շաբ');
 /*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1808,6 +1808,7 @@ CREATE TABLE IF NOT EXISTS `topic_translations` (
   `locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
   `field` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci,
+  `isDefault` int(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `lookup_unique_idx` (`locale`,`object_id`,`field`),
   KEY `IDX_98B25D13232D562B` (`object_id`)

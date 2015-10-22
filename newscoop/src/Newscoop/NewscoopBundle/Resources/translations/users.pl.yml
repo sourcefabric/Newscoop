@@ -187,6 +187,7 @@ Miscellaneous: Różne
 'User image (full-size)': 'Obraz użytkownika (pełen rozmiar)'
 'User account is highlighted as "featured account"': 'Konto użytkownika jest oznaczone jako "promowane konto"'
 'Custom attribute...': 'Własna właściwość '
+'An author with the same full name (combination of first and last name) already exists.': null
 users:
     label:
         title: 'Wyszukiwarka uzytkowników'

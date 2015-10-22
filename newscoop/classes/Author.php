@@ -433,24 +433,44 @@ class Author extends DatabaseObject
         $p_name = trim($p_name);
         $firstName = NULL;
         $lastName = NULL;
-        preg_match('/([^,]+),([^,]+)/', $p_name, $matches);
-        if (count($matches) > 0) {
-            $lastName = trim($matches[1]);
-            $firstName = isset($matches[2]) ? trim($matches[2]) : '';
+
+        // check if name exists in DB
+        global $g_ado_db;
+
+        $sql = 'SELECT first_name, last_name
+            FROM Authors
+            WHERE TRIM(CONCAT_WS(" ", first_name, last_name)) = :name
+        ';
+        $authors = $g_ado_db->GetAll($sql, array('name' => $p_name));
+
+        if (count($authors) > 0) {
+            $firstName = $authors[0]['first_name'];
+            $lastName = $authors[0]['last_name'];
         } else {
-            preg_match_all('/[^\s]+/', $p_name, $matches);
-            if (isset($matches[0])) {
-                $matches = $matches[0];
-            }
-            if (count($matches) > 1) {
-                $lastName = array_pop($matches);
-                $firstName = implode(' ', $matches);
-            }
-            if (count($matches) == 1) {
-                $firstName = $matches[0];
+
+            preg_match('/([^,]+),([^,]+)/', $p_name, $matches);
+            if (count($matches) > 0) {
+                $lastName = trim($matches[1]);
+                $firstName = isset($matches[2]) ? trim($matches[2]) : '';
+            } else {
+                preg_match_all('/[^\s]+/', $p_name, $matches);
+                if (isset($matches[0])) {
+                    $matches = $matches[0];
+                }
+                if (count($matches) > 1) {
+                    $lastName = array_pop($matches);
+                    $firstName = implode(' ', $matches);
+                }
+                if (count($matches) == 1) {
+                    $firstName = $matches[0];
+                }
             }
         }
 
-        return array('first_name' => $firstName, 'last_name' => $lastName);
+        // Important! Trim spaces and replace multiple ones by space
+        return array(
+            'first_name' => preg_replace('/\s+/', ' ', trim($firstName)),
+            'last_name' => preg_replace('/\s+/', ' ', trim($lastName))
+        );
     }
 }

@@ -194,7 +194,6 @@ class PlaylistRepository extends EntityRepository
         $em->getConnection()->beginTransaction();
 
         try {
-
             $em->persist($playlist);
             if (is_null($playlist->getId())) {
                 $em->flush();

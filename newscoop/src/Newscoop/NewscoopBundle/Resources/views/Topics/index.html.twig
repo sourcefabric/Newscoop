@@ -23,9 +23,9 @@
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/highlight.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/angular-ui-tree-filter.min.js') }}?v=1"></script>
 <script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/checklist-model.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/tree.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/bundles/newscoopnewscoop/js/tree.js') }}?v=1"></script>
 <script src="/js/admin.js"></script>
 {% endblock %}
 {% block admin_page_menu_bar %}
@@ -35,10 +35,10 @@
 {% endblock %}
 {% block admin_content %}
 
-<div class="system_pref topics" ng-app="treeApp" ng-controller="treeCtrl" ng-cloak>
+<div class="system_pref topics" ng-app="treeApp" ng-controller="treeController as treeCtrl" ng-cloak>
 {% if compactView %}
 <div class="fixed-top topics-top">
-  <button class="button right-floated with-margin-top" type="button" ng-click="attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
+  <button class="button right-floated with-margin-top" type="button" ng-click="treeCtrl.attachTopics('{{ articleNumber }}', '{{ articleLanguage }}')">{{ 'topics.btn.saveandclose'|trans }}</button>
   <button class="button right-floated with-margin-top" onclick="parent.$.fancybox.close(); return false;">{{ 'topics.btn.close'|trans }}</button>
   <h3>{{ 'topics.title'|trans }} - {{ 'topics.attachtopics'|trans }}</h3>
   </div>
@@ -48,16 +48,32 @@
 
 {% endif %}
 <div class="container">
-<div class="row" ng-init="dim=false; highlight=true; {% if compactView %}onFilterLanguageChange('{{ articleLanguage }}', '{{ articleNumber }}'){% else %}loadTopicsTree(){% endif %}">
+<div class="row" ng-init="dim=false; highlight=true; {% if compactView %}treeCtrl.onFilterLanguageChange('{{ articleLanguage }}', '{{app.request.locale}}', '{{ articleNumber }}'){% else %}treeCtrl.loadTopicsTree('{{app.request.locale}}'){% endif %}">
+{% if compactView and assignedTopics|length > 0 %}
+<div class="col-lg-12">
+<h3>{{ 'topics.attachedtopics'|trans }}</h3>
+  <div class="list">
+    {% for topic in assignedTopics %}
+    <div
+       class="tree-node tree-node-content angular-ui-tree-handle angular-ui-tree ng-scope" style="cursor:pointer; background: #E1E9EF; padding: 10px 10px" ng-click="treeCtrl.goToTopic('{{topic.title}}', {{topic.id}})">
+       <div class="default-wrap">
+          <input type="checkbox" ng-click="$event.stopPropagation();" id="selectedCheckbox" checklist-model="treeCtrl.selectedTopics.ids" checklist-value="{{topic.id}}" class="topic-marker"/>
+            {{ topic.path }}
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
         <div class="col-sm-4">
             <h3>{{ 'topics.label.addroot'|trans }}</h3>
             <div class="alert alert-danger" ng-show="addTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
             <div class="alert alert-danger" ng-show="addTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
-            <form class="form-inline" name="addTopicForm" ng-submit="addNewTopic()" role="form">
+            <form class="form-inline" name="addTopicForm" ng-submit="treeCtrl.addNewTopic()" role="form">
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="form-group">
-                      <input type="text" name="title" ng-model="formData.title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" id="addNewTopic" placeholder="{{ 'topics.label.topicname'|trans }}">
+                      <input type="text" name="title" ng-model="treeCtrl.formData.title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" id="addNewTopic" placeholder="{{ 'topics.label.topicname'|trans }}">
                       <button ng-disabled="addTopicForm.$invalid" type="submit" class="btn btn-sm btn-primary">{{ 'topics.btn.add'|trans }}</button>
                       </div>
                     </div>
@@ -67,14 +83,14 @@
         <div class="col-sm-4">
             <h3>{{ 'topics.label.search'|trans }}</h3>
             <form class="form-inline" name="searchForm" role="form">
-                <input type="search" class="form-control search input-sm" placeholder="{{ 'topics.label.filterplaceholder'|trans }}"  ng-model="pattern">
+                <input type="search" class="form-control search input-sm" placeholder="{{ 'topics.label.filterplaceholder'|trans }}"  ng-model="treeCtrl.pattern">
             </form>
         </div>
         <div class="col-sm-4">
           {% if compactView == false %}
           <h3>{{ 'topics.label.filterbylang'|trans }}</h3>
           <form class="form-inline" name="filterForm" role="form">
-            <select ng-model="langSelected" ng-options='language.code as (language.name + " [" + language.code + "]") for language in languageList' ng-change="onFilterLanguageChange(langSelected)" class="form-control input-sm">
+            <select ng-model="treeCtrl.langSelected" ng-options='language.code as (language.name + " [" + language.code + "]") for language in treeCtrl.languageList' ng-change="treeCtrl.onFilterLanguageChange(treeCtrl.langSelected, '{{app.request.locale}}')" class="form-control input-sm">
             <option value="">{{ 'topics.label.all'|trans }}</option>
             </select>
           </form>
@@ -86,30 +102,30 @@
             <h3>{{ 'topics.label.tree'|trans }}
             <div class="expand-btn pull-right">
                 <span class="label">{{ 'topics.label.expandcollapse'|trans }}</span>
-                <button type="button" class="btn btn-default btn-sm" title="Expand/collapse tree" ng-click="expandCollapseAll(this)"><span class="glyphicon glyphicon-resize-vertical"></span></button>
+                <button type="button" class="btn btn-default btn-sm" title="Expand/collapse tree" ng-click="treeCtrl.expandCollapseAll()"><span class="glyphicon glyphicon-resize-vertical"></span></button>
               </div>
             </h3>
             <!-- Nested node template -->
             <script type="text/ng-template" id="nodes_renderer.html">
               <div ui-tree-handle ng-class="{'active': editing || addingSubtopic}" class="tree-node tree-node-content angular-ui-tree-handle" {% if compactView %}style="cursor:auto" ng-style="{ background: node.attached ? '#E1E9EF' : '#f2f2f2' }"{% endif %}>
               <div class="pull-right btn-group">
-                <a data-nodrag ng-click="startEditing(this)" class="btn btn-default btn-sm" ng-class="{'active': editing}"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
-                <a data-nodrag ng-click="showNewSubtopicBox(this)" class="btn btn-default btn-sm" ng-class="{'active': addingSubtopic}"><span title="{{ 'topics.label.addsubtopic'|trans }}" class="glyphicon glyphicon-plus"></span></a>
+                <a data-nodrag ng-click="treeCtrl.startEditing(this)" class="btn btn-default btn-sm" ng-class="{'active': treeCtrl.editing}"><span title="{{ 'topics.btn.edit'|trans }}" class="glyphicon glyphicon-pencil"></span></a>
+                <a data-nodrag ng-click="treeCtrl.showNewSubtopicBox(this)" class="btn btn-default btn-sm" ng-class="{'active': addingSubtopic}"><span title="{{ 'topics.label.addsubtopic'|trans }}" class="glyphicon glyphicon-plus"></span></a>
                 {% if compactView == false %}
-                <a data-nodrag ng-click="removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="btn btn-default btn-sm"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
+                <a data-nodrag ng-click="treeCtrl.removeTopicAlert(node.id)" data-toggle="modal" data-target="#removeAlert" class="btn btn-default btn-sm"><span title="{{ 'topics.btn.remove'|trans }}" class="glyphicon glyphicon-trash"></span></a>
                 {% endif %}
               </div>
                 <div class="drag-bar" {% if compactView %}style="display: none;"{% endif %}></div>
-                <a data-nodrag ng-click="toggleTopic(this, node)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed, 'glyphicon-chevron-down': collapsed || node.hasAttachedSubtopic || showExpanded}"></span></a>
+                <a data-nodrag ng-click="toggle(this)" class="pointer"><span ng-if="node.__children.length > 0" class="glyphicon" ng-class="{'glyphicon-chevron-right': !collapsed || !treeCtrl.showExpanded || !toggler, 'glyphicon-chevron-down': collapsed || treeCtrl.showExpanded || toggler}"></span></a>
 
                 <div class="default-wrap" {% if not compactView %}ng-if="!editing"{% endif %}>
-                  {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="selectedTopics.ids" checklist-value="node.id" class="topic-marker" />{% endif %}
-                  <span ng-bind-html="node.title | highlight:pattern | trust" class="ng-binding" {% if compactView %}style="margin-left: 20px;"{% endif %}></span>
-                  <ul ng-if="!editing" class="list-group" ng-model="node.translations" ng-init="setLanguageLabel(node, '{{ app.request.locale }}')">
-                      <li class="list-group-item" ng-class="{'active': node.activeLabel, 'fallback': languageCode != node.locale && !node.activeLabel && node.fallback}" ng-repeat="node in node.translations">
-                          <span class="badge ng-binding">{[{ node.locale }]}</span>
+                  {% if compactView %}<input type="checkbox" id="selectedCheckbox" checklist-model="treeCtrl.selectedTopics.ids" checklist-value="node.id" class="topic-marker" />{% endif %}
+                  <div><span ng-bind-html="node.title | highlight:treeCtrl.pattern | trust" class="ng-binding" {% if compactView %}style="margin-left: 20px;"{% endif %}></span>
+                  <ul ng-if="!editing" class="list-group" ng-model="node.translations">
+                      <li class="list-group-item" ng-class="{'active': node.activeLabel, 'fallback': treeCtrl.languageCode != node.locale && !node.activeLabel && node.fallback}" ng-repeat="node in node.translations track by node.id">
+                          <span class="badge ng-binding">{[{ ::node.locale }]}</span>
                       </li>
-                  </ul>
+                  </ul></div>
                 </div>
                 <div class="node-add-subtopic-div" ng-if="addingSubtopic" data-nodrag style="cursor:auto">
                 <h3>{{ 'topics.label.addsubtopic'|trans }}</h3>
@@ -120,7 +136,7 @@
                           <div class="alert alert-danger" ng-show="addSubTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                           <div class="form-group">
                             <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="node.newChild[node.id]" placeholder="{{ 'topics.label.subtopicname'|trans }}">
-                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="addNewTopic(this)">{{ 'topics.btn.add'|trans }}</button>
+                            <button type="submit" ng-disabled="addSubTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="treeCtrl.addNewTopic(this)">{{ 'topics.btn.add'|trans }}</button>
                           </div>
                         </form>
                     </div>
@@ -132,7 +148,7 @@
                       <div class="alert alert-danger" ng-show="editTopicForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                       <div class="alert alert-danger" ng-show="editTopicForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                         <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" placeholder="{{ 'topics.label.topicname'|trans }}" ng-model="node.title">
-                      <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="updateTopic(node)">{{ 'topics.btn.save'|trans }}</button>
+                      <button type="submit" ng-disabled="editTopicForm.$invalid" class="btn btn-sm btn-default" ng-click="treeCtrl.updateTopic(node)">{{ 'topics.btn.save'|trans }}</button>
                     </form>
                   </div>
                 </div>
@@ -142,37 +158,37 @@
                             <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.maxlength" role="alert">{{ 'topics.toolong'|trans }}</div>
                             <div class="alert alert-danger" ng-show="addTranslationForm.title.$error.minlength" role="alert">{{ 'topics.tooshort'|trans }}</div>
                             <div class="form-group">
-                              <select ng-model="languageSelected" ng-options="language.name for language in languageList" ng-change="onLanguageChange(languageSelected)" class="form-control input-sm" style="width: 160px" required>
+                              <select ng-model="treeCtrl.languageSelected" ng-options="language.name for language in treeCtrl.languageList" ng-change="treeCtrl.onLanguageChange(treeCtrl.languageSelected)" class="form-control input-sm" style="width: 160px" required>
                                 <option value="">{{ 'topics.label.choose'|trans }}</option>
                               </select>
                               <input type="text" name="title" required ng-minlength="1" ng-maxlength="60" class="form-control input-sm" ng-model="node.newTranslation[node.id]" placeholder="{{ 'topics.label.translationstring'|trans }}">
-                              <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="addTranslation(node)">{{ 'topics.btn.add'|trans }}</button>
+                              <button type="submit" ng-disabled="addTranslationForm.$invalid" class="btn btn-sm btn-default" ng-click="treeCtrl.addTranslation(node)">{{ 'topics.btn.add'|trans }}</button>
                             </div>
                       </form>
                       <h3>{{ 'topics.label.topictranslations'|trans }}</h3>
                       <ul class="lang-list" ng-model="node.translations">
-                          <li ng-repeat="node in node.translations">
+                          <li ng-repeat="node in node.translations track by node.id">
                             <div>
-                              <span class="badge">{[{ node.locale }]}</span>
-                              {[{ node.content }]}
-                              <a data-nodrag class="remove-translation" ng-click="removeTranslation(node.id)"><span title="{{ 'topics.btn.removetrans'|trans }}" class="glyphicon glyphicon-remove"></span></a>
+                              <span class="badge">{[{ ::node.locale }]}</span>
+                              {[{ ::node.content }]}
+                              <a data-nodrag class="remove-translation" ng-click="treeCtrl.removeTranslation(node.id)"><span title="{{ 'topics.btn.removetrans'|trans }}" class="glyphicon glyphicon-remove"></span></a>
                             </div>
                           </li>
                       </ul>
                 </div>
                 <div class="button-close" ng-show="editing || addingSubtopic">
-                  <a class="btn btn-sm btn-default" data-nodrag ng-click="hideExtraOptions(this)"><span title="{{ 'topics.btn.hide'|trans }}" class="glyphicon glyphicon-chevron-up"></span></a>
+                  <a class="btn btn-sm btn-default" data-nodrag ng-click="treeCtrl.hideExtraOptions(this)"><span title="{{ 'topics.btn.hide'|trans }}" class="glyphicon glyphicon-chevron-up"></span></a>
                 </div>
               </div>
-              <ol ui-tree-nodes ng-model="node.__children" ng-class="{hidden: !showExpanded && !collapsed && !pattern && !node.hasAttachedSubtopic }" ng-if="collapsed || node.hasAttachedSubtopic || ex">
-                  <li ng-repeat="node in node.__children" ui-tree-node ng-include="'nodes_renderer.html'">
+              <ol ui-tree-nodes ng-model="node.__children" ng-if="collapsed || treeCtrl.showExpanded || toggler">
+                  <li ng-repeat="node in node.__children" id="node{[{::node.id}]}" ng-if="treeCtrl.treeFilter(node, treeCtrl.pattern, treeCtrl.supportedFields, this) && !dim" ui-tree-node ng-include="'nodes_renderer.html'">
 
                   </li>
               </ol>
             </script>
-            <div ui-tree="treeOptions" {% if compactView %}data-drag-enabled="false"{% endif %} id="tree-root">
-              <ol ui-tree-nodes ng-model="data">
-                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" ng-hide="!treeFilter(node, pattern, supportedFields, this) && !dim" ng-class="{'filtered-out':!treeFilter(node, pattern, supportedFields, this) && dim}"></li>
+            <div ui-tree="treeCtrl.treeOptions" {% if compactView %}data-drag-enabled="false"{% endif %} id="tree-root">
+              <ol ui-tree-nodes ng-model="treeCtrl.data">
+                <li ng-repeat="node in treeCtrl.data track by node.id" id="node{[{::node.id}]}" ui-tree-node ng-include="'nodes_renderer.html'" ng-hide="treeCtrl.pattern && !treeCtrl.treeFilter(node, treeCtrl.pattern, treeCtrl.supportedFields, this) && !dim"></li>
               </ol>
             </div>
             <!-- Modal -->
@@ -190,7 +206,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'topics.btn.close'|trans }}</button>
-                    <button type="button" ng-click="removeTopic()" ng-disabled="deleteDisabled" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
+                    <button type="button" ng-click="treeCtrl.removeTopic()" ng-disabled="treeCtrl.deleteDisabled" class="btn btn-danger">{{ 'topics.btn.remove'|trans }}</button>
                   </div>
                 </div>
               </div>
@@ -208,4 +224,3 @@
     {{ parent() }}
   {% endif %}
 {% endblock %}
-

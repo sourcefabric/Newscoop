@@ -12,7 +12,7 @@ Newscoop\Entity\Playlist:
             read_only: true
             type: string
             groups: ["list", "details"]
-            serialized_name: title
+            serialized_name: name
         notes:
             expose: true
             read_only: true

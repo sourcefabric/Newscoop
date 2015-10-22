@@ -141,6 +141,26 @@ class Playlist extends AbstractEntity
     }
 
     /**
+     * Returns the name of the playlist.
+     *
+     * @var string
+     */
+    public function setTitle($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Returns the name of the playlist.
+     */
+    public function getTitle()
+    {
+        return $this->name;
+    }
+
+    /**
      * Gets the value of notes.
      *
      * @return string
