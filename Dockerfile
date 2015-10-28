@@ -18,15 +18,15 @@ WORKDIR /usr/share/newscoop
 #VOLUME /var/www
 
 # copy virtual host config and source code
-ADD docker/newscoop.conf /etc/apache2/sites-available/newscoop.conf
-ADD docker/newscoop-dev.conf /etc/apache2/sites-available/newscoop-dev.conf
+ADD scripts/docker/newscoop.conf /etc/apache2/sites-available/newscoop.conf
+ADD scripts/docker/newscoop-dev.conf /etc/apache2/sites-available/newscoop-dev.conf
 ADD newscoop /var/www/newscoop
 
 # Enable production env
 RUN a2ensite newscoop
 
 # add management scripts
-ADD docker /usr/share/newscoop
+ADD scripts/docker /usr/share/newscoop
 
 # update permissions
 # 1000 needs to be a dynamic var for the userid of the files
