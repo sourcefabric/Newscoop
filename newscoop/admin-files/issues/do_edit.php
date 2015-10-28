@@ -126,7 +126,8 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
 	$issueObj->setProperty('IdLanguage', $f_new_language_id, false);
 	$issueObj->commit();
 	//@New theme management
-    if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+    // TODO: 4.5 replace this with acl check
+    if(true) {
         if($newOutputSetting){
             $outputSettingIssueService->insert($outSetIssue);
         } else {

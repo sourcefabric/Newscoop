@@ -34,6 +34,7 @@ use Newscoop\Entity\AuthorType;
 use Doctrine\ORM\AbstractQuery;
 use Newscoop\Services\UserService;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class ArticlesControllerSpec extends ObjectBehavior
@@ -68,6 +69,7 @@ class ArticlesControllerSpec extends ObjectBehavior
         AuthorType $authorType,
         AbstractQuery $query,
         SecurityContext $security,
+        TokenStorage $tokenStorage,
         TokenInterface $token,
         Router $router
     ) {
@@ -89,7 +91,9 @@ class ArticlesControllerSpec extends ObjectBehavior
         $security->getToken()->willReturn($token);
         $container->get('security.context')->willReturn($security);
         $container->has('security.context')->willReturn(true);
-
+        $container->has('security.token_storage')->willReturn(true);
+        $container->get('security.token_storage')->willReturn($tokenStorage);
+        
         $this->setContainer($container);
 
         $entityManager->getRepository('Newscoop\Entity\Article')->willReturn($articleRepository);
@@ -112,14 +116,14 @@ class ArticlesControllerSpec extends ObjectBehavior
         $this->shouldImplement('FOS\RestBundle\Controller\FOSRestController');
     }
 
-    public function its_lockUnlockArticle_should_lock_article($request, $article, $query, $number, $language, $user, $token, $security)
+    public function its_lockUnlockArticle_should_lock_article($request, $article, $query, $number, $language, $user, $token, $tokenStorage, $security)
     {
         $query->getOneOrNullResult()->willReturn($article);
         $request->getMethod()->willReturn('POST');
         $article->isLocked()->willReturn(false);
         $user = new User('jhon.doe@example.com');
         $user->setUsername('doe');
-        $security->getToken()->willReturn($token);
+        $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($user);
         $article->setLockUser($user)->willReturn(null);
         $article->setLockTime(Argument::type('\DateTime'))->willReturn(null);

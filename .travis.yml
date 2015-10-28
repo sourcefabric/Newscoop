@@ -1,14 +1,22 @@
 language: php
-php:
-- '5.6'
-- '5.5'
-- '5.4'
-- '5.3'
+
+matrix:
+  include:
+      - php: 5.3
+      - php: 5.4
+      - php: 5.5
+      - php: 5.6
+      - php: nightly
+  allow_failures:
+      - php: nightly
+  fast_finish: true
+
 notifications:
   email: false
   hipchat:
     rooms:
       secure: ArA/zjwjNhHWUQauavuyqkHGD6vGoiav1DJrnw2dl6qPDKXe220i/Y0AbbcSh2BazG1cf2B/nkgoWPPCz+xRN7/6tbNV7AkYuN+y0WomBqx/BMaFr6uofgGa0OABZ3XN/Madx9yOE+3q0iJnje41ymJtdpzC23urZ5ma3jxltBs=
+
 before_script:
 - sudo apt-get update > /dev/null
 - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl php5-gd postfix
@@ -23,7 +31,7 @@ before_script:
 - "./application/console newscoop:install --fix --database_name newscoop --database_user root --no-client"
 - sudo php upgrade.php
 - "./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test"
-- "./application/console user:create test@example.org testpassword testuser 'Test Name' 'Test Surname' true 1 1"
+- "./application/console user:create test@example.org testpassword testuser 'Test Name' 'Test Surname' true 1 1 --isAdmin"
 - cd ..
 - sudo php newscoop/scripts/fixer.php
 script:

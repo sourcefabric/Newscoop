@@ -52,7 +52,8 @@ class SystemPrefController extends Controller
 
         $hasManagePermission = false;
 
-        if (\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+        // TODO: 4.5 check for permissions from acl
+        if (true) {
             $hasManagePermission = true;
         }
 
@@ -414,7 +415,7 @@ class SystemPrefController extends Controller
      * Sets templates caching.
      *
      * @param string                                   $cache_template Values 1 or 0
-     * @param Symfony\Component\Translation\Translator $translator     Translator
+     * @param Symfony\Component\Translation\TranslatorInterface $translator     Translator
      *
      * @return void|RedirectResponse
      */
@@ -448,7 +449,7 @@ class SystemPrefController extends Controller
      * @param string                                   $user            Replication server password
      * @param string                                   $use_replication Defines if replication is on or off
      * @param int                                      $port            Replication server port
-     * @param Symfony\Component\Translation\Translator $translator      Translator
+     * @param Symfony\Component\Translation\TranslatorInterface $translator      Translator
      *
      * @return void|RedirectResponse
      */
@@ -483,7 +484,7 @@ class SystemPrefController extends Controller
      * Defines and sets max upload file size.
      *
      * @param string                                   $max_size   Max upload file size
-     * @param Symfony\Component\Translation\Translator $translator Translator
+     * @param Symfony\Component\Translation\TranslatorInterface $translator Translator
      *
      * @return void|RedirectResponse
      */
@@ -530,7 +531,7 @@ class SystemPrefController extends Controller
      * @param point                                    $latitude    Latitude
      * @param point                                    $longitude   Longitude
      * @param array                                    $geoLocation Geolocation data
-     * @param Symfony\Component\Translation\Translator $translator  Translator
+     * @param Symfony\Component\Translation\TranslatorInterface $translator  Translator
      *
      * @return void|RedirectResponse
      */

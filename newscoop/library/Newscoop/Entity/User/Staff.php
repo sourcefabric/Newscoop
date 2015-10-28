@@ -99,9 +99,9 @@ class Staff extends User implements \Zend_Acl_Role_Interface
         try {
             list($resource, $action) = PermissionToAcl::translate($permission);
             if ($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-				return \SaaS::singleton()->hasPermission($permission);
+				return true;
             } else {
-            	return FALSE;
+            	return false;
             }
         } catch (Exception $e) {
             return false;

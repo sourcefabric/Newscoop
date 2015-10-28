@@ -1,4 +1,5 @@
 parameters:
+    remember_me_key: overrideme
     phpSettings:
         display_startup_errors: "0"
         display_errors: "0"

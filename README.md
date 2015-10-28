@@ -64,6 +64,8 @@ PHP version must be at least 5.4 on Debian and CentOS to run Newscoop properly. 
 
 REST API documentation will be available under the link: `http://www.domain.com/documentation/rest-api/` after Newscoop installation is done.
 
+You can preview it on newscoop-demo instance: [http://newscoop-demo.sourcefabric.org/documentation/rest-api/][15]
+
 ## How to contribute
 
 Only 4 steps:
@@ -91,3 +93,4 @@ Newscoop is licensed under the GPL3 license.
 [12]: https://dev-blog.sourcefabric.org/en/blogs/?filter=1
 [13]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
 [14]: https://bugs.php.net/bug.php?id=54709
+[15]: http://newscoop-demo.sourcefabric.org/documentation/rest-api/
