@@ -715,7 +715,7 @@ class Article extends DatabaseObject
         // Delete scheduled publishing
         ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
-        $translator = \Zend_Registry::get('container')->getService('translator');
+         $translator = \Zend_Registry::get('container')->getService('translator');
         // Delete Article Comments
         // @todo change this with DOCTRINE2 CASCADE DELETE
         $em = Zend_Registry::get('container')->getService('em');
@@ -771,12 +771,11 @@ class Article extends DatabaseObject
         // Delete webcode
         $em = Zend_Registry::get('container')->getService('em');
         $article = $em->getRepository('Newscoop\Entity\Article')
-            ->findOneBy(array(
+            ->find(array(
                 'number' => $this->getArticleNumber(),
                 'language' => $this->getLanguageId(),
             ));
-
-        $webcode = $article->getWebcodeEntity();
+        $webcode = $article->getWebcodeEntity($article);
 
         $em->remove($webcode);
         $em->flush();
