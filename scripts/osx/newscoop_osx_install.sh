@@ -66,14 +66,12 @@ echo "Backing up existing /etc/apache2/httpd.conf"
 sudo cp /etc/apache2/httpd.conf /etc/apache2/httpd.conf.bak
 sudo cp $SCRIPTPATH/httpd.conf /etc/apache2/httpd.conf
 
-echo $SCRIPTPATH
-
 echo "Backing up existing /etc/apache2/extra/httpd-vhosts.conf"
 sudo cp /etc/apache2/extra/httpd-vhosts.conf /etc/apache2/extra/httpd-vhosts.conf.bak
 (sed '/# START newscoop.dev.conf/,/# END newscoop.dev.conf/d' /etc/apache2/extra/httpd-vhosts.conf; cat newscoop.dev.conf ) > $SCRIPTPATH/httpd-vhosts.conf.tpl
 sudo sh -c "sed 's/\$NEWSCOOPDIR/$NSDIR/g' $SCRIPTPATH/httpd-vhosts.conf.tpl > /etc/apache2/extra/httpd-vhosts.conf"
-rm -rf $SCRIPTPATH/httpd-vhosts.conf.tpl
 sudo apachectl restart
+rm -rf $SCRIPTPATH/httpd-vhosts.conf.tpl
 
 # reset newscoop config
 cd $SCRIPTPATH/../../newscoop
