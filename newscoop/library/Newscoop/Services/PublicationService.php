@@ -176,6 +176,10 @@ class PublicationService
             'code_default_language' => $alias[0]['languageCode']
         );
 
+        $this->publicationMetadata['request'] = array(
+            'uri' => $request->getRequestUri()
+        );
+
         /**
          * Save publication metadata to into Request attributes.
          */

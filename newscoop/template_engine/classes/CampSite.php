@@ -127,6 +127,9 @@ final class CampSite extends CampSystem
                 $error_message = 'Error occurred.';
             }
         } else {
+            // determine if homepage
+            // check publication setting
+            // ladybug_dump($uri); echo '<hr>';
             $template = $uri->getTemplate(CampRequest::GetVar(CampRequest::TEMPLATE_ID));
             switch ($template) {
                 case null:
@@ -140,7 +143,7 @@ final class CampSite extends CampSystem
                     $template = '_campsite_error.tpl';
                     break;
                 default:
-                    $themePath = $themesService->getThemePath();
+                    $themePath = $themesService->getThemePath(CampRequest::GetVar('language', null));
                     $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
             }
         }

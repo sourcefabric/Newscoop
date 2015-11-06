@@ -29,14 +29,14 @@ class PublicationType extends AbstractType
             'required' => true,
         ));
 
-        if ($options['publication_id']) {
+        if ($options['publication']) {
             $builder->add('defaultAlias', 'entity', array(
                 'class' => 'Newscoop\Entity\Aliases',
                 'property' => 'name',
                 'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->createQueryBuilder('a')
                         ->where('a.publication = :publicationId')
-                        ->setParameter('publicationId', $options['publication_id'])
+                        ->setParameter('publicationId', $options['publication']->getId())
                         ->orderBy('a.name', 'ASC');
                 },
                 'error_bubbling' => true,
@@ -49,6 +49,43 @@ class PublicationType extends AbstractType
                 'label' => 'publications.form_type.label.alias',
                 'required' => true,
             ));
+        }
+
+        if (!is_null($options['publication'])) {
+            $publicationIssuesLanguages = array();
+            foreach ($options['publication']->getIssues() as $key => $issue) {
+                if (!array_key_exists($issue->getLanguageCode(), $publicationIssuesLanguages)) {
+                    $publicationIssuesLanguages[$issue->getLanguageCode()] = $issue->getLanguage();
+                }
+            }
+
+            foreach ($publicationIssuesLanguages as $languageCode => $language) {
+                $outputSettingsPublication = $options['em']->getRepository('Newscoop\Entity\Output\OutputSettingsPublication')
+                    ->findOneBy(array(
+                        'output' => 1,
+                        'publication' => $options['publication']->getId(),
+                        'language' => $language,
+                    )
+                );
+
+                $frontThemeChoices = array('0' => 'Follow current issue theme');
+                $choosedTheme = 0;
+                foreach ($options['publication_themes'] as $value) {
+                    $frontThemeChoices[$value->getPath()] = $value->getName()->__toString() .' ('.$value->getDescription().')';
+                    if ($outputSettingsPublication && $value->getPath() == $outputSettingsPublication->getThemePath()->getPath()) {
+                        $choosedTheme = $value->getPath();
+                    }
+                }
+
+                $builder->add($languageCode . '_front_theme', 'choice', array(
+                    'choices'   => $frontThemeChoices,
+                    'data' => $choosedTheme,
+                    'label' => 'Language: '. $languageCode,
+                    'error_bubbling' => true,
+                    'required' => true,
+                    'mapped' => false
+                ));
+            }
         }
 
         $builder->add('language', 'entity', array(
@@ -155,7 +192,9 @@ class PublicationType extends AbstractType
     {
         $resolver->setDefaults(array(
             'translation_domain' => 'pub',
-            'publication_id' => null,
+            'publication' => null,
+            'publication_themes' => array(),
+            'em' => null
         ));
     }
 
