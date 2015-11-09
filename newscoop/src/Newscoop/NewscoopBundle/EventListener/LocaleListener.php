@@ -61,7 +61,7 @@ class LocaleListener
 
         } else {
             // Session language
-            if ($session->has('languageCode')) {
+            if ($session && $session->has('languageCode')) {
                 $languageCode = $session->get('languageCode');
             }
 
@@ -101,7 +101,9 @@ class LocaleListener
                 $languageCode = $publicationMetadata['publication']['code_default_language'];
             }
 
-            $session->set('languageCode', $languageCode);
+            if ($session) {
+                $session->set('languageCode', $languageCode);
+            }
         }
 
         if (!is_null($languageCode)) {
