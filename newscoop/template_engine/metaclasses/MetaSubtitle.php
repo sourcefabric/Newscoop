@@ -189,8 +189,14 @@ final class MetaSubtitle
      * @param  string $p_content
      * @return string
      */
-    private static function ProcessContent($p_content)
+    public static function ProcessContent($p_content, $articleNumber = null, $articleLanguageNumber = null)
     {
+        if (!is_null($articleNumber)) {
+            $context = CampTemplate::singleton()->context();
+            $uri = $context->url;
+            $uri->article = new MetaArticle($articleLanguageNumber, $articleNumber);
+        }
+
         $content = trim($p_content);
         if (empty($content)) {
             return $p_content;
