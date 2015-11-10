@@ -143,7 +143,7 @@
                 </div>
             </div>
             {% if publication and publicationIssuesLanguages %}
-                <h3>Template settings</h3>
+                <h3>{{ 'publications.front_page_theme_settings'|trans({},'pub') }}</h3>
                 {% for languageCode in publicationIssuesLanguages %}
                 {% set widget_name = languageCode ~ "_front_theme" %}
                 <div class="form-group">

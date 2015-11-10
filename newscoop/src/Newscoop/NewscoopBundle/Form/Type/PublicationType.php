@@ -68,7 +68,7 @@ class PublicationType extends AbstractType
                     )
                 );
 
-                $frontThemeChoices = array('0' => 'Follow current issue theme');
+                $frontThemeChoices = array('0' => 'publications.form_type.label.follow_current_issue_theme');
                 $choosedTheme = 0;
                 foreach ($options['publication_themes'] as $value) {
                     $frontThemeChoices[$value->getPath()] = $value->getName()->__toString() .' ('.$value->getDescription().')';
@@ -80,7 +80,7 @@ class PublicationType extends AbstractType
                 $builder->add($languageCode . '_front_theme', 'choice', array(
                     'choices'   => $frontThemeChoices,
                     'data' => $choosedTheme,
-                    'label' => 'Language: '. $languageCode,
+                    'label' => $language->getName().': ',
                     'error_bubbling' => true,
                     'required' => true,
                     'mapped' => false

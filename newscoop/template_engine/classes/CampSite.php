@@ -127,9 +127,6 @@ final class CampSite extends CampSystem
                 $error_message = 'Error occurred.';
             }
         } else {
-            // determine if homepage
-            // check publication setting
-            // ladybug_dump($uri); echo '<hr>';
             $template = $uri->getTemplate(CampRequest::GetVar(CampRequest::TEMPLATE_ID));
             switch ($template) {
                 case null:

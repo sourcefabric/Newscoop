@@ -102,6 +102,37 @@ class Issue
      * @var Newscoop\Entity\Output\OutputSettingsIssue
      */
     protected $outputSettingsIssues;
+    
+    /**
+     * @ORM\Column(type="datetime", name="PublicationDate", nullable=true)
+     *
+     * @var DateTime
+     */
+    protected $published;
+
+    /**
+     * Get published.
+     *
+     * @return string
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set published.
+     *
+     * @param \Datetime|null $published
+     *
+     * @return self
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
 
     /**
      * @param int                         $number

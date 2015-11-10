@@ -125,7 +125,7 @@ class IssueRepository extends EntityRepository
             ->setParameter('publishStatus', \Newscoop\Entity\Issue::STATUS_PUBLISHED)
             ->setParameter('languageId', $languageId)
             ->setMaxResults(1)
-            ->orderBy('i.id', 'DESC');
+            ->orderBy('i.published', 'ASC');
 
         return $query->getQuery();
     }

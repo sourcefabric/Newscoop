@@ -136,7 +136,6 @@ class IssueService implements IssueServiceInterface
             }
         }
 
-        // TODO: Check if we should add locale from request here
         return $this->getLatestPublishedIssue($request->getLocale());
     }
 

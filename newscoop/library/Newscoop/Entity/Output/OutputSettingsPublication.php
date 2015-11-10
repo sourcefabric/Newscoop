@@ -20,9 +20,9 @@ use Newscoop\Entity\AbstractEntity;
 class OutputSettingsPublication extends AbstractEntity
 {
     /**
-	 * Provides the class name as a constant.
-	 */
-	const NAME_1 = __CLASS__;
+     * Provides the class name as a constant.
+     */
+    const NAME_1 = __CLASS__;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Output")
@@ -31,19 +31,19 @@ class OutputSettingsPublication extends AbstractEntity
      */
     protected $output;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication", inversedBy="outputSettingsPublication")
-	 * @ORM\JoinColumn(name="fk_publication_id", referencedColumnName="Id")
-	 * @var Newscoop\Entity\Publication
-	 */
-	protected $publication;
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication", inversedBy="outputSettingsPublication")
+     * @ORM\JoinColumn(name="fk_publication_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\Publication
+     */
+    protected $publication;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
-	 * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
-	 * @var Newscoop\Entity\Language
-	 */
-	protected $language;
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\Language
+     */
+    protected $language;
 
 
     /**

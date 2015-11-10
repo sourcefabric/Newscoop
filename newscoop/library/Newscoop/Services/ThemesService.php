@@ -70,24 +70,23 @@ class ThemesService implements ThemesServiceInterface
     {
         $publicationMetadata = $this->publicationService->getPublicationMetadata();
         $frontpage = $this->isHomepage($publicationMetadata['request']['uri'], true);
-
+        $languageId = null;
         $issue = $this->issueService->getIssue();
         if (!$issue) {
             return;
         }
-        $languageId = null;
 
         if (!($language instanceof \Newscoop\Entity\Language)) {
+            $languageCode = $language;
             $language = $this->em->getRepository('Newscoop\Entity\Language')
                 ->findOneByCode($language);
         }
-        if ($language instanceof \Newscoop\Entity\Language) {
+        
+        if (!is_null($languageId)) {
             $languageId = $language->getId();
-        }
-        if (is_null($languageId)) {
+        } else if (is_null($languageId)) {
             $languageId = $issue->getLanguageId();
         }
-
         $publication = $this->publicationService->getPublication();
         $cacheKeyThemePath = $this->cacheService->getCacheKey(array('getThemePath', $frontpage, $languageId, $publication->getId(), $issue->getNumber()), 'issue');
 
@@ -138,7 +137,7 @@ class ThemesService implements ThemesServiceInterface
         $matches = array();
         if ($path === '/') {
             return true;
-        } elseif ($withLanguageHomepage && preg_match('@^/[a-z]{2}(?:_[A-Z]{2})?$@', $path, $matches)) {
+        } elseif ($withLanguageHomepage && preg_match('@^/[a-z]{2}(?:-[A-Z]{2})?$@', $path, $matches)) {
             try {
                 $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneBy(array('code' => ltrim($matches[0], '/')));
                 if ($language) {
