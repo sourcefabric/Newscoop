@@ -20,6 +20,10 @@ use Newscoop\Entity\Publication;
 use Newscoop\Entity\Aliases;
 use Newscoop\NewscoopBundle\Form\Type\PublicationType;
 use Newscoop\NewscoopBundle\Form\Type\RemovePublicationType;
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\ISyncResourceService;
+use Newscoop\Entity\Output\OutputSettingsPublication;
 
 class BackendPublicationsController extends Controller
 {
@@ -53,13 +57,21 @@ class BackendPublicationsController extends Controller
      */
     public function editAction(Request $request, Publication $publication)
     {
+        $resourceId = new ResourceId('Publication/Edit');
+        $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+        $publicationThemes = $themeManagementService->getThemes($publication->getId());
+
         $user = $this->container->get('user')->getCurrentUser();
         $translator = $this->container->get('translator');
         if (!$user->hasPermission('ManagePub')) {
             throw new AccessDeniedException($translator->trans("You do not have the right to change publication information.", array(), 'pub'));
         }
 
-        $form = $this->createForm(new PublicationType(), $publication, array('publication_id' => $publication->getId()));
+        $form = $this->createForm(new PublicationType(), $publication, array(
+            'publication' => $publication,
+            'publication_themes' => $publicationThemes,
+            'em' => $this->container->get('em')
+        ));
 
         if ($request->getMethod() === 'POST') {
             $form = $this->processRequest($request, $form, $publication);
@@ -69,11 +81,20 @@ class BackendPublicationsController extends Controller
             }
         }
 
+        $publicationIssuesLanguages = array();
+        foreach ($publication->getIssues() as $key => $issue) {
+            if (!in_array($issue->getLanguageCode(), $publicationIssuesLanguages)) {
+                $publicationIssuesLanguages[] = $issue->getLanguageCode();
+            }
+        }
+
         return $this->render(
             'NewscoopNewscoopBundle:BackendPublications:edit.html.twig',
             array(
                 'form' => $form->createView(),
-                'pageTitle' => $translator->trans('publications.title.edit', array(), 'pub')
+                'pageTitle' => $translator->trans('publications.title.edit', array(), 'pub'),
+                'publication' => $publication,
+                'publicationIssuesLanguages' => $publicationIssuesLanguages
             )
         );
     }
@@ -99,6 +120,7 @@ class BackendPublicationsController extends Controller
             'NewscoopNewscoopBundle:BackendPublications:edit.html.twig',
             array(
                 'form' => $form->createView(),
+                'publication' => null,
                 'pageTitle' => $translator->trans('publications.title.add', array(), 'pub')
             )
         );
@@ -156,15 +178,53 @@ class BackendPublicationsController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             if(!$publication) {
-                $attributes = $form->getData();
+                $publication = $form->getData();
                 $alias = new Aliases();
-                $alias->setName($attributes->getDefaultAlias());
+                $alias->setName($publication->getDefaultAlias());
                 $em->persist($alias);
                 $em->flush();
-                $attributes->setDefaultAlias($alias);
-                $em->persist($attributes);
-                $alias->setPublication($attributes);
+                $publication->setDefaultAlias($alias);
+                $em->persist($publication);
+                $alias->setPublication($publication);
             }
+
+            $publicationIssuesLanguages = array();
+            foreach ($publication->getIssues() as $key => $issue) {
+                if (!array_key_exists($issue->getLanguageCode(), $publicationIssuesLanguages)) {
+                    $publicationIssuesLanguages[$issue->getLanguageCode()] = $issue->getLanguage();
+                }
+            }
+
+            $resourceId = new ResourceId('Publication/Edit');
+            $syncRsc = $resourceId->getService(ISyncResourceService::NAME);
+            foreach ($publicationIssuesLanguages as $languageCode => $language) {
+                $outputSettingsPublication = $em
+                    ->getRepository('Newscoop\Entity\Output\OutputSettingsPublication')
+                    ->findOneBy(array(
+                        'output' => 1,
+                        'publication' => $publication->getId(),
+                        'language' => $language,
+                    )
+                );
+
+                if ($form->get($languageCode.'_front_theme')->getData() !== 0) {
+                    $themeResource = $syncRsc->getThemePath($form->get($languageCode.'_front_theme')->getData());
+                    if (is_null($outputSettingsPublication)) {
+                        $outputSettingsPublication = new OutputSettingsPublication();
+                        $em->persist($outputSettingsPublication);
+                    }
+
+                    $outputSettingsPublication->setPublication($publication);
+                    $outputSettingsPublication->setOutput($em->getReference("Newscoop\Entity\Output", 1));
+                    $outputSettingsPublication->setLanguage($language);
+                    $outputSettingsPublication->setThemePath($themeResource);
+                } else {
+                    if ($outputSettingsPublication){
+                        $em->remove($outputSettingsPublication);
+                    }
+                }
+            }
+
             $em->flush();
 
             $cacheService = $this->container->get('newscoop.cache');

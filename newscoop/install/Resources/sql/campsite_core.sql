@@ -2561,6 +2561,20 @@ INSERT INTO `output` VALUES (1,'Web');
 UNLOCK TABLES;
 
 --
+-- Table structure for table output_publication
+--
+
+DROP TABLE IF EXISTS `output_publication`;
+CREATE TABLE `output_publication` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_publication_id` int(11) unsigned NOT NULL,
+  `fk_language_id` int(11) unsigned NOT NULL,
+  `theme_path` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `publication_language` (`fk_publication_id`,`fk_language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `output_issue`
 --
 

@@ -595,6 +595,32 @@ class Comment implements DocumentInterface
     }
 
     /**
+     * Add one more like for comment
+     *
+     * @return self
+     */
+    public function addLike()
+    {
+        $this->likes = $this->likes+1;
+
+        return $this;
+    }
+
+    /**
+     * Set likes number for comment
+     *
+     * @param int $likesNumber
+     *
+     * @return self
+     */
+    public function setLikes($likesNumber)
+    {
+        $this->likes = $likesNumber;
+
+        return $this;
+    }
+
+    /**
      * Get the likes count
      *
      * @return int
@@ -602,6 +628,20 @@ class Comment implements DocumentInterface
     public function getLikes()
     {
         return $this->likes;
+    }
+
+    public function addDislike()
+    {
+        $this->dislikes = $this->dislikes+1;
+
+        return $this;
+    }
+
+    public function setDislikes($dislikesNumber)
+    {
+        $this->dislikes = $dislikesNumber;
+
+        return $this;
     }
 
     /**
