@@ -1,10 +1,10 @@
 newscoop:
-    build: ../
+    build: ../../
     command: newscoop
     ports:
         - "80:80"
     volumes:
-        - ../newscoop:/var/www/newscoop
+        - ../../newscoop:/var/www/newscoop
 
 mysql:
     image: "mysql:5"

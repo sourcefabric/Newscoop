@@ -1,6 +1,8 @@
 # How Do I Install Newscoop?
 
 - [Newscoop Ubuntu 14.04 Install Guide][ubuntu]
+- [Newscoop OSX Install Guide][osx]
+- [Newscoop Docker Install Guide][docker]
 
 ### Hardware Requirements
 
@@ -22,4 +24,6 @@
 
 [swap]: https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04
 [ubuntu]: https://github.com/sourcefabric/Newscoop/blob/v4.3/newscoop/docs/INSTALL-ubuntu.md
+[osx]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-osx.md
+[docker]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-docker.md
 [restore]: https://github.com/sourcefabric/Newscoop/blob/v4.3/newscoop/docs/UPGRADE_4_3.md#restoring-backup-package-from-newscoop-version-423424-on-43
