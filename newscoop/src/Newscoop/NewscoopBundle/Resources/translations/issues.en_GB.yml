@@ -59,4 +59,4 @@ Schedule: Schedule
 'There was an error reading the issue parameter.': 'There was an error reading the issue parameter.'
 'There was an error scheduling the $1 action on $2': 'There was an error scheduling the $1 action on $2'
 'The action scheduled on $1 could not be deleted.': 'The action scheduled on $1 could not be deleted.'
-'Click to open': null
+'Click to open': 'Click to open'

@@ -85,7 +85,7 @@ publications:
     general_settings: 'General Settings'
     comments_settings: 'Comments Settings'
     seo_settings: 'SEO Settings'
-    front_page_theme_settings: null
+    front_page_theme_settings: 'Front page theme settings'
     publication_removed: 'Publication was removed.'
     publication_saved: 'Publication changes were saved successfully.'
     remove:
@@ -113,7 +113,7 @@ publications:
         remove: Remove
     form_type:
         label:
-            follow_current_issue_theme: null
+            follow_current_issue_theme: 'Follow current issue theme'
             name: 'Publication Name'
             template_path: 'Template path'
             short_names: 'Short name'
