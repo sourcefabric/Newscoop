@@ -59,3 +59,4 @@ Schedule: Automatisieren
 'There was an error reading the issue parameter.': 'Fehler beim Lesen der Ausgabeneinstellung.'
 'There was an error scheduling the $1 action on $2': 'Fehler bei der Automatisierung von $1 am $2'
 'The action scheduled on $1 could not be deleted.': 'Die automatisierte Aktion für $1 konnte nicht gelöscht werden.'
+'Click to open': null

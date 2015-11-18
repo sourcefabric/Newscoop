@@ -85,6 +85,7 @@ publications:
     general_settings: 'Общие настройки'
     comments_settings: 'Настройки комментариев'
     seo_settings: 'Настройки SEO'
+    front_page_theme_settings: null
     publication_removed: 'Издание удалено.'
     publication_saved: 'Изменения в данных издания успешно сохранены.'
     remove:
@@ -112,6 +113,7 @@ publications:
         remove: Удалить
     form_type:
         label:
+            follow_current_issue_theme: null
             name: 'Название издания'
             template_path: 'Путь к шаблону'
             short_names: 'Сокращенное название'

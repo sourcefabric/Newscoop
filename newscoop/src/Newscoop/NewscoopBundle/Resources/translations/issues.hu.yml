@@ -59,3 +59,4 @@ Schedule: Ütemezés
 'There was an error reading the issue parameter.': 'Hiba történt a szám paraméter olvasásakor.'
 'There was an error scheduling the $1 action on $2': 'Hiba történt a/z $1 művelet beütemezésekor a következő időpontban: $2'
 'The action scheduled on $1 could not be deleted.': 'Nem lehet törölni a/z $1 időpontra beütemezett műveletet.'
+'Click to open': null
