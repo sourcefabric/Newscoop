@@ -65,8 +65,7 @@ class PublicationType extends AbstractType
                         'output' => 1,
                         'publication' => $options['publication']->getId(),
                         'language' => $language,
-                    )
-                );
+                    ));
 
                 $frontThemeChoices = array('0' => 'publications.form_type.label.follow_current_issue_theme');
                 $choosedTheme = 0;

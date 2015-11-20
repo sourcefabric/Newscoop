@@ -205,23 +205,24 @@ class PlaylistsService
     public function updateThemePlaylists($theme, $themePlaylists)
     {
         $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
+        if (is_array($newThemePlaylists)) {
+            foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
+                $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
+                if (!$playlist) {
+                    $playlist = new Playlist();
+                    $playlist->setName($playlistName);
 
-        foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
-            $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
-            if (!$playlist) {
-                $playlist = new Playlist();
-                $playlist->setName($playlistName);
+                    $this->em->persist($playlist);
+                }
 
-                $this->em->persist($playlist);
+                $themes = $playlist->getThemes();
+                $themes[$theme->getId()] = $themePlaylist['templates'];
+
+                $playlist->setThemes($themes);
             }
 
-            $themes = $playlist->getThemes();
-            $themes[$theme->getId()] = $themePlaylist['templates'];
-
-            $playlist->setThemes($themes);
+            $this->em->flush();
         }
-
-        $this->em->flush();
 
         return true;
     }
