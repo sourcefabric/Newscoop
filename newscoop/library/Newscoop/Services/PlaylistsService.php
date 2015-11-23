@@ -205,6 +205,9 @@ class PlaylistsService
     public function updateThemePlaylists($theme, $themePlaylists)
     {
         $newThemePlaylists = $this->buildNewThemePlaylists($themePlaylists);
+        if (!is_array($newThemePlaylists)) {
+            return true;
+        }
 
         foreach ($newThemePlaylists as $playlistName => $themePlaylist) {
             $playlist = $this->em->getRepository('Newscoop\Entity\Playlist')->getPlaylistByTitle($playlistName)->getOneOrNullResult();
