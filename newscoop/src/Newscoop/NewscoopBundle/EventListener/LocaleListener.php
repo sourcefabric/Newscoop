@@ -5,6 +5,7 @@
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\NewscoopBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -47,61 +48,66 @@ class LocaleListener
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        $pos = strpos($request->server->get('REQUEST_URI'), '/admin');
+        $isAdmin = (strpos($request->server->get('REQUEST_URI'), '/admin') !== false);
         $cookies = $request->cookies;
+        $session = $request->getSession();
+        $languageCode = null;
 
-        if ($cookies->has('TOL_Language')) {
-            $request->setLocale($cookies->get("TOL_Language"));
-        }
+        // Backend cookie
+        if ($isAdmin) {
+            if ($cookies->has('TOL_Language')) {
+                $languageCode = $cookies->get("TOL_Language");
+            }
 
-        // Allow for overriding locale with get parameter
-        if ($request->query->has('__set_lang')) {
-            try {
-                $language = $this->em->getRepository('Newscoop\Entity\Language')
-                    ->findByRFC3066bis($request->query->get('__set_lang'), true);
+        } else {
+            // Session language
+            if ($session && $session->has('languageCode')) {
+                $languageCode = $session->get('languageCode');
+            }
 
-                if ($language) {
-                    $request->setLocale($language->getCode());
+            // Allow for overriding locale with get parameter
+            if ($request->query->has('__set_lang')) {
 
-                    return;
-                }
-            } catch (\Exception $e) {}
-        }
+                try {
+                    $language = $this->em->getRepository('Newscoop\Entity\Language')
+                        ->findByRFC3066bis($request->query->get('__set_lang'), true);
 
-        // if it's not admin
-        if ($pos === false) {
-            // try to get locale from issue
+                    if ($language) {
+                        $languageCode = $language->getCode();
+                    }
+                } catch (\Exception $e) {}
+            }
+
+            // Try to get locale from issue
             $issueMetadata = $request->attributes->get('_newscoop_issue_metadata');
             $issueLanguageCode = $issueMetadata['code_default_language'];
             if ($issueLanguageCode) {
-                $request->setLocale($issueLanguageCode);
-
-                return;
+                $languageCode = $issueLanguageCode;
             }
 
-            // try to get locale from publication but only if locale is not in url
-            $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
-            $languageCode = $publicationMetadata['publication']['code_default_language'];
+            // Determine language from URL
             $locale = $this->extractLocaleFromUri($request->getRequestUri());
-            if (!$locale) {
-                $request->setLocale($languageCode);
-
-                return;
+            if ($locale) {
+                $language = $this->em->getRepository('Newscoop\Entity\Language')
+                        ->findOneByCode($locale);
+                if ($language) {
+                    $languageCode = $language->getCode();
+                }
             }
 
-            // get langauge from url and check if it's valid - if it's then set is as current locale
-            $cacheKey = $this->cacheService->getCacheKey(array('resolver', $locale), 'language');
-            if ($this->cacheService->contains($cacheKey)) {
-                $language = $this->cacheService->fetch($cacheKey);
-            } else {
-                $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneBy(array(
-                    'code' => $locale,
-                ));
-
-                $this->cacheService->save($cacheKey, $language);
+            // Last fallback is to use default publication language
+            if (is_null($languageCode)) {
+                $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
+                $languageCode = $publicationMetadata['publication']['code_default_language'];
             }
 
-            $request->setLocale(!is_null($language) ? $language->getCode() : $languageCode);
+            if ($session) {
+                $session->set('languageCode', $languageCode);
+            }
+        }
+
+        if (!is_null($languageCode)) {
+            $request->setLocale($languageCode);
         }
     }
 

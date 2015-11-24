@@ -59,3 +59,4 @@ Schedule: Programează
 'There was an error reading the issue parameter.': 'O eroare s-a produs în timpul interpretării parametrului ediţiei.'
 'There was an error scheduling the $1 action on $2': 'S-a produs o eroare la programarea acţiunii $1 la $2'
 'The action scheduled on $1 could not be deleted.': 'Acţiunea programată la $1 nu a putut fi ştearsă.'
+'Click to open': null

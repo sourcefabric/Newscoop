@@ -285,7 +285,12 @@ if($themePath != null && $themePath != '0'){
 			<br/>
 			<?php echo $translator->trans("so that default templates can be assigned to the issue.", array(), 'issues');?>
 			<br/>
-			<?php echo $translator->trans("Once this is done, the issue can be published", array(), 'issues');?>
+			<?php echo $translator->trans("Once this is done, the issue can be published", array(), 'issues');?>.
+			<br />
+			<?php if ($g_user->hasPermission('ManageTheme')) { ?>
+			<br />
+			<?php echo $translator->trans('Click to open', array(), 'issues');?> <a target="_blank" href="/<?php echo $ADMIN ?>/themes"><?php echo $translator->trans('Theme management', array(), 'themes');?></a>.
+			<?php } ?>
 			</TD>
 		</TR>
 		<?php }

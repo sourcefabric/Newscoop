@@ -85,6 +85,7 @@ publications:
     general_settings: 'Ustawienia główne'
     comments_settings: 'Ustawienia komentarzy'
     seo_settings: 'Ustawienia SEO'
+    front_page_theme_settings: null
     publication_removed: 'Publikacja została usunięta'
     publication_saved: 'Zmiany w publikacji zostały zapisane pomyślnie.'
     remove:
@@ -112,6 +113,7 @@ publications:
         remove: Usuń
     form_type:
         label:
+            follow_current_issue_theme: null
             name: 'Nazwa publikacji'
             template_path: 'ścieżka szablonu'
             short_names: 'Krótkie nazwy'

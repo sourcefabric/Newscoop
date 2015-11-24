@@ -59,3 +59,4 @@ Schedule: null
 'There was an error reading the issue parameter.': '이슈 파라미터를 읽는중 에러가 있습니다. '
 'There was an error scheduling the $1 action on $2': '$1 기능을 $2 에 스케듈링하는데 에러가 있습니다. '
 'The action scheduled on $1 could not be deleted.': '$1 에 스케듈링된 기능이 삭제될수 없습니다.'
+'Click to open': null

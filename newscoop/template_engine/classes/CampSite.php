@@ -140,7 +140,7 @@ final class CampSite extends CampSystem
                     $template = '_campsite_error.tpl';
                     break;
                 default:
-                    $themePath = $themesService->getThemePath();
+                    $themePath = $themesService->getThemePath(CampRequest::GetVar('language', null));
                     $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
             }
         }

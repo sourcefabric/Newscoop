@@ -59,3 +59,4 @@ Schedule: გრაფიკი
 'There was an error reading the issue parameter.': 'გამოცემის პარამეტრის კითხვისას დაფიქსირდა შეცდომა.'
 'There was an error scheduling the $1 action on $2': '$1 მოქმედების $2 დროზე დაგეგმვისას დაფიქსირდა შეცდომა'
 'The action scheduled on $1 could not be deleted.': '$1 დროზე დაგეგმილი მოქმედების წაშლა შეუძლებელია.'
+'Click to open': null

@@ -59,3 +59,4 @@ Schedule: null
 'There was an error reading the issue parameter.': 'Er was een fout bij het lezen van de uitgave parameter.'
 'There was an error scheduling the $1 action on $2': 'Er was een probleem bij het plannen van de $1 actie om $2'
 'The action scheduled on $1 could not be deleted.': 'De geplande actie om $1 kan niet worden gewist.'
+'Click to open': null

@@ -142,6 +142,18 @@
                   {{ form_widget(form.metaDescription, {'attr': {'class': 'form-control input-sm'}}) }}
                 </div>
             </div>
+            {% if publication and publicationIssuesLanguages %}
+                <h3>{{ 'publications.front_page_theme_settings'|trans({},'pub') }}</h3>
+                {% for languageCode in publicationIssuesLanguages %}
+                {% set widget_name = languageCode ~ "_front_theme" %}
+                <div class="form-group">
+                    {{ form_label(attribute(form, widget_name), label|default(null), {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-8">
+                      {{ form_widget(attribute(form, widget_name), {'attr': {'class': 'form-control input-sm'}}) }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="clearfix"></div>
         <button type="submit" class="save-button pull-right">{{ 'Save'|trans({}, 'messages') }}</button>
