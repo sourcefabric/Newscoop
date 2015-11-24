@@ -17,12 +17,6 @@ if (empty($userIsBlogger)) { ?>
         class="input_checkbox" <?php if ($articleObj->ratingEnabled()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> />
         <label for="f_rating_enabled"><?php echo $translator->trans('Enable Rating', array(), 'articles'); ?></label>
       </li>
-      <li<?php
-      $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
-      if (!$pluginsService->isEnabled('newscoop/newscoop-paywall-bundle') && $articleObj->isPublic()) { ?> style="display:none"<?php } ?>
-      ><input type="checkbox" name="f_is_public" id="f_is_public"
-        class="input_checkbox" <?php if ($articleObj->isPublic()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> /> <label for="f_is_public"><?php echo $translator->trans('Visible to non-subscribers', array(), 'articles'); ?></label>
-      </li>
     <?php
     foreach ($dbColumns as $dbColumn) {
         // Custom switches
@@ -53,7 +47,6 @@ if (empty($userIsBlogger)) { ?>
             var vals = {
                 'setOnFrontPage': $('input[name=f_on_front_page]', form),
                 'setOnSectionPage': $('input[name=f_on_section_page]', form),
-                'setIsPublic': $('input[name=f_is_public]', form),
                 'setRatingEnabled': $('input[name=f_rating_enabled]', form)
             };
 
