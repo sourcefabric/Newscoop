@@ -28,7 +28,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
             ->setName('webcode:generate')
             ->setDescription('Generate webcodes for articles without webcode. It\'s always safe to run the command without the clear parameters.')
             ->addArgument('number', InputArgument::OPTIONAL, 'Article number range to start from, e.g. 300', 1)
-            ->addOption('clear', null, InputOption::VALUE_NONE, 'If set, clears webcodes and starts generating webcodes afterards. Use this the first time.')
+            ->addOption('clear', null, InputOption::VALUE_NONE, 'If set, clears webcodes and starts generating webcodes afterwards. Use this the first time.')
             ->addOption('only-clear', null, InputOption::VALUE_NONE, 'If set, clears webcodes. Doesn\'t start generation.');
     }
 
