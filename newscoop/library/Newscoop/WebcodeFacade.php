@@ -46,7 +46,8 @@ class WebcodeFacade
     {
         if (empty($webcode)) {
             $webcode = $this->generateWebcode();
-        } else if (!$this->isUnique($webcode)) {
+        }
+        if (!$this->isUnique($webcode)) {
             throw new \InvalidArgumentException("Webcode '$webcode' is in use.");
         }
 

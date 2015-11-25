@@ -26,9 +26,10 @@ class GenerateWebcodeCommand extends Console\Command\Command
     {
         $this
             ->setName('webcode:generate')
-            ->setDescription('Generates webcodes for articles without it.')
+            ->setDescription('Generate webcodes for articles without webcode. It\'s always safe to run the command without the clear parameters.')
             ->addArgument('number', InputArgument::OPTIONAL, 'Article number range to start from, e.g. 300', 1)
-            ->addOption('clear', null, InputOption::VALUE_NONE, 'If set, clears indexes. Use this first time.');
+            ->addOption('clear', null, InputOption::VALUE_NONE, 'If set, clears webcodes and starts generating webcodes afterwards. Use this the first time.')
+            ->addOption('only-clear', null, InputOption::VALUE_NONE, 'If set, clears webcodes. Doesn\'t start generation.');
     }
 
     /**
@@ -44,7 +45,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
         try {
             ini_set('memory_limit', '-1');
 
-            if ($input->getOption('clear')) {
+            if ($input->getOption('clear') || $input->getOption('only-clear')) {
                 $output->writeln('<info>Clearing webcodes.</info>');
 
                 $qb = $em->createQueryBuilder();
@@ -61,6 +62,9 @@ class GenerateWebcodeCommand extends Console\Command\Command
                     ->execute();
 
                 $output->writeln('<info>Webcodes cleared: '.$result.'.</info>');
+                if ($input->getOption('only-clear')) {
+                    return 0;
+                }
             }
 
             $output->writeln('<info>Generating webcodes. Please wait! It can take up to few minutes, depends on database size.</info>');
@@ -84,6 +88,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
                 $articles = $em->getRepository('Newscoop\Entity\Article')
                     ->createQueryBuilder('a')
                     ->where('a.webcode IS NULL')
+                    ->orderBy('a.number', 'ASC')
                     ->setFirstResult($offset)
                     ->setMaxResults($batch)
                     ->getQuery()
