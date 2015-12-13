@@ -201,7 +201,8 @@ class ArticlesController extends FOSRestController
      *     parameters={
      *         {"name"="type", "dataType"="integer", "required"=true, "description"="Article type"},
      *         {"name"="language", "dataType"="string", "required"=false, "description"="Language code"},
-     *         {"name"="issue", "dataType"="string", "required"=false, "description"="Issue number"}
+     *         {"name"="issue", "dataType"="string", "required"=false, "description"="Issue number"},
+     *         {"name"="section", "dataType"="string", "required"=false, "description"="Section number"}
      *     }
      * )
      *
@@ -218,7 +219,7 @@ class ArticlesController extends FOSRestController
         $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticles($publication, $request->get('type', null), $request->get('language', null), $request->get('issue', null));
+            ->getArticles($publication, $request->get('type', null), $request->get('language', null), $request->get('issue', null), $request->get('section', null));
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
