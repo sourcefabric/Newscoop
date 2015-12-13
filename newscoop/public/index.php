@@ -66,6 +66,7 @@ if (APPLICATION_ENV === 'production') {
 
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
+Request::setTrustedProxies(array($request->server->get('REMOTE_ADDR')));
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
