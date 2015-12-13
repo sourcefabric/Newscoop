@@ -159,7 +159,7 @@ class ImageService
                     'quality' => 90, //from 0 to 100
                 ));
             $filesystem->chmod($thumbnailPath, 0644);
-        } catch (\Exceptiom $e) {
+        } catch (\Exception $e) {
             $filesystem->remove($imagePath);
             $filesystem->remove($thumbnailPath);
             $this->orm->remove($image);
