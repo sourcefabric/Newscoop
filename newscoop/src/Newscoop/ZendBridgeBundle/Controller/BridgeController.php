@@ -44,6 +44,11 @@ class BridgeController extends Controller
         $application = \Zend_Registry::get('zend_application');
         $bootstrap = $application->getBootstrap();
 
+        // set https on when it's ssl
+        if ($request->isSecure()) {
+            $_SERVER['HTTPS'] = 'on';
+        }
+
         $front = $bootstrap->getResource('FrontController');
         $front->setDefaultControllerName('legacy');
         $front->returnResponse(true);

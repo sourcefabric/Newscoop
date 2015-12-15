@@ -29,7 +29,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      *
      * @return \Doctrine\ORM\Query
      */
-    public function getArticles($publication, $type = null, $language = null, $issue = null)
+    public function getArticles($publication, $type = null, $language = null, $issue = null, $section = null)
     {
         $em = $this->getEntityManager();
 
@@ -42,30 +42,19 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 'publication' => $publication,
             ));
 
-        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
-            ->createQueryBuilder('a')
-            ->select('count(a)')
-            ->where('a.workflowStatus = :workflowStatus')
-            ->andWhere('a.publication = :publication')
-            ->setParameters(array(
-                'workflowStatus' => 'Y',
-                'publication' => $publication,
-            ));
-
         if ($type) {
-            $countQueryBuilder->andWhere('a.type = :type')
-                ->setParameter('type', $type);
-
             $queryBuilder->andWhere('a.type = :type')
                 ->setParameter('type', $type);
         }
 
         if ($issue) {
-            $countQueryBuilder->andWhere('a.issueId = :issue')
-                ->setParameter('issue', $issue);
-
             $queryBuilder->andWhere('a.issueId = :issue')
                 ->setParameter('issue', $issue);
+        }
+
+        if ($section) {
+            $queryBuilder->andWhere('a.sectionId = :section')
+                ->setParameter('section', $section);
         }
 
         if ($language) {
@@ -76,13 +65,12 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 throw new NotFoundHttpException('Results with language "'.$language.'" was not found.');
             }
 
-            $countQueryBuilder->andWhere('a.language = :languageId')
-                ->setParameter('languageId', $languageId->getId());
-
             $queryBuilder->andWhere('a.language = :languageId')
                 ->setParameter('languageId', $languageId->getId());
         }
 
+        $countQueryBuilder = clone $queryBuilder;
+        $countQueryBuilder->select('count(a)');
         $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
 
         $query = $queryBuilder->getQuery();
