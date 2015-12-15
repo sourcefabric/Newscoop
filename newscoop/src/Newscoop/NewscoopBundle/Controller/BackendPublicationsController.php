@@ -59,7 +59,7 @@ class BackendPublicationsController extends Controller
     {
         $resourceId = new ResourceId('Publication/Edit');
         $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
-        $publicationThemes = $themeManagementService->getThemes($publication->getId());
+        $publicationThemes = $themeManagementService->getThemes($publication);
 
         $user = $this->container->get('user')->getCurrentUser();
         $translator = $this->container->get('translator');
@@ -82,9 +82,11 @@ class BackendPublicationsController extends Controller
         }
 
         $publicationIssuesLanguages = array();
-        foreach ($publication->getIssues() as $key => $issue) {
-            if (!in_array($issue->getLanguageCode(), $publicationIssuesLanguages)) {
-                $publicationIssuesLanguages[] = $issue->getLanguageCode();
+        if (is_array($publication->getIssues())) {
+            foreach ($publication->getIssues() as $key => $issue) {
+                if (!in_array($issue->getLanguageCode(), $publicationIssuesLanguages)) {
+                    $publicationIssuesLanguages[] = $issue->getLanguageCode();
+                }
             }
         }
 
@@ -189,9 +191,11 @@ class BackendPublicationsController extends Controller
             }
 
             $publicationIssuesLanguages = array();
-            foreach ($publication->getIssues() as $key => $issue) {
-                if (!array_key_exists($issue->getLanguageCode(), $publicationIssuesLanguages)) {
-                    $publicationIssuesLanguages[$issue->getLanguageCode()] = $issue->getLanguage();
+            if (is_array($publication->getIssues())) {
+                foreach ($publication->getIssues() as $key => $issue) {
+                    if (!array_key_exists($issue->getLanguageCode(), $publicationIssuesLanguages)) {
+                        $publicationIssuesLanguages[$issue->getLanguageCode()] = $issue->getLanguage();
+                    }
                 }
             }
 
