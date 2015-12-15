@@ -150,7 +150,7 @@ class IssueService implements IssueServiceInterface
         }
 
         $language = $this->em->getRepository('Newscoop\Entity\Language')
-            ->findOneByCode($languageCode);
+            ->findOneBy(array('code' => $languageCode));
         if (!($language instanceof \Newscoop\Entity\Language)) {
             $language = $publication->getDefaultLanguage();
         }

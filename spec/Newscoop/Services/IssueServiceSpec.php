@@ -3,6 +3,7 @@
 namespace spec\Newscoop\Services;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Request;
 use Newscoop\Entity\Issue;
 use Newscoop\Entity\Language;
@@ -11,6 +12,7 @@ use Newscoop\Services\CacheService;
 use Newscoop\Services\PublicationService;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Repository\IssueRepository;
+use Doctrine\ORM\EntityRepository;
 use Newscoop\Entity\Publication;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Doctrine\ORM\AbstractQuery;
@@ -26,16 +28,15 @@ class IssueServiceSpec extends ObjectBehavior
     public function let(
         EntityManager $em,
         PublicationService $publicationService,
-        IssueRepository $repository,
+        IssueRepository $issueRepository,
+        EntityRepository $languageRepository,
         Issue $issue,
         Publication $publication,
         AbstractQuery $query,
-        CacheService $cacheService)
-    {
-        $em
-            ->getRepository('Newscoop\Entity\Issue')
-            ->willReturn($repository);
-
+        CacheService $cacheService
+    ){
+        $em->getRepository('Newscoop\Entity\Issue')->willReturn($issueRepository);
+        $em->getRepository('Newscoop\Entity\Language')->willReturn($languageRepository);
         $publicationService->getPublication()->willReturn($publication);
 
         $this->beConstructedWith($em, $publicationService, $cacheService);
@@ -45,15 +46,15 @@ class IssueServiceSpec extends ObjectBehavior
         Request $request,
         Issue $issue,
         ParameterBag $attributes,
-        $repository,
+        $issueRepository,
         $publication,
-        $query)
-    {
-        $repository->findOneBy(array(
+        $query
+    ){
+        $issueRepository->findOneBy(array(
             'publication' => $publication,
             'shortName' => 'may2014',
         ))->willReturn($issue);
-        $repository->getIssue('en', $publication, 'may2014')->willReturn($query);
+        $issueRepository->getIssue('en', $publication, 'may2014')->willReturn($query);
         $query->getOneOrNullResult()->willReturn($issue);
 
         $request->getRequestUri()->willReturn('/en/may2014/60/test-article.htm');
@@ -82,20 +83,17 @@ class IssueServiceSpec extends ObjectBehavior
         Issue $issue,
         Publication $publication,
         $query,
-        $repository,
-        $em)
-    {
-        $publication->getId()->willReturn(1);
+        $issueRepository,
+        $languageRepository,
         $em
-            ->getReference('Newscoop\Entity\Issue', 7)
-            ->willReturn($issue);
-        $repository->getLastPublishedByPublication(1)->willReturn($query);
-        $issueResult = array(array(
-            'id' => 7,
-            'number' => 12,
-            'workflowStatus' => 'Y',
-        ));
-        $query->getArrayResult()->willReturn($issueResult);
+    ){
+        $publication->getId()->willReturn(1);
+        $em->getReference('Newscoop\Entity\Issue', 7)->willReturn($issue);
+        $language = new Language();
+        $language->setId(1);
+        $languageRepository->findOneBy(Argument::type('array'))->willReturn($language);
+        $issueRepository->getLastPublishedByPublicationAndLanguage(1, 1)->willReturn($query);
+        $query->getSingleResult()->willreturn($issue);
 
         $this->getLatestPublishedIssue()->shouldReturn($issue);
     }

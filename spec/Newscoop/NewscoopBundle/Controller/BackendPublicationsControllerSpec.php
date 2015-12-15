@@ -13,12 +13,14 @@ use Symfony\Component\Translation\Translator;
 use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Publication;
+use Newscoop\Entity\Resource;
 use Newscoop\Services\UserService;
 use Newscoop\NewscoopBundle\Form\Type\PublicationType;
 use Newscoop\NewscoopBundle\Form\Type\RemovePublicationType;
 use Doctrine\ORM\AbstractQuery;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 
 class BackendPublicationsControllerSpec extends ObjectBehavior
 {
@@ -38,6 +40,7 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         \Newscoop\Entity\Repository\ArticleRepository $articleRepository,
         DelegatingEngine $templating,
         Publication $publication,
+        ThemeManagementServiceLocal $themeManagementServiceLocal,
         \Symfony\Component\Form\FormFactory $formFactory,
         \Symfony\Component\Form\Form $form,
         \Symfony\Component\Form\FormView $formView,
@@ -74,6 +77,13 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         $articleRepository->getArticlesCountForPublication(Argument::type('int'))->willReturn($query);
         $session->getFlashBag()->willReturn($flashBag);
 
+        $publication->getId()->willReturn(1);
+        $publication->getIssues()->willReturn(array());
+        $publication->getDefaultAlias()->willReturn('newscoop.dev');
+        $publication->setDefaultAlias(Argument::any())->willReturn($publication);
+
+        $themeManagementServiceLocal->getThemes(1)->willReturn(array());
+
         $this->setContainer($container);
     }
 
@@ -107,7 +117,8 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         $form,
         $formFactory,
         $formView,
-        $router
+        $router,
+        Resource $resource
     ){
         $user->hasPermission('ManagePub')->willReturn(true);
         $response = new Response();
@@ -120,7 +131,7 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         ->willReturn($response);
 
         $formFactory->create(
-            Argument::type('\Newscoop\NewscoopBundle\Form\Type\PublicationType'), 
+            Argument::type('\Newscoop\NewscoopBundle\Form\Type\PublicationType'),
             Argument::type('\Newscoop\Entity\Publication'),
             Argument::any()
         )->willReturn($form);
@@ -176,7 +187,7 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         ->willReturn($response);
 
         $formFactory->create(
-            Argument::type('\Newscoop\NewscoopBundle\Form\Type\RemovePublicationType'), 
+            Argument::type('\Newscoop\NewscoopBundle\Form\Type\RemovePublicationType'),
             Argument::type('\Newscoop\Entity\Publication'),
             Argument::any()
         )->willReturn($form);

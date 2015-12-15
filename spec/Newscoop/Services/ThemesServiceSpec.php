@@ -7,12 +7,14 @@ use Newscoop\IssueServiceInterface;
 use Newscoop\Services\CacheService;
 use Newscoop\Services\PublicationService;
 use Newscoop\Entity\Issue;
+use Newscoop\Entity\Language;
 use Newscoop\Entity\Publication;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Newscoop\Entity\Output;
 use Newscoop\Entity\Output\OutputSettingsIssue;
+use Newscoop\Entity\Output\OutputSettingsPublication;
 use Prophecy\Argument;
 use Newscoop\Entity\Resource;
 
@@ -34,11 +36,13 @@ class ThemesServiceSpec extends ObjectBehavior
         Registry $doctrine,
         EntityRepository $repository,
         Output $output,
-        OutputSettingsIssue $issueOutput
-    )
-    {
+        OutputSettingsIssue $issueOutput,
+        OutputSettingsPublication $publicationOutput,
+        Language $language
+    ){
         $issueService->getIssue()->willReturn($issue);
         $publicationService->getPublication()->willReturn($publication);
+        $publicationService->getPublicationMetadata()->willReturn(array('request' => array('uri' => '/')));
         $doctrine->getManager()->willReturn($em);
 
         $em->getRepository(Argument::exact('Newscoop\Entity\Output'))->willReturn($repository);
@@ -46,6 +50,12 @@ class ThemesServiceSpec extends ObjectBehavior
 
         $em->getRepository(Argument::exact('Newscoop\Entity\Output\OutputSettingsIssue'))->willReturn($repository);
         $repository->findBy(array('issue' => 1, 'output' => 1))->willReturn(array($issueOutput));
+
+        $em->getRepository(Argument::exact('Newscoop\Entity\Output\OutputSettingsPublication'))->willReturn($repository);
+        $repository->findBy(array('output' => 1, 'publication' => $publication, 'language' => 1))->willReturn(array($publicationOutput));
+
+        $em->getRepository(Argument::exact('Newscoop\Entity\Language'))->willReturn($repository);
+        $repository->findOneBy(Argument::type('array'))->willReturn($language);
 
         $issue->getId()->willReturn(1);
         $issue->getNumber()->willReturn(10);
@@ -79,10 +89,14 @@ class ThemesServiceSpec extends ObjectBehavior
             ->during('findByName', array(''));
     }
 
-    public function it_gets_theme_path(OutputSettingsIssue $issueOutput, Resource $resource)
-    {
+    public function it_gets_theme_path(
+        OutputSettingsIssue $issueOutput,
+        Resource $resource,
+        $publicationOutput
+    ){
         $resource->getPath()->willReturn('publication_1/theme_1/');
         $issueOutput->getThemePath()->willReturn($resource);
+        $publicationOutput->getThemePath()->willReturn($resource);
         $this->getThemePath()->shouldReturn('publication_1/theme_1/');
     }
 }

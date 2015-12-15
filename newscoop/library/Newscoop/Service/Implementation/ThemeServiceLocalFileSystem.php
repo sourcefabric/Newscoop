@@ -517,6 +517,10 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 */
 	protected function escapePath($path)
 	{
+        if(!defined('DIR_SEP')) {
+            define('DIR_SEP', DIRECTORY_SEPARATOR);
+        }
+
 		return str_replace(DIR_SEP, '/', $path);
 	}
 

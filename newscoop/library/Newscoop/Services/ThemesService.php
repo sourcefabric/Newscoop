@@ -79,9 +79,9 @@ class ThemesService implements ThemesServiceInterface
         if (!($language instanceof \Newscoop\Entity\Language)) {
             $languageCode = $language;
             $language = $this->em->getRepository('Newscoop\Entity\Language')
-                ->findOneByCode($language);
+                ->findOneBy(array('code' => $language));
         }
-        
+
         if (!is_null($languageId)) {
             $languageId = $language->getId();
         } else if (is_null($languageId)) {
