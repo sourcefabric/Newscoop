@@ -45,7 +45,7 @@ class BridgeController extends Controller
         $bootstrap = $application->getBootstrap();
 
         // set https on when it's ssl
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+        if ($request->isSecure()) {
             $_SERVER['HTTPS'] = 'on';
         }
 
