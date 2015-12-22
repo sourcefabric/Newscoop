@@ -152,6 +152,14 @@ final class CampSite extends CampSystem
             'error_message' => isset($error_message) ? $error_message : null
         );
         $document->render($params);
+
+        if (array_key_exists('controller', $GLOBALS)) {
+            $GLOBALS['controller']->getResponse()->setHeader(
+                'Content-Type',
+                sprintf('%s; charset=%s', $document->getMimeType(), $document->getCharset())
+            );
+            $GLOBALS['header_content_type_set'] = true;
+        }
     }// fn render
 
     /**
