@@ -68,8 +68,11 @@ class ThemesService implements ThemesServiceInterface
      */
     public function getThemePath($language = null)
     {
+        $frontpage = false;
         $publicationMetadata = $this->publicationService->getPublicationMetadata();
-        $frontpage = $this->isHomepage($publicationMetadata['request']['uri'], true);
+        if (isset($publicationMetadata['request'])) {
+            $frontpage = $this->isHomepage($publicationMetadata['request']['uri'], true);
+        }
         $languageId = null;
         $issue = $this->issueService->getIssue();
         if (!$issue) {
