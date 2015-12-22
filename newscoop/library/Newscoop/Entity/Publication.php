@@ -141,7 +141,7 @@ class Publication
 
     /**
      * @ORM\Column(nullable=True)
-     * @var int
+     * @var string
      */
     protected $seo;
 

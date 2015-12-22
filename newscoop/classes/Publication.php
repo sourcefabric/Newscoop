@@ -269,7 +269,7 @@ class Publication extends DatabaseObject {
      */
     public function getSeo()
     {
-        return @unserialize($this->m_data['seo']);
+        return (array) @unserialize($this->m_data['seo']);
     } // fn getSeo
 
 
