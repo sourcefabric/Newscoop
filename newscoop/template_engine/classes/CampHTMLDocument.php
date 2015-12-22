@@ -311,6 +311,13 @@ final class CampHTMLDocument
             }
         }
 
+        if (strpos($template, 'rss.tpl') !== false) {
+            $this->setMimeType('application/rss+xml');
+        }
+        if (strpos($template, 'atom.tpl') !== false) {
+            $this->setMimeType('application/atom+xml');
+        }
+
         try {
             $tpl->display($template);
         } catch (\Exception $e) {
