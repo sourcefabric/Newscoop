@@ -1,81 +1,81 @@
-get: get
+get: pobierz
 Soundcloud: SoundCloud
-Templates: Templates
-'Feedback Messages': 'Feedback Messages'
-'Article Playlists': 'Article Playlists'
-'Check all': 'Check all'
-view: view
-undo/redo: undo/redo
-underline: underline
-translate: translate
-'text direction': 'text direction'
-'text alignment': 'text alignment'
-table: table
+Templates: Szablony
+'Feedback Messages': 'Wiadomość zwrotna'
+'Article Playlists': 'Listy artykułów'
+'Check all': 'Zaznacz wszystkie'
+view: zobacz
+undo/redo: cofnij/dalej
+underline: podkreślenie
+translate: tłumaczenia
+'text direction': 'kierunek tekstu'
+'text alignment': 'pozycjonowanie tekstu'
+table: tabela
 superscript: superscript
 subscript: subscript
-subhead: subhead
-strikethrough: strikethrough
-statusbar: statusbar
-'spell checker enabled': 'spell checker enabled'
-'source view': 'source view'
-publish: publish
-notify: notify
-moderate: moderate
-manage: manage
-'list number': 'list number'
-'list bullet': 'list bullet'
+subhead: podrubryka
+strikethrough: przekreślenie
+statusbar: 'pasek statusu'
+'spell checker enabled': 'sprawdzanie pisowni'
+'source view': 'widok źródla'
+publish: publikacja
+notify: powiadomienia
+moderate: moderacja
+manage: zarządzanie
+'list number': 'lista numerowana'
+'list bullet': 'lista nieuporządkowana'
 link: link
-italic: italic
-indent: indent
-image: image
-'horizontal rule': 'horizontal rule'
-handle: handle
-guest: guest
-'font size': 'font size'
-'font face': 'font face'
-'font color': 'font color'
-find/replace: find/replace
-enlarge: enlarge
-enable: enable
-edit: edit
-delete: delete
-copy/cut/paste: copy/cut/paste
-clear: clear
-'character map': 'character map'
-bold: bold
-attach: attach
-'any resource': 'any resource'
-admin: admin
-add: add
-'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
-'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
-'User type saved.': 'User type saved.'
-'User type deleted.': 'User type deleted.'
-'User type added.': 'User type added.'
-'User Groups': 'User Groups'
-Themes: Themes
-'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+italic: pochylenie
+indent: wcięcie
+image: zdjęcie
+'horizontal rule': 'lista pozioma'
+handle: uchwyt
+guest: gość
+'font size': 'rozmiar czcionki'
+'font face': 'rodzaj czcionki'
+'font color': 'kolor czcionki'
+find/replace: znajdź/zamień
+enlarge: powiększ
+enable: odblokuj
+edit: edytuj
+delete: usuń
+copy/cut/paste: kopiuj/wytnij/wklej
+clear: wyczyść
+'character map': 'lista znaków'
+bold: pogrubienie
+attach: dołacz
+'any resource': 'każdy zasób'
+admin: administrator
+add: dodaj
+'You cant deny yourself to manage $1': 'Nie możesz zabronić sobie zarządzania $1'
+'You are not allowed to $1 $2.': 'Nie masz uprawnień do $1 $2.'
+'User type saved.': 'Rodzaj użytkownika zapisany.'
+'User type deleted.': 'Rodzaj użytkownika usunięty.'
+'User type added.': 'Rodzaj użytkownika dodany.'
+'User Groups': 'Grupy użytkowników'
+Themes: Szablony
+'That type name already exists, please choose a different name.': 'Ta nazwa typu już istnieje, wybierz inną nazwę.'
 System: System
-Structure: Structure
-'Search Indexer': 'Search Indexer'
-'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
-ReCaptcha: ReCaptcha
-Polls: Polls
-'Permissions:': 'Permissions:'
-'Permissions updated': 'Permissions updated'
-Notification: Notification
-Log: Log
-Layout: Layout
-Global: Global
-Files: Files
-'Error: ': 'Error: '
-'Edit user type $1': 'Edit user type $1'
-Deny: Deny
-'Delete user type $1': 'Delete user type $1'
-'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
-Cache: Cache
-Backup: Backup
-Authoring: Authoring
-Allow: Allow
-'User types': 'User types'
-'No user types.': 'No user types.'
+Structure: Struktura
+'Search Indexer': 'Indeksowanie wyszukiwania'
+'Rich-Text Editor Preferences': 'Ustawienia edytora tekstu'
+ReCaptcha: ReCaptacha
+Polls: Ankiety
+'Permissions:': Uprawnienia
+'Permissions updated': 'Uprawnienia zaktualizowane'
+Notification: Powiadomienia
+Log: Logi
+Layout: Układ
+Global: Globalnie
+Files: Pliki
+'Error: ': Błąd
+'Edit user type $1': 'Edytuj typ użytkownika $1'
+Deny: Zabroń
+'Delete user type $1': 'Usuń typ użytkownika $1'
+'Can not delete a user type with assigned users.': 'Nie można usunąć typu użytkownika z przydzielonymi użytkownikami.'
+Cache: 'Pamięć podręczna'
+Backup: 'Kopia zapasowa'
+Authoring: Tworzenie
+Allow: Zezwól
+'User types': 'Typy użytkowników'
+'No user types.': 'Brak typów użytkowników'

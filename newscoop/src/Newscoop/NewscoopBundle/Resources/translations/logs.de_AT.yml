@@ -1,11 +1,11 @@
-show: show
-hide: hide
-Title: Title
-'Resource Type:': 'Resource Type:'
-'Resource Type': 'Resource Type'
-Resource: Resource
+show: anzeigen
+hide: verbergen
+Title: Titel
+'Resource Type:': Ressourcentyp
+'Resource Type': Ressourcentyp
+Resource: Ressource
 Diff: Diff
-'Broken data': 'Broken data'
-'Action Type:': 'Action Type:'
-'No logs.': 'No logs.'
-User: User
+'Broken data': 'Kaputte Daten'
+'Action Type:': 'Aktionstyp: '
+'No logs.': 'Keine Logs. '
+User: Benutzer

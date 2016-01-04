@@ -20,7 +20,7 @@ Support: Support
 Last: Last
 First: First
 Feedback: Feedback
-'Edit your password': 'Edit your password'
+'Edit your password': 'Change your password'
 'Edit user': 'Edit user'
 'Edit permissions': 'Edit permissions'
 Detail: Detail
@@ -35,7 +35,7 @@ MiB: MiB
 at: at
 'You must at least upload one file.': 'You must at least upload one file.'
 'Warning: the existing data and themes will be deleted!': 'Warning: the existing data and themes will be deleted!'
-'Value is required and cant be empty': 'Value is required and cant be empty'
+'Value is required and cant be empty': 'Value is required and can not be empty'
 Upload: Upload
 'Update comment': 'Update comment'
 'Time created': 'Time created'
@@ -159,5 +159,5 @@ Backup/Restore: Backup/Restore
 'Active users': 'Active users'
 'New comments': 'New comments'
 'Published articles': 'Published articles'
-'Last 7 days statistics': 'Last 7 days statistics'
+'Last 7 days statistics': 'Statistics for the last 7 days'
 'Change password': 'Change password'

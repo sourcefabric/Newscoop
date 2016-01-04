@@ -1,67 +1,67 @@
-third: third
-second: second
-forth: forth
-first: first
-'You must input a number greater than 0 into the Number of addresses field.': 'You must input a number greater than 0 into the Number of addresses field.'
-'You must input a number between 0 and 255 into the Start IP address $1 field.': 'You must input a number between 0 and 255 into the Start IP address $1 field.'
-'User IP access list management': 'User IP access list management'
-'The IP address group conflicts with another existing group.': 'The IP address group conflicts with another existing group.'
-'Subscription sections': 'Subscription sections'
-'No records.': 'No records.'
-'You have subscription for all available publications': 'You have subscription for all available publications'
-'Subscription type:': 'Subscription type:'
-'Start:': 'Start:'
-'Start Date': 'Start Date'
-'Sections:': 'Sections:'
-'Publication:': 'Publication:'
-'Paid days': 'Paid days'
-'Paid Days:': 'Paid Days:'
-Paid: Paid
-'No subscriptions': 'No subscriptions'
-'Languages:': 'Languages:'
-'Edit all sections': 'Edit all sections'
-'Days:': 'Days:'
-'Days must be number': 'Days must be number'
-Any: Any
-'Add section': 'Add section'
-saved: saved
-removed: removed
-deleted: deleted
-deactivated: deactivated
-activated: activated
-'Value is required and cant be empty': 'Value is required and cant be empty'
-'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
-'That $1 already exists, please choose a different $2.': 'That $1 already exists, please choose a different $2.'
-'Subscriptions exist for all available publications.': 'Subscriptions exist for all available publications.'
-'Subscription IP Addresses': 'Subscription IP Addresses'
-'Subscription $1': 'Subscription $1'
-'Subscriber saved.': 'Subscriber saved.'
-'Subscriber management': 'Subscriber management'
-'Subscriber deleted.': 'Subscriber deleted.'
-'Start IP': 'Start IP'
-'Select country': 'Select country'
-'Number of addresses': 'Number of addresses'
-'Number of Addressses': 'Number of Addressses'
-'No IP Addresses': 'No IP Addresses'
-'IP Address added allready': 'IP Address added allready'
-'IP Address $1': 'IP Address $1'
-'IP Access': 'IP Access'
-'Full Name': 'Full Name'
-'Edit subscriptions': 'Edit subscriptions'
-'Edit subscriber $1': 'Edit subscriber $1'
-E-Mail: E-Mail
-'Delete subscriber $1': 'Delete subscriber $1'
-'Creation Date': 'Creation Date'
-'Change subscriber information': 'Change subscriber information'
-'Add new IP address': 'Add new IP address'
-'Add new IP Address': 'Add new IP Address'
-'Account Name': 'Account Name'
-'%value% must be greater than %min%': '%value% must be greater than %min%'
-'%value% is not a valid IP Address': '%value% is not a valid IP Address'
-'Regardless of the language': 'Regardless of the language'
-'Individual languages': 'Individual languages'
-'Add sections now': 'Add sections now'
-'Add sections later': 'Add sections later'
-'Subscription Type': 'Subscription Type'
-'Paid (payment will be confirmed later)': 'Paid (payment will be confirmed later)'
-'Paid (confirm payment now)': 'Paid (confirm payment now)'
+third: harmadik
+second: második
+forth: tovább
+first: első
+'You must input a number greater than 0 into the Number of addresses field.': 'A Címek száma mezőben nullánál nagyobb számot kell megadnod.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'A Kezdő IP-cím $1 mezőben meg kell adnod egy 0 és 255 közti számot.'
+'User IP access list management': 'Felhasználó IP hozzáférési lista kezelése'
+'The IP address group conflicts with another existing group.': 'Az IP-címcsoport ütközik egy másik meglévő csoporttal.'
+'Subscription sections': 'Előfizetéses rovatok'
+'No records.': 'Nincsenek rekordok.'
+'You have subscription for all available publications': 'Neked az összes létező kiadványra van előfizetésed'
+'Subscription type:': 'Előfizetés típusa:'
+'Start:': 'Kezdet:'
+'Start Date': 'Kezdő dátum'
+'Sections:': 'Rovatok:'
+'Publication:': 'Kiadvány:'
+'Paid days': 'Fizetett napok'
+'Paid Days:': 'Fizetett napok:'
+Paid: Fizetett
+'No subscriptions': 'Nincsenek előfizetések'
+'Languages:': 'Nyelvek:'
+'Edit all sections': 'Az összes rovat szerkesztése'
+'Days:': 'Napok:'
+'Days must be number': 'A napoknak számnak kell lennie'
+Any: Bármi
+'Add section': 'Rovat hozzáadása'
+saved: mentve
+removed: eltávolítva
+deleted: törölve
+deactivated: inaktiválva
+activated: aktiválva
+'Value is required and cant be empty': 'Az érték kötelező és nem lehet üres'
+'That user name already exists, please choose a different login name.': 'Ez a felhasználónév már létezik, válassz másik bejelentkezési nevet.'
+'That $1 already exists, please choose a different $2.': 'Ez a/z $1 már létezik, válassz másik $2 -t.'
+'Subscriptions exist for all available publications.': 'Léteznek előfizetések az összes elérhető kiadványra.'
+'Subscription IP Addresses': 'Előfizetés IP-címei'
+'Subscription $1': '$1 előfizetés'
+'Subscriber saved.': 'Az előfizető mentése megtörtént.'
+'Subscriber management': Előfizetőkezelés
+'Subscriber deleted.': 'Az előfizető törlése megtörtént.'
+'Start IP': 'Kezdő IP'
+'Select country': 'Ország kiválasztása'
+'Number of addresses': 'Címek száma'
+'Number of Addressses': 'Címek száma'
+'No IP Addresses': 'Nincsenek IP-címek'
+'IP Address added allready': 'Az IP-cím már hozzáadásra került'
+'IP Address $1': '$1 IP-cím'
+'IP Access': IP-hozzáférés
+'Full Name': 'Teljes név'
+'Edit subscriptions': 'Előfizetések szerkesztése'
+'Edit subscriber $1': 'A/z $1 nevű előfizető szerkesztése'
+E-Mail: E-mail
+'Delete subscriber $1': 'A/z $1 nevű előfizető törlése'
+'Creation Date': 'Létrehozás dátuma'
+'Change subscriber information': 'Előfizetői adatok módosítása'
+'Add new IP address': 'Új IP-cím hozzáadása'
+'Add new IP Address': 'Új IP-cím hozzáadása'
+'Account Name': null
+'%value% must be greater than %min%': 'A/z %value% értéknek nagyobbnak kell lennie, mint %min%'
+'%value% is not a valid IP Address': 'A/z %value% nem érvényes IP-cím'
+'Regardless of the language': 'A nyelvtől függetlenül'
+'Individual languages': Nyelvek
+'Add sections now': 'Rovatok hozzáadása most'
+'Add sections later': 'Rovatok hozzáadása később'
+'Subscription Type': 'Előfizetés típusa'
+'Paid (payment will be confirmed later)': 'Fizetett (a fizetés később kerül megerősítésre)'
+'Paid (confirm payment now)': 'Fizetett (a fizetés megerősítése most)'

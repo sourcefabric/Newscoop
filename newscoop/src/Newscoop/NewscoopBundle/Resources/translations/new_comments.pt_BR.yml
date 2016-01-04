@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: 'Comments management'
-        menu: Comments
-        banned: Banned
-        anonymous: Anonymous
-        at: at
-        noentries: 'No entries found.'
-        showing: Showing
-        of: of
-        to: to
-        entries: entries
-        fullarticle: 'Full article'
-        hidden: Hidden
-        approved: Approved
-        new: New
-        editarticle: 'Go to edit article'
-        section: Section
-        comment: Comment
-        replyto: 'Reply to comment'
-        subject: Subject
-        ban: 'Ban/Unban user'
-        author: Author
-        date: 'Date / Comment'
-        article: Article
-        search: Search
-        show: Show
-        recommended: Recommended
-        unrecommended: Unrecommended
-        editcomment: 'Quick comment edit'
-        actions: Actions
-        selectstatus: 'Select status'
-        deleted: Deleted
-        alert: Alert
-        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
+        comments: null
+        menu: Comentários
+        banned: null
+        anonymous: null
+        at: no
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Artigo inteiro'
+        hidden: Oculto
+        approved: Aprovado
+        new: Novo
+        editarticle: 'Ir para edição do artigo'
+        section: Seção
+        comment: Comentário
+        replyto: 'Responder ao comentário'
+        subject: Assunto
+        ban: null
+        author: Autor
+        date: null
+        article: Artigo
+        search: Procurar
+        show: Mostrar
+        recommended: Recomendado
+        unrecommended: 'Não recomendado'
+        editcomment: null
+        actions: Ações
+        selectstatus: 'Selecionar status'
+        deleted: Removido
+        alert: null
+        searchholder: null
     btn:
-        cancel: Cancel
-        submit: Submit
-        unrecommend: Unrecommend
-        recommend: Recommend
-        delete: Delete
-        reply: Reply
-        edit: 'Quick edit'
-        close: Close
-        okay: Ok
-        filter: Filter
+        cancel: Cancelar
+        submit: 'Submeter à Apreciação'
+        unrecommend: 'Não recomendo'
+        recommend: Recomendo
+        delete: Apagar
+        reply: Responder
+        edit: 'Edição rápida'
+        close: Fechar
+        okay: null
+        filter: Filtro
     msg:
-        deleted: 'Comment deleted.'
-        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
+        deleted: 'Comentário removido.'
+        commentinarticle: 'Comentário $4 feito por $1 no artigo $2 ($3)'
         status:
-            new: new
-            approved: approved
-            hidden: hidden
-            single: 'Comment status change to'
-            all: 'Comments status change to'
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
         error:
-            reach: 'Unable to reach Newscoop. Please check your internet connection.'
-            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
-            statuschange: 'Error changing comment status'
-            delete: 'Could not delete this comment'
-            update: 'Fields cannot be empty'
-        sure: 'You are about to permanently delete a comment.'
-        suremultiple: 'You are about to permanently delete comments.'
-        first: 'Please, select comment/comments first!'
-        surequestion: 'Are you sure you want to do it?'
-        updated: 'Comment updated.'
+            reach: 'Não foi possivel fazer conexão com Newscoop. Por favor verifique a sua conexão com internet.'
+            deletefromarticle: '$1 apagou o comentário do artigo $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Você vai apagar o comentário para sempre.'
+        suremultiple: null
+        first: null
+        surequestion: 'Tem certeza que quer fazer isso?'
+        updated: 'Comentário atualizado.'

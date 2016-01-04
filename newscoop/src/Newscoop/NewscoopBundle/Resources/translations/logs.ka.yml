@@ -1,11 +1,11 @@
-show: show
-hide: hide
-Title: Title
-'Resource Type:': 'Resource Type:'
-'Resource Type': 'Resource Type'
-Resource: Resource
-Diff: Diff
-'Broken data': 'Broken data'
-'Action Type:': 'Action Type:'
-'No logs.': 'No logs.'
-User: User
+show: ჩვენება
+hide: დამალვა
+Title: სათაური
+'Resource Type:': 'რესურსის ტიპი:'
+'Resource Type': 'რესურსის ტიპი'
+Resource: 'რესურსი '
+Diff: შედარება
+'Broken data': 'ხარვეზული მონაცემი'
+'Action Type:': 'მოქმედების ტიპი: '
+'No logs.': 'აღრიცხვა არ არსებობს'
+User: მომხმარებელი

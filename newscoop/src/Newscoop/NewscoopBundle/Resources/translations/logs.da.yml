@@ -1,11 +1,11 @@
-show: show
-hide: hide
-Title: Title
-'Resource Type:': 'Resource Type:'
-'Resource Type': 'Resource Type'
-Resource: Resource
+show: vis
+hide: skjul
+Title: Titel
+'Resource Type:': 'Ressource type:'
+'Resource Type': 'Ressource type'
+Resource: Ressource
 Diff: Diff
-'Broken data': 'Broken data'
-'Action Type:': 'Action Type:'
-'No logs.': 'No logs.'
-User: User
+'Broken data': 'Ødelagt data'
+'Action Type:': 'Handlings type:'
+'No logs.': 'Ingen logfiler.'
+User: Bruger

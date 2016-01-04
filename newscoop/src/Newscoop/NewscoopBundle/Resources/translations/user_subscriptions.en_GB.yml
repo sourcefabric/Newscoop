@@ -1,6 +1,6 @@
 third: third
 second: second
-forth: forth
+forth: fourth
 first: first
 'You must input a number greater than 0 into the Number of addresses field.': 'You must input a number greater than 0 into the Number of addresses field.'
 'You must input a number between 0 and 255 into the Start IP address $1 field.': 'You must input a number between 0 and 255 into the Start IP address $1 field.'
@@ -8,7 +8,7 @@ first: first
 'The IP address group conflicts with another existing group.': 'The IP address group conflicts with another existing group.'
 'Subscription sections': 'Subscription sections'
 'No records.': 'No records.'
-'You have subscription for all available publications': 'You have subscription for all available publications'
+'You have subscription for all available publications': 'You have a subscription for all available publications'
 'Subscription type:': 'Subscription type:'
 'Start:': 'Start:'
 'Start Date': 'Start Date'
@@ -29,7 +29,7 @@ removed: removed
 deleted: deleted
 deactivated: deactivated
 activated: activated
-'Value is required and cant be empty': 'Value is required and cant be empty'
+'Value is required and cant be empty': 'Value is required and can not be empty'
 'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
 'That $1 already exists, please choose a different $2.': 'That $1 already exists, please choose a different $2.'
 'Subscriptions exist for all available publications.': 'Subscriptions exist for all available publications.'

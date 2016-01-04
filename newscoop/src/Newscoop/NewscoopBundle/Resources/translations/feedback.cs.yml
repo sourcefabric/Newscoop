@@ -1,29 +1,29 @@
-'No attachment': 'No attachment'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-Approve: Approve
-Approved.: Approved.
-at: at
-Attachment: Attachment
-'Ban/Unban user': 'Ban/Unban user'
-'Change selected messages status': 'Change selected messages status'
-Deleted: Deleted
-'Full article': 'Full article'
-Message: Message
-'Message deleted.': 'Message deleted.'
-'Messages deleted.': 'Messages deleted.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Message status change to $1.': 'Message status change to $1.'
-'Messages updated.': 'Messages updated.'
-'Message updated.': 'Message updated.'
-Processed: Processed
-Reply: Reply
-'Reply to message': 'Reply to message'
-Star: Star
-Starred: Starred
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-'With document attachment': 'With document attachment'
-'With image attachment': 'With image attachment'
-'With no attachment': 'With no attachment'
-'Feedback Messages': 'Feedback Messages'
+'No attachment': 'Žádná příloha'
+'You are about to permanently delete multiple messages.': 'Chystáte se trvale vymazat hromadné zprávy'
+'You are about to permanently delete a message.': 'Chystáte se permanentně vymazat zprávu'
+'Are you sure you want to do it?': 'Jste si jisti, že to chcete udělat?'
+Approve: Schválit
+Approved.: Schváleno
+at: na
+Attachment: Příloha
+'Ban/Unban user': 'Zakázat/Obnovit uživatele'
+'Change selected messages status': 'Změnit statu vybraným zprávám'
+Deleted: Vymazat
+'Full article': 'Celý článek'
+Message: Zpráva;
+'Message deleted.': 'Zpráva vymazána'
+'Messages deleted.': 'Zprávy vymazány'
+'Messages status change to $1.': 'Statu zpráv změněn na  $1'
+'Message status change to $1.': 'Status zprávy změněn na  $1'
+'Messages updated.': 'Zprávy aktualizovány'
+'Message updated.': 'Zpráva aktualizována'
+Processed: Zpracováno
+Reply: Odpovědět
+'Reply to message': 'Odpovědět na zprávu'
+Star: Hvězda
+Starred: 'S hvězdičkou'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
+'With document attachment': 'S přílohou dokumentu'
+'With image attachment': 'S přílohou obrázku'
+'With no attachment': 'Bez přílohy'
+'Feedback Messages': 'Feedback zpráv'

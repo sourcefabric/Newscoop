@@ -1,219 +1,219 @@
-'Edit metadata': 'Edit metadata'
-Rating: Rating
-'Enable Rating': 'Enable Rating'
-'Blog management': 'Blog management'
-'View article': 'View article'
-'Select a list': 'Select a list'
-'Remove list': 'Remove list'
-'Please select a list': 'Please select a list'
-Playlist: Playlist
-'List updated.': 'List updated.'
-'List saved': 'List saved'
-'List Name': 'List Name'
-'List ID': 'List ID'
-'Item already exists in the list': 'Item already exists in the list'
-'Featured Articles': 'Featured Articles'
-'Featured Article Lists': 'Featured Article Lists'
-'Featured Article List': 'Featured Article List'
-'Duplicate list': 'Duplicate list'
-'Duplicate article entry found': 'Duplicate article entry found'
-'Drag here to add to list': 'Drag here to add to list'
-'Could not save the list': 'Could not save the list'
-'Available Articles': 'Available Articles'
-'Are you sure you want to delete this list?': 'Are you sure you want to delete this list?'
-'Add to list': 'Add to list'
-'Add list': 'Add list'
-'Multi date events': 'Multi date events'
-Slideshows: Slideshows
-'Place images': 'Place images'
-'Youre not allowed to edit article.': 'Youre not allowed to edit article.'
+'Edit metadata': 'Editar metadatos'
+Rating: Calificación
+'Enable Rating': 'Activar calificación'
+'Blog management': 'Administración del blog'
+'View article': 'Ver artículo'
+'Select a list': 'Seleccionar una lista'
+'Remove list': 'Remover lista'
+'Please select a list': 'Por favor selecciones una lista'
+Playlist: 'Lista de artículos inteligente'
+'List updated.': 'Lista actualizada'
+'List saved': 'Lista almacenada'
+'List Name': 'Nombre de la lista'
+'List ID': 'ID de la lista'
+'Item already exists in the list': 'Este artículo ya existe en la lista'
+'Featured Articles': 'Artículos seleccionados'
+'Featured Article Lists': 'Listas de artículos seleccionados'
+'Featured Article List': 'Lista de artículos seleccionados'
+'Duplicate list': 'Duplicar lista'
+'Duplicate article entry found': 'Se detectó un artículo duplicado'
+'Drag here to add to list': 'Arrastra hasta aquí para agregar a la lista'
+'Could not save the list': 'No fue posible guardar la lista'
+'Available Articles': 'Artículos disponibles'
+'Are you sure you want to delete this list?': '¿Realmente desea eliminar esta lista?'
+'Add to list': 'Añadir a lista'
+'Add list': 'Añadir lista'
+'Multi date events': 'Eventos con múltiples fechas'
+Slideshows: Diapositivas
+'Place images': 'Colocar imágenes'
+'Youre not allowed to edit article.': 'No tiene permitido editar un artículo.'
 Webcode: Webcode
-Unapproved: Unapproved
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'This issue cannot be previewed. Please make sure the publication has a theme assigned.'
-'The article could not be submitted.': 'The article could not be submitted.'
-'Submit articles': 'Submit articles'
-'Submit article': 'Submit article'
-'Related Articles': 'Related Articles'
-'Pending articles': 'Pending articles'
-'Pending Articles': 'Pending Articles'
-'Context Box updated': 'Context Box updated'
-On: On
-Off: Off
-'You do not have the right to moderate comments.': 'You do not have the right to moderate comments.'
-'You can not schedule opposing events at the same time': 'You can not schedule opposing events at the same time'
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-Title: Title
-'There already is an article with the same name. Please change the name and try again.': 'There already is an article with the same name. Please change the name and try again.'
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.'
-Geolocation: Geolocation
+Unapproved: 'No aprobado'
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'No es posible previsualizar esta edición.  Por favor asegúrese de que la publicación tiene un tema asignado.'
+'The article could not be submitted.': 'No fue posible enviar el artículo.'
+'Submit articles': 'Enviar artículos'
+'Submit article': 'Enviar artículo'
+'Related Articles': 'Artículos relacionados'
+'Pending articles': 'Artículos pendientes'
+'Pending Articles': 'Artículos pendientes'
+'Context Box updated': 'Se actualizó la Casilla de Contexto'
+On: Encendido
+Off: Apagado
+'You do not have the right to moderate comments.': 'No tienes autorización para moderar comentarios.'
+'You can not schedule opposing events at the same time': 'No puedes asignar eventos opuestos en el mismo horario'
+'Unable to reach Newscoop. Please check your internet connection.': 'No se pudo conectar a Newscoop. Por favor, verifica tu conexión a Internet.'
+Title: Tìtulo
+'There already is an article with the same name. Please change the name and try again.': 'Ya existe un archivo con ese nombre. Por favor, cámbialo e intenta de nuevo.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Por favor, recuerde que todos los eventos de publicación calendarizados para este artículo serán eliminados cuando cambie el estado a Nuevo. Confirme el cambio de estado.'
+Geolocation: Geolocalización
 Newscoop: Newscoop
-'Overwrite articles with matching names': 'Overwrite articles with matching names'
-'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Article <i>$1</i> already exists, and was not overwritten.<br />'
-Files: Files
-'Select section:': 'Select section:'
-'Add another author': 'Add another author'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'The article has been locked by $1 ($2) $3 minute(s) ago.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.'
-'Switches saved.': 'Switches saved.'
-'Keywords saved.': 'Keywords saved.'
-'Comment settings': 'Comment settings'
-Authors: Authors
-'Attach Topic To Article': 'Attach Topic To Article'
-'Article saved.': 'Article saved.'
-'Article is locked': 'Article is locked'
-'Actions updated.': 'Actions updated.'
-'Your work has not been saved. Do you want to continue and lose your changes?': 'Your work has not been saved. Do you want to continue and lose your changes?'
+'Overwrite articles with matching names': 'Sobreescribir artículos con nombres idénticos'
+'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Ya existe el artículo <i>$1</i> y no fue sobreescrito.<br />'
+Files: Archivos
+'Select section:': 'Elija sección:'
+'Add another author': 'Añada otro autor'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': '$1 ($2) bloqueó el artículo hace $3 minuto(s).'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': '$1 ($2) bloqueó el artículo hace $3 hora(s) y $4 minuto(s).'
+'Switches saved.': 'Se almacenaron los switches.'
+'Keywords saved.': 'Se almacenaron las palabras clave.'
+'Comment settings': 'Configuración de comentarios'
+Authors: Autores
+'Attach Topic To Article': 'Adjuntar tópico al artículo'
+'Article saved.': 'Artículo almacenado'
+'Article is locked': 'Artículo bloqueado'
+'Actions updated.': 'Se actualizaron las acciones.'
+'Your work has not been saved. Do you want to continue and lose your changes?': 'No ha almacenado su trabajo.  ¿Desea continuar y perder los cambios?'
 Switches: Switches
-'No subtopics available': 'No subtopics available'
-'Newscoop Subhead': 'Newscoop Subhead'
-Media: Media
-'Last modified': 'Last modified'
-'Keywords &amp; Topics': 'Keywords &amp; Topics'
+'No subtopics available': 'No hay subtópicos disponibles.'
+'Newscoop Subhead': 'Subtítulo de Newscoop'
+Media: Multimedia
+'Last modified': 'Modificado por última vez'
+'Keywords &amp; Topics': 'Palabras clave & tópicos'
 Info: Info
-'Go to live article': 'Go to live article'
-Created: Created
-'Are you sure you want to remove the map from the article?': 'Are you sure you want to remove the map from the article?'
-'Scheduled action added': 'Scheduled action added'
-'Content edited': 'Content edited'
-'You must select an article language.': 'You must select an article language.'
-'You must select a publication.': 'You must select a publication.'
-'You must select a file to upload.': 'You must select a file to upload.'
-'You must select a XML input file.': 'You must select a XML input file.'
-'You do not have the right to import XML archives.': 'You do not have the right to import XML archives.'
-'There was a problem uploading the file.': 'There was a problem uploading the file.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini'
-'The file exceeds the allowed max file size.': 'The file exceeds the allowed max file size.'
-Optional: Optional
-'Input File': 'Input File'
-'Import XML': 'Import XML'
-'File is not a valid XML file.': 'File is not a valid XML file.'
-'File does not exist.': 'File does not exist.'
-'File could not be uploaded.': 'File could not be uploaded.'
-'File could not be read.': 'File could not be read.'
-'Error List': 'Error List'
-'Bad format in XML file.': 'Bad format in XML file.'
-'Article could not be created.': 'Article could not be created.'
-'---Select article type---': '---Select article type---'
-'$1 articles successfully imported.': '$1 articles successfully imported.'
-Saved: Saved
-'Save All': 'Save All'
-'Online Server: On': 'Online Server: On'
-'Online Server: Off': 'Online Server: Off'
-Download: Download
-'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.'
-'Visible to non-subscribers': 'Visible to non-subscribers'
-'The article could not be published.': 'The article could not be published.'
-'Scheduled action deleted.': 'Scheduled action deleted.'
-'Scheduled action added.': 'Scheduled action added.'
-'Article(s) unlocked.': 'Article(s) unlocked.'
-'Article(s) duplicated.': 'Article(s) duplicated.'
-'Article(s) deleted.': 'Article(s) deleted.'
-'Article status set to $1': 'Article status set to $1'
-'Article unlocked.': 'Article unlocked.'
-'Article translation created.': 'Article translation created.'
-'Article order changed.': 'Article order changed.'
-'Article moved.': 'Article moved.'
-'Article deleted.': 'Article deleted.'
-'Article created.': 'Article created.'
-'$1 toggled.': '$1 toggled.'
+'Go to live article': 'Previsualizar artículo'
+Created: Creado
+'Are you sure you want to remove the map from the article?': '¿Desea remover el mapa del artículo?'
+'Scheduled action added': 'Se añadió una acción programada'
+'Content edited': 'Se editó el contenido'
+'You must select an article language.': 'Debes seleccionar un lenguaje para el artículo.'
+'You must select a publication.': 'Debes seleccionar una publicación.'
+'You must select a file to upload.': 'Debe seleccionar un archivo para cargar.'
+'You must select a XML input file.': 'Debes selecionar un archivor input XML '
+'You do not have the right to import XML archives.': 'No tienes el derecho de importar archivos XML.'
+'There was a problem uploading the file.': 'Hubo un problema al subir el archivo.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'El archivo solo subió parcialmente. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en php.ini'
+'The file exceeds the allowed max file size.': 'El archivo sobrepasa el tamaño máximo permitido para un archivo.'
+Optional: Opciones
+'Input File': 'Archivo de entrada'
+'Import XML': 'Importar XML'
+'File is not a valid XML file.': 'El archivo no es un archivo XML válido'
+'File does not exist.': 'El archivo no existe.'
+'File could not be uploaded.': 'El archivo no pudo ser cargado.'
+'File could not be read.': 'El archivo no pudo ser leído.'
+'Error List': 'Lista de errores.'
+'Bad format in XML file.': 'Formato erróneo en archivo XML.'
+'Article could not be created.': 'El artículo no pudo ser creado.'
+'---Select article type---': '- - - Seleccione un tipo de archivo - - -'
+'$1 articles successfully imported.': '$1 artículos exitosamente importada.'
+Saved: Guardado
+'Save All': 'Guardar todo'
+'Online Server: On': 'Servidor en línea: encendido'
+'Online Server: Off': 'Servidor en línea: apagado'
+Download: Descargar
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'No puede tener dos artículos con el mismo nombre en la misma sección.  El nombre de artículo que especificó ya se está utilizando en el artículo $1. '
+'Visible to non-subscribers': 'Visible a no suscriptores'
+'The article could not be published.': 'No se pudo publicar el artículo.'
+'Scheduled action deleted.': 'Se eliminó la acción programada.'
+'Scheduled action added.': 'Se añadió la acción programada.'
+'Article(s) unlocked.': 'Se desbloqueó el o los artículos.'
+'Article(s) duplicated.': 'Se duplicó el o los artículos.'
+'Article(s) deleted.': 'Se eliminó el o los artículos.'
+'Article status set to $1': 'Se estableció el estatus del artículo en $1'
+'Article unlocked.': 'Se desbloqueó el artículo.'
+'Article translation created.': 'Se creó la traducción del artículo.'
+'Article order changed.': 'Se cambió el orden del artículo'
+'Article moved.': 'Se movió el artículo.'
+'Article deleted.': 'Se eliminó el artículo'
+'Article created.': 'Se creó el artículo'
+'$1 toggled.': '$ seleccionados/deseleccionados'
 'Total:': 'Total:'
-'Show Comments': 'Show Comments'
-Locked: Locked
-'Invalid type: $1': 'Invalid type: $1'
-'Hide Comments': 'Hide Comments'
-Enabled: Enabled
-Disabled: Disabled
-Comments: Comments
-'The article has already been translated into $1.': 'The article has already been translated into $1.'
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.'
-'You do not have the right to translate articles.': 'You do not have the right to translate articles.'
-'You do not have the right to publish articles.': 'You do not have the right to publish articles.'
-'You do not have the right to move articles.': 'You do not have the right to move articles.'
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.'
-'Publish?': 'Publish?'
-'Publish articles': 'Publish articles'
-'Publish article': 'Publish article'
-'Move?': 'Move?'
-'Move articles': 'Move articles'
-'Move article': 'Move article'
-'An issue must be created for the selected language but you do not have the right to create an issue.': 'An issue must be created for the selected language but you do not have the right to create an issue.'
-'A section must be created for the selected language but you do not have the right to create a section.': 'A section must be created for the selected language but you do not have the right to create a section.'
-'to section': 'to section'
-'You must choose a language': 'You must choose a language'
-'Unable to create the section for translation $1.': 'Unable to create the section for translation $1.'
-'Unable to create the issue for translation $1.': 'Unable to create the issue for translation $1.'
-'The following articles are new; it is not possible to schedule them for automatic publishing': 'The following articles are new; it is not possible to schedule them for automatic publishing'
-'Section URL Name': 'Section URL Name'
-'Section Name': 'Section Name'
-'Publish Schedule': 'Publish Schedule'
-'No action specified': 'No action specified'
-'New section name': 'New section name'
-'New section URL name': 'New section URL name'
-'New issue name': 'New issue name'
-'New issue URL name': 'New issue URL name'
-'New article name': 'New article name'
-'Issue URL Name': 'Issue URL Name'
-'Issue Name': 'Issue Name'
-'Duplicate?': 'Duplicate?'
-'Duplicate articles': 'Duplicate articles'
-'Article name ($1)': 'Article name ($1)'
-'Article List': 'Article List'
-'Are you sure you want to remove the topic $1 from the article?': 'Are you sure you want to remove the topic $1 from the article?'
-'Are you sure you want to remove the file $1 from the article?': 'Are you sure you want to remove the file $1 from the article?'
-'Are you sure you want to remove the event scheduled on $1?': 'Are you sure you want to remove the event scheduled on $1?'
-'Are you sure you want to delete this article?': 'Are you sure you want to delete this article?'
-'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'An issue must be created for the selected language.  Please enter the issue name and URL name.'
-'A section must be created for the selected language.  Please enter the section name and URL name.': 'A section must be created for the selected language.  Please enter the section name and URL name.'
-'Article Type': 'Article Type'
-'Show article on front page': 'Show article on front page'
-'Show article on section page': 'Show article on section page'
-'Translate article': 'Translate article'
-'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.'
-'Duplicate article': 'Duplicate article'
-'The destination section is the same as the source section.': 'The destination section is the same as the source section.'
-'The article is new; it is not possible to schedule it for automatic publishing.': 'The article is new; it is not possible to schedule it for automatic publishing.'
-'No article types were defined. You must create an article type first.': 'No article types were defined. You must create an article type first.'
-'Edit article types': 'Edit article types'
-'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.'
-'You do not have the right to delete articles.': 'You do not have the right to delete articles.'
-'You must select an article type.': 'You must select an article type.'
-'Are you sure you want to remove the image $1 from the article?': 'Are you sure you want to remove the image $1 from the article?'
-'There was an error reading request parameters.': 'There was an error reading request parameters.'
-'This article cannot be previewed. Please make sure it has the article template selected.': 'This article cannot be previewed. Please make sure it has the article template selected.'
-'No such article.': 'No such article.'
-'No such section.': 'No such section.'
-Characters: Characters
-Snippet: Snippet
-'This list is already in a different state than the one in which it was loaded.': 'This list is already in a different state than the one in which it was loaded.'
-'List name should not be longer than 40 chars': 'List name should not be longer than 40 chars'
-'Not valid number': 'Not valid number'
-'List limit': 'List limit'
-'The last article of this list has been removed.': 'The last article of this list has been removed.'
-Revert: Revert
-'Could not automatically refresh the list': 'Could not automatically refresh the list'
-'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
+'Show Comments': 'Mostrar comentarios'
+Locked: Blquear
+'Invalid type: $1': 'Tipo inválido:  $1'
+'Hide Comments': 'Ocultar comentarios'
+Enabled: Activar
+Disabled: Desactivar
+Comments: Comentarios
+'The article has already been translated into $1.': 'El artículo ya fue traducido a $1.'
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'Debe especificar la publicación, edición y sección antes de programarla para publicación.  Vaya al menú $1 y seleccione $2 para hacerlo.  '
+'You do not have the right to translate articles.': 'No tiene permiso para traducir artículos'
+'You do not have the right to publish articles.': 'No tiene permiso para publicar artículos'
+'You do not have the right to move articles.': 'No tiene permiso para mover artículos'
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'No puede $1 los artículos marcados en rojo porque la edición de destino no ha sido traducida al idioma apropiado.'
+'Publish?': '¿Publicar?'
+'Publish articles': 'Publicar artículos'
+'Publish article': 'Publicar artículo'
+'Move?': '¿Mover?'
+'Move articles': 'Mover artículos'
+'Move article': 'Mover artículo'
+'An issue must be created for the selected language but you do not have the right to create an issue.': 'Se debe crear una edición para el idioma seleccionado pero no tiene privilegios para hacerlo.'
+'A section must be created for the selected language but you do not have the right to create a section.': 'Se debe crear una sección para el idioma seleccionado pero no tiene los privilegios para hacerlo.'
+'to section': 'a sección'
+'You must choose a language': 'Debe elegir un idioma.'
+'Unable to create the section for translation $1.': 'No fue posible crear la sección para la traducción $1.'
+'Unable to create the issue for translation $1.': 'No fue posible crear la edición para la traducción $1.'
+'The following articles are new; it is not possible to schedule them for automatic publishing': 'Los siguientes artículos son nuevos; no es posible programarlos para publicación automática.'
+'Section URL Name': 'Nombre del URL de sección'
+'Section Name': 'Nombre de sección'
+'Publish Schedule': 'Publicar horario'
+'No action specified': 'No se ha especificado una acción'
+'New section name': 'Nombre de nueva sección'
+'New section URL name': 'Nuevo nombre para el URL de sección'
+'New issue name': 'Nombre de nueva edición'
+'New issue URL name': 'Nuevo nombre para URL de edición'
+'New article name': 'Nuevo nombre de artículo'
+'Issue URL Name': 'Nombre para URL de edición'
+'Issue Name': 'Nombre de edición'
+'Duplicate?': '¿Duplicar?'
+'Duplicate articles': 'Duplicar artículos'
+'Article name ($1)': 'Nombre de artículo ($1)'
+'Article List': 'Lista de artículos'
+'Are you sure you want to remove the topic $1 from the article?': '¿Está seguro de que desea eliminar el tópico $1 del artículo?'
+'Are you sure you want to remove the file $1 from the article?': '¿Está seguro de que desea eliminar el archivo $1 del artículo?'
+'Are you sure you want to remove the event scheduled on $1?': '¿Está seguro de que desea eliminar el evento programado para el $1?'
+'Are you sure you want to delete this article?': '¿Está seguro de que desea eliminar este artículo?'
+'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Se debe crear una edición para el idioma seleccionado.  Por favor ingrese el nombre de la edición y del URL.'
+'A section must be created for the selected language.  Please enter the section name and URL name.': 'Se debe crear una sección para el idioma seleccionado.  Por favor ingrese el nombre de la sección y del URL.'
+'Article Type': 'Tipo de artículo'
+'Show article on front page': 'Mostrar artículo en portada'
+'Show article on section page': 'Mostrar artículo en página de sección'
+'Translate article': 'Traducir artículo'
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'No tiene derechos para cambiar este artículo.  Solamente puede editar sus propios artículos y una vez enviado un artículo sólo puede ser cambiado por usuarios autorizados.'
+'Duplicate article': 'Duplicar articulo'
+'The destination section is the same as the source section.': 'La seccion destino es la misma que la seccion fuente.'
+'The article is new; it is not possible to schedule it for automatic publishing.': 'El artículo es nuevo; no es posible programarlo para publicación automática.'
+'No article types were defined. You must create an article type first.': 'No se definieron tipos de artículo.  Primero debe crear un tipo de artículo.'
+'Edit article types': 'Editar tipos de artículo'
+'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'No puede almacenar el artículo.  Ha sido bloqueado por $1 hace $2 hora(s) y $3 minuto(s).'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'No tiene los privilegios para cambiar el estatus de este artículo.  Una vez enviado el artículo solo los usuarios autorizados pueden modificarlos.'
+'You do not have the right to delete articles.': 'No tiene privilegios para eliminar artículos.'
+'You must select an article type.': 'Debe seleccionar un tipo de artículo.'
+'Are you sure you want to remove the image $1 from the article?': '¿Está seguro de que desea eliminar la imagen $1 del artículo?'
+'There was an error reading request parameters.': 'Hubo un error en la lectura de parámetros de solicitud'
+'This article cannot be previewed. Please make sure it has the article template selected.': 'No se puede previsualizar este artículo.  Por favor asegúrese que seleccionó el template artículo.'
+'No such article.': 'No existe articulo'
+'No such section.': 'No existe sección'
+Characters: null
+Snippet: null
+'This list is already in a different state than the one in which it was loaded.': null
+'List name should not be longer than 40 chars': null
+'Not valid number': null
+'List limit': null
+'The last article of this list has been removed.': null
+Revert: null
+'Could not automatically refresh the list': null
+'The article slideshows have been successfully updated, please close the window.': null
 articles:
     playlists:
-        namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'
-        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you change the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 till 50 will be deleted from the list.'
+        namechanged: null
+        alert: null
     images:
-        see_original: 'See full-size image in a new tab'
+        see_original: null
         edit:
-            edit_image_metadata: 'Edit image metadata'
-            save: Save
+            edit_image_metadata: null
+            save: null
             form:
-                use: Use
-                number: Number
-                caption: Caption
-                status_approved: Approved
-                status_unapproved: Unapproved
-                status: Status
-                description: Description
-                photographer: Photographer
-                photographer_url: 'Photographer URL'
-                place: Place
-                date: Date
-                article_specific: 'Article specific'
-                global: Global
-                other_captions: 'Other Captions'
+                use: null
+                number: null
+                caption: null
+                status_approved: null
+                status_unapproved: null
+                status: null
+                description: null
+                photographer: null
+                photographer_url: null
+                place: null
+                date: null
+                article_specific: null
+                global: null
+                other_captions: null

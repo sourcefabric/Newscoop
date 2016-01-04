@@ -1,81 +1,81 @@
-get: get
+get: hent
 Soundcloud: SoundCloud
-Templates: Templates
-'Feedback Messages': 'Feedback Messages'
-'Article Playlists': 'Article Playlists'
-'Check all': 'Check all'
-view: view
-undo/redo: undo/redo
-underline: underline
-translate: translate
-'text direction': 'text direction'
-'text alignment': 'text alignment'
-table: table
-superscript: superscript
-subscript: subscript
-subhead: subhead
-strikethrough: strikethrough
+Templates: Skabeloner
+'Feedback Messages': 'Feedback beskeder'
+'Article Playlists': 'Artikle playlister'
+'Check all': 'Vælg alle'
+view: se
+undo/redo: fortryd/gentag
+underline: understreget
+translate: oversæt
+'text direction': 'tekst retning'
+'text alignment': 'tekst justering'
+table: tabel
+superscript: hævet
+subscript: sænket
+subhead: underoverskrift
+strikethrough: gennemstreget
 statusbar: statusbar
-'spell checker enabled': 'spell checker enabled'
-'source view': 'source view'
-publish: publish
-notify: notify
-moderate: moderate
-manage: manage
-'list number': 'list number'
-'list bullet': 'list bullet'
+'spell checker enabled': 'stavekontrol slået til'
+'source view': 'se kilde'
+publish: udgiv
+notify: underret
+moderate: moderer
+manage: administrer
+'list number': 'liste med tal'
+'list bullet': 'liste med punkter'
 link: link
-italic: italic
-indent: indent
-image: image
-'horizontal rule': 'horizontal rule'
-handle: handle
-guest: guest
-'font size': 'font size'
-'font face': 'font face'
-'font color': 'font color'
-find/replace: find/replace
-enlarge: enlarge
-enable: enable
-edit: edit
-delete: delete
-copy/cut/paste: copy/cut/paste
-clear: clear
-'character map': 'character map'
-bold: bold
-attach: attach
-'any resource': 'any resource'
+italic: kursiv
+indent: indryk
+image: billede
+'horizontal rule': 'vandret linje'
+handle: håndtag
+guest: gæst
+'font size': skriftstørrelse
+'font face': skrifttype
+'font color': skriftfarve
+find/replace: søg/erstat
+enlarge: forstør
+enable: 'slå til'
+edit: rediger
+delete: slet
+copy/cut/paste: 'kopier/klip/sæt ind'
+clear: ryd
+'character map': tegnoversigt
+bold: fed
+attach: vedhæft
+'any resource': 'valgfri ressource'
 admin: admin
-add: add
-'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
-'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
-'User type saved.': 'User type saved.'
-'User type deleted.': 'User type deleted.'
-'User type added.': 'User type added.'
-'User Groups': 'User Groups'
-Themes: Themes
-'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+add: tilføj
+'You cant deny yourself to manage $1': 'Du kan ikke forbyde dig selv at administrere $1'
+'You are not allowed to $1 $2.': 'Du har ikke tilladelse til at $1 $2.'
+'User type saved.': 'Brugertype gemt.'
+'User type deleted.': 'Brugertype slettet.'
+'User type added.': 'Brugertype tilføjet.'
+'User Groups': 'Bruger grupper'
+Themes: Temaer
+'That type name already exists, please choose a different name.': 'Det valgte typenavn eksisterer allerede, vælg venligst et andet navn.'
 System: System
-Structure: Structure
-'Search Indexer': 'Search Indexer'
-'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
+Structure: Struktur
+'Search Indexer': 'Søge indexer'
+'Rich-Text Editor Preferences': 'Indstillinger for tekstredigering'
 ReCaptcha: ReCaptcha
-Polls: Polls
-'Permissions:': 'Permissions:'
-'Permissions updated': 'Permissions updated'
-Notification: Notification
+Polls: Afstemninger
+'Permissions:': 'Tilladelser:'
+'Permissions updated': 'Tilladelser opdateret'
+Notification: Besked
 Log: Log
 Layout: Layout
 Global: Global
-Files: Files
-'Error: ': 'Error: '
-'Edit user type $1': 'Edit user type $1'
-Deny: Deny
-'Delete user type $1': 'Delete user type $1'
-'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
+Files: Filer
+'Error: ': 'Fejl:'
+'Edit user type $1': 'Rediger brugertype $1'
+Deny: Afvis
+'Delete user type $1': 'Slet brugertype $1'
+'Can not delete a user type with assigned users.': 'En brugertype med brugere kan ikke slettes.'
 Cache: Cache
 Backup: Backup
-Authoring: Authoring
-Allow: Allow
-'User types': 'User types'
-'No user types.': 'No user types.'
+Authoring: Redigerer
+Allow: Tillad
+'User types': Brugertyper
+'No user types.': 'Ingen brugertyper.'

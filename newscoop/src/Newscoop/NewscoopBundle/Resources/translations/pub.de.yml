@@ -1,140 +1,140 @@
-'Make sure to enter the Moderator Address below': 'Make sure to enter the Moderator Address below'
-'click to see issues': 'click to see issues'
-'Moderator Address': 'Moderator Address'
-'From Address': 'From Address'
-'Use CAPTCHA to prevent spam?': 'Use CAPTCHA to prevent spam?'
-'Public allowed to comment?': 'Public allowed to comment?'
-'Enable spam blocking?': 'Enable spam blocking?'
-'The subscription settings for $1 could not be added.': 'The subscription settings for $1 could not be added.'
-'The publication name you specified conflicts with publication $1.': 'The publication name you specified conflicts with publication $1.'
-'The publication alias you specified conflicts with publication $1.': 'The publication alias you specified conflicts with publication $1.'
-'Subscription defaults': 'Subscription defaults'
-'Subscription Settings by Country': 'Subscription Settings by Country'
-'Set subscription settings for a country': 'Set subscription settings for a country'
-'Set subscription settings by country': 'Set subscription settings by country'
-'Default time periods:': 'Default time periods:'
-'Country subscription settings updated.': 'Country subscription settings updated.'
-'Country subscription settings deleted.': 'Country subscription settings deleted.'
-'Change country subscription settings': 'Change country subscription settings'
-'Are you sure you want to delete the subscription settings for $1?': 'Are you sure you want to delete the subscription settings for $1?'
-'Publication updated': 'Publication updated'
-'Subscriber comments moderated?': 'Subscriber comments moderated?'
-'Public comments moderated?': 'Public comments moderated?'
-'Comments enabled?': 'Comments enabled?'
-'Comments enabled': 'Comments enabled'
-'Article comments default to enabled?': 'Article comments default to enabled?'
-'trial subscription': 'trial subscription'
-'paid subscription': 'paid subscription'
-'time units': 'time units'
-'one language': 'one language'
-'all languages': 'all languages'
-'Trial subscriptions': 'Trial subscriptions'
-'Time unit cost per one section': 'Time unit cost per one section'
-'Paid subscriptions': 'Paid subscriptions'
-'Default time period': 'Default time period'
-'Go To Issues': 'Go To Issues'
-'Delete publication $1': 'Delete publication $1'
-'No publications.': 'No publications.'
-'Default Site Alias': 'Default Site Alias'
-'URL Type': 'URL Type'
-'Country<BR><SMALL>(click to edit)</SMALL>': 'Country<BR><SMALL>(click to edit)</SMALL>'
-'Delete alias $1': 'Delete alias $1'
-'Configure publication': 'Configure publication'
-'You do not have the right to edit publication information.': 'You do not have the right to edit publication information.'
-'General attributes': 'General attributes'
-'You do not have the right to change publication information.': 'You do not have the right to change publication information.'
-'The publication information could not be updated.': 'The publication information could not be updated.'
-'You do not have the right to delete publications.': 'You do not have the right to delete publications.'
-'Are you sure you want to delete the publication $1?': 'Are you sure you want to delete the publication $1?'
-'Deleting publication': 'Deleting publication'
-'There are $1 subscription(s) left.': 'There are $1 subscription(s) left.'
-'The publication $1 could not be deleted.': 'The publication $1 could not be deleted.'
-'The publication could not be added.': 'The publication could not be added.'
-'You do not have the right to manage publications.': 'You do not have the right to manage publications.'
-'You must select a country.': 'You must select a country.'
-'Add new alias': 'Add new alias'
-'Alias (click to edit)': 'Alias (click to edit)'
-'Edit aliases': 'Edit aliases'
-'Publication Aliases': 'Publication Aliases'
-'Adding new alias': 'Adding new alias'
-'The site alias $1 could not be added.': 'The site alias $1 could not be added.'
-'Another alias with the same name exists already.': 'Another alias with the same name exists already.'
-'Edit alias': 'Edit alias'
-'Editing alias': 'Editing alias'
-'The site alias $1 could not be modified.': 'The site alias $1 could not be modified.'
-'Are you sure you want to delete the alias $1?': 'Are you sure you want to delete the alias $1?'
-'Deleting alias': 'Deleting alias'
-'The alias $1 could not be deleted.': 'The alias $1 could not be deleted.'
-'$1 is the default publication alias, it can not be deleted.': '$1 is the default publication alias, it can not be deleted.'
-'You do not have the right to add publications.': 'You do not have the right to add publications.'
-'There are $1 issue(s) left.': 'There are $1 issue(s) left.'
-'Time Unit': 'Time Unit'
-Currency: Currency
-'Edit languages': 'Edit languages'
-'Search engine optimization': 'Search engine optimization'
-'Article title': 'Article title'
-'Article keywords': 'Article keywords'
-'Article topics': 'Article topics'
+'Make sure to enter the Moderator Address below': 'Überprüfen Sie, dass die Moderatoren-Adresse unten eingegeben ist.'
+'click to see issues': 'Klicken um Ausgaben anzuzeigen'
+'Moderator Address': Moderatoren-Adresse
+'From Address': Absender
+'Use CAPTCHA to prevent spam?': 'CAPTCHA nutzen um Spam zu verhindern?'
+'Public allowed to comment?': 'Öffentliche Kommentare erlaubt?'
+'Enable spam blocking?': 'Spam-Blocker aktivieren?'
+'The subscription settings for $1 could not be added.': 'Die Nutzungseinstellungen für $1 konnten nicht hinzugefügt werden.'
+'The publication name you specified conflicts with publication $1.': 'Der angegebene Publikationsname steht im Widerspruch zur Publikation $1.'
+'The publication alias you specified conflicts with publication $1.': 'Der angegebene Publikations-Alias steht im Widerspruch zur Publikation $1.'
+'Subscription defaults': Standardabonnements
+'Subscription Settings by Country': 'Abonnement-Einstellungen nach Ländern'
+'Set subscription settings for a country': 'Abonnement-Einstellungen für ein Land festlegen'
+'Set subscription settings by country': 'Abonnement-Einstellungen nach Ländern festlegen'
+'Default time periods:': 'Standard-Zeitraum:'
+'Country subscription settings updated.': 'Abonnement-Einstellungen Land aktualisiert.'
+'Country subscription settings deleted.': 'Abonnement-Einstellungen Land gelöscht.'
+'Change country subscription settings': 'Abonnement-Einstellungen Land ändern'
+'Are you sure you want to delete the subscription settings for $1?': 'Abonnement-Einstellungen für $1 wirklich löschen?'
+'Publication updated': 'Publikation aktualisiert'
+'Subscriber comments moderated?': 'Benutzerkommentare moderieren?'
+'Public comments moderated?': 'Öffentliche Kommentare moderieren?'
+'Comments enabled?': 'Kommentare aktiviert?'
+'Comments enabled': 'Kommentare aktiviert'
+'Article comments default to enabled?': 'Artikelkommentare standardmäßig aktivieren?'
+'trial subscription': Probe-Abonnement
+'paid subscription': 'Bezahltes Abonnement'
+'time units': Zeiteinheiten
+'one language': 'Eine Sprache'
+'all languages': 'Alle Sprachen'
+'Trial subscriptions': Probe-Abonnements
+'Time unit cost per one section': 'Kosten der Zeiteinheit für eine Rubrik'
+'Paid subscriptions': 'Bezahlte Abonnements'
+'Default time period': 'Voreinstellung des Zeitraumes'
+'Go To Issues': 'Gehe zu Ausgaben'
+'Delete publication $1': 'Publikation $1 löschen'
+'No publications.': 'Keine Publikationen'
+'Default Site Alias': Standard-Seitenalias
+'URL Type': 'URL Typ'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Land<BR><SMALL>(zum Bearbeiten anklicken)</SMALL>'
+'Delete alias $1': 'Eintrag $1 löschen'
+'Configure publication': 'Publikation konfigurieren'
+'You do not have the right to edit publication information.': 'Keine Berechtigung Publikationsinformation zu bearbeiten.'
+'General attributes': 'Allgemeine Eigenschaften'
+'You do not have the right to change publication information.': 'Keine Berechtigung Publikationsinformation zu ändern.'
+'The publication information could not be updated.': 'Die Publikationsinformation konnte nicht aktualisiert werden.'
+'You do not have the right to delete publications.': 'Keine Berechtigung Publikationen zu löschen.'
+'Are you sure you want to delete the publication $1?': 'Sicher, dass Publikation $1 gelöscht werden soll?'
+'Deleting publication': 'Publikation wird gelöscht'
+'There are $1 subscription(s) left.': '$1 Abonnement(s) noch vorhanden'
+'The publication $1 could not be deleted.': 'Publikation $1 konnte nicht gelöscht werden'
+'The publication could not be added.': 'Publikation konnte nicht hinzugefügt werden.'
+'You do not have the right to manage publications.': 'Keine Berechtigung, Publikationen zu verwalten.'
+'You must select a country.': 'Es muss ein Land gewählt werden'
+'Add new alias': 'Neuen Alias hinzufügen'
+'Alias (click to edit)': 'Alias (anklicken zum Bearbeiten)'
+'Edit aliases': 'Aliase bearbeiten'
+'Publication Aliases': 'Aliase der Publikationen'
+'Adding new alias': 'Neuen Alias hinzufügen'
+'The site alias $1 could not be added.': 'Alias $1 für die Seite konnte nicht hinzugefügt werden.'
+'Another alias with the same name exists already.': 'Ein anderer Alias mit dem gleichen Namen existiert bereits.'
+'Edit alias': 'Alias bearbeiten'
+'Editing alias': 'Alias wird bearbeitet'
+'The site alias $1 could not be modified.': 'Der Alias $1 der Seite konnte nicht modifiziert werden.'
+'Are you sure you want to delete the alias $1?': 'Soll Alias $1 wirklich gelöscht werden?'
+'Deleting alias': 'Alias löschen'
+'The alias $1 could not be deleted.': 'Alias $1 konnte nicht gelöscht werden.'
+'$1 is the default publication alias, it can not be deleted.': '$1 ist der voreingestellte Alias der Publikation und kann nicht gelöscht werden.'
+'You do not have the right to add publications.': 'Keine Zugriffsrechte, um eine neue Publikation zu erstellen.'
+'There are $1 issue(s) left.': 'Es sind $1 Ausgaben übrig.'
+'Time Unit': Zeiteinheit
+Currency: Währung
+'Edit languages': 'Sprachen bearbeiten'
+'Search engine optimization': Suchmaschinenoptimierung
+'Article title': Artikeltitel
+'Article keywords': Artikelschlagwörter
+'Article topics': Artikelthemen
 publications:
     title:
-        list: 'List of publications'
-        edit: 'Edit publication'
-        add: 'Add new publication'
-        remove: 'Remove publication'
-    no_publications: 'No publications.'
-    general_settings: 'General Settings'
-    comments_settings: 'Comments Settings'
-    seo_settings: 'SEO Settings'
-    front_page_theme_settings: 'Front page theme settings'
-    publication_removed: 'Publication was removed.'
-    publication_saved: 'Publication changes were saved successfully.'
+        list: null
+        edit: null
+        add: null
+        remove: null
+    no_publications: null
+    general_settings: null
+    comments_settings: null
+    seo_settings: null
+    front_page_theme_settings: null
+    publication_removed: null
+    publication_saved: null
     remove:
-        cant_be_removed: 'This publication isn''t empty - and can''t be removed.'
-        can_be_removed: 'This publication is empty and can be removed.'
-        left_issues: 'Left issues'
-        left_sections: 'Left sections'
-        left_articles: 'Left articles'
-        show_issues: 'show issues'
-        before_removing: 'Before removing publication you need to remove/move all remaining elements.'
-        you_sure: 'Are you sure that you want to remove publication'
-        remove: 'Remove publication'
+        cant_be_removed: null
+        can_be_removed: null
+        left_issues: null
+        left_sections: null
+        left_articles: null
+        show_issues: null
+        before_removing: null
+        you_sure: null
+        remove: null
     buttons:
-        addNew: 'Add new publication'
-        listPublications: 'List publications'
-        listIssues: 'List publication issues'
+        addNew: null
+        listPublications: null
+        listIssues: null
     table:
-        number: Number
-        name: Name
-        default_alias: 'Default Alias'
-        default_language: 'Default Language'
-        comments_status: 'Comments status'
-        url_type: 'Url type'
-        configure: Configure
-        remove: Remove
+        number: null
+        name: null
+        default_alias: null
+        default_language: null
+        comments_status: null
+        url_type: null
+        configure: null
+        remove: null
     form_type:
         label:
-            follow_current_issue_theme: 'Follow current issue theme'
-            name: 'Publication Name'
-            template_path: 'Template path'
-            short_names: 'Short name'
-            alias: 'Default alias'
-            url_type: 'Url type'
-            seo: 'Article url parts'
-            seo_article_title: 'Article title'
-            seo_article_keywords: 'Article keywords'
-            seo_article_topics: 'Article topics'
-            edit_aliases: 'Edit aliases'
-            edit_languages: 'Edit languages'
-            moderator_to: 'Moderator address'
-            moderator_from: 'Moderation emails from addres'
-            comments_enabled: 'Comments are enabled?'
-            public_comments_enabled: 'Public (anonymous) comments are enabled?'
-            comments_article_default_enabled: 'Comments for article are enabled by default?'
-            comments_subscribers_moderated: 'Registered users'' comments are moderated?'
-            comments_public_moderated: 'Public (anonymous) comments are moderated?'
-            comments_captcha_enabled: 'Captcha is enabled?'
-            comments_spam_blocking_enabled: 'Comments spam (internal system) blocking is enabled?'
-            meta_title: 'Publication title'
-            meta_keywords: 'Publication keywords'
-            meta_description: 'Publication description'
-    tip1: 'Newscoop content is organized in a hierarchical structure, which conforms to the tradition of newspapers and magazines: Publications, Issues, Sections and Articles. Each publication is made up of issues, each issue is in turn made up of sections, which are comprised of articles.'
+            follow_current_issue_theme: null
+            name: null
+            template_path: null
+            short_names: null
+            alias: null
+            url_type: null
+            seo: null
+            seo_article_title: null
+            seo_article_keywords: null
+            seo_article_topics: null
+            edit_aliases: null
+            edit_languages: null
+            moderator_to: null
+            moderator_from: null
+            comments_enabled: null
+            public_comments_enabled: null
+            comments_article_default_enabled: null
+            comments_subscribers_moderated: null
+            comments_public_moderated: null
+            comments_captcha_enabled: null
+            comments_spam_blocking_enabled: null
+            meta_title: null
+            meta_keywords: null
+            meta_description: null
+    tip1: null

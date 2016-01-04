@@ -1,51 +1,51 @@
-newscoop.plugins_manager.manager: 'Plugins Manager'
-newscoop.plugins_manager.legacy_manager: 'Legacy Plugins Manager'
-newscoop.plugins_manager.public_plugins: 'Public plugins'
-newscoop.plugins_manager.private_plugins: 'Private plugins'
-newscoop.plugins_manager.install.public: 'Install new plugins'
-newscoop.plugins_manager.installed_table.name: Name
-newscoop.plugins_manager.installed_table.description: Description
-newscoop.plugins_manager.installed_table.enabled: Enabled
-newscoop.plugins_manager.installed_table.version: Version
-newscoop.plugins_manager.installed_table.license: License
-newscoop.plugins_manager.installed_table.installed_at: 'Installed At'
-newscoop.plugins_manager.installed_table.updated_at: 'Updated At'
-newscoop.plugins_manager.installed_table.actions: Actions
-newscoop.plugins_manager.installed_table.update_plugin: Update
-newscoop.plugins_manager.installed_table.remove_plugin: Remove
-newscoop.plugins_manager.installed_table.install_plugin: Install
-newscoop.plugins_manager.installed_table.plugin_installed: Installed
-newscoop.plugins_manager.upload.private: 'Upload private plugin'
-newscoop.plugins_manager.search_for_plugins: 'Search for plugins'
-newscoop.plugins_manager.form.package: 'Package must be a zip file.'
-newscoop.plugins_manager.form.submit: Upload
-newscoop.plugins_manager.runcommand: 'Run command'
-newscoop.plugins_manager.openterminal: 'Open terminal and run command'
-newscoop.plugins_manager.installassets: 'Install assets'
-newscoop.plugins_manager.done: 'Done. Close this window and refresh page.'
-newscoop.plugins_manager.close: Close
-newscoop.plugins_manager.update: 'How to update this plugin?'
-newscoop.plugins_manager.install: 'How to install this plugin?'
-newscoop.plugins_manager.remove: 'How to remove this plugin?'
-newscoop.plugins_manager.installed: 'Done. Refresh this page. Plugin should be now visible in your list of installed plugins.'
-newscoop.plugins_manager.clipboard: 'Copy to clipboard: Ctrl+C (Cmd + C for Mac), Enter'
-newscoop.plugins_manager.downloads: downloads
-newscoop.plugins_manager.favers: favers
-newscoop.plugins_manager.private_plugins_not_writable: '%privatePluginsPath% is not writable by your web server.'
-newscoop.plugins_manager.private_plugins_not_writable_commands: 'On a Linux server you can fix this with the commands:'
+newscoop.plugins_manager.manager: 'Zarządzanie wtyczkami'
+newscoop.plugins_manager.legacy_manager: 'Stare zarządzanie wtyczkami'
+newscoop.plugins_manager.public_plugins: 'Pluginy publiczne'
+newscoop.plugins_manager.private_plugins: 'Pluginy prywatne'
+newscoop.plugins_manager.install.public: 'Instaluj publiczne pluginy'
+newscoop.plugins_manager.installed_table.name: Nazwa
+newscoop.plugins_manager.installed_table.description: Opis
+newscoop.plugins_manager.installed_table.enabled: Aktywny
+newscoop.plugins_manager.installed_table.version: Wersja
+newscoop.plugins_manager.installed_table.license: Licencja
+newscoop.plugins_manager.installed_table.installed_at: 'Data instalacji'
+newscoop.plugins_manager.installed_table.updated_at: 'Data aktualizacji'
+newscoop.plugins_manager.installed_table.actions: Akcje
+newscoop.plugins_manager.installed_table.update_plugin: Aktualizuj
+newscoop.plugins_manager.installed_table.remove_plugin: Usuń
+newscoop.plugins_manager.installed_table.install_plugin: Instaluj
+newscoop.plugins_manager.installed_table.plugin_installed: Zainstalowany
+newscoop.plugins_manager.upload.private: 'Wgraj plik prywatnego pluginu'
+newscoop.plugins_manager.search_for_plugins: 'Szukaj pluginów'
+newscoop.plugins_manager.form.package: 'Plik pluginu'
+newscoop.plugins_manager.form.submit: Wgraj
+newscoop.plugins_manager.runcommand: 'Uruchom polecenie'
+newscoop.plugins_manager.openterminal: 'Otwórz terminal konsoli i uruchom polecenie'
+newscoop.plugins_manager.installassets: 'Zainstaluj wymagane pliki'
+newscoop.plugins_manager.done: 'Zakończono. Zamknij to okno i odśwież stronę. '
+newscoop.plugins_manager.close: Zamknij
+newscoop.plugins_manager.update: 'Jak zaktualizować wtyczkę?'
+newscoop.plugins_manager.install: 'Jak zainstalować wtyczkę?'
+newscoop.plugins_manager.remove: 'Jak usunąć wtyczkę?'
+newscoop.plugins_manager.installed: 'Zakończono. Odśwież tą stronę. Wtyczka powinna być widoczna na liście zainstalowanych wtyczek.'
+newscoop.plugins_manager.clipboard: 'Skopiuj do schowka: Ctrl+C (Cmd + C na komputerach Mac), Enter'
+newscoop.plugins_manager.downloads: pobrania
+newscoop.plugins_manager.favers: Ulubione
+newscoop.plugins_manager.private_plugins_not_writable: null
+newscoop.plugins_manager.private_plugins_not_writable_commands: null
 newscoop:
     datatable:
         table:
-            info: 'Showing _START_ to _END_ of _TOTAL_ entries'
-            noentries: 'No entries to show'
-            filtering: ' - filtering from _MAX_ records'
-            menu: 'Display _MENU_ records'
+            info: 'Widoczne _START_ do _END_ z _TOTAL_ rekordów'
+            noentries: 'Nie ma żadnych rekordów'
+            filtering: ' - filtrowanie z _MAX_ rekordów'
+            menu: 'Pokazuje _MENU_ rekordów'
         label:
-            search: Search
-            filter: Filter
-            processing: Processing...
-            last: Last
-            next: Next
-            first: First
-            previous: Previous
-            norecords: 'No records found.'
+            search: Szukaj
+            filter: Filtruj
+            processing: Przetwarzanie...
+            last: Ostatni
+            next: Następny
+            first: Pierwszy
+            previous: Poprzedni
+            norecords: 'Nie znaleziono żadnych rekordów.'

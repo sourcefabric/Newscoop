@@ -1,29 +1,29 @@
-'No attachment': 'No attachment'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-Approve: Approve
-Approved.: Approved.
-at: at
-Attachment: Attachment
-'Ban/Unban user': 'Ban/Unban user'
-'Change selected messages status': 'Change selected messages status'
-Deleted: Deleted
-'Full article': 'Full article'
-Message: Message
-'Message deleted.': 'Message deleted.'
-'Messages deleted.': 'Messages deleted.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Message status change to $1.': 'Message status change to $1.'
-'Messages updated.': 'Messages updated.'
-'Message updated.': 'Message updated.'
-Processed: Processed
-Reply: Reply
-'Reply to message': 'Reply to message'
-Star: Star
-Starred: Starred
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-'With document attachment': 'With document attachment'
-'With image attachment': 'With image attachment'
-'With no attachment': 'With no attachment'
-'Feedback Messages': 'Feedback Messages'
+'No attachment': 'Brak załączników'
+'You are about to permanently delete multiple messages.': 'Chcesz bezpowrotnie usunąć wiele wiadomości.'
+'You are about to permanently delete a message.': 'Chcesz bezpowrotnie usunąć tą wiadomość.'
+'Are you sure you want to do it?': 'Jesteś pewien że chcesz to zrobić?'
+Approve: Zaakceptuj
+Approved.: Zaakceptowany
+at: w
+Attachment: Zalącznik
+'Ban/Unban user': 'Zablokuj/Odblokuj użytkownika'
+'Change selected messages status': 'Wybierz status wiadomości'
+Deleted: Usunięty
+'Full article': 'Pełny artykuł'
+Message: Wiadomość
+'Message deleted.': 'Wiadomość została usunięta'
+'Messages deleted.': 'Wiadomość została usunięta'
+'Messages status change to $1.': 'Status wiadomości został zmieniony na $1'
+'Message status change to $1.': 'Status wiadomości został zmieniony na $1'
+'Messages updated.': 'Wiadomość została zaktualizowana'
+'Message updated.': 'Wiadomość została zaktualizowana'
+Processed: Przetworzony
+Reply: Odpowiedz
+'Reply to message': 'Odpowiedz na wiadomość'
+Star: Gwiazdka
+Starred: Odznaczony
+'Unable to reach Newscoop. Please check your internet connection.': 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
+'With document attachment': 'Dokument dostępny w zalącznikach'
+'With image attachment': 'Zdjęcie dostępne w załącznikach'
+'With no attachment': 'Brak załączników.'
+'Feedback Messages': 'Wiadomość zwrotna'

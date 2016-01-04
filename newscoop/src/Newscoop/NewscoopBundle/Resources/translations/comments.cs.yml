@@ -1,120 +1,120 @@
-'No attachment': 'No attachment'
-at: at
-'With no attachment': 'With no attachment'
-'With image attachment': 'With image attachment'
-'With document attachment': 'With document attachment'
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-Starred: Starred
-Star: Star
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
-'Reply to message': 'Reply to message'
-Reply: Reply
-Processed: Processed
-'No records found.': 'No records found.'
-'No entries to show': 'No entries to show'
-'Messages updated.': 'Messages updated.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Messages deleted.': 'Messages deleted.'
-'Message updated.': 'Message updated.'
-'Message status change to $1.': 'Message status change to $1.'
-'Message deleted.': 'Message deleted.'
-Message: Message
-Last: Last
-'Full article': 'Full article'
-First: First
-'Feedback Messages': 'Feedback Messages'
-'Display _MENU_ records': 'Display _MENU_ records'
-Deleted: Deleted
-'Change selected messages status': 'Change selected messages status'
-Attachment: Attachment
-Approved.: Approved.
-Approve: Approve
-Anonymous: Anonymous
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-User: User
-None: None
-'Coming from': 'Coming from'
-'Ban/Unban user': 'Ban/Unban user'
-Ip: Ip
-'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
-'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
-'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
-Website: Website
-'Value is not $1 characters long': 'Value is not $1 characters long'
-Username: Username
-'User id': 'User id'
-'User ban settings': 'User ban settings'
-'Update comment': 'Update comment'
-Unrecommended: Unrecommended
-Unrecommend: Unrecommend
-'Subject is not $1 characters long': 'Subject is not $1 characters long'
-'Sort by Thread order': 'Sort by Thread order'
-'Show parent comment': 'Show parent comment'
-'Show commenter details': 'Show commenter details'
-'Show commenter': 'Show commenter'
-'Show comment user details': 'Show comment user details'
-'Show comment user': 'Show comment user'
-'Show comment details': 'Show comment details'
-'Select status': 'Select status'
-'Search Type': 'Search Type'
-'Reply to comment': 'Reply to comment'
-Recommended: Recommended
-Recommend: Recommend
-'Quick edit': 'Quick edit'
-Parent: Parent
+'No attachment': 'Žádná příloha'
+at: na
+'With no attachment': 'Bez přílohy'
+'With image attachment': 'S přílohou obrázku'
+'With document attachment': 'S přílohou dokumentu'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
+Starred: 'S hvězdičkou'
+Star: Hvězda
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Ukázat _START_ až _END_ z _TOTAL_ záznamů'
+'Reply to message': 'Odpovědět na zprávu'
+Reply: Odpovědět
+Processed: Zpracováno
+'No records found.': 'Nebyly nalezeny žádné záznamy.'
+'No entries to show': 'Nejsou zde žádné příspěvky k zobrazení'
+'Messages updated.': 'Zprávy aktualizovány'
+'Messages status change to $1.': 'Statu zpráv změněn na  $1'
+'Messages deleted.': 'Zprávy vymazány'
+'Message updated.': 'Zpráva aktualizována'
+'Message status change to $1.': 'Status zprávy změněn na  $1'
+'Message deleted.': 'Zpráva vymazána'
+Message: Zpráva;
+Last: Poslední
+'Full article': 'Celý článek'
+First: První
+'Feedback Messages': 'Feedback zpráv'
+'Display _MENU_ records': 'Zobrazit _MENU_ záznamy'
+Deleted: Vymazat
+'Change selected messages status': 'Změnit statu vybraným zprávám'
+Attachment: Příloha
+Approved.: Schváleno
+Approve: Schválit
+Anonymous: Anonymní
+' - filtering from _MAX_ records': '- filtrováno z _MAX_ záznamů'
+'You are about to permanently delete multiple messages.': 'Chystáte se trvale vymazat hromadné zprávy'
+'You are about to permanently delete a message.': 'Chystáte se permanentně vymazat zprávu'
+User: Uživatel
+None: Žádné
+'Coming from': 'Přichází od '
+'Ban/Unban user': 'Zakázat/Obnovit uživatele'
+Ip: IP
+'Bans can be applied to a users name, email address or IP address.': 'Zákazy mohou být aplikované na uřivatelské jméno, emailovou nebo IP adresu.'
+'You are about to permanently delete multiple comments.': 'Právě se chystáte permanentně vymazat hromadné komentáře.'
+'You are about to permanently delete a comment.': 'Právě se chystáte permanentně vymazat komentář.'
+Website: 'Webová stránka'
+'Value is not $1 characters long': 'Hodnota není $1 znaků dlouhá'
+Username: 'Uživatelské jméno'
+'User id': 'Uživatelské ID'
+'User ban settings': 'Nastavení zákazu pro uživatele'
+'Update comment': 'Aktualizovat komentář'
+Unrecommended: Nedoproučený
+Unrecommend: Nedoporučeno
+'Subject is not $1 characters long': 'Předmět není $1 charakterů dlouhý'
+'Sort by Thread order': 'Seřadit podle vláken'
+'Show parent comment': 'Ukázat ústřední komentář'
+'Show commenter details': 'Ukázat detail komentátora'
+'Show commenter': 'Ukázat komentátora'
+'Show comment user details': 'Ukázat detail komentátora'
+'Show comment user': 'Ukázat komentujícího uživatel'
+'Show comment details': 'Ukázat detaily komentáře'
+'Select status': 'Vybrat status'
+'Search Type': 'Vyhledat typ'
+'Reply to comment': 'Odpovědět na komentář'
+Recommended: Doporučené
+Recommend: Doporučeno
+'Quick edit': 'Rychlá editace '
+Parent: Ústřední
 ID: ID
-'Go to edit article': 'Go to edit article'
-Forum: Forum
-'For Column': 'For Column'
+'Go to edit article': 'Jděte upravit článek'
+Forum: Fórum
+'For Column': 'Pro odstavec'
 Email: Email
-'Edit acceptance criteria': 'Edit acceptance criteria'
-E-mail: E-mail
-'Delete all comments?': 'Delete all comments?'
-'Date Created': 'Date Created'
-'Comments updated.': 'Comments updated.'
-'Comments status change to $1.': 'Comments status change to $1.'
-'Comments deleted.': 'Comments deleted.'
-'Commenter $1 saved.': 'Commenter $1 saved.'
-'Commenter $1 deleted.': 'Commenter $1 deleted.'
-Commenter: Commenter
-'Comment updated.': 'Comment updated.'
-'Comment status change to $1.': 'Comment status change to $1.'
-'Comment id': 'Comment id'
-'Comment deleted.': 'Comment deleted.'
-'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
-'Comment Acceptance': 'Comment Acceptance'
-'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
-'Comment $1 saved.': 'Comment $1 saved.'
-Column: Column
-'Change subscriber information': 'Change subscriber information'
-'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
-Ban: Ban
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-'Add rating': 'Add rating'
-'Add new comment commenter': 'Add new comment commenter'
-'Add new comment': 'Add new comment'
-'Add new acceptance criteria': 'Add new acceptance criteria'
-'Acceptance $1 saved.': 'Acceptance $1 saved.'
-'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
+'Edit acceptance criteria': 'Upravit kritéria pro přijetí'
+E-mail: Email
+'Delete all comments?': 'Vymazat všechny komentáře?'
+'Date Created': 'Datum vytvořeno'
+'Comments updated.': 'Komentáře jsou aktualizovány.'
+'Comments status change to $1.': 'Status komentářů změněno na $1.'
+'Comments deleted.': 'Komentáře vymazány.'
+'Commenter $1 saved.': 'Komentátor $1 uložen.'
+'Commenter $1 deleted.': 'Komentátor $1 vymazán.'
+Commenter: Komentátor
+'Comment updated.': 'Komentář aktualizován.'
+'Comment status change to $1.': 'Status komentáře změněn na $1.'
+'Comment id': 'ID komentáře'
+'Comment deleted.': 'Komentář vymazán.'
+'Comment delete by $1 from the article $2 ($3)': 'Komentář vymazán $1 z článku $2 ($3)'
+'Comment Acceptance': 'Přijetí komentáře'
+'Comment $4 by $1 in the article $2 ($3)': 'Komentář $4'
+'Comment $1 saved.': 'Komentář $1 uložen.'
+Column: 'Odstavec '
+'Change subscriber information': 'Změna informací registrovaného'
+'Ban for commenter $1 saved.': 'Zákaz pro komentátora $1 uloženo.'
+Ban: Zakázat
+'Are you sure you want to do it?': 'Jste si jisti, že to chcete udělat?'
+'Add rating': 'Přidat hodnocení'
+'Add new comment commenter': 'Přidat nový komentář'
+'Add new comment': 'Přidat nový komentář'
+'Add new acceptance criteria': 'Přidat nová kritéria pro přijetí'
+'Acceptance $1 saved.': 'Akceptace $1 uložena.'
+'Acceptance $1 deleted.': 'Akceptace $1 vymazána.'
 editorial:
     alert:
-        toolong: 'Message is too long.'
-        added: 'Comment has been successfully added.'
-        edited: 'Comment has been successfully edited.'
-        resolved: 'Comment has been successfully resolved.'
-        deleted: 'Comment has been successfully deleted.'
+        toolong: null
+        added: null
+        edited: null
+        resolved: null
+        deleted: null
     btn:
-        send: Send
-        cancel: Cancel
-        resolve: Resolve
-        save: Save
-        edit: Edit
-        delete: Delete
-        reply: Reply
+        send: null
+        cancel: null
+        resolve: null
+        save: null
+        edit: null
+        delete: null
+        reply: null
     label:
-        title: 'Editorial Comments'
-        post: 'Post a new comment'
-        reply: Reply...
-        nocomments: 'No comments yet.'
+        title: null
+        post: null
+        reply: null
+        nocomments: null

@@ -1,78 +1,78 @@
-'Display newsfeed images': 'Display newsfeed images'
-'Mark image': 'Mark image'
-'Add selected images to slideshow': 'Add selected images to slideshow'
-'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sorry that image is too small. Image needs to be at least %dx%d.'
-'Slideshow rendition': 'Slideshow rendition'
-'Renditions reloaded': 'Renditions reloaded'
-'Reload renditions': 'Reload renditions'
-'Edit images': 'Edit images'
-'Specify image url if you want to load it.': 'Specify image url if you want to load it.'
-'Items: ': 'Items: '
-'Attach slideshows': 'Attach slideshows'
-'original size:': 'original size:'
-'no caption': 'no caption'
-'Video URL': 'Video URL'
-'Use for all': 'Use for all'
-'Use default': 'Use default'
-'Slug must be unique': 'Slug must be unique'
-Slug: Slug
-'Slideshow headline': 'Slideshow headline'
-Slideshow: Slideshow
-'Set selected as default image': 'Set selected as default image'
-'Set as default': 'Set as default'
-Saving...: Saving...
-Saved: Saved
-'Save headline': 'Save headline'
-'Place Images': 'Place Images'
-'No renditions defined.': 'No renditions defined.'
-'No images found.': 'No images found.'
-'No images attached to article.': 'No images attached to article.'
-'No images': 'No images'
-'Next: Upload and Edit Metadata': 'Next: Upload and Edit Metadata'
-'Next: Place Images': 'Next: Place Images'
-'Media Archive': 'Media Archive'
-Location: Location
-Items: Items
-Item: Item
-'Image files': 'Image files'
-'Image Files: ': 'Image Files: '
-Headline: Headline
-Finish: Finish
-'Edit Image Data': 'Edit Image Data'
-'Edit $1': 'Edit $1'
-'Done editing': 'Done editing'
-Detach: Detach
-Create: Create
-Caption: Caption
-'Attached images': 'Attached images'
-'Attach & Place': 'Attach & Place'
-'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)'
-'Add video': 'Add video'
-'Add caption': 'Add caption'
-'Show all': 'Show all'
-'The image has been removed from the article.': 'The image has been removed from the article.'
-'Unable to add new image.': 'Unable to add new image.'
-'Image number $1 already exists': 'Image number $1 already exists'
-'You do not have the right to change image information.': 'You do not have the right to change image information.'
-'The image number specified is already in use.': 'The image number specified is already in use.'
-'Image $1 updated.': 'Image $1 updated.'
-'Image $1 added.': 'Image $1 added.'
-'Edit article': 'Edit article'
-'You do not have the right to attach images to articles.': 'You do not have the right to attach images to articles.'
-'You do not have the right to add images.': 'You do not have the right to add images.'
-'Image information': 'Image information'
-'Attach New Image': 'Attach New Image'
-'Attach Image To Article': 'Attach Image To Article'
-'Attach Existing Image': 'Attach Existing Image'
-'Add New Image': 'Add New Image'
-Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Date<BR><SMALL>(yyyy-mm-dd)</SMALL>
-'You must select an image file to upload.': 'You must select an image file to upload.'
-'Change image information': 'Change image information'
-'You do not have the right to add images': 'You do not have the right to add images'
-'Filter by uploader...': 'Filter by uploader...'
-'Slideshow images': 'Slideshow images'
-'Add items to slideshow': 'Add items to slideshow'
-'Attached Slideshows': 'Attached Slideshows'
-'Value is required and can''t be empty': 'Value is required and can''t be empty'
-'Select all images': 'Select all images'
-'Unselect all images': 'Unselect all images'
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
+'Sorry that image is too small. Image needs to be at least %dx%d.': null
+'Slideshow rendition': null
+'Renditions reloaded': null
+'Reload renditions': null
+'Edit images': 'Uredi slike'
+'Specify image url if you want to load it.': 'Odredite URL slike ako želite da je učitate.'
+'Items: ': null
+'Attach slideshows': null
+'original size:': null
+'no caption': null
+'Video URL': null
+'Use for all': 'Koristi za sve.'
+'Use default': null
+'Slug must be unique': null
+Slug: null
+'Slideshow headline': null
+Slideshow: null
+'Set selected as default image': null
+'Set as default': null
+Saving...: null
+Saved: Sačuvano
+'Save headline': null
+'Place Images': null
+'No renditions defined.': null
+'No images found.': null
+'No images attached to article.': null
+'No images': null
+'Next: Upload and Edit Metadata': null
+'Next: Place Images': null
+'Media Archive': 'Arhiva medijskih zapisa'
+Location: null
+Items: null
+Item: null
+'Image files': Slike
+'Image Files: ': null
+Headline: null
+Finish: null
+'Edit Image Data': null
+'Edit $1': 'Uredi $1'
+'Done editing': null
+Detach: null
+Create: Napravi
+Caption: null
+'Attached images': null
+'Attach & Place': null
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
+'Add video': 'Dodaj video'
+'Add caption': 'Dodaj opis'
+'Show all': 'Prikaži sve'
+'The image has been removed from the article.': 'Slika je uklonjena iz teksta'
+'Unable to add new image.': 'Nije moguće dodati novu sliku.'
+'Image number $1 already exists': 'Slika broj $1 već postoji'
+'You do not have the right to change image information.': 'Nemate pravo menjanja podataka o slikama.'
+'The image number specified is already in use.': 'Broj slike koji ste uneli je već upotrebljen.'
+'Image $1 updated.': 'slika $1 je izmenjena.'
+'Image $1 added.': 'Slika $1 je dodata.'
+'Edit article': 'Uredi tekst'
+'You do not have the right to attach images to articles.': 'Nemate pravo da kačite slike uz tekstove.'
+'You do not have the right to add images.': 'Nemate pravo da dodajete slike.'
+'Image information': 'Podaci o slici'
+'Attach New Image': 'Zakači novu sliku'
+'Attach Image To Article': 'Prikači sliku uz tekst'
+'Attach Existing Image': 'Prikači postojeću sliku'
+'Add New Image': 'Dodaj novu sliku'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Datum<br><small>(gggg-mm-dd)</small>
+'You must select an image file to upload.': 'Morate izabrati sliku koju želite da aploudujete.'
+'Change image information': 'Promeni podatke o slici'
+'You do not have the right to add images': 'Nemate pravo da dodajete slike'
+'Filter by uploader...': null
+'Slideshow images': null
+'Add items to slideshow': null
+'Attached Slideshows': null
+'Value is required and can''t be empty': null
+'Select all images': null
+'Unselect all images': null

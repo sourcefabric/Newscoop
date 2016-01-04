@@ -1,78 +1,78 @@
-'Display newsfeed images': 'Display newsfeed images'
-'Mark image': 'Mark image'
-'Add selected images to slideshow': 'Add selected images to slideshow'
-'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sorry that image is too small. Image needs to be at least %dx%d.'
-'Slideshow rendition': 'Slideshow rendition'
-'Renditions reloaded': 'Renditions reloaded'
-'Reload renditions': 'Reload renditions'
-'Edit images': 'Edit images'
-'Specify image url if you want to load it.': 'Specify image url if you want to load it.'
-'Items: ': 'Items: '
-'Attach slideshows': 'Attach slideshows'
-'original size:': 'original size:'
-'no caption': 'no caption'
-'Video URL': 'Video URL'
-'Use for all': 'Use for all'
-'Use default': 'Use default'
-'Slug must be unique': 'Slug must be unique'
+'Display newsfeed images': 'Pokazuj obrazy z kanałów informacyjnych'
+'Mark image': 'Zaznacz zdjęcie'
+'Add selected images to slideshow': 'Dodaj zaznaczone obrazy do galerii '
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sorry, te zdjęcie jest za małe. Zdjęcie musi mieć przynajmniej %d na %d'
+'Slideshow rendition': 'Galerie obrazów'
+'Renditions reloaded': 'Obrazy przeładowane'
+'Reload renditions': 'Przeładuj obrazy'
+'Edit images': 'Edytuj zdjecia'
+'Specify image url if you want to load it.': 'Podaj adres url do zdjęcia aby je załadować.'
+'Items: ': Elementy
+'Attach slideshows': 'Dodaj galerie'
+'original size:': 'rozmiar orginalny'
+'no caption': 'Brak podpisu'
+'Video URL': 'Link do wideo'
+'Use for all': 'Zastosuj dla wszystkich'
+'Use default': 'Użyj domyślny'
+'Slug must be unique': 'Slug musi być unikalny'
 Slug: Slug
-'Slideshow headline': 'Slideshow headline'
-Slideshow: Slideshow
-'Set selected as default image': 'Set selected as default image'
-'Set as default': 'Set as default'
-Saving...: Saving...
-Saved: Saved
-'Save headline': 'Save headline'
-'Place Images': 'Place Images'
-'No renditions defined.': 'No renditions defined.'
-'No images found.': 'No images found.'
-'No images attached to article.': 'No images attached to article.'
-'No images': 'No images'
-'Next: Upload and Edit Metadata': 'Next: Upload and Edit Metadata'
-'Next: Place Images': 'Next: Place Images'
-'Media Archive': 'Media Archive'
-Location: Location
-Items: Items
-Item: Item
-'Image files': 'Image files'
-'Image Files: ': 'Image Files: '
-Headline: Headline
-Finish: Finish
-'Edit Image Data': 'Edit Image Data'
-'Edit $1': 'Edit $1'
-'Done editing': 'Done editing'
-Detach: Detach
-Create: Create
-Caption: Caption
-'Attached images': 'Attached images'
-'Attach & Place': 'Attach & Place'
-'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)'
-'Add video': 'Add video'
-'Add caption': 'Add caption'
-'Show all': 'Show all'
-'The image has been removed from the article.': 'The image has been removed from the article.'
-'Unable to add new image.': 'Unable to add new image.'
-'Image number $1 already exists': 'Image number $1 already exists'
-'You do not have the right to change image information.': 'You do not have the right to change image information.'
-'The image number specified is already in use.': 'The image number specified is already in use.'
-'Image $1 updated.': 'Image $1 updated.'
-'Image $1 added.': 'Image $1 added.'
-'Edit article': 'Edit article'
-'You do not have the right to attach images to articles.': 'You do not have the right to attach images to articles.'
-'You do not have the right to add images.': 'You do not have the right to add images.'
-'Image information': 'Image information'
-'Attach New Image': 'Attach New Image'
-'Attach Image To Article': 'Attach Image To Article'
-'Attach Existing Image': 'Attach Existing Image'
-'Add New Image': 'Add New Image'
-Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Date<BR><SMALL>(yyyy-mm-dd)</SMALL>
-'You must select an image file to upload.': 'You must select an image file to upload.'
-'Change image information': 'Change image information'
-'You do not have the right to add images': 'You do not have the right to add images'
-'Filter by uploader...': 'Filter by uploader...'
-'Slideshow images': 'Slideshow images'
-'Add items to slideshow': 'Add items to slideshow'
-'Attached Slideshows': 'Attached Slideshows'
-'Value is required and can''t be empty': 'Value is required and can''t be empty'
-'Select all images': 'Select all images'
-'Unselect all images': 'Unselect all images'
+'Slideshow headline': 'Nagłówek galerii'
+Slideshow: Galeria
+'Set selected as default image': 'Ustaw wybrany jako domyślny obraz'
+'Set as default': 'Ustaw jako domyślne'
+Saving...: Zapisywanie...
+Saved: Zapisano
+'Save headline': 'Zapisz nagłówek'
+'Place Images': 'Umieść zdjęcia'
+'No renditions defined.': 'Nie masz zdefiniowanych obrazów.'
+'No images found.': 'Nie znaleziono zdjęć.'
+'No images attached to article.': 'Ten artykuł nie ma żadnych zdjęć'
+'No images': 'Brak zdjęć'
+'Next: Upload and Edit Metadata': 'Dalej: Wgraj i edytuj informacje'
+'Next: Place Images': 'Dalej: Umieść zjdęcia'
+'Media Archive': 'Biblioteka Mediów'
+Location: Lokalizacja
+Items: Elementy
+Item: Element
+'Image files': 'Pliki zdjęć'
+'Image Files: ': 'Pliki zdjęć:'
+Headline: Nagłówek
+Finish: Zakończ
+'Edit Image Data': 'Edytuj dane zdjecia'
+'Edit $1': 'Edytuj $1'
+'Done editing': 'Zakończ edycję'
+Detach: Usuń
+Create: Utwórz
+Caption: Podpis
+'Attached images': 'Zalączone zdjęcia'
+'Attach & Place': 'Załącz i umieść'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Dodaj link do wideo (np. http://vimeo.com/25083275 dla Vimeo albo http://youtu.be/1XsPVO61e9w dla YouTube)'
+'Add video': 'Dodaj film'
+'Add caption': 'Dodaj podpis'
+'Show all': 'Pokaż wszystkie'
+'The image has been removed from the article.': 'Zdjęcie zostało usunięte z artykułu.'
+'Unable to add new image.': 'Nie można dodać nowego zdjęcia.'
+'Image number $1 already exists': 'Zdjęcie numer $1 już istnieje'
+'You do not have the right to change image information.': 'Nie masz praw aby zmieniać informacje o zdjęciu.'
+'The image number specified is already in use.': 'Numer zdjęcia jest już w użyciu.'
+'Image $1 updated.': 'Zdjęcie $1 zaktualizowane.'
+'Image $1 added.': 'Zdjęcie $1 dodane.'
+'Edit article': 'Edycja artykułu'
+'You do not have the right to attach images to articles.': 'Nie masz praw aby załączać zdjęcia do artykułu.'
+'You do not have the right to add images.': 'Nie masz praw aby dodawać zdjęcia'
+'Image information': 'Informacje o zdjęciu'
+'Attach New Image': 'Dodaj nowe zdjęcie'
+'Attach Image To Article': 'Dodaj zdjęcie do artykułu'
+'Attach Existing Image': 'Załącz istniejące zdjęcie'
+'Add New Image': 'Dodaj nowe zdjęcie'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Data <BR><SMALL>(rrrr-mm-dd)</SMALL>'
+'You must select an image file to upload.': 'Musisz wybrać zdjęcie nim je dodasz.'
+'Change image information': 'Zmień informacje o zdjęciu'
+'You do not have the right to add images': 'Nie masz praw aby dodawać zdjęcia'
+'Filter by uploader...': 'Filtruj po osobie przesyłającej'
+'Slideshow images': null
+'Add items to slideshow': null
+'Attached Slideshows': null
+'Value is required and can''t be empty': null
+'Select all images': null
+'Unselect all images': null

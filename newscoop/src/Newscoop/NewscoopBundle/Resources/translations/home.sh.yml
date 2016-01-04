@@ -1,163 +1,163 @@
-'Rename user': 'Rename user'
-Campsite: Campsite
-'Image Rendering': 'Image Rendering'
-'Featured Article Lists': 'Featured Article Lists'
-'You have tried to upload an invalid backup file.': 'You have tried to upload an invalid backup file.'
-'You do not have the right to manage backups.': 'You do not have the right to manage backups.'
-'Make a new backup': 'Make a new backup'
-'Are you sure you want to make a new backup?': 'Are you sure you want to make a new backup?'
-'Security token expired. Please resubmit the form.': 'Security token expired. Please resubmit the form.'
-Templates: Templates
-'Create slideshow': 'Create slideshow'
-Create: Create
-Attach/Detach: Attach/Detach
-'Are you sure you want to delete slideshow?': 'Are you sure you want to delete slideshow?'
-Support: Support
-'Pending articles': 'Pending articles'
-'Manage Users': 'Manage Users'
-'Manage User Types': 'Manage User Types'
-'Manage User Points System': 'Manage User Points System'
-Last: Last
-First: First
-Feedback: Feedback
-'Edit your password': 'Edit your password'
-'Edit user': 'Edit user'
-'Edit permissions': 'Edit permissions'
-Detail: Detail
-'Create new user': 'Create new user'
-'Create new account': 'Create new account'
-'Add feed': 'Add feed'
-'Upload of file $1 was not successful.': 'Upload of file $1 was not successful.'
-'The file $1 could not be moved. Check you have enough of disk space.': 'The file $1 could not be moved. Check you have enough of disk space.'
-MiB: MiB
-'Download was not successful. Check please that the server is not out of disk space.': 'Download was not successful. Check please that the server is not out of disk space.'
-'try again later': 'try again later'
-at: at
-'You must at least upload one file.': 'You must at least upload one file.'
-'Warning: the existing data and themes will be deleted!': 'Warning: the existing data and themes will be deleted!'
-'Value is required and cant be empty': 'Value is required and cant be empty'
-Upload: Upload
-'Update comment': 'Update comment'
-'Time created': 'Time created'
-Themes: Themes
-'Stop current upload': 'Stop current upload'
-'Start uploading queue': 'Start uploading queue'
-'Start upload': 'Start upload'
-Settings: Settings
-'Select files': 'Select files'
-Reply: Reply
-'New comment added': 'New comment added'
-'Manage Authors': 'Manage Authors'
-Loading..: Loading..
-Filename: Filename
-'Edit user type': 'Edit user type'
-'Edit language': 'Edit language'
-'Drag files here.': 'Drag files here.'
-'Connection interrupted': 'Connection interrupted'
-Ban: Ban
-'Are you sure you want to': 'Are you sure you want to'
-'Add files to the upload queue and click the start button.': 'Add files to the upload queue and click the start button.'
-'Add files': 'Add files'
-'%value% is more than %max% characters long': '%value% is more than %max% characters long'
-'%value% is less than %min% characters long': '%value% is less than %min% characters long'
-'User name': 'User name'
+'Rename user': null
+Campsite: Newscoop
+'Image Rendering': null
+'Featured Article Lists': null
+'You have tried to upload an invalid backup file.': null
+'You do not have the right to manage backups.': null
+'Make a new backup': 'Napravi novi bekap.'
+'Are you sure you want to make a new backup?': null
+'Security token expired. Please resubmit the form.': null
+Templates: Šabloni
+'Create slideshow': null
+Create: Napravi
+Attach/Detach: Prikači/Otkači
+'Are you sure you want to delete slideshow?': null
+Support: Podrška
+'Pending articles': 'Tekstovi na čekanju'
+'Manage Users': 'Upravljanje korisnicima'
+'Manage User Types': 'Upravljanje tipovima korisnika'
+'Manage User Points System': 'Upravljanje sistemom korisničkih poena'
+Last: Poslednji
+First: Prvi
+Feedback: 'Povratna informacija'
+'Edit your password': 'Uredi svoju lozinku'
+'Edit user': 'Uredi korisnika'
+'Edit permissions': 'Uredi korisnička prava'
+Detail: Detalji
+'Create new user': 'Napravi novog korisnika'
+'Create new account': 'Napravi novi nalog'
+'Add feed': 'Dodaj feed'
+'Upload of file $1 was not successful.': 'Aploud fajla $1 nije bio uspešan.'
+'The file $1 could not be moved. Check you have enough of disk space.': 'Fajl $1 ne može biti premešten. Proverite da li imate dovoljno prostora na disku.'
+MiB: MB
+'Download was not successful. Check please that the server is not out of disk space.': 'Daunloud nije bio uspešan. Proverite da li na serveru ima dovoljno prostora.'
+'try again later': 'pokušajte ponovo kasnije'
+at: u
+'You must at least upload one file.': 'Morate aploudovati bar jedan fajl.'
+'Warning: the existing data and themes will be deleted!': 'Upozorenje: postojeći podaci i teme će biti obrisani!'
+'Value is required and cant be empty': 'Vrednost je obavezna i ne može ostati prazna'
+Upload: Aplouduj
+'Update comment': 'Izmeni komentar'
+'Time created': 'Vreme kreiranja'
+Themes: Teme
+'Stop current upload': 'Prekini trenutni aploud'
+'Start uploading queue': 'Započni sa aploudom reda'
+'Start upload': 'Započni aploud'
+Settings: Podešavanja
+'Select files': 'Izaberi fajlove'
+Reply: Odgovori
+'New comment added': 'Novi komentar dodat'
+'Manage Authors': 'Upravljanje autorima'
+Loading..: Učitavanje...
+Filename: 'Naziv fajla'
+'Edit user type': 'Uredi tip korisnika'
+'Edit language': 'Uredi jezik'
+'Drag files here.': 'Prevuci fajlove ovde.'
+'Connection interrupted': 'Veza prekinuta'
+Ban: Zabrani
+'Are you sure you want to': 'Da li ste sigurni da želite da'
+'Add files to the upload queue and click the start button.': 'Dodaj fajlove u red za aploud i pritisni dugme za početak.'
+'Add files': 'Dodaj fajlove'
+'%value% is more than %max% characters long': '%value% je duži od %max% karaktera'
+'%value% is less than %min% characters long': '%value% je kraća od %min% karaktera'
+'User name': 'Korisničko ime'
 Newscoop: Newscoop
-'Your password has been reset.': 'Your password has been reset.'
-'Proceed to login.': 'Proceed to login.'
+'Your password has been reset.': 'Lozinka je resetovana.'
+'Proceed to login.': 'Nastavi sa prijavljivanjem.'
 'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
-'Go to login': 'Go to login'
-'Back to login.': 'Back to login.'
-'Back to login': 'Back to login'
-'An email with instructions on how to recover you password has been sent to your inbox.': 'An email with instructions on how to recover you password has been sent to your inbox.'
-'Session expired.': 'Session expired.'
-Processing...: Processing...
-Please: Please
-'Go to dashboard': 'Go to dashboard'
-'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.'
-'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.'
-'Newscoop cache was cleaned up': 'Newscoop cache was cleaned up'
-Dashboard: Dashboard
-'Your changes will be saved after login.': 'Your changes will be saved after login.'
-'Upload backup file': 'Upload backup file'
-'The file $1 has been uploaded successfully.': 'The file $1 has been uploaded successfully.'
-'Media Archive': 'Media Archive'
-Widgets: Widgets
-'Widget info': 'Widget info'
-'Widget added to dashboard.': 'Widget added to dashboard.'
-'Remove widget': 'Remove widget'
-'Please login to continue.': 'Please login to continue.'
-'Add to dashboard': 'Add to dashboard'
-'Add more widgets': 'Add more widgets'
-login: login
-'This link is not valid.': 'This link is not valid.'
-'Recover password': 'Recover password'
-'Please enter your email.': 'Please enter your email.'
-'Password recovery is disabled.': 'Password recovery is disabled.'
-'Password recovery': 'Password recovery'
-'Password Recovery': 'Password Recovery'
-'No user is registered with this email.': 'No user is registered with this email.'
-'Forgot your password?': 'Forgot your password?'
-'Email: incorrect format.': 'Email: incorrect format.'
-Email: Email
-'Bad input parameters.': 'Bad input parameters.'
-'There was an error trying to delete the file $1.': 'There was an error trying to delete the file $1.'
-'The file $1 was deleted successfully.': 'The file $1 was deleted successfully.'
-Size: Size
-'Restore file': 'Restore file'
-Restore: Restore
+'Go to login': 'Idi na prijavljivanje'
+'Back to login.': 'Nazad na prijavljivanje.'
+'Back to login': 'Nazad na prijavljivanje'
+'An email with instructions on how to recover you password has been sent to your inbox.': 'Email sa uputstvima za povraćaj lozinke je poslat na Vašu adresu'
+'Session expired.': 'Sesija je istekla.'
+Processing...: Obrađujem...
+Please: molim
+'Go to dashboard': 'Idi na kontrolnu tablu'
+'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'Vaš pretraživač ne podržava Javascript ili Vam je (što je verovatnije) isključena podrška za Javascript. Sredite to da biste mogli da koristite Newscoop.'
+'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop je unapredio svoje sigurnosne postavke. Da biste svoj nalog prilagodili ovim novim merama, morate ponovo uneti lozinku.'
+'Newscoop cache was cleaned up': 'Newscoop keš je očišćen'
+Dashboard: 'Kontrolna tabla'
+'Your changes will be saved after login.': 'Vaše izmene će biti snimljene posle prijavljivanja.'
+'Upload backup file': 'Aplouduj bekap fajl'
+'The file $1 has been uploaded successfully.': 'Fajl $1 je uspešno aploudovan'
+'Media Archive': 'Arhiva medijskih zapisa'
+Widgets: Vidžeti
+'Widget info': 'Informacije o vidžetu'
+'Widget added to dashboard.': 'Vidžet je dodat na kontrolnu tablu'
+'Remove widget': 'Ukloni vidžet'
+'Please login to continue.': 'Prijavite se da biste nastavili.'
+'Add to dashboard': 'Dodaj na kontrolnu tablu'
+'Add more widgets': 'Dodaj još vidžeta'
+login: prijava
+'This link is not valid.': 'Ovaj link je neispravan'
+'Recover password': 'Povrati lozinku'
+'Please enter your email.': 'Unesite vaš email.'
+'Password recovery is disabled.': 'Povraćaj lozinke je onemogućen'
+'Password recovery': 'Povraćaj lozinke'
+'Password Recovery': 'Povraćaj lozinke'
+'No user is registered with this email.': 'Ne postoji korisnik sa ovim emailom'
+'Forgot your password?': 'Zaboravili ste lozinku?'
+'Email: incorrect format.': 'Email: pogrešan format.'
+Email: email
+'Bad input parameters.': 'Pogrešni parametri unosa.'
+'There was an error trying to delete the file $1.': 'Došlo je do greške pri pokušaju brisanja fajla $1.'
+'The file $1 was deleted successfully.': 'Fajl $1 je uspešno obrisan.'
+Size: Veličina
+'Restore file': 'Vrati fajl'
+Restore: Vrati
 Mb: Mb
-'Free disk space': 'Free disk space'
-'Download file': 'Download file'
-Download: Download
-'Delete file': 'Delete file'
-'Backup list is empty.': 'Backup list is empty.'
-'Are you sure you want to restore the file $1?': 'Are you sure you want to restore the file $1?'
-'Are you sure you want to delete the file $1?': 'Are you sure you want to delete the file $1?'
-'Import XML': 'Import XML'
-'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'You must have the permissions to add/change issues and articles in order to set the author for all articles.'
-'Select the field from which to generate the author': 'Select the field from which to generate the author'
-'Invalid or empty field $1. You must select a valid dynamic field.': 'Invalid or empty field $1. You must select a valid dynamic field.'
-'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Unable to create author $1 for article no. $2 ($3) of type $4.'
-'There were errors setting the author for articles of type $1 from the field $2.': 'There were errors setting the author for articles of type $1 from the field $2.'
-'The author was set successfuly for articles of type $1 from the field $2.': 'The author was set successfuly for articles of type $1 from the field $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'The article has been locked by $1 ($2) $3 minute(s) ago.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.'
-'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Error setting the author $1 for article no. $2 ($3) of type $4.'
-'Clear system cache': 'Clear system cache'
-'The system was unable to upload the file $1. ': 'The system was unable to upload the file $1. '
-'Please check the file you are trying to upload, it might be corrupted.': 'Please check the file you are trying to upload, it might be corrupted.'
-'An error occurred in session management. Please reload the login page.': 'An error occurred in session management. Please reload the login page.'
-'This file is stored on disk as $1.': 'This file is stored on disk as $1.'
-'The system is unable to write to the directory $1.': 'The system is unable to write to the directory $1.'
-'The system was unable to read the file $1.': 'The system was unable to read the file $1.'
-'The system was unable to delete the directory $1.': 'The system was unable to delete the directory $1.'
-'Please check if the user $1 has permission to read this file.': 'Please check if the user $1 has permission to read this file.'
-'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Please check if the directory is empty and the user $1 has permission to write to the directory $2.'
-'The system was unable to write to the file $1.': 'The system was unable to write to the file $1.'
-'The system was unable to delete the file $1.': 'The system was unable to delete the file $1.'
-'The system was unable to create the file $1.': 'The system was unable to create the file $1.'
-'The system was unable to create the directory $1.': 'The system was unable to create the directory $1.'
-'Please check if the user $1 has permission to write to this file.': 'Please check if the user $1 has permission to write to this file.'
-'Please check if the user $1 has permission to write to the directory $2.': 'Please check if the user $1 has permission to write to the directory $2.'
-'Type the code shown above:': 'Type the code shown above:'
-'Please enter your user name.': 'Please enter your user name.'
-'Please enter your password.': 'Please enter your password.'
-'Please enter the code shown in the image.': 'Please enter the code shown in the image.'
-'CAPTCHA code is not valid.  Please try again.': 'CAPTCHA code is not valid.  Please try again.'
-'Signed in: $1': 'Signed in: $1'
-Help: Help
-'Please enter your user name and password': 'Please enter your user name and password'
-'You do not have the right to access this page.': 'You do not have the right to access this page.'
-'Login failed': 'Login failed'
-'Please make sure that you typed the correct user name and password.': 'Please make sure that you typed the correct user name and password.'
-'If your problem persists please contact the site administrator $1': 'If your problem persists please contact the site administrator $1'
-Backup/Restore: Backup/Restore
-'Step 2': 'Step 2'
-'Step 3': 'Step 3'
-'Add new user': 'Add new user'
-'Bad credentials': 'Bad credentials'
-'Active users': 'Active users'
-'New comments': 'New comments'
-'Published articles': 'Published articles'
-'Last 7 days statistics': 'Last 7 days statistics'
-'Change password': 'Change password'
+'Free disk space': 'Slobodno prostora na disku'
+'Download file': 'Preuzmi fajl'
+Download: Preuzmi
+'Delete file': 'Obriši fajl'
+'Backup list is empty.': 'Lista bekapova je prazna'
+'Are you sure you want to restore the file $1?': 'Da li ste sigurni da želite da vratite fajl $1?'
+'Are you sure you want to delete the file $1?': 'Da li ste sigurni da želite da obrišete fajl $1?'
+'Import XML': 'Uvezi XML'
+'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Morate imati odobrenja za dodavanje/menjanje izdanja i tekstova da biste bili u mogućnosti da podešavate autora svih tekstova.'
+'Select the field from which to generate the author': 'Izaberite polje iz koga će se generisati autor'
+'Invalid or empty field $1. You must select a valid dynamic field.': 'Pogrešno ili prazno polje $1. Morate izabrati ispravno polje.'
+'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Nemoguće je napraviti autora $1 za članak broj $2 ($3) of tipa $4.'
+'There were errors setting the author for articles of type $1 from the field $2.': 'Došlo je do greške pri podešavanju autora za članke tipa $1 korišćenjem polja $2.'
+'The author was set successfuly for articles of type $1 from the field $2.': 'Autor je uspešno postavljen za članke tipa $1 koršćenjem polja $2.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Tekst je zaključan od strane $1 ($2) pre $3 minut(a).'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Tekst je zaključan od strane $1 ($2) pre $3 čas(ova) i $4 minut(a).'
+'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Greška pri podešavanju autora $1 za članak broj $2 ($3) tipa $4.'
+'Clear system cache': 'Obriši sistemski keš'
+'The system was unable to upload the file $1. ': 'Sistem nije bio u stanju da uploaduje fajl $1. '
+'Please check the file you are trying to upload, it might be corrupted.': 'Proverite fajl koji pokušavate da uploadujete, moguće je da je oštećen.'
+'An error occurred in session management. Please reload the login page.': null
+'This file is stored on disk as $1.': 'Fajl je spremljen na disku kao $1.'
+'The system is unable to write to the directory $1.': 'Sistem nije u stanju da upisuje u direktorijum $1.'
+'The system was unable to read the file $1.': 'Sistem nije u stanju da čita fajl $1.'
+'The system was unable to delete the directory $1.': 'Sistem nije u stanju da obriše direkrtorijum $1.'
+'Please check if the user $1 has permission to read this file.': 'Molimo Vas proverite da li korisnik $1 ima pravo čitanja tog fajla.'
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Molimo Vas proverite da li je direktorijum prazan i da li korisnik $1 ima dozvolu da upisuje u direktorijum $2.'
+'The system was unable to write to the file $1.': 'Sistem nije u stanju da upisuje u fajl $1.'
+'The system was unable to delete the file $1.': 'Sistem nije u stanju da obriše fajl $1.'
+'The system was unable to create the file $1.': 'Sistem nije u stanju da kreira fajl $1.'
+'The system was unable to create the directory $1.': 'sistem nije u stanju da kreira direktorijum $1.'
+'Please check if the user $1 has permission to write to this file.': 'Molimo Vas proverite da li korisnik $1 ima pravo upisa u ovaj fajl. '
+'Please check if the user $1 has permission to write to the directory $2.': 'Molimo proverite da li korisnik $1 ima pravo upisa u direktorijum $2.'
+'Type the code shown above:': 'Unesite kod prikazan na slici:'
+'Please enter your user name.': 'Unesite svoje korisničko ime.'
+'Please enter your password.': 'Unesite svoju lozinku.'
+'Please enter the code shown in the image.': 'Unesite kod prikazan na slici.'
+'CAPTCHA code is not valid.  Please try again.': 'CAPTCHA kod nije ispravan. Pokušajte ponovo.'
+'Signed in: $1': 'Prijavljeno: $1'
+Help: Pomoć
+'Please enter your user name and password': 'Unesite svoje korisničko ime i lozinku'
+'You do not have the right to access this page.': 'Nemate pravo pristupa ovoj strani'
+'Login failed': 'Neuspešna prijava'
+'Please make sure that you typed the correct user name and password.': 'Proverite da li ste ispravno upisali korisničko ime i lozinku'
+'If your problem persists please contact the site administrator $1': 'Ako se problem ponovi kontaktirajte administratora sajta $1'
+Backup/Restore: Bekap/Vraćanje
+'Step 2': 'Korak 2'
+'Step 3': 'Korak 3'
+'Add new user': 'Dodaj novog korisnika'
+'Bad credentials': null
+'Active users': 'Aktivni korisnici'
+'New comments': 'Novi komentari'
+'Published articles': 'Objavljenih tekstova'
+'Last 7 days statistics': 'Statistika za poslednjih 7 dana'
+'Change password': null

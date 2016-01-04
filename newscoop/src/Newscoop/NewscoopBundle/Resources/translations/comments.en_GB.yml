@@ -13,10 +13,10 @@ Processed: Processed
 'No records found.': 'No records found.'
 'No entries to show': 'No entries to show'
 'Messages updated.': 'Messages updated.'
-'Messages status change to $1.': 'Messages status change to $1.'
+'Messages status change to $1.': 'Messages status changed to $1.'
 'Messages deleted.': 'Messages deleted.'
 'Message updated.': 'Message updated.'
-'Message status change to $1.': 'Message status change to $1.'
+'Message status change to $1.': 'Message status changed to $1.'
 'Message deleted.': 'Message deleted.'
 Message: Message
 Last: Last
@@ -30,7 +30,7 @@ Attachment: Attachment
 Approved.: Approved.
 Approve: Approve
 Anonymous: Anonymous
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+' - filtering from _MAX_ records': '- filtering from _MAX_ records'
 'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
 'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
 User: User

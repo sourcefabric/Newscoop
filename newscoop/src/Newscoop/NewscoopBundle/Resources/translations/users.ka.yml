@@ -1,225 +1,225 @@
-'Password confirmation does not match your password.': 'Password confirmation does not match your password.'
-'Password Confirmation': 'Password Confirmation'
-Website: Website
-Twitter: Twitter
-'Save profile': 'Save profile'
-'Profile image': 'Profile image'
-Organisation: Organisation
-'Last Name Public': 'Last Name Public'
-Google+: Google+
-Geolocation: Geolocation
-Gender: Gender
-'First Name Public': 'First Name Public'
-Facebook: Facebook
-'Date of birth': 'Date of birth'
-'Allow sending emails': 'Allow sending emails'
-'About me': 'About me'
-'User with email %s is registered already.': 'User with email %s is registered already.'
-'Username is used. Please use another one.': 'Username is used. Please use another one.'
-Continue: Continue
-'Accepting terms of use': 'Accepting terms of use'
-'send confirmation email': 'send confirmation email'
-'edit user': 'edit user'
-'delete user': 'delete user'
-'Verified profile': 'Verified profile'
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
-'Send email to user:': 'Send email to user:'
-'No users found.': 'No users found.'
-'No records found.': 'No records found.'
-'No entries to show': 'No entries to show'
-'Display _MENU_ records': 'Display _MENU_ records'
-'Are you sure you want to {action}?': 'Are you sure you want to {action}?'
-'Active Logins': 'Active Logins'
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
-'User renamed.': 'User renamed.'
-'User attributes': 'User attributes'
-'Rename user $1': 'Rename user $1'
-'Username is used already': 'Username is used already'
-'User with id $1 not found': 'User with id $1 not found'
-'User was deleted.': 'User was deleted.'
-'User saved': 'User saved'
-'User id not specified': 'User id not specified'
-'User $1 created': 'User $1 created'
-'Send confirm email': 'Send confirm email'
-'Profile saved.': 'Profile saved.'
-Picture: Picture
-'Password updated': 'Password updated'
-None: None
-'New confirmation email was sent to user.': 'New confirmation email was sent to user.'
-'Email is used already': 'Email is used already'
-'Edit your password': 'Edit your password'
-'Edit user $1': 'Edit user $1'
-'Edit subscriptions': 'Edit subscriptions'
-'Edit profile': 'Edit profile'
-'Edit permissions': 'Edit permissions'
-'Create new account': 'Create new account'
-'Comment ban settings': 'Comment ban settings'
-'Ban for user $1 saved.': 'Ban for user $1 saved.'
-'User account is active': 'User account is active'
-'Allow users profile to be publicly displayed': 'Allow users profile to be publicly displayed'
-'Allow user access to login to site backend': 'Allow user access to login to site backend'
-Templates: Templates
-Username: Username
-'Last Name': 'Last Name'
-'First Name': 'First Name'
-Email: Email
-'You were logged out.': 'You were logged out.'
-'Newscoop Subhead': 'Newscoop Subhead'
-Filters: Filters
-'Add new Author': 'Add new Author'
-'Loading Data': 'Loading Data'
-'Delete author type': 'Delete author type'
-'Cannot remove author type.': 'Cannot remove author type.'
-'Cannot remove author alias.': 'Cannot remove author alias.'
-'Author alias removed.': 'Author alias removed.'
-'Are you sure you want to delete this author?': 'Are you sure you want to delete this author?'
-'Are you sure you want to delete this author alias?': 'Are you sure you want to delete this author alias?'
-'All Author Types': 'All Author Types'
-'Add author type': 'Add author type'
-'You do not have the permission to change authors.': 'You do not have the permission to change authors.'
-'Please fill at least first name and last name.': 'Please fill at least first name and last name.'
-'Cannot add author type, this type already exists.': 'Cannot add author type, this type already exists.'
-'Author type removed.': 'Author type removed.'
-'Author type must be at least three characters long.': 'Author type must be at least three characters long.'
-'Author type added.': 'Author type added.'
-'Are you sure you want to delete this author type?': 'Are you sure you want to delete this author type?'
-'User may change authors': 'User may change authors'
-'Unable to add new image, target directory is not writable.': 'Unable to add new image, target directory is not writable.'
-'Author saved.': 'Author saved.'
-'Author deleted.': 'Author deleted.'
-'Enable Firefox spell checking by default': 'Enable Firefox spell checking by default'
-'User may use the editor status bar': 'User may use the editor status bar'
-'User may clear up the system cache': 'User may clear up the system cache'
-'Another user is registered with that e-mail address, please choose a different one.': 'Another user is registered with that e-mail address, please choose a different one.'
-'There was an error when trying to update the user info.': 'There was an error when trying to update the user info.'
-'User may moderate comments': 'User may moderate comments'
-'User may enable comments': 'User may enable comments'
-'User may translate articles': 'User may translate articles'
-'User may move articles': 'User may move articles'
-'User may find and replace': 'User may find and replace'
-'User may change system preferences': 'User may change system preferences'
-'User may attach topics to articles': 'User may attach topics to articles'
-'User may attach images to articles': 'User may attach images to articles'
-'User may add special characters': 'User may add special characters'
-'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
-'User may delete article attachments': 'User may delete article attachments'
-'User may change article attachments': 'User may change article attachments'
-'User may add article attachments': 'User may add article attachments'
-'You do not have the right to create user accounts.': 'You do not have the right to create user accounts.'
-'You must select a $1': 'You must select a $1'
-'The password must be at least 6 characters long and both passwords should match.': 'The password must be at least 6 characters long and both passwords should match.'
-'The user account could not be created.': 'The user account could not be created.'
-'User account $1 was created successfully.': 'User account $1 was created successfully.'
-'You do not have the right to change user account permissions.': 'You do not have the right to change user account permissions.'
-'You do not have the right to change user account information.': 'You do not have the right to change user account information.'
-'The password you typed is incorrect.': 'The password you typed is incorrect.'
-'You do not have the right to delete user accounts.': 'You do not have the right to delete user accounts.'
-'User account $1 was deleted successfully.': 'User account $1 was deleted successfully.'
-'The IP Group $1 has been created.': 'The IP Group $1 has been created.'
-'There was an error creating the IP address group.': 'There was an error creating the IP address group.'
-'The IP address group $1 has been deleted.': 'The IP address group $1 has been deleted.'
-'User $1 information was changed successfully.': 'User $1 information was changed successfully.'
-'User Type': 'User Type'
-'The IP address group $1:$2 conflicts with another existing group.': 'The IP address group $1:$2 conflicts with another existing group.'
-'User may add/change publications': 'User may add/change publications'
-'Invalid value of user type parameter': 'Invalid value of user type parameter'
-'User may delete publications': 'User may delete publications'
-'User may add/change issues': 'User may add/change issues'
-'User may delete issues': 'User may delete issues'
-'User may add/change sections': 'User may add/change sections'
-'User may delete sections': 'User may delete sections'
-'User may add articles': 'User may add articles'
-'User may change articles': 'User may change articles'
-'User may delete articles': 'User may delete articles'
-'User may add images': 'User may add images'
-'User may change images': 'User may change images'
-'User may delete images': 'User may delete images'
-'User may delete templates': 'User may delete templates'
-'User may add/change staff accounts and passwords': 'User may add/change staff accounts and passwords'
-'User may add/change subscribers accounts and passwords': 'User may add/change subscribers accounts and passwords'
-'User may delete staff accounts': 'User may delete staff accounts'
-'User may manage user subscriptions': 'User may manage user subscriptions'
-'User may manage account types': 'User may manage account types'
-'User may add/change article types': 'User may add/change article types'
-'User may delete article types': 'User may delete article types'
-'User may manage templates': 'User may manage templates'
-'User may add/change country entries': 'User may add/change country entries'
-'User may add languages and manage language information': 'User may add languages and manage language information'
-'User may delete languages': 'User may delete languages'
-'User may view audit logs': 'User may view audit logs'
-'User may delete country entries': 'User may delete country entries'
-'User may manage localizer': 'User may manage localizer'
-'User may publish articles': 'User may publish articles'
-'User may manage topics': 'User may manage topics'
-'User may use bold': 'User may use bold'
-'User may use italic': 'User may use italic'
-'User may use underline': 'User may use underline'
-'User may use strikethrough': 'User may use strikethrough'
-'User may change text alignment': 'User may change text alignment'
-'User may copy, cut, and paste': 'User may copy, cut, and paste'
-'User may undo/redo': 'User may undo/redo'
-'User may change text direction': 'User may change text direction'
-'User may set indents': 'User may set indents'
-'User may add links': 'User may add links'
-'User may add subheads': 'User may add subheads'
-'User may insert images': 'User may insert images'
-'User may view the HTML source': 'User may view the HTML source'
-'User may enlarge the editor': 'User may enlarge the editor'
-'User may change the font face': 'User may change the font face'
-'User may change the font size': 'User may change the font size'
-'User may create bulleted lists': 'User may create bulleted lists'
-'User may create numbered lists': 'User may create numbered lists'
-'User may insert tables': 'User may insert tables'
-'User may insert horizontal rules': 'User may insert horizontal rules'
-'User may change the font color': 'User may change the font color'
-'User may use superscripts': 'User may use superscripts'
-'User may use subscripts': 'User may use subscripts'
-'User may backup and restore the site data': 'User may backup and restore the site data'
-Miscellaneous: Miscellaneous
-'Staff/Subscribers Management': 'Staff/Subscribers Management'
-'Editor Basic Settings': 'Editor Basic Settings'
-'Editor Advanced Font Settings': 'Editor Advanced Font Settings'
-'Editor Table Settings': 'Editor Table Settings'
-'Administrative tasks': 'Administrative tasks'
-'User will be notified on several events': 'User will be notified on several events'
-'Editor Miscellaneous Settings': 'Editor Miscellaneous Settings'
-'No such user account.': 'No such user account.'
-'User image (full-size)': 'User image (full-size)'
-'User account is highlighted as "featured account"': 'User account is highlighted as "featured account"'
-'Custom attribute...': 'Custom attribute...'
-'An author with the same full name (combination of first and last name) already exists.': 'An author with the same full name (combination of first and last name) already exists.'
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: ვებგვერდი
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: 'გეოგრაფიული მდებარეობა'
+Gender: სქესი
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': 'დადასტურების ელფოსტის გაგზავნა'
+'edit user': 'მომხმარებლის რედაქტირება'
+'delete user': 'მომხმარებლის წაშლა'
+'Verified profile': 'გადამოწმებული პროფილი'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
+'Send email to user:': 'მომხმარებლისთვის ელფოსტის გაგზავნა:'
+'No users found.': 'მომხმარებელი ნაპოვნი არ არის.'
+'No records found.': 'ჩანაწერები ნაპოვნი არ არის.'
+'No entries to show': 'საჩვენებელი ჩანაწერები არ არის.'
+'Display _MENU_ records': '_MENU_ ჩანაწერების ჩვენება'
+'Are you sure you want to {action}?': 'დარწმუნებული ხართ, რომ გსურთ (მოქმედება)?'
+'Active Logins': 'აქტიური ავტორიზაციები'
+' - filtering from _MAX_ records': null
+'User renamed.': 'მომხმარებელის სახელი შეცვლილია. '
+'User attributes': 'მომხმარებლის ატრიბუტები'
+'Rename user $1': '$1 მომხმარებლის სახელის შეცვლა'
+'Username is used already': 'მომხმარებლის სახელი გამოყენებულია'
+'User with id $1 not found': ' მომხმარებელი საიდენტიფიკაციო ნომრით $1 არ მოიძებნა'
+'User was deleted.': 'მომხმარებელი წაიშალა. '
+'User saved': 'მომხმარებელი დამახსოვრებულია'
+'User id not specified': 'მომხმარებლის საიდენტიფიკაციო ნომერი არ არის მითითებული'
+'User $1 created': 'შეიქმნა მომხმარებელი $1'
+'Send confirm email': 'დადასტურების ელფოსტის გაგზავნა'
+'Profile saved.': 'პროფილი დამახსოვრებულია. '
+Picture: 'სურათი '
+'Password updated': 'პაროლი განახლებულია'
+None: არცერთი
+'New confirmation email was sent to user.': 'ახალი დადასტურების ელფოსტა გაეგზავნა მომხმარებელს. '
+'Email is used already': 'ელფოსტა უკვე გამოყენებულია'
+'Edit your password': 'თქვენი პაროლის შეცვლა'
+'Edit user $1': ' $1 მომხმარებლის რედაქტირება'
+'Edit subscriptions': 'გამოწერების რედაქტირება'
+'Edit profile': 'პროფილის რედაქტირება'
+'Edit permissions': 'ნებართვების რედაქტიერბა'
+'Create new account': 'ახალი ანგარიშის შექმნა'
+'Comment ban settings': 'კომენტარის ბანის პარამეტრები'
+'Ban for user $1 saved.': 'ბანი $1 მომხმარებელზე დამახსოვრებულია.'
+'User account is active': 'მომხმარებლის ანგარიში აქტიურია'
+'Allow users profile to be publicly displayed': 'მომხმარებლის პროფილის საჯაროდ ჩვენება'
+'Allow user access to login to site backend': 'ნება დართეთ მომხმარებელს როგორც ადმინისტრატორი შევიდეს გვერდზე'
+Templates: შაბლონები
+Username: 'მომხმარებლის სახელი'
+'Last Name': 'გვარი '
+'First Name': სახელი
+Email: ელფოსტა
+'You were logged out.': 'თქვენ გამოხვედით სისტემიდან.'
+'Newscoop Subhead': 'ნიუსქუფის ქვესათაური'
+Filters: ფილტრები
+'Add new Author': 'ახალი ავტორის დამატება'
+'Loading Data': 'მონაცემები იტვირთება'
+'Delete author type': 'ავტორის ტიპის წაშლა'
+'Cannot remove author type.': 'ავტორის ტიპის მოხსნა შეუძლებელია'
+'Cannot remove author alias.': 'ავტორის ფსევდონიმის მოხსნა შეუძლებელია.'
+'Author alias removed.': 'ავტორის ფსევდონიმი მოიხსნა'
+'Are you sure you want to delete this author?': 'დარწმუნებული ხართ რომ გსურთ ამ ავტორის წაშლა?'
+'Are you sure you want to delete this author alias?': 'დარწმუნებული ხართ რომ გსურთ ამ ავტორის ფსევდონიმის მოხსნა?'
+'All Author Types': 'ყველა ავტორის ტიპი'
+'Add author type': 'ავტორის ტიპის დამატება'
+'You do not have the permission to change authors.': 'თქვენ არ გაქვთ ავტორების შეცვლის უფლება.'
+'Please fill at least first name and last name.': 'გთხოვთ მინიმუმ შეიყვანოთ სახელი და გვარი.'
+'Cannot add author type, this type already exists.': 'ავტორის ტიპი დამატება შეუძლებელია, ის უკვე არსებობს.'
+'Author type removed.': 'ავტორის ტიპი მოიხსნა.'
+'Author type must be at least three characters long.': 'ავტორის ტიპი უნდა შეიცავდეს მინიმუმ 3 სიმბოლოს'
+'Author type added.': 'ავტორის ტიპი დაემატა'
+'Are you sure you want to delete this author type?': 'დარწმუნებული ხართ რომ გსურთ ამ ავტორის ტიპის წაშლა?'
+'User may change authors': 'მომხმარებელს შეუძლია ავტორების შეცვლა'
+'Unable to add new image, target directory is not writable.': 'შეუძლებელია ახალი გამოსახულების დამატება, სამიზნე დირექტორია არ არის გადაწერადი. '
+'Author saved.': 'ავტორი დამახსოვრდა'
+'Author deleted.': 'ავტორი წაიშალა'
+'Enable Firefox spell checking by default': 'Firefox-ის ორთოგრაფის ჩართვა'
+'User may use the editor status bar': 'მომხმარებელმა შეიძლება გამოიყენოს რედაქტორის სტატუს-პანელი.'
+'User may clear up the system cache': 'მომხმარებელს შეუძლია სისტემური ქეშის გაწმენდა.'
+'Another user is registered with that e-mail address, please choose a different one.': 'ეს იმეილი უკვე გამოყენებულია არსებული მომხმარებლის მიერ. გთხოვთ მიუთითოთ სხვა იმეილი.'
+'There was an error when trying to update the user info.': 'მომხმარებლის ინფორმაციის განახლებისას დაფიქსირდა შეცდომა.'
+'User may moderate comments': 'მომხმარებელს შეუძლია კომენტარების მართვა'
+'User may enable comments': 'მომხმარებელს შეუძლია კომენტარების ჩართვა'
+'User may translate articles': 'მომხმარებელს შეუძლია სტატიების თარგმნა'
+'User may move articles': 'მომხმარებელს შეუძლია სტატიების გადაადგილება'
+'User may find and replace': 'მომხმარებელს შეუძლია პოვნა და შეცვლა'
+'User may change system preferences': 'მომხმარებელს შეუძლია სისტემის პარამეტრების შეცვლა'
+'User may attach topics to articles': 'მომხმარებელს შეუძლია სტატიებზე თემების მიბმა'
+'User may attach images to articles': 'მომხმარებელს შეუძლია სტატიაზე სურათების მიბმა'
+'User may add special characters': 'მომხმარებელს შეუძლია გარდა ასოებისა სხვა სიმბოლოების დამატებაც'
+'That user name already exists, please choose a different login name.': 'ასეთი მომხმარებელი უკვე არსებობს, შეიყვანეთ სხვა სახელი'
+'User may delete article attachments': 'მომხმარებელს შეუძლია სტატიაზე მიბმული მასალის წაშლა'
+'User may change article attachments': 'მომხმარებელს შეუძლია სტატიაზე მიბმული მასალის შეცვლა'
+'User may add article attachments': 'მომხმარებელს შეუძლია სტატიაზე მასალის მიბმა'
+'You do not have the right to create user accounts.': 'თქვენ არ გაქვთ მომხმარებლების შექმნის უფლება'
+'You must select a $1': 'აირჩიეთ $1'
+'The password must be at least 6 characters long and both passwords should match.': 'პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს და ის უნდა ემთხვეოდეს ორივე ველში.'
+'The user account could not be created.': 'მომხმარებელი ვერ შეიქმნა.'
+'User account $1 was created successfully.': '$1 მომხმარებელი შეიქმნა.'
+'You do not have the right to change user account permissions.': 'თქვენ არ გაქვთ მომხმარებლის ნებართვების ცვლილების უფლება.'
+'You do not have the right to change user account information.': 'თქვენ არ გაქვთ მომხმარებლის ინფორმაციის ცვლილების უფლება.'
+'The password you typed is incorrect.': 'შეყვანილი პაროლი არასწორია.'
+'You do not have the right to delete user accounts.': 'თქვენ არ გაქვთ მომხმარებლის წაშლის უფლება'
+'User account $1 was deleted successfully.': 'მომხმარებელი $1 წაიშალა.'
+'The IP Group $1 has been created.': 'IP ჯგუფი $1 შეიქმნა'
+'There was an error creating the IP address group.': 'IP ჯგუფის შექმნისას დაფიქსირდა შეცდომა.'
+'The IP address group $1 has been deleted.': '$1 IP მისამართების ჯგუფი წაიშალა'
+'User $1 information was changed successfully.': '$1 მომხმარებელის ინფორმაცია შეიცვალა'
+'User Type': 'მომხმარებლის ტიპი'
+'The IP address group $1:$2 conflicts with another existing group.': 'IP მისამართის ჯგუფი $1:$2 ემთხვევა უკვე არსებულ ჯგუფს.'
+'User may add/change publications': 'მომხმარებელს შეუძლია დაამატოს/შეცვალოს პუბლიკაციები'
+'Invalid value of user type parameter': 'მომხმარებლის ტიპის პარამეტრის არასწორი მნიშვნელობა'
+'User may delete publications': 'მომხმარებელს შეუძლია პუბლიკაციების წაშლა'
+'User may add/change issues': 'მომხმარებელს შეუძლია გამოცემების დამატება/შეცვლა'
+'User may delete issues': 'მომხმარებელს შეუძლია გამოცემების წაშლა'
+'User may add/change sections': 'მომხმარებელს შეუძლია სექციების დამატება/შეცვლა'
+'User may delete sections': 'მომხმარებელს შეუძლია სექციების წაშლა'
+'User may add articles': 'მომხმარებელს შეუძლია სტატიების დამატება'
+'User may change articles': 'მომხმარებელს შეუძლია სტატიების შეცვლა'
+'User may delete articles': 'მომხმარებელს შეუძლია სტატიების წაშლა'
+'User may add images': 'მომხმარებელს შეუძლია სურათების დამატება'
+'User may change images': 'მომხმარებელს შეუძლია სურათების შეცვლა'
+'User may delete images': 'მომხმარებელს შეუძლია სურათების წაშლა'
+'User may delete templates': 'მომხმარებელს შეუძლია შაბლონების წაშლა'
+'User may add/change staff accounts and passwords': 'მომხმარებელს შეუძლია შტატის მომხმარებლების და პაროლების დამატება/შეცვლა'
+'User may add/change subscribers accounts and passwords': 'მომხმარებელს შეუძლია გამომწერი მომხმარებლების და პაროლების დამატება/შეცვლა'
+'User may delete staff accounts': 'მომხმარებელს შეუძლია შტატის მომხმარებლების წაშლა'
+'User may manage user subscriptions': 'მომხმარებელს შეუძლია გამოწერების მართვა'
+'User may manage account types': 'მომხმარებელს შეუძლია მომხმარებლის ტიპების მართვა'
+'User may add/change article types': 'მომხმარებელს შეუძლია სტატიის ტიპების დამატება/შეცვლა'
+'User may delete article types': 'მომხმარებელს შეუძლია სტატიის ტიპების წაშლა'
+'User may manage templates': 'მომხმარებელს შეუძლია შაბლონების მართვა'
+'User may add/change country entries': 'მომხმარებელს შეუძლია ქვეყნების დამატება/შეცვლა'
+'User may add languages and manage language information': 'მომხმარებელს შეუძლია ენების დამატება და ენის ინფორმაციის მართვა'
+'User may delete languages': 'მომხმარებელს შეუძლია ენების წაშლა'
+'User may view audit logs': 'მომხმარებელს შეუძლია აუდიტის აღრიცხვის ნახვა'
+'User may delete country entries': 'მომხმარებელს შეუძლია ქვეყნების წაშლა'
+'User may manage localizer': 'მომხმარებელს შეუძლია ლოკალიზატორის მართვა'
+'User may publish articles': 'მომხმარებელს შეუძლია სტატიების გამოქვეყნება'
+'User may manage topics': 'მომხმარებელს შეუძლია თემების მართვა'
+'User may use bold': 'მომხმარებელს შეუძლია სიმბოლოების გამუქება (bold)'
+'User may use italic': 'მომხმარებელს შეუძლია დახრილი სიმბოლოების გამოყენება (italic)'
+'User may use underline': 'მომხმარებელს შეუძლია ქვედახაზის გამოყენება (underline)'
+'User may use strikethrough': 'მომხმარებელს შეუძლია სიმბოლოებზე ხაზის გადასმა'
+'User may change text alignment': 'მომხმარებელს შეუძლია ტექსტის გამწკრივება'
+'User may copy, cut, and paste': 'მომხმარებელს შეუძლია კოპირება, ამოჭრა, ჩასმა.'
+'User may undo/redo': 'მომხმარებელს შეუძლია უკან დაბრუნება და წინ გადასვლა'
+'User may change text direction': 'მომხმარებელს შეუძია ტექსტის მიმართულების შეცვლა'
+'User may set indents': 'მომხმარებლეს შეუძლია დაშორებების მითითება'
+'User may add links': 'მომხმარებელს შეუძია ბმულების დამატება'
+'User may add subheads': 'მომხმარებელს შეუძია ქვეთავების დამატება'
+'User may insert images': 'მომხმარებელს შეუძლია სურათების ჩასმა'
+'User may view the HTML source': 'მომხმარებელს შეუძია HTML წყაროს ნახვა'
+'User may enlarge the editor': 'მომხმარებელს შეუძია რედაქტორის გადიდება'
+'User may change the font face': 'მომხმარებელს შეუძია შრიფტის შეცვლა'
+'User may change the font size': 'მომხმარებელს შეუძია შრიფტის ზომის შეცვლა'
+'User may create bulleted lists': 'მომხმარებელს შეუძია წერტილებიანი ჩამონათვალის გაკეთება'
+'User may create numbered lists': 'მომხმარებელს შეუძია რიცხვებიანი ჩამონათვალის გაკეთება'
+'User may insert tables': 'მომხმარებელს შეუძლია ცხრილების ჩასმა'
+'User may insert horizontal rules': 'მომხმარებელს შეუძლია ჰორიზონტალური სახაზავის ჩასმა'
+'User may change the font color': 'მომხმარებელს შეუძია ფონტის შრიფტის შეცვლა'
+'User may use superscripts': 'მომხმარებელს შეუძლია ზედა ინდექსის გამოყენება'
+'User may use subscripts': 'მომხმარებელს შეუძლია ქვედა ინდექსის გამოყენება'
+'User may backup and restore the site data': 'მომხმარებელს შეუძლია საიტის მასალის დარეზერვება და აღდგენა'
+Miscellaneous: სხვადასხვა
+'Staff/Subscribers Management': 'შტატის/გამომწერების მართვა'
+'Editor Basic Settings': 'რედაქტორის პარამეტრები'
+'Editor Advanced Font Settings': 'რედაქტორის შრიფტის პარამეტრები'
+'Editor Table Settings': 'რედაქტორის ცხრილების პარამეტრები'
+'Administrative tasks': 'ადმინისტრაციული დავალებები'
+'User will be notified on several events': 'მომხმარებელი რამდენიმე მოვლენების დროს მიიღებს შეტყობინება'
+'Editor Miscellaneous Settings': 'რედაქტორის სხვადასხვა პარამეტრები'
+'No such user account.': 'ასეთი მომხმარებელი არ არსებობს.'
+'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
+'An author with the same full name (combination of first and last name) already exists.': null
 users:
     label:
-        title: 'Users search'
+        title: null
     menu:
-        manage: 'Manage Users'
-    created: Created
-    updated: Updated
+        manage: 'მომხმარებლების მართვა'
+    created: შექმნილია
+    updated: null
     status:
-        status: Status
-        registered: Registered
-        pending: Pending
-        deleted: Deleted
-        active: Active
+        status: სტატუსი
+        registered: null
+        pending: null
+        deleted: წაიშალა
+        active: აქტიური
     table:
         actions:
-            actions: Actions
-            edit: Edit
-            resend_email: 'Resend activation email'
-            rename: Rename
-            remove: Remove
-        confirm_remove: 'You realy want to remove this user?'
+            actions: მოქმედება
+            edit: რედაქტირება
+            resend_email: null
+            rename: null
+            remove: მოხსნა
+        confirm_remove: null
         table_messages:
-            page: Page
-            perPageText: 'Show: '
-            pageText: 'Pages: '
-            recordCountPageBoundTemplate: '{pageLowerBound} to {pageUpperBound} of'
-            recordCountPageUnboundedTemplate: '{recordsShown} of'
-            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
-            recordCountFilteredTemplate: ' (filtered from {recordsTotal} total records)'
-            recordCountText: 'Showing '
-            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
-            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
-            processingText: Processing...
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: დამუშავება...
     chart:
-        title: 'Active Logins'
+        title: 'აქტიური ავტორიზაციები'

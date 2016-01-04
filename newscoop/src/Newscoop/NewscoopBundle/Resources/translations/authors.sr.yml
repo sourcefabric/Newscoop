@@ -1,19 +1,19 @@
-'Translate from': 'Translate from'
-'Total articles': 'Total articles'
+'Translate from': 'Преведи форму'
+'Total articles': 'Укупно текстова'
 Skype: Skype
-'Save All': 'Save All'
-Reset: Reset
-'Please enter the last name': 'Please enter the last name'
-'Please enter the first name': 'Please enter the first name'
-'No records found': 'No records found'
-'Last name': 'Last name'
+'Save All': 'сачувај све'
+Reset: Поништи
+'Please enter the last name': 'Унесите измене'
+'Please enter the first name': 'Унесите име'
+'No records found': 'Нема пронађених резултата'
+'Last name': Презиме
 Jabber: Jabber
-General: General
-'First name': 'First name'
-Email: Email
-'Delete author': 'Delete author'
-Contacts: Contacts
-Biography: Biography
-Aliases: Aliases
+General: Опште
+'First name': Име
+Email: email
+'Delete author': 'Обриши аутора'
+Contacts: Контакти
+Biography: Биографија
+Aliases: Алијаси
 AIM: AIM
-'Search for authors': 'Search for authors'
+'Search for authors': null

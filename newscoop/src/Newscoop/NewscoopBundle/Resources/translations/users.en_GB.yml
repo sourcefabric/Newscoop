@@ -15,7 +15,7 @@ Facebook: Facebook
 'Allow sending emails': 'Allow sending emails'
 'About me': 'About me'
 'User with email %s is registered already.': 'User with email %s is registered already.'
-'Username is used. Please use another one.': 'Username is used. Please use another one.'
+'Username is used. Please use another one.': 'Username is already used. Please use another one.'
 Continue: Continue
 'Accepting terms of use': 'Accepting terms of use'
 'send confirmation email': 'send confirmation email'
@@ -30,7 +30,7 @@ Continue: Continue
 'Display _MENU_ records': 'Display _MENU_ records'
 'Are you sure you want to {action}?': 'Are you sure you want to {action}?'
 'Active Logins': 'Active Logins'
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+' - filtering from _MAX_ records': '- filtering from _MAX_ records'
 'User renamed.': 'User renamed.'
 'User attributes': 'User attributes'
 'Rename user $1': 'Rename user $1'
@@ -47,7 +47,7 @@ Picture: Picture
 None: None
 'New confirmation email was sent to user.': 'New confirmation email was sent to user.'
 'Email is used already': 'Email is used already'
-'Edit your password': 'Edit your password'
+'Edit your password': 'Change your password'
 'Edit user $1': 'Edit user $1'
 'Edit subscriptions': 'Edit subscriptions'
 'Edit profile': 'Edit profile'
@@ -171,7 +171,7 @@ Filters: Filters
 'User may create numbered lists': 'User may create numbered lists'
 'User may insert tables': 'User may insert tables'
 'User may insert horizontal rules': 'User may insert horizontal rules'
-'User may change the font color': 'User may change the font color'
+'User may change the font color': 'User may change the font colour'
 'User may use superscripts': 'User may use superscripts'
 'User may use subscripts': 'User may use subscripts'
 'User may backup and restore the site data': 'User may backup and restore the site data'
@@ -208,7 +208,7 @@ users:
             resend_email: 'Resend activation email'
             rename: Rename
             remove: Remove
-        confirm_remove: 'You realy want to remove this user?'
+        confirm_remove: 'Do you really want to remove this user?'
         table_messages:
             page: Page
             perPageText: 'Show: '

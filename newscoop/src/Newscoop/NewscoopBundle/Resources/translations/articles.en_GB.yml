@@ -68,7 +68,7 @@ Switches: Switches
 'Newscoop Subhead': 'Newscoop Subhead'
 Media: Media
 'Last modified': 'Last modified'
-'Keywords &amp; Topics': 'Keywords &amp; Topics'
+'Keywords &amp; Topics': 'Keywords & Topics'
 Info: Info
 'Go to live article': 'Go to live article'
 Created: Created
@@ -186,8 +186,8 @@ Comments: Comments
 Characters: Characters
 Snippet: Snippet
 'This list is already in a different state than the one in which it was loaded.': 'This list is already in a different state than the one in which it was loaded.'
-'List name should not be longer than 40 chars': 'List name should not be longer than 40 chars'
-'Not valid number': 'Not valid number'
+'List name should not be longer than 40 chars': 'List name should not be longer than 40 characters'
+'Not valid number': 'Not a valid number'
 'List limit': 'List limit'
 'The last article of this list has been removed.': 'The last article of this list has been removed.'
 Revert: Revert
@@ -195,8 +195,8 @@ Revert: Revert
 'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
 articles:
     playlists:
-        namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'
-        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you change the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 till 50 will be deleted from the list.'
+        namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the front end. Please check with your site administrator if you have doubts.'
+        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you change the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 to 50 will be deleted from the list.'
     images:
         see_original: 'See full-size image in a new tab'
         edit:

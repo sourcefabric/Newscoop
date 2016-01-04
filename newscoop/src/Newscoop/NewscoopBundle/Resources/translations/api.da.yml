@@ -1,107 +1,107 @@
-'No such article type': 'No such article type'
-'Multi-line Text': 'Multi-line Text'
-'Filter saved': 'Filter saved'
-'Filter not saved': 'Filter not saved'
-'Not a color': 'Not a color'
-'No such field': 'No such field'
-'Color saved': 'Color saved'
-'Color not saved': 'Color not saved'
-'Topic created': 'Topic created'
-'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
-'Complex Date': 'Complex Date'
-vertices: vertices
-'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
-'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
-'Pan Map': 'Pan Map'
-'Open large map': 'Open large map'
-'No news available.': 'No news available.'
-'Edit Polygon': 'Edit Polygon'
-'Create Polygon': 'Create Polygon'
-'Communication error: ': 'Communication error: '
-'Cant fetch news from $1': 'Cant fetch news from $1'
-Loading...: Loading...
+'No such article type': 'Artikel typen eksisterer ikke'
+'Multi-line Text': Tekstfelt
+'Filter saved': 'Filteret blev gemt'
+'Filter not saved': 'Filteret blev ikke gemt'
+'Not a color': 'Ikke en farve'
+'No such field': 'Feltet eksisterer ikke'
+'Color saved': 'Farven blev gemt'
+'Color not saved': 'Farven blev ikke gemt'
+'Topic created': 'Emne oprettet'
+'The topic name is already in use by another topic.': 'Navnet bruges af et andet emne.'
+'Complex Date': 'Kompleks dato'
+vertices: punkter
+'There was a problem trying to execute the XML RPC function.': 'XML RPC funktionen kunne ikke køre.'
+'The Campcaster server configuration is invalid.': 'Campcaster serverens opsætning er ugyldig.'
+'Pan Map': 'Træk kort'
+'Open large map': 'Åben stort kort'
+'No news available.': 'Ingen nyheder.'
+'Edit Polygon': 'Ret Polygon'
+'Create Polygon': 'Opret polygon'
+'Communication error: ': 'Kommunikationsfejl:'
+'Cant fetch news from $1': 'Kunne ikke hente nyheder fra $1'
+Loading...: Henter...
 Version: Version
-License: License
-Homepage: Homepage
-'Show original map': 'Show original map'
-'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
-Map: Map
-Center: Center
-Title: Title
-'Invalid security token.': 'Invalid security token.'
-'Callback $1 is not callable.': 'Callback $1 is not callable.'
-'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
-'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
-'Article deleted.': 'Article deleted.'
-'Article created.': 'Article created.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
-'Article URL': 'Article URL'
-'Article Number': 'Article Number'
-'Access denied.': 'Access denied.'
-'Publish with issue': 'Publish with issue'
-unknown: unknown
-Switch: Switch
-Numeric: Numeric
-'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
-'The following fields are mandatory:': 'The following fields are mandatory:'
-'Missing value for $1': 'Missing value for $1'
-'Manage Plugins': 'Manage Plugins'
-'* Marked fields are mandatory.': '* Marked fields are mandatory.'
-'$1 is of type $2': '$1 is of type $2'
-'Invalid resize width/height.': 'Invalid resize width/height.'
-'Image type $1 is not supported.': 'Image type $1 is not supported.'
-'The file uploaded is not an image.': 'The file uploaded is not an image.'
-'Could not delete record from the database.': 'Could not delete record from the database.'
-'template path': 'template path'
-'short names': 'short names'
-'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
-Last: Last
-First: First
-'Single-line Text': 'Single-line Text'
-'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
-'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
-'URL $1 is not an image.': 'URL $1 is not an image.'
+License: Licens
+Homepage: Hjemmeside
+'Show original map': 'Vis originalt kort'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Det uploadede arkiv indeholder ikke en gyldig newscoop plugin.'
+Map: Kort
+Center: Centrér
+Title: Titel
+'Invalid security token.': 'Ugyldig sikkerheds token.'
+'Callback $1 is not callable.': 'Callback $1 kan ikke kaldes.'
+'Article translated to $4 ($5)': 'Artikel oversat til $4 ($5)'
+'Article status changed from $1 to $2.': 'Artikel status ændret fra $1 til $2.'
+'Article deleted.': 'Artikel slettet.'
+'Article created.': 'Artikel oprettet.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Artikel kopieret til artikel $4 (publikation $5, udgivelse $6, sektion $7).'
+'Article URL': 'Artikel URL'
+'Article Number': 'Artikel nummer'
+'Access denied.': 'Adgang nægtet'
+'Publish with issue': 'Udgiv med udgivelsen'
+unknown: ukendt
+Switch: Skift
+Numeric: Numerisk
+'The uploaded file format is unsupported.': 'Det uploadede filformat understøttes ikke.'
+'The following fields are mandatory:': 'Disse felter er obligatoriske:'
+'Missing value for $1': 'Manglende værdi for $1'
+'Manage Plugins': 'Administrer plugins'
+'* Marked fields are mandatory.': '* markerede felter er obligatoriske.'
+'$1 is of type $2': '$1 er type $2'
+'Invalid resize width/height.': 'Ugyldig højde/bredde'
+'Image type $1 is not supported.': 'Billeder af typen $1 understøttes ikke.'
+'The file uploaded is not an image.': 'Den uploadede fil er ikke et billede.'
+'Could not delete record from the database.': 'Posten kunne ikke slettes fra databasen.'
+'template path': 'skabelon sti'
+'short names': 'korte navne'
+'Unable to fetch image from remote server.': 'Billedet kunne ikke hentes fra serveren.'
+Last: Sidste
+First: Første
+'Single-line Text': 'Enkelt linje tekst'
+'Multi-line Text with WYSIWYG': 'Tekstfelt med WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 er ugyldig eller er ikke et billede.'
+'URL $1 is not an image.': 'URL $1 er ikke et billede.'
 client:
-    added: 'Client was added'
-    notfound: 'Client not found'
-    removed: 'Client was removed'
+    added: 'Klient tilføjet'
+    notfound: 'Klienten kunne ikke findes'
+    removed: 'Klient fjernet'
 publicresources:
-    updated: 'Public resources was updated'
+    updated: 'Offentlige ressourcer opdateret'
 api:
     configure:
-        title: 'Configure API - public resources'
-        title_content: 'Configure API - public resources'
+        title: 'Indstil API - offentlige ressourcer'
+        title_content: 'Indstil API - offentlige ressourcer'
         tabs:
-            resources: 'Public Resources'
-            clients: Clients
+            resources: 'Offentlige ressourcer'
+            clients: Klienter
         resources:
-            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
-            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
-            add_button: 'Add Client'
+            info: 'Som standard er alle resourcer beskyttet af firewall, men du kan vælge resourcer der skal være offentligt tilgængelige.'
+            api_docs: 'Fuld dokumentation for APIen kan findes på din server (det er offentligt)'
+            add_button: 'Tilføj klient'
         clients:
             table:
-                name: 'Client name'
-                id: 'Client id'
-                secret: Secret
-                trusted: 'Trusted?'
-                redirect: 'Redirect Uris'
-                publication: Publication
-                actions: Actions
+                name: 'Klient navn'
+                id: 'Klient id'
+                secret: Hemmelighed
+                trusted: 'Betroet?'
+                redirect: 'URI''er til omdirigering'
+                publication: Publikation
+                actions: Handlinger
                 actions_buttons:
-                    remove: Remove
+                    remove: Fjern
             actions:
                 remove:
-                    confirm: 'You sure that you want remove this client?'
+                    confirm: 'Vil du fjerne klienten?'
         menu: API
     form:
         client:
             label:
-                name: 'Choose name for your client:'
-                publication: 'Choose publication for your client:'
-                redirectUris: 'Choose redirect uris for your client:'
-                trusted: 'Trusted?'
-                save: Save
+                name: 'Klientens navn:'
+                publication: 'Klientens publikation:'
+                redirectUris: 'Klientens uri:'
+                trusted: 'Betroet?'
+                save: Gem
         PublicResources:
             label:
-                routes: 'Choose resources to make public:'
-                save: Save
+                routes: 'Vælg ressourcer der skal gøres offentlige:'
+                save: Gem

@@ -1,32 +1,32 @@
-'Language id not specified': 'Language id not specified'
-'No languages.': 'No languages.'
-'Native Name': 'Native Name'
-'Name taken.': 'Name taken.'
-'Language saved.': 'Language saved.'
-'Language removed.': 'Language removed.'
-'Language not found.': 'Language not found.'
-'Language is in use and cannot be removed.': 'Language is in use and cannot be removed.'
-'Language added.': 'Language added.'
-'English language cannot be removed.': 'English language cannot be removed.'
-'Edit short month names': 'Edit short month names'
-'Edit short day names': 'Edit short day names'
-'Edit month names': 'Edit month names'
-'Edit language: $1': 'Edit language: $1'
-'Edit day names': 'Edit day names'
-'Code Page': 'Code Page'
-'Add new Language': 'Add new Language'
-'Add Language': 'Add Language'
-We: We
-Tu: Tu
-Th: Th
-Su: Su
+'Language id not specified': 'Sprog id er ikke angivet'
+'No languages.': 'Ingen sprog.'
+'Native Name': 'Lokalt navn'
+'Name taken.': 'Navnet er i brug.'
+'Language saved.': 'Sprog gemt.'
+'Language removed.': 'Sprog fjernet.'
+'Language not found.': 'Sproget findes ikke.'
+'Language is in use and cannot be removed.': 'Sproget er i brug og kan ikke slettes.'
+'Language added.': 'Sprog tilføjet.'
+'English language cannot be removed.': 'Engelsk kan ikke fjernes.'
+'Edit short month names': 'Rediger korte månedsnavne'
+'Edit short day names': 'Rediger korte ugedags navne'
+'Edit month names': 'Rediger månedsnavne'
+'Edit language: $1': 'Rediger sprog: $1'
+'Edit day names': 'Rediger ugedags navne'
+'Code Page': Tegntabel
+'Add new Language': 'Tilføj nyt sprog'
+'Add Language': 'Tilføj sprog'
+We: On
+Tu: Ti
+Th: To
+Su: Sø
 Sep: Sep
-Sa: Sa
-'Please enter the translation for week day short names.': 'Please enter the translation for week day short names.'
-'Please enter the translation for month short names.': 'Please enter the translation for month short names.'
-Oct: Oct
+Sa: Lø
+'Please enter the translation for week day short names.': 'Oversæt korte navne for ugedage.'
+'Please enter the translation for month short names.': 'Oversæt korte navne for måneder.'
+Oct: Okt
 Nov: Nov
-Mo: Mo
+Mo: Ma
 Mar: Mar
 Jun: Jun
 Jul: Jul
@@ -36,37 +36,37 @@ Feb: Feb
 Dec: Dec
 Aug: Aug
 Apr: Apr
-'No language.': 'No language.'
-'Delete language $1': 'Delete language $1'
-'You do not have the right to add languages.': 'You do not have the right to add languages.'
-'Please enter the translation for time units.': 'Please enter the translation for time units.'
-'You do not have the right to delete languages.': 'You do not have the right to delete languages.'
-'Are you sure you want to delete the language $1?': 'Are you sure you want to delete the language $1?'
-'Deleting language': 'Deleting language'
-'The language $1 could not be deleted.': 'The language $1 could not be deleted.'
-'Edit language': 'Edit language'
-'You do not have the right to edit languages.': 'You do not have the right to edit languages.'
-'Please enter the translation for month names.': 'Please enter the translation for month names.'
-'Please enter the translation for week day names.': 'Please enter the translation for week day names.'
-January: January
-February: February
-March: March
+'No language.': 'Intet sprog.'
+'Delete language $1': 'Slet sprog $1'
+'You do not have the right to add languages.': 'Du har ikke rettigheder til at tilføje sprog.'
+'Please enter the translation for time units.': 'Oversæt tidsenheder.'
+'You do not have the right to delete languages.': 'Du har ikke rettigheder til at slette sprog.'
+'Are you sure you want to delete the language $1?': 'Vil du slette sproget $1?'
+'Deleting language': 'Sletter sprog'
+'The language $1 could not be deleted.': 'Sproget $1 kunne ikke slettes.'
+'Edit language': 'Rediger sprog'
+'You do not have the right to edit languages.': 'Du har ikke rettigheder til at redigere sprog.'
+'Please enter the translation for month names.': 'Oversæt måneder.'
+'Please enter the translation for week day names.': 'Oversæt ugedage.'
+January: Januar
+February: Februar
+March: Marts
 April: April
-May: May
-June: June
-July: July
+May: Maj
+June: Juni
+July: Juli
 August: August
 September: September
-October: October
+October: Oktober
 November: November
 December: December
-Monday: Monday
-Tuesday: Tuesday
-Wednesday: Wednesday
-Thursday: Thursday
-Friday: Friday
-Saturday: Saturday
-Sunday: Sunday
-'You do not have the right to add new languages.': 'You do not have the right to add new languages.'
-'There are $1 issue(s) left.': 'There are $1 issue(s) left.'
-'Native name': 'Native name'
+Monday: Mandag
+Tuesday: Tirsdag
+Wednesday: Onsdag
+Thursday: Torsdag
+Friday: Fredag
+Saturday: Lørdag
+Sunday: Søndag
+'You do not have the right to add new languages.': 'Du har ikke rettigheder til at tilføje nye sprog.'
+'There are $1 issue(s) left.': 'Der er $1 udgivelse(r) tilbage.'
+'Native name': 'Lokalt navn'
