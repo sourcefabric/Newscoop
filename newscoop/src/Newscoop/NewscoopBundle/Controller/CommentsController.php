@@ -489,6 +489,10 @@ class CommentsController extends Controller
             foreach ($pagination as $comment) {
                 $comment = $comment[0];
                 $thread = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $comment->getThread()));
+                if (!$thread) {
+                    continue;
+                }
+
                 $threadSection = $thread->getSection();
 
                 if (!$threadSection) {
