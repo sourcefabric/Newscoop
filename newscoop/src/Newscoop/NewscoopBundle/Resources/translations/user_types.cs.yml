@@ -1,81 +1,81 @@
-get: dostat
+get: get
 Soundcloud: SoundCloud
-Templates: Šablony
-'Feedback Messages': 'Feedback zpráv'
-'Article Playlists': 'Seznamy článků'
-'Check all': 'Zkontrolovat vše'
-view: ukázat
-undo/redo: odstranit/předělat
-underline: podtrhnout
-translate: přeložit
-'text direction': 'směr textu'
-'text alignment': 'zarovnání textu'
-table: 'tabulka '
-superscript: 'horní index'
-subscript: 'dolní index'
-subhead: podkapitola
-strikethrough: přeškrtnout
+Templates: Templates
+'Feedback Messages': 'Feedback Messages'
+'Article Playlists': 'Article Playlists'
+'Check all': 'Check all'
+view: view
+undo/redo: undo/redo
+underline: underline
+translate: translate
+'text direction': 'text direction'
+'text alignment': 'text alignment'
+table: table
+superscript: superscript
+subscript: subscript
+subhead: subhead
+strikethrough: strikethrough
 statusbar: statusbar
-'spell checker enabled': 'kontrola pravopisu povolena'
-'source view': 'zdrojový pohled'
-publish: vydat
-notify: potvrdit
-moderate: upravit
-manage: spravovat
-'list number': 'zobrazit číslo'
-'list bullet': odrážky
-link: odkaz
-italic: kurzíva
-indent: odsadit
-image: obrázek
+'spell checker enabled': 'spell checker enabled'
+'source view': 'source view'
+publish: publish
+notify: notify
+moderate: moderate
+manage: manage
+'list number': 'list number'
+'list bullet': 'list bullet'
+link: link
+italic: italic
+indent: indent
+image: image
 'horizontal rule': 'horizontal rule'
 handle: handle
-guest: host
-'font size': 'velikost písma'
-'font face': 'styl písma'
-'font color': 'barva písma'
-find/replace: najít/nahradit
-enlarge: zvětšit
-enable: umožnit
-edit: upravit
-delete: smazat
-copy/cut/paste: kopírovat/vyjmout/vložit
-clear: vymazat
+guest: guest
+'font size': 'font size'
+'font face': 'font face'
+'font color': 'font color'
+find/replace: find/replace
+enlarge: enlarge
+enable: enable
+edit: edit
+delete: delete
+copy/cut/paste: copy/cut/paste
+clear: clear
 'character map': 'character map'
-bold: tučně
-attach: připojit
-'any resource': 'jakýkoliv zdroj'
+bold: bold
+attach: attach
+'any resource': 'any resource'
 admin: admin
-add: přidat
-'You cant deny yourself to manage $1': 'Nemůžete sebe odmítnout ze spravování $1'
-'You are not allowed to $1 $2.': 'Nemáte povoleno $1 $2.'
-'User type saved.': 'Typ uživatele uložen.'
-'User type deleted.': 'Typ uživatele vymazán.'
-'User type added.': 'Typ uživatel přidán.'
-'User Groups': 'Uživatelské skupiny'
-Themes: Náměty
-'That type name already exists, please choose a different name.': 'Tento název typu již existuje, prosím vyberte jiný název.'
-System: Systém
-Structure: Struktura
-'Search Indexer': 'Vyhledat '
+add: add
+'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
+'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
+'User type saved.': 'User type saved.'
+'User type deleted.': 'User type deleted.'
+'User type added.': 'User type added.'
+'User Groups': 'User Groups'
+Themes: Themes
+'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+System: System
+Structure: Structure
+'Search Indexer': 'Search Indexer'
 'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
 ReCaptcha: ReCaptcha
-Polls: Ankety
-'Permissions:': 'Povolení:'
-'Permissions updated': 'Povolení aktualizovány'
-Notification: Oznámení
+Polls: Polls
+'Permissions:': 'Permissions:'
+'Permissions updated': 'Permissions updated'
+Notification: Notification
 Log: Log
 Layout: Layout
-Global: Globální
-Files: Soubory
-'Error: ': 'Chyba:'
-'Edit user type $1': 'Upravit typ uživatele $1'
-Deny: Zamítnout
-'Delete user type $1': 'Vymazat typ uživatele $1'
-'Can not delete a user type with assigned users.': 'Nelze vymazat uživatelský typ s přidělenými uživateli.'
+Global: Global
+Files: Files
+'Error: ': 'Error: '
+'Edit user type $1': 'Edit user type $1'
+Deny: Deny
+'Delete user type $1': 'Delete user type $1'
+'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
 Cache: Cache
 Backup: Backup
 Authoring: Authoring
-Allow: Povolit
-'User types': 'Typy uživatelů'
-'No user types.': 'Žádné typy uživatelů'
+Allow: Allow
+'User types': 'User types'
+'No user types.': 'No user types.'

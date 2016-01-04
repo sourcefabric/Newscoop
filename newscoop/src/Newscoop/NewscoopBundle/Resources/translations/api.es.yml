@@ -1,107 +1,107 @@
-'No such article type': 'No existe ese tipo de archivo'
-'Multi-line Text': 'Texto multilínea'
-'Filter saved': 'Filtro guardado'
-'Filter not saved': 'Filtro no guardado'
-'Not a color': 'No es un color'
-'No such field': 'No existe ese campo'
-'Color saved': 'Color guardado'
-'Color not saved': 'No pudo guardarse el color'
-'Topic created': 'Tópico creado'
-'The topic name is already in use by another topic.': 'Este nombre de tópico ya está en uso.'
-'Complex Date': 'Fecha compleja'
+'No such article type': 'No such article type'
+'Multi-line Text': 'Multi-line Text'
+'Filter saved': 'Filter saved'
+'Filter not saved': 'Filter not saved'
+'Not a color': 'Not a color'
+'No such field': 'No such field'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
+'Topic created': 'Topic created'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'Complex Date': 'Complex Date'
 vertices: vertices
-'There was a problem trying to execute the XML RPC function.': 'Surgió un problema al tratar de ejecutar la función XML RPC.'
-'The Campcaster server configuration is invalid.': 'La configuración del servidor Campcaster es inválida.'
-'Pan Map': 'Recorrer el mapa'
-'Open large map': 'Abrir mapa grande'
-'No news available.': 'No hay noticias disponibles.'
-'Edit Polygon': 'Editar el Polygon'
-'Create Polygon': 'Crear el Polygon'
-'Communication error: ': 'Error de comunicación.'
-'Cant fetch news from $1': 'No es posible extraer noticias de  $1'
-Loading...: Cargando...
-Version: Versión
-License: Licencia
-Homepage: Inicio
-'Show original map': 'Mostrar el mapa original'
-'The uploaded archive does not contain an valid newscoop plugin.': 'El archivo cargado no contine un plugin válido en Newscoop'
-Map: Mapa
-Center: Centro
-Title: Tìtulo
-'Invalid security token.': 'Credencial de seguridad inválida.'
-'Callback $1 is not callable.': 'El Callback $1 no es operable.'
-'Article translated to $4 ($5)': 'El artículo se tradujo al $4 ($5)'
-'Article status changed from $1 to $2.': 'El estatus del artículo cambió de $1 a $2.'
-'Article deleted.': 'Se eliminó el artículo'
-'Article created.': 'Se creó el artículo'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'El artículo se copió al Artículo $4 (publicación $5, edición $6, sección $7).'
-'Article URL': 'URL del artículo'
-'Article Number': 'Número del artículo'
-'Access denied.': 'Acceso denegado.'
-'Publish with issue': 'Publicar con edición'
-unknown: desconocido
-Switch: Cambiar
-Numeric: Numérico
-'The uploaded file format is unsupported.': 'El formato del archivo subido no es apoyado.'
-'The following fields are mandatory:': 'Los siguientes campos son obligatorios:'
-'Missing value for $1': 'Valor faltante para $1'
-'Manage Plugins': 'Administrar Plugins'
-'* Marked fields are mandatory.': '* Los campos marcados son obligatorios.'
-'$1 is of type $2': '$1 es del tipo $2'
-'Invalid resize width/height.': 'Redimensión de ancho/altura inválida.'
-'Image type $1 is not supported.': 'Imagen de tipo $1 no es apoyada.'
-'The file uploaded is not an image.': 'El archivo cargado no es una imagen'
-'Could not delete record from the database.': 'No se pudo eliminar el archivo de la base de datos.'
-'template path': 'Trayectoria (path) de la plantilla'
-'short names': 'Nombres cortos'
-'Unable to fetch image from remote server.': 'No fue posible traer la imagen del servidor remoto.'
-Last: Último
-First: Primero
-'Single-line Text': Texto
-'Multi-line Text with WYSIWYG': 'Cuerpo del artículo'
-'URL $1 is invalid or is not an image.': 'El URL $1 es inválido o no es una imagen.'
-'URL $1 is not an image.': 'El URL $1 no es una imagen.'
+'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
+'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
+'Pan Map': 'Pan Map'
+'Open large map': 'Open large map'
+'No news available.': 'No news available.'
+'Edit Polygon': 'Edit Polygon'
+'Create Polygon': 'Create Polygon'
+'Communication error: ': 'Communication error: '
+'Cant fetch news from $1': 'Cant fetch news from $1'
+Loading...: Loading...
+Version: Version
+License: License
+Homepage: Homepage
+'Show original map': 'Show original map'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
+Map: Map
+Center: Center
+Title: Title
+'Invalid security token.': 'Invalid security token.'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
+'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
+'Article URL': 'Article URL'
+'Article Number': 'Article Number'
+'Access denied.': 'Access denied.'
+'Publish with issue': 'Publish with issue'
+unknown: unknown
+Switch: Switch
+Numeric: Numeric
+'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
+'The following fields are mandatory:': 'The following fields are mandatory:'
+'Missing value for $1': 'Missing value for $1'
+'Manage Plugins': 'Manage Plugins'
+'* Marked fields are mandatory.': '* Marked fields are mandatory.'
+'$1 is of type $2': '$1 is of type $2'
+'Invalid resize width/height.': 'Invalid resize width/height.'
+'Image type $1 is not supported.': 'Image type $1 is not supported.'
+'The file uploaded is not an image.': 'The file uploaded is not an image.'
+'Could not delete record from the database.': 'Could not delete record from the database.'
+'template path': 'template path'
+'short names': 'short names'
+'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
+Last: Last
+First: First
+'Single-line Text': 'Single-line Text'
+'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
+'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-    added: 'El cliente fue añadido'
-    notfound: 'Cliente no encontrado'
-    removed: 'El cliente fue eliminado'
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
 publicresources:
-    updated: 'El recurso público ha sido actualizado'
+    updated: 'Public resources was updated'
 api:
     configure:
-        title: 'Configurar API - recursos públicos'
-        title_content: 'Configurar API - recursos públicos'
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
         tabs:
-            resources: 'Recursos Públicos'
-            clients: Clientes
+            resources: 'Public Resources'
+            clients: Clients
         resources:
-            info: 'Por defecto todos los recursos están protegidos por un cortafuegos, pero puede elegir los recursos que desee hacer públicos para todo el mundo.'
-            api_docs: null
-            add_button: 'Añadir cliente'
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            add_button: 'Add Client'
         clients:
             table:
-                name: 'Nombre del Cliente'
-                id: 'ID del Cliente'
-                secret: Secreto
-                trusted: null
-                redirect: 'URIs para redirección'
-                publication: Publicación
-                actions: Acciones
+                name: 'Client name'
+                id: 'Client id'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect Uris'
+                publication: Publication
+                actions: Actions
                 actions_buttons:
-                    remove: Eliminar
+                    remove: Remove
             actions:
                 remove:
-                    confirm: '¿Está seguro de que quiere eliminar a este cliente?'
+                    confirm: 'You sure that you want remove this client?'
         menu: API
     form:
         client:
             label:
-                name: 'Elija un nombre para su cliente:'
-                publication: 'Elija una publicación para su cliente:'
-                redirectUris: 'Elija los URI de redirección para su cliente:'
-                trusted: null
-                save: Guardar
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
+                trusted: 'Trusted?'
+                save: Save
         PublicResources:
             label:
-                routes: 'Elija los recursos que desee hacer públicos:'
-                save: Guardar
+                routes: 'Choose resources to make public:'
+                save: Save

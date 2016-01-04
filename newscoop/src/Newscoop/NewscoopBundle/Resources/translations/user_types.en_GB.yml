@@ -33,7 +33,7 @@ handle: handle
 guest: guest
 'font size': 'font size'
 'font face': 'font face'
-'font color': 'font colour'
+'font color': 'font color'
 find/replace: find/replace
 enlarge: enlarge
 enable: enable
@@ -47,7 +47,7 @@ attach: attach
 'any resource': 'any resource'
 admin: admin
 add: add
-'You cant deny yourself to manage $1': 'You can not deny yourself permission to manage $1'
+'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
 'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
 'User type saved.': 'User type saved.'
 'User type deleted.': 'User type deleted.'

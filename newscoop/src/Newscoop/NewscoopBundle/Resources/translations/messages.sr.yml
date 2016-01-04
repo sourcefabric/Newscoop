@@ -1,289 +1,289 @@
-Plugins: Плагинови
-'Manage Plugins': 'Управљање плагиновима'
-Account: Налог
-'Items per page': 'Ставки по страни'
-'Add new': 'Додај нови'
-Home: Почетак
-Logout: Одјава
-More...: Даље...
-Content: Садржаји
-Languages: Језици
-Countries: Државе
-Themes: Теме
-Topics: Топици
-Configure: Подешавања
-'Image Archive': 'Фото архива'
-'Add Article': 'Додај текст'
-Fields: Поља
-Delete: Обриши
-Type: Тип
-Name: Наслов
-Code: Код
-Edit: Уреди
-Login: Пријава
-Password: Лозинка
-Site: Сајт
-Path: Путања
-'Go up': 'Ниво изнад'
-URL: УРЛ
-Order: Поредак
-Hide: Сакри
-Duplicate: Дуплирај
-Subscription: Претплата
-expires: истиче
-starts: почиње
-before: пре
-after: после
-on: у
-status: статус
-active: активна
-inactive: неактивна
-Subscribers: Претплатници
-Staff: Сарадници
-'Select destination': 'Изабери дестинацију'
-'No languages': 'Нема језика'
-'---Select language---': '--- Изабери језик ---'
-'No publications': 'Нема публикација'
-'---Select publication---': '--- Изабери публикацију ---'
-'No issues': 'Нема текстова'
-'---Select issue---': '--- Изабери текст ---'
-'No sections': 'Нема рубрика'
-'---Select section---': '--- Изабери рубрику ---'
-Language: Језик
-Country: Држава
-'Account name': 'Име налога'
-Publication: Публикација
-'Default language': 'Основни језик'
-Subscriptions: Претплате
-Issue: Издање
-Number: Број
-Section: Рубрика
-Keywords: 'Кључне речи'
-Topic: Топик
-'URL Name': 'Скраћено име'
-'Left to pay': 'Преостало за плаћање'
-Active: Активна
-Trial: Пробна
-Next: Следећи
-Previous: Претходни
-Translate: Преведи
-View: 'Приказ '
-'Scheduled Publishing': 'Аутоматско објављивање'
-Time: Време
-Action: Акција
-'Schedule a new action': 'Закажи нову акцију'
-'Scheduling a new publish action': 'Закажи нову акцију објављивања'
-'Delete scheduled publish action': 'Обриши заказану акцију објављивања'
-Date/Time: Датум/час
-'You must select an action.': 'Морате изабрати акцију.'
-'You do not have the right to schedule issues or articles for automatic publishing.': 'Немате право да заказујете аутоматско објављивање издања и текстова.'
-'Front page': 'Почетна страна'
-'Section page': 'Страна рубрике'
-'Show on front page': 'Прикажи на почетној страни'
-'Remove from front page': 'Повуци са почетне стране'
-'Show on section page': 'Прикажи на страни рубрике'
-'Remove from section page': 'Повуци са стране рубрике'
-Actions: Акције
-Publishing: Објављивање
-Show: Прикажи
-Remove: Уклони
-'Article Types': 'Типови текстова'
-'Staff User Types': 'Типови сарадника'
-Publications: Публикације
-Issues: Издања
-Sections: Рубрике
-Articles: Текстови
-Images: Слике
-Change: Промени
-'Add new issue': 'Додај ново издање'
-'Section Template': 'Шаблон рубрике'
-'Article Template': 'Шаблон текста'
-'Default Language': 'Основни језик'
-'Paid Period': 'Плаћени период'
-Preview: Преглед
-'You must fill in the $1 field.': 'Морате попунити поље $1'
-Error: Грешка
-'Invalid input: $1': 'Погрешан унос: $1'
-'Language does not exist.': 'Нема тог језика.'
-'Publication does not exist.': 'Нема такве публикације.'
-'Issue does not exist.': 'Нема тог издања.'
-'You must select a language.': 'Морате изабрати језик.'
-'Section does not exist.': 'Та рубрика не постоји.'
-'No articles.': 'Нема текстова.'
-'Article does not exist.': 'Текст не постоји.'
-'Image does not exist.': 'Слика не постоји.'
-'Access denied': 'Забрањен приступ'
-'Invalid parameters received': 'Примљени су погрешни параметри'
-'Add new article': 'Додај нови чланак'
-Status: Статус
-Published: Објављен
-'Not published': Необјављено
-Submitted: Предат
-New: Нови
-Article: Текст
-Publish: Објави
-Unpublish: Повуци
-Unlock: Откључај
-Uploaded: Аплоудован
-YYYY-MM-DD: ГГГГ-ММ-ДД
-Submit: Пошаљи
-Image: Слика
-Description: Опис
-Photographer: Фотограф
-Place: Место
-Date: Датум
-Thumbnail: 'Умањена слика'
-'In use': 'У употреби'
-'Additional searches': 'Додатне претраге'
-'Most Recently Added': 'Најновије додато'
-'Most Recently Modified': 'Најскорије мењано'
-'$1 images found': 'Пронађено/а је $1 слика'
-'Reset search conditions': 'Поништи услове претраге'
-'Image number': 'Број слике'
-Users: Корисници
-Localizer: Локализатор
-'Adding new translation': 'Додавање новог превода'
-'No more languages.': 'Нема више језика.'
-'The $1 field may only contain letters, digits and underscore (_) character.': 'Поље $1 може садржати искључиво слова, бројке и доњу црту (_).'
-'Add new publication': 'Додај нову публикацију'
-'Upload new template': 'Аплоудуј нови шаблон'
-'Add new staff member': 'Додај новог сарадника'
-'Staff member deleted.': null
-'Add new subscriber': 'додај новог претплатника'
-'Add new user type': 'Додај нови тип корисника'
-'Add new article type': 'Додај нови тип текста'
-'Add new country': 'Додај државу'
-'Add new language': 'Додај језик'
-'View logs': 'Прикажи логове'
-'Change your password': 'Промени лозинку'
-'Your Articles': 'Твоји текстови'
-'Submitted Articles': 'Предати текстови'
-Logs: Логови
-'There are $1 article(s) left.': 'Преоста(л)о је $1 текст(ова)'
-'There are $1 issues(s) left.': 'Преостало је $1 издања.'
-'There are $1 section(s) left.': 'Преостало је $1 рубрика'
-'There are $1 publication(s) left.': 'Преостало(а) је $1 публикација'
-'There are $1 countries left.': 'Преостало је $1 држава'
-'Name <SMALL>(click to edit)</SMALL>': 'Име<br><small>(клик за уређивање)</small>'
-'Add new subscription': 'Додај нову претплату'
-'You do not have the right to add subscriptions.': 'Немате право да додајете претплате'
-'Adding subscription': 'Додавање претплате'
-'Delete subscription': 'Обриши претплату'
-'You do not have the right to delete subscriptions.': 'Немате право да бришете претплате'
-'No such subscription.': 'Нема такве претплате'
-Yes: Да
-No: Не
-Close: Затвори
-'No issues.': 'Нема издања'
-'Back to Edit Article': 'Назад на детаље текста'
-'No topics': 'Нема топика'
-'You do not have the right to add articles.': 'Немате право да додајете текстове'
-Start: Почетак
-Days: Дана
-'The sections could not be added successfully. Some of them were already added !': 'Рубрике не могу бити додате. Неке од њих већ постоје!'
-'Add another': 'Настави са додавањем'
-Cancel: Батали
-Done: Готово
+Plugins: Plugins
+'Manage Plugins': 'Manage Plugins'
+Account: Account
+'Items per page': 'Items per page'
+'Add new': 'Add new'
+Home: Home
+Logout: Logout
+More...: More...
+Content: Content
+Languages: Languages
+Countries: Countries
+Themes: Themes
+Topics: Topics
+Configure: Configure
+'Image Archive': 'Image Archive'
+'Add Article': 'Add Article'
+Fields: Fields
+Delete: Delete
+Type: Type
+Name: Name
+Code: Code
+Edit: Edit
+Login: Login
+Password: Password
+Site: Site
+Path: Path
+'Go up': 'Go up'
+URL: URL
+Order: Order
+Hide: Hide
+Duplicate: Duplicate
+Subscription: Subscription
+expires: expires
+starts: starts
+before: before
+after: after
+on: on
+status: status
+active: active
+inactive: inactive
+Subscribers: Subscribers
+Staff: Staff
+'Select destination': 'Select destination'
+'No languages': 'No languages'
+'---Select language---': '---Select language---'
+'No publications': 'No publications'
+'---Select publication---': '---Select publication---'
+'No issues': 'No issues'
+'---Select issue---': '---Select issue---'
+'No sections': 'No sections'
+'---Select section---': '---Select section---'
+Language: Language
+Country: Country
+'Account name': 'Account name'
+Publication: Publication
+'Default language': 'Default language'
+Subscriptions: Subscriptions
+Issue: Issue
+Number: Number
+Section: Section
+Keywords: Keywords
+Topic: Topic
+'URL Name': 'URL Name'
+'Left to pay': 'Left to pay'
+Active: Active
+Trial: Trial
+Next: Next
+Previous: Previous
+Translate: Translate
+View: View
+'Scheduled Publishing': 'Scheduled Publishing'
+Time: Time
+Action: Action
+'Schedule a new action': 'Schedule a new action'
+'Scheduling a new publish action': 'Scheduling a new publish action'
+'Delete scheduled publish action': 'Delete scheduled publish action'
+Date/Time: Date/Time
+'You must select an action.': 'You must select an action.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'You do not have the right to schedule issues or articles for automatic publishing.'
+'Front page': 'Front page'
+'Section page': 'Section page'
+'Show on front page': 'Show on front page'
+'Remove from front page': 'Remove from front page'
+'Show on section page': 'Show on section page'
+'Remove from section page': 'Remove from section page'
+Actions: Actions
+Publishing: Publishing
+Show: Show
+Remove: Remove
+'Article Types': 'Article Types'
+'Staff User Types': 'Staff User Types'
+Publications: Publications
+Issues: Issues
+Sections: Sections
+Articles: Articles
+Images: Images
+Change: Change
+'Add new issue': 'Add new issue'
+'Section Template': 'Section Template'
+'Article Template': 'Article Template'
+'Default Language': 'Default Language'
+'Paid Period': 'Paid Period'
+Preview: Preview
+'You must fill in the $1 field.': 'You must fill in the $1 field.'
+Error: Error
+'Invalid input: $1': 'Invalid input: $1'
+'Language does not exist.': 'Language does not exist.'
+'Publication does not exist.': 'Publication does not exist.'
+'Issue does not exist.': 'Issue does not exist.'
+'You must select a language.': 'You must select a language.'
+'Section does not exist.': 'Section does not exist.'
+'No articles.': 'No articles.'
+'Article does not exist.': 'Article does not exist.'
+'Image does not exist.': 'Image does not exist.'
+'Access denied': 'Access denied'
+'Invalid parameters received': 'Invalid parameters received'
+'Add new article': 'Add new article'
+Status: Status
+Published: Published
+'Not published': 'Not published'
+Submitted: Submitted
+New: New
+Article: Article
+Publish: Publish
+Unpublish: Unpublish
+Unlock: Unlock
+Uploaded: Uploaded
+YYYY-MM-DD: YYYY-MM-DD
+Submit: Submit
+Image: Image
+Description: Description
+Photographer: Photographer
+Place: Place
+Date: Date
+Thumbnail: Thumbnail
+'In use': 'In use'
+'Additional searches': 'Additional searches'
+'Most Recently Added': 'Most Recently Added'
+'Most Recently Modified': 'Most Recently Modified'
+'$1 images found': '$1 images found'
+'Reset search conditions': 'Reset search conditions'
+'Image number': 'Image number'
+Users: Users
+Localizer: Localizer
+'Adding new translation': 'Adding new translation'
+'No more languages.': 'No more languages.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'The $1 field may only contain letters, digits and underscore (_) character.'
+'Add new publication': 'Add new publication'
+'Upload new template': 'Upload new template'
+'Add new staff member': 'Add new staff member'
+'Staff member deleted.': 'Staff member deleted.'
+'Add new subscriber': 'Add new subscriber'
+'Add new user type': 'Add new user type'
+'Add new article type': 'Add new article type'
+'Add new country': 'Add new country'
+'Add new language': 'Add new language'
+'View logs': 'View logs'
+'Change your password': 'Change your password'
+'Your Articles': 'Your Articles'
+'Submitted Articles': 'Submitted Articles'
+Logs: Logs
+'There are $1 article(s) left.': 'There are $1 article(s) left.'
+'There are $1 issues(s) left.': 'There are $1 issues(s) left.'
+'There are $1 section(s) left.': 'There are $1 section(s) left.'
+'There are $1 publication(s) left.': 'There are $1 publication(s) left.'
+'There are $1 countries left.': 'There are $1 countries left.'
+'Name <SMALL>(click to edit)</SMALL>': 'Name <SMALL>(click to edit)</SMALL>'
+'Add new subscription': 'Add new subscription'
+'You do not have the right to add subscriptions.': 'You do not have the right to add subscriptions.'
+'Adding subscription': 'Adding subscription'
+'Delete subscription': 'Delete subscription'
+'You do not have the right to delete subscriptions.': 'You do not have the right to delete subscriptions.'
+'No such subscription.': 'No such subscription.'
+Yes: Yes
+No: No
+Close: Close
+'No issues.': 'No issues.'
+'Back to Edit Article': 'Back to Edit Article'
+'No topics': 'No topics'
+'You do not have the right to add articles.': 'You do not have the right to add articles.'
+Start: Start
+Days: Days
+'The sections could not be added successfully. Some of them were already added !': 'The sections could not be added successfully. Some of them were already added !'
+'Add another': 'Add another'
+Cancel: Cancel
+Done: Done
 OK: OK
-Save: Сними
-Search: Тражи
-'Make a selection': Изаберите
-'You must input a number greater than 0 into the $1 field.': 'Морате унети број већи од 0 у поље $1'
-'You must input a valid date.': 'Морате исправно унети датум'
-'Add new field': 'Додај ново поље'
-'Article automatic publishing schedule': 'Распоред аутоматског објављивања текстова'
-'Are you sure you want to delete this scheduled action?': ' '
-Unlink: 'Уклони линк'
-'Are you sure you want to delete the image $1?': 'Да ли сте сигурни да желите да обришете слику $1?'
-'No such issue.': 'Нема тог издања.'
-'Are you sure you want to delete the subscription to the publication $1?': 'Да ли сте сигурни да желите да обришете претплату на публикацију $1? '
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Промена у издању $1 не може бити снимљена. Проверите да ли УРЛ име издања $2 није већ коришћено у публикацији $3.'
-GB: ГБ
-MB: МБ
-KB: КБ
-bytes: бајтова
-Attach: Прикачи
-Back: Назад
-File: Фајл
-'Save and Close': 'Сними и затвори'
-Add: Додај
-'Select All': 'Изабери све'
-'Select None': 'Изабери ниједан'
-'Add Event': 'Додајте акцију'
-N/A: 'без података'
-'On Front Page': 'На првој страни'
-'On Section Page': 'На страни рубрике'
-'Created by': 'Креирао:'
-'Creation date': 'Датум креирања'
-'Publication List': 'Листа публикација'
-'Issue List': 'Листа издања'
-'Section List': 'Листа рубрика'
-All: Све
-duplicate: дуплирај
-move: премести
-Move: Премести
-'From:': 'Од:'
-'Date:': 'Датум:'
-Hidden: Сакривен
-Comments: Коментари
-Comment: Коментар
-Approved: Одобрен
-Subject: Наслов
-'IP address:': 'ИП адреса:'
-'Email:': 'Имејл:'
-Author: аутор
-'Article name': 'Наслов текста'
-'Hide article': 'Сакри текст'
-'Show article': 'Прикажи текст'
-'Article Type Fields': 'Поља типа текста'
-'Article Images': 'Слике у тексту'
-'Log Messages': 'Лог поруке'
-'Article Files': 'Фајлови уз текст'
-'Article Comments': 'Коментари на текст'
-'Are you sure you want to deactivate the subscription?': 'Да ли сте сигурни да желите да деактивирате претплату?'
-'Are you sure you want to activate the subscription?': 'Да ли сте сигурни да желите да активирате претплату?'
-Other: Друго
-'Time:': Време
-'No events.': 'Без догађаја.'
-'Default templates': 'Основни шаблони'
-'System Preferences': 'Системске поставке'
-'The date must be in the future.': 'Датум мора бити у будућности.'
-Send: Пошаљи
-'Thank you.': Хвала.
-'Please take a minute to send us an email.': 'Молимо Вас одвојите који минут да нам пошаљете имејл'
-(optional): (опционо)
-'The URL you entered is invalid: $1': 'УРЛ који сте унели је неисправан: $1'
-Reads: читања
-'Publish with issue': 'Објави заједно са издањем'
-'Universal List': 'Универзална листа'
-'Invalid security token!': 'Погрешан сигурносни симбол'
-Authors: Аутори
-Title: Наслов
-'Edit country': null
-'Entry $1 prepared for publishing': null
-'Entry deleted': null
-'Feed saved': null
-'Item published': null
-'Settings saved': null
-'Self-delete is not permitted.': null
-'Edit staff member $1': null
-'Delete staff member $1': null
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
-'Changing user type would prevent you to manage users. Aborted.': null
-'Staff member saved.': null
-'Permissions: $1': null
-'Change user account information': null
-'Staff management': null
-Updated: null
-Options: null
-Verified: null
-Confirm: null
-at: у
-published: null
-unpublished: null
-nopermissions: null
-importantmessage: null
-anonymous: null
-'Successfully refreshed authentication token.': null
-'Failed to refresh authentication token.': null
+Save: Save
+Search: Search
+'Make a selection': 'Make a selection'
+'You must input a number greater than 0 into the $1 field.': 'You must input a number greater than 0 into the $1 field.'
+'You must input a valid date.': 'You must input a valid date.'
+'Add new field': 'Add new field'
+'Article automatic publishing schedule': 'Article automatic publishing schedule'
+'Are you sure you want to delete this scheduled action?': 'Are you sure you want to delete this scheduled action?'
+Unlink: Unlink
+'Are you sure you want to delete the image $1?': 'Are you sure you want to delete the image $1?'
+'No such issue.': 'No such issue.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Are you sure you want to delete the subscription to the publication $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: Attach
+Back: Back
+File: File
+'Save and Close': 'Save and Close'
+Add: Add
+'Select All': 'Select All'
+'Select None': 'Select None'
+'Add Event': 'Add Event'
+N/A: N/A
+'On Front Page': 'On Front Page'
+'On Section Page': 'On Section Page'
+'Created by': 'Created by'
+'Creation date': 'Creation date'
+'Publication List': 'Publication List'
+'Issue List': 'Issue List'
+'Section List': 'Section List'
+All: All
+duplicate: duplicate
+move: move
+Move: Move
+'From:': 'From:'
+'Date:': 'Date:'
+Hidden: Hidden
+Comments: Comments
+Comment: Comment
+Approved: Approved
+Subject: Subject
+'IP address:': 'IP address:'
+'Email:': 'Email:'
+Author: Author
+'Article name': 'Article name'
+'Hide article': 'Hide article'
+'Show article': 'Show article'
+'Article Type Fields': 'Article Type Fields'
+'Article Images': 'Article Images'
+'Log Messages': 'Log Messages'
+'Article Files': 'Article Files'
+'Article Comments': 'Article Comments'
+'Are you sure you want to deactivate the subscription?': 'Are you sure you want to deactivate the subscription?'
+'Are you sure you want to activate the subscription?': 'Are you sure you want to activate the subscription?'
+Other: Other
+'Time:': 'Time:'
+'No events.': 'No events.'
+'Default templates': 'Default templates'
+'System Preferences': 'System Preferences'
+'The date must be in the future.': 'The date must be in the future.'
+Send: Send
+'Thank you.': 'Thank you.'
+'Please take a minute to send us an email.': 'Please take a minute to send us an email.'
+(optional): (optional)
+'The URL you entered is invalid: $1': 'The URL you entered is invalid: $1'
+Reads: Reads
+'Publish with issue': 'Publish with issue'
+'Universal List': 'Universal List'
+'Invalid security token!': 'Invalid security token!'
+Authors: Authors
+Title: Title
+'Edit country': 'Edit country'
+'Entry $1 prepared for publishing': 'Entry $1 prepared for publishing'
+'Entry deleted': 'Entry deleted'
+'Feed saved': 'Feed saved'
+'Item published': 'Item published'
+'Settings saved': 'Settings saved'
+'Self-delete is not permitted.': 'Self-delete is not permitted.'
+'Edit staff member $1': 'Edit staff member $1'
+'Delete staff member $1': 'Delete staff member $1'
+'Could not save user $1. Please make sure it does not already exist': 'Could not save user $1. Please make sure it does not already exist'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Could not save user with e-mail address $1. Please make sure it does not already exist'
+'Changing user type would prevent you to manage users. Aborted.': 'Changing user type would prevent you to manage users. Aborted.'
+'Staff member saved.': 'Staff member saved.'
+'Permissions: $1': 'Permissions: $1'
+'Change user account information': 'Change user account information'
+'Staff management': 'Staff management'
+Updated: Updated
+Options: Options
+Verified: Verified
+Confirm: Confirm
+at: at
+published: published
+unpublished: unpublished
+nopermissions: 'You don''t have permissions to access this resource.'
+importantmessage: 'Important Info'
+anonymous: Anonymous
+'Successfully refreshed authentication token.': 'Successfully refreshed authentication token.'
+'Failed to refresh authentication token.': 'Failed to refresh authentication token.'

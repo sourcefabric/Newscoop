@@ -1,107 +1,107 @@
-'No such article type': 'Tento typ článku nenalezen'
-'Multi-line Text': 'Několikařádkový text'
-'Filter saved': 'Filtr uložen'
-'Filter not saved': 'Filtr neuložen'
-'Not a color': 'To není barva'
-'No such field': 'Žádné takové pole'
-'Color saved': 'Barva uložena'
-'Color not saved': 'Barva neuložena'
-'Topic created': 'Námět vytvořen'
-'The topic name is already in use by another topic.': 'Název námětu je již užíván u jiného námětu.'
-'Complex Date': 'Komplexní datum'
-vertices: vrchol
-'There was a problem trying to execute the XML RPC function.': 'Vyskytl se problém při pokusu o provedení XML RPC funkce.'
-'The Campcaster server configuration is invalid.': 'Campcaster konfigurace serveru je neplatná.'
-'Pan Map': 'Pan Mapa'
-'Open large map': 'Otevřená velká mapa'
-'No news available.': 'Žádné novinky k dispozici.'
-'Edit Polygon': 'Upravit Polygon'
-'Create Polygon': 'Vytvořit Polygon'
-'Communication error: ': 'Komunikační eror:'
-'Cant fetch news from $1': 'Není možné získat zprávy z $1 '
-Loading...: 'Nahrává se...'
-Version: Verze
-License: Licence
-Homepage: 'Domovská stránka'
-'Show original map': 'Ukázat původní rozdělení'
-'The uploaded archive does not contain an valid newscoop plugin.': 'Nahraný archiv neobsahuje platný plugin Newscoopu.'
-Map: Rozdělení
-Center: Střed
-Title: Název
-'Invalid security token.': 'Neplatný bezpečnostní symbol.'
-'Callback $1 is not callable.': 'Volání $1 není možné.'
-'Article translated to $4 ($5)': 'Článek přeložen do $4 ($5)'
-'Article status changed from $1 to $2.': 'Status článku změněn z $1 na $2.'
-'Article deleted.': 'Článek smazán.'
-'Article created.': 'Článek vytvořen.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Článek kopírován do článku $4 (publikace $5, vydání $6, sekce $7).'
-'Article URL': 'Článek URL'
-'Article Number': 'Číslo Článku'
-'Access denied.': 'Přístup byl odepřen.'
-'Publish with issue': 'Publikovat s vydáním'
-unknown: neznámý
-Switch: Přepnout
-Numeric: Číselný
-'The uploaded file format is unsupported.': 'Formát nahraného souboru není podporován.'
-'The following fields are mandatory:': 'Následující pole jsou povinné:'
-'Missing value for $1': 'Chybí hodnota pro $1'
-'Manage Plugins': 'Spravovat Pluginy'
-'* Marked fields are mandatory.': '* Označená pole jsou povinná.'
-'$1 is of type $2': '$1 je typu $2'
-'Invalid resize width/height.': 'Neplatná změna velikosti šířka/výška.'
-'Image type $1 is not supported.': 'Typ obrázku $1 není podporován.'
-'The file uploaded is not an image.': 'Nahraný soubor není obrázek.'
-'Could not delete record from the database.': 'Nezdařilo se odstranit záznam z databáze.'
-'template path': 'cesta šablony'
-'short names': 'krátká jména'
-'Unable to fetch image from remote server.': 'Nezdařilo se načíst obrázek ze vzdáleného serveru.'
-Last: Poslední
-First: První
-'Single-line Text': 'Jednořádkový text'
-'Multi-line Text with WYSIWYG': 'Více řádkový text WYSIWYG'
-'URL $1 is invalid or is not an image.': 'URL $1 není platné, nebo se nejedná o obrázek.'
-'URL $1 is not an image.': 'URL $1 není obrázek'
+'No such article type': 'No such article type'
+'Multi-line Text': 'Multi-line Text'
+'Filter saved': 'Filter saved'
+'Filter not saved': 'Filter not saved'
+'Not a color': 'Not a color'
+'No such field': 'No such field'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
+'Topic created': 'Topic created'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'Complex Date': 'Complex Date'
+vertices: vertices
+'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
+'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
+'Pan Map': 'Pan Map'
+'Open large map': 'Open large map'
+'No news available.': 'No news available.'
+'Edit Polygon': 'Edit Polygon'
+'Create Polygon': 'Create Polygon'
+'Communication error: ': 'Communication error: '
+'Cant fetch news from $1': 'Cant fetch news from $1'
+Loading...: Loading...
+Version: Version
+License: License
+Homepage: Homepage
+'Show original map': 'Show original map'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
+Map: Map
+Center: Center
+Title: Title
+'Invalid security token.': 'Invalid security token.'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
+'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
+'Article URL': 'Article URL'
+'Article Number': 'Article Number'
+'Access denied.': 'Access denied.'
+'Publish with issue': 'Publish with issue'
+unknown: unknown
+Switch: Switch
+Numeric: Numeric
+'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
+'The following fields are mandatory:': 'The following fields are mandatory:'
+'Missing value for $1': 'Missing value for $1'
+'Manage Plugins': 'Manage Plugins'
+'* Marked fields are mandatory.': '* Marked fields are mandatory.'
+'$1 is of type $2': '$1 is of type $2'
+'Invalid resize width/height.': 'Invalid resize width/height.'
+'Image type $1 is not supported.': 'Image type $1 is not supported.'
+'The file uploaded is not an image.': 'The file uploaded is not an image.'
+'Could not delete record from the database.': 'Could not delete record from the database.'
+'template path': 'template path'
+'short names': 'short names'
+'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
+Last: Last
+First: First
+'Single-line Text': 'Single-line Text'
+'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
+'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-    added: 'Klient byl přidán'
-    notfound: 'Klient nenalezen'
-    removed: 'Klient byl odstraněn'
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
 publicresources:
-    updated: 'Veřejné zdroje byly aktualizovány'
+    updated: 'Public resources was updated'
 api:
     configure:
-        title: 'Konfigurace API - veřejné zdroje'
-        title_content: 'Konfigurace API - veřejné zdroje'
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
         tabs:
-            resources: 'Veřejné zdroje'
-            clients: Klienti
+            resources: 'Public Resources'
+            clients: Clients
         resources:
-            info: 'Defoltně jsou všechny zdroje chráněné Firewall, ale můžete si vybrat zdroje, které zveřejníte.'
-            api_docs: null
-            add_button: 'Přidat klienta'
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            add_button: 'Add Client'
         clients:
             table:
-                name: 'Jméno klienta'
-                id: 'ID klienta'
-                secret: Tajný
-                trusted: 'Důvěryhodný?'
-                redirect: 'Přesměrovat Uris'
-                publication: Publikace
-                actions: Činnosti
+                name: 'Client name'
+                id: 'Client id'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect Uris'
+                publication: Publication
+                actions: Actions
                 actions_buttons:
-                    remove: Odstranit
+                    remove: Remove
             actions:
                 remove:
-                    confirm: 'Určitě chcete odstranit tohoto klienta?'
+                    confirm: 'You sure that you want remove this client?'
         menu: API
     form:
         client:
             label:
-                name: 'Vyber jméno pro svého klienta:'
-                publication: 'Vyber publikaci pro svého klienta:'
-                redirectUris: 'Vyber přesměrování uris pro svého klienta:'
-                trusted: 'Důvěryhodný?'
-                save: Uložit
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
+                trusted: 'Trusted?'
+                save: Save
         PublicResources:
             label:
-                routes: 'Vyber zdroje pro zveřejnění:'
-                save: Uložit
+                routes: 'Choose resources to make public:'
+                save: Save

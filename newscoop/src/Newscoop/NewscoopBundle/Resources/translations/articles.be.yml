@@ -1,219 +1,219 @@
-'Edit metadata': 'змяніць метададзеныя'
-Rating: Рэйтынг
-'Enable Rating': 'Актывізіраваць рэйтынг'
-'Blog management': 'Кіраванне блогамі'
-'View article': 'Прагляд артыкула'
-'Select a list': 'Вылучыць спіс'
-'Remove list': 'Выдаліць спіс'
-'Please select a list': 'Калі ласка, вылучыце спіс'
-Playlist: Плэйліст
-'List updated.': 'Абноўлены спіс.'
-'List saved': 'Захаваны спіс.'
-'List Name': 'Назва спісу'
-'List ID': 'ID спісу'
-'Item already exists in the list': 'Гэты пункт ужо ёсць у спісе'
-'Featured Articles': 'Выбраныя артыкулы'
-'Featured Article Lists': 'Спісы Выбраных артыкулаў'
-'Featured Article List': 'Спіс Выбраных артыкулаў'
-'Duplicate list': 'Дубляваць спіс'
-'Duplicate article entry found': 'Дубляваць знойдзены артыкул'
-'Drag here to add to list': 'Перацягнуць у спіс'
-'Could not save the list': 'Не атрымалася захаваць спіс'
-'Available Articles': 'Даступныя артыкулы'
-'Are you sure you want to delete this list?': 'Вы ўпэўненыя, што жадаеце выдаліць гэты спіс?'
-'Add to list': 'Дадаць у спіс'
-'Add list': 'Дадаць спіс'
-'Multi date events': 'Каляндар падзей'
-Slideshows: Слайдшоў
-'Place images': 'Размясціць выявы'
-'Youre not allowed to edit article.': 'У вас няма правоў каб рэдагаваць гэты артыкул.'
-Webcode: Web-код
-Unapproved: 'Не зацверджана'
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Немагчыма зрабіць папярэдні прагляд выпуску. Калі ласка, пераканайцеся, што для выдання існуе патрэбная тэма (шаблон).'
-'The article could not be submitted.': 'Немагчыма адправіць артыкул.'
-'Submit articles': 'Адправіць артыкулы'
-'Submit article': 'Адправіць артыкул'
-'Related Articles': 'Артыкулы па тэме'
-'Pending articles': 'Незакончаныя артыкулы'
-'Pending Articles': 'Незакончаныя артыкулы'
-'Context Box updated': 'Кантэкстны блок адноўлены '
-On: Укл.
-Off: Выкл.
-'You do not have the right to moderate comments.': 'У вас няма правоў для мадэрацыі каментароў.'
-'You can not schedule opposing events at the same time': 'Немагчыма запланаваць супрацьлеглыя мерапрыемствы адначасова'
-'Unable to reach Newscoop. Please check your internet connection.': 'Немагчыма звязацца з Newscoop. Калі ласка, праверце ваша інтэрнэт-злучэнне.'
-Title: Загаловак
-'There already is an article with the same name. Please change the name and try again.': 'Артыкул з такой назвай ужо існуе. Калі ласка, зьмяніце назву і зрабіце яшчэ адну спробу.'
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Для звесткі: усе запланаваныя дзеянні для гэтага артыкула будуць выдаленыя, як толькі для артыкула будзе прызначаны статус Новая. Калі ласка, пацвердзіце змену статусу.'
-Geolocation: 'Вызначэньне месца на карце'
+'Edit metadata': 'Edit metadata'
+Rating: Rating
+'Enable Rating': 'Enable Rating'
+'Blog management': 'Blog management'
+'View article': 'View article'
+'Select a list': 'Select a list'
+'Remove list': 'Remove list'
+'Please select a list': 'Please select a list'
+Playlist: Playlist
+'List updated.': 'List updated.'
+'List saved': 'List saved'
+'List Name': 'List Name'
+'List ID': 'List ID'
+'Item already exists in the list': 'Item already exists in the list'
+'Featured Articles': 'Featured Articles'
+'Featured Article Lists': 'Featured Article Lists'
+'Featured Article List': 'Featured Article List'
+'Duplicate list': 'Duplicate list'
+'Duplicate article entry found': 'Duplicate article entry found'
+'Drag here to add to list': 'Drag here to add to list'
+'Could not save the list': 'Could not save the list'
+'Available Articles': 'Available Articles'
+'Are you sure you want to delete this list?': 'Are you sure you want to delete this list?'
+'Add to list': 'Add to list'
+'Add list': 'Add list'
+'Multi date events': 'Multi date events'
+Slideshows: Slideshows
+'Place images': 'Place images'
+'Youre not allowed to edit article.': 'Youre not allowed to edit article.'
+Webcode: Webcode
+Unapproved: Unapproved
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'This issue cannot be previewed. Please make sure the publication has a theme assigned.'
+'The article could not be submitted.': 'The article could not be submitted.'
+'Submit articles': 'Submit articles'
+'Submit article': 'Submit article'
+'Related Articles': 'Related Articles'
+'Pending articles': 'Pending articles'
+'Pending Articles': 'Pending Articles'
+'Context Box updated': 'Context Box updated'
+On: On
+Off: Off
+'You do not have the right to moderate comments.': 'You do not have the right to moderate comments.'
+'You can not schedule opposing events at the same time': 'You can not schedule opposing events at the same time'
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+Title: Title
+'There already is an article with the same name. Please change the name and try again.': 'There already is an article with the same name. Please change the name and try again.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.'
+Geolocation: Geolocation
 Newscoop: Newscoop
-'Overwrite articles with matching names': 'Перапісаць артыкулы з адпаведнымі імёнамі'
-'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Артыкул <i> $1</ i> ужо існуе і не быў перазапісаны. <br />'
-Files: Файлы
-'Select section:': 'Выберыце раздзел'
-'Add another author': 'Дадаць аўтара'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 хвілін таму.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 гадзін і $4 хвілін таму.'
-'Switches saved.': 'Статут маркераў захаваны.'
-'Keywords saved.': 'Ключавыя словы захаваныя'
-'Comment settings': 'Наладкі каментаваньня'
-Authors: Аўтары
-'Attach Topic To Article': 'Прымацаваць тэму да артыкула'
-'Article saved.': 'Змесціва артыкула захаванае.'
-'Article is locked': 'Артыкул заблакаваны'
-'Actions updated.': 'Дзеянне абноўленае.'
-'Your work has not been saved. Do you want to continue and lose your changes?': 'Вашы дзеянні на сайце не былі захаваныя. Ці жадаеце Вы працягнуць і страціць зробленыя змяненні?'
-Switches: Маркеры
-'No subtopics available': 'Няма даступных падтем для выкарыстання'
-'Newscoop Subhead': 'Падзагаловак Newscoop'
-Media: Медыя
-'Last modified': 'Апошнія змяненні'
-'Keywords &amp; Topics': 'Ключавыя словы & Тэмы'
-Info: Інфармацыя
-'Go to live article': 'Перайсці да актыўнага артыкула'
-Created: Створаная
-'Are you sure you want to remove the map from the article?': 'Вы ўпэўненыя, што жадаеце выдаліць гэтую карту з артыкула?'
-'Scheduled action added': 'Запланаванае дзеянне дададзена'
-'Content edited': 'Запланаванае дзеянне дададзенае'
-'You must select an article language.': 'Вы павінны выбраць мову артыкула.'
-'You must select a publication.': 'Вы павінны выбраць выданне.'
-'You must select a file to upload.': 'Вы павiнны выбраць файл для загрузкi.'
-'You must select a XML input file.': 'Вы павінны выбраць уваходны XML-файл'
-'You do not have the right to import XML archives.': 'У вас няма правоў доступу для імпартавання  XML архіваў.'
-'There was a problem uploading the file.': 'Праблема загрузкі файла.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Загружаны файл захаваны на сервер часткова. Гэта звязана з тым, што максімальна дапушчальны час загрузкі файла пераўзыходзіць час, неабходны для загрузкі гэтага файла. Максімальны час загрузкі вызначаны ў файле php.ini'
-'The file exceeds the allowed max file size.': 'Памер гэтага файла пераўзыходзіць дапушчальны.'
-Optional: Неабавязковае
-'Input File': 'Уваходны файл'
-'Import XML': 'Імпарт XML'
-'File is not a valid XML file.': 'Гэты файл не зяўляецца XML-файлам'
-'File does not exist.': 'Такі файл не існуе'
-'File could not be uploaded.': 'Немагчыма загрузіць дадзены файл.'
-'File could not be read.': 'Немагчыма прачытаць дадзены файл'
-'Error List': 'Спіс памылак'
-'Bad format in XML file.': 'Няправільны фармат файла'
-'Article could not be created.': 'Артыкул не можа быць створаны'
-'---Select article type---': '---Выберыце тып артыкула---'
-'$1 articles successfully imported.': '$1 артыкулы паспяхова імпартаваныя.'
-Saved: Захаванае
-'Save All': 'Захаваць усё'
-'Online Server: On': 'Сервер ён-лайн: уключаны'
-'Online Server: Off': 'Сервер ён-лайн: выключаны'
-Download: Загрузіць
-'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Вы ня можаце мець два артыкулы ў адной рубрыцы з аднолькавай назвай. Азначаная назва ўжо выкарыстоўваецца артыкулам $1.'
-'Visible to non-subscribers': 'Вiдаць ня толькi падпiсчыкам'
-'The article could not be published.': 'Артыкул ня можа быць апублiкаваны.'
-'Scheduled action deleted.': 'Заплянаванае дзеяньне адмененае.'
-'Scheduled action added.': 'Заплянаванае дзеяньне дадана.'
-'Article(s) unlocked.': 'Артыкул(ы) заблякаваныя.'
-'Article(s) duplicated.': 'Артыкул(ы) прадубляваныя.'
-'Article(s) deleted.': 'Артыкулы выдаленыя.'
-'Article status set to $1': 'Статус артыкула ўстаноўлены  ў $1 '
-'Article unlocked.': 'Артыкул разблякаваны.'
-'Article translation created.': 'Пераклады артыкула створаныя.'
-'Article order changed.': 'Парадак артыкулаў зьменены.'
-'Article moved.': 'Артыкул перамешчаны.'
-'Article deleted.': 'Артыкул выдалены.'
-'Article created.': 'Артыкул створаны.'
-'$1 toggled.': '$1 зьменена.'
-'Total:': 'Усяго:'
-'Show Comments': 'Паказаць камэнтары'
-Locked: Заблякавана
-'Invalid type: $1': 'Няправiльны тып: $1'
-'Hide Comments': 'Схаваць камэнтары'
-Enabled: Дазволена
-Disabled: Забаронена
-Comments: Камэнтары
-'The article has already been translated into $1.': 'Артыкул ужо быў перакладены на $1.'
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
-'You do not have the right to translate articles.': 'Вы ня маеце правоў  перакладаць рубрыкі.'
-'You do not have the right to publish articles.': 'Вы ня маеце правоў  публiкаваць артыкулы.'
-'You do not have the right to move articles.': 'Вы ня маеце правоў перамяшчаць артыкулы.'
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'Вы ня можаце $1 артыкулы, якiя азначаныя чырвоным колерам, таму што выпуск прызначэньня не перакладзены на адпаведную мову'
-'Publish?': 'Апублiкаваць?'
-'Publish articles': 'Апублiкаваць артыкулы'
-'Publish article': 'Апублiкаваць артыкул'
-'Move?': 'Перанесьцi?'
-'Move articles': 'Перанесьцi артыкулы'
-'Move article': 'Перанесьцi артыкул'
-'An issue must be created for the selected language but you do not have the right to create an issue.': 'Выпуск павiнен быць створаны для выбранай мовы, але Вы ня маеце правоў доступу для стварэньня выпуску.'
-'A section must be created for the selected language but you do not have the right to create a section.': 'Павiнна быць створана рубрыка для абранай мовы, але Вы не маеце правоў доступу дзеля ставрэння рубрыцы.'
-'to section': 'да рубрыцы'
-'You must choose a language': 'Вы павiнны вызначыць мову'
-'Unable to create the section for translation $1.': 'Немагчыма стварыць рубрыку для перакладу $1.'
-'Unable to create the issue for translation $1.': 'Немагчыма стварыць выпуск для перакладу $1.'
-'The following articles are new; it is not possible to schedule them for automatic publishing': 'Дадзеныя артыкулы новыя; немагчыма прызначыць iх для аўтаматычнага публiкаваньня'
-'Section URL Name': 'Назва URL рубрыкі'
-'Section Name': 'Назва рубрыкі'
-'Publish Schedule': 'Расклад публікацый'
-'No action specified': 'Дзеяньнi ня вызначаныя'
-'New section name': 'Назва новай рубрыкі'
-'New section URL name': 'Назва URL новай рубрыцы'
-'New issue name': 'Назва новага выпуску'
-'New issue URL name': 'Назва URL новага выпуску'
-'New article name': 'Назва новага артыкула'
-'Issue URL Name': 'Назва URL выпуску'
-'Issue Name': 'Назва выпуску'
-'Duplicate?': 'Дубляваць?'
-'Duplicate articles': 'Дубляваць артыкул'
-'Article name ($1)': 'Назва артыкула ($1)'
-'Article List': 'Сьпiс артыкулаў'
-'Are you sure you want to remove the topic $1 from the article?': 'Цi Вы ўпэўненыя, што жадаеце выдалiць тэму $1 з артыкула?'
-'Are you sure you want to remove the file $1 from the article?': 'Цi Вы ўпэўненыя, што жадаеце выдалiць файл $1 з артыкула?'
-'Are you sure you want to remove the event scheduled on $1?': 'Ці Вы ўпэўнены, што хочаце выдалiць дзеяньне, прызначанае на $1?'
-'Are you sure you want to delete this article?': 'Цi Вы ўпэўненыя, што жадаеце выдалiць гэты артыкул?'
-'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Выпуск павiнен быць створаны для выбранай мовы. Калі ласка, увядзеце назву выпуску і назву URL. '
-'A section must be created for the selected language.  Please enter the section name and URL name.': 'Рубрыка павiнна быць створаная для выбранай мовы. Калi ласка, увядзеце назву рубрыкі і назву URL.'
-'Article Type': 'Тып артыкула'
-'Show article on front page': 'Паказаць артыкул на тытульнай старонцы '
-'Show article on section page': 'Паказаць артыкул на старонцы рубрыкi.'
-'Translate article': 'Перакласьцi артыкул'
-'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Вы ня маеце правоў доступу для зьмяненьня гэтага артыкула. Вы можаце рэдагаваць толькi свае асабiстыя артыкулы. Калі артыкул адпраўлены, ён можа быць зьменены толькі ўпаўнаважанымі карыстальнікамі.'
-'Duplicate article': 'Дубляваць артыкул'
-'The destination section is the same as the source section.': 'Рубрыка прызначэння тая ж, што і рубрыка крыніцы.'
-'The article is new; it is not possible to schedule it for automatic publishing.': 'Артыкул новы, яго немагчыма прызначыць для аўтаматычнай публiкацыі.'
-'No article types were defined. You must create an article type first.': 'Тыпы артыкулаў ня вызначаныя. Вы павінны спачатку стварыць тыпы артыкулаў.'
-'Edit article types': 'Рэдагаваць тыпы артыкулаў'
-'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Не ўдалося захаваць артыкул. Ён заблякаваны карыстальнікам $1 $2 гадзіны  і $3 хвілін таму. '
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Вы ня маеце правоў зьмяняць стан гэтага артыкула.  Калі артыкул адпраўлены, ён можа быць зьменены толькі ўпаўнаважанымі карыстальнікамі.'
-'You do not have the right to delete articles.': 'Вы ня маеце правоў выдаляць артыкул.'
-'You must select an article type.': 'Вы павінны выбраць  тып артыкула.'
-'Are you sure you want to remove the image $1 from the article?': 'Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл $1 з артыкула? '
-'There was an error reading request parameters.': 'Памылка чытаньня парамэтраў запыту.'
-'This article cannot be previewed. Please make sure it has the article template selected.': 'Немагчыма зрабіць папярэдні агляд артыкула. Пераканайцеся, ці выбраны шаблён артыкула.'
-'No such article.': 'Няма такога артыкула.'
-'No such section.': 'Няма такой рубрыкі:by '
-Characters: null
-Snippet: null
-'This list is already in a different state than the one in which it was loaded.': null
-'List name should not be longer than 40 chars': null
-'Not valid number': null
-'List limit': null
-'The last article of this list has been removed.': null
-Revert: null
-'Could not automatically refresh the list': null
-'The article slideshows have been successfully updated, please close the window.': null
+'Overwrite articles with matching names': 'Overwrite articles with matching names'
+'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Article <i>$1</i> already exists, and was not overwritten.<br />'
+Files: Files
+'Select section:': 'Select section:'
+'Add another author': 'Add another author'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'The article has been locked by $1 ($2) $3 minute(s) ago.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.'
+'Switches saved.': 'Switches saved.'
+'Keywords saved.': 'Keywords saved.'
+'Comment settings': 'Comment settings'
+Authors: Authors
+'Attach Topic To Article': 'Attach Topic To Article'
+'Article saved.': 'Article saved.'
+'Article is locked': 'Article is locked'
+'Actions updated.': 'Actions updated.'
+'Your work has not been saved. Do you want to continue and lose your changes?': 'Your work has not been saved. Do you want to continue and lose your changes?'
+Switches: Switches
+'No subtopics available': 'No subtopics available'
+'Newscoop Subhead': 'Newscoop Subhead'
+Media: Media
+'Last modified': 'Last modified'
+'Keywords &amp; Topics': 'Keywords &amp; Topics'
+Info: Info
+'Go to live article': 'Go to live article'
+Created: Created
+'Are you sure you want to remove the map from the article?': 'Are you sure you want to remove the map from the article?'
+'Scheduled action added': 'Scheduled action added'
+'Content edited': 'Content edited'
+'You must select an article language.': 'You must select an article language.'
+'You must select a publication.': 'You must select a publication.'
+'You must select a file to upload.': 'You must select a file to upload.'
+'You must select a XML input file.': 'You must select a XML input file.'
+'You do not have the right to import XML archives.': 'You do not have the right to import XML archives.'
+'There was a problem uploading the file.': 'There was a problem uploading the file.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini'
+'The file exceeds the allowed max file size.': 'The file exceeds the allowed max file size.'
+Optional: Optional
+'Input File': 'Input File'
+'Import XML': 'Import XML'
+'File is not a valid XML file.': 'File is not a valid XML file.'
+'File does not exist.': 'File does not exist.'
+'File could not be uploaded.': 'File could not be uploaded.'
+'File could not be read.': 'File could not be read.'
+'Error List': 'Error List'
+'Bad format in XML file.': 'Bad format in XML file.'
+'Article could not be created.': 'Article could not be created.'
+'---Select article type---': '---Select article type---'
+'$1 articles successfully imported.': '$1 articles successfully imported.'
+Saved: Saved
+'Save All': 'Save All'
+'Online Server: On': 'Online Server: On'
+'Online Server: Off': 'Online Server: Off'
+Download: Download
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.'
+'Visible to non-subscribers': 'Visible to non-subscribers'
+'The article could not be published.': 'The article could not be published.'
+'Scheduled action deleted.': 'Scheduled action deleted.'
+'Scheduled action added.': 'Scheduled action added.'
+'Article(s) unlocked.': 'Article(s) unlocked.'
+'Article(s) duplicated.': 'Article(s) duplicated.'
+'Article(s) deleted.': 'Article(s) deleted.'
+'Article status set to $1': 'Article status set to $1'
+'Article unlocked.': 'Article unlocked.'
+'Article translation created.': 'Article translation created.'
+'Article order changed.': 'Article order changed.'
+'Article moved.': 'Article moved.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'$1 toggled.': '$1 toggled.'
+'Total:': 'Total:'
+'Show Comments': 'Show Comments'
+Locked: Locked
+'Invalid type: $1': 'Invalid type: $1'
+'Hide Comments': 'Hide Comments'
+Enabled: Enabled
+Disabled: Disabled
+Comments: Comments
+'The article has already been translated into $1.': 'The article has already been translated into $1.'
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.'
+'You do not have the right to translate articles.': 'You do not have the right to translate articles.'
+'You do not have the right to publish articles.': 'You do not have the right to publish articles.'
+'You do not have the right to move articles.': 'You do not have the right to move articles.'
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.'
+'Publish?': 'Publish?'
+'Publish articles': 'Publish articles'
+'Publish article': 'Publish article'
+'Move?': 'Move?'
+'Move articles': 'Move articles'
+'Move article': 'Move article'
+'An issue must be created for the selected language but you do not have the right to create an issue.': 'An issue must be created for the selected language but you do not have the right to create an issue.'
+'A section must be created for the selected language but you do not have the right to create a section.': 'A section must be created for the selected language but you do not have the right to create a section.'
+'to section': 'to section'
+'You must choose a language': 'You must choose a language'
+'Unable to create the section for translation $1.': 'Unable to create the section for translation $1.'
+'Unable to create the issue for translation $1.': 'Unable to create the issue for translation $1.'
+'The following articles are new; it is not possible to schedule them for automatic publishing': 'The following articles are new; it is not possible to schedule them for automatic publishing'
+'Section URL Name': 'Section URL Name'
+'Section Name': 'Section Name'
+'Publish Schedule': 'Publish Schedule'
+'No action specified': 'No action specified'
+'New section name': 'New section name'
+'New section URL name': 'New section URL name'
+'New issue name': 'New issue name'
+'New issue URL name': 'New issue URL name'
+'New article name': 'New article name'
+'Issue URL Name': 'Issue URL Name'
+'Issue Name': 'Issue Name'
+'Duplicate?': 'Duplicate?'
+'Duplicate articles': 'Duplicate articles'
+'Article name ($1)': 'Article name ($1)'
+'Article List': 'Article List'
+'Are you sure you want to remove the topic $1 from the article?': 'Are you sure you want to remove the topic $1 from the article?'
+'Are you sure you want to remove the file $1 from the article?': 'Are you sure you want to remove the file $1 from the article?'
+'Are you sure you want to remove the event scheduled on $1?': 'Are you sure you want to remove the event scheduled on $1?'
+'Are you sure you want to delete this article?': 'Are you sure you want to delete this article?'
+'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'An issue must be created for the selected language.  Please enter the issue name and URL name.'
+'A section must be created for the selected language.  Please enter the section name and URL name.': 'A section must be created for the selected language.  Please enter the section name and URL name.'
+'Article Type': 'Article Type'
+'Show article on front page': 'Show article on front page'
+'Show article on section page': 'Show article on section page'
+'Translate article': 'Translate article'
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.'
+'Duplicate article': 'Duplicate article'
+'The destination section is the same as the source section.': 'The destination section is the same as the source section.'
+'The article is new; it is not possible to schedule it for automatic publishing.': 'The article is new; it is not possible to schedule it for automatic publishing.'
+'No article types were defined. You must create an article type first.': 'No article types were defined. You must create an article type first.'
+'Edit article types': 'Edit article types'
+'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.'
+'You do not have the right to delete articles.': 'You do not have the right to delete articles.'
+'You must select an article type.': 'You must select an article type.'
+'Are you sure you want to remove the image $1 from the article?': 'Are you sure you want to remove the image $1 from the article?'
+'There was an error reading request parameters.': 'There was an error reading request parameters.'
+'This article cannot be previewed. Please make sure it has the article template selected.': 'This article cannot be previewed. Please make sure it has the article template selected.'
+'No such article.': 'No such article.'
+'No such section.': 'No such section.'
+Characters: Characters
+Snippet: Snippet
+'This list is already in a different state than the one in which it was loaded.': 'This list is already in a different state than the one in which it was loaded.'
+'List name should not be longer than 40 chars': 'List name should not be longer than 40 chars'
+'Not valid number': 'Not valid number'
+'List limit': 'List limit'
+'The last article of this list has been removed.': 'The last article of this list has been removed.'
+Revert: Revert
+'Could not automatically refresh the list': 'Could not automatically refresh the list'
+'The article slideshows have been successfully updated, please close the window.': 'The article slideshows have been successfully updated, please close the window.'
 articles:
     playlists:
-        namechanged: null
-        alert: null
+        namechanged: 'Are you sure you want to change the list name? The name might be used in the Newscoop templates to render the list in the frontend. Please check with your siteadmin if you have doubts.'
+        alert: 'Are you sure you want to change the maximum number of articles for this featured article list? If you change the limit, all articles beyond this limit will be deleted. Example: If you change the limit from 50 to 30 articles all 20 articles starting from position number 31 till 50 will be deleted from the list.'
     images:
-        see_original: null
+        see_original: 'See full-size image in a new tab'
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Edit image metadata'
+            save: Save
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
-                photographer_url: null
-                place: null
-                date: null
-                article_specific: null
-                global: null
-                other_captions: null
+                use: Use
+                number: Number
+                caption: Caption
+                status_approved: Approved
+                status_unapproved: Unapproved
+                status: Status
+                description: Description
+                photographer: Photographer
+                photographer_url: 'Photographer URL'
+                place: Place
+                date: Date
+                article_specific: 'Article specific'
+                global: Global
+                other_captions: 'Other Captions'

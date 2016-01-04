@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: 'Management komentářů'
-        menu: Komentáře
-        banned: Zakázaný
-        anonymous: Anonym
-        at: na
-        noentries: 'Nenalezeny žádné příspěvky. '
-        showing: Náhled
-        of: z
-        to: do
-        entries: příspěvky
-        fullarticle: 'Celý článek'
-        hidden: Skrytý
-        approved: Schválený
-        new: Nový
-        editarticle: 'Jděte upravit článek'
-        section: Oddíl
-        comment: Komentář
-        replyto: 'Odpovědět na komentář'
-        subject: Předmět
-        ban: 'Zakázat/Obnovit uživatele'
-        author: Autor
-        date: 'Datum / Komentář'
-        article: Článek
-        search: Hledej
-        show: Zobraz
-        recommended: Doporučené
-        unrecommended: Nedoproučený
-        editcomment: 'Rychlá úprava komentáře'
-        actions: Činnosti
-        selectstatus: 'Vybrat status'
-        deleted: Vymazat
-        alert: Varování
-        searchholder: 'Hledat... (např. jméno, e-mail, předmět, komentář, název článku)'
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: Zrušit
-        submit: Podat
-        unrecommend: Nedoporučeno
-        recommend: Doporučeno
-        delete: Smazat
-        reply: Odpovědět
-        edit: 'Rychlá editace '
-        close: Zavřít
-        okay: OK
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
+        okay: Ok
         filter: Filter
     msg:
-        deleted: 'Komentář vymazán.'
-        commentinarticle: 'Komentář $4'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: nový
-            approved: schváleno
-            hidden: skrytý
-            single: 'Status komentáře změnit na'
-            all: 'Status komentářů změnit na'
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
-            deletefromarticle: 'Komentář vymazán $1 z článku $2 ($3)'
-            statuschange: 'Chyba změny statusu komentářů'
-            delete: 'Komentář nelze smazat'
-            update: 'Pole nemůžou zůstat prázdná'
-        sure: 'Právě se chystáte permanentně vymazat komentář.'
-        suremultiple: 'Právě se chystáte permanentně vymazat komentáře. '
-        first: 'Nejdříve vyberte komentář/komentáře!'
-        surequestion: 'Jste si jisti, že to chcete udělat?'
-        updated: 'Komentář aktualizován.'
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

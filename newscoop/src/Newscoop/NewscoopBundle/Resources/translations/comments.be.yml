@@ -1,120 +1,120 @@
-'No attachment': null
-at: на
-'With no attachment': 'Без ўкладання'
-'With image attachment': 'З прыкладзенай выявай'
-'With document attachment': 'З прыкладзеным дакументам'
-'Unable to reach Newscoop. Please check your internet connection.': 'Немагчыма звязацца з Newscoop. Калі ласка, праверце ваша інтэрнэт-злучэнне.'
-Starred: 'Пазначаныя зорачкай'
-Star: Зорачка
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Паказаныя _START_ да _END_ / _TOTAL_ запісаў'
-'Reply to message': 'Адказаць на паведамленне'
-Reply: Адказ
-Processed: Апрацаванае
-'No records found.': 'Не абрана ніводная з запісаў'
-'No entries to show': 'Няма запісаў для прагляду'
-'Messages updated.': 'Паведамленні абноўленыя'
-'Messages status change to $1.': 'Статус паведамлення зменены на $1.'
-'Messages deleted.': 'Паведамленні выдаленыя.'
-'Message updated.': 'Паведамленне абноўленае'
-'Message status change to $1.': 'Статус паведамлення зменены на $1.'
-'Message deleted.': 'Паведамленне выдаленае.'
-Message: Паведамленне
-Last: Апошнi
-'Full article': 'Увесь тэкст артыкула'
-First: Першы
-'Feedback Messages': 'Адказ на паведамленні'
-'Display _MENU_ records': 'Адлюстраваць _MENU_ запісы'
-Deleted: Выдаленае
-'Change selected messages status': 'Змяніць статус выдзеленых паведамленняў'
-Attachment: 'Прымацаваны файл'
-Approved.: Зацверджана
-Approve: Зацвердзіць
-Anonymous: null
-' - filtering from _MAX_ records': 'фільтраванне ад _MAX_ запісаў'
-'You are about to permanently delete multiple messages.': 'Вы прыйшлі на старонку, каб назаўсёды выдаліць шматлікія паведамленні.'
-'You are about to permanently delete a message.': 'Вы прыйшлі на старонку, каб выдаліць паведамленне.'
-User: Карыстальнік
-None: Ніводная
-'Coming from': Адпраўлена
-'Ban/Unban user': 'Забараніць/дазволіць карыстальніку камэнтаваць'
-Ip: ' Ip'
-'Bans can be applied to a users name, email address or IP address.': 'Забараніць камэнтаваць можна па імені карыстальніка, email альбо IP адрасе.'
-'You are about to permanently delete multiple comments.': 'Вы збіраецеся канчаткова выдаліць каментары.'
-'You are about to permanently delete a comment.': 'Вы збіраецеся канчаткова выдаліць каментары.'
-Website: Web-сайт.
-'Value is not $1 characters long': 'Значэнне не змяшчае $ знакаў'
-Username: 'Імя карыстальніка'
-'User id': 'id карыстальніка'
-'User ban settings': 'Налады забароны на каментары'
-'Update comment': 'Аднавіць каментары'
-Unrecommended: 'Не рэкамендуецца'
-Unrecommend: 'Не рэкамендаваць'
-'Subject is not $1 characters long': 'Тэма не змяшчае $ 1 знакаў'
-'Sort by Thread order': 'Сартаваць па парадку паведамленняў'
-'Show parent comment': 'Паказаць пачатковы каментар'
-'Show commenter details': 'Паказаць інфармацыю аб каментатары'
-'Show commenter': 'Паказаць каментатара'
-'Show comment user details': 'Паказаць дадзеныя'
-'Show comment user': 'Паказаць карыстальніка каментара'
-'Show comment details': 'Паказаць інфармацыю аб каментары'
-'Select status': 'Абраць статус'
-'Search Type': 'Шукаць тып'
-'Reply to comment': 'Адказаць на камэнтар'
-Recommended: Рэкамендуецца
-Recommend: Рэкамендаваць
-'Quick edit': 'Хуткае рэдагаванне'
-Parent: Крыніца
+'No attachment': 'No attachment'
+at: at
+'With no attachment': 'With no attachment'
+'With image attachment': 'With image attachment'
+'With document attachment': 'With document attachment'
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+Starred: Starred
+Star: Star
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Reply to message': 'Reply to message'
+Reply: Reply
+Processed: Processed
+'No records found.': 'No records found.'
+'No entries to show': 'No entries to show'
+'Messages updated.': 'Messages updated.'
+'Messages status change to $1.': 'Messages status change to $1.'
+'Messages deleted.': 'Messages deleted.'
+'Message updated.': 'Message updated.'
+'Message status change to $1.': 'Message status change to $1.'
+'Message deleted.': 'Message deleted.'
+Message: Message
+Last: Last
+'Full article': 'Full article'
+First: First
+'Feedback Messages': 'Feedback Messages'
+'Display _MENU_ records': 'Display _MENU_ records'
+Deleted: Deleted
+'Change selected messages status': 'Change selected messages status'
+Attachment: Attachment
+Approved.: Approved.
+Approve: Approve
+Anonymous: Anonymous
+' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
+'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
+User: User
+None: None
+'Coming from': 'Coming from'
+'Ban/Unban user': 'Ban/Unban user'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
+'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
+'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
+Website: Website
+'Value is not $1 characters long': 'Value is not $1 characters long'
+Username: Username
+'User id': 'User id'
+'User ban settings': 'User ban settings'
+'Update comment': 'Update comment'
+Unrecommended: Unrecommended
+Unrecommend: Unrecommend
+'Subject is not $1 characters long': 'Subject is not $1 characters long'
+'Sort by Thread order': 'Sort by Thread order'
+'Show parent comment': 'Show parent comment'
+'Show commenter details': 'Show commenter details'
+'Show commenter': 'Show commenter'
+'Show comment user details': 'Show comment user details'
+'Show comment user': 'Show comment user'
+'Show comment details': 'Show comment details'
+'Select status': 'Select status'
+'Search Type': 'Search Type'
+'Reply to comment': 'Reply to comment'
+Recommended: Recommended
+Recommend: Recommend
+'Quick edit': 'Quick edit'
+Parent: Parent
 ID: ID
-'Go to edit article': 'Перайсці да рэдагуемага артыкулу'
-Forum: Форум
-'For Column': 'Для калёнкі'
+'Go to edit article': 'Go to edit article'
+Forum: Forum
+'For Column': 'For Column'
 Email: Email
-'Edit acceptance criteria': 'Рэдагаваць крытэрыі дапушчальнасці'
+'Edit acceptance criteria': 'Edit acceptance criteria'
 E-mail: E-mail
-'Delete all comments?': 'Выдаліць усе каментары?'
-'Date Created': 'Дата створаная'
-'Comments updated.': 'Каментары абноўленыя.'
-'Comments status change to $1.': null
-'Comments deleted.': null
-'Commenter $1 saved.': null
-'Commenter $1 deleted.': null
-Commenter: null
-'Comment updated.': 'Каментар абноўлены.'
-'Comment status change to $1.': null
-'Comment id': null
-'Comment deleted.': null
-'Comment delete by $1 from the article $2 ($3)': null
-'Comment Acceptance': null
-'Comment $4 by $1 in the article $2 ($3)': null
-'Comment $1 saved.': null
-Column: null
-'Change subscriber information': null
-'Ban for commenter $1 saved.': null
-Ban: Забаронены
-'Are you sure you want to do it?': null
-'Add rating': null
-'Add new comment commenter': null
-'Add new comment': null
-'Add new acceptance criteria': null
-'Acceptance $1 saved.': null
-'Acceptance $1 deleted.': null
+'Delete all comments?': 'Delete all comments?'
+'Date Created': 'Date Created'
+'Comments updated.': 'Comments updated.'
+'Comments status change to $1.': 'Comments status change to $1.'
+'Comments deleted.': 'Comments deleted.'
+'Commenter $1 saved.': 'Commenter $1 saved.'
+'Commenter $1 deleted.': 'Commenter $1 deleted.'
+Commenter: Commenter
+'Comment updated.': 'Comment updated.'
+'Comment status change to $1.': 'Comment status change to $1.'
+'Comment id': 'Comment id'
+'Comment deleted.': 'Comment deleted.'
+'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
+'Comment Acceptance': 'Comment Acceptance'
+'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
+'Comment $1 saved.': 'Comment $1 saved.'
+Column: Column
+'Change subscriber information': 'Change subscriber information'
+'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
+Ban: Ban
+'Are you sure you want to do it?': 'Are you sure you want to do it?'
+'Add rating': 'Add rating'
+'Add new comment commenter': 'Add new comment commenter'
+'Add new comment': 'Add new comment'
+'Add new acceptance criteria': 'Add new acceptance criteria'
+'Acceptance $1 saved.': 'Acceptance $1 saved.'
+'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Message is too long.'
+        added: 'Comment has been successfully added.'
+        edited: 'Comment has been successfully edited.'
+        resolved: 'Comment has been successfully resolved.'
+        deleted: 'Comment has been successfully deleted.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Send
+        cancel: Cancel
+        resolve: Resolve
+        save: Save
+        edit: Edit
+        delete: Delete
+        reply: Reply
     label:
-        title: null
-        post: null
-        reply: null
-        nocomments: null
+        title: 'Editorial Comments'
+        post: 'Post a new comment'
+        reply: Reply...
+        nocomments: 'No comments yet.'

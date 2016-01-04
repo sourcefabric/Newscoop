@@ -1,120 +1,120 @@
-'No attachment': 'Əlavə edilmiş fayl yoxdur'
-at: burada
-'With no attachment': 'Əlavə faylsız'
-'With image attachment': 'Şəkil əlavəsi ilə'
-'With document attachment': 'Sənəd əlavəsi ilə'
-'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
-Starred: Ulduzlu
-Star: Ulduz
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Ümumilikdə _TOTAL_ girişin _START_-dan/dən _END_-a/ə qaydasında nümayişi'
-'Reply to message': 'Mesaja cavab yaz'
-Reply: 'Cavab yaz'
-Processed: 'İcra edildi'
-'No records found.': 'Yazı tapılmadı.'
-'No entries to show': 'Nümayiş üçün giriş yoxdur'
-'Messages updated.': 'Mesajlar yeniləndi.'
-'Messages status change to $1.': 'Mesajların statusu $1 olaraq təyin edildi.'
-'Messages deleted.': 'Mesajlar silindi.'
-'Message updated.': 'Mesaj yeniləndi.'
-'Message status change to $1.': 'Mesaj statusu $1 olaraq təyin edildi.'
-'Message deleted.': 'Mesaj silindi.'
-Message: Mesaj
-Last: Son
-'Full article': 'Tam məqalə'
-First: İlk
-'Feedback Messages': 'Rəy Mesajları'
-'Display _MENU_ records': '_MENU_ yazılarını göstər'
-Deleted: Silindi
-'Change selected messages status': 'Seçilmiş mesajların statusunu dəyiş'
-Attachment: 'Əlavə fayl'
-Approved.: Təsdiqləndi.
-Approve: 'Təsdiq et'
-Anonymous: Anonim
-' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'
-'You are about to permanently delete multiple messages.': 'Çoxsaylı mesajları həmişəlik silmək ərəfəsindəsən.'
-'You are about to permanently delete a message.': 'Mesajı həmişəlik silmək ərəfəsindəsən.'
-User: İstifadəçi
-None: 'Heç biri'
-'Coming from': 'Göndərənin ünvanı'
-'Ban/Unban user': 'İstifadəçini Kilidlə/Kilidini Aç'
+'No attachment': 'No attachment'
+at: at
+'With no attachment': 'With no attachment'
+'With image attachment': 'With image attachment'
+'With document attachment': 'With document attachment'
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+Starred: Starred
+Star: Star
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Reply to message': 'Reply to message'
+Reply: Reply
+Processed: Processed
+'No records found.': 'No records found.'
+'No entries to show': 'No entries to show'
+'Messages updated.': 'Messages updated.'
+'Messages status change to $1.': 'Messages status change to $1.'
+'Messages deleted.': 'Messages deleted.'
+'Message updated.': 'Message updated.'
+'Message status change to $1.': 'Message status change to $1.'
+'Message deleted.': 'Message deleted.'
+Message: Message
+Last: Last
+'Full article': 'Full article'
+First: First
+'Feedback Messages': 'Feedback Messages'
+'Display _MENU_ records': 'Display _MENU_ records'
+Deleted: Deleted
+'Change selected messages status': 'Change selected messages status'
+Attachment: Attachment
+Approved.: Approved.
+Approve: Approve
+Anonymous: Anonymous
+' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
+'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
+User: User
+None: None
+'Coming from': 'Coming from'
+'Ban/Unban user': 'Ban/Unban user'
 Ip: Ip
-'Bans can be applied to a users name, email address or IP address.': 'Kilid istifadəçi adı, email ünvan və IP ünvana tətbiq edilə bilər.'
-'You are about to permanently delete multiple comments.': 'Çoxsaylı şərhləri həmişəlik silmək ərəfəsindəsən.'
-'You are about to permanently delete a comment.': 'Şərhi həmişəlik silmək ərəfəsindəsən.'
-Website: Vebsayt
-'Value is not $1 characters long': 'Dəyər $1 uzunluqda işarədən ibarət deyil'
-Username: 'İstifadəçi adı'
-'User id': 'İstifadəçi Id-si'
-'User ban settings': 'İstifadəçi kilid parametrləri'
-'Update comment': 'Şərhi yenilə'
-Unrecommended: 'Tövsiyyə Edilmədi'
-Unrecommend: 'Tövsiyyə Etmə'
-'Subject is not $1 characters long': 'Başlıq $1 uzunluqda işarədən ibarət deyil'
-'Sort by Thread order': 'Keçid sıralaması ilə yerləşdir'
-'Show parent comment': 'Mənbə şərhi göstər'
-'Show commenter details': 'Şərh edənin məlumatlarını göstər'
-'Show commenter': 'Şərh edəni göstər'
-'Show comment user details': 'Şərhin istifadəçisinin məlumatlarını göstər'
-'Show comment user': 'Şərhin istifadəçisini göstər'
-'Show comment details': 'Şərh məlumatlarını göstər'
-'Select status': 'Status seç'
-'Search Type': 'Axtarış Növü'
-'Reply to comment': 'Şərhə cavab yaz'
-Recommended: 'Tövsiyyə Olunur'
-Recommend: 'Tövsiyyə Et'
-'Quick edit': 'Tez dəyiş'
-Parent: Mənbə
+'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
+'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
+'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
+Website: Website
+'Value is not $1 characters long': 'Value is not $1 characters long'
+Username: Username
+'User id': 'User id'
+'User ban settings': 'User ban settings'
+'Update comment': 'Update comment'
+Unrecommended: Unrecommended
+Unrecommend: Unrecommend
+'Subject is not $1 characters long': 'Subject is not $1 characters long'
+'Sort by Thread order': 'Sort by Thread order'
+'Show parent comment': 'Show parent comment'
+'Show commenter details': 'Show commenter details'
+'Show commenter': 'Show commenter'
+'Show comment user details': 'Show comment user details'
+'Show comment user': 'Show comment user'
+'Show comment details': 'Show comment details'
+'Select status': 'Select status'
+'Search Type': 'Search Type'
+'Reply to comment': 'Reply to comment'
+Recommended: Recommended
+Recommend: Recommend
+'Quick edit': 'Quick edit'
+Parent: Parent
 ID: ID
-'Go to edit article': 'Məqaləni dəyişməyə keç'
+'Go to edit article': 'Go to edit article'
 Forum: Forum
-'For Column': 'Sütun Üçün'
+'For Column': 'For Column'
 Email: Email
-'Edit acceptance criteria': 'Qəbul kriteriyasını dəyiş'
+'Edit acceptance criteria': 'Edit acceptance criteria'
 E-mail: E-mail
-'Delete all comments?': 'Şərhlərin hamısını silirsən?'
-'Date Created': 'Məlumat Yaradıldı'
-'Comments updated.': 'Şərhlər yeniləndi.'
-'Comments status change to $1.': 'Şərhlərin statusunu $1 olaraq təyin et.'
-'Comments deleted.': 'Şərhlər silindi.'
-'Commenter $1 saved.': '$1 şərh sahibi saxlandı.'
-'Commenter $1 deleted.': '$1 şərh sahibi silindi.'
-Commenter: 'Şərh sahibi'
-'Comment updated.': 'Şərh yeniləndi.'
-'Comment status change to $1.': 'Şərh statusu $1 olaraq təyin edilir.'
-'Comment id': 'Şərh Id-si'
-'Comment deleted.': 'Şərh silindi.'
-'Comment delete by $1 from the article $2 ($3)': 'Şərh $2 ($3) məqaləsindən $1 tərəfindən silindi'
-'Comment Acceptance': 'Şərhin Qəbulu'
-'Comment $4 by $1 in the article $2 ($3)': '$2 ($3) məqaləsində $1 tərəfindən $4 şərhi'
-'Comment $1 saved.': '$1 şərhi saxlandı.'
-Column: Sütun
-'Change subscriber information': 'Abunə məlumatını dəyiş'
-'Ban for commenter $1 saved.': '$1 şərhçisi üçün kilid saxlandı.'
-Ban: Kilid
-'Are you sure you want to do it?': 'Bunu etmək istədiyinə əminsən?'
-'Add rating': 'Qiymət əlavə et'
-'Add new comment commenter': 'Yeni şərhçi əlavə et'
-'Add new comment': 'Yeni şəth əlavə et'
-'Add new acceptance criteria': 'Yeni qəbul kriteriyası əlavə et'
-'Acceptance $1 saved.': '$1 təhvili saxlandı.'
-'Acceptance $1 deleted.': '$1 təhvili silindi.'
+'Delete all comments?': 'Delete all comments?'
+'Date Created': 'Date Created'
+'Comments updated.': 'Comments updated.'
+'Comments status change to $1.': 'Comments status change to $1.'
+'Comments deleted.': 'Comments deleted.'
+'Commenter $1 saved.': 'Commenter $1 saved.'
+'Commenter $1 deleted.': 'Commenter $1 deleted.'
+Commenter: Commenter
+'Comment updated.': 'Comment updated.'
+'Comment status change to $1.': 'Comment status change to $1.'
+'Comment id': 'Comment id'
+'Comment deleted.': 'Comment deleted.'
+'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
+'Comment Acceptance': 'Comment Acceptance'
+'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
+'Comment $1 saved.': 'Comment $1 saved.'
+Column: Column
+'Change subscriber information': 'Change subscriber information'
+'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
+Ban: Ban
+'Are you sure you want to do it?': 'Are you sure you want to do it?'
+'Add rating': 'Add rating'
+'Add new comment commenter': 'Add new comment commenter'
+'Add new comment': 'Add new comment'
+'Add new acceptance criteria': 'Add new acceptance criteria'
+'Acceptance $1 saved.': 'Acceptance $1 saved.'
+'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Message is too long.'
+        added: 'Comment has been successfully added.'
+        edited: 'Comment has been successfully edited.'
+        resolved: 'Comment has been successfully resolved.'
+        deleted: 'Comment has been successfully deleted.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Send
+        cancel: Cancel
+        resolve: Resolve
+        save: Save
+        edit: Edit
+        delete: Delete
+        reply: Reply
     label:
-        title: null
-        post: null
-        reply: null
-        nocomments: null
+        title: 'Editorial Comments'
+        post: 'Post a new comment'
+        reply: Reply...
+        nocomments: 'No comments yet.'

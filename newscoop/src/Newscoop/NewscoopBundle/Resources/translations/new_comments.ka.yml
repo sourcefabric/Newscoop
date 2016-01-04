@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: null
-        menu: კომენტარები
-        banned: null
-        anonymous: ანონიმური
-        at: '-ზე'
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
-        fullarticle: 'მთლიანი სტატია'
-        hidden: დამალული
-        approved: დადასტურებული
-        new: ახალი
-        editarticle: 'სტატიის რედაქტირებაზე გადასვლა'
-        section: სექცია
-        comment: კომენტარი
-        replyto: 'კომენტარზე პასუხის გაცემა'
-        subject: თემა
-        ban: 'მომხმარებლისთვის ბანის დადება/მოხსნა'
-        author: ავტორი
-        date: null
-        article: სტატია
-        search: ძიება
-        show: ჩვენება
-        recommended: რეკომენდირებული
-        unrecommended: არარეკომენდირებული
-        editcomment: null
-        actions: მოქმედება
-        selectstatus: 'აირჩიეთ სტატუსი'
-        deleted: წაიშალა
-        alert: null
-        searchholder: null
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: გაუქმება
-        submit: გაგზავნა
-        unrecommend: 'რეკომენდაციის უკუგდება'
-        recommend: 'რეკომენდაციის მიცემა'
-        delete: წაშლა
-        reply: 'პასუხის გაცემა'
-        edit: 'სწრაფი რედაქტირება'
-        close: დახურული
-        okay: null
-        filter: ფილტრი
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
+        okay: Ok
+        filter: Filter
     msg:
-        deleted: 'კომენტარი წაიშალა.'
-        commentinarticle: '$2 ($3) სტატიის კომენტარი $4 $1-ის მიერ'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
-            deletefromarticle: '$2 ($3) სტატიის კომენტარი წაიშალა $1-ის მიერ'
-            statuschange: null
-            delete: null
-            update: null
-        sure: 'კომენტარი სამუდამოდ წაიშლება.'
-        suremultiple: null
-        first: null
-        surequestion: 'დაადასტურეთ, რომ გსურთ ამის გაკეთება.'
-        updated: 'კომენტარი განახლებულია. '
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

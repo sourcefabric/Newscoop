@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: null
-        menu: Kommentare
-        banned: null
-        anonymous: null
-        at: auf
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
-        fullarticle: 'Ganzer Artikel'
-        hidden: Verborgen
-        approved: Bewilligt
-        new: Neu
-        editarticle: 'Gehe zur Artikelbearbeitung'
-        section: Rubrik
-        comment: Kommentar
-        replyto: 'Kommentar beantworten'
-        subject: Subjekt
-        ban: 'User sperren / entsperren '
-        author: AutorIn
-        date: null
-        article: Artikel
-        search: Suche
-        show: Zeige
-        recommended: Empfohlen
-        unrecommended: 'Empfehlung zurückgenommen. '
-        editcomment: null
-        actions: Aktionen
-        selectstatus: 'Status auswählen '
-        deleted: Gelöscht
-        alert: null
-        searchholder: null
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: Abbruch
-        submit: Absenden
-        unrecommend: 'Empfehlung zurücknehmen'
-        recommend: Empfehlen
-        delete: Löschen
-        reply: Antworten
-        edit: Schnellbearbeitung
-        close: Schließen
-        okay: null
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
+        okay: Ok
         filter: Filter
     msg:
-        deleted: 'Kommentar gelöscht. '
-        commentinarticle: 'Kommentar $4 von $1 im Artikel $2 ($3)'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'Die Verbindung zu Newscoop kann nicht hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung. '
-            deletefromarticle: 'Kommentar gelöscht von $1 aus dem Artikel $2 ($3)'
-            statuschange: null
-            delete: null
-            update: null
-        sure: 'Sie sind im Begriff einen Kommentar permanent zu löschen. '
-        suremultiple: null
-        first: null
-        surequestion: 'Sind Sie sicher, dass Sie das tun wollen? '
-        updated: 'Kommentar aktualisiert.'
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

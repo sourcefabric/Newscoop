@@ -1,81 +1,81 @@
-get: 'əldə et'
+get: get
 Soundcloud: SoundCloud
-Templates: Üzlük
-'Feedback Messages': 'Rəy Mesajları'
-'Article Playlists': 'Məqalə Pleylistləri'
-'Check all': 'Hamısını yoxla'
-view: bax
-undo/redo: geri/irəli
-underline: altxətt
-translate: tərcümə
-'text direction': 'mətnin istiqaməti'
-'text alignment': 'mətnin yerləşməsi'
-table: masa
-superscript: superskript
-subscript: abunəlik
-subhead: altbaşlıq
-strikethrough: kəsişmə
-statusbar: 'status yeri'
-'spell checker enabled': 'söz yoxlaması aktivdir'
-'source view': 'mənbəyə baxış'
-publish: nümayiş
-notify: 'xəbərdar et'
-moderate: 'idarə et'
-manage: 'nəzarət et'
-'list number': 'siyahı sayı'
-'list bullet': 'siyahı bülleteni'
+Templates: Templates
+'Feedback Messages': 'Feedback Messages'
+'Article Playlists': 'Article Playlists'
+'Check all': 'Check all'
+view: view
+undo/redo: undo/redo
+underline: underline
+translate: translate
+'text direction': 'text direction'
+'text alignment': 'text alignment'
+table: table
+superscript: superscript
+subscript: subscript
+subhead: subhead
+strikethrough: strikethrough
+statusbar: statusbar
+'spell checker enabled': 'spell checker enabled'
+'source view': 'source view'
+publish: publish
+notify: notify
+moderate: moderate
+manage: manage
+'list number': 'list number'
+'list bullet': 'list bullet'
 link: link
-italic: 'əl yazısı'
-indent: boşluq
-image: şəkil
-'horizontal rule': 'şaquli xətt'
-handle: qulp
-guest: qonaq
-'font size': 'hərif ölçüsü'
-'font face': 'hərif forması'
-'font color': 'hərif rəngi'
-find/replace: tap/əvəzlə
-enlarge: genişləndir
-enable: aktivləşdir
-edit: dəyiş
-delete: sil
-copy/cut/paste: köçür/kəs/yapışdır
-clear: təmizlə
-'character map': 'işarə xəritəsi'
-bold: qalın
-attach: 'əlavə et'
-'any resource': 'hər hansı ehtiyat'
+italic: italic
+indent: indent
+image: image
+'horizontal rule': 'horizontal rule'
+handle: handle
+guest: guest
+'font size': 'font size'
+'font face': 'font face'
+'font color': 'font color'
+find/replace: find/replace
+enlarge: enlarge
+enable: enable
+edit: edit
+delete: delete
+copy/cut/paste: copy/cut/paste
+clear: clear
+'character map': 'character map'
+bold: bold
+attach: attach
+'any resource': 'any resource'
 admin: admin
-add: 'əlavə et'
-'You cant deny yourself to manage $1': '$1 nəzarətdə saxlamaqdan boyun qaçıra bilməzsən'
-'You are not allowed to $1 $2.': 'Sənin $2 $1 ixtiyarın yoxdur.'
-'User type saved.': 'İstifadəçi növü saxlandı.'
-'User type deleted.': 'İstifadəçi növü silindi.'
-'User type added.': 'İstifadəçi növü əlavə edildi.'
-'User Groups': 'İstifadəçi Qrupları'
-Themes: Mövzular
-'That type name already exists, please choose a different name.': 'O növ ad artıq mövcuddur, lütfən, başqasını seç.'
-System: Sistem
-Structure: Struktur
-'Search Indexer': 'Axtarış Əlaməti'
-'Rich-Text Editor Preferences': 'Zəngin-Mətn Dəyişiklik Göstəriciləri'
+add: add
+'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
+'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
+'User type saved.': 'User type saved.'
+'User type deleted.': 'User type deleted.'
+'User type added.': 'User type added.'
+'User Groups': 'User Groups'
+Themes: Themes
+'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+System: System
+Structure: Structure
+'Search Indexer': 'Search Indexer'
+'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
 ReCaptcha: ReCaptcha
-Polls: Səslər
-'Permissions:': 'İcazələr:'
-'Permissions updated': 'İcazələr yeniləndi'
-Notification: Xəbərdarlıq
-Log: Giriş
-Layout: Görünüş
-Global: Qlobal
-Files: Fayllar
-'Error: ': 'Xəta:'
-'Edit user type $1': '$1 istifadəçi növünü dəyiş'
-Deny: 'Rədd et'
-'Delete user type $1': '$1 istifadəçi növünü sil'
-'Can not delete a user type with assigned users.': 'Təyin edilmiş istifadəçilərlə istifadəçi növünü silmək mümkün deyil.'
-Cache: Keş
-Backup: Arxiv
-Authoring: Müəlliflik
-Allow: 'İcazə ver'
-'User types': 'İstifadəçi növləri'
-'No user types.': 'İstifadəçi növü yoxdur.'
+Polls: Polls
+'Permissions:': 'Permissions:'
+'Permissions updated': 'Permissions updated'
+Notification: Notification
+Log: Log
+Layout: Layout
+Global: Global
+Files: Files
+'Error: ': 'Error: '
+'Edit user type $1': 'Edit user type $1'
+Deny: Deny
+'Delete user type $1': 'Delete user type $1'
+'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
+Cache: Cache
+Backup: Backup
+Authoring: Authoring
+Allow: Allow
+'User types': 'User types'
+'No user types.': 'No user types.'

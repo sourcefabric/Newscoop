@@ -265,12 +265,12 @@ Title: Title
 'Feed saved': 'Feed saved'
 'Item published': 'Item published'
 'Settings saved': 'Settings saved'
-'Self-delete is not permitted.': 'Deleting yourself is not permitted.'
+'Self-delete is not permitted.': 'Self-delete is not permitted.'
 'Edit staff member $1': 'Edit staff member $1'
 'Delete staff member $1': 'Delete staff member $1'
-'Could not save user $1. Please make sure it does not already exist': 'Could not save user $1. Please make sure the account does not already exist.'
-'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Could not save user with e-mail address $1. Please make sure it does not already exist.'
-'Changing user type would prevent you to manage users. Aborted.': 'Changing user type would prevent you from managing users. Aborted.'
+'Could not save user $1. Please make sure it does not already exist': 'Could not save user $1. Please make sure it does not already exist'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Could not save user with e-mail address $1. Please make sure it does not already exist'
+'Changing user type would prevent you to manage users. Aborted.': 'Changing user type would prevent you to manage users. Aborted.'
 'Staff member saved.': 'Staff member saved.'
 'Permissions: $1': 'Permissions: $1'
 'Change user account information': 'Change user account information'
@@ -282,8 +282,8 @@ Confirm: Confirm
 at: at
 published: published
 unpublished: unpublished
-nopermissions: 'You don''t have permission to access this resource.'
+nopermissions: 'You don''t have permissions to access this resource.'
 importantmessage: 'Important Info'
 anonymous: Anonymous
-'Successfully refreshed authentication token.': 'Successfully refreshed the authentication token.'
-'Failed to refresh authentication token.': 'Failed to refresh the authentication token.'
+'Successfully refreshed authentication token.': 'Successfully refreshed authentication token.'
+'Failed to refresh authentication token.': 'Failed to refresh authentication token.'

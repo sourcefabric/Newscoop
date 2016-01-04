@@ -1,67 +1,67 @@
-third: null
-second: null
-forth: null
-first: null
-'You must input a number greater than 0 into the Number of addresses field.': null
-'You must input a number between 0 and 255 into the Start IP address $1 field.': null
-'User IP access list management': null
-'The IP address group conflicts with another existing group.': null
-'Subscription sections': null
-'No records.': null
-'You have subscription for all available publications': null
-'Subscription type:': null
-'Start:': null
-'Start Date': null
-'Sections:': null
-'Publication:': null
-'Paid days': null
-'Paid Days:': null
-Paid: null
-'No subscriptions': null
-'Languages:': null
-'Edit all sections': null
-'Days:': null
-'Days must be number': null
-Any: null
-'Add section': null
-saved: null
-removed: null
-deleted: null
-deactivated: null
-activated: null
-'Value is required and cant be empty': null
-'That user name already exists, please choose a different login name.': 'Korisničko ime već postoji, izaberite drugo ime za prijavu.'
-'That $1 already exists, please choose a different $2.': null
-'Subscriptions exist for all available publications.': null
-'Subscription IP Addresses': null
-'Subscription $1': null
-'Subscriber saved.': null
-'Subscriber management': null
-'Subscriber deleted.': null
-'Start IP': null
-'Select country': null
-'Number of addresses': null
-'Number of Addressses': null
-'No IP Addresses': null
-'IP Address added allready': null
-'IP Address $1': null
-'IP Access': 'IP pristup'
-'Full Name': null
-'Edit subscriptions': null
-'Edit subscriber $1': null
-E-Mail: null
-'Delete subscriber $1': null
-'Creation Date': null
-'Change subscriber information': null
-'Add new IP address': null
-'Add new IP Address': null
-'Account Name': null
-'%value% must be greater than %min%': null
-'%value% is not a valid IP Address': null
-'Regardless of the language': 'Bez obzira na jezik'
-'Individual languages': 'Pojedinačni jezici'
-'Add sections now': 'Dodaj rubrike odmah'
-'Add sections later': 'Dodaj rubrike kasnije'
-'Subscription Type': 'Vrsta pretplate'
-'Paid (payment will be confirmed later)': 'Plaćeno (plaćanje će biti potvrđeno naknadno)'
-'Paid (confirm payment now)': 'Plaćeno (potvrdi plaćanje odmah)'
+third: third
+second: second
+forth: forth
+first: first
+'You must input a number greater than 0 into the Number of addresses field.': 'You must input a number greater than 0 into the Number of addresses field.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'You must input a number between 0 and 255 into the Start IP address $1 field.'
+'User IP access list management': 'User IP access list management'
+'The IP address group conflicts with another existing group.': 'The IP address group conflicts with another existing group.'
+'Subscription sections': 'Subscription sections'
+'No records.': 'No records.'
+'You have subscription for all available publications': 'You have subscription for all available publications'
+'Subscription type:': 'Subscription type:'
+'Start:': 'Start:'
+'Start Date': 'Start Date'
+'Sections:': 'Sections:'
+'Publication:': 'Publication:'
+'Paid days': 'Paid days'
+'Paid Days:': 'Paid Days:'
+Paid: Paid
+'No subscriptions': 'No subscriptions'
+'Languages:': 'Languages:'
+'Edit all sections': 'Edit all sections'
+'Days:': 'Days:'
+'Days must be number': 'Days must be number'
+Any: Any
+'Add section': 'Add section'
+saved: saved
+removed: removed
+deleted: deleted
+deactivated: deactivated
+activated: activated
+'Value is required and cant be empty': 'Value is required and cant be empty'
+'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
+'That $1 already exists, please choose a different $2.': 'That $1 already exists, please choose a different $2.'
+'Subscriptions exist for all available publications.': 'Subscriptions exist for all available publications.'
+'Subscription IP Addresses': 'Subscription IP Addresses'
+'Subscription $1': 'Subscription $1'
+'Subscriber saved.': 'Subscriber saved.'
+'Subscriber management': 'Subscriber management'
+'Subscriber deleted.': 'Subscriber deleted.'
+'Start IP': 'Start IP'
+'Select country': 'Select country'
+'Number of addresses': 'Number of addresses'
+'Number of Addressses': 'Number of Addressses'
+'No IP Addresses': 'No IP Addresses'
+'IP Address added allready': 'IP Address added allready'
+'IP Address $1': 'IP Address $1'
+'IP Access': 'IP Access'
+'Full Name': 'Full Name'
+'Edit subscriptions': 'Edit subscriptions'
+'Edit subscriber $1': 'Edit subscriber $1'
+E-Mail: E-Mail
+'Delete subscriber $1': 'Delete subscriber $1'
+'Creation Date': 'Creation Date'
+'Change subscriber information': 'Change subscriber information'
+'Add new IP address': 'Add new IP address'
+'Add new IP Address': 'Add new IP Address'
+'Account Name': 'Account Name'
+'%value% must be greater than %min%': '%value% must be greater than %min%'
+'%value% is not a valid IP Address': '%value% is not a valid IP Address'
+'Regardless of the language': 'Regardless of the language'
+'Individual languages': 'Individual languages'
+'Add sections now': 'Add sections now'
+'Add sections later': 'Add sections later'
+'Subscription Type': 'Subscription Type'
+'Paid (payment will be confirmed later)': 'Paid (payment will be confirmed later)'
+'Paid (confirm payment now)': 'Paid (confirm payment now)'

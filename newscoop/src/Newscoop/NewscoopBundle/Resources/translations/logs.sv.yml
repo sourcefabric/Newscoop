@@ -1,11 +1,11 @@
-show: null
-hide: null
-Title: null
-'Resource Type:': null
-'Resource Type': null
-Resource: null
-Diff: null
-'Broken data': null
-'Action Type:': null
-'No logs.': null
-User: Användare
+show: show
+hide: hide
+Title: Title
+'Resource Type:': 'Resource Type:'
+'Resource Type': 'Resource Type'
+Resource: Resource
+Diff: Diff
+'Broken data': 'Broken data'
+'Action Type:': 'Action Type:'
+'No logs.': 'No logs.'
+User: User

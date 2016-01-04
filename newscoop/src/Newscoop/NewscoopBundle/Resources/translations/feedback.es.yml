@@ -1,29 +1,29 @@
-'No attachment': 'Sin adjunto'
-'You are about to permanently delete multiple messages.': 'Está a punto de eliminar múltiples mensajes de forma permanente.'
-'You are about to permanently delete a message.': 'Está a punto de eliminar un mensaje de forma permanente.'
-'Are you sure you want to do it?': '¿Está seguro de que quiere hacerlo?'
-Approve: Aprobar
-Approved.: Aprobado
-at: en
-Attachment: Adjunto
-'Ban/Unban user': 'Bloquear/desbloquear usuario'
-'Change selected messages status': 'Cambiar los mensajes de estatus seleccionados'
-Deleted: Eliminado
-'Full article': 'Artículo completo'
-Message: Mensaje
-'Message deleted.': 'Mensaje eliminado.'
-'Messages deleted.': 'Mensajes eliminados.'
-'Messages status change to $1.': 'El estatus del mensaje cambió a $1.'
-'Message status change to $1.': 'Estatus del mensaje cambió a $1.'
-'Messages updated.': 'Mensajes actualizados'
-'Message updated.': 'Mensaje actualizado.'
-Processed: Procesado
-Reply: Responder
-'Reply to message': 'Responder a mensaje'
-Star: Ponderación
-Starred: Ponderado
-'Unable to reach Newscoop. Please check your internet connection.': 'No se pudo conectar a Newscoop. Por favor, verifica tu conexión a Internet.'
-'With document attachment': 'Con documento adjunto'
-'With image attachment': 'Con imagen adjunta'
-'With no attachment': 'Sin adjunto'
-'Feedback Messages': 'Mensajes de retroalimentación'
+'No attachment': 'No attachment'
+'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
+'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
+'Are you sure you want to do it?': 'Are you sure you want to do it?'
+Approve: Approve
+Approved.: Approved.
+at: at
+Attachment: Attachment
+'Ban/Unban user': 'Ban/Unban user'
+'Change selected messages status': 'Change selected messages status'
+Deleted: Deleted
+'Full article': 'Full article'
+Message: Message
+'Message deleted.': 'Message deleted.'
+'Messages deleted.': 'Messages deleted.'
+'Messages status change to $1.': 'Messages status change to $1.'
+'Message status change to $1.': 'Message status change to $1.'
+'Messages updated.': 'Messages updated.'
+'Message updated.': 'Message updated.'
+Processed: Processed
+Reply: Reply
+'Reply to message': 'Reply to message'
+Star: Star
+Starred: Starred
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+'With document attachment': 'With document attachment'
+'With image attachment': 'With image attachment'
+'With no attachment': 'With no attachment'
+'Feedback Messages': 'Feedback Messages'

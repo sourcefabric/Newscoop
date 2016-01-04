@@ -1,29 +1,29 @@
-'No attachment': 'Nincs melléklet'
-'You are about to permanently delete multiple messages.': 'Több üzenet végleges törlésére készülsz.'
-'You are about to permanently delete a message.': 'Egy üzenet végleges törlésére készülsz.'
-'Are you sure you want to do it?': 'Biztosan ezt akarod tenni?'
-Approve: Jóváhagyás
-Approved.: Jóváhagyva.
-at: null
-Attachment: Csatolmány
-'Ban/Unban user': 'Felhasználó kitiltása/kitiltásának megszüntetése'
-'Change selected messages status': 'A kijelölt üzenetek állapotának módosítása'
-Deleted: Törölve
-'Full article': 'Teljes cikk'
-Message: Üzenet
-'Message deleted.': 'Az üzenet törlése megtörtént.'
-'Messages deleted.': 'Az üzenetek törlése megtörtént.'
-'Messages status change to $1.': 'Az üzenetek állapotának módosítása erre: $1.'
-'Message status change to $1.': 'Az üzenet állapotának módosítása erre: $1.'
-'Messages updated.': 'Az üzenetek frissítése megtörtént.'
-'Message updated.': 'Az üzenet frissítése megtörtént.'
-Processed: Feldolgozva
-Reply: Válasz
-'Reply to message': 'Válasz az üzenetre'
-Star: Csillagozás
-Starred: Csillagozva
-'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
-'With document attachment': Dokumentummelléklettel
-'With image attachment': Képmelléklettel
-'With no attachment': 'Melléklet nélkül'
-'Feedback Messages': 'Visszajelző üzenetek'
+'No attachment': 'No attachment'
+'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
+'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
+'Are you sure you want to do it?': 'Are you sure you want to do it?'
+Approve: Approve
+Approved.: Approved.
+at: at
+Attachment: Attachment
+'Ban/Unban user': 'Ban/Unban user'
+'Change selected messages status': 'Change selected messages status'
+Deleted: Deleted
+'Full article': 'Full article'
+Message: Message
+'Message deleted.': 'Message deleted.'
+'Messages deleted.': 'Messages deleted.'
+'Messages status change to $1.': 'Messages status change to $1.'
+'Message status change to $1.': 'Message status change to $1.'
+'Messages updated.': 'Messages updated.'
+'Message updated.': 'Message updated.'
+Processed: Processed
+Reply: Reply
+'Reply to message': 'Reply to message'
+Star: Star
+Starred: Starred
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+'With document attachment': 'With document attachment'
+'With image attachment': 'With image attachment'
+'With no attachment': 'With no attachment'
+'Feedback Messages': 'Feedback Messages'

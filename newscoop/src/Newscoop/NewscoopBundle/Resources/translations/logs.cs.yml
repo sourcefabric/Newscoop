@@ -1,11 +1,11 @@
-show: zobrazit
-hide: skrýt
-Title: Název
-'Resource Type:': 'Typ zdroje:'
-'Resource Type': 'Typ zdroje'
-Resource: Zdroj
+show: show
+hide: hide
+Title: Title
+'Resource Type:': 'Resource Type:'
+'Resource Type': 'Resource Type'
+Resource: Resource
 Diff: Diff
-'Broken data': 'Nesouvislá data'
-'Action Type:': 'Typ akce:'
-'No logs.': 'Žádné záznamy.'
-User: Uživatel
+'Broken data': 'Broken data'
+'Action Type:': 'Action Type:'
+'No logs.': 'No logs.'
+User: User

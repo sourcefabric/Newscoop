@@ -1,120 +1,120 @@
-'No attachment': 'Ingen vedhæfning'
-at: på
-'With no attachment': 'Uden vedhæftninger'
-'With image attachment': 'Med vedhæftet billede'
-'With document attachment': 'Med vedhæftet dokument'
-'Unable to reach Newscoop. Please check your internet connection.': 'Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.'
-Starred: Stjernemarkeret
-Star: Stjernemarkér
-'Showing _START_ to _END_ of _TOTAL_ entries': 'VISER _START_ til _END_ af _TOTAL_ opslag'
-'Reply to message': 'Send svar'
-Reply: Svar
-Processed: Behandlet
-'No records found.': 'Ingen opslag.'
-'No entries to show': 'Intet at vise'
-'Messages updated.': 'Beskeder opdateret.'
-'Messages status change to $1.': 'Beskeders status ændret til $1.'
-'Messages deleted.': 'Beskeder slettet.'
-'Message updated.': 'Besked opdateret.'
-'Message status change to $1.': 'Beskeds status ændret til $1.'
-'Message deleted.': 'Besked slettet.'
-Message: Besked
-Last: Sidste
-'Full article': 'Fuld artikel'
-First: Første
-'Feedback Messages': 'Feedback beskeder'
-'Display _MENU_ records': 'Vis _MENU_ opslag'
-Deleted: Slettet
-'Change selected messages status': 'Skift status for valgte beskeder'
-Attachment: Vedhæftning
-Approved.: Godkendt.
-Approve: Godkend
-Anonymous: Anonym
-' - filtering from _MAX_ records': '- filtreret fra _MAX_ opslag'
-'You are about to permanently delete multiple messages.': 'Du er ved at slette flere meddelelser permanent.'
-'You are about to permanently delete a message.': 'Du er ved at slette nen meddelelse permanent.'
-User: Bruger
-None: Ingen
-'Coming from': Fra
-'Ban/Unban user': 'Bloker/afbloker bruger'
-Ip: IP
-'Bans can be applied to a users name, email address or IP address.': 'Du kan blokere et brugernavn, en email adresse eller en IP adresse.'
-'You are about to permanently delete multiple comments.': 'Du er ved at slette adskillige kommentarer permanent.'
-'You are about to permanently delete a comment.': 'Du er ved at slette en kommentar permanent.'
+'No attachment': 'No attachment'
+at: at
+'With no attachment': 'With no attachment'
+'With image attachment': 'With image attachment'
+'With document attachment': 'With document attachment'
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+Starred: Starred
+Star: Star
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Reply to message': 'Reply to message'
+Reply: Reply
+Processed: Processed
+'No records found.': 'No records found.'
+'No entries to show': 'No entries to show'
+'Messages updated.': 'Messages updated.'
+'Messages status change to $1.': 'Messages status change to $1.'
+'Messages deleted.': 'Messages deleted.'
+'Message updated.': 'Message updated.'
+'Message status change to $1.': 'Message status change to $1.'
+'Message deleted.': 'Message deleted.'
+Message: Message
+Last: Last
+'Full article': 'Full article'
+First: First
+'Feedback Messages': 'Feedback Messages'
+'Display _MENU_ records': 'Display _MENU_ records'
+Deleted: Deleted
+'Change selected messages status': 'Change selected messages status'
+Attachment: Attachment
+Approved.: Approved.
+Approve: Approve
+Anonymous: Anonymous
+' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
+'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
+User: User
+None: None
+'Coming from': 'Coming from'
+'Ban/Unban user': 'Ban/Unban user'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
+'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
+'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
 Website: Website
-'Value is not $1 characters long': 'Værdien er ikke $1 tegn lang'
-Username: Brugernavn
-'User id': 'Bruger id'
-'User ban settings': 'Indstillinger for blokering af brugere'
-'Update comment': 'Opdater kommentar'
-Unrecommended: 'Ikke anbefalet'
-Unrecommend: 'Anbefal ikke'
-'Subject is not $1 characters long': 'Emnet er ikke $1 tegn langt'
-'Sort by Thread order': 'Sorter efter tråd'
-'Show parent comment': 'Vis ovenstående kommentar'
-'Show commenter details': 'Vis info om debattør'
-'Show commenter': 'Vis debattør'
-'Show comment user details': 'Vis bruger info for kommentar'
-'Show comment user': 'Vis bruger for kommentar'
-'Show comment details': 'Vis info om kommentar'
-'Select status': 'Vælg status'
-'Search Type': 'Søg type'
-'Reply to comment': 'Svar på komentaren'
-Recommended: Anbefalet
-Recommend: Anbefalet
-'Quick edit': 'Hurtig redigering'
-Parent: Forælder
+'Value is not $1 characters long': 'Value is not $1 characters long'
+Username: Username
+'User id': 'User id'
+'User ban settings': 'User ban settings'
+'Update comment': 'Update comment'
+Unrecommended: Unrecommended
+Unrecommend: Unrecommend
+'Subject is not $1 characters long': 'Subject is not $1 characters long'
+'Sort by Thread order': 'Sort by Thread order'
+'Show parent comment': 'Show parent comment'
+'Show commenter details': 'Show commenter details'
+'Show commenter': 'Show commenter'
+'Show comment user details': 'Show comment user details'
+'Show comment user': 'Show comment user'
+'Show comment details': 'Show comment details'
+'Select status': 'Select status'
+'Search Type': 'Search Type'
+'Reply to comment': 'Reply to comment'
+Recommended: Recommended
+Recommend: Recommend
+'Quick edit': 'Quick edit'
+Parent: Parent
 ID: ID
-'Go to edit article': 'Rediger artikel'
+'Go to edit article': 'Go to edit article'
 Forum: Forum
-'For Column': 'Til kolonne'
+'For Column': 'For Column'
 Email: Email
-'Edit acceptance criteria': 'Rediger godkendelseskriterier'
+'Edit acceptance criteria': 'Edit acceptance criteria'
 E-mail: E-mail
-'Delete all comments?': 'Slet alle kommentarer?'
-'Date Created': Oprettelsesdato
-'Comments updated.': 'Kommentarer opdateret'
-'Comments status change to $1.': 'Kommentar status ændret til $1'
-'Comments deleted.': 'Kommentarer slettet'
-'Commenter $1 saved.': 'Debattør $1 gemt.'
-'Commenter $1 deleted.': 'Debattør $1 slettet.'
-Commenter: Debattør
-'Comment updated.': 'Kommentaren er opdateret.'
-'Comment status change to $1.': 'Kommentar status ændret til $1.'
-'Comment id': 'Kommentar id'
-'Comment deleted.': 'Kommentar slettet.'
-'Comment delete by $1 from the article $2 ($3)': '$1 har slettet kommentar fra artiklen $2 ($3)'
-'Comment Acceptance': Kommentargodkendelse
-'Comment $4 by $1 in the article $2 ($3)': 'Kommentar $4 af $1 i artiklen $2 ($3)'
-'Comment $1 saved.': 'Kommentar $1 gemt.'
-Column: Kolonne
-'Change subscriber information': 'Ret abonnent information'
-'Ban for commenter $1 saved.': 'Blokering af debattør $1 blev gemt.'
-Ban: Bloker
-'Are you sure you want to do it?': 'Er du sikker på det er det du vil?'
-'Add rating': 'Tilføj bedømmelse'
-'Add new comment commenter': 'Tilføj debattør'
-'Add new comment': 'Tilføj kommentar'
-'Add new acceptance criteria': 'Tilføj godkendelseskriterie'
-'Acceptance $1 saved.': 'Godkendelse $1 gemt.'
-'Acceptance $1 deleted.': 'Godkendelse $1 slettet.'
+'Delete all comments?': 'Delete all comments?'
+'Date Created': 'Date Created'
+'Comments updated.': 'Comments updated.'
+'Comments status change to $1.': 'Comments status change to $1.'
+'Comments deleted.': 'Comments deleted.'
+'Commenter $1 saved.': 'Commenter $1 saved.'
+'Commenter $1 deleted.': 'Commenter $1 deleted.'
+Commenter: Commenter
+'Comment updated.': 'Comment updated.'
+'Comment status change to $1.': 'Comment status change to $1.'
+'Comment id': 'Comment id'
+'Comment deleted.': 'Comment deleted.'
+'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
+'Comment Acceptance': 'Comment Acceptance'
+'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
+'Comment $1 saved.': 'Comment $1 saved.'
+Column: Column
+'Change subscriber information': 'Change subscriber information'
+'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
+Ban: Ban
+'Are you sure you want to do it?': 'Are you sure you want to do it?'
+'Add rating': 'Add rating'
+'Add new comment commenter': 'Add new comment commenter'
+'Add new comment': 'Add new comment'
+'Add new acceptance criteria': 'Add new acceptance criteria'
+'Acceptance $1 saved.': 'Acceptance $1 saved.'
+'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
 editorial:
     alert:
-        toolong: 'Beskedden er for lang.'
-        added: 'Kommentaren blev tilføjet.'
-        edited: 'Kommentaren blev opdateret.'
-        resolved: null
-        deleted: 'Kommentaren blev slettet.'
+        toolong: 'Message is too long.'
+        added: 'Comment has been successfully added.'
+        edited: 'Comment has been successfully edited.'
+        resolved: 'Comment has been successfully resolved.'
+        deleted: 'Comment has been successfully deleted.'
     btn:
         send: Send
-        cancel: Annullér
-        resolve: null
-        save: Gem
-        edit: Rediger
-        delete: Slet
-        reply: Svar
+        cancel: Cancel
+        resolve: Resolve
+        save: Save
+        edit: Edit
+        delete: Delete
+        reply: Reply
     label:
-        title: 'Redaktionelle kommentar'
-        post: 'Skriv en ny kommentar'
-        reply: Svar...
-        nocomments: 'Ingen kommentarer endnu.'
+        title: 'Editorial Comments'
+        post: 'Post a new comment'
+        reply: Reply...
+        nocomments: 'No comments yet.'

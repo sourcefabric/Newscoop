@@ -1,16 +1,16 @@
-saved: mentve
-deleted: törölve
-'Subscribed sections: $1': 'Előfizetett rovatok: $1'
-'Start Date': 'Kezdő dátum'
-'Select sections for subscribing': 'Rovatok kiválasztása az előfizetéshez'
-'Sections saved': 'A rovatok mentése megtörtént'
-'Section $1': '$1 rovat'
-'No sections to edit': 'Nincsenek szerkesztendő rovatok'
-'Edit section': 'Rovat szerkesztése'
-'Edit all sections': 'Az összes rovat szerkesztése'
-'Add new subscription section': 'Új előfizetéses rovat hozzáadása'
-'Add new section': 'Új rovat hozzáadása'
-'Regardless of the language': 'A nyelvtől függetlenül'
-'Individual languages': Nyelvek
-'All languages': 'Minden nyelv'
-'Paid Days': 'Fizetett napok'
+saved: saved
+deleted: deleted
+'Subscribed sections: $1': 'Subscribed sections: $1'
+'Start Date': 'Start Date'
+'Select sections for subscribing': 'Select sections for subscribing'
+'Sections saved': 'Sections saved'
+'Section $1': 'Section $1'
+'No sections to edit': 'No sections to edit'
+'Edit section': 'Edit section'
+'Edit all sections': 'Edit all sections'
+'Add new subscription section': 'Add new subscription section'
+'Add new section': 'Add new section'
+'Regardless of the language': 'Regardless of the language'
+'Individual languages': 'Individual languages'
+'All languages': 'All languages'
+'Paid Days': 'Paid Days'

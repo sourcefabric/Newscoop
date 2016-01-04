@@ -1,120 +1,120 @@
-'No attachment': null
-at: no
-'With no attachment': null
-'With image attachment': null
-'With document attachment': null
-'Unable to reach Newscoop. Please check your internet connection.': 'Não foi possivel fazer conexão com Newscoop. Por favor verifique a sua conexão com internet.'
-Starred: null
-Star: null
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostrando _START_ a _END_ de _TOTAL_ inscrições'
-'Reply to message': null
-Reply: Responder
-Processed: null
-'No records found.': 'Nenhum dado encontrado'
-'No entries to show': 'Não há registros para mostrar'
-'Messages updated.': null
-'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
-'Message status change to $1.': null
-'Message deleted.': null
-Message: null
-Last: Ultimo
-'Full article': 'Artigo inteiro'
-First: Primeiro
-'Feedback Messages': null
-'Display _MENU_ records': Mostrar_MENU_registros
-Deleted: Removido
-'Change selected messages status': null
-Attachment: null
-Approved.: null
-Approve: null
-Anonymous: null
-' - filtering from _MAX_ records': '- filtrando de _MAX_ registros'
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
-User: Utilizador
-None: Nenhum
-'Coming from': null
-'Ban/Unban user': null
+'No attachment': 'No attachment'
+at: at
+'With no attachment': 'With no attachment'
+'With image attachment': 'With image attachment'
+'With document attachment': 'With document attachment'
+'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
+Starred: Starred
+Star: Star
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Reply to message': 'Reply to message'
+Reply: Reply
+Processed: Processed
+'No records found.': 'No records found.'
+'No entries to show': 'No entries to show'
+'Messages updated.': 'Messages updated.'
+'Messages status change to $1.': 'Messages status change to $1.'
+'Messages deleted.': 'Messages deleted.'
+'Message updated.': 'Message updated.'
+'Message status change to $1.': 'Message status change to $1.'
+'Message deleted.': 'Message deleted.'
+Message: Message
+Last: Last
+'Full article': 'Full article'
+First: First
+'Feedback Messages': 'Feedback Messages'
+'Display _MENU_ records': 'Display _MENU_ records'
+Deleted: Deleted
+'Change selected messages status': 'Change selected messages status'
+Attachment: Attachment
+Approved.: Approved.
+Approve: Approve
+Anonymous: Anonymous
+' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
+'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
+'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
+User: User
+None: None
+'Coming from': 'Coming from'
+'Ban/Unban user': 'Ban/Unban user'
 Ip: Ip
-'Bans can be applied to a users name, email address or IP address.': 'Proibições podem ser aplicadas no nome do usuário, endereço de email, ou endereço IP'
-'You are about to permanently delete multiple comments.': 'Você vai apagar comentários múltiplos para sempre.'
-'You are about to permanently delete a comment.': 'Você vai apagar o comentário para sempre.'
+'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
+'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
+'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
 Website: Website
-'Value is not $1 characters long': 'Valor não tem $1 de caracteres'
-Username: 'Nome de usuário'
-'User id': 'ID do usuário'
-'User ban settings': 'Preferências para proibição de usuários'
-'Update comment': 'Atualizar comentário'
-Unrecommended: 'Não recomendado'
-Unrecommend: 'Não recomendo'
-'Subject is not $1 characters long': 'Assunto não tem $1 caracteres'
-'Sort by Thread order': 'Classificar pela ordem dos tópicos'
-'Show parent comment': 'Mostrar o comentário matriz'
-'Show commenter details': 'Mostrar dados do autor do comentário'
-'Show commenter': 'Mostrar o autor do comentário'
-'Show comment user details': null
-'Show comment user': null
-'Show comment details': 'Mostrar dados do comentário'
-'Select status': 'Selecionar status'
-'Search Type': 'Tipo de busca'
-'Reply to comment': 'Responder ao comentário'
-Recommended: Recomendado
-Recommend: Recomendo
-'Quick edit': 'Edição rápida'
-Parent: Matriz
+'Value is not $1 characters long': 'Value is not $1 characters long'
+Username: Username
+'User id': 'User id'
+'User ban settings': 'User ban settings'
+'Update comment': 'Update comment'
+Unrecommended: Unrecommended
+Unrecommend: Unrecommend
+'Subject is not $1 characters long': 'Subject is not $1 characters long'
+'Sort by Thread order': 'Sort by Thread order'
+'Show parent comment': 'Show parent comment'
+'Show commenter details': 'Show commenter details'
+'Show commenter': 'Show commenter'
+'Show comment user details': 'Show comment user details'
+'Show comment user': 'Show comment user'
+'Show comment details': 'Show comment details'
+'Select status': 'Select status'
+'Search Type': 'Search Type'
+'Reply to comment': 'Reply to comment'
+Recommended: Recommended
+Recommend: Recommend
+'Quick edit': 'Quick edit'
+Parent: Parent
 ID: ID
-'Go to edit article': 'Ir para edição do artigo'
+'Go to edit article': 'Go to edit article'
 Forum: Forum
-'For Column': 'Para a coluna'
+'For Column': 'For Column'
 Email: Email
-'Edit acceptance criteria': 'Editar critérios de aceitação'
+'Edit acceptance criteria': 'Edit acceptance criteria'
 E-mail: E-mail
-'Delete all comments?': 'Remover todos os comentários?'
-'Date Created': 'Data de criação'
-'Comments updated.': 'Comentários atualizados.'
-'Comments status change to $1.': 'Status dos comentários foi modificado para $1.'
-'Comments deleted.': 'Comentários removidos'
-'Commenter $1 saved.': 'Autor do comentário $1 foi salvo.'
-'Commenter $1 deleted.': 'Autor do comentário $1 foi apagado.'
-Commenter: 'Autor do comentário'
-'Comment updated.': 'Comentário atualizado.'
-'Comment status change to $1.': 'Status do comentário modificado para $1.'
-'Comment id': 'ID do comentário'
-'Comment deleted.': 'Comentário removido.'
-'Comment delete by $1 from the article $2 ($3)': '$1 apagou o comentário do artigo $2 ($3)'
-'Comment Acceptance': 'Aceitação do comentário'
-'Comment $4 by $1 in the article $2 ($3)': 'Comentário $4 feito por $1 no artigo $2 ($3)'
-'Comment $1 saved.': 'Comentário $1 foi salvo.'
-Column: Coluna
-'Change subscriber information': 'Modificar dados do assinante'
-'Ban for commenter $1 saved.': 'Proibição para autor do comentário $1 foi salva.'
-Ban: Banir
-'Are you sure you want to do it?': 'Tem certeza que quer fazer isso?'
-'Add rating': 'Dar nota'
-'Add new comment commenter': null
-'Add new comment': 'Adicionar novo comentários'
-'Add new acceptance criteria': 'Adicionar novos critérios de aceitação'
-'Acceptance $1 saved.': null
-'Acceptance $1 deleted.': null
+'Delete all comments?': 'Delete all comments?'
+'Date Created': 'Date Created'
+'Comments updated.': 'Comments updated.'
+'Comments status change to $1.': 'Comments status change to $1.'
+'Comments deleted.': 'Comments deleted.'
+'Commenter $1 saved.': 'Commenter $1 saved.'
+'Commenter $1 deleted.': 'Commenter $1 deleted.'
+Commenter: Commenter
+'Comment updated.': 'Comment updated.'
+'Comment status change to $1.': 'Comment status change to $1.'
+'Comment id': 'Comment id'
+'Comment deleted.': 'Comment deleted.'
+'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
+'Comment Acceptance': 'Comment Acceptance'
+'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
+'Comment $1 saved.': 'Comment $1 saved.'
+Column: Column
+'Change subscriber information': 'Change subscriber information'
+'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
+Ban: Ban
+'Are you sure you want to do it?': 'Are you sure you want to do it?'
+'Add rating': 'Add rating'
+'Add new comment commenter': 'Add new comment commenter'
+'Add new comment': 'Add new comment'
+'Add new acceptance criteria': 'Add new acceptance criteria'
+'Acceptance $1 saved.': 'Acceptance $1 saved.'
+'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Message is too long.'
+        added: 'Comment has been successfully added.'
+        edited: 'Comment has been successfully edited.'
+        resolved: 'Comment has been successfully resolved.'
+        deleted: 'Comment has been successfully deleted.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Send
+        cancel: Cancel
+        resolve: Resolve
+        save: Save
+        edit: Edit
+        delete: Delete
+        reply: Reply
     label:
-        title: null
-        post: null
-        reply: null
-        nocomments: null
+        title: 'Editorial Comments'
+        post: 'Post a new comment'
+        reply: Reply...
+        nocomments: 'No comments yet.'

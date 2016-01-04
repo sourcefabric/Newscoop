@@ -1,107 +1,107 @@
-'No such article type': 'Belə məqalə növü yoxdur'
-'Multi-line Text': 'Çox zolaqlı Mətn'
-'Filter saved': 'Filter saxlandı'
-'Filter not saved': 'Filter saxlanmadı'
-'Not a color': Rəngsiz
-'No such field': 'Belə sahə yoxdur'
-'Color saved': 'Rəng saxlandı'
-'Color not saved': 'Rəng saxlanmadı'
-'Topic created': 'Mövzu yaradıldı'
-'The topic name is already in use by another topic.': 'Təklif edilən mövzu adı başqa mövzuda istifadə edilir.'
-'Complex Date': 'Əlavə Məlumatlı Tarix'
-vertices: zirvələr
-'There was a problem trying to execute the XML RPC function.': 'XML RPC əməliyyatının icrasında problem yarandı.'
-'The Campcaster server configuration is invalid.': 'Airtime server konfiqurasiyası səhvdir.'
-'Pan Map': 'Panoramik Xəritə'
-'Open large map': 'Böyük xəritəni aç'
-'No news available.': 'Hal-hazırda xəbər yoxdur.'
-'Edit Polygon': 'Çoxbucaqlını Dəyiş'
-'Create Polygon': 'Çoxbucaqlı Yarat'
-'Communication error: ': 'Ünsiyyət xətası:'
-'Cant fetch news from $1': 'Xəbər $1-dən(dan) endirilə bilmir'
-Loading...: Yüklənir...
-Version: Versiya
-License: Lisenziya
-Homepage: 'Baş səhifə'
-'Show original map': 'Orijinal xəritəni göstər'
-'The uploaded archive does not contain an valid newscoop plugin.': 'Yüklənmiş arxivdə qüvvədə olan newscoop plaqini yoxdur.'
-Map: Xəritə
-Center: Mərkəz
-Title: Başlıq
-'Invalid security token.': 'Səhv təhlükəsizlik nişanı.'
-'Callback $1 is not callable.': '$1 istiqamətində geriyə zəng mümkün deyil.'
-'Article translated to $4 ($5)': 'Məqalə $4 ($5) dilinə tərcümə edildi'
-'Article status changed from $1 to $2.': 'Məqalə başlığı $1 variantından $2 variantına dəyişdirildi.'
-'Article deleted.': 'Məqalə silindi.'
-'Article created.': 'Məqalə yaradıldı.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Məqalə $4 Məqaləsinə köçürüldü (nəşr $5, maddə $6, bölmə $7).'
-'Article URL': 'Məqalə URL-i'
-'Article Number': 'Məqalə Nömrəsi'
-'Access denied.': 'Giriş qadağandır.'
-'Publish with issue': 'Maddə ilə nümayiş et'
-unknown: naməlum
-Switch: Keç
-Numeric: Rəqəmsal
-'The uploaded file format is unsupported.': 'Yüklənmiş fayl növü dəstəklənmir.'
-'The following fields are mandatory:': 'Növbəti sahələr məcburidir:'
-'Missing value for $1': '$1 üçün dəyər çatmır'
-'Manage Plugins': 'Plaqinləri Quraşdır'
-'* Marked fields are mandatory.': '* ilə işarələnmiş sahələr məcburidir.'
-'$1 is of type $2': '$1 $2-nin növüdür'
-'Invalid resize width/height.': 'Enin/uzunun ölçüsünün dəyişilməsində səhv.'
-'Image type $1 is not supported.': '$1 şəkil növü dəstəklənmir.'
-'The file uploaded is not an image.': 'Yüklənmiş fayl şəkil deyil.'
-'Could not delete record from the database.': 'Yazı məlumat bazasından silinə bilmədi.'
-'template path': 'nümunənin istiqaməti'
-'short names': 'qısa adlar'
-'Unable to fetch image from remote server.': 'Şəkil serverdən endirilə bilmədi.'
-Last: Son
-First: İlk
-'Single-line Text': 'Bir sətirli Mətn'
-'Multi-line Text with WYSIWYG': 'WYSIWYG ilə çox sətirli Mətn'
-'URL $1 is invalid or is not an image.': '$1 URL-i səhvdir və ya şəkil deyil.'
-'URL $1 is not an image.': '$1 URL-i şəkil deyil.'
+'No such article type': 'No such article type'
+'Multi-line Text': 'Multi-line Text'
+'Filter saved': 'Filter saved'
+'Filter not saved': 'Filter not saved'
+'Not a color': 'Not a color'
+'No such field': 'No such field'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
+'Topic created': 'Topic created'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'Complex Date': 'Complex Date'
+vertices: vertices
+'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
+'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
+'Pan Map': 'Pan Map'
+'Open large map': 'Open large map'
+'No news available.': 'No news available.'
+'Edit Polygon': 'Edit Polygon'
+'Create Polygon': 'Create Polygon'
+'Communication error: ': 'Communication error: '
+'Cant fetch news from $1': 'Cant fetch news from $1'
+Loading...: Loading...
+Version: Version
+License: License
+Homepage: Homepage
+'Show original map': 'Show original map'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
+Map: Map
+Center: Center
+Title: Title
+'Invalid security token.': 'Invalid security token.'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
+'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
+'Article URL': 'Article URL'
+'Article Number': 'Article Number'
+'Access denied.': 'Access denied.'
+'Publish with issue': 'Publish with issue'
+unknown: unknown
+Switch: Switch
+Numeric: Numeric
+'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
+'The following fields are mandatory:': 'The following fields are mandatory:'
+'Missing value for $1': 'Missing value for $1'
+'Manage Plugins': 'Manage Plugins'
+'* Marked fields are mandatory.': '* Marked fields are mandatory.'
+'$1 is of type $2': '$1 is of type $2'
+'Invalid resize width/height.': 'Invalid resize width/height.'
+'Image type $1 is not supported.': 'Image type $1 is not supported.'
+'The file uploaded is not an image.': 'The file uploaded is not an image.'
+'Could not delete record from the database.': 'Could not delete record from the database.'
+'template path': 'template path'
+'short names': 'short names'
+'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
+Last: Last
+First: First
+'Single-line Text': 'Single-line Text'
+'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
+'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-    added: 'Sifarişçi əlavə edildi'
-    notfound: 'Sifarişçi tapılmadı'
-    removed: 'Sifarişçi xaric edildi'
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
 publicresources:
-    updated: 'İctimai vəsait yeniləndi'
+    updated: 'Public resources was updated'
 api:
     configure:
-        title: 'API - ictimai vəsaiti konfiqurasiya et'
-        title_content: 'API - ictimai vəsaiti konfiqurasiya et'
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
         tabs:
-            resources: 'İctimai Vəsaitlər'
-            clients: Sifarişçilər
+            resources: 'Public Resources'
+            clients: Clients
         resources:
-            info: 'Mövcud halda bütün vəsaitlər qoruyucu divar tərəfindən qorunur, amma sən istədiyin vəsaitləri ictimailəşdirmək üçün seçə bilərsən.'
-            api_docs: null
-            add_button: 'Sifarişçi Əlavə Et'
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            add_button: 'Add Client'
         clients:
             table:
-                name: 'Sifarişçi adı'
-                id: 'Sifarişçi id-si'
-                secret: Sirr
-                trusted: 'İnanırsınız?'
-                redirect: 'Urisi Başqa Yerə Yönəlt'
-                publication: Nəşr
-                actions: Addımlar
+                name: 'Client name'
+                id: 'Client id'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect Uris'
+                publication: Publication
+                actions: Actions
                 actions_buttons:
-                    remove: 'Xaric Et'
+                    remove: Remove
             actions:
                 remove:
-                    confirm: 'Bu sifarişçini xaric etmək istədiyinə əminsən?'
+                    confirm: 'You sure that you want remove this client?'
         menu: API
     form:
         client:
             label:
-                name: 'Sifarişçin üçün ad seç:'
-                publication: 'Sifarişçin üçün nəşr seç:'
-                redirectUris: 'Sifarişçin üçün yönü dəyişilmiş urisi seç:'
-                trusted: 'İnanırsınız?'
-                save: Saxla
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
+                trusted: 'Trusted?'
+                save: Save
         PublicResources:
             label:
-                routes: 'İctimailəşdirmək üçün vəsait seç:'
-                save: Saxla
+                routes: 'Choose resources to make public:'
+                save: Save

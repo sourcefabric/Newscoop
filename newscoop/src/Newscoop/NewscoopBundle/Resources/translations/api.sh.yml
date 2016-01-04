@@ -1,107 +1,107 @@
-'No such article type': null
-'Multi-line Text': null
-'Filter saved': null
-'Filter not saved': null
-'Not a color': null
-'No such field': null
-'Color saved': null
-'Color not saved': null
-'Topic created': 'Topik kreiran'
-'The topic name is already in use by another topic.': 'Ime za topik je već u upotrebi'
-'Complex Date': 'Složen datum'
-vertices: čvorovi
-'There was a problem trying to execute the XML RPC function.': 'Došlo je do problema pri pokušaju izvršenja XML RPC funkcije'
-'The Campcaster server configuration is invalid.': 'Podešavanja Kempkaster servera su neispravna'
-'Pan Map': 'Pomeraj mapu'
-'Open large map': 'Otvori veliku mapu'
-'No news available.': 'Nema dostupnih vesti'
-'Edit Polygon': 'Uredi poligon'
-'Create Polygon': 'Napravi poligon'
-'Communication error: ': 'Greška u komunikaciji'
-'Cant fetch news from $1': 'Nije moguće preuzeti vesti sa $1'
-Loading...: Učitavanje...
-Version: Verzija
-License: Licenca
-Homepage: 'Početna strana'
-'Show original map': 'Prikaži originalnu mapu'
-'The uploaded archive does not contain an valid newscoop plugin.': 'Arhiva aplouda ne sadrži ispravan Newscoop plagin'
-Map: Mapa
-Center: Centar
-Title: Naslov
-'Invalid security token.': 'Pogrešan sigurnosni token'
+'No such article type': 'No such article type'
+'Multi-line Text': 'Multi-line Text'
+'Filter saved': 'Filter saved'
+'Filter not saved': 'Filter not saved'
+'Not a color': 'Not a color'
+'No such field': 'No such field'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
+'Topic created': 'Topic created'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'Complex Date': 'Complex Date'
+vertices: vertices
+'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
+'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
+'Pan Map': 'Pan Map'
+'Open large map': 'Open large map'
+'No news available.': 'No news available.'
+'Edit Polygon': 'Edit Polygon'
+'Create Polygon': 'Create Polygon'
+'Communication error: ': 'Communication error: '
+'Cant fetch news from $1': 'Cant fetch news from $1'
+Loading...: Loading...
+Version: Version
+License: License
+Homepage: Homepage
+'Show original map': 'Show original map'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
+Map: Map
+Center: Center
+Title: Title
+'Invalid security token.': 'Invalid security token.'
 'Callback $1 is not callable.': 'Callback $1 is not callable.'
-'Article translated to $4 ($5)': 'Tekst je preveden u $4 ($5)'
-'Article status changed from $1 to $2.': 'Status teksta je promenjen iz $1 u $2.'
-'Article deleted.': 'Tekst je obrisan.'
-'Article created.': 'Tekst je napravljen.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Tekst je kopiran u tekst $4 (publikacija $5, izdanje $6, rubrika $7).'
-'Article URL': 'URL teksta'
-'Article Number': 'Broj teksta'
-'Access denied.': 'Pristup zabranjen.'
-'Publish with issue': 'Objavi zajedno sa izdanjem'
-unknown: nepoznato
-Switch: Prekidač
-Numeric: 'Brojačna vrednost'
-'The uploaded file format is unsupported.': 'Format ulpoadovanog fajla nije podržan.'
-'The following fields are mandatory:': 'Sledeća polja su obavezna:'
-'Missing value for $1': 'Nedostaje vrednost za $1'
-'Manage Plugins': 'Upravljanje pluginovima'
-'* Marked fields are mandatory.': 'Polja označena * su obavezna'
-'$1 is of type $2': '$1 je za tip $2'
-'Invalid resize width/height.': 'Neispravne vrednosti za promenu dimenzija širina/visina'
-'Image type $1 is not supported.': 'Tip slike $1 nije podržan'
-'The file uploaded is not an image.': 'Uploadovani fajl nije slika.'
-'Could not delete record from the database.': 'Nije moguće obrisati zapis iz baze.'
-'template path': 'šablonska putanja'
-'short names': 'skraćeni nazivi'
-'Unable to fetch image from remote server.': 'Nije moguće pokupiti sliku sa udaljenog servera.'
-Last: Poslednji
-First: Prvi
-'Single-line Text': Tekst
-'Multi-line Text with WYSIWYG': 'Složen tekst'
-'URL $1 is invalid or is not an image.': 'URL $1 je neispravan ili nije slika'
-'URL $1 is not an image.': 'URL $1 nije slika.'
+'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
+'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
+'Article URL': 'Article URL'
+'Article Number': 'Article Number'
+'Access denied.': 'Access denied.'
+'Publish with issue': 'Publish with issue'
+unknown: unknown
+Switch: Switch
+Numeric: Numeric
+'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
+'The following fields are mandatory:': 'The following fields are mandatory:'
+'Missing value for $1': 'Missing value for $1'
+'Manage Plugins': 'Manage Plugins'
+'* Marked fields are mandatory.': '* Marked fields are mandatory.'
+'$1 is of type $2': '$1 is of type $2'
+'Invalid resize width/height.': 'Invalid resize width/height.'
+'Image type $1 is not supported.': 'Image type $1 is not supported.'
+'The file uploaded is not an image.': 'The file uploaded is not an image.'
+'Could not delete record from the database.': 'Could not delete record from the database.'
+'template path': 'template path'
+'short names': 'short names'
+'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
+Last: Last
+First: First
+'Single-line Text': 'Single-line Text'
+'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
+'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
 publicresources:
-    updated: null
+    updated: 'Public resources was updated'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
         tabs:
-            resources: null
-            clients: Klijenti
+            resources: 'Public Resources'
+            clients: Clients
         resources:
-            info: null
-            api_docs: null
-            add_button: 'Dodaj klijenta'
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            add_button: 'Add Client'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: null
-                redirect: null
-                publication: Publikacija
-                actions: Akcije
+                name: 'Client name'
+                id: 'Client id'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect Uris'
+                publication: Publication
+                actions: Actions
                 actions_buttons:
-                    remove: Ukloni
+                    remove: Remove
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'You sure that you want remove this client?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
-                trusted: null
-                save: Snimi
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
+                trusted: 'Trusted?'
+                save: Save
         PublicResources:
             label:
-                routes: null
-                save: Snimi
+                routes: 'Choose resources to make public:'
+                save: Save

@@ -2,10 +2,10 @@
 'Multi-line Text': 'Multi-line Text'
 'Filter saved': 'Filter saved'
 'Filter not saved': 'Filter not saved'
-'Not a color': 'Not a colour'
+'Not a color': 'Not a color'
 'No such field': 'No such field'
-'Color saved': 'Colour saved'
-'Color not saved': 'Colour not saved'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
 'Topic created': 'Topic created'
 'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
 'Complex Date': 'Complex Date'
@@ -18,13 +18,13 @@ vertices: vertices
 'Edit Polygon': 'Edit Polygon'
 'Create Polygon': 'Create Polygon'
 'Communication error: ': 'Communication error: '
-'Cant fetch news from $1': 'Can not fetch news from $1'
+'Cant fetch news from $1': 'Cant fetch news from $1'
 Loading...: Loading...
 Version: Version
 License: License
 Homepage: Homepage
 'Show original map': 'Show original map'
-'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain a valid Newscoop plugin.'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
 Map: Map
 Center: Center
 Title: Title
@@ -66,7 +66,7 @@ client:
     notfound: 'Client not found'
     removed: 'Client was removed'
 publicresources:
-    updated: 'Public resources were updated'
+    updated: 'Public resources was updated'
 api:
     configure:
         title: 'Configure API - public resources'
@@ -75,30 +75,30 @@ api:
             resources: 'Public Resources'
             clients: Clients
         resources:
-            info: 'By default all resources are protected by a firewall, but you can choose resources to make them public for everyone.'
-            api_docs: 'Full documentation of the API can be found on your instance (and it''s public)'
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
             add_button: 'Add Client'
         clients:
             table:
                 name: 'Client name'
-                id: 'Client ID'
+                id: 'Client id'
                 secret: Secret
                 trusted: 'Trusted?'
-                redirect: 'Redirect URIs'
+                redirect: 'Redirect Uris'
                 publication: Publication
                 actions: Actions
                 actions_buttons:
                     remove: Remove
             actions:
                 remove:
-                    confirm: 'Are you sure that you want to remove this client?'
+                    confirm: 'You sure that you want remove this client?'
         menu: API
     form:
         client:
             label:
                 name: 'Choose name for your client:'
                 publication: 'Choose publication for your client:'
-                redirectUris: 'Choose redirect URIs for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
                 trusted: 'Trusted?'
                 save: Save
         PublicResources:

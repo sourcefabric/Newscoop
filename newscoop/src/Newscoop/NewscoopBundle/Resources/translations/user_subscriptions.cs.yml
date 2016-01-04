@@ -1,67 +1,67 @@
-third: třeti
-second: druhý
-forth: čtvrtý
-first: první
-'You must input a number greater than 0 into the Number of addresses field.': 'Musíte vložit číslo větší než 0 do políčka Počet adres'
-'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Musíte vložit číslo mezi 0 a 255 do políčka Start IP adresa $1 '
+third: third
+second: second
+forth: forth
+first: first
+'You must input a number greater than 0 into the Number of addresses field.': 'You must input a number greater than 0 into the Number of addresses field.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'You must input a number between 0 and 255 into the Start IP address $1 field.'
 'User IP access list management': 'User IP access list management'
-'The IP address group conflicts with another existing group.': 'Adresa IP skupiny je v rozporu s jinou existující skupinou.'
-'Subscription sections': 'Sekce předplatného'
-'No records.': 'Žádný záznam'
-'You have subscription for all available publications': 'Máte předplatné pro všechny dostupné publikace'
-'Subscription type:': 'Typ předplatného:'
-'Start:': 'Začátek:'
-'Start Date': 'Počáteční datum'
-'Sections:': 'Sekce:'
-'Publication:': 'Publikace:'
-'Paid days': 'Placené dny'
-'Paid Days:': 'Placené dny:'
-Paid: Zaplaceno
-'No subscriptions': 'Žádné předplatné'
-'Languages:': 'Jazyky:'
-'Edit all sections': 'Upravit všechny sekce'
-'Days:': 'Dny:'
-'Days must be number': 'Dny musejí být číslo'
-Any: Jakékoliv
-'Add section': 'Přidat sekci'
-saved: Uloženo
-removed: odstraněno
-deleted: vymazané
-deactivated: deaktivováno
-activated: aktivováno
-'Value is required and cant be empty': 'Hodnota je požadována a nemůže zůstat nevyplněna'
-'That user name already exists, please choose a different login name.': 'Toto uživatlské jméno již existuje, prosím vyberte si jiné přihlašovací jméno.'
-'That $1 already exists, please choose a different $2.': ' $1 již existuje, prosím vyberte si jiné  $2.'
-'Subscriptions exist for all available publications.': 'Předplatné existuje pro všechny dostupné publikace.'
-'Subscription IP Addresses': 'IP adresy předplatného'
-'Subscription $1': 'Předplatné $1'
-'Subscriber saved.': 'Předplatitel uložen.'
-'Subscriber management': 'Management předplatitele'
-'Subscriber deleted.': 'Předplatitel vymazán.'
+'The IP address group conflicts with another existing group.': 'The IP address group conflicts with another existing group.'
+'Subscription sections': 'Subscription sections'
+'No records.': 'No records.'
+'You have subscription for all available publications': 'You have subscription for all available publications'
+'Subscription type:': 'Subscription type:'
+'Start:': 'Start:'
+'Start Date': 'Start Date'
+'Sections:': 'Sections:'
+'Publication:': 'Publication:'
+'Paid days': 'Paid days'
+'Paid Days:': 'Paid Days:'
+Paid: Paid
+'No subscriptions': 'No subscriptions'
+'Languages:': 'Languages:'
+'Edit all sections': 'Edit all sections'
+'Days:': 'Days:'
+'Days must be number': 'Days must be number'
+Any: Any
+'Add section': 'Add section'
+saved: saved
+removed: removed
+deleted: deleted
+deactivated: deactivated
+activated: activated
+'Value is required and cant be empty': 'Value is required and cant be empty'
+'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
+'That $1 already exists, please choose a different $2.': 'That $1 already exists, please choose a different $2.'
+'Subscriptions exist for all available publications.': 'Subscriptions exist for all available publications.'
+'Subscription IP Addresses': 'Subscription IP Addresses'
+'Subscription $1': 'Subscription $1'
+'Subscriber saved.': 'Subscriber saved.'
+'Subscriber management': 'Subscriber management'
+'Subscriber deleted.': 'Subscriber deleted.'
 'Start IP': 'Start IP'
-'Select country': 'Vyberte zemi'
-'Number of addresses': 'Počet adres'
-'Number of Addressses': 'Počet adres'
-'No IP Addresses': 'Žádné IP adresy'
-'IP Address added allready': 'IP adresa již přidána'
-'IP Address $1': 'IP adresa $1'
-'IP Access': 'IP přístup'
-'Full Name': 'Celé jméno'
-'Edit subscriptions': 'Editovat předplatné'
-'Edit subscriber $1': 'Upravit předplatitele $1'
-E-Mail: Email
-'Delete subscriber $1': 'Vymazat předplatitele $1'
-'Creation Date': 'Datum vytoření'
-'Change subscriber information': 'Změna informací registrovaného'
-'Add new IP address': 'Přidat novou IP adresu'
-'Add new IP Address': 'Přidat novou IP adresu'
-'Account Name': null
-'%value% must be greater than %min%': '%hodnota% musí být větší než %min%'
-'%value% is not a valid IP Address': '%hodnota% není platná IP adresa'
-'Regardless of the language': 'Nehledě na jazyk'
-'Individual languages': 'Jednotlivé jazyky'
-'Add sections now': 'Přidat rubriku nyní'
-'Add sections later': 'Přidat rubriku později'
-'Subscription Type': 'Typ předplatného'
-'Paid (payment will be confirmed later)': 'Zaplaceno (platba bude potvrzena později)'
-'Paid (confirm payment now)': 'Zaplaceno (potvrďte nyní)'
+'Select country': 'Select country'
+'Number of addresses': 'Number of addresses'
+'Number of Addressses': 'Number of Addressses'
+'No IP Addresses': 'No IP Addresses'
+'IP Address added allready': 'IP Address added allready'
+'IP Address $1': 'IP Address $1'
+'IP Access': 'IP Access'
+'Full Name': 'Full Name'
+'Edit subscriptions': 'Edit subscriptions'
+'Edit subscriber $1': 'Edit subscriber $1'
+E-Mail: E-Mail
+'Delete subscriber $1': 'Delete subscriber $1'
+'Creation Date': 'Creation Date'
+'Change subscriber information': 'Change subscriber information'
+'Add new IP address': 'Add new IP address'
+'Add new IP Address': 'Add new IP Address'
+'Account Name': 'Account Name'
+'%value% must be greater than %min%': '%value% must be greater than %min%'
+'%value% is not a valid IP Address': '%value% is not a valid IP Address'
+'Regardless of the language': 'Regardless of the language'
+'Individual languages': 'Individual languages'
+'Add sections now': 'Add sections now'
+'Add sections later': 'Add sections later'
+'Subscription Type': 'Subscription Type'
+'Paid (payment will be confirmed later)': 'Paid (payment will be confirmed later)'
+'Paid (confirm payment now)': 'Paid (confirm payment now)'

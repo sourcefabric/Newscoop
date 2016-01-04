@@ -1,81 +1,81 @@
-get: null
+get: get
 Soundcloud: SoundCloud
-Templates: Šabloni
-'Feedback Messages': 'Poruke sa povratnom informacijom'
-'Article Playlists': 'Plejliste tekstova'
-'Check all': 'Označi sve'
-view: pogledaj
+Templates: Templates
+'Feedback Messages': 'Feedback Messages'
+'Article Playlists': 'Article Playlists'
+'Check all': 'Check all'
+view: view
 undo/redo: undo/redo
-underline: podvučeno
-translate: prevedi
-'text direction': 'pravac teksta'
-'text alignment': 'poravnavanje teksta'
-table: tabela
-superscript: 'tekst u eksponentu'
-subscript: 'tekst u indeksu'
-subhead: podnaslov
-strikethrough: precrtano
-statusbar: 'statusna linija'
-'spell checker enabled': 'provera pravopisa omogućena'
-'source view': 'pregled izvora'
-publish: objavi
-notify: obavesti
-moderate: uređuj
-manage: upravljaj
-'list number': 'brojevna lista'
-'list bullet': 'lista stavki'
+underline: underline
+translate: translate
+'text direction': 'text direction'
+'text alignment': 'text alignment'
+table: table
+superscript: superscript
+subscript: subscript
+subhead: subhead
+strikethrough: strikethrough
+statusbar: statusbar
+'spell checker enabled': 'spell checker enabled'
+'source view': 'source view'
+publish: publish
+notify: notify
+moderate: moderate
+manage: manage
+'list number': 'list number'
+'list bullet': 'list bullet'
 link: link
-italic: italik
-indent: uvlačenje
-image: slika
-'horizontal rule': 'vodoravni lenjir'
-handle: rukovanje
-guest: gost
-'font size': 'veličina pisma'
-'font face': 'vrsta pisma'
-'font color': 'boja pisma'
-find/replace: pronađi/zameni
-enlarge: uvećaj
-enable: omogući
-edit: uredi
-delete: obriši
-copy/cut/paste: kopiraj/iseci/zalepi
-clear: očisti
-'character map': 'mapa karaktera'
-bold: crno
-attach: prikači
-'any resource': 'bilo koji resurs'
+italic: italic
+indent: indent
+image: image
+'horizontal rule': 'horizontal rule'
+handle: handle
+guest: guest
+'font size': 'font size'
+'font face': 'font face'
+'font color': 'font color'
+find/replace: find/replace
+enlarge: enlarge
+enable: enable
+edit: edit
+delete: delete
+copy/cut/paste: copy/cut/paste
+clear: clear
+'character map': 'character map'
+bold: bold
+attach: attach
+'any resource': 'any resource'
 admin: admin
-add: dodaj
-'You cant deny yourself to manage $1': 'Ne možete osporiti sebi upravljanje $1'
-'You are not allowed to $1 $2.': 'Nemate pravo da $1 $2.'
-'User type saved.': 'Tip korisnika snimljen.'
-'User type deleted.': 'Tip korisnika obrisan.'
-'User type added.': 'Tip korisnika dodat.'
-'User Groups': 'Grupe korisnika'
-Themes: Teme
-'That type name already exists, please choose a different name.': 'Takvo ime tipa već postoji, izaberite neko drugo'
-System: sistem
-Structure: Struktura
-'Search Indexer': 'Indekser pretrage'
-'Rich-Text Editor Preferences': 'Podešavanja editora teksta'
+add: add
+'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
+'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
+'User type saved.': 'User type saved.'
+'User type deleted.': 'User type deleted.'
+'User type added.': 'User type added.'
+'User Groups': 'User Groups'
+Themes: Themes
+'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+System: System
+Structure: Structure
+'Search Indexer': 'Search Indexer'
+'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
 ReCaptcha: ReCaptcha
-Polls: Ankete
-'Permissions:': 'Prava:'
-'Permissions updated': 'Prava izmenjena'
-Notification: Obaveštenja
+Polls: Polls
+'Permissions:': 'Permissions:'
+'Permissions updated': 'Permissions updated'
+Notification: Notification
 Log: Log
-Layout: Izgled
-Global: Globalno
-Files: Fajlova
-'Error: ': 'Greška:'
-'Edit user type $1': 'Uredi tip korisnika $1'
-Deny: Ospori
-'Delete user type $1': 'Obriši tip korisnika $1'
-'Can not delete a user type with assigned users.': 'Nije moguće obrisati tip korisnika sa dodeljenim korisnicima.'
-Cache: Keš
-Backup: Bekap
-Authoring: Autorizovanje
-Allow: Dozvoli
-'User types': 'Tipovi korisnika'
-'No user types.': 'Nema tipova korisnika'
+Layout: Layout
+Global: Global
+Files: Files
+'Error: ': 'Error: '
+'Edit user type $1': 'Edit user type $1'
+Deny: Deny
+'Delete user type $1': 'Delete user type $1'
+'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
+Cache: Cache
+Backup: Backup
+Authoring: Authoring
+Allow: Allow
+'User types': 'User types'
+'No user types.': 'No user types.'

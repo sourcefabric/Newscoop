@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: 'Administration af kommentarer'
-        menu: Kommentarer
-        banned: Blokeret
-        anonymous: Anonym
-        at: på
-        noentries: 'Ingen poster fundet.'
-        showing: Viser
-        of: af
-        to: til
-        entries: poster
-        fullarticle: 'Fuld artikel'
-        hidden: Skjult
-        approved: Godkendt
-        new: Ny
-        editarticle: 'Rediger artikel'
-        section: Sektion
-        comment: Kommentér
-        replyto: 'Svar på komentaren'
-        subject: Emne
-        ban: 'Bloker/afbloker bruger'
-        author: Forfatter
-        date: 'Dato / Kommentar'
-        article: Artikel
-        search: Søg
-        show: Vis
-        recommended: Anbefalet
-        unrecommended: 'Ikke anbefalet'
-        editcomment: 'Hurtig kommentar redigering'
-        actions: Handlinger
-        selectstatus: 'Vælg status'
-        deleted: Slettet
-        alert: Advarsel
-        searchholder: 'Søg... (f.eks. navn, email, emne, kommentar, artikel titel)'
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: Annullér
-        submit: Send
-        unrecommend: 'Anbefal ikke'
-        recommend: Anbefalet
-        delete: Slet
-        reply: Svar
-        edit: 'Hurtig redigering'
-        close: Luk
-        okay: OK
-        filter: Filtrér
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
+        okay: Ok
+        filter: Filter
     msg:
-        deleted: 'Kommentar slettet.'
-        commentinarticle: 'Kommentar $4 af $1 i artiklen $2 ($3)'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: ny
-            approved: godkendt
-            hidden: skjult
-            single: 'Kommentar status ændret til'
-            all: 'Kommentar status ændret til'
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.'
-            deletefromarticle: '$1 har slettet kommentar fra artiklen $2 ($3)'
-            statuschange: 'Kommentar status kunne ikke ændres'
-            delete: 'Kommentaren kunne ikke slettes'
-            update: 'Felter kan ikke være tomme'
-        sure: 'Du er ved at slette en kommentar permanent.'
-        suremultiple: 'Du er ved at slette kommentarer permanent.'
-        first: 'Vælg kommentar først!'
-        surequestion: 'Er du sikker på det er det du vil?'
-        updated: 'Kommentaren er opdateret.'
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

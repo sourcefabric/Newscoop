@@ -1,14 +1,14 @@
-'You have no installed plugins.': 'Sie haben keine Plugins installiert. '
-'Some plugins have to be updated. Please press the save button.': 'Einige Plugins müssen aktualisiert werden. Bitte auf Speichern klicken.'
-'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Bitte Deinstallation von Plugin $1 bestätigen. Alle Plugin Daten werden gelöscht!'
-'You do not have the right to manage plugins.': 'Keine Berechtigung Plugins zu verwalten.'
+'You have no installed plugins.': 'You have no installed plugins.'
+'Some plugins have to be updated. Please press the save button.': 'Some plugins have to be updated. Please press the save button.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Please confirm the plugin $1 uninstall. All plugin data will be deleted!'
+'You do not have the right to manage plugins.': 'You do not have the right to manage plugins.'
 Version: Version
-'Upload Plugin': 'Plugin hochladen'
+'Upload Plugin': 'Upload Plugin'
 Upload: Upload
-Uninstall: Deinstallieren
-'The plugin $1 was sucessfully installed.': 'Das Plugin $1 wurde erfolgreich installiert.'
-'No plugins found.': 'Keine Plugins gefunden'
-Manage: Verwalten
-Enabled: Aktiviert
-'Delete plugin': 'Plugin löschen'
-'Add new image': 'Neues Bild hinzufügen'
+Uninstall: Uninstall
+'The plugin $1 was sucessfully installed.': 'The plugin $1 was sucessfully installed.'
+'No plugins found.': 'No plugins found.'
+Manage: Manage
+Enabled: Enabled
+'Delete plugin': 'Delete plugin'
+'Add new image': 'Add new image'

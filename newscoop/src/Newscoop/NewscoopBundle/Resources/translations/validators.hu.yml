@@ -1,9 +1,9 @@
 type_publications:
     name:
-        min: 'A kiadvány címének hosszabbnak kell lennie {{ limit }} karakternél.'
+        min: 'Publication name must be longer than {{ limit }} characters.'
     metaDescription:
-        max: null
+        max: 'Publication description must be shorter than {{ limit }} characters.'
     metaTitle:
-        max: null
+        max: 'Publication title must be shorter than {{ limit }} characters.'
     metaKeywords:
-        max: null
+        max: 'Publication keyword total must be shorter than {{ limit }} characters.'
