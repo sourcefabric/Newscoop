@@ -250,11 +250,6 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->setParameter('topic', $articleSearchCriteria->topic);
         }
 
-        /*if ($articleSearchCriteria->publication) {
-            $queryBuilder->andWhere('ap.id = :publication')
-                ->setParameter('publication', $articleSearchCriteria->publication);
-        }*/
-
         if ($onlyPublished) {
             $queryBuilder->andWhere('a.workflowStatus  = :workflowStatus')
                 ->setParameter('workflowStatus', Article::STATUS_PUBLISHED);
