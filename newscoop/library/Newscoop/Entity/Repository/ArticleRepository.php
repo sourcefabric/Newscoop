@@ -158,7 +158,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->orderBy('a.uploaded', 'DESC');
         }
 
-        $queryBuilder->setMaxResults(80);
+        $queryBuilder->setMaxResults(80)
+            ->orderBy('number', $order);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
         $tmpNumbers = array();
@@ -248,6 +249,11 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $queryBuilder->andWhere('t.id = :topic')
                 ->setParameter('topic', $articleSearchCriteria->topic);
         }
+
+        /*if ($articleSearchCriteria->publication) {
+            $queryBuilder->andWhere('ap.id = :publication')
+                ->setParameter('publication', $articleSearchCriteria->publication);
+        }*/
 
         if ($onlyPublished) {
             $queryBuilder->andWhere('a.workflowStatus  = :workflowStatus')
