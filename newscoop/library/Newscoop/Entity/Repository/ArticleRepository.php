@@ -146,7 +146,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->orderBy('a.uploaded', 'DESC');
         }
 
-        $queryBuilder->setMaxResults(80);
+        $queryBuilder->setMaxResults(80)
+            ->orderBy('number', $order);
 
         $articleNumbers = $queryBuilder->getQuery()->getResult();
         $tmpNumbers = array();
