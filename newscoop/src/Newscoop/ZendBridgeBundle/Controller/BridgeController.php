@@ -60,6 +60,7 @@ class BridgeController extends Controller
         }
 
         $front->setParam('bootstrap', $bootstrap);
+        $front->setParam('locale', $request->getLocale());
         $front->setBaseUrl('/');
         $response = $front->dispatch();
 
