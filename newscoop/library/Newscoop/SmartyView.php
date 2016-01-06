@@ -30,8 +30,19 @@ class SmartyView extends \Zend_View_Abstract
             $this->smarty->assign($key, $val);
         }
 
+        $context = $this->smarty->context();
+        $locale = \Zend_Controller_Front::getInstance()->getParam('locale');
+        $em = \Zend_Registry::get('container')->getService('em');
+        try {
+            $language = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($locale);
+            $context->language = new \MetaLanguage($language->getId());
+        } catch (\Exception $e) {
+            // Do nothing, default language will be used
+        }
+
         $this->smarty->assign('view', $this);
-        $this->smarty->assign('gimme', $this->smarty->context());
+        $this->smarty->assign('gimme', $context);
 
         $file = array_shift(func_get_args());
         $this->smarty->display($file);
