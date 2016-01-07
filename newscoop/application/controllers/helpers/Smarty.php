@@ -24,6 +24,13 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
 
         $request = $this->getRequest();
 
+        if ($request->getParam('language') == false) {
+            $locale = \Zend_Controller_Front::getInstance()->getParam('locale');
+            if (!empty($locale)) {
+                $request->setParam('language', $locale);
+            }
+        }
+
         $format = $request->getParam('format', null);
         if (isset($format) && $format == "json") {
             return;
