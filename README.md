@@ -15,6 +15,8 @@ Quick links to our resources are:
 * Download link: [https://sourceforge.net/projects/newscoop/][10]
 * Developer's wiki: [https://wiki.sourcefabric.org/display/CS/][11]
 * Developer's blog: [https://dev-blog.sourcefabric.org][12]
+* Plugins Development’s documentation: [http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/][15]
+* RESTful API documentation: [http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/][16]
 
 ## Installation
 
@@ -67,7 +69,7 @@ REST API documentation will be available under the link: `http://www.domain.com/
 ## How to contribute
 
 Only 4 steps:
- 
+
 * Fork sourcefabric/Newscoop repository - [how to fork][2].
 * Clone your fork
 * Create new local feature branch - [how to create branch][3]
@@ -91,3 +93,5 @@ Newscoop is licensed under the GPL3 license.
 [12]: https://dev-blog.sourcefabric.org/en/blogs/?filter=1
 [13]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
 [14]: https://bugs.php.net/bug.php?id=54709
+[15]: http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/
+[16]: http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/
