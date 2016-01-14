@@ -76,7 +76,7 @@ class PluginsController extends Controller
             }
         }
 
-        // check if private plugins is writable 
+        // check if private plugins is writable
         $privatePluginsPathWritable = is_writable($pluginService->getPluginsDir().self::PRIVATE_PLUGINS_DIR);
 
         // search for private plugins

@@ -9,7 +9,7 @@ namespace Newscoop\NewscoopBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 /**
