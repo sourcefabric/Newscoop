@@ -82,8 +82,8 @@ class BackendPublicationsController extends Controller
         }
 
         $publicationIssuesLanguages = array();
-        if (is_array($publication->getIssues())) {
-            foreach ($publication->getIssues() as $key => $issue) {
+        if ($publication->getIssues()->count() > 0) {
+            foreach ($publication->getIssues() as $issue) {
                 if (!in_array($issue->getLanguageCode(), $publicationIssuesLanguages)) {
                     $publicationIssuesLanguages[] = $issue->getLanguageCode();
                 }
@@ -191,7 +191,7 @@ class BackendPublicationsController extends Controller
             }
 
             $publicationIssuesLanguages = array();
-            if (is_array($publication->getIssues())) {
+            if ($publication->getIssues()->count() > 0) {
                 foreach ($publication->getIssues() as $key => $issue) {
                     if (!array_key_exists($issue->getLanguageCode(), $publicationIssuesLanguages)) {
                         $publicationIssuesLanguages[$issue->getLanguageCode()] = $issue->getLanguage();

@@ -1825,4 +1825,14 @@ class Article implements DocumentInterface
 
         return $this;
     }
+
+    /**
+     * Get comments count
+     *
+     * @return integer
+     */
+    public function getCommentsCount()
+    {
+        return $this->comments_count;
+    }
 }
