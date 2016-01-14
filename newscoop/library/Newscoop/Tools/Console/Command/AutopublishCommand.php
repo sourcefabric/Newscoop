@@ -8,11 +8,12 @@
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 /**
  * Update Image Storage Command
  */
-class AutopublishCommand extends Console\Command\Command
+class AutopublishCommand extends ContainerAwareCommand
 {
     /**
      * @see Console\Command\Command
@@ -32,9 +33,8 @@ class AutopublishCommand extends Console\Command\Command
     {
         $issueActions = \IssuePublish::DoPendingActions();
         $articleActions = \ArticlePublish::DoPendingActions();
-
         if ($issueActions > 0 || $articleActions > 0) {
-            fopen(realpath(APPLICATION_PATH . '/../') .'/reset_cache', 'w');
+            fopen($this->getContainer()->getParameter('kernel.cache_dir') .'/reset_cache', 'w');
         }
 
         if ($input->getOption('verbose')) {

@@ -53,9 +53,10 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             }, error_reporting());
         }
 
-        if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
+        $resetCachePath = Zend_Registry::get('container')->getParameter('kernel.cache_dir').'/reset_cache';
+        if (file_exists($resetCachePath)) {
             CampCache::singleton()->clear('user');
-            unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
+            unlink($resetCachePath);
         }
     }
 
