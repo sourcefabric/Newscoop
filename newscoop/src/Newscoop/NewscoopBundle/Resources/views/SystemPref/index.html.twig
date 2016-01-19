@@ -117,10 +117,6 @@ table.cron-jobs td:nth-child(2) {
                         </dt>
                         <dd>
                             {{ form_row(form.session_lifetime, {'attr' : {'class' : 'input_text'}}) }}
-                            {% if php_ini_max_seconds %}
-                                <span style="margin-top:8px;"><= {{ php_ini_max_seconds }}, {{ 'newscoop.preferences.label.sessionlifetimemsg'|trans }}
-                                </span>
-                            {% endif %}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.separator'|trans }} <small id="separator">(?)</small></label>

@@ -84,14 +84,12 @@ class RegisterController extends Zend_Controller_Action
         $translator = \Zend_Registry::get('container')->getService('translator');
         $session = \Zend_Registry::get('container')->getService('session');
         $user = $this->getAuthUser();
-        $social = $this->_getParam('social');
         $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
         $form->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
-            'username' => $this->_helper->service('user')
-                ->generateUsername($user->getFirstName(), $user->getLastName()),
+            'username' => $this->_helper->service('user')->generateUsername($user->getFirstName(), $user->getLastName()),
         ));
 
         if ($this->auth->hasIdentity()) {
@@ -102,21 +100,23 @@ class RegisterController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
+
             try {
                 if (!empty($values['image'])) {
                     $imageInfo = array_pop($form->image->getFileInfo());
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
-
                 $this->_helper->service('user')->savePending($values, $user);
                 $this->_helper->service('dispatcher')->dispatch('user.register', new GenericEvent($this, array(
                     'user' => $user,
                 )));
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
-
                 $auth = \Zend_Auth::getInstance();
                 if ($auth->hasIdentity()) {
                     $this->_helper->flashMessenger('User registered successfully.');
+                    if (isset($values['_target_path']) && !empty($values['_target_path'])) {
+                        $this->_helper->redirector->gotoUrl($values['_target_path']);
+                    }
                     $this->_helper->redirector(null, null, 'default');
                 } else {
                     $adapter = $this->_helper->service('auth.adapter');
@@ -138,7 +138,7 @@ class RegisterController extends Zend_Controller_Action
 
         $this->view->form = $form;
         $this->view->user = new \MetaUser($user);
-        $this->view->social = $social ?: false;
+        $this->view->social = $this->_getParam('social') ?: false;
     }
 
     public function generateUsernameAction()

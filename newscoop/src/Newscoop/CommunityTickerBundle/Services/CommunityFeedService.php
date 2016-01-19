@@ -59,7 +59,7 @@ class CommunityFeedService
         return $this->getRepository()->getListByCriteria($criteria);
     }
 
-   
+
     /**
      * Count by given criteria
      *

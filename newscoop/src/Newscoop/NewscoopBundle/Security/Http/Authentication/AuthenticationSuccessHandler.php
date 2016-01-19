@@ -58,9 +58,8 @@ class AuthenticationSuccessHandler extends AbstractAuthenticationHandler
         \LoginAttempts::DeleteOldLoginAttempts();
         \LoginAttempts::ClearLoginAttemptsForIp();
 
-        $zendAuth = \Zend_Auth::getInstance();
         $this->authAdapter->setUsername($user->getUsername())->setPassword($request->request->get('_password'))->setAdmin(true);
-        $zendAuth->authenticate($this->authAdapter);
+        \Zend_Auth::getInstance()->authenticate($this->authAdapter);
 
         $OAuthtoken = $this->userService->loginUser($user, 'oauth_authorize');
         $session = $request->getSession();
