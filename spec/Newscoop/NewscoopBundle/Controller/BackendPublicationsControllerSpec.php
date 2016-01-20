@@ -47,7 +47,8 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         \Newscoop\Services\CacheService $cacheService,
         \Symfony\Component\HttpFoundation\Session\Session $session,
         \Symfony\Component\HttpFoundation\Session\Flash\FlashBag $flashBag,
-        \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+        \Symfony\Bundle\FrameworkBundle\Routing\Router $router,
+        \Doctrine\Common\Collections\ArrayCollection $arrayCollection
     ) {
         $container->get('em')->willReturn($entityManager);
         $container->get('request')->willReturn($request);
@@ -78,7 +79,7 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         $session->getFlashBag()->willReturn($flashBag);
 
         $publication->getId()->willReturn(1);
-        $publication->getIssues()->willReturn(array());
+        $publication->getIssues()->willReturn($arrayCollection);
         $publication->getDefaultAlias()->willReturn('newscoop.dev');
         $publication->setDefaultAlias(Argument::any())->willReturn($publication);
 
