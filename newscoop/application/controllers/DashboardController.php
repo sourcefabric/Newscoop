@@ -7,15 +7,15 @@
 
 use Newscoop\Entity\User;
 use Newscoop\Topic\SaveUserTopicsCommand;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Filesystem\Filesystem;
+use Newscoop\Exception\AuthenticationException;
 
 /**
+ * User dashboard controller
  */
 class DashboardController extends Zend_Controller_Action
 {
     /** @var Newscoop\Services\UserService */
-    private $service;
+    private $userService;
 
     /** @var Newscoop\Entity\User */
     private $user;
@@ -24,9 +24,13 @@ class DashboardController extends Zend_Controller_Action
     {
         $GLOBALS['controller'] = $this;
         $this->_helper->layout->disableLayout();
+        $this->userService = $this->_helper->service('user');
 
-        $this->service = $this->_helper->service('user');
-        $this->user = $this->service->getCurrentUser();
+        try {
+            $this->user = $this->userService->getCurrentUser();
+        } catch (AuthenticationException $e) {
+            $this->_helper->redirector('index', 'auth');
+        }
 
         $this->_helper->contextSwitch()
             ->addActionContext('update-topics', 'json')
@@ -35,10 +39,6 @@ class DashboardController extends Zend_Controller_Action
 
     public function preDispatch()
     {
-        if (empty($this->user)) {
-            $this->_helper->redirector('index', 'auth');
-        }
-
         if ($this->user->isPending()) {
             $this->_helper->redirector('confirm', 'register');
         }
@@ -62,8 +62,8 @@ class DashboardController extends Zend_Controller_Action
                     $imageInfo = array_pop($form->image->getFileInfo());
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
-                //TODO add event to subscribe for newsletter
-                $this->service->save($values, $this->user);
+
+                $this->userService->save($values, $this->user);
                 $this->_helper->flashMessenger->addMessage($translator->trans('Profile saved.', array(), 'users'));
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {

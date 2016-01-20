@@ -13,11 +13,16 @@ use Newscoop\Entity\User;
 use Newscoop\User\UserCriteria;
 use Newscoop\ListResult;
 use Newscoop\Search\RepositoryInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * User repository
  */
-class UserRepository extends EntityRepository implements RepositoryInterface
+class UserRepository extends EntityRepository implements RepositoryInterface, UserProviderInterface
 {
     /** @var array */
     protected $setters = array(
@@ -544,6 +549,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             $user->setEmail(null);
             $user->setFirstName(null);
             $user->setLastName(null);
+            $user->setUsername($user->getUsername().'__deleted__'.date('his'));
             $this->removeAttributes($user);
         }
 
@@ -787,6 +793,49 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $list->items = $qb->getQuery()->getResult();
 
         return $list;
+    }
+
+    public function loadUserByUsername($usernameOrEmail)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb->andWhere($qb->expr()->orX("(u.username = :usernameOrEmail)", "(u.email = :usernameOrEmail)"))
+            ->setParameter('usernameOrEmail', $usernameOrEmail);
+
+        try {
+            // The Query::getSingleResult() method throws an exception if there is no record matching the criteria.
+            $user = $qb->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            $message = sprintf('Unable to find an user identified by "%s".', $usernameOrEmail);
+
+            throw new UsernameNotFoundException($message, 0, $e);
+        }
+
+        return $user;
+    }
+
+    /**
+     * [refreshUser description]
+     * @param  UserInterface $user [description]
+     * @return [type]              [description]
+     */
+    public function refreshUser(UserInterface $user)
+    {
+        $class = get_class($user);
+        if (!$this->supportsClass($class)) {
+            throw new UnsupportedUserException(
+                sprintf(
+                    'Instances of "%s" are not supported.',
+                    $class
+                )
+            );
+        }
+
+        return $this->find($user->getId());
+    }
+
+    public function supportsClass($class)
+    {
+        return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 
     /**

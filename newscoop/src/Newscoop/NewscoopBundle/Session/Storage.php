@@ -24,10 +24,7 @@ class Storage extends PhpBridgeSessionStorage
     */
     public function __construct(array $options = array(), $preferencesService, $handler = null, MetadataBag $metaBag = null)
     {
-        $seconds = $preferencesService->SiteSessionLifeTime;
-
-        $options['cookie_lifetime'] = $seconds;
-        $options['gc_maxlifetime'] = $seconds;
+        $options['cookie_lifetime'] = $preferencesService->SiteSessionLifeTime;
 
         $this->setMetadataBag($metaBag);
         $this->setOptions($options);

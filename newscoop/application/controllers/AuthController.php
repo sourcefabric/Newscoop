@@ -5,8 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-/**
- */
+ use Symfony\Component\Security\Core\SecurityContext;
+
 class AuthController extends Zend_Controller_Action
 {
     /** @var Zend_Auth */
@@ -25,35 +25,30 @@ class AuthController extends Zend_Controller_Action
         }
 
         $translator = Zend_Registry::get('container')->getService('translator');
-
         $form = new Application_Form_Login();
-
         $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
-            $values = $form->getValues();
-            $adapter = $this->_helper->service('auth.adapter');
-            $adapter->setEmail($values['email'])->setPassword($values['password']);
-            $result = $this->auth->authenticate($adapter);
 
-            if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-                $expire = null;
-                if (!empty($values['remember_me'])) {
-                    // set expire to 10 years in the future
-                    $expire = time() + (10 * 365 * 24 * 60 * 60);
-                }
-
-                setcookie('NO_CACHE', '1', $expire, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
-                if (isset($values['_target_path'])) {
-                    $this->_helper->redirector->gotoUrl($values['_target_path']);
-                }
-
-                $this->_helper->redirector('index', 'dashboard');
-            } else {
-                $form->addError($translator->trans("Invalid credentials"));
-            }
+        if ($authenticationException = $this->getLastAuthenticationError()) {
+            $form->addError($translator->trans($authenticationException->getMessage()));
         }
 
         $this->view->form = $form;
+    }
+
+    private function getLastAuthenticationError()
+    {
+        $request = \Zend_Registry::get('container')->getService('request');
+        $session = $request->getSession();
+        $authenticationException = null;
+
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $authenticationException = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } elseif ($session !== null && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $authenticationException = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+
+        return $authenticationException;
     }
 
     public function logoutAction()

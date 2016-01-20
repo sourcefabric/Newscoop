@@ -65,17 +65,6 @@ class SystemPrefController extends Controller
         $translator = $this->get('translator');
 
         $sp_session_lifetime = 0 + $preferencesService->SiteSessionLifeTime;
-        $php_ini_max_seconds = 0;
-        $php_ini_gc_works = ini_get('session.gc_probability');
-
-        if (!empty($php_ini_gc_works)) {
-            $php_ini_max_seconds = 0 + ini_get('session.gc_maxlifetime');
-            if (!empty($php_ini_max_seconds)) {
-                if ($sp_session_lifetime > $php_ini_max_seconds) {
-                    $sp_session_lifetime = $php_ini_max_seconds;
-                }
-            }
-        }
 
         $upload_min_filesize = $this->formatBytes(
             min(
@@ -295,7 +284,6 @@ class SystemPrefController extends Controller
 
         return array(
             'form' => $form->createView(),
-            'php_ini_max_seconds' => $php_ini_max_seconds,
             'upload_min_filesize' => $upload_min_filesize,
             'hasManagePermission' => $hasManagePermission,
             'mysql_client_command_path' => $mysql_client_command_path,

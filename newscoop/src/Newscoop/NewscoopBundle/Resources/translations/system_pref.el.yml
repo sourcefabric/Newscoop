@@ -50,7 +50,6 @@ newscoop:
             allowrecovery: null
             secretkey: null
             sessionlifetime: null
-            sessionlifetimemsg: null
             separator: null
             captcha: null
             maxupload: null

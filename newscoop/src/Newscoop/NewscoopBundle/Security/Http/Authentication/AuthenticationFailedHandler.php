@@ -1,12 +1,12 @@
 <?php
- 
+
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
- 
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler;
- 
+
 /**
  * Custom authentication success handler
  */
@@ -24,9 +24,6 @@ class AuthenticationFailedHandler extends DefaultAuthenticationFailureHandler
      */
     function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // log failed attepts
-        //\LoginAttempts::RecordLoginAttempt();
-
         return parent::onAuthenticationFailure($request, $exception);
     }
 }
