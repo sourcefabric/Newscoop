@@ -10,9 +10,7 @@ namespace Newscoop\NewscoopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class SecurityController extends Controller
 {
@@ -75,7 +73,6 @@ class SecurityController extends Controller
             }
 
             $request->request->set('TOL_Language', $defaultLanguage);
-            $request->cookies->set('TOL_Language', $defaultLanguage);
         }
 
         return $defaultLanguage;

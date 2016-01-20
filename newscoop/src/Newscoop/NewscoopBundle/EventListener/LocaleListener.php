@@ -40,7 +40,7 @@ class LocaleListener
         $request = $event->getRequest();
         if ($request->request->has('login_language')) {
             $response = $event->getResponse();
-            $response->headers->setCookie(new Cookie('TOL_Language', $request->request->get('login_language')));
+            $response->headers->setCookie(new Cookie('TOL_Language', $request->request->get('login_language'), 2147483647, '/admin'));
             $event->setResponse($response);
         }
     }
