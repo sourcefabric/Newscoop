@@ -500,7 +500,7 @@ class TopicRepository extends NestedTreeRepository
     /**
      * {@inheritDoc}
      */
-    public function getRootNodes($locale = null, $childrenLevel = false, $sortByField = null, $direction = 'asc')
+    public function getRootNodes($locale = null, $sortByField = null, $direction = 'asc')
     {
         $meta = $this->getClassMetadata();
         $config = $this->listener->getConfiguration($this->_em, $meta->name);
@@ -509,13 +509,8 @@ class TopicRepository extends NestedTreeRepository
             ->select('node', 't', 'c')
             ->from($config['useObjectClass'], 'node')
             ->leftJoin('node.translations', 't')
-            ->leftJoin('node.children', 'c');
-
-        if (!$childrenLevel) {
-            $qb->where($qb->expr()->isNull('node.'.$config['parent']));
-        } else {
-            $qb->where($qb->expr()->isNull('node.'.$config['parent']));
-        }
+            ->leftJoin('node.children', 'c')
+            ->where($qb->expr()->isNull('node.'.$config['parent']));
 
         if ($sortByField !== null) {
             $qb->orderBy('node.'.$sortByField, strtolower($direction) === 'asc' ? 'asc' : 'desc');
