@@ -74,10 +74,10 @@ class SchedulerManagerCommand extends ContainerAwareCommand
                     if ($systemPreferences->CronJobsSenderName) {
                         $job['smtpSenderName'] = $systemPreferences->CronJobsSenderName;
                     }
+                }
 
-                    if (is_null($job['output'])) {
-                        $job['output'] = realpath(__DIR__ . '/../../../../../log') . '/cron_job_' . $this->cleanString($job['name']). '.log';
-                    }
+                if (is_null($job['output'])) {
+                    $job['output'] = realpath(__DIR__ . '/../../../../../log') . '/cron_job_' . $this->cleanString($job['name']). '.log';
                 }
 
                 unset($job['sendMail']);
@@ -99,7 +99,7 @@ class SchedulerManagerCommand extends ContainerAwareCommand
      */
     private function cleanString($string)
     {
-        $string = str_replace(' ', '-', $string);
+        $string = str_replace(' ', '-', strtolower($string));
 
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
