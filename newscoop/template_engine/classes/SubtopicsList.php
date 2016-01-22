@@ -45,7 +45,11 @@ class SubtopicsList extends ListObject
         $language = $em->getReference('Newscoop\Entity\Language', $p_parameters['language_id']);
         $topic = $repository->getSingleTopicQuery($rootTopicId, $language ? $language->getCode() : null)->getOneOrNullResult();
         if (!$topic) {
-            $subtopics = $repository->getRootNodes($language ? $language->getCode() : null)->getArrayResult();
+            $subtopics = $repository->getRootNodes(
+                $language ? $language->getCode() : null,
+                isset($order['field']) ? $order['field'] : null,
+                isset($order['dir']) ? $order['dir'] : null
+            )->getArrayResult();
         } else {
             $topicsCount = $topicService->countBy();
             $cacheKey = $cacheService->getCacheKey(array('topics', $topicsCount, $rootTopicId), 'topic');
@@ -113,7 +117,7 @@ class SubtopicsList extends ListObject
                     if (array_search(strtolower($word), SubtopicsList::$s_orderFields) === false) {
                         CampTemplate::singleton()->trigger_error("invalid order field $word in list_subtopics, order parameter");
                     } else {
-                        $orderField = $aliases[$word];
+                        $orderField = $aliases[strtolower($word)];
                         $state = 2;
                     }
                     break;
