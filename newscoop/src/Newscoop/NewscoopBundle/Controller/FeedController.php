@@ -19,25 +19,28 @@ use Symfony\Component\HttpFoundation\Response;
 class FeedController extends Controller
 {
     /**
-     * @Route("/feed/", name="newscoop_feed")
-     * @Route("/feed/{feedName}.{_format}", requirements={"_format" = "(rss|atom)"}, name="newscoop_feed_details")
+     * @Route("/{languageCode}/feed/", name="newscoop_feed")
+     * @Route("/{languageCode}/feed/{feedName}.{format}", requirements={"format" = "(rss|atom)"}, name="newscoop_feed_details")
      */
-    public function renderFeedAction(Request $request, $feedName = "default", $_format = "rss")
+    public function renderFeedAction(Request $request, $languageCode = "en", $feedName = "default", $format = "rss")
     {
-        $templatesService = $this->get('newscoop.templates.service');
-
         $response = new Response();
+        $templatesService = $this->container->get('newscoop.templates.service');
+        $language = $this->container->get('em')->getRepository('Newscoop\Entity\Language')->findOneByCode($languageCode);
+        if (!is_null($language)) {
+            $templatesService->getSmarty()->context()->language = new \MetaLanguage($language->getId());
+        }
+
         try {
             $templatesService->setVector(array(
-                'params' => serialize(array($request->query->all(), $feedName, $_format))
+                'params' => serialize(array($request->query->all(), $feedName, $format, $languageCode))
             ));
             $response->setContent($templatesService->fetchTemplate('_feed/'.$feedName.'.tpl'));
             $response->setStatusCode(Response::HTTP_OK);
-            $response->headers->set('Content-Type', 'application/'.$_format.'+xml; charset=UTF-8');
+            $response->headers->set('Content-Type', 'application/'.$format.'+xml; charset=UTF-8');
         } catch (\SmartyException $e) {
             $response->setContent($templatesService->fetchTemplate('404.tpl'));
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
-            $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
         }
 
         return $response;
