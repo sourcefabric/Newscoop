@@ -19,7 +19,7 @@ use Newscoop\Entity\User;
 class UsersController extends Controller
 {
     /**
-     * @Route("admin/users/")
+     * @Route("/admin/users/")
      */
     public function indexAction(Request $request)
     {

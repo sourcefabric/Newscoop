@@ -69,7 +69,6 @@ class OauthController extends Controller
     public function defaultOauthRedirectAction(Request $request)
     {
         $templatesService = $this->get('newscoop.templates.service');
-        $smarty = $templatesService->getSmarty();
 
         return new Response($templatesService->fetchTemplate('oauth_result.tpl'), 200, array('Content-Type' => 'text/html'));
     }
