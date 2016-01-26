@@ -162,7 +162,7 @@ class PublicationService
         }
 
         if (empty($alias)) {
-            return null;
+            return;
         }
 
         $this->publicationMetadata['alias'] = array(
@@ -185,10 +185,10 @@ class PublicationService
          */
         $request->attributes->set('_newscoop_publication_metadata', $this->publicationMetadata);
         $aliasObject = $this->em->getReference('Newscoop\Entity\Aliases', $alias[0]['aliasId']);
-        $publicationObject = $this->em->getReference('Newscoop\Entity\Publication', $alias[0]['publicationId']);
         $this->setPublicationAlias($aliasObject);
-        $this->setPublication($publicationObject);
-
-        return $publicationObject;
+        if ($alias[0]['publicationId'] != null) {
+            $publicationObject = $this->em->getReference('Newscoop\Entity\Publication', $alias[0]['publicationId']);
+            $this->setPublication($publicationObject);
+        }
     }
 }
