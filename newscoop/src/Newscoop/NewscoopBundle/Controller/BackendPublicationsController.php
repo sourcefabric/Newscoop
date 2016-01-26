@@ -149,7 +149,7 @@ class BackendPublicationsController extends Controller
         if ($request->getMethod() === 'POST' && $issuesRemaining == 0 && $sectionsRemaining == 0 && $articlesRemaining == 0) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                // unassign publication from aliases
+                // remove publication aliases
                 $dql = "DELETE FROM Newscoop\Entity\Aliases as a WHERE a.publication = :publication";
                 $em->createQuery($dql)->setParameters(array('publication' => $publication))->getResult();
 
