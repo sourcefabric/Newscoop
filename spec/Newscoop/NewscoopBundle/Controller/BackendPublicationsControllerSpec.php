@@ -72,6 +72,7 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         $entityManager->flush(Argument::any())->willReturn(true);
         $entityManager->persist(Argument::any())->willReturn(true);
         $entityManager->remove(Argument::any())->willReturn(true);
+        $entityManager->createQuery(Argument::any())->willReturn($query);
         $publicationRepository->getPublications()->willReturn($query);
         $issueRepository->getIssuesCountForPublication(Argument::type('int'))->willReturn($query);
         $sectionRepository->getSectionsCountForPublication(Argument::type('int'))->willReturn($query);
@@ -174,7 +175,8 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         $form,
         $formFactory,
         $formView,
-        $router
+        $router,
+        $query
     )
     {
         $user->hasPermission('ManagePub')->willReturn(true);
@@ -195,6 +197,9 @@ class BackendPublicationsControllerSpec extends ObjectBehavior
         $form->createView()->willReturn($formView);
 
         $publication->getId()->willReturn(1);
+        $query->setParameters(Argument::type('array'))->willReturn($query);
+        $query->getSingleScalarResult()->willReturn(0);
+        $query->getResult()->willReturn(true);
 
         $form->handleRequest($request)->willReturn(true);
         $form->isValid()->willReturn(true);
