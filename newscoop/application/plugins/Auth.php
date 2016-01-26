@@ -70,8 +70,10 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      */
     private function setSessionLifetime()
     {
-        $session = new Zend_Session_Namespace(Zend_Auth::getInstance()->getStorage()->getNamespace());
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $session->setExpirationSeconds($preferencesService->SiteSessionLifeTime);
+        if ($preferencesService->SiteSessionLifeTime > 0) {
+            $session = new Zend_Session_Namespace(Zend_Auth::getInstance()->getStorage()->getNamespace());
+            $session->setExpirationSeconds($preferencesService->SiteSessionLifeTime);
+        }
     }
 }
