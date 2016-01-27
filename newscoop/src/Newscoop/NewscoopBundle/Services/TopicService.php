@@ -140,6 +140,7 @@ class TopicService
      */
     public function removeTopicFromAllArticles($topicId)
     {
+        $updateDateTime = new \DateTime();
         $qb = $this->em->createQueryBuilder();
         $topic = $this->em->getReference('Newscoop\NewscoopBundle\Entity\Topic', $topicId);
         $children = $this->getTopicRepository()->childrenQuery($topic)->getArrayResult();
@@ -151,6 +152,22 @@ class TopicService
         }
 
         $attachedTopics[] = $topicId;
+
+        $articles = $this->em->createQueryBuilder()
+            ->select('a')
+            ->from('Newscoop\Entity\Article', 'a')
+            ->innerJoin('Newscoop\Entity\ArticleTopic', 'at')
+            ->where('at.topic IN (:topic_ids)')
+            ->setParameter('topic_ids', $attachedTopics)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($articles as $article) {
+            $article->setUpdated($updateDateTime);
+            $this->em->persist($article);
+        }
+        $this->em->flush();
+
         $topicsQuery = $qb->delete('Newscoop\Entity\ArticleTopic', 'at')
             ->where('at.topic IN (?1)')
             ->setParameter(1, $attachedTopics)

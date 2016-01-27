@@ -52,7 +52,7 @@ final class MetaAuthor extends MetaDbObject
         $this->m_customProperties = self::$m_defaultCustomProperties;
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('MetaAuthor', $p_idOrName, $p_type), 'author');
+        $cacheKey = $cacheService->getCacheKey(array('MetaAuthor', $p_idOrName, serialize($p_type)), 'author');
         if ($cacheService->contains($cacheKey)) {
             $this->m_dbObject = $cacheService->fetch($cacheKey);
         } else {
@@ -91,7 +91,7 @@ final class MetaAuthor extends MetaDbObject
             $language = (int) CampTemplate::singleton()->context()->language->number;
             $this->m_biography = new MetaAuthorBiography($this->m_dbObject->getId(), $language);
         }
-        
+
         return $this->m_biography;
     }
 

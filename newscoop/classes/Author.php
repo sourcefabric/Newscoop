@@ -54,7 +54,7 @@ class Author extends DatabaseObject
         }
         if ($this->exists()) {
             if (!is_null($p_type)) {
-                $this->m_type = new AuthorType((int) $p_type);
+                $this->m_type = new AuthorType($p_type);
             }
             $this->loadAliases();
         } else {
