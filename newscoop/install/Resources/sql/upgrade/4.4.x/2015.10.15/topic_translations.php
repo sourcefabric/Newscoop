@@ -32,7 +32,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 try {
     $app['db']->query('ALTER TABLE `topic_translations` ADD `isDefault` INT( 1 ) NULL DEFAULT NULL');
 } catch (\Exception $e) {
-    if ($app['db']->errorCode() !== '42000') {
+    if ($app['db']->errorCode() !== '42S21') {
         $upgradeErrors[] = $e->getMessage();
         $logger->addError($e->getMessage());
     }
