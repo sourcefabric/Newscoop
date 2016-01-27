@@ -1782,7 +1782,9 @@ UNLOCK TABLES;
 -- Table structure for table `main_topics`
 --
 
-CREATE TABLE IF NOT EXISTS `main_topics` (
+DROP TABLE IF EXISTS `main_topics`;
+
+CREATE TABLE `main_topics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
   `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -1804,7 +1806,9 @@ ALTER TABLE `main_topics` ADD CONSTRAINT `FK_EEAFE2F727ACA70` FOREIGN KEY (`pare
 -- Table structure for table `topic_translations`
 --
 
-CREATE TABLE IF NOT EXISTS `topic_translations` (
+DROP TABLE IF EXISTS `topic_translations`;
+
+CREATE TABLE `topic_translations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) DEFAULT NULL,
   `locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,

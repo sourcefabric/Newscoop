@@ -1,4 +1,6 @@
-CREATE TABLE IF NOT EXISTS `main_topics` (
+DROP TABLE IF EXISTS `topic_translations`;
+DROP TABLE IF EXISTS `main_topics`;
+CREATE TABLE `main_topics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
   `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -14,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `main_topics` (
   KEY `IDX_EEAFE2F727ACA70` (`parent_id`),
   CONSTRAINT `FK_EEAFE2F727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `main_topics` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-CREATE TABLE IF NOT EXISTS `topic_translations` (
+CREATE TABLE `topic_translations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `object_id` int(11) DEFAULT NULL,
   `locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
