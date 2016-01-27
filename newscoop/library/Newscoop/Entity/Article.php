@@ -1086,6 +1086,7 @@ class Article implements DocumentInterface
         if (!$this->topics->contains($topic)) {
             $this->topics->add($topic);
             $topic->addArticleTopic($this);
+            $this->setUpdated(new DateTime());
 
             return true;
         }
@@ -1105,6 +1106,7 @@ class Article implements DocumentInterface
         if ($this->topics->contains($topic)) {
             $this->topics->removeElement($topic);
             $topic->removeArticleTopic($this);
+            $this->setUpdated(new DateTime());
 
             return true;
         }
