@@ -75,63 +75,65 @@ class RegisterController extends Zend_Controller_Action
         }
     }
 
+    /**
+     * Empty action for view shown after registration
+     */
     public function afterAction()
-    {
-    }
+    {}
 
+    /**
+     * Account confirmation action
+     */
     public function confirmAction()
     {
-        $translator = \Zend_Registry::get('container')->getService('translator');
-        $session = \Zend_Registry::get('container')->getService('session');
-        $user = $this->getAuthUser();
+        $token = $this->_getParam('token', false);
+        $user = $this->getAuthUser($token);
         $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
         $form->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
-            'username' => $this->_helper->service('user')->generateUsername($user->getFirstName(), $user->getLastName()),
+            'username' => $this->_helper->service('user')->generateUsername($user->getFirstName(), $user->getLastName())
         ));
 
-        if ($this->auth->hasIdentity()) {
-            $form->removeElement('password');
-            $form->removeElement('password_confirm');
-        }
-
         $request = $this->getRequest();
+
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
-
             try {
                 if (!empty($values['image'])) {
                     $imageInfo = array_pop($form->image->getFileInfo());
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
+
                 $this->_helper->service('user')->savePending($values, $user);
                 $this->_helper->service('dispatcher')->dispatch('user.register', new GenericEvent($this, array(
                     'user' => $user,
                 )));
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
-                $auth = \Zend_Auth::getInstance();
-                if ($auth->hasIdentity()) {
-                    $this->_helper->flashMessenger('User registered successfully.');
-                    if (isset($values['_target_path']) && !empty($values['_target_path'])) {
-                        $this->_helper->redirector->gotoUrl($values['_target_path']);
-                    }
-                    $this->_helper->redirector(null, null, 'default');
-                } else {
-                    $adapter = $this->_helper->service('auth.adapter');
-                    $adapter->setEmail($user->getEmail())->setPassword($values['password']);
-                    $auth->authenticate($adapter);
-                    $token = $this->_helper->service('user')->loginUser($user, 'frontend_area');
-                    $session->set('_security_frontend_area', serialize($token));
-                    $OAuthtoken = $this->_helper->service('user')->loginUser($user, 'oauth_authorize');
-                    $session->set('_security_oauth_authorize', serialize($OAuthtoken));
-                    if (isset($values['_target_path']) && !empty($values['_target_path'])) {
-                        $this->_helper->redirector->gotoUrl($values['_target_path']);
-                    }
-                    $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
+
+                // Login user after confirming token
+                // Zend
+                $adapter = $this->_helper->service('auth.adapter');
+                $adapter->setEmail($user->getEmail())->setPassword($values['password']);
+                $this->auth->authenticate($adapter);
+                // Frontend
+                $token = $this->_helper->service('user')->loginUser($user, 'frontend_area');
+                $session = \Zend_Registry::get('container')->getService('session');
+                $session->set('_security_frontend_area', serialize($token));
+                // Oauth
+                $OAuthtoken = $this->_helper->service('user')->loginUser($user, 'oauth_authorize');
+                $session->set('_security_oauth_authorize', serialize($OAuthtoken));
+
+                // Redirect to target path (if provided)
+                if (isset($values['_target_path']) && !empty($values['_target_path'])) {
+                    $this->_helper->redirector->gotoUrl($values['_target_path']);
                 }
+
+                // redirect to dashboard
+                $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
             } catch (InvalidArgumentException $e) {
+                $translator = \Zend_Registry::get('container')->getService('translator');
                 $form->username->addError($translator->trans('Username is used. Please use another one.', array(), 'users'));
             }
         }
@@ -182,12 +184,12 @@ class RegisterController extends Zend_Controller_Action
         if ($this->_getParam('email')) {
             $user = $this->_helper->service('user')->findBy(array('email' => $this->_getParam('email')));
 
-            if ($user) {
-                $this->view->result = '0';
-            } else {
+            if (!$user) {
                 $user = $this->_helper->service('user')->createPending($this->_getParam('email'));
                 $this->_helper->service('email')->sendConfirmationToken($user);
                 $this->view->result = '1';
+
+                return;
             }
         }
 
@@ -195,17 +197,13 @@ class RegisterController extends Zend_Controller_Action
     }
 
     /**
-     * Get user by token or auth
+     * Get user by token
      *
      * @return Newscoop\Entity\User
      */
-    private function getAuthUser()
+    private function getAuthUser($token)
     {
-        if ($this->auth->hasIdentity()) {
-            $user = $this->_helper->service('user')->find($this->auth->getIdentity());
-        } else {
-            $user = $this->_helper->service('user')->find($this->_getParam('user'));
-        }
+        $user = $this->_helper->service('user')->find($this->_getParam('user'));
 
         if (empty($user)) {
             $this->_helper->flashMessenger(array('error', "User not found"));
@@ -217,12 +215,8 @@ class RegisterController extends Zend_Controller_Action
             $this->_helper->redirector(null, null, 'default');
         }
 
-        if ($this->auth->hasIdentity()) {
-            return $user;
-        }
-
-        $token = $this->_getParam('token', false);
-        if (!$token && !$auth->hasIdentity()) {
+        // Validate token
+        if (!$token) {
             $this->_helper->flashMessenger(array('error', "No token provided"));
             $this->_helper->redirector(null, null, 'default');
         }
