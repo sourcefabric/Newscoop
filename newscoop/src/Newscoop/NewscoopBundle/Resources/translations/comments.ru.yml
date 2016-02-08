@@ -114,7 +114,7 @@ editorial:
         delete: Удалить
         reply: Ответ
     label:
-        title: null
+        title: 'Комментарии автора:'
         post: 'Отправить новый комментарий'
         reply: Ответить...
         nocomments: 'Нет комментариев.'

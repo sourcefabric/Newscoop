@@ -36,7 +36,7 @@ topics:
         topicname: 'Название темы'
         expandcollapse: развернуть/свернуть
         changename: 'Переименовать тему'
-        for: null
+        for: для
         addsubtopic: 'Добавить вложенную тему'
         subtopicname: 'Название вложенной темы'
         addtranslation: 'Добавить перевод:'
