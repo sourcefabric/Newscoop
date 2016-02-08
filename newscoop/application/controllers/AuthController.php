@@ -21,7 +21,7 @@ class AuthController extends Zend_Controller_Action
     public function indexAction()
     {
         if ($this->auth->hasIdentity()) {
-            $this->_helper->redirector('index', 'dashboard');
+            $this->_helper->redirector('index', 'index');
         }
 
         $translator = Zend_Registry::get('container')->getService('translator');
