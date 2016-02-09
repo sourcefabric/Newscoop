@@ -17,6 +17,7 @@ Quick links to our resources are:
 * Developer's blog: [https://dev-blog.sourcefabric.org][12]
 * Plugins Development’s documentation: [http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/][15]
 * RESTful API documentation: [http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/][16]
+* Developer's Cookbooks: [http://docs.sourcefabric.org/projects/newscoop-cookbook/en/latest/][17]
 
 ## Installation
 
@@ -97,3 +98,4 @@ Newscoop is licensed under the GPL3 license.
 [14]: https://bugs.php.net/bug.php?id=54709
 [15]: http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/
 [16]: http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/
+[17]: http://docs.sourcefabric.org/projects/newscoop-cookbook/en/latest/
