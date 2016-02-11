@@ -24,35 +24,35 @@ Top: Anfang
 'Deleting topic': 'Thema wird gelöscht'
 'Change topic name': 'Themenname ändern'
 'There are $1 articles using the topic.': 'Thema wird von $1 Artikeln verwendet.'
-'Search for topics': null
+'Search for topics': 'Nach Themen suchen'
 topics:
     tip: null
     label:
-        all: null
+        all: Alle
         filterbylang: null
-        search: null
+        search: 'Suche '
         filterplaceholder: null
-        addroot: null
-        topicname: null
+        addroot: 'Thema auf oberster Ebene hinzufügen'
+        topicname: 'Name des Themas'
         expandcollapse: null
-        changename: null
+        changename: 'Themenname ändern'
         for: null
         addsubtopic: null
         subtopicname: null
         addtranslation: null
         topictranslations: null
-        choose: null
+        choose: Auswählen...
         translationstring: null
         tree: null
-    title: null
+    title: Themen
     btn:
-        hide: null
+        hide: Verbergen
         remove: null
         edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
+        close: Schliessen
+        add: Hinzufügen
+        save: Speichern
+        saveandclose: 'Speichern und Schließen'
         removetrans: null
     alerts:
         languagenotfound: null
@@ -60,8 +60,8 @@ topics:
         translationexists: null
         beforedelete: null
         wrongparams: null
-        ordersaved: null
-        saved: null
+        ordersaved: 'Reihenfolge gespeichert.'
+        saved: 'Erfolgreich gespeichert.'
         beforedeleteinfo: null
     added: null
     failedfind: null

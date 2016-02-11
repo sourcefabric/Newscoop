@@ -282,8 +282,8 @@ Confirm: Bestätige
 at: auf
 published: veröffentlicht
 unpublished: unveröffentlicht
-nopermissions: null
-importantmessage: null
-anonymous: null
-'Successfully refreshed authentication token.': null
-'Failed to refresh authentication token.': null
+nopermissions: 'Sie haben keine Zugangsrechte für diese Ressource.'
+importantmessage: 'Wichtige Information'
+anonymous: Anonym
+'Successfully refreshed authentication token.': 'Der Authentifizierungs-Nachweis wurde erfolgreich aktualisiert.'
+'Failed to refresh authentication token.': 'Fehler: Der Authentifizierungs-Nachweis konnte nicht aktualisiert werden.'

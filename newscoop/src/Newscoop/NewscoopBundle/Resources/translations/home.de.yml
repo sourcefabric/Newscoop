@@ -126,7 +126,7 @@ Download: Herunterladen
 'Clear system cache': 'System-Cache leeren'
 'The system was unable to upload the file $1. ': 'Das System konnte die Datei $1 nicht hochladen.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Die Datei, die Sie hochladen möchten, könnte beschädigt sein.'
-'An error occurred in session management. Please reload the login page.': null
+'An error occurred in session management. Please reload the login page.': 'Ein Fehler beim Session Management ist aufgetreten. Bitte laden Sie die Login-Seite erneut.'
 'This file is stored on disk as $1.': 'Diese Datei ist als $1 gespeichert.'
 'The system is unable to write to the directory $1.': 'Das System konnte nicht auf das Verzeichnis $1 zugreifen.'
 'The system was unable to read the file $1.': 'Das System konnte die Datei $1 nicht lesen.'
@@ -152,12 +152,12 @@ Help: Hilfe
 'Please make sure that you typed the correct user name and password.': 'Bitte prüfen, ob Benutzername und Passwort korrekt eingegeben wurden.'
 'If your problem persists please contact the site administrator $1': 'Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.'
 Backup/Restore: Backup/Wiederherstellung
-'Step 2': null
-'Step 3': null
-'Add new user': null
-'Bad credentials': null
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
-'Change password': null
+'Step 2': 'Schritt 2'
+'Step 3': 'Schritt 3'
+'Add new user': 'Neuen Nutzer hinzufügen'
+'Bad credentials': 'Falsche Zugangsdaten'
+'Active users': 'Aktive Nutzer'
+'New comments': 'Neue Kommentare'
+'Published articles': 'Publizierte Artikel'
+'Last 7 days statistics': 'Statistik für die letzten 7 Tage'
+'Change password': 'Passwort ändern'

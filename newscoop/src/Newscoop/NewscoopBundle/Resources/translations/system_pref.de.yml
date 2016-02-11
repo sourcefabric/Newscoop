@@ -32,8 +32,8 @@ newscoop:
             cronjob: null
         btn:
             cleardatabasecache: 'Lösche aktuellen Treiber-Cache'
-            disable: null
-            enable: null
+            disable: Deaktivieren
+            enable: Aktivieren
         label:
             title: Systemeinstellungen
             header: Einstellungen
@@ -117,16 +117,16 @@ newscoop:
             geosearch: 'Lokale GeoNamen Suche benutzen:'
             usergarbage: null
             usergarbagedaysinfo: null
-            usergarbagedays: null
+            usergarbagedays: 'Anzahl der Tage'
             smartyUseProtocol: null
             cronjob: null
-            enabled: null
-            options: null
+            enabled: Status
+            options: Optionen
             info: null
             infodesc: null
             prevRun: null
             nextRun: null
-            norecords: null
+            norecords: 'Es wurde kein Eintrag gefunden.'
             cronJobEmail: null
             cronJobSenderEmail: null
             cronJobSenderName: null

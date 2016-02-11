@@ -1,38 +1,38 @@
-newscoop.plugins_manager.manager: null
-newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
-newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.manager: Pluginverwaltung
+newscoop.plugins_manager.legacy_manager: 'Frühere Pluginverwaltung'
+newscoop.plugins_manager.public_plugins: 'Öffentliche Plugins'
+newscoop.plugins_manager.private_plugins: 'Private Plugins'
+newscoop.plugins_manager.install.public: 'Neue Plugins installieren'
 newscoop.plugins_manager.installed_table.name: Name
 newscoop.plugins_manager.installed_table.description: Beschreibung
 newscoop.plugins_manager.installed_table.enabled: Aktiviert
 newscoop.plugins_manager.installed_table.version: Version
 newscoop.plugins_manager.installed_table.license: Lizenz
-newscoop.plugins_manager.installed_table.installed_at: null
-newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.installed_at: 'Installiert am'
+newscoop.plugins_manager.installed_table.updated_at: 'Aktualisiert am'
 newscoop.plugins_manager.installed_table.actions: Aktionen
-newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.update_plugin: Update
 newscoop.plugins_manager.installed_table.remove_plugin: Entferne
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
-newscoop.plugins_manager.upload.private: null
-newscoop.plugins_manager.search_for_plugins: null
-newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.installed_table.install_plugin: Installieren
+newscoop.plugins_manager.installed_table.plugin_installed: Installiert
+newscoop.plugins_manager.upload.private: 'Privates Plugin hochladen'
+newscoop.plugins_manager.search_for_plugins: 'Nach Plugins suchen'
+newscoop.plugins_manager.form.package: 'Dateipaket muss eine Zip Datei sein.'
 newscoop.plugins_manager.form.submit: Upload
-newscoop.plugins_manager.runcommand: null
-newscoop.plugins_manager.openterminal: null
-newscoop.plugins_manager.installassets: null
-newscoop.plugins_manager.done: null
-newscoop.plugins_manager.close: null
-newscoop.plugins_manager.update: null
-newscoop.plugins_manager.install: null
-newscoop.plugins_manager.remove: null
-newscoop.plugins_manager.installed: null
-newscoop.plugins_manager.clipboard: null
-newscoop.plugins_manager.downloads: null
+newscoop.plugins_manager.runcommand: 'Kommando ausführen'
+newscoop.plugins_manager.openterminal: 'Kommandozeilen-Terminal öffnen und Kommando ausführen'
+newscoop.plugins_manager.installassets: 'Zusatzelemente (Assets) installieren'
+newscoop.plugins_manager.done: 'Erledigt. Bitte Fenster schließen und Seite neu laden.'
+newscoop.plugins_manager.close: Schließen
+newscoop.plugins_manager.update: 'Wie wird das Plugin aktiualisiert?'
+newscoop.plugins_manager.install: 'Wie wird das Plugin installiert?'
+newscoop.plugins_manager.remove: 'Wie wird das Plugin entfernt?'
+newscoop.plugins_manager.installed: 'Erledigt. Seite bitte neu laden. Das Plugin sollte jetzt in der Liste installierter Plugins erscheinen.'
+newscoop.plugins_manager.clipboard: 'In die Zwischenablage kopieren: Strg.+C (Apfel+C für Mac), Eingabe'
+newscoop.plugins_manager.downloads: Downloads
 newscoop.plugins_manager.favers: null
-newscoop.plugins_manager.private_plugins_not_writable: null
-newscoop.plugins_manager.private_plugins_not_writable_commands: null
+newscoop.plugins_manager.private_plugins_not_writable: '%privatePluginsPath% kann nicht auf Ihren Web-Server geschrieben werden.'
+newscoop.plugins_manager.private_plugins_not_writable_commands: 'Auf einem Linux Server kann dies mit folgenden Kommandos behoben werden:'
 newscoop:
     datatable:
         table:

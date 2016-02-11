@@ -63,7 +63,7 @@ Username: Benutzername
 'Last Name': Nachname
 'First Name': Vorname
 Email: E-Mail
-'You were logged out.': null
+'You were logged out.': 'Sie wurden ausgeloggt. '
 'Newscoop Subhead': 'Newscoop Zwischentitel'
 Filters: Filter
 'Add new Author': 'Neuen Autor hinzufügen'
@@ -183,7 +183,7 @@ Miscellaneous: Sonstiges
 'Administrative tasks': 'Administrative Aufgaben'
 'User will be notified on several events': 'Der Benutzer wird bei mehreren Events benachrichtigt'
 'Editor Miscellaneous Settings': 'Editor: Sonstige Einstellungen'
-'No such user account.': null
+'No such user account.': 'Benutzeraccount existiert nicht. '
 'User image (full-size)': null
 'User account is highlighted as "featured account"': null
 'Custom attribute...': null
