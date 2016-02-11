@@ -58,7 +58,7 @@ None: Ниједан
 'User account is active': null
 'Allow users profile to be publicly displayed': null
 'Allow user access to login to site backend': null
-Templates: null
+Templates: Шаблони
 Username: 'Корисничко име'
 'Last Name': Презиме
 'First Name': Име
@@ -194,7 +194,7 @@ users:
     menu:
         manage: 'Управљање корисницима'
     created: Направљено
-    updated: null
+    updated: Измењено
     status:
         status: Статус
         registered: null
@@ -210,14 +210,14 @@ users:
             remove: Уклони
         confirm_remove: null
         table_messages:
-            page: null
-            perPageText: null
-            pageText: null
+            page: Страна
+            perPageText: 'Прикажи:'
+            pageText: Стране
             recordCountPageBoundTemplate: null
             recordCountPageUnboundedTemplate: null
             recordCountTotalTemplate: null
             recordCountFilteredTemplate: null
-            recordCountText: null
+            recordCountText: Приказивање
             recordCountTextTemplate: null
             recordCountTemplate: null
             processingText: Обрађујем...

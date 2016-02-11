@@ -1,31 +1,31 @@
-'Edit metadata': null
-Rating: null
-'Enable Rating': null
-'Blog management': null
+'Edit metadata': 'Уреди мета-податке'
+Rating: Рејтинг
+'Enable Rating': 'Активирај рејтинг'
+'Blog management': 'Подешавање блога'
 'View article': 'Погледај текст'
-'Select a list': null
-'Remove list': null
-'Please select a list': null
-Playlist: null
-'List updated.': null
-'List saved': null
-'List Name': null
-'List ID': null
-'Item already exists in the list': null
+'Select a list': 'Изабери листу'
+'Remove list': 'Уклони листу'
+'Please select a list': 'Изабери листу'
+Playlist: 'Плејлиста текстова'
+'List updated.': 'Листа измењена'
+'List saved': 'Листа сачувана'
+'List Name': 'Назив листе'
+'List ID': 'Број листе'
+'Item already exists in the list': 'Изабрана ставка већ постоји у листи'
 'Featured Articles': null
 'Featured Article Lists': null
 'Featured Article List': null
-'Duplicate list': null
-'Duplicate article entry found': null
-'Drag here to add to list': null
-'Could not save the list': null
-'Available Articles': null
-'Are you sure you want to delete this list?': null
-'Add to list': null
-'Add list': null
-'Multi date events': null
-Slideshows: null
-'Place images': null
+'Duplicate list': 'Дуплирај листу'
+'Duplicate article entry found': 'Дуплирај нађени текст'
+'Drag here to add to list': 'Превуци да додаш у листу'
+'Could not save the list': 'Није могуће сачувати промене за листу'
+'Available Articles': 'Понуђени текстови'
+'Are you sure you want to delete this list?': 'Да ли сте сигурни да желите да обришете листу?'
+'Add to list': 'Додај у листу'
+'Add list': 'Додај листу'
+'Multi date events': 'Догађаји са више датума'
+Slideshows: 'Галерија слика'
+'Place images': 'Додај слике'
 'Youre not allowed to edit article.': 'Немате право уређивања текста'
 Webcode: 'Веб код'
 Unapproved: Неодобрен
@@ -183,37 +183,37 @@ Comments: Коментари
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Текст не може бити прегелдан. Проверите да ли је одређен шаблон за приказ текста.'
 'No such article.': 'Нема таквог текста.'
 'No such section.': 'Нема те рубрике.'
-Characters: null
-Snippet: null
+Characters: Карактери
+Snippet: Снипет
 'This list is already in a different state than the one in which it was loaded.': null
-'List name should not be longer than 40 chars': null
-'Not valid number': null
-'List limit': null
-'The last article of this list has been removed.': null
-Revert: null
-'Could not automatically refresh the list': null
-'The article slideshows have been successfully updated, please close the window.': null
+'List name should not be longer than 40 chars': 'Назив листе не би требало да буде дужи од 40 карактера'
+'Not valid number': 'Број није исправан'
+'List limit': 'Лимит листе'
+'The last article of this list has been removed.': 'Последњи текст у листи је избачен.'
+Revert: 'Поврати страницу пре измена'
+'Could not automatically refresh the list': 'Листа није аутоматски освежена'
+'The article slideshows have been successfully updated, please close the window.': 'Галерија слика уз овај чланак је успешно измењена. Затворите овај прозор.'
 articles:
     playlists:
-        namechanged: null
-        alert: null
+        namechanged: 'Сигурни сте да желите да измените назив листе? Назив листе се можда користи у систему, за приказивање текстова на почетној страни. Уколико нисте сигурни, консултујте се са администратором сајта.'
+        alert: 'Сигурни сте да желите да промените максималан број чланака за листу? Уколико овај лимит промените, сви артикли изнад лимита ће бити избачени са листе. Пример: Уколико промените лимит са 50 на 30, свих 20 чланака од позиције 31 до 50 це бити избачени са листе.'
     images:
-        see_original: null
+        see_original: 'Преглед слике у оригиналној величини у новом табу'
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Уреди мета-податке за слику'
+            save: Сними
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
+                use: Употреби
+                number: Број
+                caption: Потпис
+                status_approved: Одобрен
+                status_unapproved: Неодобрен
+                status: Статус
+                description: Опис
+                photographer: Фотограф
                 photographer_url: null
-                place: null
-                date: null
+                place: Место
+                date: Датум
                 article_specific: null
-                global: null
-                other_captions: null
+                global: Глобално
+                other_captions: 'Други потписи'

@@ -1,5 +1,5 @@
-'so that default templates can be assigned to the issue.': null
-'Once this is done, the issue can be published': null
+'so that default templates can be assigned to the issue.': 'тако да предефинисани шаблон може бити додељен издању.'
+'Once this is done, the issue can be published': 'Када је то урађено, издање може бити објављено'
 'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Ово издање не може бити приказано. Проверите да ли публикација има додељену тему.'
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Ово издање не може бити прегледано. Проверите да ли има додељен шаблон за приказ прве стране.'
 'Publish all articles:': 'Објави све текстове:'
@@ -59,4 +59,4 @@ Schedule: Закажи
 'There was an error reading the issue parameter.': 'Дошло је до грешке при читању параметра издања.'
 'There was an error scheduling the $1 action on $2': 'Дошло је до грешке у заказивању акције $1 за $2'
 'The action scheduled on $1 could not be deleted.': 'Акција заказана за $1 не може бити обрисана.'
-'Click to open': null
+'Click to open': 'Клик за отварање'

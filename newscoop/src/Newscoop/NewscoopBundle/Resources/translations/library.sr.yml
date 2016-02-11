@@ -1,4 +1,4 @@
-'Show hidden Article Types?': null
+'Show hidden Article Types?': 'Приказ скривених типова текста?'
 Webcode: 'Веб код'
 'View article': 'Погледај текст'
 Source: Извор
@@ -70,7 +70,7 @@ Added: Додато
 '$1 toggled.': '$1 измењено у спротно.'
 '$1 articles have been removed': '$1 текстова уклоњено'
 ' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'
-'Search for creators': null
-'No matches.': null
-Searching...: null
-'Minimum input of characters: $1': null
+'Search for creators': 'Тражи ауторе'
+'No matches.': 'Нема резултата.'
+Searching...: Претраживање...
+'Minimum input of characters: $1': 'Најмањи број карактера: $1'

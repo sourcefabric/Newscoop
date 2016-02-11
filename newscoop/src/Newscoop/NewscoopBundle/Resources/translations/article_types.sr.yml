@@ -1,8 +1,8 @@
-list: null
-filter: null
-'Show in Article Lists?': null
-'Are you sure you want to $1 articles of article type $2?': null
-'$1 articles of article type $2': null
+list: листа
+filter: filter
+'Show in Article Lists?': 'Прикажи у листи чланака'
+'Are you sure you want to $1 articles of article type $2?': 'Да ли сте сигурни да желите да $1 чланака типа $2?'
+'$1 articles of article type $2': '$1 чланака тип чланка $2'
 'Hide human-readable field names': 'Сакри називе поља прилагођене људима'
 'Edit and translate human-readable field names': 'Уреди и преведи називе поља прилагођене људима'
 'The template name may only contain letters and the underscore (_) character.': 'Назив поља може садржати искључиво слова и доњу црту (_)'
@@ -46,7 +46,7 @@ activate: активирај
 'The translation could not be added.': 'Превод не може бити додат'
 'The article type $1 does not exist.': 'Тип текста $1 не постоји'
 'Template Type Name': 'Назив типа шаблона'
-'Show to Authors?': null
+'Show to Authors?': 'Видљиво за ауторе?'
 'Show article on section page': 'Прикажи текст на страни рубрике'
 'Show article on front page': 'Прикажи текст на првој страни'
 'Publish date': 'Датум објављивања'
@@ -58,7 +58,7 @@ Merge!: Споји!
 'Go to Step 2': 'Иди на корак 2'
 'Display Name': 'Приказно име'
 'Delete article type $1.': 'Обриши тип текста $1.'
-'Comments Enabled?': null
+'Comments Enabled?': 'Омогући коментаре?'
 'Back to Step 2': 'Назад на корак 2'
 'Back to Step 1': 'Назад на корак 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Да ли сте сигурни да желите да обришете тип текста $1? УПОЗОРЕЊЕ: брисање типа текста ће обрисати и све текстове додате коришћењем овог типа текста.'

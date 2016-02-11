@@ -36,7 +36,7 @@ hide: сакри
 'The field $1 does not exist.': 'Поље $1 не постоји'
 'The $1 field may only contain letters and underscore (_) character.': 'Поље $1 може садржати искључиво слова и доњу црту (_)'
 'Template Field Name': 'Име поља шаблона'
-'Show to Authors?': null
+'Show to Authors?': 'Видљиво за ауторе?'
 'Renaming article type field': 'Преименовање поља типа тикста'
 'Rename field': 'Преименуј поље'
 'Reassign a field type': 'Поново додели тип поља'

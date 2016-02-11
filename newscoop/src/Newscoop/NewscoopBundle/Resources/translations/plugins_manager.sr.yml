@@ -1,38 +1,38 @@
-newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.manager: 'Управљање додацима'
 newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
-newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.public_plugins: 'Јавни додаци'
+newscoop.plugins_manager.private_plugins: 'Приватни додаци'
+newscoop.plugins_manager.install.public: 'Инсталирај нови додатак'
 newscoop.plugins_manager.installed_table.name: Наслов
 newscoop.plugins_manager.installed_table.description: Опис
 newscoop.plugins_manager.installed_table.enabled: Омогућени
 newscoop.plugins_manager.installed_table.version: Верзија
 newscoop.plugins_manager.installed_table.license: Лиценца
-newscoop.plugins_manager.installed_table.installed_at: null
-newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.installed_at: 'Инсталирано овде'
+newscoop.plugins_manager.installed_table.updated_at: 'Измењено овде'
 newscoop.plugins_manager.installed_table.actions: Акције
-newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.update_plugin: Измени
 newscoop.plugins_manager.installed_table.remove_plugin: Уклони
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
-newscoop.plugins_manager.upload.private: null
-newscoop.plugins_manager.search_for_plugins: null
-newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.installed_table.install_plugin: Инсталирај
+newscoop.plugins_manager.installed_table.plugin_installed: Инсталирано
+newscoop.plugins_manager.upload.private: 'Аплодуј приватне додатке'
+newscoop.plugins_manager.search_for_plugins: 'Претражи додатке'
+newscoop.plugins_manager.form.package: 'Мора бити компресовано у zip фајл.'
 newscoop.plugins_manager.form.submit: Аплоудуј
-newscoop.plugins_manager.runcommand: null
-newscoop.plugins_manager.openterminal: null
+newscoop.plugins_manager.runcommand: 'Стартуј команду'
+newscoop.plugins_manager.openterminal: 'Отвори терминал и стартуј команду'
 newscoop.plugins_manager.installassets: null
-newscoop.plugins_manager.done: null
-newscoop.plugins_manager.close: null
-newscoop.plugins_manager.update: null
-newscoop.plugins_manager.install: null
-newscoop.plugins_manager.remove: null
-newscoop.plugins_manager.installed: null
+newscoop.plugins_manager.done: 'Завршено. Затвори овај прозор и освежи страну.'
+newscoop.plugins_manager.close: Затвори
+newscoop.plugins_manager.update: 'Како да ажурирам овај додатак?'
+newscoop.plugins_manager.install: 'Како да инсталирам овај додатак?'
+newscoop.plugins_manager.remove: 'Како да обришем овај додатак?'
+newscoop.plugins_manager.installed: 'Завршено. Освежи страну. Додатак би требало да се налази у листи инсталираних додатака.'
 newscoop.plugins_manager.clipboard: null
-newscoop.plugins_manager.downloads: null
+newscoop.plugins_manager.downloads: Преузето
 newscoop.plugins_manager.favers: null
 newscoop.plugins_manager.private_plugins_not_writable: null
-newscoop.plugins_manager.private_plugins_not_writable_commands: null
+newscoop.plugins_manager.private_plugins_not_writable_commands: 'На Линукс серверу ово можете решити следећим командама:'
 newscoop:
     datatable:
         table:

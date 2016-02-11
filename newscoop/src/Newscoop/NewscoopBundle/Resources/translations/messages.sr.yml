@@ -148,7 +148,7 @@ Localizer: Локализатор
 'Add new publication': 'Додај нову публикацију'
 'Upload new template': 'Аплоудуј нови шаблон'
 'Add new staff member': 'Додај новог сарадника'
-'Staff member deleted.': null
+'Staff member deleted.': 'Сарадник је избрисан.'
 'Add new subscriber': 'додај новог претплатника'
 'Add new user type': 'Додај нови тип корисника'
 'Add new article type': 'Додај нови тип текста'
@@ -259,31 +259,31 @@ Reads: читања
 'Invalid security token!': 'Погрешан сигурносни симбол'
 Authors: Аутори
 Title: Наслов
-'Edit country': null
-'Entry $1 prepared for publishing': null
-'Entry deleted': null
+'Edit country': 'Изабери државу'
+'Entry $1 prepared for publishing': '$1 спремно за објављивање'
+'Entry deleted': Обрисано
 'Feed saved': null
-'Item published': null
-'Settings saved': null
-'Self-delete is not permitted.': null
-'Edit staff member $1': null
-'Delete staff member $1': null
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Item published': 'Ставка је објављена'
+'Settings saved': 'Подешавања сачувана'
+'Self-delete is not permitted.': 'Није могуће избрисати свој налог.'
+'Edit staff member $1': 'Уреди сарадника $1'
+'Delete staff member $1': 'Избриши сарадника $1'
+'Could not save user $1. Please make sure it does not already exist': 'Корисник $1 није сачуван. Проверите да ли већ постоји у систему.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Корисник са мејл адресом  $1 није сачуван. Проверите да ли већ постоји у систему.'
 'Changing user type would prevent you to manage users. Aborted.': null
-'Staff member saved.': null
-'Permissions: $1': null
-'Change user account information': null
-'Staff management': null
-Updated: null
-Options: null
-Verified: null
-Confirm: null
+'Staff member saved.': 'Сарадник сачуван.'
+'Permissions: $1': 'Права: $1'
+'Change user account information': 'Промени податке о кориснику'
+'Staff management': 'Управљање сарадничким налозима'
+Updated: Измењено
+Options: Опције
+Verified: Верификовано
+Confirm: Потврђено
 at: у
-published: null
-unpublished: null
-nopermissions: null
-importantmessage: null
-anonymous: null
+published: објављено
+unpublished: повучено
+nopermissions: 'Немате право да приступите страни'
+importantmessage: 'Важна информација'
+anonymous: Анонимус
 'Successfully refreshed authentication token.': null
 'Failed to refresh authentication token.': null

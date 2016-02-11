@@ -1,15 +1,15 @@
 comments:
     label:
-        comments: null
+        comments: 'Управљање коментарима'
         menu: Коментари
-        banned: null
-        anonymous: null
+        banned: Забрањен
+        anonymous: Анонимус
         at: у
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
+        noentries: 'Нема уноса за тражено.'
+        showing: Приказивање
+        of: од
+        to: ка
+        entries: уноси
         fullarticle: 'Цео текст'
         hidden: Сакривен
         approved: Одобрен
@@ -19,20 +19,20 @@ comments:
         comment: Коментар
         replyto: 'Одговорите на коментар'
         subject: Наслов
-        ban: null
+        ban: 'Блокирајте или одблокирајте корисника'
         author: аутор
-        date: null
+        date: 'Датум / Коментари'
         article: Текст
         search: Тражи
         show: Прикажи
         recommended: Препоручени
         unrecommended: Непрепоручен
-        editcomment: null
+        editcomment: 'Брзо уређивање коментара'
         actions: Акције
         selectstatus: 'Изабери статус'
         deleted: Обрисано
-        alert: null
-        searchholder: null
+        alert: Упозорење
+        searchholder: 'Претраживање...(име, мејл, наслов, коментар, наслов чланка)'
     btn:
         cancel: Батали
         submit: Пошаљи
@@ -42,25 +42,25 @@ comments:
         reply: Одговори
         edit: 'Брзо уређивање'
         close: Затвори
-        okay: null
+        okay: OK
         filter: Филтер
     msg:
         deleted: 'Коментар избрисан'
         commentinarticle: 'Коментатор $4 од $1 у тексту $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: нови
+            approved: одобрен
+            hidden: сакривен
+            single: 'Статус коментара промењен у'
+            all: 'Статус коментара промењен у'
         error:
             reach: 'Newscoop није доступан. Проверите своју интернет везу.'
             deletefromarticle: 'Коментар обрисан од стране $1 из текста $2 ($3)'
-            statuschange: null
-            delete: null
-            update: null
+            statuschange: 'Грешка приликом промене статуса коментара'
+            delete: 'Није могуће обрисати овај коментар'
+            update: 'Поља не могу остати празна'
         sure: 'Неповратно ћете избрисати коментар.'
-        suremultiple: null
-        first: null
+        suremultiple: 'Неповратно ћете избрисати коментаре.'
+        first: 'Прво изаберите коментаре!'
         surequestion: 'Сигурни сте да желите то да урадите?'
         updated: 'Коментар измењен.'
