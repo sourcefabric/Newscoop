@@ -2,8 +2,8 @@ type_publications:
     name:
         min: 'Der Name der Publikation muss länger sein als  {{ limit }} Zeichen.'
     metaDescription:
-        max: null
+        max: 'Die (SEO-)Beschreibung der Publikation muss kürzer sein als  {{ limit }} Zeichen.'
     metaTitle:
-        max: null
+        max: 'Der (SEO-)Titel der Publikation muss kürzer sein als  {{ limit }} Zeichen.'
     metaKeywords:
-        max: null
+        max: 'Die (SEO-)Schlüsselwörter der Publikation müssen insgesamt kürzer sein als  {{ limit }} Zeichen.'

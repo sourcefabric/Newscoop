@@ -118,7 +118,7 @@ Filters: Filter
 'The IP Group $1 has been created.': null
 'There was an error creating the IP address group.': null
 'The IP address group $1 has been deleted.': null
-'User $1 information was changed successfully.': null
+'User $1 information was changed successfully.': 'Nutzer $1 Informationen wurde erfolgreich geändert.'
 'User Type': Benutzertyp
 'The IP address group $1:$2 conflicts with another existing group.': null
 'User may add/change publications': 'Benutzer darf Publikationen hinzufügen / ändern'

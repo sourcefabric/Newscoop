@@ -55,9 +55,9 @@ topics:
         saveandclose: 'Speichern und Schließen'
         removetrans: 'Die Übersetzung des Themas entfernen'
     alerts:
-        languagenotfound: null
+        languagenotfound: 'Die Sprache wurde nicht gefunden: %locale%'
         translationadded: 'Die Übersetzung wurde hinzugefügt'
-        translationexists: null
+        translationexists: 'Eine Übersetzung für %locale% existiert bereits.'
         beforedelete: 'Soll dieses Thema wirklich gelöscht werden?'
         wrongparams: null
         ordersaved: 'Reihenfolge gespeichert.'
@@ -73,7 +73,7 @@ topics:
     failedremoveTranslation: 'Die Standard-Übersetzung des Themas kann nicht entfernt werden. Stattdessen das Thema entfernen.'
     updated: 'Das Thema wurde aktualisiert'
     error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.'
-    csrfinvalid: null
+    csrfinvalid: 'Der CSRF Token (Schutz des Formulars vor Missbrauch) ist ungültig. Bitte versuchen Sie erneut das Formular abzuschicken.'
     tooshort: null
     toolong: null
     attachtopics: 'Thema zuweisen'
