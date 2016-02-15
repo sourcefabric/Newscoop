@@ -101,11 +101,11 @@ publications:
     buttons:
         addNew: 'Neue Publikation hinzufügen'
         listPublications: 'Publikationen auflisten'
-        listIssues: null
+        listIssues: 'Zeige Ausgaben der Publikation'
     table:
         number: Nummer
         name: Name
-        default_alias: null
+        default_alias: 'Vorgegebener Alias'
         default_language: Standardsprache
         comments_status: Kommentarstatus
         url_type: 'URL Typ'
@@ -119,7 +119,7 @@ publications:
             short_names: Kurzname
             alias: 'Standard Alias'
             url_type: 'URL Typ'
-            seo: null
+            seo: 'Artikel URL Bestandteile'
             seo_article_title: Artikeltitel
             seo_article_keywords: Artikelschlagwörter
             seo_article_topics: Artikelthemen
@@ -133,7 +133,7 @@ publications:
             comments_subscribers_moderated: 'Werden Kommentare registrierter Nutzer moderiert?'
             comments_public_moderated: 'Werden öffentliche (anonyme) Kommentare moderiert?'
             comments_captcha_enabled: 'Captcha Spamschutz aktiviert?'
-            comments_spam_blocking_enabled: null
+            comments_spam_blocking_enabled: 'Kommentar Spam (internes System) Blocker aktiviert?'
             meta_title: 'SEO-Titel der Publikation'
             meta_keywords: 'SEO-Schlüsselwörter der Publikation'
             meta_description: 'SEO-Beschreibung der Publikation'

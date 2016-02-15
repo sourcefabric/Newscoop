@@ -30,7 +30,7 @@ newscoop.plugins_manager.remove: 'Wie wird das Plugin entfernt?'
 newscoop.plugins_manager.installed: 'Erledigt. Seite bitte neu laden. Das Plugin sollte jetzt in der Liste installierter Plugins erscheinen.'
 newscoop.plugins_manager.clipboard: 'In die Zwischenablage kopieren: Strg.+C (Apfel+C für Mac), Eingabe'
 newscoop.plugins_manager.downloads: Downloads
-newscoop.plugins_manager.favers: null
+newscoop.plugins_manager.favers: Favoriten
 newscoop.plugins_manager.private_plugins_not_writable: '%privatePluginsPath% kann nicht auf Ihren Web-Server geschrieben werden.'
 newscoop.plugins_manager.private_plugins_not_writable_commands: 'Auf einem Linux Server kann dies mit folgenden Kommandos behoben werden:'
 newscoop:
