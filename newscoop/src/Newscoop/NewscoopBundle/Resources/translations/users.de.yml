@@ -134,7 +134,7 @@ Filters: Filter
 'User may add images': 'Benutzer darf Bilder hinzufügen'
 'User may change images': 'Benutzer darf Bilder ändern'
 'User may delete images': 'Benutzer darf Bilder löschen'
-'User may delete templates': 'Benutzer darf Templates löschen'
+'User may delete templates': 'Benutzer darf Designvorlagen löschen'
 'User may add/change staff accounts and passwords': 'Benutzer darf Mitarbeiteraccounts und Passwörter hinzufügen / ändern'
 'User may add/change subscribers accounts and passwords': 'Benutzer darf Abonnementkonten und Kennwörter hinzufügen / ändern'
 'User may delete staff accounts': 'Benutzer darf Mitarbeiteraccounts löschen'
@@ -142,7 +142,7 @@ Filters: Filter
 'User may manage account types': 'Benutzer darf Kontotypen verwalten'
 'User may add/change article types': 'Benutzer darf Artikeltypen hinzufügen / ändern'
 'User may delete article types': 'Benutzer darf Artikeltypen löschen'
-'User may manage templates': 'Benutzer darf Templates verwalten'
+'User may manage templates': 'Benutzer darf Designvorlagen verwalten'
 'User may add/change country entries': 'Benutzer darf Ländereinträge hinzufügen/ändern'
 'User may add languages and manage language information': 'Nutzer kann Sprachen hinzufügen und verwalten Sprachinformationen'
 'User may delete languages': 'Benutzer darf Sprachen löschen'
@@ -186,7 +186,7 @@ Miscellaneous: Sonstiges
 'No such user account.': 'Benutzeraccount existiert nicht. '
 'User image (full-size)': 'Bild des Nutzers (in Originalgröße)'
 'User account is highlighted as "featured account"': 'Das Nutzerkonto wird als "besonderes Nutzerkonto" hervorgehoben'
-'Custom attribute...': null
+'Custom attribute...': 'Individuell erstelltes Attribut...'
 'An author with the same full name (combination of first and last name) already exists.': 'Ein Autor gleichen Namens (Kombination des Vor- und Nachnamens) existiert bereits.'
 users:
     label:
