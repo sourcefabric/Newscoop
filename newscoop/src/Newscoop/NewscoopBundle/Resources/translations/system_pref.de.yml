@@ -119,19 +119,19 @@ newscoop:
             usergarbagedaysinfo: 'Definieren Sie eine Anzahl von Tagen nach denen anhängige, noch nicht vollständig registrierte Nutzer, gelöscht werden sollen.'
             usergarbagedays: 'Anzahl der Tage'
             smartyUseProtocol: 'Soll das Protokoll für absolute URLs von Smarty genutzt werden?'
-            cronjob: null
+            cronjob: 'Name des Cronjobs (zeitliche Steuerung eines Prozesses)'
             enabled: Status
             options: Optionen
             info: 'Information:'
-            infodesc: null
-            prevRun: null
-            nextRun: null
+            infodesc: 'Diese Einstellungen helfen dabei Hintergrund-Prozesse zu steuern, indem ausgwählte Prozesse gestartet und gestoppt werden.'
+            prevRun: 'Vorhergehendes Start-Datum'
+            nextRun: 'Nächstes Start-Datum'
             norecords: 'Es wurde kein Eintrag gefunden.'
             cronJobEmail: null
             cronJobSenderEmail: null
             cronJobSenderName: null
             cronJobNotify: null
-            cronslist: null
+            cronslist: 'Liste der Hintergrund-Prozesse'
             cronsadvanced: 'Erweiterte Einstellungen'
             moredetails: 'Mehr Details'
         popover:
@@ -161,4 +161,4 @@ newscoop:
                 secure: 'Falls Sie eine sichere URL für reCAPTCHA benutzen, wählen Sie die Option Ja'
             garbage: null
             lifetime: 'Die Lebensdauer einer Newscoop Sitzung in Sekunden. Maximal 86.400 (24 Stunden). Minimal: 0 (bis der Browser geschlossen wird).'
-            smartyuseprotocol: null
+            smartyuseprotocol: 'Wenn freigeschaltet, dann wird diese Smarty Funktion absolute URLs mit einem Protokoll (http/https) erstellen. Standardmäßig ist diese Funktion deaktiviert und es werden relative URLs erstellt. Es ist möglich dieses Verhalten mit dem Nutzerprotokoll Parameter der Smarty Funktion zu überschreiben und eine Boole-Funktion mit dem gewünschten Verhalten zu spezifizieren.'

@@ -86,7 +86,7 @@ Compatibility: Kompatibilität
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 Dateien $2'
 'Available themes': null
-'Update cached data': null
+'Update cached data': 'Zwischengespeicherte Daten aktualisieren'
 'Assigned templates': null
 'Cached informations about theme playlists are not up to date!': 'Zwischengespeicherte Informationen über "Listen ausgewählter Artikel" sind nicht auf dem letzten Stand.'
 'The theme''s configuration file does not contain information about the list of used featured articles.': null
