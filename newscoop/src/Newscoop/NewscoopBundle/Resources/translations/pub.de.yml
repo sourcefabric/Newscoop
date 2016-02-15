@@ -85,7 +85,7 @@ publications:
     general_settings: 'Allgemeine Einstellungen'
     comments_settings: 'Einstellungen für Kommentare'
     seo_settings: 'Einstellungen für Suchmaschinenoptimierung'
-    front_page_theme_settings: 'Startseiten Template Einstellungen'
+    front_page_theme_settings: 'Einstellungen der Startseiten-Designvorlage'
     publication_removed: 'Die Publikation wurde entfernt.'
     publication_saved: 'Die Änderungen an der Publikation wurden erfolgreich gespeichert.'
     remove:
@@ -113,7 +113,7 @@ publications:
         remove: Entfernen
     form_type:
         label:
-            follow_current_issue_theme: 'Nutze das Template der aktuellen Ausgabe'
+            follow_current_issue_theme: 'Nutze die Designvorlage der aktuellen Ausgabe'
             name: 'Name der Publikation'
             template_path: Templatepfad
             short_names: Kurzname
