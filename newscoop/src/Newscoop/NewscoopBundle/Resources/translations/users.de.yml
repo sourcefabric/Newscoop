@@ -185,7 +185,7 @@ Miscellaneous: Sonstiges
 'Editor Miscellaneous Settings': 'Editor: Sonstige Einstellungen'
 'No such user account.': 'Benutzeraccount existiert nicht. '
 'User image (full-size)': 'Bild des Nutzers (in Originalgröße)'
-'User account is highlighted as "featured account"': null
+'User account is highlighted as "featured account"': 'Das Nutzerkonto wird als "besonderes Nutzerkonto" hervorgehoben'
 'Custom attribute...': null
 'An author with the same full name (combination of first and last name) already exists.': 'Ein Autor gleichen Namens (Kombination des Vor- und Nachnamens) existiert bereits.'
 users:
