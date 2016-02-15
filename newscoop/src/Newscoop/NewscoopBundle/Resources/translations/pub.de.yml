@@ -126,7 +126,7 @@ publications:
             edit_aliases: 'Aliase bearbeiten'
             edit_languages: 'Sprachen bearbeiten'
             moderator_to: Moderatoren-Adresse
-            moderator_from: null
+            moderator_from: 'Adresse von der aus Moderations-E-Mails gesendet werden'
             comments_enabled: 'Kommentare aktiviert?'
             public_comments_enabled: 'Öffentliche (anonyme) Kommentare aktiviert?'
             comments_article_default_enabled: 'Sind Kommentare für Artikel standardmäßig aktiviert?'

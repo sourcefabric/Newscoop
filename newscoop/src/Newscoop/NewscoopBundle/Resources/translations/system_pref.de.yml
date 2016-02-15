@@ -11,14 +11,14 @@ newscoop:
             latitude: 'Wert im Feld Breitengrad ist ungültig.'
             longitude: 'Wert im Feld Längengrad ist ungültig. '
             cacheNotCleared: 'Fehler bei der Cache-Bereinigung'
-            joberror: null
+            joberror: 'Der Status des ausgewählten Prozesses konnte nicht verändert werden.'
             jobnotifyerror: null
         success:
             saved: 'Systemeinstellungen aktualisiert.'
             cacheCleared: 'Cache wurde gelöscht'
-            jobenabled: null
-            jobdisabled: null
-            jobnotifyswitched: null
+            jobenabled: 'Der Prozess wurde erfolgreich aktiviert.'
+            jobdisabled: 'Der Prozess wurde erfolgreich deaktiviert.'
+            jobnotifyswitched: 'Die Hintergrund-Prozess-Notifikations-Einstellung wurde erfolgreich geändert.'
         menu:
             general: 'Allgemeine Einstellungen'
             email: 'E-Mail Einstellungen'
@@ -29,7 +29,7 @@ newscoop:
             cache: Cache-Einstelllungen
             other: 'Andere Einstellungen'
             recaptcha: 'reCAPTCHA Einstellungen'
-            cronjob: null
+            cronjob: 'Hintergrund-Prozess Einstellungen'
         btn:
             cleardatabasecache: 'Lösche aktuellen Treiber-Cache'
             disable: Deaktivieren
@@ -118,7 +118,7 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: 'Definieren Sie eine Anzahl von Tagen nach denen anhängige, noch nicht vollständig registrierte Nutzer, gelöscht werden sollen.'
             usergarbagedays: 'Anzahl der Tage'
-            smartyUseProtocol: null
+            smartyUseProtocol: 'Soll das Protokoll für absolute URLs von Smarty genutzt werden?'
             cronjob: null
             enabled: Status
             options: Optionen
