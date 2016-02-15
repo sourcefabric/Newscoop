@@ -12,13 +12,13 @@ newscoop:
             longitude: 'Wert im Feld Längengrad ist ungültig. '
             cacheNotCleared: 'Fehler bei der Cache-Bereinigung'
             joberror: 'Der Status des ausgewählten Prozesses konnte nicht verändert werden.'
-            jobnotifyerror: null
+            jobnotifyerror: 'Benachrichtigungen konnten nicht aktiviert/deaktiviert werden.'
         success:
             saved: 'Systemeinstellungen aktualisiert.'
             cacheCleared: 'Cache wurde gelöscht'
             jobenabled: 'Der Prozess wurde erfolgreich aktiviert.'
             jobdisabled: 'Der Prozess wurde erfolgreich deaktiviert.'
-            jobnotifyswitched: 'Die Hintergrund-Prozess-Notifikations-Einstellung wurde erfolgreich geändert.'
+            jobnotifyswitched: 'Die Hintergrund-Prozess Benachrichtigungs-Einstellung wurde erfolgreich geändert.'
         menu:
             general: 'Allgemeine Einstellungen'
             email: 'E-Mail Einstellungen'
@@ -115,7 +115,7 @@ newscoop:
             yesoption: Ja
             nooption: Nein
             geosearch: 'Lokale GeoNamen Suche benutzen:'
-            usergarbage: null
+            usergarbage: 'Entferne die Daten veralteter anhängiger Nutzer'
             usergarbagedaysinfo: 'Definieren Sie eine Anzahl von Tagen nach denen anhängige, noch nicht vollständig registrierte Nutzer, gelöscht werden sollen.'
             usergarbagedays: 'Anzahl der Tage'
             smartyUseProtocol: 'Soll das Protokoll für absolute URLs von Smarty genutzt werden?'
@@ -127,16 +127,16 @@ newscoop:
             prevRun: 'Vorhergehendes Start-Datum'
             nextRun: 'Nächstes Start-Datum'
             norecords: 'Es wurde kein Eintrag gefunden.'
-            cronJobEmail: null
-            cronJobSenderEmail: null
-            cronJobSenderName: null
-            cronJobNotify: null
+            cronJobEmail: 'E-Mail-Adressen für Benachrichtigungen'
+            cronJobSenderEmail: 'E-Mail-Adresse des Absenders'
+            cronJobSenderName: 'Name des Absenders (z.B.: Newscoop Zeitplaner)'
+            cronJobNotify: 'Benachrichtigung senden?'
             cronslist: 'Liste der Hintergrund-Prozesse'
             cronsadvanced: 'Erweiterte Einstellungen'
             moredetails: 'Mehr Details'
         popover:
-            cronJobEmail: null
-            cronJobSenderEmail: null
+            cronJobEmail: 'Komma getrennte E-Mail-Adressen, an welche Fehler-Meldungen gesendet werden.'
+            cronJobSenderEmail: 'Die E-Mail-Adresse von der aus Benachrichtigungen gesendet werden.'
             cacheengine: 'Ermöglicht oder verhindert das APC Caching, welches die Leistung von Newscoop verbessern kann.'
             cacheenginehost: 'Cache-Host eingeben (für Memcache, Memcached oder Redis)'
             cacheengineport: 'Cache-Host-Ports eingeben (für Memcache, Memcached oder Redis)'
@@ -159,6 +159,6 @@ newscoop:
                 publickey: 'Benutzen Sie dies im JavaScript Code, der Ihren Nutzern bereitgestellt wird.'
                 privatekey: 'Nutzen Sie dies für die Kommunikation zwischen Ihrem Server und dem reCAPTCHA-Server. Achten Sie dabei auf Geheimhaltung.'
                 secure: 'Falls Sie eine sichere URL für reCAPTCHA benutzen, wählen Sie die Option Ja'
-            garbage: null
+            garbage: 'Wenn diese Funktion freigeschaltet ist, dann ermöglicht sie dem Seitenbetreiber anhängige Nutzer nach einer konfigurierbaren Anzahl von Tagen zu löschen. Die Standardeinstellung beträgt 90 Tage. '
             lifetime: 'Die Lebensdauer einer Newscoop Sitzung in Sekunden. Maximal 86.400 (24 Stunden). Minimal: 0 (bis der Browser geschlossen wird).'
             smartyuseprotocol: 'Wenn freigeschaltet, dann wird diese Smarty Funktion absolute URLs mit einem Protokoll (http/https) erstellen. Standardmäßig ist diese Funktion deaktiviert und es werden relative URLs erstellt. Es ist möglich dieses Verhalten mit dem Nutzerprotokoll Parameter der Smarty Funktion zu überschreiben und eine Boole-Funktion mit dem gewünschten Verhalten zu spezifizieren.'
