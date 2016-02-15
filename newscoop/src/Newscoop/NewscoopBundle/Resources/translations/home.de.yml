@@ -34,12 +34,12 @@ MiB: MiB
 'try again later': 'Bitte später wieder versuchen. '
 at: auf
 'You must at least upload one file.': 'Sie müssen mindestens eine Datei hochladen. '
-'Warning: the existing data and themes will be deleted!': 'Achtung: Die vorhandenen Daten und Themen werden gelöscht. '
+'Warning: the existing data and themes will be deleted!': 'Achtung: Die vorhandenen Daten und Designvorlagen werden gelöscht. '
 'Value is required and cant be empty': 'Der Wert ist erforderlich und kann nicht leer sein. '
 Upload: Upload
 'Update comment': 'Kommentar aktualisieren'
 'Time created': 'Zeitpunkt angelegt. '
-Themes: Themen
+Themes: Designvorlage
 'Stop current upload': 'Laufenden Upload abbrechen'
 'Start uploading queue': 'Upload Reihenfolge starten '
 'Start upload': 'Upload starten'
