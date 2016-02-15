@@ -1,4 +1,4 @@
-'Password confirmation does not match your password.': null
+'Password confirmation does not match your password.': 'Die Bestätigung Ihres Passworts und Ihr Passwort stimmen nicht überein.'
 'Password Confirmation': 'Passwort Bestätigung'
 Website: Website
 Twitter: Twitter
@@ -54,7 +54,7 @@ None: Keine
 'Edit permissions': 'Berechtigung bearbeiten'
 'Create new account': 'Neues Benutzerkonto anlegen'
 'Comment ban settings': 'Kommentarverbot Einstellungen'
-'Ban for user $1 saved.': null
+'Ban for user $1 saved.': 'Die Sperrung des Nutzers $1 wurde gespeichert.'
 'User account is active': 'Benutzerkonto ist aktiv'
 'Allow users profile to be publicly displayed': 'Benutzerprofil darf öffentlich angezeigt werden'
 'Allow user access to login to site backend': 'Benutzer erlauben, sich im Backend anmelden'
@@ -91,7 +91,7 @@ Filters: Filter
 'User may use the editor status bar': 'Benutzer darf Editor Statusleiste verwenden'
 'User may clear up the system cache': 'Benutzer darf System-Cache bereinigen'
 'Another user is registered with that e-mail address, please choose a different one.': 'Diese E-Mail-Adresse wird von einem anderen Benutzer verwendet, bitte wähle eine andere Adresse.'
-'There was an error when trying to update the user info.': null
+'There was an error when trying to update the user info.': 'Bei der Aktualisierung der Nutzerinformationen ist ein Fehler aufgetreten.'
 'User may moderate comments': 'Benutzer darf Kommentare moderieren'
 'User may enable comments': 'Benutzer darf Kommentare aktivieren'
 'User may translate articles': 'Benutzer darf Artikel übersetzen'
@@ -112,7 +112,7 @@ Filters: Filter
 'User account $1 was created successfully.': 'Benutzerkonto $1 wurde erfolgreich erstellt.'
 'You do not have the right to change user account permissions.': 'Du bist nicht berechtigt, die Benutzerrechte zu bearbeiten.'
 'You do not have the right to change user account information.': 'Du bist nicht berechtig, die Benutzerinformationen zu bearbeiten.'
-'The password you typed is incorrect.': null
+'The password you typed is incorrect.': 'Das Passwort ist nicht korrekt.'
 'You do not have the right to delete user accounts.': 'Du bist nicht berechtigt, Benutzerkonten zu löschen.'
 'User account $1 was deleted successfully.': 'Benutzerkonto $1 erfolreich gelöscht.'
 'The IP Group $1 has been created.': null
@@ -184,10 +184,10 @@ Miscellaneous: Sonstiges
 'User will be notified on several events': 'Der Benutzer wird bei mehreren Events benachrichtigt'
 'Editor Miscellaneous Settings': 'Editor: Sonstige Einstellungen'
 'No such user account.': 'Benutzeraccount existiert nicht. '
-'User image (full-size)': null
+'User image (full-size)': 'Bild des Nutzers (in Originalgröße)'
 'User account is highlighted as "featured account"': null
 'Custom attribute...': null
-'An author with the same full name (combination of first and last name) already exists.': null
+'An author with the same full name (combination of first and last name) already exists.': 'Ein Autor gleichen Namens (Kombination des Vor- und Nachnamens) existiert bereits.'
 users:
     label:
         title: Benutzersuche

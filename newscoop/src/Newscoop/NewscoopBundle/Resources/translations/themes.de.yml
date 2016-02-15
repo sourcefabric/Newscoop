@@ -1,7 +1,7 @@
 'Duplicate assignment': 'Doppelte Zuordnung'
 Templates: Templates
 'Import theme': 'Designvorlage importieren'
-'Import succeeded!': null
+'Import succeeded!': 'Import erfolgreich.'
 'Import failed!': 'Import fehlgeschlagen. '
 'Edit template: $1': 'Designvorlage bearbeiten: $1'
 'Set new name to': 'Neuen Namen einstellen für'
@@ -88,6 +88,6 @@ Compatibility: Kompatibilität
 'Available themes': null
 'Update cached data': null
 'Assigned templates': null
-'Cached informations about theme playlists are not up to date!': null
+'Cached informations about theme playlists are not up to date!': 'Zwischengespeicherte Informationen über "Listen ausgewählter Artikel" sind nicht auf dem letzten Stand.'
 'The theme''s configuration file does not contain information about the list of used featured articles.': null
 'Below code should be placed into theme.xml (between ''theme'' nodes) file to make it work. This file is located in every theme''s main directory.': null

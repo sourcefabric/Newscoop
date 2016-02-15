@@ -1,6 +1,6 @@
 type_publications:
     name:
-        min: null
+        min: 'Der Name der Publikation muss länger sein als  {{ limit }} Zeichen.'
     metaDescription:
         max: null
     metaTitle:

@@ -64,9 +64,9 @@ newscoop:
             imagewidth: 'Bildbreite verändern:'
             imageheight: 'Bildhöhe verändern:'
             zoom: 'Zoom aktiviert für Bilder im Artikelinhalt?'
-            mediaRichTextCaptions: null
-            mediaCaptionLength: null
-            mediaCaptionLength_after: null
+            mediaRichTextCaptions: 'Rich-Text Bildunterschriften aktivieren?'
+            mediaCaptionLength: 'Zeichenlimit für Bildunterschriften:'
+            mediaCaptionLength_after: Zeichen
             external: 'Abonnements extern verwalten?'
             usereplication: 'Newscoop Replication Server erstellen?'
             serverdb: 'Newscoop Online Server Datenbank'
@@ -116,13 +116,13 @@ newscoop:
             nooption: Nein
             geosearch: 'Lokale GeoNamen Suche benutzen:'
             usergarbage: null
-            usergarbagedaysinfo: null
+            usergarbagedaysinfo: 'Definieren Sie eine Anzahl von Tagen nach denen anhängige, noch nicht vollständig registrierte Nutzer, gelöscht werden sollen.'
             usergarbagedays: 'Anzahl der Tage'
             smartyUseProtocol: null
             cronjob: null
             enabled: Status
             options: Optionen
-            info: null
+            info: 'Information:'
             infodesc: null
             prevRun: null
             nextRun: null
@@ -132,8 +132,8 @@ newscoop:
             cronJobSenderName: null
             cronJobNotify: null
             cronslist: null
-            cronsadvanced: null
-            moredetails: null
+            cronsadvanced: 'Erweiterte Einstellungen'
+            moredetails: 'Mehr Details'
         popover:
             cronJobEmail: null
             cronJobSenderEmail: null
@@ -147,8 +147,8 @@ newscoop:
             separator: 'Spezifizieren Sie den Trenner für Keywords im Artikel Editor (Komma oder Bindestrich).'
             stats: 'Mit dieser Option aktivieren Sie die Sammlung von Statistiken über den Zugriff von Lesern Ihrer Publikationen. Klicken Sie Nein falls Sie ein externes Statistiktool nutzen, weil das Sammeln von Statisiken eine Belastung für Ihren Newscoop-Server darstellt.'
             zoom: 'Wenn hier Ja eingestellt ist, können die Leser das Bild durch Klick auf das Bild vergrößern. Dieses Zooming-Element funktioniert bei jedem Inline-Bild innerhalb des Artikeltextes.'
-            richtext_status: null
-            richtext_length: null
+            richtext_status: 'Schaltet einen HTML-Editor für Bildunterschriften frei. Das Ausschalten von Rich-Text wird bestehendes HTML in der Bildunterschrift ignorieren, aber nicht löschen. Wenn Rich-Text Bildunterschriften ausgeschaltet sind, ist die Zeichenbegrenzung auf 255 Zeichen limitiert. Alle Bildunterschriften werden dann bei der nächsten Bearbeitung auf dieses Zeichenlimit gekürzt.'
+            richtext_length: 'Das Zeichenlimit beinhaltet jedwede Form von HTML und beträgt standardmäßig 255 Zeichen. Um unlimitierte Zeichenmengen für Bildunterschriften zu erlauben, muss hier der Wert 0 gesetzt werden. Achten Sie darauf, dass Ihr Newscoop Template unlimitierte Zeichenmengen für Bildunterschriften unterstützt.'
             ratio: 'Das Beibehalten des Größenverhältnisses hat Vorrang vor Änderungen der Breite oder Höhe. Falls kein Größenverhältnis festgelegt ist, wird Newscoop den Wert benutzen, der zu einer kleineren Bildgröße führt. Die Standardeinstellungen können überschrieben werden durch Einstellungen von Größenverhältnis, Breite oder Höhe eines spezifischen Inline-Bildes im Artikel Editor. '
             replication: 'Ermöglicht es Ihnen, Newscoop so einzustellen, dass es aus Sicherheitsgründen oder wegen Netzwerkproblemen auf zwei Servern gleichzeitig läuft.'
             filter: 'Wenn Sie Keywords für Templates vor dem Template Editor verbergen wollen, geben Sie diese in der Theme Management Seite ein. Zum Beispiel für Templates, die nicht mehr in Gebrauch sind, die sie aber nicht vom Server löschen wollen.'
@@ -160,5 +160,5 @@ newscoop:
                 privatekey: 'Nutzen Sie dies für die Kommunikation zwischen Ihrem Server und dem reCAPTCHA-Server. Achten Sie dabei auf Geheimhaltung.'
                 secure: 'Falls Sie eine sichere URL für reCAPTCHA benutzen, wählen Sie die Option Ja'
             garbage: null
-            lifetime: null
+            lifetime: 'Die Lebensdauer einer Newscoop Sitzung in Sekunden. Maximal 86.400 (24 Stunden). Minimal: 0 (bis der Browser geschlossen wird).'
             smartyuseprotocol: null

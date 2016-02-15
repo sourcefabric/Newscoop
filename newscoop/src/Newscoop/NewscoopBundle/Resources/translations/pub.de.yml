@@ -85,19 +85,19 @@ publications:
     general_settings: 'Allgemeine Einstellungen'
     comments_settings: 'Einstellungen für Kommentare'
     seo_settings: 'Einstellungen für Suchmaschinenoptimierung'
-    front_page_theme_settings: null
+    front_page_theme_settings: 'Startseiten Template Einstellungen'
     publication_removed: 'Die Publikation wurde entfernt.'
     publication_saved: 'Die Änderungen an der Publikation wurden erfolgreich gespeichert.'
     remove:
         cant_be_removed: 'Die Publikation ist nicht leer und kann nicht entfernt werden.'
         can_be_removed: 'Diese Publikation ist leer und kann entfernt werden.'
-        left_issues: null
-        left_sections: null
-        left_articles: null
+        left_issues: 'Verbleibende Ausgaben'
+        left_sections: 'Verbleibende Rubriken'
+        left_articles: 'Verbleibende Artikel'
         show_issues: 'Ausgaben anzeigen'
         before_removing: 'Bevor die Publikation entfernt werden kann, müssen alle verbliebenen Elemente gelöscht oder verschoben werden. '
         you_sure: 'Soll die Publikation wirklich entfernt werden?'
-        remove: null
+        remove: 'Publikation entfernen'
     buttons:
         addNew: 'Neue Publikation hinzufügen'
         listPublications: 'Publikationen auflisten'
@@ -113,7 +113,7 @@ publications:
         remove: Entfernen
     form_type:
         label:
-            follow_current_issue_theme: null
+            follow_current_issue_theme: 'Nutze das Template der aktuellen Ausgabe'
             name: 'Name der Publikation'
             template_path: Templatepfad
             short_names: Kurzname
@@ -137,4 +137,4 @@ publications:
             meta_title: 'SEO-Titel der Publikation'
             meta_keywords: 'SEO-Schlüsselwörter der Publikation'
             meta_description: 'SEO-Beschreibung der Publikation'
-    tip1: null
+    tip1: 'Newscoop Inhalte werden in einer hierarchischen Struktur organisiert, welche der Tradition der Zeitungen und Magazine folgt: Publikationen, Ausgaben, Rubriken und Artikel. Jede Publikation besteht aus mehreren Ausgaben, jede Ausgabe beinhaltet mehrere Rubriken und jede Rubrik enthält eine Anzahl von Artikeln.'
