@@ -711,13 +711,14 @@ class UserRepository extends EntityRepository implements RepositoryInterface, Us
                 ->setParameter('is_public', $criteria->is_public);
         }
 
+        if ($criteria->is_author) {
+            $qb->andWhere($qb->expr()->isNotNull("u.author"));
+            unset($criteria->perametersOperators['is_author']);
+        }
+
         foreach ($criteria->perametersOperators as $key => $operator) {
             $qb->andWhere('u.'.$key.' = :'.$key)
                 ->setParameter($key, $criteria->$key);
-        }
-
-        if ($criteria->is_author) {
-            $qb->andWhere($qb->expr()->isNotNull("u.author"));
         }
 
         if (!empty($criteria->groups)) {
