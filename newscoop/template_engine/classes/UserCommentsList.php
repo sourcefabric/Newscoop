@@ -35,18 +35,17 @@ class UserCommentsList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
 	    $comments = array();
-
-        if(!isset( $p_parameters['commenters'])) {
+        if(!isset($p_parameters['commenters'])) {
             return $comments;
 	    }
 
-        $comment_service = \Zend_Registry::get('container')->getService('comment');
+        $commentService = \Zend_Registry::get('container')->getService('comment');
 
-        foreach ($comment_service->findUserComments($p_parameters, $this->m_order, $p_limit, $p_start) as $comment) {
+        foreach ($commentService->findUserComments($p_parameters, $this->m_order, $p_limit, $p_start) as $comment) {
             $comments[] = new MetaComment($comment->getId());
         }
 
-        $p_count = is_array($comments) ? count($comments) : 0;
+        $p_count = $commentService->countUserComments($p_parameters);
 
         return $comments;
 	}
