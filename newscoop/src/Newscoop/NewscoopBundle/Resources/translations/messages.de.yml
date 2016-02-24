@@ -9,7 +9,7 @@ More...: Mehr...
 Content: Inhalt
 Languages: Sprachen
 Countries: Länder
-Themes: Themen
+Themes: Designvorlagen
 Topics: Themen
 Configure: Konfiguration
 'Image Archive': Bildarchiv
@@ -96,7 +96,7 @@ Articles: Artikel
 Images: Bilder
 Change: Ändern
 'Add new issue': 'Neue Ausgabe anlegen'
-'Section Template': 'Rubrik Template'
+'Section Template': 'Rubriken Template'
 'Article Template': 'Artikel Template'
 'Default Language': Standardsprache
 'Paid Period': 'Bezahlter Zeitraum'
@@ -282,8 +282,8 @@ Confirm: Bestätige
 at: auf
 published: veröffentlicht
 unpublished: unveröffentlicht
-nopermissions: null
-importantmessage: null
-anonymous: null
-'Successfully refreshed authentication token.': null
-'Failed to refresh authentication token.': null
+nopermissions: 'Sie haben keine Zugangsrechte für diese Ressource.'
+importantmessage: 'Wichtige Information'
+anonymous: Anonym
+'Successfully refreshed authentication token.': 'Der Authentifizierungs-Nachweis wurde erfolgreich aktualisiert.'
+'Failed to refresh authentication token.': 'Fehler: Der Authentifizierungs-Nachweis konnte nicht aktualisiert werden.'

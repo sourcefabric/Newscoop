@@ -58,6 +58,6 @@ Size: Größe
 'Used in articles': 'In Artikeln verwendet'
 'View image': 'Bild betrachten'
 'Change image information': 'Bildinformation ändern'
-'Photographer URL': null
-'Add website url starting with http://': null
-'An error occured while uploading the file $1': null
+'Photographer URL': 'URL/Webadresse des Photographen'
+'Add website url starting with http://': 'Fügen Sie die Web-Adresse beginnend mit http:// hinzu'
+'An error occured while uploading the file $1': 'Ein Fehler ist aufgetreten beim Hochladen der Datei $1'

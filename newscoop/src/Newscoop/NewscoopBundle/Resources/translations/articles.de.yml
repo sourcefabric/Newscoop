@@ -29,7 +29,7 @@ Slideshows: Bildstrecken
 'Youre not allowed to edit article.': 'Sie haben keine Berechtigung um einen Artikel zu bearbeiten. '
 Webcode: Webcode
 Unapproved: 'Nicht genehmigt'
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Vom Artikel kann keine Vorschau erstellt werden. Bitte stellen Sie sicher, dass er einem Thema zugeordnet wurde. '
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Vom Artikel kann keine Vorschau erstellt werden. Bitte stellen Sie sicher, dass er einer Designvorlage zugeordnet wurde. '
 'The article could not be submitted.': 'Der Artikel konnte nicht eingepflegt werden'
 'Submit articles': 'Artikel einpflegen'
 'Submit article': 'Artikel einpflegen'
@@ -129,7 +129,7 @@ Comments: Kommentare
 'You do not have the right to translate articles.': 'Keine Berechtigung Artikel zu übersetzen.'
 'You do not have the right to publish articles.': 'Keine Berechtigung Artikel zu publizieren.'
 'You do not have the right to move articles.': 'Keine Berechtigung Artikel zu verschieben.'
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': null
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'Sie können die in rot markierten Artikel nich $1, weil die Ziel-Ausgabe nicht in die entsprechende Sprache übersetzt wurde.'
 'Publish?': 'Veröffentlichen?'
 'Publish articles': 'Artikel veröffentlichen'
 'Publish article': 'Artikel veröffentlichen'
@@ -183,37 +183,37 @@ Comments: Kommentare
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Dieser Artikel kann nicht in der Vorschau angezeigt werden. Bitte prüfen, ob die Artikel Template ausgewählt wurde.'
 'No such article.': 'Artikel nicht vorhanden'
 'No such section.': 'Rubrik nicht vorhanden'
-Characters: null
-Snippet: null
-'This list is already in a different state than the one in which it was loaded.': null
-'List name should not be longer than 40 chars': null
-'Not valid number': null
-'List limit': null
-'The last article of this list has been removed.': null
-Revert: null
-'Could not automatically refresh the list': null
-'The article slideshows have been successfully updated, please close the window.': null
+Characters: Zeichen
+Snippet: Code-Schnipsel
+'This list is already in a different state than the one in which it was loaded.': 'Die Liste wurde zwischenzeitlich aktualisiert und hat einen anderen Stand, als zu dem Zeitpunkt, als sie geladen wurde.'
+'List name should not be longer than 40 chars': 'Der Name der Liste sollte 40 Zeichen nicht überschreiten'
+'Not valid number': 'Ungültige Nummer'
+'List limit': 'Listen Begrenzung'
+'The last article of this list has been removed.': 'Der letzte Artikel von dieser Liste wurde entfernt.'
+Revert: 'Rückgängig machen'
+'Could not automatically refresh the list': 'Die Liste konnte nicht automatisch aktualisiert werden.'
+'The article slideshows have been successfully updated, please close the window.': 'Die Slideshow des Artikels wurde erfolgreich aktualisiert, bitte schließen Sie das Fenster.'
 articles:
     playlists:
-        namechanged: null
-        alert: null
+        namechanged: 'Sind Sie sicher, daß Sie den Namen der Liste ändern wollen? Der Name wird vermutlich in den Newscoop Templates verwendet, um die Liste im Frontend zur Anzeige zu bringen. Im Zweifel fragen Sie bitte Ihren Administrator.'
+        alert: 'Sind Sie sicher das Sie die maximale Anzahl an Artikeln für diese Liste ändern wollen? Wenn Sie die Begrenzung anpassen, dann werden alle Artikel die außerhalb der Begrenzung liegen automatisch von der Liste entfernt. Beispiel: Wenn Sie die Begrenzung von 50 auf 30 verringern, dann werden alle 20 Artikel von Position 31 an aus der Liste entfernt.'
     images:
-        see_original: null
+        see_original: 'Bild in voller Größe in neuem Tab öffnen.'
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Metadaten des Bildes editieren'
+            save: Speichern
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
-                photographer_url: null
-                place: null
-                date: null
-                article_specific: null
-                global: null
-                other_captions: null
+                use: Verwenden
+                number: Nummer
+                caption: Bildlegende
+                status_approved: Genehmigt
+                status_unapproved: 'Nicht genehmigt'
+                status: Status
+                description: Beschreibung
+                photographer: Fotograf/in
+                photographer_url: 'URL/Webadresse des Photographen'
+                place: Ort
+                date: Datum
+                article_specific: 'Artikel spezifisch'
+                global: Globale
+                other_captions: 'Weitere Bildunterschriften'

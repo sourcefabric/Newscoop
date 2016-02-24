@@ -1,6 +1,6 @@
-'No thumbnails were fixed.': null
-'Missing thumbnails fixed.': null
-Slideshows: null
+'No thumbnails were fixed.': 'Прикази слика нису сређени.'
+'Missing thumbnails fixed.': 'Прикази слика сређени.'
+Slideshows: 'Галерија слика'
 'You cant update used files.': 'Не можете мењати фајлове који су у употреби'
 Source: Извор
 Local: Локални
@@ -60,4 +60,4 @@ Size: Величина
 'Change image information': 'Промени податке о слици'
 'Photographer URL': null
 'Add website url starting with http://': null
-'An error occured while uploading the file $1': null
+'An error occured while uploading the file $1': 'Дошло је до проблема при аплоуду фајла $1'

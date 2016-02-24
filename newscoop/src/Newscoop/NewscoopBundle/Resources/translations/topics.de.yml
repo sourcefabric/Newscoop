@@ -24,58 +24,58 @@ Top: Anfang
 'Deleting topic': 'Thema wird gelöscht'
 'Change topic name': 'Themenname ändern'
 'There are $1 articles using the topic.': 'Thema wird von $1 Artikeln verwendet.'
-'Search for topics': null
+'Search for topics': 'Nach Themen suchen'
 topics:
-    tip: null
+    tip: 'Themen in Newscoop werden verwendet um Artikel, die zu einer bestimmten Thematik passen, zu gruppieren und auf der Webseite in einer themenspezifischen Liste anzuzeigen. Die Themen werden einem Artikel von Redakteuren zugewiesen. Themen werden in Themenbäumen organisiert. Ein Haupt-Thema kann verschiedene Unterthemen haben. Ein Beispiel: Das Haupt-Thema "Sport" könnte die Unterthemen "Fussball", "Basketball" und "Wasserpolo" haben. Ein einzelner Artikel kann mehrere Haupt- und Unterthemen zugewiesen bekommen.'
     label:
-        all: null
-        filterbylang: null
-        search: null
-        filterplaceholder: null
-        addroot: null
-        topicname: null
-        expandcollapse: null
-        changename: null
-        for: null
-        addsubtopic: null
-        subtopicname: null
-        addtranslation: null
-        topictranslations: null
-        choose: null
-        translationstring: null
-        tree: null
-    title: null
+        all: Alle
+        filterbylang: 'Zeige Themen der Sprache'
+        search: 'Suche '
+        filterplaceholder: 'Tippen Sie den Namen (oder Bestandteile davon) eines Themas...'
+        addroot: 'Thema auf oberster Ebene hinzufügen'
+        topicname: 'Name des Themas'
+        expandcollapse: ausklappen/einklappen
+        changename: 'Themenname ändern'
+        for: für
+        addsubtopic: 'Unterthema hinzufügen'
+        subtopicname: 'Name des Unterthemas'
+        addtranslation: 'Übersetzung hinzufügen'
+        topictranslations: 'Übersetzung des Themas'
+        choose: Auswählen...
+        translationstring: Übersetzung
+        tree: Themenbaum
+    title: Themen
     btn:
-        hide: null
-        remove: null
-        edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
-        removetrans: null
+        hide: Verbergen
+        remove: 'Thema entfernen'
+        edit: 'Thema bearbeiten'
+        close: Schliessen
+        add: Hinzufügen
+        save: Speichern
+        saveandclose: 'Speichern und Schließen'
+        removetrans: 'Die Übersetzung des Themas entfernen'
     alerts:
-        languagenotfound: null
-        translationadded: null
-        translationexists: null
-        beforedelete: null
-        wrongparams: null
-        ordersaved: null
-        saved: null
-        beforedeleteinfo: null
-    added: null
-    failedfind: null
-    failedfindTranslation: null
-    removed: null
-    exists: null
-    existsname: null
-    removedTranslation: null
-    failedremoveTranslation: null
-    updated: null
-    error: null
-    csrfinvalid: null
-    tooshort: null
-    toolong: null
-    attachtopics: null
-    attachedtopics: null
-    attached: null
+        languagenotfound: 'Die Sprache wurde nicht gefunden: %locale%'
+        translationadded: 'Die Übersetzung wurde hinzugefügt'
+        translationexists: 'Eine Übersetzung für %locale% existiert bereits.'
+        beforedelete: 'Soll dieses Thema wirklich gelöscht werden?'
+        wrongparams: 'Die Anzahl der sortierten Haupt-Themen muss der Anzahl aller Haupt-Themen entsprechen'
+        ordersaved: 'Reihenfolge gespeichert.'
+        saved: 'Erfolgreich gespeichert.'
+        beforedeleteinfo: 'Mit dem Löschen eines Themas werden auch alle zugehörigen Unterthemen und die jeweiligen Übersetzungen gelöscht. Trotzdem fortfahren?'
+    added: 'Thema wurde hinzugefügt'
+    failedfind: 'Das Finden des Themas nach folgender ID hat nicht funktioniert:  %id%'
+    failedfindTranslation: 'Das Finden der Übersetzung des Themas nach folgender ID hat nicht funktioniert: %id%'
+    removed: 'Thema %title% wurde entfernt'
+    exists: 'Das Thema existiert bereits'
+    existsname: 'Der Name des Themas existiert bereits'
+    removedTranslation: 'Die Übersetzung des Themas wurde entfernt'
+    failedremoveTranslation: 'Die Standard-Übersetzung des Themas kann nicht entfernt werden. Stattdessen das Thema entfernen.'
+    updated: 'Das Thema wurde aktualisiert'
+    error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.'
+    csrfinvalid: 'Der CSRF Token (Schutz des Formulars vor Missbrauch) ist ungültig. Bitte versuchen Sie erneut das Formular abzuschicken.'
+    tooshort: 'Der Name des Themas ist zu kurz.'
+    toolong: 'Der Name des Themas ist zu lang.'
+    attachtopics: 'Thema zuweisen'
+    attachedtopics: 'Zugewiesene Themen'
+    attached: 'Dieses Thema ist %occurence% Artikel(n) zugewiesen. Wenn das Thema entfernt wird, wird auch die Zuweisung zu den Artikeln entfernt. Wenn das Thema Unterthemen hat, werden auch diese Zuweisungen zum Artikel entfernt.'

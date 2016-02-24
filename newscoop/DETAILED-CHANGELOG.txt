@@ -3,6 +3,64 @@ VERSION 4  NEWSCOOP 4.3
 =========================================================================================================
 
    Version 4.4 - Newscoop 4.4 minor release
+      08/02/2016 13:42  4.4.7  Newscoop 4.4.7 release
+         7f5a968 Add information about not supported MySQL "strict mode"
+         a945fc8 Revert "simplify registration confirmation"
+         530c86a simplify registration confirmation
+         17a0534 correct error code
+         1727f85 CS-5923 - After upgrade: fatal error on article editor opening due to topic stuff
+         66db93e CS-5949: Adds updating of article modified time on topic changes
+         fee1b11 fix spec
+         14a3d2c update comemnt in code
+         aa9821b remove publication aliases on publication removal, don't set publication in listener when not exist and is still attached to alias
+         fa3677b don't set session lifetime if it's set to 0
+         418018d add language to url, set it on rendered template
+         f880438 CS-5925 - list_subtopics on empty topic (i.e. root) does not respect order constraint
+         030e5bc [feature] implement feed controller
+         9c7fd33 CS-5938 - Job scheduler doesn't execute task if notification isn't enabled
+         9b3baf9 updated translation resources
+         206974a remove dump, don't sett cookie in request paramerer bag, change TOL_Language cookie parameters
+         6967786 remove connection between session lifetime and php gc, allow to login on frontend with username, cover /auth with symfony firewall
+         3b806e9 fix spec for BackendPublicationsController
+         55ed031 add links to docs under docs.sourcefabric.org
+         6876303 move cache_reset file to cache/{env}/cache_reset
+         7708dc9 [CS-5844] fix implementation
+         91d23b5 CS-5931: Moves language setting code to helper, instead of view
+         354dad2 CS-5931: Reverting changes
+         e07139e CS-5931: Persists locale from Symfony request to Zend Smarty View
+         7534240 AZ-278 - Issue with indexing of articles - remove commented code
+         a1bb9d5 AZ-278 - Issue with indexing of articles
+         a2a38ef ignore comments for not existing articles
+         8778e2d updated translation resources
+         4b0bad4 updated translation resources
+         e4470a1 CS-5941: Adds charset as well to header
+         81dd223 CS-5941: Sets different content-type for rss.tpl or atom.tpl templates
+         4ed7279 CS-5933: Forces getSEO() always to return an array and fixes typo
+         b91fd21 CS-5942: Adds check if request is set
+         99254ca remove unused hipchat notifications from travis
+         5985b49 update outdated tests for phpspec
+         beb8398 simplify repository method, use better way to checking if request is secure
+         967b131 add support to filter articles by section in /articles api resource
+         1fd9944 fix code typo
+         41a865e handle ssl and proper protocol behind proxy
+         9c1749a removed Visible to non subscribers switch - moved to paywall plugin
+         9089db1 AZ-266: Typo
+         84072f6 AZ-266: Add script to run webcode for many many webcodes
+         0cc66eb AZ-266: Adds return status to webcode command and removes weird loop
+         4a140ac simplify code in PlaylistsService
+         6864636 remove broken upgrade script, improve errors handling in publication edit form
+         456fdbc updated translation resources
+         fac026d updated translation resources
+         eea522a enable sluggable extension
+         0fa08f9 improve fetching topic articles
+         cecf521 polish and simplify code for front page template theme setting feature
+         d2d526b add support for comments likes and dislikes, render images, snippets, links and more in api this same as in template
+         b3c1e2e Fix issue with 500 error when session not exists in request object
+         eb3388a CS-5931: Stores language in session
+         82ca2a0 CS-5930: Removes unneeded parameter
+         3d29357 CS-5844: Initial commit
+         c5211d2 CS-5844: Detect language by uri parts, then issue
+         d714d20 Probable fix for multi theme handling per issue and language
       19/10/2015 19:04  4.4.6  Release of Newscoop 4.4.6
          aac2ece Adds missing echo
          8d0cc94 replace addError with addWarning

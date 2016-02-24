@@ -1,42 +1,42 @@
-'No attachment': null
+'No attachment': 'Нема фајлова у прилогу'
 at: у
-'With no attachment': null
-'With image attachment': null
-'With document attachment': null
+'With no attachment': 'Без прилога'
+'With image attachment': 'Слика у прилогу'
+'With document attachment': 'Документ у прилогу'
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop није доступан. Проверите своју интернет везу.'
-Starred: null
-Star: null
+Starred: Означено
+Star: Означите
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Приказано _START_ до _END_ од _TOTAL_ уноса'
-'Reply to message': null
+'Reply to message': 'Одговорите на поруку'
 Reply: Одговори
-Processed: null
+Processed: Обрађено
 'No records found.': 'Нема записа'
 'No entries to show': 'Нема уноса за приказ'
-'Messages updated.': null
-'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
-'Message status change to $1.': null
-'Message deleted.': null
-Message: null
+'Messages updated.': 'Поруке измењене.'
+'Messages status change to $1.': 'Промена статуса поруке у $1.'
+'Messages deleted.': 'Порука је обрисана.'
+'Message updated.': 'Порука измењена.'
+'Message status change to $1.': 'Промена статуса поруке у $1.'
+'Message deleted.': 'Порука је обрисана.'
+Message: Порука
 Last: Последњи
 'Full article': 'Цео текст'
 First: Први
 'Feedback Messages': 'Поруке са повратном информацијом'
 'Display _MENU_ records': 'Прикажи _MENU_ записе'
 Deleted: Обрисано
-'Change selected messages status': null
-Attachment: null
-Approved.: null
-Approve: null
-Anonymous: null
+'Change selected messages status': 'Промени статус изабраних порука'
+Attachment: 'Прикачени фајл'
+Approved.: Одобрен
+Approve: Одобри
+Anonymous: Анонимус
 ' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
+'You are about to permanently delete multiple messages.': 'Неповратно ћете избрисати више порука.'
+'You are about to permanently delete a message.': 'Неповратно ћете избрисати поруку.'
 User: Корисник
 None: Ниједан
-'Coming from': null
-'Ban/Unban user': null
+'Coming from': 'Стигло од'
+'Ban/Unban user': 'Блокирајте или одблокирајте корисника'
 Ip: null
 'Bans can be applied to a users name, email address or IP address.': 'Забране могу бити примењене на корисничко име, имејл адресу или ИП адресу'
 'You are about to permanently delete multiple comments.': 'Неповратно ћете избрисати више коментара.'
@@ -100,21 +100,21 @@ Ban: Забрани
 'Acceptance $1 deleted.': 'Прихватљивост $1 обрисана.'
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Порука је предугачка'
+        added: 'Коментар је успешно додат.'
+        edited: 'Коментар је успешно измењен.'
+        resolved: 'Коментар је успешно уређен.'
+        deleted: 'Коментар је успешно обрисан.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Пошаљи
+        cancel: Откажи
+        resolve: Уреди
+        save: Сними
+        edit: Уреди
+        delete: Обриши
+        reply: Одговори
     label:
         title: null
-        post: null
-        reply: null
-        nocomments: null
+        post: 'Пошаљи нови коментар'
+        reply: Одговори
+        nocomments: 'Још увек без коментара.'

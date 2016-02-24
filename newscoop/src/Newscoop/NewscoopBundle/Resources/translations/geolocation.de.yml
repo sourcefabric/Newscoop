@@ -64,4 +64,4 @@ text: Text
 image: Bild
 icon: Symbol
 'Setting Map Locations': 'Kartenstandorte festlegen'
-Deselect: null
+Deselect: 'Auswahl zurücknehmen'

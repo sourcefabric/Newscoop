@@ -100,21 +100,21 @@ Ban: Sperre
 'Acceptance $1 deleted.': 'Freigabe $1 gelöscht. '
 editorial:
     alert:
-        toolong: null
-        added: null
-        edited: null
-        resolved: null
-        deleted: null
+        toolong: 'Die Nachricht ist zu lang.'
+        added: 'Der Kommentar wurde erfolgreich hinzugefügt.'
+        edited: 'Der Kommentar wurde erfolgreich editiert.'
+        resolved: 'Der Kommentar wurde erfolgreich geklärt. '
+        deleted: 'Der Kommentar wurde erfolgreich gelöscht.'
     btn:
-        send: null
-        cancel: null
-        resolve: null
-        save: null
-        edit: null
-        delete: null
-        reply: null
+        send: Senden
+        cancel: Abbrechen
+        resolve: Klären
+        save: Speichern
+        edit: Bearbeiten
+        delete: Löschen
+        reply: Antworten
     label:
-        title: null
-        post: null
-        reply: null
-        nocomments: null
+        title: 'Redaktionelle Kommentare'
+        post: 'Einen neuen Kommentar publizieren'
+        reply: Antworten...
+        nocomments: 'Keine Kommentare bisher.'

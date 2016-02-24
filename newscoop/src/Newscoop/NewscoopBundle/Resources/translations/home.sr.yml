@@ -1,18 +1,18 @@
-'Rename user': null
-Campsite: null
+'Rename user': 'Преименуј корисника'
+Campsite: Newscoop
 'Image Rendering': null
 'Featured Article Lists': null
-'You have tried to upload an invalid backup file.': null
-'You do not have the right to manage backups.': null
-'Make a new backup': null
-'Are you sure you want to make a new backup?': null
-'Security token expired. Please resubmit the form.': null
-Templates: null
-'Create slideshow': null
-Create: null
-Attach/Detach: null
-'Are you sure you want to delete slideshow?': null
-Support: null
+'You have tried to upload an invalid backup file.': 'Грешка у додавању неисправне архиве фајлова.'
+'You do not have the right to manage backups.': 'Немате право да управљате архивом фајлова.'
+'Make a new backup': 'Креирај новз архиву фајлова.'
+'Are you sure you want to make a new backup?': 'Да ли сте сигурно да желите да додате нову архиву фајлова?'
+'Security token expired. Please resubmit the form.': 'Истекао је сигурносни токен. Молимо вас да поново попуни и пошаљете формулар.'
+Templates: Шаблони
+'Create slideshow': 'Креирај галерију слика'
+Create: Креирај
+Attach/Detach: Прикачи/Уклони
+'Are you sure you want to delete slideshow?': 'Сигурни сте да желите да обришете галерију слика?'
+Support: Подршка
 'Pending articles': 'Текстови на чекању'
 'Manage Users': 'Управљање корисницима'
 'Manage User Types': 'Управљање типовима корисника'
@@ -152,12 +152,12 @@ Help: Помоћ
 'Please make sure that you typed the correct user name and password.': 'Проверите да ли сте исправно уписали корисничко име и лозинку'
 'If your problem persists please contact the site administrator $1': 'Ако се проблем понови контактирајте администратора сајта $1'
 Backup/Restore: Бекап/враћање
-'Step 2': null
-'Step 3': null
-'Add new user': null
-'Bad credentials': null
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
-'Change password': null
+'Step 2': 'Корак 2'
+'Step 3': 'Корак 3'
+'Add new user': 'Додај новог корисника'
+'Bad credentials': 'Погрешан корисник или шифра'
+'Active users': 'Активни корисници'
+'New comments': 'Нови коментари'
+'Published articles': 'Објављени текстови'
+'Last 7 days statistics': 'Статистика за последњих 7 дана'
+'Change password': 'Промени лозинку'

@@ -28,14 +28,14 @@ Top: Врх
 topics:
     tip: null
     label:
-        all: null
+        all: Све
         filterbylang: null
-        search: null
+        search: Тражи
         filterplaceholder: null
-        addroot: null
+        addroot: 'Додај матични топик'
         topicname: null
         expandcollapse: null
-        changename: null
+        changename: 'Промени име топика'
         for: null
         addsubtopic: null
         subtopicname: null
@@ -44,15 +44,15 @@ topics:
         choose: null
         translationstring: null
         tree: null
-    title: null
+    title: Топици
     btn:
-        hide: null
+        hide: Сакри
         remove: null
         edit: null
-        close: null
-        add: null
-        save: null
-        saveandclose: null
+        close: Затвори
+        add: Додај
+        save: Сними
+        saveandclose: 'Сними и затвори'
         removetrans: null
     alerts:
         languagenotfound: null
@@ -61,7 +61,7 @@ topics:
         beforedelete: null
         wrongparams: null
         ordersaved: null
-        saved: null
+        saved: 'Успешно сачувано.'
         beforedeleteinfo: null
     added: null
     failedfind: null

@@ -1,4 +1,4 @@
-'Password confirmation does not match your password.': null
+'Password confirmation does not match your password.': 'Die Bestätigung Ihres Passworts und Ihr Passwort stimmen nicht überein.'
 'Password Confirmation': 'Passwort Bestätigung'
 Website: Website
 Twitter: Twitter
@@ -54,7 +54,7 @@ None: Keine
 'Edit permissions': 'Berechtigung bearbeiten'
 'Create new account': 'Neues Benutzerkonto anlegen'
 'Comment ban settings': 'Kommentarverbot Einstellungen'
-'Ban for user $1 saved.': null
+'Ban for user $1 saved.': 'Die Sperrung des Nutzers $1 wurde gespeichert.'
 'User account is active': 'Benutzerkonto ist aktiv'
 'Allow users profile to be publicly displayed': 'Benutzerprofil darf öffentlich angezeigt werden'
 'Allow user access to login to site backend': 'Benutzer erlauben, sich im Backend anmelden'
@@ -63,7 +63,7 @@ Username: Benutzername
 'Last Name': Nachname
 'First Name': Vorname
 Email: E-Mail
-'You were logged out.': null
+'You were logged out.': 'Sie wurden ausgeloggt. '
 'Newscoop Subhead': 'Newscoop Zwischentitel'
 Filters: Filter
 'Add new Author': 'Neuen Autor hinzufügen'
@@ -91,7 +91,7 @@ Filters: Filter
 'User may use the editor status bar': 'Benutzer darf Editor Statusleiste verwenden'
 'User may clear up the system cache': 'Benutzer darf System-Cache bereinigen'
 'Another user is registered with that e-mail address, please choose a different one.': 'Diese E-Mail-Adresse wird von einem anderen Benutzer verwendet, bitte wähle eine andere Adresse.'
-'There was an error when trying to update the user info.': null
+'There was an error when trying to update the user info.': 'Bei der Aktualisierung der Nutzerinformationen ist ein Fehler aufgetreten.'
 'User may moderate comments': 'Benutzer darf Kommentare moderieren'
 'User may enable comments': 'Benutzer darf Kommentare aktivieren'
 'User may translate articles': 'Benutzer darf Artikel übersetzen'
@@ -112,13 +112,13 @@ Filters: Filter
 'User account $1 was created successfully.': 'Benutzerkonto $1 wurde erfolgreich erstellt.'
 'You do not have the right to change user account permissions.': 'Du bist nicht berechtigt, die Benutzerrechte zu bearbeiten.'
 'You do not have the right to change user account information.': 'Du bist nicht berechtig, die Benutzerinformationen zu bearbeiten.'
-'The password you typed is incorrect.': null
+'The password you typed is incorrect.': 'Das Passwort ist nicht korrekt.'
 'You do not have the right to delete user accounts.': 'Du bist nicht berechtigt, Benutzerkonten zu löschen.'
 'User account $1 was deleted successfully.': 'Benutzerkonto $1 erfolreich gelöscht.'
 'The IP Group $1 has been created.': null
 'There was an error creating the IP address group.': null
 'The IP address group $1 has been deleted.': null
-'User $1 information was changed successfully.': null
+'User $1 information was changed successfully.': 'Nutzer $1 Informationen wurde erfolgreich geändert.'
 'User Type': Benutzertyp
 'The IP address group $1:$2 conflicts with another existing group.': null
 'User may add/change publications': 'Benutzer darf Publikationen hinzufügen / ändern'
@@ -134,7 +134,7 @@ Filters: Filter
 'User may add images': 'Benutzer darf Bilder hinzufügen'
 'User may change images': 'Benutzer darf Bilder ändern'
 'User may delete images': 'Benutzer darf Bilder löschen'
-'User may delete templates': 'Benutzer darf Templates löschen'
+'User may delete templates': 'Benutzer darf Designvorlagen löschen'
 'User may add/change staff accounts and passwords': 'Benutzer darf Mitarbeiteraccounts und Passwörter hinzufügen / ändern'
 'User may add/change subscribers accounts and passwords': 'Benutzer darf Abonnementkonten und Kennwörter hinzufügen / ändern'
 'User may delete staff accounts': 'Benutzer darf Mitarbeiteraccounts löschen'
@@ -142,7 +142,7 @@ Filters: Filter
 'User may manage account types': 'Benutzer darf Kontotypen verwalten'
 'User may add/change article types': 'Benutzer darf Artikeltypen hinzufügen / ändern'
 'User may delete article types': 'Benutzer darf Artikeltypen löschen'
-'User may manage templates': 'Benutzer darf Templates verwalten'
+'User may manage templates': 'Benutzer darf Designvorlagen verwalten'
 'User may add/change country entries': 'Benutzer darf Ländereinträge hinzufügen/ändern'
 'User may add languages and manage language information': 'Nutzer kann Sprachen hinzufügen und verwalten Sprachinformationen'
 'User may delete languages': 'Benutzer darf Sprachen löschen'
@@ -183,11 +183,11 @@ Miscellaneous: Sonstiges
 'Administrative tasks': 'Administrative Aufgaben'
 'User will be notified on several events': 'Der Benutzer wird bei mehreren Events benachrichtigt'
 'Editor Miscellaneous Settings': 'Editor: Sonstige Einstellungen'
-'No such user account.': null
-'User image (full-size)': null
-'User account is highlighted as "featured account"': null
-'Custom attribute...': null
-'An author with the same full name (combination of first and last name) already exists.': null
+'No such user account.': 'Benutzeraccount existiert nicht. '
+'User image (full-size)': 'Bild des Nutzers (in Originalgröße)'
+'User account is highlighted as "featured account"': 'Das Nutzerkonto wird als "besonderes Nutzerkonto" hervorgehoben'
+'Custom attribute...': 'Individuell erstelltes Attribut...'
+'An author with the same full name (combination of first and last name) already exists.': 'Ein Autor gleichen Namens (Kombination des Vor- und Nachnamens) existiert bereits.'
 users:
     label:
         title: Benutzersuche

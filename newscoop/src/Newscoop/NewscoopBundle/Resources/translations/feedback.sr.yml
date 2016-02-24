@@ -1,29 +1,29 @@
-'No attachment': null
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
+'No attachment': 'Нема фајлова у прилогу'
+'You are about to permanently delete multiple messages.': 'Неповратно ћете избрисати више порука.'
+'You are about to permanently delete a message.': 'Неповратно ћете избрисати поруку.'
 'Are you sure you want to do it?': 'Сигурни сте да желите то да урадите?'
-Approve: null
-Approved.: null
+Approve: Одобри
+Approved.: Одобрен
 at: у
-Attachment: null
-'Ban/Unban user': null
-'Change selected messages status': null
+Attachment: 'Прикачени фајл'
+'Ban/Unban user': 'Блокирајте или одблокирајте корисника'
+'Change selected messages status': 'Промени статус изабраних порука'
 Deleted: Обрисано
 'Full article': 'Цео текст'
-Message: null
-'Message deleted.': null
-'Messages deleted.': null
-'Messages status change to $1.': null
-'Message status change to $1.': null
-'Messages updated.': null
-'Message updated.': null
-Processed: null
+Message: Порука
+'Message deleted.': 'Порука је обрисана.'
+'Messages deleted.': 'Порука је обрисана.'
+'Messages status change to $1.': 'Промена статуса поруке у $1.'
+'Message status change to $1.': 'Промена статуса поруке у $1.'
+'Messages updated.': 'Поруке измењене.'
+'Message updated.': 'Порука измењена.'
+Processed: Обрађено
 Reply: Одговори
-'Reply to message': null
-Star: null
-Starred: null
+'Reply to message': 'Одговорите на поруку'
+Star: Означите
+Starred: Означено
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop није доступан. Проверите своју интернет везу.'
-'With document attachment': null
-'With image attachment': null
-'With no attachment': null
+'With document attachment': 'Документ у прилогу'
+'With image attachment': 'Слика у прилогу'
+'With no attachment': 'Без прилога'
 'Feedback Messages': 'Поруке са повратном информацијом'

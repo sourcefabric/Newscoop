@@ -62,46 +62,46 @@ First: Erste
 'URL $1 is invalid or is not an image.': 'URL $1 ist ungültig oder es ist kein Bild.'
 'URL $1 is not an image.': 'Unter URL $1 ist kein Bild verfügbar.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Kunde wurde hinzugefügt'
+    notfound: 'Kunde wurde nicht gefunden'
+    removed: 'Kunde wurde entfernt'
 publicresources:
-    updated: null
+    updated: 'Öffentliche Ressourcen wurden aktualisiert'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'Konfiguriere API - öffentliche Ressourcen'
+        title_content: 'Konfiguriere API - öffentliche Ressourcen'
         tabs:
-            resources: null
-            clients: null
+            resources: 'Öffentliche Ressourcen'
+            clients: Kunden
         resources:
-            info: null
-            api_docs: null
-            add_button: null
+            info: 'Alle Ressourcen sind per Voreinstellung nicht öffentlich und durch eine Firewall geschützt. Sie können die Voreinstellung ändern und eine oder mehrere Ressourcen öffentlich zur Verfügung stellen.'
+            api_docs: 'Eine vollständige Dokumentation der API können Sie auf Ihrer Newscoop Instanz finden (sie ist öffentlich zugänglich)'
+            add_button: 'Kunden hinzufügen'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: null
-                redirect: null
+                name: 'Name des Kunden'
+                id: 'Kunden ID'
+                secret: Geheim
+                trusted: 'Vertrauenswürdig?'
+                redirect: 'Umleitungs URIs'
                 publication: Publikation
                 actions: Aktionen
                 actions_buttons:
                     remove: Entferne
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'Sind Sie sicher, dass Sie diesen Kunden entfernen wollen?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
-                trusted: null
+                name: 'Namen für Kunden auswählen:'
+                publication: 'Publikation für Kunden auswählen:'
+                redirectUris: 'Wählen Sie Umleitungs URIs für Ihren Kunden:'
+                trusted: 'Vertrauenswürdig?'
                 save: Speichern
         PublicResources:
             label:
-                routes: null
+                routes: 'Wählen Sie Ressourcen aus, die Sie öffentlich machen wollen:'
                 save: Speichern

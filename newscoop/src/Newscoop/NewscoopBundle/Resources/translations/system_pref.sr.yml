@@ -3,115 +3,115 @@ newscoop:
         save: Сними
     preferences:
         error:
-            cache: null
-            replication: null
-            maxupload: null
+            cache: 'Грешка: потребно је да PHP %cache% буде омогућен да бисте користили шаблонски систем кеширања.'
+            replication: 'Датум репликације базе података је некомплетан'
+            maxupload: 'Унесена је погрешна максимална величина фајла за аплоуд'
             geolocation: null
-            noaccess: null
+            noaccess: 'Немате право промене системских поставки.'
             latitude: null
             longitude: null
             cacheNotCleared: null
             joberror: null
             jobnotifyerror: null
         success:
-            saved: null
-            cacheCleared: null
-            jobenabled: null
-            jobdisabled: null
+            saved: 'системске поставке измењене.'
+            cacheCleared: 'Кеш је очишћен'
+            jobenabled: 'Успешно омогућена радња'
+            jobdisabled: 'Успешно забрањена радња'
             jobnotifyswitched: null
         menu:
-            general: null
-            email: null
-            editor: null
-            geolocation: null
-            fb: null
-            media: null
-            cache: null
-            other: null
-            recaptcha: null
+            general: 'Основне поставке'
+            email: 'Подешавања мејла'
+            editor: 'Подешавање едитора'
+            geolocation: 'Подешавање гео-локација'
+            fb: 'Подешавања Фејсбука'
+            media: 'Видео подешавања'
+            cache: 'Подешавање кеша'
+            other: 'Друга подешавања'
+            recaptcha: 'reCAPTCHA подешавања'
             cronjob: null
         btn:
-            cleardatabasecache: null
-            disable: null
-            enable: null
+            cleardatabasecache: 'Обриши кеш драјвера'
+            disable: Деактивирати
+            enable: Омогући
         label:
             title: 'Системске поставке'
-            header: null
-            siteonline: null
-            sitetitle: null
-            metakeywords: null
-            metadescription: null
-            timezone: null
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cachetemplate: null
-            cacheimage: null
-            allowrecovery: null
-            secretkey: null
-            sessionlifetime: null
-            sessionlifetimemsg: null
-            separator: null
-            captcha: null
-            maxupload: null
+            header: Поставке
+            siteonline: 'Сајт онлајн?'
+            sitetitle: 'Назив сајта'
+            metakeywords: 'Мета кључне речи сајта:'
+            metadescription: 'Мета опис сајта:'
+            timezone: 'Временска зона:'
+            cacheengine: 'Кеширање базе података:'
+            cacheenginehost: 'Хост ѕа кеширање базе података:'
+            cacheengineport: 'Порт ѕа кеширање базе података:'
+            cachetemplate: 'Руковалац шаблонским кешом:'
+            cacheimage: 'Трајање кеширања за слике'
+            allowrecovery: 'Дозволи повраћај лозинке:'
+            secretkey: 'Тајни кључ'
+            sessionlifetime: 'трајање сесије:'
+            sessionlifetimemsg: 'У складу са php.ini подешавањима.'
+            separator: 'Сепаратор кључних речи:'
+            captcha: 'Број неуспелих покушаја пријаве пре него што се прикаже CAPTCHA:'
+            maxupload: 'Максимална величина фајла за аплоуд:'
             maxuploadmsg: null
-            stats: null
-            smtphost: null
-            smtpport: null
-            email: null
-            emailfrom: null
-            imageratio: null
-            imagewidth: null
-            imageheight: null
-            zoom: null
+            stats: 'Аутоматско прикупљање статистичких података:'
+            smtphost: 'СМТП хост:'
+            smtpport: 'СМТП порт:'
+            email: 'SMTP мејл адресе са које се шаље:'
+            emailfrom: 'Мејл адреса за примање информација из система:'
+            imageratio: 'Размера промене величине слике:'
+            imagewidth: 'Ширина за промену величине слике:'
+            imageheight: 'Висина за промену величине слике:'
+            zoom: 'Увећавање је омогућено за слике у тексту?'
             mediaRichTextCaptions: null
-            mediaCaptionLength: null
-            mediaCaptionLength_after: null
-            external: null
-            usereplication: null
-            serverdb: null
-            replicationhost: null
-            replicationuser: null
-            replicationpw: null
-            replicationport: null
-            filter: null
-            cron: null
+            mediaCaptionLength: 'Лимит за број карактера наслова слика:'
+            mediaCaptionLength_after: карактер(и)
+            external: 'Корисничке претплате се уређују екстерно?'
+            usereplication: 'Подешавање Newscoop репликационог сервера?'
+            serverdb: 'Newscoop база података на онлајн серверу'
+            replicationhost: 'Хост за репликациону базу:'
+            replicationuser: 'Корисничко име за базу репликационог сервера:'
+            replicationpw: 'Лозинка на репликационој бази:'
+            replicationport: 'Порт на репликационој бази:'
+            filter: 'Филтер шаблона (раздвојено зарезом)'
+            cron: 'Екстерно покретање планираних акција?'
             mysqlpath: null
             mysqlpathmsg: null
-            latitude: null
-            longitude: null
-            zoomlevel: null
-            defaultwidth: null
-            defaultheight: null
-            css: null
-            autofocus: null
-            zoomautofocus: null
-            borderautofocus: null
-            mapprovider: null
-            mapquest: null
-            openstreet: null
-            defaultmapprovider: null
+            latitude: 'Географска висина центра мапе:'
+            longitude: 'Географска дужина центра мапе:'
+            zoomlevel: 'Ниво зумирања мапе:'
+            defaultwidth: 'Подразумевана ширина мапе:'
+            defaultheight: 'Подразумевана висина мапе:'
+            css: 'Додај CSS фајл за приказ мапе'
+            autofocus: 'Ауто центрирање мапе као подразумевано понашање:'
+            zoomautofocus: 'Највеће увећање при аутоматском центрирању:'
+            borderautofocus: 'Оквир мапе за аутоматско центрирање:'
+            mapprovider: 'Омогући Google Streets map провајдера:'
+            mapquest: 'Омогући MapQuest map провајдера'
+            openstreet: 'Омогући OpenStreet Map провајдера:'
+            defaultmapprovider: 'Подразумевани провајдер мапа:'
             nominatimsearch: null
             preflanguage: null
-            markerdir: null
-            defaultmarker: null
-            popupwidth: null
-            popupheight: null
-            youtubewidth: null
-            youtubeheight: null
-            vimeowidth: null
-            vimeoheight: null
-            flashwidth: null
-            flashheight: null
-            flashserver: null
-            flashdir: null
+            markerdir: 'Директоријум маркера'
+            defaultmarker: 'Подразумевани маркер:'
+            popupwidth: 'Минимална ширина поп-апа са мапом:'
+            popupheight: 'Минимална висина поп-апа са мапом'
+            youtubewidth: 'Подразумевана ширина Youtube клипа:'
+            youtubeheight: 'Подразумевана висина Youtube клипа'
+            vimeowidth: 'Подразумевана ширина Vimeo клипа:'
+            vimeoheight: 'Подразумевана висина Vimeo клипа:'
+            flashwidth: 'Подразумевана ширина за флеш:'
+            flashheight: 'Подразумевана висина за флеш:'
+            flashserver: 'Локални флеш сервер:'
+            flashdir: 'Локални флеш директоријум:'
             apikey: null
             appid: null
             fbsecret: null
             recaptchapublickey: null
             recaptchaprivatekey: null
             recaptchasecure: null
-            disabled: null
+            disabled: онемогућено
             yesoption: Да
             nooption: Не
             geosearch: null
@@ -120,13 +120,13 @@ newscoop:
             usergarbagedays: null
             smartyUseProtocol: null
             cronjob: null
-            enabled: null
-            options: null
+            enabled: Статус
+            options: Опције
             info: null
             infodesc: null
             prevRun: null
             nextRun: null
-            norecords: null
+            norecords: 'Нема записа'
             cronJobEmail: null
             cronJobSenderEmail: null
             cronJobSenderName: null

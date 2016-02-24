@@ -12,11 +12,12 @@ Quick links to our resources are:
 * Forums and mailing lists: [http://forum.sourcefabric.org][7]
 * Bug Tracking: [http://dev.sourcefabric.org/browse/CS][8]
 * Public source code hosting: [http://github.com/sourcefabric/Newscoop][9]
-* Download link: [https://sourceforge.net/projects/newscoop/][10]
+* Download link: [https://github.com/sourcefabric/Newscoop/releases/latest][10]
 * Developer's wiki: [https://wiki.sourcefabric.org/display/CS/][11]
 * Developer's blog: [https://dev-blog.sourcefabric.org][12]
 * Plugins Development’s documentation: [http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/][15]
 * RESTful API documentation: [http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/][16]
+* Developer's Cookbooks: [http://docs.sourcefabric.org/projects/newscoop-cookbook/en/latest/][17]
 
 ## Installation
 
@@ -51,6 +52,8 @@ docker-compose -f docker-compose-dev.yml up
 ## Requirements
 
 PHP version must be at least 5.4 on Debian and CentOS to run Newscoop properly. See [PHP bug][14].
+
+MySQL can't work in "strict mode". Newscoop will currently break in many places when "strict mode" is enabled.
 
 **Compatibility**
 
@@ -88,10 +91,11 @@ Newscoop is licensed under the GPL3 license.
 [7]: http://forum.sourcefabric.org
 [8]: http://dev.sourcefabric.org/browse/CS
 [9]: http://github.com/sourcefabric/Newscoop
-[10]: https://sourceforge.net/projects/newscoop/
+[10]: https://github.com/sourcefabric/Newscoop/releases/latest
 [11]: https://wiki.sourcefabric.org/display/CS/
 [12]: https://dev-blog.sourcefabric.org/en/blogs/?filter=1
 [13]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
 [14]: https://bugs.php.net/bug.php?id=54709
 [15]: http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/
 [16]: http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/
+[17]: http://docs.sourcefabric.org/projects/newscoop-cookbook/en/latest/
