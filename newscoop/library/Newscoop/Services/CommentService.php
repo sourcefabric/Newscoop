@@ -181,6 +181,35 @@ class CommentService
      */
     public function findUserComments($params, $order, $limit, $start)
     {
+        $qb = $this->buildConditions($params);
+
+        foreach ($order as $column => $direction) {
+            $qb->addOrderBy("c.$column", $direction);
+        }
+
+        $qb->setFirstResult($start);
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Counts all user comments by given params.
+     *
+     * @param array $params An array of parameters
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query Builder
+     */
+    public function countUserComments($params)
+    {
+        $qb = $this->buildConditions($params);
+        $qb->select('count(c)');
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    private function buildConditions($params = array())
+    {
         $qb = $this->em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c');
 
@@ -193,14 +222,7 @@ class CommentService
 
         $qb->where($conditions);
 
-        foreach ($order as $column => $direction) {
-            $qb->addOrderBy("c.$column", $direction);
-        }
-
-        $qb->setFirstResult($start);
-        $qb->setMaxResults($limit);
-
-        return $qb->getQuery()->getResult();
+        return $qb;
     }
 
     /**
