@@ -101,6 +101,8 @@ class CampGetImage
     {
         $this->m_basePath = $GLOBALS['g_campsiteDir'].'/images/';
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $maxImageWidth = $preferencesService->get('CroopedImageMaxWidth', 3000);
+        $maxImageHeight = $preferencesService->get('CroopedImageMaxHeight', 3000);
         $this->m_ttl = $preferencesService->ImagecacheLifetime;
 
         if (empty($p_imageId) || !is_numeric($p_imageId)) {
@@ -109,10 +111,16 @@ class CampGetImage
         if($p_imageRatio > 0 && $p_imageRatio < 100) {
             $this->m_ratio = $p_imageRatio;
         }
-        if($p_imageWidth > 0) {
+        if ($p_imageWidth > 0) {
+            if ((int) $p_imageWidth > $maxImageWidth) {
+                 $p_imageWidth = $maxImageWidth;
+            }
             $this->m_resizeWidth = $p_imageWidth;
         }
-        if($p_imageHeight > 0) {
+        if ($p_imageHeight > 0) {
+            if ((int) $p_imageHeight > $maxImageHeight) {
+                 $p_imageHeight = $maxImageHeight;
+            }
             $this->m_resizeHeight = $p_imageHeight;
         }
         if (!is_null($p_imageCrop)) {
