@@ -51,11 +51,11 @@ fi
 ###############################################################
 
 # apache config
-DEFAULT_NS_DIR=/Users/$(whoami)/Sites/Newscoop
+DEFAULT_NS_DIR="`( cd \"$SCRIPTPATH/../../\" && pwd )`" 
 echo "Enter the Newscoop repository checkout dir, followed by [ENTER]: ($DEFAULT_NS_DIR)"
 read NSDIR 
 
-if [[ -z "$VAR" ]] ; then
+if [[ -z "$NSDIR" ]] ; then
     NSDIR=${DEFAULT_NS_DIR//\//\\/}
 else
     NSDIR=${NSDIR//\//\\/}
@@ -82,6 +82,7 @@ mysql -e 'drop database newscoop;' -uroot
 chmod 775 plugins install cache images public conf log
 
 # composer install, and newscoop install
+# default admin / password
 composer self-update
 composer install --prefer-dist
 sudo ./application/console newscoop:install --fix --database_name newscoop --database_user root --no-client
