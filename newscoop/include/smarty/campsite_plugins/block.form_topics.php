@@ -1,18 +1,22 @@
 <?php
 /**
- * @package Newscoop
  */
 
 /**
- * Follow topics form
+ * Follow topics form.
  *
  * @param string $params
  * @param string $content
  * @param object $smarty
+ *
  * @return string
  */
 function smarty_block_form_topics($params, $content, $smarty)
 {
+    if (!isset($content)) {
+        return;
+    }
+
     $view = $smarty->getTemplateVars('view');
 
     $params += array(
