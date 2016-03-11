@@ -1,9 +1,9 @@
 <?php
 /**
- * @package Newscoop
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+use Newscoop\Exception\AuthenticationException;
 
 /**
  */
@@ -15,7 +15,11 @@ class MyTopicsController extends Zend_Controller_Action
     public function init()
     {
         $this->_helper->layout->disableLayout();
-        $this->user = $this->_helper->service('user')->getCurrentUser();
+        try {
+            $this->user = $this->_helper->service('user')->getCurrentUser();
+        } catch (AuthenticationException $e) {
+            $this->user = null;
+        }
     }
 
     public function preDispatch()
