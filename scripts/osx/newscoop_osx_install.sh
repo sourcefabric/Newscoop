@@ -68,7 +68,7 @@ sudo cp $SCRIPTPATH/httpd.conf /etc/apache2/httpd.conf
 
 echo "Backing up existing /etc/apache2/extra/httpd-vhosts.conf"
 sudo cp /etc/apache2/extra/httpd-vhosts.conf /etc/apache2/extra/httpd-vhosts.conf.bak
-(sed '/# START newscoop.dev.conf/,/# END newscoop.dev.conf/d' /etc/apache2/extra/httpd-vhosts.conf; cat newscoop.dev.conf ) > $SCRIPTPATH/httpd-vhosts.conf.tpl
+(sed '/# START newscoop.dev.conf/,/# END newscoop.dev.conf/d' /etc/apache2/extra/httpd-vhosts.conf; cat $SCRIPTPATH/newscoop.dev.conf ) > $SCRIPTPATH/httpd-vhosts.conf.tpl
 sudo sh -c "sed 's/\$NEWSCOOPDIR/$NSDIR/g' $SCRIPTPATH/httpd-vhosts.conf.tpl > /etc/apache2/extra/httpd-vhosts.conf"
 sudo apachectl restart
 rm -rf $SCRIPTPATH/httpd-vhosts.conf.tpl
@@ -82,7 +82,6 @@ mysql -e 'drop database newscoop;' -uroot
 chmod 775 plugins install cache images public conf log
 
 # composer install, and newscoop install
-# default admin / password
 composer self-update
 composer install --prefer-dist
 sudo ./application/console newscoop:install --fix --database_name newscoop --database_user root --no-client
