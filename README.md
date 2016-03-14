@@ -11,8 +11,8 @@ Quick links to our resources are:
 * Manuals for Newscoop [http://manuals.sourcefabric.org][6]
 * Forums and mailing lists: [http://forum.sourcefabric.org][7]
 * Bug Tracking: [http://dev.sourcefabric.org/browse/CS][8]
-* Public source code hosting: [http://github.com/sourcefabric/Newscoop][9]
-* Download link: [https://sourceforge.net/projects/newscoop/][10]
+* Public source code hosting: [https://github.com/sourcefabric/Newscoop][9]
+* Download link: [https://github.com/sourcefabric/Newscoop/releases][10]
 * Developer's wiki: [https://wiki.sourcefabric.org/display/CS/][11]
 * Developer's blog: [https://dev-blog.sourcefabric.org][12]
 
@@ -87,8 +87,8 @@ Newscoop is licensed under the GPL3 license.
 [6]: http://manuals.sourcefabric.org
 [7]: http://forum.sourcefabric.org
 [8]: http://dev.sourcefabric.org/browse/CS
-[9]: http://github.com/sourcefabric/Newscoop
-[10]: https://sourceforge.net/projects/newscoop/
+[9]: https://github.com/sourcefabric/Newscoop
+[10]: https://github.com/sourcefabric/Newscoop/releases
 [11]: https://wiki.sourcefabric.org/display/CS/
 [12]: https://dev-blog.sourcefabric.org/en/blogs/?filter=1
 [13]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
