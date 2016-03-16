@@ -51,9 +51,12 @@ docker-compose -f docker-compose-dev.yml up
 
 ## Requirements
 
-PHP version must be at least 5.4 on Debian and CentOS to run Newscoop properly. See [PHP bug][14].
+- PHP version must be at least 5.4 on Debian and CentOS to run Newscoop properly. See [PHP bug][14].
 
-MySQL can't work in "strict mode". Newscoop will currently break in many places when "strict mode" is enabled.
+- MySQL can't work in "strict mode". Newscoop will currently break in many places when "strict mode" is enabled.
+
+- If you use `E_DEPRECATED` error_reporting level in PHP 5.6, you can get the behaviour described in this [PHP bug][18] report.
+  `always_populate_raw_post_data` must be set to `-1` in your `php.ini` file.
 
 **Compatibility**
 
@@ -99,3 +102,4 @@ Newscoop is licensed under the GPL3 license.
 [15]: http://docs.sourcefabric.org/projects/newscoop-plugins/en/latest/
 [16]: http://docs.sourcefabric.org/projects/newscoop-restful-api/en/master/
 [17]: http://docs.sourcefabric.org/projects/newscoop-cookbook/en/latest/
+[18]: https://bugs.php.net/bug.php?id=66763
