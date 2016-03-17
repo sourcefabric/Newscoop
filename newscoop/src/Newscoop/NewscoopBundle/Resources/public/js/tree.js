@@ -197,10 +197,9 @@
           if (draggedNode.$middle) {
             params['middle'] = true;
             if (event.dest.nodesScope.$parent.$modelValue) {
-              var closestIndex = closestNode.$index;
               var draggedIndex = draggedNode.$index;
-              if (draggedIndex > closestIndex) {
-                params['parent'] = closestNode.node.id;
+              if (closestNode.$$nextSibling.node !== undefined) {
+                params['parent'] = closestNode.$$nextSibling.node.id;
               }
             } else {
 
@@ -214,7 +213,6 @@
                 params['asRoot'] = true;
               }
             }
-
           }
 
           moveTopic(event.source.nodeScope.$modelValue.id, params);
@@ -281,6 +279,7 @@
         TopicsFactory.moveTopic(draggedNode, params).success(function(response) {
           if (response.status) {
             flashMessage(response.message);
+            updateTopicAfterMove(self.data, draggedNode, response.topic);
           } else {
             flashMessage(response.message, 'error');
           }
@@ -329,6 +328,32 @@
             var found = updateList(children[i].__children, id);
             if (found) {
               return true;
+            }
+          }
+        }
+      };
+
+      /**
+       * Updates topic after it has been moved.
+       *
+       * @param  {array} children   Array of children
+       * @param  {integer} id       Topic id
+       * @param  {object}  response Object with data returned from the server
+       * @return {boolean}          True when topic found
+       */
+      var updateTopicAfterMove = function(children, id, response) {
+        if (children) {
+          for (var i = 0; i < children.length; i++) {
+            if (children[i].id == id) {
+              children[i].root = response.root;
+              children[i].parentId = response.parentId;
+
+              return children[i];
+            }
+
+            var found = updateTopicAfterMove(children[i].__children, id, response);
+            if (found) {
+              return found;
             }
           }
         }
@@ -413,12 +438,13 @@
         if (children) {
           for (var i = 0; i < children.length; i++) {
             if (children[i].id == id) {
-              if (children[i].__children == undefined) {
-                children[i]['__children'] = [{
+              if (children[i]['__children'].length == 0) {
+                children[i]['__children'].push({
                   id: response.topicId,
                   locale: response.locale,
-                  title: response.topicTitle
-                }];
+                  title: response.topicTitle,
+                  __children: []
+                });
                 children[i]['__children'][0]['translations'] = [{
                   locale: response.locale,
                   field: "title",
@@ -431,6 +457,7 @@
                   id: response.topicId,
                   locale: response.locale,
                   title: response.topicTitle,
+                  __children: [],
                   translations: [{
                     locale: response.locale,
                     field: "title",
@@ -439,7 +466,7 @@
                 };
 
                 self.setLanguageLabel(topic, response.locale);
-                children[i].__children.push(topic);
+                children[i]['__children'].push(topic);
               }
 
               return children[i];
@@ -608,6 +635,7 @@
                 id: response.topicId,
                 title: response.topicTitle,
                 root: response.topicId,
+                __children: [],
                 translations: [{
                   content: response.topicTitle,
                   locale: response.locale
@@ -719,7 +747,6 @@
           getSelectedTopics(data.tree);
           setLanguageLabels(self.data, currentLocale);
         }).error(function(data, status) {
-          console.log(data, status)
           flashMessage(data.message, 'error');
         });
       }
