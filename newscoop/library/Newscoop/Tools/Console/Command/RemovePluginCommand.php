@@ -24,8 +24,8 @@ class RemovePluginCommand extends Console\Command\Command
     {
         $this
             ->setName('plugins:remove')
-            ->setDescription('Remove Newscoop Plugin.')
-            ->addArgument('name', InputArgument::REQUIRED, 'Composer package name "vendor/plugin-name"');
+            ->setDescription('Remove Newscoop Plugin(s).')
+            ->addArgument('list', InputArgument::REQUIRED, 'Composer package name "vendor/plugin-name"');
     }
 
     /**
@@ -34,8 +34,9 @@ class RemovePluginCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $pluginsManager = $this->getApplication()->getKernel()->getContainer()->getService('newscoop.plugins.manager');
-        $name = $input->getArgument('name');
 
-        $pluginsManager->removePlugin($name, $output);
+        $list = $input->getArgument('list');
+        $plugins = $pluginsManager->stringToArray($list, false);
+        $pluginsManager->removePlugin($plugins, $output);
     }
 }

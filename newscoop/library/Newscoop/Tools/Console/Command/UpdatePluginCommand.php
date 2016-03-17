@@ -25,8 +25,9 @@ class UpdatePluginCommand extends Console\Command\Command
         $this
             ->setName('plugins:update')
             ->setDescription('Update Newscoop Plugin.')
-            ->addArgument('name', InputArgument::REQUIRED, 'Composer package name, ex. "vendor/plugin-name"')
-            ->addArgument('version', InputArgument::OPTIONAL, 'Composer package version, ex. "dev-master"', "*");
+            ->addArgument('list', InputArgument::REQUIRED, 'List of one or more plugins, format: vendor/plugin-name:version');
+            // ->addArgument('name', InputArgument::REQUIRED, 'Composer package name, ex. "vendor/plugin-name"')
+            // ->addArgument('version', InputArgument::OPTIONAL, 'Composer package version, ex. "dev-master"', "*");
     }
 
     /**
@@ -35,9 +36,9 @@ class UpdatePluginCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $pluginsManager = $this->getApplication()->getKernel()->getContainer()->getService('newscoop.plugins.manager');
-        $name = $input->getArgument('name');
-        $version = $input->getArgument('version');
+        $list = $input->getArgument('list');
 
-        $pluginsManager->updatePlugin($name, $version, $output);
+        $plugins = $pluginsManager->stringToArray($list, true);
+        $pluginsManager->updatePlugin($plugins, $output);
     }
 }

@@ -24,7 +24,7 @@ class DispatchEventForPluginCommand extends Console\Command\Command
     {
         $this
             ->setName('plugins:dispatch')
-            ->setDescription('Dispatch instalation event for new plugin in new request.')
+            ->setDescription('Dispatch instalation event for new plugin in new request. For dispatching the same event to multiple plugins, wrap the names in double quotes. E.g.: "<plugin-1> <plugin-2>" <event-name>')
             ->addArgument('name', InputArgument::REQUIRED, 'Composer package name, ex. "vendor/plugin-name"')
             ->addArgument('eventName', InputArgument::REQUIRED, 'Event name');
     }
@@ -38,6 +38,7 @@ class DispatchEventForPluginCommand extends Console\Command\Command
         $name = $input->getArgument('name');
         $eventName = $input->getArgument('eventName');
 
-        $pluginsManager->dispatchEventForPlugin($name, $eventName, $output);
+        $plugins = $pluginsManager->stringToArray($name, false);
+        $pluginsManager->dispatchEventForPlugins($plugins, $eventName, $output);
     }
 }

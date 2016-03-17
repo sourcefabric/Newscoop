@@ -24,9 +24,10 @@ class InstallPluginCommand extends Console\Command\Command
     {
         $this
             ->setName('plugins:install')
-            ->setDescription('Install Newscoop Plugin.')
-            ->addArgument('name', InputArgument::REQUIRED, 'Composer package name, ex. "vendor/plugin-name"')
-            ->addArgument('version', InputArgument::OPTIONAL, 'Composer package version, ex. "dev-master"', "*");
+            ->setDescription('Install Newscoop Plugins.')
+            ->addArgument('list', InputArgument::REQUIRED, 'List of one or more plugins, format: vendor/plugin-name:version');
+            // ->addArgument('name', InputArgument::REQUIRED, 'Composer package name, ex. "vendor/plugin-name"')
+            // ->addArgument('version', InputArgument::OPTIONAL, 'Composer package version, ex. "dev-master"', "*");
     }
 
     /**
@@ -35,9 +36,9 @@ class InstallPluginCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $pluginsManager = $this->getApplication()->getKernel()->getContainer()->getService('newscoop.plugins.manager');
-        $name = $input->getArgument('name');
-        $version = $input->getArgument('version');
 
-        $pluginsManager->installPlugin($name, $version, $output);
+        $list = $input->getArgument('list');
+        $plugins = $pluginsManager->stringToArray($list, true);
+        $pluginsManager->installPlugin($plugins, $output);
     }
 }

@@ -83,26 +83,46 @@ class ManagerService
     /**
      * Install plugin inside Newscoop - it's a wrapper for all tasks connected with plugin installation
      *
-     * @param string           $pluginName
-     * @param string           $version
+     * @param array            $plugins
      * @param OutputInterface  $output
      * @param boolean          $notify
+     * @param boolean          $clearCache
      */
-    public function installPlugin($pluginName, $version, $output, $notify = true)
+    public function installPlugin($plugins, $output, $notify = true, $clearCache = true)
+    // public function installPlugin($pluginName, $version, $output, $notify = true)
     {
         $this->installComposer();
         $this->prepareCacheDir();
 
-        $pluginMeta = explode('/', $pluginName);
-        if (count($pluginMeta) !== 2) {
-            throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
+        $composerList = array();
+        $eventList = array();
+        foreach ($plugins as $plugin) {
+            if (!$this->isInstalled($plugins)) {
+                $composerList[] = sprintf('%s:%s', $plugin['name'], $plugin['version']);
+                $eventList[] = $plugin['name'];
+            } else {
+                $output->writeln('<info>The plugin '.$plugin['name'].' is already installed.</info>');
+            }
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require --no-update ' . $pluginName .':' . $version .' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update ' . $pluginName .'  --prefer-dist --no-dev -n');
+        if (count($composerList) == 0) {
+            $output->writeln('<info>No plugins to install.</info>');
+            return;
+        }
 
+        $composerList = implode(' ', $composerList);
+        $eventList = implode(' ', $eventList);
+
+        // Require deps via composer
+        $process = new Process(sprintf(
+            'cd %s && php -d memory_limit=%s composer.phar require %s --update-no-dev --update-with-dependencies --prefer-dist -n',
+            $this->newsoopDir,
+            $this->config['internal_memory_limit'],
+            $composerList
+        ));
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
-            if ('err' === $type) {
+            if (Process::ERR === $type) {
                 $output->write('<error>'.$buffer.'</error>');
             } else {
                 $output->write('<info>'.$buffer.'</info>');
@@ -110,28 +130,37 @@ class ManagerService
         });
 
         if (!$process->isSuccessful()) {
-            throw new \Exception("Error with installing plugin", 1);
+            throw new \Exception("Error with installing plugin(s).", 1);
         }
 
-        $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/add_'.str_replace('/', '-', $pluginName).'_package.json';
-        if (file_exists($cachedPluginMeta)) {
-            $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
-            $pluginDetails = file_get_contents($this->pluginsDir.'/'.$pluginMeta['targetDir'].'/composer.json');
-            $this->em->getRepository('Newscoop\Entity\Plugin')->addPlugin($pluginMeta, $pluginDetails);
+        foreach ($plugins as $plugin) {
+            $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/add_'.str_replace('/', '-', $plugin['name']).'_package.json';
+            if (file_exists($cachedPluginMeta)) {
+                $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
+                $pluginDetails = file_get_contents($this->pluginsDir.'/'.$pluginMeta['targetDir'].'/composer.json');
+                $this->em->getRepository('Newscoop\Entity\Plugin')->addPlugin($pluginMeta, $pluginDetails);
 
-            // clear cache files
-            $filesystem = new Filesystem();
-            $filesystem->remove($cachedPluginMeta);
+                // clear cache files
+                $filesystem = new Filesystem();
+                $filesystem->remove($cachedPluginMeta);
+            }
         }
 
         $this->saveAvaiablePluginsToCacheFile();
-        $this->clearCache($output);
+        if ($clearCache) {
+            $this->clearCache($output);
+        }
 
         if ($notify) {
-            $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' application/console plugins:dispatch ' . $pluginName.' install');
+            $process = new Process(sprintf(
+                'cd %s && php -d memory_limit=%s application/console plugins:dispatch "%s" install',
+                $this->newsoopDir,
+                $this->config['internal_memory_limit'],
+                $eventList
+            ));
             $process->setTimeout(3600);
             $process->run(function ($type, $buffer) use ($output) {
-                if ('err' === $type) {
+                if (Process::ERR === $type) {
                     $output->write('<error>'.$buffer.'</error>');
                 } else {
                     $output->write('<info>'.$buffer.'</info>');
@@ -139,38 +168,52 @@ class ManagerService
             });
 
             if (!$process->isSuccessful()) {
-                throw new \Exception("Error with dispatching install event", 1);
+                throw new \Exception("Error with dispatching install event(s).", 1);
             }
         }
 
-        $output->writeln('<info>Plugin '.$pluginName.' is installed!</info>');
+        // TODO: make sure this works with multiple plugins
+        $output->writeln('<info>Plugin(s) installed: '.$eventList.'</info>');
+    }
+
+    /**
+     * Dispatch event for plugin
+     * @param  string $pluginName
+     * @param  string $eventName
+     * @param  mixed  $output
+     */
+    public function dispatchEventForPlugin($pluginName, $eventName, $output = null)
+    {
+        $this->dispatchEventForPlugins(array($pluginName), $eventName, $output);
     }
 
     /**
      * Dispatch events for plugins
-     * @param  string $pluginName
+     * @param  array  $plugins
      * @param  string $eventName
-     * @param  mixed $output
+     * @param  mixed  $output
      */
-    public function dispatchEventForPlugin($pluginName, $eventName, $output = null)
+    public function dispatchEventForPlugins($plugins, $eventName, $output = null)
     {
-        $this->dispatcher->dispatch('plugin.'.$eventName, new GenericEvent($this, array(
-            'plugin_name' => $pluginName
-        )));
-
-        if ($output) {
-            $output->writeln('<info>We just fired: "plugin.'.$eventName.'" event</info>');
-        }
-
-        $this->dispatcher->dispatch(
-            'plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)),
-            new GenericEvent($this, array(
+        foreach ($plugins as $pluginName) {
+            $this->dispatcher->dispatch('plugin.'.$eventName, new GenericEvent($this, array(
                 'plugin_name' => $pluginName
-            ))
-        );
+            )));
 
-        if ($output) {
-            $output->writeln('<info>We just fired: "plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)).'" event</info>');
+            if ($output) {
+                $output->writeln('<info>We just fired: "plugin.'.$eventName.'" event</info>');
+            }
+
+            $this->dispatcher->dispatch(
+                'plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)),
+                new GenericEvent($this, array(
+                    'plugin_name' => $pluginName
+                ))
+            );
+
+            if ($output) {
+                $output->writeln('<info>We just fired: "plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)).'" event</info>');
+            }
         }
     }
 
@@ -181,116 +224,35 @@ class ManagerService
      * @param  OutputInterface $output
      * @param  boolean         $notify
      */
-    public function removePlugin($pluginName, OutputInterface $output, $notify = true)
+    public function removePlugin($plugins, OutputInterface $output, $notify = true)
     {
         $this->installComposer();
         $this->prepareCacheDir();
 
-        /*if (!$this->isInstalled($pluginName)) {
-            $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
-
-            return;
-        }*/
-
-        $composerFile = $this->newsoopDir . 'composer.json';
-        $composerDefinitions = json_decode(file_get_contents($composerFile), true);
-
-        foreach ($composerDefinitions['require'] as $package => $version) {
-            if ($package == $pluginName) {
-
-                if ($notify) {
-                    $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' application/console plugins:dispatch ' . $pluginName.' remove');
-                    $process->setTimeout(3600);
-                    $process->run(function ($type, $buffer) use ($output) {
-                        if ('err' === $type) {
-                            $output->write('<error>'.$buffer.'</error>');
-                        } else {
-                            $output->write('<info>'.$buffer.'</info>');
-                        }
-                    });
-
-                    if (!$process->isSuccessful()) {
-                        throw new \Exception("Error with dispatching remove event", 1);
-                    }
-                }
-
-                $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
-                unset($composerDefinitions['require'][$package]);
-
-                file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
-
-                $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --no-dev ' . $pluginName);
-                $process->setTimeout(3600);
-                $process->run(function ($type, $buffer) use ($output) {
-                    if ('err' === $type) {
-                        $output->write('<error>'.$buffer.'</error>');
-                    } else {
-                        $output->write('<info>'.$buffer.'</info>');
-                    }
-                });
-
-                if (!$process->isSuccessful()) {
-                    throw new \Exception("Error with removing plugin", 1);
-                }
-            }
-        }
-
-        $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/uninstall_'.str_replace('/', '-', $pluginName).'_package.json';
-
-        if (file_exists($cachedPluginMeta)) {
-            $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
-
-            $this->em->getRepository('Newscoop\Entity\Plugin')->removePlugin($pluginName);
-
-            // clear cache files
-            $filesystem = new Filesystem();
-            $filesystem->remove($cachedPluginMeta);
-            $filesystem->remove($this->pluginsDir.'/'.$pluginMeta['targetDir'].'/');
-        }
-
-        $this->saveAvaiablePluginsToCacheFile();
-        $this->clearCache($output);
-
-        $output->writeln('<info>Plugin '.$pluginName.' is removed!</info>');
-    }
-
-    /**
-     * Update installed plugin
-     *
-     * @param  string          $pluginName
-     * @param  string          $version
-     * @param  OutputInterface $output
-     * @param  boolean         $notify
-     */
-    public function updatePlugin($pluginName, $version, OutputInterface $output, $notify = true)
-    {
-        $this->installComposer();
-
-        $output->writeln('<info>Update "'.$pluginName.'"</info>');sleep(10);
-        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --prefer-dist --no-dev ' . $pluginName);
-        $process->setTimeout(3600);
-        $process->run(function ($type, $buffer) use ($output) {
-            if ('err' === $type) {
-                $output->write('<error>'.$buffer.'</error>');
+        $nameList = array();
+        foreach ($plugins as $plugin) {
+            if ($this->isInstalled($plugin)) {
+                $nameList[] = $plugin;
             } else {
-                $output->write('<info>'.$buffer.'</info>');
+                $output->writeln("<info>The plugin $plugin is not installed.</info>");
             }
-        });
-
-        if (!$process->isSuccessful()) {
-            throw new \Exception("Error with updating plugin", 1);
         }
 
-        $this->saveAvaiablePluginsToCacheFile();
-
-        $this->clearCache($output);
-        $this->prepareCacheDir();
+        if (count($nameList) == 0) {
+            $output->writeln('<info>None of the specified plugins are installed.</info>');
+            return;
+        }
 
         if ($notify) {
-            $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' application/console plugins:dispatch ' . $pluginName.' update');
+            $process = new Process(sprintf(
+                'cd %s && php -d memory_limit=%s application/console plugins:dispatch "%s" remove',
+                $this->newsoopDir,
+                $this->config['internal_memory_limit'],
+                implode(' ', $nameList)
+            ));
             $process->setTimeout(3600);
             $process->run(function ($type, $buffer) use ($output) {
-                if ('err' === $type) {
+                if (Process::ERR === $type) {
                     $output->write('<error>'.$buffer.'</error>');
                 } else {
                     $output->write('<info>'.$buffer.'</info>');
@@ -298,24 +260,147 @@ class ManagerService
             });
 
             if (!$process->isSuccessful()) {
-                throw new \Exception("Error with dispatching update event", 1);
+                throw new \Exception('Error with dispatching remove event(s).', 1);
             }
         }
 
-        $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/update_'.str_replace('/', '-', $pluginName).'_package.json';
+        $process = new Process(sprintf(
+            'cd %s && php -d memory_limit=%s composer.phar remove %s --update-no-dev -n',
+            $this->newsoopDir,
+            $this->config['internal_memory_limit'],
+            implode(' ', $nameList)
+        ));
+        $process->setTimeout(3600);
+        $process->run(function ($type, $buffer) use ($output) {
+            if (Process::ERR === $type) {
+                $output->write('<error>'.$buffer.'</error>');
+            } else {
+                $output->write('<info>'.$buffer.'</info>');
+            }
+        });
 
-        if (file_exists($cachedPluginMeta)) {
-            $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
-            $pluginDetails = file_get_contents($this->pluginsDir.'/'.$pluginMeta['target']['targetDir'].'/composer.json');
-
-            $this->em->getRepository('Newscoop\Entity\Plugin')->updatePlugin($pluginMeta['target'], $pluginDetails);
-
-            // clear cache files
-            $filesystem = new Filesystem();
-            $filesystem->remove($cachedPluginMeta);
+        if (!$process->isSuccessful()) {
+            throw new \Exception('Error with removing plugin(s).', 1);
         }
 
-        $output->writeln('<info>Plugin '.$pluginName.' is updated!</info>');
+        foreach ($nameList as $plugin) {
+            $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/uninstall_'.str_replace('/', '-', $plugin).'_package.json';
+
+            if (file_exists($cachedPluginMeta)) {
+                $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
+
+                $this->em->getRepository('Newscoop\Entity\Plugin')->removePlugin($plugin);
+
+                // clear cache files
+                $filesystem = new Filesystem();
+                $filesystem->remove($cachedPluginMeta);
+                $filesystem->remove($this->pluginsDir.'/'.$pluginMeta['targetDir'].'/');
+            }
+        }
+
+        $this->saveAvaiablePluginsToCacheFile();
+        $this->clearCache($output);
+
+        $output->writeln('<info>Plugin(s) removed: '.implode(', ', $nameList).'</info>');
+    }
+
+    /**
+     * Update installed plugin
+     *
+     * @param  array           $plugins
+     * @param  OutputInterface $output
+     * @param  boolean         $notify
+     * @param  boolean         $clearCache
+     */
+    public function updatePlugin($plugins, OutputInterface $output, $notify = true, $clearCache = true)
+    // public function updatePlugin($pluginName, $version, OutputInterface $output, $notify = true)
+    {
+        $this->installComposer();
+
+        $composerList = array();
+        $eventList = array();
+        foreach ($plugins as $plugin) {
+            if ($this->isInstalled($plugin['name'])) {
+                $composerList[] = sprintf('%s:%s', $plugin['name'], $plugin['version']);
+                $eventList[] = $plugin['name'];
+            } else {
+                $output->writeln('<info>The plugin '.$plugin['name'].' is not installed.</info>');
+            }
+        }
+
+        if (count($composerList) == 0) {
+            $output->writeln('<info>None of the specified plugins are installed.</info>');
+            return;
+        }
+
+        $composerList = implode(' ', $composerList);
+        $eventList = implode(' ', $eventList);
+        $printList = str_replace(' ', ', ', $eventList);
+
+        $output->writeln('<info>Updating: '.$printList.'</info>');
+
+        // Require deps via composer
+        $process = new Process(sprintf(
+            'cd %s && php -d memory_limit=%s composer.phar require %s --update-no-dev --update-with-dependencies --prefer-dist -n',
+            $this->newsoopDir,
+            $this->config['internal_memory_limit'],
+            $composerList
+        ));
+        $process->setTimeout(3600);
+        $process->run(function ($type, $buffer) use ($output) {
+            if (Process::ERR === $type) {
+                $output->write('<error>'.$buffer.'</error>');
+            } else {
+                $output->write('<info>'.$buffer.'</info>');
+            }
+        });
+
+        if (!$process->isSuccessful()) {
+            throw new \Exception('Error with updating plugin(s).', 1);
+        }
+
+        $this->saveAvaiablePluginsToCacheFile();
+
+        if ($clearCache) {
+            $this->clearCache($output);
+        }
+
+        if ($notify) {
+            $process = new Process(sprintf(
+                'cd %s && php -d memory_limit=%s application/console plugins:dispatch "%s" update',
+                $this->newsoopDir,
+                $this->config['internal_memory_limit'],
+                $eventList
+            ));
+            $process->setTimeout(3600);
+            $process->run(function ($type, $buffer) use ($output) {
+                if (Process::ERR === $type) {
+                    $output->write('<error>'.$buffer.'</error>');
+                } else {
+                    $output->write('<info>'.$buffer.'</info>');
+                }
+            });
+
+            if (!$process->isSuccessful()) {
+                throw new \Exception('Error with dispatching update event(s).', 1);
+            }
+        }
+
+        foreach ($plugins as $plugin) {
+            $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/update_'.str_replace('/', '-', $plugin['name']).'_package.json';
+            if (file_exists($cachedPluginMeta)) {
+                $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
+
+                $pluginDetails = file_get_contents($this->pluginsDir.'/'.$pluginMeta['target']['targetDir'].'/composer.json');
+                $this->em->getRepository('Newscoop\Entity\Plugin')->updatePlugin($pluginMeta['target'], $pluginDetails);
+
+                // clear cache files
+                $filesystem = new Filesystem();
+                $filesystem->remove($cachedPluginMeta);
+            }
+        }
+
+        $output->writeln('<info>Plugin(s) updated: '.$printList.'</info>');
     }
 
     /**
@@ -407,6 +492,21 @@ class ManagerService
     }
 
     /**
+     * Reinstall plugins after Newscoop upgrade (re-add them to composer)
+     */
+    public function getPluginData()
+    {
+        $newPlugins = array();
+        $allPlugins = $this->pluginsService->getAllAvailablePlugins();
+        foreach ($allPlugins as $plugin) {
+            if (strpos($plugin->getName(), '/') !== false) {
+                $newPlugins[] = $plugin;
+            }
+        }
+        return $newPlugins;
+    }
+
+    /**
      * Get installed plugins
      * @return array Array with installed plugins info
      */
@@ -439,11 +539,11 @@ class ManagerService
      */
     private function clearCache($output)
     {
-        $output->writeln('<info>remove '.realpath($this->newsoopDir.'cache/').'/*</info>');
+        $output->writeln('<info>removing '.realpath($this->newsoopDir.'cache/').'/*</info>');
         $process = new Process('rm -rf '.realpath($this->newsoopDir.'cache/').'/*');
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
-            if ('err' === $type) {
+            if (Process::ERR === $type) {
                 $output->write('<error>'.$buffer.'</error>');
             } else {
                 $output->write('<info>'.$buffer.'</info>');
@@ -469,7 +569,7 @@ class ManagerService
             $installComposer->run();
 
             if (!$installComposer->isSuccessful()) {
-                throw new \Exception("Error with installing composer", 1);
+                throw new \Exception("Error with installing composer.", 1);
             }
         }
     }
@@ -518,8 +618,8 @@ class ManagerService
         }
     }
 
-    private function handleConfig(array $config) {
-
+    private function handleConfig(array $config)
+    {
         foreach ($config as $key => $value) {
             if (trim($value) == '') {
                 unset($config[$key]);
@@ -532,5 +632,47 @@ class ManagerService
         }
 
         $this->config = array_merge($this->config, $config);
+    }
+
+    /**
+     * Convert a (string) list of plugins to an array
+     * Supported formats:
+     *     <vendor>/<plugin-name>:<version>
+     *     <vendor>/<plugin-name>
+     *
+     * Multiple plugin statements should be seperated by a space. Both formats
+     * can be used mixed.
+     *
+     * @param  string $pluginList List of plugins
+     *
+     * @return array
+     */
+    public function stringToArray($pluginList, $withVersion = true)
+    {
+        $pluginsInput = explode(' ', $pluginList);
+        $pluginsOutput = array();
+        foreach ($pluginsInput as $plugin) {
+            if ($withVersion) {
+                if (strpos($plugin, ':') !== false) {
+                    list($name, $version) = explode(':', $plugin);
+                } else {
+                    $name = $plugin;
+                    $version = '*';
+                }
+            } else {
+                $name = $plugin;
+            }
+            $pluginMeta = explode('/', $name);
+            if (count($pluginMeta) !== 2) {
+                throw new \Exception("Plugin name $name is invalid, try \"vendor/plugin-name\"", 1);
+            }
+            if ($withVersion) {
+                $pluginsOutput[] = array('name' => $name, 'version' =>$version);
+            } else {
+                $pluginsOutput[] = $name;
+            }
+        }
+
+        return $pluginsOutput;
     }
 }
