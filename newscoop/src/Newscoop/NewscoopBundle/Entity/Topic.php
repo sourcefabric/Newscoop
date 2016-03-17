@@ -301,6 +301,16 @@ class Topic
     }
 
     /**
+     * Gets the value of parent id.
+     *
+     * @return mixed
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
      * Gets the integer value of parent.
      *
      * @return int

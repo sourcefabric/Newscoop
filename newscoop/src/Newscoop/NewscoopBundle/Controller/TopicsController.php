@@ -168,6 +168,11 @@ class TopicsController extends Controller
         $cacheService->clearNamespace('topic');
 
         return new JsonResponse(array(
+            'topic' => array(
+                'id' => $node->getId(),
+                'root' => $node->getRoot(),
+                'parentId' => $node->getParentId()
+            ),
             'status' => true,
             'message' => $translator->trans('topics.alerts.ordersaved', array(), 'topics'),
         ), 200);

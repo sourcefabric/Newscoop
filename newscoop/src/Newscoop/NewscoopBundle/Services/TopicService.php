@@ -184,7 +184,7 @@ class TopicService
      * @param Topic $node   Dragged topic object
      * @param array $params Parameters with positions
      *
-     * @return bool
+     * @return Topic
      */
     public function saveTopicPosition(Topic $node, $params)
     {
@@ -231,7 +231,7 @@ class TopicService
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
         $this->em->flush();
 
-        return true;
+        return $node;
     }
 
     /**
