@@ -332,8 +332,33 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $zip->deleteName(".");
         if ($res === TRUE) {
             $themePath = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED.'/');
-            $zip->extractTo(realpath($this->toFullPath($themePath)));
+            $themePath = realpath($this->toFullPath($themePath));
+            $zip->extractTo($themePath);
             $zip->close();
+
+            // The theme can be downloaded in a zip file which contains the files in a folder named after the theme name
+            // If this is the case, the files need to copied from this folder into the parent folder
+            if (!file_exists($themePath . DIR_SEP . 'theme.xml')) {
+                $contents = scandir($themePath);
+                if (count($contents) !== 3) {
+                    // Clean up
+                    $this->rrmdir($themePath);
+                    throw new \Exception("Unexpected number of files in theme folder");
+                }
+
+                $themeName = null;
+                foreach ($contents as $content) {
+                    if (( $content != '.' ) && ( $content != '..' )) {
+                        $themeName = $content;
+                        break;
+                    }
+                }
+
+                if (!is_null($themeName)) {
+                    $this->copy($themePath . DIR_SEP . $themeName, $themePath);
+                    $this->rrmdir($themePath . DIR_SEP . $themeName);
+                }
+            }
 
             return true;
         } else {
