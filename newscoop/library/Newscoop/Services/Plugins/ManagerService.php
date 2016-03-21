@@ -109,7 +109,7 @@ class ManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require --no-update ' . $pluginName .':' . $version .' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update '. $pluginName .'  --prefer-dist '. $this->dev .' -n');
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.qphar require ' . $pluginName .':' . $version);
 
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
@@ -225,12 +225,9 @@ class ManagerService
                     }
                 }
 
-                $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
-                unset($composerDefinitions['require'][$package]);
+                $output->writeln('<info>Remove "'.$pluginName.'"</info>');
 
-                file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
-
-                $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update '. $this->dev .' ' . $pluginName);
+                $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar remove '. $this->dev .' ' . $pluginName);
                 $process->setTimeout(3600);
                 $process->run(function ($type, $buffer) use ($output) {
                     if ('err' === $type) {
