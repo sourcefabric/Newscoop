@@ -109,7 +109,7 @@ class ManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.qphar require ' . $pluginName .':' . $version);
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require ' . $pluginName .':' . $version);
 
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
