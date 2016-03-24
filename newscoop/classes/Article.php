@@ -585,7 +585,7 @@ class Article extends DatabaseObject
                 $this->positionAbsolute(1);
             } else {
                 $logtext = $translator->trans('Article "$1" not processed', array('$1' => $articleCopy->getTitle()), 'api');
-                Log::ArticleMessage($this, $logtext,);
+                Log::ArticleMessage($this, $logtext);
             }
         }
 
