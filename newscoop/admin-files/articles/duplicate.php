@@ -12,7 +12,11 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_code = Input::Get('f_article_code', 'array', array(), true);
 $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
-$f_destination_issue_number = Input::Get('f_destination_issue_number', 'int', 0, true);
+
+$f_destination_issue_number_language = explode('_', Input::Get('f_destination_issue_number', 'str', '0_'.$f_language_id, true));
+$f_destination_issue_number = $f_destination_issue_number_language[0];
+$f_destination_issue_language_id = $f_destination_issue_number_language[1];
+
 $f_destination_section_number = Input::Get('f_destination_section_number', 'int', 0, true);
 
 // $f_mode can be "single" or "multi".  This governs
@@ -142,7 +146,7 @@ if (count($allPublications) == 1) {
 // Get the most recent issues.
 $allIssues = array();
 if ($f_destination_publication_id > 0) {
-	$allIssues = Issue::GetIssues($f_destination_publication_id, null, null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
+$allIssues = Issue::GetIssues($f_destination_publication_id, null, null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC")/*, 'GROUP BY' => 'Number'*/), true);
 	// Automatically select the issue if there is only one.
 	if (count($allIssues) == 1) {
 		$tmpIssue = camp_array_peek($allIssues);
@@ -153,8 +157,8 @@ if ($f_destination_publication_id > 0) {
 // Get all the sections.
 $allSections = array();
 if ($f_destination_issue_number > 0) {
-    $destIssue = new Issue($f_destination_publication_id);
-    $allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, null, null, null, array("ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
+    $destIssue = new Issue($f_destination_publication_id, $f_destination_issue_language_id);
+    $allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $f_destination_issue_language_id, null, null, array("ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
     // Automatically select the section if there is only one.
     if (count($allSections) == 1) {
         $tmpSection = camp_array_peek($allSections);
@@ -229,7 +233,7 @@ if (isset($_REQUEST["action_button"])) {
         $ArticleDatetimeRepository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\ArticleDatetime');
         foreach ($doAction as $articleNumber => $languageArray) {
 			$events = $ArticleDatetimeRepository->findBy(array('articleId' => $articleNumber));
-            
+
             $languageArray = array_keys($languageArray);
 			$tmpLanguageId = camp_array_peek($languageArray);
 
@@ -259,7 +263,7 @@ if (isset($_REQUEST["action_button"])) {
                     $commentDefault = $tmpPub->commentsArticleDefaultEnabled();
                     $newArticle->setCommentsEnabled($commentDefault);
             	}
-                
+
                 foreach ($events as $event) {
                     //$repo->add($timeSet, $articleId, 'schedule');
                     $newEvent = $ArticleDatetimeRepository->getEmpty();
@@ -419,7 +423,7 @@ if (isset($_REQUEST["action_button"])) {
                         ->dispatch('article.submit', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                             'article' => $tmpArticle,
                         )));
-                        
+
 					$tmpArticles[] = $tmpArticle;
 				}
 			}
@@ -527,8 +531,6 @@ foreach ($articles as $languageArray) {
 				<?php
 				if ($f_action == "duplicate") {
 					echo $translator->trans("Duplicate?", array(), 'articles');
-//				} elseif ($f_action == "move") {
-//					echo $translator->trans("Move?");
 				} elseif ($f_action == "publish") {
 					echo $translator->trans("Publish?", array(), 'articles');
 				}
@@ -640,11 +642,11 @@ foreach ($articles as $languageArray) {
 					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php echo $translator->trans('Issue'); ?>: </TD>
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (($f_destination_publication_id > 0) && (count($allIssues) > 1)) { ?>
-						<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_issue_number); ?>) { this.form.submit(); }">
+						<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != '<?php p($f_destination_issue_number.'_'.$f_destination_issue_language_id); ?>') { this.form.submit(); }">
 						<OPTION VALUE="0"><?php echo $translator->trans('---Select issue---'); ?></option>
 						<?php
 						foreach ($allIssues as $tmpIssue) {
-							camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_number, $tmpIssue->getIssueNumber().". ".$tmpIssue->getName());
+							camp_html_select_option($tmpIssue->getIssueNumber().'_'.$tmpIssue->getLanguageId(), $f_destination_issue_number.'_'.$f_destination_issue_language_id, $tmpIssue->getIssueNumber().". ".$tmpIssue->getName());
 						}
 						?>
 						</SELECT>
@@ -691,7 +693,7 @@ foreach ($articles as $languageArray) {
 		<tr>
 			<td colspan="2"><?php
 				if ( ($f_publication_id == $f_destination_publication_id) && ($f_issue_number == $f_destination_issue_number)
-				&& ($f_section_number == $f_destination_section_number) && ($f_section_number > 0)) {
+				&& ($f_section_number == $f_destination_section_number) && ($f_section_number > 0) && ($f_language_id == $f_destination_issue_language_id)) {
 					echo $translator->trans("The destination section is the same as the source section.", array(), 'articles'); echo "<BR>\n";
 				}
 			?></td>
