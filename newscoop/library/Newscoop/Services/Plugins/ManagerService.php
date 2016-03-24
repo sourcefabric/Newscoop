@@ -66,6 +66,12 @@ class ManagerService
     protected $config = array();
 
     /**
+     * Application environment
+     * @var string
+     */
+    protected $dev;
+
+    /**
      * @param Doctrine\ORM\EntityManager $em
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
      */
@@ -78,6 +84,11 @@ class ManagerService
         $this->newsoopDir = __DIR__ . '/../../../../';
         $this->pluginsDir = $this->newsoopDir . 'plugins';
         $this->handleConfig($config);
+
+        $this->dev = '';
+        if (APPLICATION_ENV === 'production') {
+            $this->dev = '--no-dev';
+        };
     }
 
     /**
@@ -98,7 +109,7 @@ class ManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require --no-update ' . $pluginName .':' . $version .' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update ' . $pluginName .'  --prefer-dist --no-dev -n');
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require ' . $pluginName .':' . $version);
 
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
@@ -214,12 +225,9 @@ class ManagerService
                     }
                 }
 
-                $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
-                unset($composerDefinitions['require'][$package]);
+                $output->writeln('<info>Remove "'.$pluginName.'"</info>');
 
-                file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
-
-                $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --no-dev ' . $pluginName);
+                $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar remove '. $this->dev .' ' . $pluginName);
                 $process->setTimeout(3600);
                 $process->run(function ($type, $buffer) use ($output) {
                     if ('err' === $type) {
@@ -267,7 +275,7 @@ class ManagerService
         $this->installComposer();
 
         $output->writeln('<info>Update "'.$pluginName.'"</info>');sleep(10);
-        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --prefer-dist --no-dev ' . $pluginName);
+        $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update --prefer-dist'. $this->dev .' ' . $pluginName);
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
@@ -379,7 +387,7 @@ class ManagerService
         $update = implode(' ', $update);
 
         if ($doUpdate) {
-            $doUpdate = ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update ' . $update . ' --no-dev';
+            $doUpdate = ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar update ' . $update . ' '. $this->dev;
         }
 
         $process = new Process('cd ' . $this->newsoopDir . ' && php -d memory_limit='.$this->config['internal_memory_limit'].' composer.phar require ' . $require.' --no-update'.$doUpdate);
