@@ -570,7 +570,12 @@ class Article extends DatabaseObject
         }
         $success = false;
         if (count($columns) > 0) {
-            $success = $this->update($columns);
+            try {
+                $success = $this->update($columns);
+            } catch (\Exception $e) {
+                $success = false;
+            }
+
             if ($success) {
                 $this->setWorkflowStatus($this->getWorkflowStatus());
                 $g_ado_db->Execute('LOCK TABLES Articles WRITE');
@@ -578,6 +583,9 @@ class Article extends DatabaseObject
                 $this->setProperty('ArticleOrder', $articleOrder);
                 $g_ado_db->Execute('UNLOCK TABLES');
                 $this->positionAbsolute(1);
+            } else {
+                $logtext = $translator->trans('Article "$1" not processed', array('$1' => $articleCopy->getTitle()), 'api');
+                Log::ArticleMessage($this, $logtext,);
             }
         }
 

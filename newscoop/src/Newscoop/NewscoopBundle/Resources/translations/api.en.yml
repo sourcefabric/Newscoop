@@ -39,6 +39,7 @@ Title: Title
 'Article Number': 'Article Number'
 'Access denied.': 'Access denied.'
 'Publish with issue': 'Publish with issue'
+'Article "$1" not processed': 'Article "$1" not processed'
 unknown: unknown
 Switch: Switch
 Numeric: Numeric
@@ -65,7 +66,7 @@ client:
   added: 'Client was added'
   notfound: 'Client not found'
   removed: 'Client was removed'
-publicresources: 
+publicresources:
   updated: 'Public resources was updated'
 api:
   configure:
