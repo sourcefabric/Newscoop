@@ -39,6 +39,7 @@ Title: Заголовок
 'Article Number': 'Номер статьи'
 'Access denied.': 'Отказано в доступе.'
 'Publish with issue': 'Опубликовать выпуск'
+'Article "$1" not processed': null
 unknown: неизвестно
 Switch: Переключатель
 Numeric: Числовой

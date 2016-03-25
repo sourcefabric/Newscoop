@@ -39,6 +39,7 @@ Title: Cím
 'Article Number': 'Cikk száma'
 'Access denied.': 'Hozzáférés megtagadva.'
 'Publish with issue': 'Közzététel folyóiratszámmal'
+'Article "$1" not processed': null
 unknown: ismeretlen
 Switch: Váltás
 Numeric: Numerikus

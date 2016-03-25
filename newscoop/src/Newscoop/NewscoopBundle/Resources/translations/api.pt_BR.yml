@@ -39,6 +39,7 @@ Title: Título
 'Article Number': 'Número do artigo'
 'Access denied.': 'Acesso proibido.'
 'Publish with issue': 'Publicar com edição'
+'Article "$1" not processed': null
 unknown: desconhecido
 Switch: Switch
 Numeric: Numérico

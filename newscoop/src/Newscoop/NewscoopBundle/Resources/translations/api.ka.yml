@@ -39,6 +39,7 @@ Title: სათაური
 'Article Number': 'სტატიის ნომერი'
 'Access denied.': 'წვდომა აკრძალულია'
 'Publish with issue': 'გამოქვეყნება გამოცემასთან ერთად'
+'Article "$1" not processed': null
 unknown: უცნობი
 Switch: გადართვა
 Numeric: რიცხვითი

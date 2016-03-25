@@ -39,6 +39,7 @@ Title: Başlıq
 'Article Number': 'Məqalə Nömrəsi'
 'Access denied.': 'Giriş qadağandır.'
 'Publish with issue': 'Maddə ilə nümayiş et'
+'Article "$1" not processed': null
 unknown: naməlum
 Switch: Keç
 Numeric: Rəqəmsal

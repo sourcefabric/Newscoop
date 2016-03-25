@@ -39,6 +39,7 @@ Title: Наслов
 'Article Number': 'Број текста'
 'Access denied.': 'Приступ забрањен'
 'Publish with issue': 'Објави заједно са издањем'
+'Article "$1" not processed': null
 unknown: непознато
 Switch: Прекидач
 Numeric: 'Бројчана вредност'

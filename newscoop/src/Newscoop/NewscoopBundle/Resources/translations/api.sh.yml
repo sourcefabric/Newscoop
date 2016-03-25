@@ -39,6 +39,7 @@ Title: Naslov
 'Article Number': 'Broj teksta'
 'Access denied.': 'Pristup zabranjen.'
 'Publish with issue': 'Objavi zajedno sa izdanjem'
+'Article "$1" not processed': null
 unknown: nepoznato
 Switch: Prekidač
 Numeric: 'Brojačna vrednost'

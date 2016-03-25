@@ -39,6 +39,7 @@ Title: Název
 'Article Number': 'Číslo Článku'
 'Access denied.': 'Přístup byl odepřen.'
 'Publish with issue': 'Publikovat s vydáním'
+'Article "$1" not processed': null
 unknown: neznámý
 Switch: Přepnout
 Numeric: Číselný

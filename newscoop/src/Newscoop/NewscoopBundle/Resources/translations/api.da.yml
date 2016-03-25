@@ -39,6 +39,7 @@ Title: Titel
 'Article Number': 'Artikel nummer'
 'Access denied.': 'Adgang nægtet'
 'Publish with issue': 'Udgiv med udgivelsen'
+'Article "$1" not processed': null
 unknown: ukendt
 Switch: Skift
 Numeric: Numerisk

@@ -39,6 +39,7 @@ Title: العنوان
 'Article Number': 'رقم المقال'
 'Access denied.': 'الدخول مرفوض'
 'Publish with issue': 'إنشر مع العدد'
+'Article "$1" not processed': null
 unknown: 'غير معروف'
 Switch: تبديل
 Numeric: رقمي

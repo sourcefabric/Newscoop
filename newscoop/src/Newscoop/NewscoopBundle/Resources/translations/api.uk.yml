@@ -39,6 +39,7 @@ Title: Заголовок
 'Article Number': 'номер статті'
 'Access denied.': 'Доступ заборонено'
 'Publish with issue': 'Опублікувати з випуском'
+'Article "$1" not processed': null
 unknown: невідомий
 Switch: Перемикнути
 Numeric: Числовий

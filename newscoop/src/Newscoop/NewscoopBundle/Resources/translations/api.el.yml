@@ -39,6 +39,7 @@ Title: Τίτλος
 'Article Number': 'Αριθμός Άρθρου'
 'Access denied.': 'Άρνηση πρόσβασης.'
 'Publish with issue': 'Δημοσίευση με τεύχος'
+'Article "$1" not processed': null
 unknown: άγνωστο
 Switch: Εναλλαγή
 Numeric: Αριθμητικός
