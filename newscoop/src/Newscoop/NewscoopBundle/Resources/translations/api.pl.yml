@@ -4,7 +4,7 @@
 'Filter not saved': 'Filtr nie został zapisany'
 'Not a color': 'Wartość nie jest kolorem.'
 'No such field': 'Nie ma takiego pola'
-'Color saved': 'Kolor zapisany'
+'Color saved': 'Kolor został zapisany'
 'Color not saved': 'Kolor nie został zapisany'
 'Topic created': 'Temat został utworzony'
 'The topic name is already in use by another topic.': 'Ta nazwa jest już wykorzystywana przez inny temat.'
@@ -26,7 +26,7 @@ Homepage: 'Strona domowa'
 'Show original map': 'Pokaż oryginalną mapę'
 'The uploaded archive does not contain an valid newscoop plugin.': 'Dodane archiwum nie zawiera ważnych pluginów Newscoop'
 Map: Mapa
-Center: Centruj
+Center: Wyśrodkuj
 Title: Tytuł
 'Invalid security token.': 'Niepoprawny token bezpieczeństwa.'
 'Callback $1 is not callable.': 'Callback $1 nie jest w zasięgu.'
