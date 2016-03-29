@@ -405,6 +405,11 @@ class Article extends DatabaseObject
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 
         $translator = \Zend_Registry::get('container')->getService('translator');
+
+        $changedValues = array('IdPublication' => (int)$p_destPublicationId,
+            'NrIssue' => (int)$p_destIssueNumber,
+            'NrSection' => (int)$p_destSectionNumber);
+
         $copyArticles = array();
         if ($p_copyTranslations) {
             // Get all translations for this article
@@ -413,33 +418,48 @@ class Article extends DatabaseObject
             // Remove any translations that are not requested to be translated.
             if (is_array($p_copyTranslations)) {
                 $tmpArray = array();
+
                 foreach ($copyArticles as $tmpArticle) {
-                    if (in_array($tmpArticle->m_data['IdLanguage'], $p_copyTranslations)) {
-                        $tmpArray[] = $tmpArticle;
+                    if (!in_array($tmpArticle->m_data['IdLanguage'], $p_copyTranslations)) {
+                        continue;
                     }
+
+                    //Check whether copy will violate uniqueness constraints
+                    if (!$tmpArticle->willReplacementBeUnique($changedValues)) {
+                        continue;
+                    }
+
+                    $tmpArray[] = $tmpArticle;
                 }
                 $copyArticles = $tmpArray;
             }
         } else {
-            $copyArticles[] = $this;
+            if ($this->willReplacementBeUnique($changedValues)) {
+                $copyArticles[] = $this;
+            }
         }
+
+        // If there are no articles to be copied return empty array
+        if (count($copyArticles) === 0) {
+            return $copyArticles;
+        }
+
         $newArticleNumber = $this->__generateArticleNumber();
 
         // geo-map copying
-        if (0 < count($copyArticles)) {
-            $map_user_id = $p_userId;
-            if (is_null($map_user_id)) {
-                $map_user_id = $this->m_data['IdUser'];
-            }
-
-            $map_artilce_src = (int) $this->m_data['Number'];
-            $map_artilce_dest = (int) $newArticleNumber;
-            $map_translations = array();
-            foreach ($copyArticles as $copyMe) {
-                $map_translations[] = (int) $copyMe->m_data['IdLanguage'];
-            }
-            Geo_Map::OnArticleCopy($map_artilce_src, $map_artilce_dest, $map_translations, $map_user_id);
+        $map_user_id = $p_userId;
+        if (is_null($map_user_id)) {
+            $map_user_id = $this->m_data['IdUser'];
         }
+
+        $map_artilce_src = (int) $this->m_data['Number'];
+        $map_artilce_dest = (int) $newArticleNumber;
+        $map_translations = array();
+        foreach ($copyArticles as $copyMe) {
+            $map_translations[] = (int) $copyMe->m_data['IdLanguage'];
+        }
+        Geo_Map::OnArticleCopy($map_artilce_src, $map_artilce_dest, $map_translations, $map_user_id);
+
 
         $articleOrder = null;
         $logtext = '';
@@ -979,6 +999,37 @@ class Article extends DatabaseObject
 
         return $section;
     } // fn getSection
+
+
+    /**
+     * Check whether a copy with the same values as this object, but with one or more changed, will violate uniqueness constraints
+     *
+     * @param array $changedValues -
+     *                           Array of key value pairs to replace those of the this object
+     *
+     * @return boolean - true if the object with changed values will be unique
+     */
+    public function willReplacementBeUnique($changedValues)
+    {
+        if (!is_array($changedValues) || !count($changedValues)) {
+            return false;
+        }
+
+        global $g_ado_db;
+
+        $uniqueColumns = array('IdPublication', 'NrIssue', 'NrSection', 'IdLanguage', 'Name');
+        $keysValues = array();
+        foreach ($uniqueColumns as $column) {
+            $value = isset($changedValues[$column]) ? $changedValues[$column] : $this->m_data[$column];
+            $keysValues[] = $g_ado_db->escapeKeyVal($column, $value);
+        }
+
+        $queryStr = "SELECT Number FROM " . $this->m_dbTableName . " WHERE " . implode(" AND ", $keysValues);
+        if ($g_ado_db->GetRow($queryStr)) {
+            return false;
+        }
+        return true;
+    }
 
 
     /**
