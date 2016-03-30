@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../include/campsite_constants.php';
 require_once dirname(__FILE__) . '/DbObjectArray.php';
 require_once dirname(__FILE__) . '/CampCache.php';
 require_once dirname(__FILE__) . '/Exceptions.php';
+require_once dirname(__FILE__) . '/Log.php';
 
 use \Newscoop\EventDispatcher\EventDispatcher;
 use \Newscoop\EventDispatcher\Events\GenericEvent;
@@ -610,8 +611,15 @@ class DatabaseObject
 						.' SET `'. $p_dbColumnName.'`='.$value
 						.' WHERE '.$this->getKeyWhereClause()
 						.' LIMIT 1';
-			$result = $g_ado_db->executeUpdate($queryStr);
-			$success = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
+			try {
+				$result = $g_ado_db->executeUpdate($queryStr);
+				$success = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
+			} catch (\Exception $e) {
+				Log::Message("Exception thrown when executing update query " . $queryStr . " " . $e->getMessage());
+				$success = false;
+				$result = false;
+			}
+
 			if ($result !== false) {
 				$this->m_exists = true;
 				if ($isKeyColumn && DatabaseObject::GetUseCache()) {
@@ -723,7 +731,13 @@ class DatabaseObject
 	        			.' SET '.implode(',', $setColumns)
 	        			.' WHERE ' . $this->getKeyWhereClause()
 	        			.' LIMIT 1';
-	        $success = $g_ado_db->executeUpdate($queryStr);
+			try {
+				$success = $g_ado_db->executeUpdate($queryStr);
+			} catch (\Exception $e) {
+				Log::Message("Exception thrown when executing update query " . $queryStr . " " . $e->getMessage());
+				$success = false;
+			}
+
 			if ($success !== false) {
 				$this->m_exists = true;
 			}
