@@ -18,6 +18,8 @@ Quick links to our resources are:
 
 ## Installation
 
+How do I install Newscoop? [Check here][16]
+
 **Using console command**
 
 	php application/console newscoop:install --fix --database_name newscoop --database_user root --database_password password
@@ -94,3 +96,4 @@ Newscoop is licensed under the GPL3 license.
 [13]: https://github.com/sourcefabric/Newscoop/blob/master/newscoop/docs/INSTALL-ubuntu.md
 [14]: https://bugs.php.net/bug.php?id=54709
 [15]: http://newscoop-demo.sourcefabric.org/documentation/rest-api/
+[16]: https://github.com/sourcefabric/Newscoop/tree/master/newscoop/docs
