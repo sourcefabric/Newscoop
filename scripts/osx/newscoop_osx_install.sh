@@ -76,7 +76,7 @@ rm -rf $SCRIPTPATH/httpd-vhosts.conf.tpl
 # reset newscoop config
 cd $SCRIPTPATH/../../newscoop
 sudo rm -rf conf/configuration.php conf/database_conf.php cache/*
-mysql -e 'drop database newscoop;' -uroot
+mysql -e 'drop database newscoop;' -uroot -proot
 
 # set permissions
 chmod 775 plugins install cache images public conf log
@@ -84,6 +84,9 @@ chmod 775 plugins install cache images public conf log
 # composer install, and newscoop install
 composer self-update
 composer install --prefer-dist
-sudo ./application/console newscoop:install --fix --database_name newscoop --database_user root --no-client
+sudo ./application/console newscoop:install --fix --database_name newscoop --database_user root --database_password root --no-client
 sudo php upgrade.php
 sudo php $SCRIPTPATH/../../newscoop/scripts/fixer.php
+
+# create an apache htaccess file after the installation process
+cp $SCRIPTPATH/htaccess.dist $SCRIPTPATH/.htaccess
