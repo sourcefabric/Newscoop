@@ -70,11 +70,9 @@ fos_rest:
         decoders:
             json: fos_rest.decoder.json
     format_listener:
-        default_priorities:
-            - json
-            - html
-        fallback_format: json
-        prefer_extension: true
+        rules:
+            - { path: '^/(api|content\-api)', priorities: ['json'], fallback_format: json, prefer_extension: true }
+            - { path: '^/', stop: true }
     exception:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
@@ -83,7 +81,6 @@ fos_rest:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
-            'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
             'Newscoop\Exception\ResourceNotModifiedException': 304
             'Newscoop\NewscoopException': 500
@@ -97,7 +94,6 @@ fos_rest:
             'Doctrine\ORM\EntityNotFoundException': true
             'Symfony\Component\Form\Exception\InvalidArgumentException' : true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
-            'Symfony\Component\HttpKernel\Exception\FlattenException': true
             'Newscoop\Exception\ResourceNotModifiedException': false
             'OAuth2\OAuth2AuthenticateException': true
             'Newscoop\NewscoopException': true
@@ -206,3 +202,8 @@ stof_doctrine_extensions:
             translatable: true
             sortable: true
             loggable: false
+
+swp_updater:
+    version_class: %swp_updater.version.class%
+    client:
+        base_uri: http://rafal.sourcefabric.net

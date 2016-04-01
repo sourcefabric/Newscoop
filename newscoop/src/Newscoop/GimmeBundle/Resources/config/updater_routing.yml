@@ -1,0 +1,32 @@
+newscoop_gimme_updater_download:
+    path: /api/updates/download/{resource}.{_format}
+    defaults:
+        _controller: SWPUpdaterBundle:Updater:download
+        _format: json
+    requirements:
+          _method: GET
+
+newscoop_gimme_updater_get:
+    path: /api/updates/{channel}.{_format}
+    defaults:
+        _controller: SWPUpdaterBundle:Updater:get
+        _format: json
+        channel: default
+    requirements:
+          _method: GET
+
+newscoop_gimme_updater_install:
+    path: /api/updates/{resource}.{_format}
+    defaults:
+        _controller: SWPUpdaterBundle:Updater:install
+        _format: json
+    requirements:
+          _method: POST
+
+newscoop_gimme_updater_latest:
+    path: /api/updates/latest/.{_format}
+    defaults:
+        _controller: SWPUpdaterBundle:Updater:latest
+        _format: json
+    requirements:
+          _method: GET

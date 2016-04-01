@@ -43,6 +43,9 @@ NewscoopGimmeBundleConfigureApi:
     resource: "@NewscoopGimmeBundle/Controller/ConfigureApiController.php"
     prefix:   /
     type:     annotation
+swp_updater:
+    resource: "@NewscoopGimmeBundle/Resources/config/updater_routing.yml"
+    prefix:   /
 newscoop:
     prefix: /
     resource: "@NewscoopNewscoopBundle/Resources/config/routing.yml"

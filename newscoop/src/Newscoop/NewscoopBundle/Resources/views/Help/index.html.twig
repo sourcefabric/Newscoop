@@ -1,0 +1,193 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "help" %}
+{% block admin_title %}{{ 'Help'|trans }} - {{ parent() }}{% endblock %}
+{% block admin_page_title_content %}{{ 'Help'|trans }}{% endblock %}
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="/admin-style/misc-pages.css" />
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/font-awesome-animation.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/help-page.css')}}">
+{% endblock %}
+{% block admin_content %}
+<div class="help-container">
+	<img src="/admin-style/images/newscoop_logo_big.png" style="float:left;">
+	<dl class="metadata help-wrapper">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="updater-wrapper help-wrapper">
+					<div class="updater-icon"><i class="glyphicon glyphicon-refresh"></i></div>
+					<div class="updater-text"> <span></span>
+						<a class="updater-button" id="updater-update-btn" href="#myModal" data-backdrop="static" data-keyboard="false"  data-toggle="modal"> {{ 'Update Now'|trans }}</a>
+						<a class="updater-button" id="updater-check-btn" href="{{path('newscoop_gimme_updater_latest')}}" > {{ 'Check again'|trans }}</a> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<dt>{{'Version'|trans}}:</dt> <dd>{{ version }}</dd>
+		<dt>{{'REST API Version'|trans}}:</dt> <dd>{{ apiVersion }} (<a href="/documentation/rest-api/">{{'Documentation'|trans}}</a>)</dd>
+		<dt>{{'Release date'|trans}}:</dt> <dd>{{ releaseDate }}</dd>
+	</dl>
+
+	<div class="clear"></div>
+
+	<ul class="help">
+		<li><p>{{"Welcome to the Newscoop help page. Whether you're just getting started or you have a specific question, the best place to look is in one of the Newscoop manuals"|trans}}<br /><a href="http://www.sourcefabric.org/en/newscoop/manuals" target="_blank">http://www.sourcefabric.org/en/newscoop/manuals</a></p></li>
+
+		<li><p>{{'Alternatively, you can ask a question in our forums at'|trans}} <a href="http://forum.sourcefabric.org/" target="_blank">http://forum.sourcefabric.org</a> {{'or suggest improvements in our bug tracker at'|trans}} <a href="http://dev.sourcefabric.org/" target="_blank">http://dev.sourcefabric.org/</a>.</p></li>
+
+		<li><p>{{'To upgrade Newscoop please visit our website'|trans }} <a href="http://www.sourcefabric.org/en/newscoop/download/" target="_blank">http://www.sourcefabric.org/en/newscoop/download/</a>. {{'Sourcefabric also offers a range of support options, which can include installation, hosting and technical support.'|trans}} {{'Talk to us today'|trans}} <a href="https://www.sourcefabric.org/en/home/contact/" target="_blank">https://www.sourcefabric.org/en/home/contact/</a> {{'and help us support quality, independent journalism.'|trans}}</p></li>
+
+		<li><p>{{'To support us in other ways, visit our Community page'|trans}} <a href="https://www.sourcefabric.org/en/home/help/" target="_blank">https://www.sourcefabric.org/en/home/help/</a>.</p></li>
+	</ul>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-time"></span> {{ 'Updating Newscoop. Please wait!'|trans }}</h4>
+			</div>
+			<div class="modal-body center-block">
+				<i class="fa fa-spinner fa-spin pull-left" style="padding: 2px;"></i><p class="updater-status-msg">{{ 'Downloading core files...'|trans }}</p>
+  </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+	var token;
+
+	var getCurrentDateTime = function () {
+		var currentdate = new Date();
+		var datetime = currentdate.getDate() + "/"
+		+ (currentdate.getMonth()+1)  + "/"
+		+ currentdate.getFullYear() + " "
+		+ currentdate.getHours() + ":"
+		+ currentdate.getMinutes();
+
+		return datetime;
+	}
+
+	var resetUpdateState = function () {
+		$('#updater-update-btn').hide();
+		$('#updater-check-btn').hide();
+		$('.updater-text span').text(Translator.trans("Checking for updates..."));
+	}
+	var makeAccessTokenCall = function () {
+		$.ajax('{{path('newscoop_gimme_users_getuseraccesstoken', {clientId: clientId})}}', {
+			success: function(data) {
+				sessionStorage.setItem('newscoop.token', data.access_token);
+				token = data.access_token;
+				makeCall();
+			},
+			error: function() {
+				flashMessage(Translator.trans("An error occurred while fetching access token."), 'error');
+			}
+		});
+	}
+
+	var getAccessToken = function () {
+		token = sessionStorage.getItem('newscoop.token');
+		if (!token) {
+			makeAccessTokenCall();
+		} else {
+			makeCall();
+		}
+	}
+
+	var makeCall = function () {
+		resetUpdateState();
+		var datetime = getCurrentDateTime();
+		$.ajax({
+			type: "GET",
+			url: '{{path('newscoop_gimme_updater_latest')}}',
+			dataType: 'json',
+			beforeSend: function(xhr, settings) {
+				xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+			},
+			success: function(data) {
+	      	if (data.version !== undefined && data.version !== '{{ release }}') {
+	      		$('.updater-text span').text(Translator.trans("Newscoop v%version% is available!", {'version': data.version}));
+	      		$('#updater-update-btn').show();
+	      	} else {
+	      		$('#updater-check-btn').show();
+	      		$('.updater-text span').text(Translator.trans("Last checked on %datetime%", {'datetime': datetime}));
+	      	}
+	      },
+	      error: function() {
+	      	flashMessage(Translator.trans('An error occurred while checking updates.'), 'error');
+	      	$('.updater-text span').text('Error...');
+	      	makeAccessTokenCall();
+			$('#updater-update-btn').hide();
+			$('#updater-check-btn').show();
+	      }
+	  });
+};
+
+$('#myModal').on('shown.bs.modal', function () {
+
+	token = sessionStorage.getItem('newscoop.token');
+	$.ajax({
+		type: "GET",
+		url: '{{path('newscoop_gimme_updater_download', {resource: 'core'})}}',
+		dataType: 'json',
+		beforeSend: function(xhr, settings) {
+			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+		},
+		success: function(data) {
+			if (data._status === 'OK') {
+				$('.updater-status-msg').text(Translator.trans('Unpacking core files...'));
+				$.ajax({
+					url : '{{path('newscoop_gimme_updater_install', {resource: 'core'})}}',
+					type: "POST",
+					dataType: 'json',
+					beforeSend: function(xhr, settings) {
+						xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+					},
+					success: function(data) {
+						if (data._status === 'OK') {
+							$('.updater-status-msg').text(Translator.trans('Finishing update process...'));
+						}
+
+						$('#updater-update-btn').hide();
+						$('#updater-check-btn').show();
+						$('#myModal').modal('hide');
+
+						var datetime = getCurrentDateTime();
+						$('.updater-text span').text(Translator.trans("Last checked on %datetime%", {'datetime': datetime}));
+						flashMessage(Translator.trans('Newscoop core has been successfully updated.'));
+						window.location.reload(true);
+					},
+					error: function() {
+						$('#myModal').modal('hide');
+						flashMessage(Translator.trans('An error occurred while updating core.'), 'error');
+					}
+				});
+			}
+		},
+		error: function() {
+			$.ajax('{{path('newscoop_gimme_users_getuseraccesstoken', {clientId: clientId})}}', {
+				success: function(data) {
+					sessionStorage.setItem('newscoop.token', data.access_token);
+					token = data.access_token;
+					makeCall();
+				}
+			});
+			flashMessage(Translator.trans("An error occurred while fetching access token."), 'error');
+			$('#updater-update-btn').hide();
+			$('#updater-check-btn').show();
+			var datetime = getCurrentDateTime();
+			$('.updater-text span').text('Last checked on '+datetime);
+			$('#myModal').modal('hide');
+		}
+	});
+});
+
+resetUpdateState();
+getAccessToken();
+
+$('a#updater-check-btn').click(function(event) {
+	event.preventDefault();
+	getAccessToken();
+});
+</script>
+{% endblock %}

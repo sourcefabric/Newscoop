@@ -133,4 +133,5 @@ parameters:
     scheduler:
         environment: 'prod'
     simple_security:
-        users_file: "%application_path%/configs/security/users.json"  
+        users_file: "%application_path%/configs/security/users.json"
+    swp_updater.version.class: "Newscoop\Version"

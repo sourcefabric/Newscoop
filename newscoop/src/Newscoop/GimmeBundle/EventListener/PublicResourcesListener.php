@@ -1,17 +1,15 @@
 <?php
+
 /**
- * @package Newscoop\Gimme
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use OAuth2\OAuth2;
 use OAuth2\OAuth2AuthenticateException;
-
 
 class PublicResourcesListener
 {
@@ -46,7 +44,6 @@ class PublicResourcesListener
                 $routesArray[] = 'newscoop_gimme_comments_createcomment';
             }
         }
-
 
         if (in_array($route, $routesArray)) {
             $unprotected = true;
