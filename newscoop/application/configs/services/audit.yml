@@ -35,6 +35,8 @@ services:
             -  { name: kernel.event_listener, event: county.delete, method: update }
             -  { name: kernel.event_listener, event: image.create, method: update }
             -  { name: kernel.event_listener, event: image.delete, method: update }
+            -  { name: kernel.event_listener, event: localimage.create, method: update }
+            -  { name: kernel.event_listener, event: localimage.delete, method: update }
             -  { name: kernel.event_listener, event: issue.create, method: update }
             -  { name: kernel.event_listener, event: issue.delete, method: update }
             -  { name: kernel.event_listener, event: language.create, method: update }

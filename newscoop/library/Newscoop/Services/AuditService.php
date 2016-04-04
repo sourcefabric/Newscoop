@@ -40,11 +40,14 @@ class AuditService
      */
     public function update(GenericEvent $event)
     {
-        list($resource, $action) = explode('.', $event->getName());
-        $user = isset($event['user']) ? $event['user'] : $this->userService->getCurrentUser();
-        $params = $event->getArguments();
+        try {
+            $user = isset($event['user']) ? $event['user'] : $this->userService->getCurrentUser();
+        } catch (\Exception $e) {
+            $user = null;
+        }
 
-        $auditEvent = new AuditEvent();
+        list($resource, $action) = explode('.', $event->getName());
+        $params = $event->getArguments();
         $values = array(
             'user' => $user,
             'action' => $action,
@@ -54,8 +57,7 @@ class AuditService
             'resource_title' => !empty($params['title']) ? $params['title'] : null,
         );
 
-        $this->em->getRepository('Newscoop\Entity\AuditEvent')
-            ->save($auditEvent, $values);
+        $this->em->getRepository('Newscoop\Entity\AuditEvent')->save(new AuditEvent(), $values);
         $this->em->flush();
     }
 
@@ -66,8 +68,7 @@ class AuditService
      */
     public function findAll()
     {
-        return $this->em->getRepository('Newscoop\Entity\AuditEvent')
-            ->findAll();
+        return $this->em->getRepository('Newscoop\Entity\AuditEvent')->findAll();
     }
 
     /**
@@ -81,16 +82,14 @@ class AuditService
      */
     public function findBy(array $criteria, $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->em->getRepository('Newscoop\Entity\AuditEvent')
-            ->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->em->getRepository('Newscoop\Entity\AuditEvent')->findBy($criteria, $orderBy, $limit, $offset);
     }
-    
+
     public function countBy(array $criteria)
     {
-        return $this->em->getRepository('Newscoop\Entity\AuditEvent')
-            ->countBy($criteria);
+        return $this->em->getRepository('Newscoop\Entity\AuditEvent')->countBy($criteria);
     }
-    
+
     public function getResourceTypes()
     {
         $resources = $this->em->getRepository('Newscoop\Entity\AuditEvent')
@@ -104,7 +103,7 @@ class AuditService
             return $row['type'];
         }, $resources);
     }
-    
+
     public function getActionTypes()
     {
         return array('create', 'delete', 'update');

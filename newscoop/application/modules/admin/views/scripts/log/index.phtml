@@ -1,6 +1,6 @@
-<?php 
+<?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-$this->headTitle($translator->trans('Logs').' - Newscoop Admin', 'SET'); 
+$this->headTitle($translator->trans('Logs').' - Newscoop Admin', 'SET');
 ?>
 
 <?php $this->renderFilter($this->form); ?>
@@ -41,13 +41,19 @@ if (empty($this->events)) { // no logs
         <td><?php echo $event->getCreated()->format('Y-m-d H:i:s'); ?></td>
         <td><?php echo $event->getResourceType(); ?></td>
         <td><?php echo $event->getAction(); ?></td>
-        <td><?php 
+        <td><?php
             $resource_id = $event->getResourceId();
             echo('<a id="res_id_show_'. $item_count .'" style="display: inline;" href="javascript:show(\'res_id_hide_'. $item_count .'\');hide(\'res_id_show_'. $item_count .'\');show(\'res_id_'. $item_count .'\');">'. $translator->trans('show', array(), 'logs') .'</a>');
             echo('<a id="res_id_hide_'. $item_count .'" style="display: none;" href="javascript:show(\'res_id_show_'. $item_count .'\');hide(\'res_id_hide_'. $item_count .'\');hide(\'res_id_'. $item_count .'\');">'. $translator->trans('hide', array(), 'logs') .'</a>');
             echo('<table id="res_id_'. $item_count .'" style="display: none;">');
             if (is_array($resource_id)) {
                 foreach ($resource_id as $key => $value) {
+                    if(is_array($value)){
+                        $value = 'array';
+                    } else {
+                        $value = $value;
+                    }
+
                     echo('<tr><td>'.$key.': </td><td>'.$value.'</td></tr>');
                 }
             } else {
@@ -56,7 +62,7 @@ if (empty($this->events)) { // no logs
             echo('</table>');
         ?></td>
         <td><?php echo $event->getResourceTitle(); ?></td>
-        <td><?php 
+        <td><?php
             $resource_diff = $event->getResourceDiff();
             echo('<a id="res_diff_show_'. $item_count .'" style="display: inline;" href="javascript:show(\'res_diff_hide_'. $item_count .'\');hide(\'res_diff_show_'. $item_count .'\');show(\'res_diff_'. $item_count .'\');">'. $translator->trans('show', array(), 'logs') .'</a>');
             echo('<a id="res_diff_hide_'. $item_count .'" style="display: none;" href="javascript:show(\'res_diff_show_'. $item_count .'\');hide(\'res_diff_hide_'. $item_count .'\');hide(\'res_diff_'. $item_count .'\');">'. $translator->trans('hide', array(), 'logs') .'</a>');
@@ -64,7 +70,7 @@ if (empty($this->events)) { // no logs
             if (is_array($resource_diff)) {
                 foreach ($resource_diff as $key => $value) {
                     if(is_array($value)){
-                        $value = 'array';
+                        $value =  serialize($array);
                     } else {
                         $value = $value;
                     }

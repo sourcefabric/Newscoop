@@ -59,6 +59,7 @@ class EventDispatcherProxy implements EventSubscriber
         $entityName = $this->getEntityName($args->getEntity());
         $this->dispatcher->dispatch("{$entityName}.create", new GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
@@ -116,10 +117,15 @@ class EventDispatcherProxy implements EventSubscriber
      */
     private function getEntityName($entity)
     {
-        // TODO: fix this - it don't work for Newscoop\Image\ArticleImage etc.
-
         $class = str_replace('Newscoop\Entity\\', '', get_class($entity));
-        return strtolower(implode('-', explode('\\', $class)));
+        $class = str_replace('Newscoop\Image\\', '', $class);
+        $name = strtolower(implode('-', explode('\\', $class)));
+
+        if ($name === 'localimage') {
+            $name = 'image';
+        }
+
+        return $name;
     }
 
     /**

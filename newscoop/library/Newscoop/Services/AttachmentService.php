@@ -157,7 +157,6 @@ class AttachmentService
 
     private function fillAttachment(Attachment $attachment, $attributes)
     {
-        $user = $this->userService->getCurrentUser();
         $attributes = array_merge(array(
             'language' => null,
             'name' => null,
@@ -172,6 +171,11 @@ class AttachmentService
             'source' => 'local',
             'status' => 'unapproved',
         ), $attributes);
+
+        $user = $attributes['user'];
+        if ($user === null) {
+            $user = $this->userService->getCurrentUser();
+        }
 
         if ($user->hasPermission('AddFile') || $user->hasPermission('ChangeFile')) {
             $attributes['status'] = 'approved';
