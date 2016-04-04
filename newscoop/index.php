@@ -1,9 +1,11 @@
 <?php
-
-$installPrefix = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME);
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = substr($uri, strlen($installPrefix)) ?: '';
-$uri = ltrim($uri, '/');
+$uri = '';
+if (isset($_SERVER)) {
+    $installPrefix = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME);
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $uri = substr($uri, strlen($installPrefix)) ?: '';
+    $uri = ltrim($uri, '/');
+}
 
 switch (true) {
     case substr($uri, 0, strlen('_statistics')) === '_statistics':
