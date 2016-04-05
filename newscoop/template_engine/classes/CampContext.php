@@ -335,7 +335,7 @@ final class CampContext
         $this->m_objects['template'] = $this->m_readonlyProperties['url']->template;
         if (is_numeric($this->m_readonlyProperties['url']->get_parameter('tpid'))) {
             $this->m_objects['topic'] = new MetaTopic(
-                $this->m_readonlyProperties['url']->get_parameter('tpid'), 
+                $this->m_readonlyProperties['url']->get_parameter('tpid'),
                 $this->m_readonlyProperties['url']->language->code
             );
         }
@@ -1350,5 +1350,15 @@ final class CampContext
         $preferencesService = \Zend_Registry::get('container')->get('preferences');
 
         return $preferencesService->get($preferenceName, $default);
+    }
+
+    /**
+    * Set preview mode for context.
+    *
+    * Setting preview mode allows rendering not published issues and articles.
+    */
+    public function setPreviewMode($status = true)
+    {
+        $this->m_readonlyProperties['preview'] = $status;
     }
 }
