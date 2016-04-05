@@ -54,7 +54,8 @@ class PublicResourcesListener
 
         if (!$unprotected &&
             strpos($route, 'newscoop_gimme_') !== false &&
-            false === $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')
+            (false === $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') ||
+            false === $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
          ) {
             throw new OAuth2AuthenticateException(OAuth2::HTTP_UNAUTHORIZED,
                 OAuth2::TOKEN_TYPE_BEARER,

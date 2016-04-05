@@ -101,7 +101,7 @@ services:
 
     newscoop_newscoop.listener.locale_listener:
         class: Newscoop\NewscoopBundle\EventListener\LocaleListener
-        arguments: ["@newscoop.cache", "@em"]
+        arguments: ["@newscoop.cache", "@em", "@translator"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }

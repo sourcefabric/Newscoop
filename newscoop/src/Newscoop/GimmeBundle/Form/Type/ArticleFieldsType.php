@@ -42,6 +42,7 @@ class ArticleFieldsType extends AbstractType
                     switch ($articleTypeField->getType()) {
                         case ArticleTypeField::TYPE_TEXT:
                         case ArticleTypeField::TYPE_COMPLEX_DATE:
+                        case ArticleTypeField::TYPE_DATE:
                             $form->add(substr($articleTypeField->getName(), 1), 'text', array(
                                 'required' => false,
                             ));

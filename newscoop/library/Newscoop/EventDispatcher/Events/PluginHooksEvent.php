@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Collect Response objects from plugins admin iterface hooks.
  */
 class PluginHooksEvent extends SymfonyGenericEvent
-{	
+{
 	/**
 	 * Array with Response objects from hooks
 	 * @var array
@@ -26,15 +26,27 @@ class PluginHooksEvent extends SymfonyGenericEvent
 
     /**
      * Add Response object to event
+     *
      * @param Response $response
      */
     public function addHookResponse(Response $response)
-    {   
+    {
         $this->hooksResponses[] = $response;
     }
 
     /**
+     * Override responses array
+     *
+     * @param array $response
+     */
+    public function setHookResponse(array $hooksResponses)
+    {
+        $this->hooksResponses = $hooksResponses;
+    }
+
+    /**
      * Get all stored Response objects from event
+     *
      * @return array
      */
     public function getHooksResponses()

@@ -25,10 +25,13 @@ class LocaleListener
 
     protected $em;
 
-    public function __construct(CacheService $cacheService, EntityManager $em)
+    protected $translator;
+
+    public function __construct(CacheService $cacheService, EntityManager $em, $translator)
     {
         $this->cacheService = $cacheService;
         $this->em = $em;
+        $this->translator = $translator;
     }
 
     public function onResponse(FilterResponseEvent $event)
@@ -108,6 +111,7 @@ class LocaleListener
 
         if (!is_null($languageCode)) {
             $request->setLocale($languageCode);
+            $this->translator->setLocale($languageCode);
         }
     }
 
