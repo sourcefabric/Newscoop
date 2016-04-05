@@ -38,6 +38,7 @@ parameters:
             namespace: "Proxy"
             autogenerate: false
         functions:
+            rand: "Newscoop\Query\MysqlRandom"
     admin:
         resources:
             layout:
@@ -132,4 +133,4 @@ parameters:
     scheduler:
         environment: 'prod'
     simple_security:
-        users_file: "%application_path%/configs/security/users.json"  
+        users_file: "%application_path%/configs/security/users.json"
