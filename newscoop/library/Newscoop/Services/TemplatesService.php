@@ -142,12 +142,15 @@ class TemplatesService
 
     private function preconfigureVector()
     {
+        $uri = \CampSite::GetURIInstance();
+        $this->smarty->campsiteVector = $this->originalVector + $uri->getCampsiteVector();
         $publicationMetadata = $this->publicationService->getPublicationMetadata();
+
         if (isset($publicationMetadata['alias']) && isset($publicationMetadata['publication'])) {
-            $this->smarty->campsiteVector = array_merge($this->originalVector, array(
+            $this->smarty->campsiteVector = $this->smarty->campsiteVector + array(
                 'publication' => $publicationMetadata['alias']['publication_id'],
                 'language' => $publicationMetadata['publication']['id_default_language']
-            ));
+            );
         }
     }
 }
