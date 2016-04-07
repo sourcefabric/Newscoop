@@ -71,7 +71,7 @@ Filters: Filtry
 'Delete author type': 'Usuń typ autora'
 'Cannot remove author type.': 'Nie można usunąć typu autora'
 'Cannot remove author alias.': 'Nie można usunąć aliasu autora.'
-'Author alias removed.': 'Alias autora zmieniony.'
+'Author alias removed.': 'Alias autora został usunięty.'
 'Are you sure you want to delete this author?': 'Na pewno usunąć tego autora?'
 'Are you sure you want to delete this author alias?': 'Na pewno usunąć alias tego autora?'
 'All Author Types': 'Wszystkie typy autorów'

@@ -3,7 +3,7 @@ filter: filtr
 'Show in Article Lists?': null
 'Are you sure you want to $1 articles of article type $2?': 'Jesteś pewien że chcesz $1 artykułów z typu artykułu $2?'
 '$1 articles of article type $2': '$1 artykułów z typu artykułu $2'
-'Hide human-readable field names': 'Ukryj ludzkie nazwy pól'
+'Hide human-readable field names': 'Ukryj wyjaśnione nazwy pól'
 'Edit and translate human-readable field names': 'Przetłumacz ludzkie nazwy pól'
 'The template name may only contain letters and the underscore (_) character.': 'Nazwa szablonu może zawierać wyłącznie litery oraz podkreślenie (_)'
 'Rename article type $1': 'Zmień nazwę typu artykułu $1'

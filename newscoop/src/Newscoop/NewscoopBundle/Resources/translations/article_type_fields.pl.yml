@@ -11,7 +11,7 @@
 'Small ($1 pixels)': 'Mały ($1 pixeli)'
 'Medium ($1 pixels)': 'Średni ($1 pikseli)'
 'Large ($1 pixels)': 'Duży ($1 pixeli)'
-'Hide human-readable field names': 'Ukryj ludzkie nazwy pól'
+'Hide human-readable field names': 'Ukryj wyjaśnione nazwy pól'
 'Editor size': 'Rozmiar edytora'
 'Edit and translate human-readable field names': 'Przetłumacz ludzkie nazwy pól'
 Custom: Własny
@@ -19,7 +19,7 @@ Custom: Własny
 'The template name may only contain letters and the underscore (_) character.': 'Nazwa szablonu może zawierać wyłącznie litery oraz podkreślenie (_)'
 'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': "Nazwa pola była już\_w użyciu jako wartość podstawowa artykułu. Pole nie będzie wyświetlane w szablonach."
 'The property $1 is already in use.': 'Wartość $1 jest już w użyciu.'
-Precision: Precision
+Precision: Precyzja
 'Can not convert the field $1 from $2 to type $3.': 'Nie można przekonwertować pola $1 z $2 do typu $3.'
 'Are you sure you want to make $1 a $2 field?': 'Na pewno chcesz zamienić pole $1 na $2?'
 'Page Read Count?': null
