@@ -36,7 +36,9 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
     }
 
     if (!array_key_exists($params['rendition'], $renditions)) {
-        throw new \InvalidArgumentException("Unknown rendition");
+        throw new \InvalidArgumentException(
+            sprintf('Unknown rendition: \'%s\'. Make sure it is defined in your theme\'s theme.xml file.', $params['rendition'])
+        );
     }
 
     $article = $smarty->getTemplateVars('gimme')->article;
