@@ -612,7 +612,7 @@ class Article extends DatabaseObject
     {
         global $g_ado_db;
         $translator = \Zend_Registry::get('container')->getService('translator');
-        $origNewName = $p_currentName . " (".$translator->trans("Duplicate");
+        $origNewName = $g_ado_db->escape($p_currentName) . " (".$translator->trans("Duplicate");
         $newName = $origNewName .") 1";
 
         $query = 'SELECT `Name` FROM `Articles` WHERE `Name` LIKE "'.substr($newName, 0, -1).'%" ORDER BY `Name` DESC LIMIT 1;';
