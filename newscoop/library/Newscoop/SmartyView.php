@@ -23,12 +23,16 @@ class SmartyView extends \Zend_View_Abstract
 
         $params = $this->getVars();
         $params['view'] = $this;
+
+        $paramsForVector = json_encode(array('request' => \Zend_Controller_Front::getInstance()->getRequest()->getParams()));
+        if (strlen($paramsForVector) > 128) {
+            $paramsForVector = md5($paramsForVector);
+        }
+
         $templatesService->setVector(array(
             'publication' => $request->attributes->get('_newscoop_publication_metadata[alias][publication_id]', null, true),
             'language' => $language->getId(),
-            'params' => json_encode(array(
-                'request' => \Zend_Controller_Front::getInstance()->getRequest()->getParams()
-            ))
+            'params' => $paramsForVector
         ));
 
         $file = array_shift(func_get_args());

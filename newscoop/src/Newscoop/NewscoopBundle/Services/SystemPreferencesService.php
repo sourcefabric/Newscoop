@@ -21,6 +21,8 @@ class SystemPreferencesService
 
     protected $preferences;
 
+    private $requestedPropertiesStack = array();
+
     /**
      * @param Doctrine\ORM\EntityManager $em
      */
@@ -49,6 +51,10 @@ class SystemPreferencesService
         ));
 
         if ($checkProperty) {
+            if (isset($this->requestedPropertiesStack[$property])) {
+                unset($this->requestedPropertiesStack[$property]);
+            }
+
             $queryBuilder = $this->em->createQueryBuilder();
             $preference = $queryBuilder->update('Newscoop\NewscoopBundle\Entity\SystemPreferences', 's')
                 ->set('s.value', ':value')
@@ -82,10 +88,14 @@ class SystemPreferencesService
      */
     public function __get($property)
     {
-        $currentProperty = $this->findOneBy($property);
+        if (isset($this->requestedPropertiesStack[$property])) {
+            return $this->requestedPropertiesStack[$property];
+        }
 
+        $currentProperty = $this->findOneBy($property);
         if (!empty($currentProperty)) {
             $currentProperty = reset($currentProperty);
+            $this->requestedPropertiesStack[$property] = $currentProperty['value'];
 
             return $currentProperty['value'];
         }
@@ -137,6 +147,10 @@ class SystemPreferencesService
         ));
 
         if ($property) {
+            if (isset($this->requestedPropertiesStack[$varname])) {
+                unset($this->requestedPropertiesStack[$varname]);
+            }
+
             $this->em->remove($property);
             $this->em->flush();
         }

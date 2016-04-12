@@ -302,22 +302,26 @@ final class MetaSubtitle
         }
 
         try {
+            $copiedUriParameters = $uri->uri_parameter;
             $uri->uri_parameter = "image $imageOptions";
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $templatesService->setVector(array_merge($templatesService->getSmarty()->campsiteVector, array(
+            $templatesService->setVector($templatesService->getSmarty()->campsiteVector + array(
                 'params' => implode('__', array(
                     $uri->article->number,
                     $imageNumber,
                     $articleImage->getImageId()
                 ))
-            )));
+            ));
 
-            return $templatesService->fetchTemplate("editor_image.tpl", array(
+            $image = $templatesService->fetchTemplate("editor_image.tpl", array(
                 'imageDetails' => $detailsArray,
                 'MediaRichTextCaptions' => $preferencesService->MediaRichTextCaptions,
                 'uri' => $uri,
                 'imgZoomLink' => $imgZoomLink
             ));
+            $uri->uri_parameter = $copiedUriParameters;
+
+            return $image;
         } catch (\Exception $e) {
             return $e->getMessage();
         }
