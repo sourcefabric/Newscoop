@@ -11,12 +11,13 @@ namespace Newscoop\ArticlesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\User;
+use Newscoop\Entity\Hierarchable;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\ArticlesBundle\Entity\Repository\EditorialCommentRepository")
  * @ORM\Table(name="editorial_comments")
  */
-class EditorialComment
+class EditorialComment implements Hierarchable
 {
     /**
      * @ORM\Id

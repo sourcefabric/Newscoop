@@ -61,25 +61,9 @@ class ArticleCommentsList extends ListObject
         $articleCommentsList = $repository->getData($params, $cols);
         $metaCommentsList = array();
         if ($this->_nested) {
-            $root = new \Node(0,0,''); // create a new Node, we remove this one later, but we need a Root Node.
-
-            foreach ($articleCommentsList as $comment) {
-                $reSortedComments[$comment->getId()] = $comment;
-            }
-
-            ksort($reSortedComments);   // sort by commentId
-
-            foreach ($reSortedComments as $comment) {
-                if ($comment->getParent() instanceof \Newscoop\Entity\Comment) {
-                    $node = new \Node($comment->getId(), $comment->getParent()->getId(), new MetaComment($comment->getId()));
-                } else {
-                    $node = new \Node($comment->getId(), 0, new MetaComment($comment->getId()));
-                }
-                $root->insertNode($node);
-            }
-
-            $list = $root->flatten(false);
-            $metaCommentsList = $list;
+            $nodeTree = new \Newscoop\GimmeBundle\Node\NodeTree();
+            $nodeTree->build($articleCommentsList);
+            $metaCommentsList = $nodeTree->getFlattened();
         } else {
             foreach ($articleCommentsList as $comment) {
                 $metaCommentsList[] = new MetaComment($comment->getId());

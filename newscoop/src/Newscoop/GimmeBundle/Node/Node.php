@@ -1,10 +1,12 @@
 <?php
 /**
- * @package   Newscoop\Node
+ * @package   Newscoop\Gimme
  * @author    Yorick Terweijden <yorick.terweijden@sourcefabric.org>
  * @copyright 2014 Sourcefabric o.p.s.
  * @license   http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
+namespace Newscoop\GimmeBundle\Node;
 
 /**
  * Node class
@@ -33,30 +35,6 @@ class Node
     }
 
     /**
-     * Insert a New Node inside the Root Node
-     *
-     * @param Node $node Node object
-     *
-     * @return bool success
-     */
-    public function insertNode(Node $node)
-    {
-        if ($node->pid == $this->id) {
-            $this->children[] = $node;
-
-            return true;
-        }
-
-        foreach ($this->children as $child) {
-            if ($child->insertNode($node)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Flatten created Node tree into an array
      *
      * @param bool $rootNode include root Node or not
@@ -75,5 +53,43 @@ class Node
         }
 
         return $aggregate;
+    }
+
+    /**
+     * @param array $nodes array of Nodes
+     */
+    public function buildTree(array $nodes)
+    {
+        $children = $this->buildSubTree($nodes, $this);
+        $this->setChildren($children);
+    }
+
+    /**
+     * @param array $nodes array of Nodes
+     * @param $parent Node whose subtree is to be built
+     * @return array Nodes, each with its subtree built
+     */
+    private function buildSubTree(array $nodes, $parent)
+    {
+        $children = array();
+
+        foreach ($nodes as $node) {
+            if ($node->pid === $parent->id) {
+                $grandChildren = $node->buildSubTree($nodes, $node);
+                $node->setChildren($grandChildren);
+                $children[$node->id] = $node;
+                unset($nodes[$node->id]);
+            }
+        }
+
+        return $children;
+    }
+
+    /**
+     * @param array $children array of Nodes
+     */
+    private function setChildren(array $children)
+    {
+        $this->children = $children;
     }
 }

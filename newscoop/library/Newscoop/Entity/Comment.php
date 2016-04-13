@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Search\DocumentInterface;
 use DateTime;
+use Newscoop\Entity\Hierarchable;
 
 /**
  * Comment entity
@@ -18,7 +19,7 @@ use DateTime;
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
  */
-class Comment implements DocumentInterface
+class Comment implements DocumentInterface, Hierarchable
 {
     protected $allowedEmpty = array( 'br', 'input', 'image' );
 
