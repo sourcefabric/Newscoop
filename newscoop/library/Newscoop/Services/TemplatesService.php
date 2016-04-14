@@ -34,7 +34,15 @@ class TemplatesService
      */
     protected $publicationService;
 
+    /**
+     * @var array
+     */
     protected $originalVector;
+
+    /**
+     * @var string
+     */
+    protected $themePath;
 
     public function __construct(ThemesService $themesService, PublicationService $publicationService)
     {
@@ -43,6 +51,7 @@ class TemplatesService
         $this->themesService = $themesService;
         $this->publicationService = $publicationService;
         $this->originalVector = $this->smarty->campsiteVector;
+        $this->themePath = $this->themesService->getThemePath();
         $this->preconfigureSmarty();
     }
 
@@ -76,7 +85,7 @@ class TemplatesService
     public function renderTemplate($file, $params = array(), $lifetime = 1400, $render = true)
     {
         $this->assignParameters($params);
-        $this->setLifetime($lifetime);
+        $this->setLifetime($lifetime, $file);
 
         return $this->smarty->fetch($file, sha1(serialize($this->smarty->campsiteVector)), null, null, $render);
     }
@@ -117,9 +126,20 @@ class TemplatesService
      *
      * @param integer $lifetime
      */
-    public function setLifetime($lifetime)
+    public function setLifetime($lifetime, $file)
     {
         $this->smarty->cache_lifetime = $lifetime;
+
+        $filePath = $this->themePath . $file;
+        if (0 === strpos($file, '/')) {
+           $filePath = substr($file, strpos($file, $this->themePath));
+        }
+
+        $template = new \Template($filePath);
+        $themeLifetime = $template->getCacheLifetime();
+        if (!is_null($themeLifetime) && $template->exists()) {
+            $this->smarty->cache_lifetime = (int) $themeLifetime;
+        }
     }
 
     private function assignParameters($params = array())
@@ -131,8 +151,8 @@ class TemplatesService
 
     private function preconfigureSmarty()
     {
-        $this->smarty->addTemplateDir(realpath(APPLICATION_PATH . '/../themes/' . $this->themesService->getThemePath()));
-        $this->smarty->config_dir = (realpath(APPLICATION_PATH . '/../themes/' . $this->themesService->getThemePath() . '_conf'));
+        $this->smarty->addTemplateDir(realpath(APPLICATION_PATH . '/../themes/' . $this->themePath ));
+        $this->smarty->config_dir = (realpath(APPLICATION_PATH . '/../themes/' . $this->themePath . '_conf'));
 
         // reverse templates dir order
         $this->smarty->setTemplateDir(array_reverse($this->smarty->getTemplateDir()));
