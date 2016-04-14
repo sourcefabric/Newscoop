@@ -323,7 +323,12 @@ final class CampHTMLDocument
         } catch (\Exception $e) {
             // log samrty errors to sentry channel
             $logger = \Zend_Registry::get('container')->get('monolog.logger.sentry');
-            $logger->log(\Psr\Log\LogLevel::CRITICAL, 'Uncaught exception', array('exception' => $e));
+            $logger->log(\Psr\Log\LogLevel::CRITICAL, 'Uncaught exception', array(
+                'message' => $e->getMessage(),
+                'stackTrace' => $e->getTraceAsString(),
+                'string' => $e->__toString(),
+                'exception' => $e
+            ));
 
             CampTemplate::singleton()->trigger_error($e->getMessage(), $tpl);
         }

@@ -39,6 +39,11 @@ abstract class PaginatedBaseList extends BaseList
     protected $cacheService;
 
     /**
+     * @var \Knp\Component\Pager\Pagination\PaginationInterface
+     */
+    protected $pagination;
+
+    /**
      * @param \Newscoop\Criteria                  $criteria
      * @param \Newscoop\Services\TemplatesService $paginatorService
      * @param \Newscoop\Services\CacheService     $cacheService
@@ -87,16 +92,16 @@ abstract class PaginatedBaseList extends BaseList
         ), $this->getName());
 
         if ($this->cacheService->contains($cacheId) && $useCache) {
-            $pagination = $this->cacheService->fetch($cacheId);
+            $this->pagination = $this->cacheService->fetch($cacheId);
         } else {
-            $pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
+            $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
             if ($useCache) {
-                $this->cacheService->save($cacheId, $pagination);
+                $this->cacheService->save($cacheId, $this->pagination);
             }
         }
 
-        $list->count = count($pagination->getItems());
-        $list->items = $pagination->getItems();
+        $list->count = count($this->pagination->getItems());
+        $list->items = $this->pagination->getItems();
 
         return $list;
     }

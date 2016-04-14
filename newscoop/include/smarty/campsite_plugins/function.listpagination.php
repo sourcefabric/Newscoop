@@ -26,7 +26,10 @@ function smarty_function_listpagination($params, &$smarty)
         return;
     }
 
-    if ($context->current_list->getIndex() === $context->current_list->getEnd()) {
+    if (
+        $context->current_list->getIndex() === $context->current_list->getEnd() &&
+        is_subclass_of($context->current_list->pagination, '\Knp\Component\Pager\Pagination\PaginationInterface')
+    ) {
         $templatesService = \Zend_Registry::get('container')->get('newscoop.templates.service');
         if (array_key_exists('file', $params)) {
             $context->current_list->pagination->renderer = function ($data) use ($templatesService, $params) {
