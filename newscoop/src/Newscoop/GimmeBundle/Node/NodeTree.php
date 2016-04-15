@@ -8,6 +8,8 @@
 
 namespace Newscoop\GimmeBundle\Node;
 
+use Newscoop\Entity\Hierarchable;
+
 class NodeTree
 {
     private $root;
@@ -21,10 +23,10 @@ class NodeTree
     {
         $nodes = array();
         foreach ($hierarchables as $hierarchable) {
-            if ($hierarchable->getParent() instanceof \Newscoop\Entity\Comment) {
-                $node = new Node($hierarchable->getId(), $hierarchable->getParent()->getId(), new \MetaComment($hierarchable->getId()));
+            if ($hierarchable->getParent() instanceof Hierarchable) {
+                $node = new Node($hierarchable->getId(), $hierarchable->getParent()->getId(), $hierarchable);
             } else {
-                $node = new Node($hierarchable->getId(), 0, new \MetaComment($hierarchable->getId()));
+                $node = new Node($hierarchable->getId(), 0, $hierarchable);
             }
             $nodes[$node->id] = $node;
         }
