@@ -155,8 +155,10 @@ class CommentsController extends FOSRestController
             }
         } catch (AuthenticationException $e) {}
 
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $sort = $paginator->getPagination()->getSort();
         $articleComments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getArticleComments($number, $language, $recommended, false, $showHidden)
+            ->getArticleComments($number, $language, $recommended, false, $showHidden, $sort)
             ->getResult();
 
         if ($order == 'nested' && $articleComments) {
@@ -165,7 +167,6 @@ class CommentsController extends FOSRestController
             $articleComments = $nodeTree->getFlattened();
         }
 
-        $paginator = $this->get('newscoop.paginator.paginator_service');
         $articleComments = $paginator->paginate($articleComments);
 
         return $articleComments;

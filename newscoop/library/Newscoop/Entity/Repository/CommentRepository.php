@@ -40,7 +40,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      *
      * @return Doctrine\ORM\Query Query
      */
-    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true, $showHidden = true)
+    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true, $showHidden = true, $sort = array())
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -55,6 +55,17 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 'thread' => $article,
                 'language' => $languageId->getId()
             ));
+
+        if (is_array($sort) && count($sort) > 0) {
+            foreach ($sort as $field => $dir) {
+                if (in_array($dir, array('asc', 'desc'))) {
+                    $queryBuilder->addOrderBy('c.'.$field, $dir);
+                }
+            }
+        } else {
+            $queryBuilder->orderBy('c.time_created', 'desc');
+        }
+
         if ($recommended) {
             $queryBuilder->andWhere('c.recommended = 1');
         }
