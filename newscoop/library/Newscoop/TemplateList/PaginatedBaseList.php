@@ -41,7 +41,7 @@ abstract class PaginatedBaseList extends BaseList
     /**
      * @var \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    protected $pagination;
+    public $pagination;
 
     /**
      * @param \Newscoop\Criteria                  $criteria
