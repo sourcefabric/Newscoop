@@ -68,8 +68,8 @@ security:
                 check_path:  admin_login_check
                 success_handler: newscoop_newscoop.security.authentication.success_handler
             remember_me:
-                key: "changeme"
-                lifetime: 31536000
+                key: "%kernel.secret%"
+                lifetime: %remember_me.lifetime%
                 path: /
                 domain: ~
             logout:
@@ -88,8 +88,8 @@ security:
                 password_parameter: password
                 success_handler: newscoop_newscoop.security.authentication.frontend.success_handler
             remember_me:
-                key: "changeme"
-                lifetime: 31536000
+                key: "%kernel.secret%"
+                lifetime: %remember_me.lifetime%
                 path: /
                 domain: ~
             logout:
