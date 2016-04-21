@@ -66,6 +66,7 @@ class User extends DatabaseObject {
         'isActive',
         'password_reset_token',
         'is_admin',
+        'last_name',
     );
 
     private static $m_defaultConfig = array();
@@ -366,6 +367,15 @@ class User extends DatabaseObject {
         return $this->m_data['Name'];
     } // fn getRealName
 
+    /**
+     * Get the last name of the user.
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->m_data['last_name'];
+    }
 
     /**
      * Get the login name of the user.
