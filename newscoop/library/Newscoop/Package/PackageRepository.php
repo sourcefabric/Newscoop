@@ -73,7 +73,7 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
             $qbArticles
                 ->where('a.publication = :publication')
                 ->setParameter('publication', $criteria->publication);
-            unset($criteria->publication);
+            $criteria->publication = null;
             $fetchResult = true;
         }
 
