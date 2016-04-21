@@ -48,7 +48,12 @@ class ShortURL
             return $uri;
         }
 
-        $scheme = $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://';
+        if (isset($_SERVER['HTTPS'])) {
+            $scheme = $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://';
+        } else {
+            $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+        }
+
         return $scheme . $publication->getDefaultAlias()->getName() . $uri;
     }
 
