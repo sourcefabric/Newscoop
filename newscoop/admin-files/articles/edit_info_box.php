@@ -28,7 +28,7 @@
       <dt><?php echo $translator->trans('Created by'); ?></dt>
       <dd><?php
           if ($articleCreator->getRealName()) {
-              p(htmlspecialchars(sprintf('%s %s', $articleCreator->getRealName(), $articleCreator->getLastName(), $articleCreator->getUserName())));
+              p(htmlspecialchars(sprintf('%s %s', $articleCreator->getRealName(), $articleCreator->getLastName())));
 
               echo ' (<a style="color:#007fb3;" href="'.\Zend_Registry::get('container')->get('zend_router')->assemble(array(
                         'module' => 'admin',
