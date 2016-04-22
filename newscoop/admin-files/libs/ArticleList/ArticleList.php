@@ -331,7 +331,12 @@ class ArticleList extends BaseList
             htmlspecialchars($article->getSection()->getName()),
             $article->getWebcode(),
             htmlspecialchars($tmpArticleType->getDisplayName()),
-            htmlspecialchars($tmpUser->getRealName()),
+            $tmpUser->getRealName() ? sprintf('%s %s', $tmpUser->getRealName(), $tmpUser->getLastName()). ' (<a style="color:#007fb3;" href="'.\Zend_Registry::get('container')->get('zend_router')->assemble(array(
+                'module' => 'admin',
+                'controller' => 'user',
+                'action' => 'edit',
+                'user' => $tmpUser->getUserId(),
+            ), 'default', true).'">'.$tmpUser->getUserName().'</a>)' : $translator->trans('N/A'),
             htmlspecialchars($tmpAuthor->getName()),
             $article->getWorkflowStatus(),
             $onFrontPage,

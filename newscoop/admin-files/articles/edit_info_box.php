@@ -26,7 +26,20 @@
       <dt><?php echo $translator->trans('Number'); ?></dt>
       <dd><?php p($articleObj->getArticleNumber()); ?></dd>
       <dt><?php echo $translator->trans('Created by'); ?></dt>
-      <dd><?php p(htmlspecialchars($articleCreator->getRealName())); ?></dd>
+      <dd><?php
+          if ($articleCreator->getRealName()) {
+              p(htmlspecialchars(sprintf('%s %s', $articleCreator->getRealName(), $articleCreator->getLastName())));
+
+              echo ' (<a style="color:#007fb3;" href="'.\Zend_Registry::get('container')->get('zend_router')->assemble(array(
+                        'module' => 'admin',
+                        'controller' => 'user',
+                        'action' => 'edit',
+                        'user' => $articleCreator->getUserId(),
+                    ), 'default', true).'">'.$articleCreator->getUserName().'</a>)';
+          } else {
+              echo $translator->trans('N/A');
+          }
+      ?></dd>
       <dt><?php echo $translator->trans('Webcode', array(), 'articles'); ?></dt>
       <dd><?php echo '+', $articleObj->getWebcode(); ?></dd>
       <dt><?php echo $translator->trans('Rating', array(), 'articles'); ?></dt>
