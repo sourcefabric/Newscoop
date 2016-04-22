@@ -1294,8 +1294,8 @@ abstract class CampURI
         $queryVars = array();
         foreach ($p_queryArray as $var => $value) {
             if (is_array($value)) {
-                foreach ($value as $item) {
-                    $queryVars[] = $var . '[]=' . urlencode($item);
+                foreach ($value as $key => $item) {
+                    $queryVars[] = $var . '[' .$key. ']=' . urlencode($item);
                 }
             } else {
                 $queryVars[] = $var . '=' . urlencode($value);
