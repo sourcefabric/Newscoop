@@ -42,6 +42,9 @@ class AuditService
     {
         try {
             $user = isset($event['user']) ? $event['user'] : $this->userService->getCurrentUser();
+            if (!is_int($user)) {
+                $user = $user->getId();
+            }
         } catch (\Exception $e) {
             $user = null;
         }
