@@ -40,14 +40,13 @@ class AuditService
      */
     public function update(GenericEvent $event)
     {
+        $user = null;
         try {
             $user = isset($event['user']) ? $event['user'] : $this->userService->getCurrentUser();
-            if (!is_int($user)) {
+            if (!is_int($user) && is_object($user) && method_exists($user, 'getId')) {
                 $user = $user->getId();
             }
-        } catch (\Exception $e) {
-            $user = null;
-        }
+        } catch (\Exception $e) {/* Catch not logged in user */}
 
         list($resource, $action) = explode('.', $event->getName());
         $params = $event->getArguments();

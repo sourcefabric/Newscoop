@@ -303,15 +303,16 @@ final class MetaSubtitle
 
         try {
             $copiedUriParameters = $uri->uri_parameter;
-            $uri->uri_parameter = "image $imageOptions";
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $templatesService->setVector($templatesService->getSmarty()->campsiteVector + array(
+            $originalVector = $templatesService->getSmarty()->campsiteVector;
+            $uri->uri_parameter = "image $imageOptions";
+            $templatesService->setVector(array_merge($templatesService->getSmarty()->campsiteVector, array(
                 'params' => implode('__', array(
                     $uri->article->number,
                     $imageNumber,
                     $articleImage->getImageId()
                 ))
-            ));
+            )));
 
             $image = $templatesService->fetchTemplate("editor_image.tpl", array(
                 'imageDetails' => $detailsArray,
@@ -320,6 +321,7 @@ final class MetaSubtitle
                 'imgZoomLink' => $imgZoomLink
             ));
             $uri->uri_parameter = $copiedUriParameters;
+            $templatesService->setVector($originalVector);
 
             return $image;
         } catch (\Exception $e) {
