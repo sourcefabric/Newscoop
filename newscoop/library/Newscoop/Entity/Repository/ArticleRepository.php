@@ -93,68 +93,72 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
      */
     public function searchArticles($articleSearchCriteria, $onlyPublished = true, $order = 'desc')
     {
-        $em = $this->getEntityManager();
-        $getLastArticles = true;
-        $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
-            ->select('DISTINCT(a.article) as number');
+        $articleNumbers = array();
+        if ($articleSearchCriteria->query) {
+            $em = $this->getEntityManager();
+            $getLastArticles = true;
+            $queryBuilder = $em->getRepository('Newscoop\Entity\ArticleIndex')->createQueryBuilder('a')
+                ->select('DISTINCT(a.article) as number');
 
-        $orX = $queryBuilder->expr()->orx();
+            $orX = $queryBuilder->expr()->orx();
 
-        $keywords = array_diff(explode(' ', $articleSearchCriteria->query), array(''));
-        foreach ($keywords as $keyword) {
-            $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
-        }
+            $keywords = array_diff(explode(' ', $articleSearchCriteria->query), array(''));
+            foreach ($keywords as $keyword) {
+                $orX->add($queryBuilder->expr()->like('k.keyword', $queryBuilder->expr()->literal("{$keyword}%")));
+            }
 
-        if (count($keywords) > 0) {
-            $queryBuilder->leftJoin('a.keyword', 'k')
-                ->andWhere($orX);
-            $getLastArticles = false;
-        }
-
-        if ($articleSearchCriteria->publication) {
-            $queryBuilder->andWhere('a.publication = :publication')
-                ->setParameter('publication', $articleSearchCriteria->publication);
-            $getLastArticles = false;
-        }
-
-        if ($articleSearchCriteria->section) {
-            $queryBuilder->andWhere('a.sectionNumber = :section')
-                ->setParameter('section', $articleSearchCriteria->section);
-            $getLastArticles = false;
-        }
-
-        if ($articleSearchCriteria->issue) {
-            $queryBuilder->andWhere('a.issueNumber = :issue')
-                ->setParameter('issue', $articleSearchCriteria->issue);
-            $getLastArticles = false;
-        }
-
-        if ($articleSearchCriteria->language) {
-            $languageId = $em->getRepository('Newscoop\Entity\Language')
-                ->findOneByCode($articleSearchCriteria->language);
-            if ($languageId) {
-                $queryBuilder->andWhere('a.language = :language')
-                    ->setParameter('language', $languageId);
+            if (count($keywords) > 0) {
+                $queryBuilder->leftJoin('a.keyword', 'k')
+                    ->andWhere($orX);
                 $getLastArticles = false;
             }
-        }
 
-        if ($getLastArticles) {
-            $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
-                ->createQueryBuilder('a')
-                ->select('a.number as number')
-                ->orderBy('a.uploaded', 'DESC');
-        }
+            if ($articleSearchCriteria->publication) {
+                $queryBuilder->andWhere('a.publication = :publication')
+                    ->setParameter('publication', $articleSearchCriteria->publication);
+                $getLastArticles = false;
+            }
 
-        $queryBuilder->setMaxResults(80)
-            ->orderBy('number', $order);
+            if ($articleSearchCriteria->section) {
+                $queryBuilder->andWhere('a.sectionNumber = :section')
+                    ->setParameter('section', $articleSearchCriteria->section);
+                $getLastArticles = false;
+            }
 
-        $articleNumbers = $queryBuilder->getQuery()->getResult();
-        $tmpNumbers = array();
-        foreach ($articleNumbers as $key => $value) {
-            $tmpNumbers[] = $value['number'];
+            if ($articleSearchCriteria->issue) {
+                $queryBuilder->andWhere('a.issueNumber = :issue')
+                    ->setParameter('issue', $articleSearchCriteria->issue);
+                $getLastArticles = false;
+            }
+
+            if ($articleSearchCriteria->language) {
+                $languageId = $em->getRepository('Newscoop\Entity\Language')
+                    ->findOneByCode($articleSearchCriteria->language);
+                if ($languageId) {
+                    $queryBuilder->andWhere('a.language = :language')
+                        ->setParameter('language', $languageId);
+                    $getLastArticles = false;
+                }
+            }
+
+            if ($getLastArticles) {
+                $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+                    ->createQueryBuilder('a')
+                    ->select('a.number as number')
+                    ->orderBy('a.uploaded', 'DESC');
+            }
+
+            $queryBuilder->setMaxResults(80)
+                ->orderBy('number', $order);
+
+            $articleNumbers = $queryBuilder->getQuery()->getResult();
+            $tmpNumbers = array();
+            foreach ($articleNumbers as $key => $value) {
+                $tmpNumbers[] = $value['number'];
+            }
+
+            $articleNumbers = $tmpNumbers;
         }
-        $articleNumbers = $tmpNumbers;
 
         $query = $this->getArticlesByCriteria($articleSearchCriteria, $articleNumbers, $onlyPublished, $order);
 
@@ -166,10 +170,19 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
-            ->createQueryBuilder('a')
-            ->select('a, FIELD(a.number, :ids) as HIDDEN field', 'l', 'u', 'ap', 'p', 'aa', 'au', 't')
-            ->andWhere('a.number IN (:ids)')
-            ->leftJoin('a.issue', 'i')
+                ->createQueryBuilder('a');
+
+        if ($articleSearchCriteria->query && !empty($ids)) {
+            $queryBuilder->select('a, FIELD(a.number, :ids) as HIDDEN field', 'l', 'u', 'ap', 'p', 'aa', 'au', 't')
+                ->andWhere('a.number IN (:ids)')
+                ->setParameters(array(
+                    'ids' => $ids,
+                ));
+        } else {
+            $queryBuilder->select('a', 'l', 'u', 'ap', 'p', 'aa', 'au', 't', 'im');
+        }
+
+        $queryBuilder->leftJoin('a.issue', 'i')
             ->leftJoin('a.section', 's')
             ->leftJoin('a.packages', 'p')
             ->leftJoin('a.language', 'l')
@@ -178,10 +191,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->leftJoin('a.attachments', 'aa')
             ->leftJoin('a.authors', 'au')
             ->leftJoin('a.topics', 't')
-            ->orderBy('field')
-            ->setParameters(array(
-                'ids' => $ids,
-            ));
+            ->leftJoin('a.images', 'im');
 
         if ($articleSearchCriteria->language) {
             $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -249,7 +259,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $countQueryBuilder = clone $queryBuilder;
         $query = $queryBuilder->getQuery();
-        $query->setHint('knp_paginator.count', $countQueryBuilder->select('COUNT(a)')->orderBy('a.number')->getQuery()->getSingleScalarResult());
+        $countQueryBuilder->resetDQLPart('join');
+        $query->setHint('knp_paginator.count', $countQueryBuilder->select('COUNT(a)')->getQuery()->getSingleScalarResult());
 
         return $query;
     }
