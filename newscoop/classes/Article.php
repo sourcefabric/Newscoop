@@ -794,8 +794,13 @@ class Article extends DatabaseObject
 
         $webcode = $article->getWebcodeEntity();
 
-        $em->remove($webcode);
-        $em->flush();
+        if (null !== $webcode) {
+            try {
+                $em->remove($webcode);
+                $em->flush();
+            } catch(\Exception $e) {}
+        }
+
         $em->detach($article);
 
         $tmpObj = clone $this; // for log
