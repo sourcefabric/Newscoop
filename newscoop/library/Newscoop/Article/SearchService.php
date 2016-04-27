@@ -217,7 +217,7 @@ class SearchService implements ServiceInterface
         }
     }
 
-    public function searchArticles($articleSearchCriteria, $onlyPublished = true)
+    public function searchArticles($articleSearchCriteria, $onlyPublished = true, $returnQuery = false)
     {
         $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
 
@@ -231,14 +231,17 @@ class SearchService implements ServiceInterface
             }
         }
 
-        $articles = $this->em->getRepository('Newscoop\Entity\Article')
+        $articlesQuery = $this->em->getRepository('Newscoop\Entity\Article')
             ->searchArticles(
                 $articleSearchCriteria,
                 $onlyPublished
-            )
-            ->getResult();
+            );
 
-        return $articles;
+        if (!$returnQuery) {
+           return $articlesQuery->getResult();
+        }
+
+        return $articlesQuery;
     }
 
     /**
