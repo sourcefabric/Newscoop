@@ -219,15 +219,17 @@ class SearchService implements ServiceInterface
 
     public function searchArticles($articleSearchCriteria, $onlyPublished = true, $returnQuery = false)
     {
-        $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
+        if ($articleSearchCriteria->query) {
+            $keywords = array_diff(explode(',', $articleSearchCriteria->query), array(''));
 
-        $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
-        if (count($webcodeMatches)) {
-            $webcode = ltrim(current($webcodeMatches), '@+');
-            $article = $this->webcoder->findArticleByWebcode($webcode);
+            $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
+            if (count($webcodeMatches)) {
+                $webcode = ltrim(current($webcodeMatches), '@+');
+                $article = $this->webcoder->findArticleByWebcode($webcode);
 
-            if ($article) {
-                return array($article);
+                if ($article) {
+                    return array($article);
+                }
             }
         }
 
