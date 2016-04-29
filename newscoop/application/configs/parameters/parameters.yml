@@ -135,3 +135,5 @@ parameters:
     simple_security:
         users_file: "%application_path%/configs/security/users.json"
     remember_me.lifetime: 31536000 # 1 year in seconds
+    doctrine.charset: utf8md4 # requires Mysql server version >= 5.5.3
+

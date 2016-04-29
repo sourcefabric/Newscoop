@@ -29,7 +29,7 @@ monolog:
 
 doctrine:
     dbal:
-        charset: UTF8
+        charset: %doctrine.charset%
         types:
             point: Newscoop\NewscoopBundle\ORM\PointType
             utcdatetime: Newscoop\NewscoopBundle\ORM\UTCDateTimeType
