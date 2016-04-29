@@ -283,7 +283,8 @@ class ArticlesController extends FOSRestController
 
         $articles = $articleSearch->searchArticles(
             $articleSearchCriteria,
-            $onlyPublished
+            $onlyPublished,
+            true
         );
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
