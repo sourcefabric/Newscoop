@@ -159,11 +159,10 @@ class SearchService implements ServiceInterface
 
             'section' => $this->linkService->getSectionShortName($article),
             'section_name' => $article->getSection() ? $article->getSection()->getName() : null,
-
-            'authors' => array_map(function($author) {
-                return $author->getFullName();
-            }, (is_array($article->getArticleAuthors())) ? $article->getArticleAuthors() : array()),
-            'keywords' => explode(',', $article->getKeywords()),
+            'authors' => $article->getArticleAuthors()->map(function ($author) {
+                return $author->getView()->name;
+            })->toArray(),
+            'keywords' => array_filter(explode(',', $article->getKeywords())),
             'topics' => array_values($article->getTopicNames()),
             'switches' => $this->getArticleSwitches($article),
         );
@@ -255,15 +254,19 @@ class SearchService implements ServiceInterface
      */
     private function addDataFields(array $doc, $article)
     {
-        $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
-        if (count($articleData->getUserDefinedColumns()) == 0) {
-            return $doc;
-        }
+        
+            $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
+            if (count($articleData->getUserDefinedColumns()) == 0) {
+                return $doc;
+            }
 
-        $fields = array();
-        foreach ($articleData->getUserDefinedColumns() as $column) {
-            $doc[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
-        }
+
+
+            $fields = array();
+            foreach ($articleData->getUserDefinedColumns() as $column) {
+                
+                $doc[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
+            }
 
         return $doc;
     }
