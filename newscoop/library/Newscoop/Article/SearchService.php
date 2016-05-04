@@ -254,19 +254,15 @@ class SearchService implements ServiceInterface
      */
     private function addDataFields(array $doc, $article)
     {
-        
-            $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
-            if (count($articleData->getUserDefinedColumns()) == 0) {
-                return $doc;
-            }
+        $articleData = new \ArticleData($article->getType(), $article->getNumber(), $article->getLanguageId());
+        if (count($articleData->getUserDefinedColumns()) == 0) {
+            return $doc;
+        }
 
-
-
-            $fields = array();
-            foreach ($articleData->getUserDefinedColumns() as $column) {
-                
-                $doc[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
-            }
+        $fields = array();
+        foreach ($articleData->getUserDefinedColumns() as $column) {
+            $doc[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
+        }
 
         return $doc;
     }
