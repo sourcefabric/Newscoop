@@ -167,9 +167,7 @@ class SearchService implements ServiceInterface
             'switches' => $this->getArticleSwitches($article),
         );
 
-        $this->addDataFields($doc, $article);
-
-        return array_filter($doc);
+        return array_filter($this->addDataFields($doc, $article));
     }
 
     /**
