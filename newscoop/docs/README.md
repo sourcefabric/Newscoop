@@ -11,7 +11,7 @@
 
 ### Software Requirements
 
-- [MySQL 5+](http://dev.mysql.com/downloads/mysql)
+- [MySQL 5.5.3+](http://dev.mysql.com/downloads/mysql)
 - [Symfony 2.3](http://symfony.com/download)
 - [PHP 5.3+](http://php.net/downloads.php)
 - [Exim4](http://www.exim.org/mirrors.html)

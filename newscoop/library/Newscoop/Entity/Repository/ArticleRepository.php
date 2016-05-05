@@ -180,6 +180,20 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ));
         } else {
             $queryBuilder->select('a', 'l', 'u', 'ap', 'p', 'aa', 'au', 't', 'im');
+            if ($articleSearchCriteria->publication) {
+                $queryBuilder->andWhere('a.publication = :publication')
+                    ->setParameter('publication', $articleSearchCriteria->publication);
+            }
+
+            if ($articleSearchCriteria->section) {
+                $queryBuilder->andWhere('a.sectionId = :section')
+                    ->setParameter('section', $articleSearchCriteria->section);
+            }
+
+            if ($articleSearchCriteria->issue) {
+                $queryBuilder->andWhere('a.issueId = :issue')
+                    ->setParameter('issue', $articleSearchCriteria->issue);
+            }
         }
 
         $queryBuilder->leftJoin('a.issue', 'i')
