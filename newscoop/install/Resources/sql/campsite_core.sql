@@ -509,22 +509,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Cache` (
   `language` int(11) unsigned DEFAULT NULL,
   `publication` int(11) unsigned DEFAULT NULL,
   `issue` int(11) unsigned DEFAULT NULL,
   `section` int(11) unsigned DEFAULT NULL,
   `article` int(11) unsigned DEFAULT NULL,
-  `params` varchar(128) DEFAULT NULL,
-  `template` varchar(128) NOT NULL,
+  `params` varchar(128) CHARACTER SET utf8 DEFAULT NULL,
+  `template` varchar(128) CHARACTER SET utf8 NOT NULL,
   `expired` int(11) NOT NULL,
-  `content` mediumtext,
-  `status` char(1) DEFAULT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci,
+  `status` char(1) CHARACTER SET utf8 DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
   KEY `expired` (`expired`),
   KEY `template` (`template`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
