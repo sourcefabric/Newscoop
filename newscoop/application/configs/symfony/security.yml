@@ -87,6 +87,7 @@ security:
                 username_parameter: email
                 password_parameter: password
                 success_handler: newscoop_newscoop.security.authentication.frontend.success_handler
+                require_previous_session: false
             remember_me:
                 key: "%kernel.secret%"
                 lifetime: %remember_me.lifetime%
