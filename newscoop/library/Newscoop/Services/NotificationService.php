@@ -30,8 +30,7 @@ class NotificationService
     const USER_DQL = "
         SELECT user.email
         FROM Newscoop\Entity\User user
-            JOIN user.groups group
-            JOIN group.role role
+            JOIN user.role role
             JOIN role.rules rule
         WHERE rule.type = :type
             AND rule.resource = :resource
@@ -67,7 +66,8 @@ class NotificationService
     public function findRecipients()
     {
         $emails = array_merge($this->findByGroup(), $this->findByUser());
-        return array_unique($emails);
+
+        return array_filter(array_unique($emails));
     }
 
     /**
