@@ -509,22 +509,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Cache` (
   `language` int(11) unsigned DEFAULT NULL,
   `publication` int(11) unsigned DEFAULT NULL,
   `issue` int(11) unsigned DEFAULT NULL,
   `section` int(11) unsigned DEFAULT NULL,
   `article` int(11) unsigned DEFAULT NULL,
-  `params` varchar(128) CHARACTER SET utf8 DEFAULT NULL,
-  `template` varchar(128) CHARACTER SET utf8 NOT NULL,
+  `params` varchar(128) DEFAULT NULL,
+  `template` varchar(128) NOT NULL,
   `expired` int(11) NOT NULL,
-  `content` mediumtext COLLATE utf8mb4_unicode_ci,
-  `status` char(1) CHARACTER SET utf8 DEFAULT NULL,
+  `content` mediumtext,
+  `status` char(1) DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
   KEY `expired` (`expired`),
   KEY `template` (`template`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,6 +533,8 @@ CREATE TABLE `Cache` (
 
 LOCK TABLES `Cache` WRITE;
 /*!40000 ALTER TABLE `Cache` DISABLE KEYS */;
+ALTER TABLE `Cache` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE `Cache` CHANGE  `content`  `content` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;
 /*!40000 ALTER TABLE `Cache` ENABLE KEYS */;
 UNLOCK TABLES;
 
