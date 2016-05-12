@@ -60,12 +60,18 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
             if (!empty($checkedImages)) {
                 foreach ($checkedImages as $key => $value) {
-                    $this->addItemToPackage($value, $slideshow);
+                    try {
+                        $this->addItemToPackage($value, $slideshow);
+                    } catch (\InvalidArgumentException $e) {
+                        continue;
+                    }
                 }
             }
 
             if (!is_null($image) && $image !== "") {
-                $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
+                try {
+                    $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
+                } catch (\InvalidArgumentException $e) {}
             }
 
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
@@ -123,10 +129,15 @@ class Admin_SlideshowController extends Zend_Controller_Action
     {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
-
         $items = array();
-        foreach ($this->_getParam('images') as $key => $value) {
-            $item = $this->addItemToPackage($value, $slideshow);
+
+        foreach ($this->_getParam('images') as $value) {
+            try {
+                $item = $this->addItemToPackage($value, $slideshow);
+            } catch (\InvalidArgumentException $e) {
+                continue;
+            }
+
             $items[] = $this->view->slideshowItem($item);
         }
 
@@ -135,12 +146,9 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
     private function addItemToPackage($imageId, $slideshow)
     {
-        try {
-            $image = $this->_helper->service('image')->find($imageId);
+        $image = $this->_helper->service('image')->find($imageId);
 
-            return $this->_helper->service('package')->addItem($slideshow, $image);
-        } catch (\InvalidArgumentException $e) {
-        }
+        return $this->_helper->service('package')->addItem($slideshow, $image);
     }
 
     public function addVideoItemAction()

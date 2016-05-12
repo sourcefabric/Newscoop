@@ -138,7 +138,13 @@ class Package
      */
     public function getItems()
     {
-        return $this->items;
+        $rendition = $this->rendition;
+
+        return $this->items->filter(
+            function($item) use ($rendition) {
+               return $rendition->fits($item->image);
+            }
+        );
     }
 
     /**
