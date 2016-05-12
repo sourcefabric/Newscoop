@@ -58,15 +58,17 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 ));
             }
 
-            if (!empty($checkedImages)) {
-                foreach ($checkedImages as $key => $value) {
-                    $this->addItemToPackage($value, $slideshow);
+            try {
+                if (!empty($checkedImages)) {
+                    foreach ($checkedImages as $key => $value) {
+                        $this->addItemToPackage($value, $slideshow);
+                    }
                 }
-            }
 
-            if (!is_null($image) && $image !== "") {
-                $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
-            }
+                if (!is_null($image) && $image !== "") {
+                    $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
+                }
+            } catch (\InvalidArgumentException $e) {}
 
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
                 'article_number' => $this->_getParam('article_number'),
@@ -123,24 +125,23 @@ class Admin_SlideshowController extends Zend_Controller_Action
     {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
-
         $items = array();
-        foreach ($this->_getParam('images') as $key => $value) {
-            $item = $this->addItemToPackage($value, $slideshow);
-            $items[] = $this->view->slideshowItem($item);
-        }
+
+        try {
+            foreach ($this->_getParam('images') as $key => $value) {
+                $item = $this->addItemToPackage($value, $slideshow);
+                $items[] = $this->view->slideshowItem($item);
+            }
+        } catch (\InvalidArgumentException $e) {}
 
         $this->_helper->json($items);
     }
 
     private function addItemToPackage($imageId, $slideshow)
     {
-        try {
-            $image = $this->_helper->service('image')->find($imageId);
+        $image = $this->_helper->service('image')->find($imageId);
 
-            return $this->_helper->service('package')->addItem($slideshow, $image);
-        } catch (\InvalidArgumentException $e) {
-        }
+        return $this->_helper->service('package')->addItem($slideshow, $image);
     }
 
     public function addVideoItemAction()
