@@ -58,17 +58,21 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 ));
             }
 
-            try {
-                if (!empty($checkedImages)) {
-                    foreach ($checkedImages as $key => $value) {
+            if (!empty($checkedImages)) {
+                foreach ($checkedImages as $key => $value) {
+                    try {
                         $this->addItemToPackage($value, $slideshow);
+                    } catch (\InvalidArgumentException $e) {
+                        continue;
                     }
                 }
+            }
 
-                if (!is_null($image) && $image !== "") {
+            if (!is_null($image) && $image !== "") {
+                try {
                     $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
-                }
-            } catch (\InvalidArgumentException $e) {}
+                } catch (\InvalidArgumentException $e) {}
+            }
 
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
                 'article_number' => $this->_getParam('article_number'),
@@ -127,12 +131,15 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $slideshow = $this->getSlideshow();
         $items = array();
 
-        try {
-            foreach ($this->_getParam('images') as $key => $value) {
+        foreach ($this->_getParam('images') as $value) {
+            try {
                 $item = $this->addItemToPackage($value, $slideshow);
-                $items[] = $this->view->slideshowItem($item);
+            } catch (\InvalidArgumentException $e) {
+                continue;
             }
-        } catch (\InvalidArgumentException $e) {}
+
+            $items[] = $this->view->slideshowItem($item);
+        }
 
         $this->_helper->json($items);
     }
