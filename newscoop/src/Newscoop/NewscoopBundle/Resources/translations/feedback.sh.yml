@@ -1,29 +1,29 @@
-'No attachment': 'No attachment'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-Approve: Approve
-Approved.: Approved.
-at: at
-Attachment: Attachment
-'Ban/Unban user': 'Ban/Unban user'
-'Change selected messages status': 'Change selected messages status'
-Deleted: Deleted
-'Full article': 'Full article'
-Message: Message
-'Message deleted.': 'Message deleted.'
-'Messages deleted.': 'Messages deleted.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Message status change to $1.': 'Message status change to $1.'
-'Messages updated.': 'Messages updated.'
-'Message updated.': 'Message updated.'
-Processed: Processed
-Reply: Reply
-'Reply to message': 'Reply to message'
-Star: Star
-Starred: Starred
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-'With document attachment': 'With document attachment'
-'With image attachment': 'With image attachment'
-'With no attachment': 'With no attachment'
-'Feedback Messages': 'Feedback Messages'
+'No attachment': null
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+'Are you sure you want to do it?': 'Siguri ste da želite to da uradite?'
+Approve: null
+Approved.: null
+at: u
+Attachment: null
+'Ban/Unban user': null
+'Change selected messages status': null
+Deleted: Obrisano
+'Full article': 'Ceo tekst'
+Message: Poruka
+'Message deleted.': null
+'Messages deleted.': 'Poruka obrisana.'
+'Messages status change to $1.': null
+'Message status change to $1.': null
+'Messages updated.': 'Poruka izmenjena.'
+'Message updated.': 'Poruka izmenjena.'
+Processed: null
+Reply: Odgovori
+'Reply to message': 'Odgovori na poruku'
+Star: null
+Starred: null
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop nije dostupan. Proverite svoju interent vezu.'
+'With document attachment': null
+'With image attachment': null
+'With no attachment': null
+'Feedback Messages': 'Poruke sa povratnom informacijom'

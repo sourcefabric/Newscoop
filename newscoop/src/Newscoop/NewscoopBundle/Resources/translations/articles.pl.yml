@@ -189,7 +189,7 @@ Snippet: Fragment
 'List name should not be longer than 40 chars': 'Nazwa listy nie może być dłuższa niż 40 znaków'
 'Not valid number': 'Podana wartość nie jest liczbą'
 'List limit': 'Limit artykułów na liście'
-'The last article of this list has been removed.': null
+'The last article of this list has been removed.': 'Ostatni artykuł z tej listy został usunięty.'
 Revert: Cofnij
 'Could not automatically refresh the list': 'Nie można odświeżyć tej listy'
 'The article slideshows have been successfully updated, please close the window.': null
@@ -198,7 +198,7 @@ articles:
         namechanged: 'Jesteś pewien że chcesz zmienić nazwę tej listy? Nazwa może być używana w szablonach twojego motywu do wyświetlania zawartości tej listy. Jeśli masz wątpliwości zapytaj osobę odpowiedzialną za używany motyw.'
         alert: null
     images:
-        see_original: null
+        see_original: 'Zobacz zdjęcie w pełnym rozmiarze w nowej karcie.'
         edit:
             edit_image_metadata: 'Edytuj metadane zdjęcia'
             save: Zapisz

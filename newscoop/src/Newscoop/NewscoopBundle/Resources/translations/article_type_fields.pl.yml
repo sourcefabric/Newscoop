@@ -1,5 +1,5 @@
-'Does serving this field count as a page read for statistics?': null
-'Is this field intended for the reader to view? If not, it is metadata.': null
+'Does serving this field count as a page read for statistics?': 'Wyświetlanie tego pola liczy się jako odsłona dla wewnętrznego systemu statystyk?'
+'Is this field intended for the reader to view? If not, it is metadata.': 'Czy to pole powinno być wyświetlane dla czytelnika? Jeśli nie to jest ono traktowane jako metadane.'
 'Event Color': 'Kolor wydarzenia'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'W pole $3 musisz wprowadzić liczbę większą od $1 i mniejszą od $2.'
 'You do not have the right to translate article types.': 'Nie masz uprawnień do tłumaczenia typów artykułu.'
@@ -22,8 +22,8 @@ Custom: Własny
 Precision: Precyzja
 'Can not convert the field $1 from $2 to type $3.': 'Nie można przekonwertować pola $1 z $2 do typu $3.'
 'Are you sure you want to make $1 a $2 field?': 'Na pewno chcesz zamienić pole $1 na $2?'
-'Page Read Count?': null
-'Editorial Content?': null
+'Page Read Count?': 'Zliczać odsłony strony?'
+'Editorial Content?': 'Treść redakcyjna?'
 'Back to Article Types List': 'Powrót do Listy Typów Artykułów'
 show: pokaż
 hide: schowaj
@@ -36,7 +36,7 @@ hide: schowaj
 'The field $1 does not exist.': 'Pole $1 nie istnieje.'
 'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 może jedynie zawierać litery oraz podkreślnik (_)'
 'Template Field Name': 'Nazwa pola używana w szablonach'
-'Show to Authors?': null
+'Show to Authors?': 'Pokaż dla autorów?'
 'Renaming article type field': 'Zmiana nazw typów artykułów'
 'Rename field': 'Zmień nazwę pola'
 'Reassign a field type': 'Zmień typ pola'

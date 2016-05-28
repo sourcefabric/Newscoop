@@ -1,4 +1,4 @@
-'Show hidden Article Types?': null
+'Show hidden Article Types?': 'Pokazać ukryte typy artykułów?'
 Webcode: 'Kod internetowy'
 'View article': 'Zobacz artykuł'
 Source: Źródło
@@ -39,7 +39,7 @@ Size: Rozmiar
 'Published after': 'Opublikowany po'
 'Publish date': 'Data publikacji'
 'Publish Schedule': 'Kalendarz wydawniczy'
-'Publish Date': 'Data publiacji'
+'Publish Date': 'Data publikacji'
 'Order updated.': 'Kolejność zaktualizowana.'
 'Open in browser': 'Otwórz w przeglądarce'
 'No sections found': 'Nie znaleziono sekcji'

@@ -70,9 +70,9 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Data <BR><SMALL>(rrrr-mm-dd)</SMALL>'
 'Change image information': 'Zmień informacje o zdjęciu'
 'You do not have the right to add images': 'Nie masz praw aby dodawać zdjęcia'
 'Filter by uploader...': 'Filtruj po osobie przesyłającej'
-'Slideshow images': null
-'Add items to slideshow': null
+'Slideshow images': 'Zdjęcia w galerii'
+'Add items to slideshow': 'Dodaj elementy do galerii'
 'Attached Slideshows': 'Załączone galerie'
-'Value is required and can''t be empty': null
-'Select all images': null
-'Unselect all images': null
+'Value is required and can''t be empty': 'Wartość jest wymagana i nie może być pusta.'
+'Select all images': 'Zaznacz wszystkie zdjęcia'
+'Unselect all images': 'Odznacz wszystkie zdjęcia'

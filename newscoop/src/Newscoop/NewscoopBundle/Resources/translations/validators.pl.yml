@@ -2,8 +2,8 @@ type_publications:
     name:
         min: 'Nazwa publikacji musi być dłuższa nie {{ limit }} znak(ów).'
     metaDescription:
-        max: null
+        max: 'Opis publikacji musi być krótszy niż {{ limit }} znaków.'
     metaTitle:
-        max: null
+        max: 'Tytuł publikacji musi być krótszy niż {{ limit }} znaków.'
     metaKeywords:
-        max: null
+        max: 'Słowa kluczowe publikacji muszą być krótsze niż {{ limit }} znaków.'
