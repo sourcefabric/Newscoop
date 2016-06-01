@@ -71,15 +71,23 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
 
         if ($criteria->publication) {
             $qbArticles
-                ->where('a.publication = :publication')
+                ->andWhere('a.publication = :publication')
                 ->setParameter('publication', $criteria->publication);
             $criteria->publication = null;
             $fetchResult = true;
         }
 
+        if ($criteria->issue) {
+            $qbArticles
+                ->andWhere('a.issue = :issue')
+                ->setParameter('issue', $criteria->issue);
+            $criteria->issue = null;
+            $fetchResult = true;
+        }
+
         if ($criteria->articleNumber && $criteria->articleLanguage) {
             $qbArticles
-                ->where('ap.article = :article')
+                ->andWhere('ap.article = :article')
                 ->andWhere('a.language = :language')
                 ->setParameters(array(
                     'article' => $criteria->articleNumber,

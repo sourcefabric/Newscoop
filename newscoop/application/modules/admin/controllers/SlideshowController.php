@@ -141,6 +141,13 @@ class Admin_SlideshowController extends Zend_Controller_Action
             $items[] = $this->view->slideshowItem($item);
         }
 
+        $offset = 0;
+        foreach ($slideshow->getItems() as $item) {
+            $item->setOffset($offset);
+            $offset++;
+        }
+        $this->orm->flush();
+
         $this->_helper->json($items);
     }
 

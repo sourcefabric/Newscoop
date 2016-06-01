@@ -51,6 +51,12 @@ class SlideshowCriteria extends Criteria
     public $publication;
 
     /**
+     * Custom handled
+     * @var integer
+     */
+    public $issue;
+
+    /**
      * @var int
      */
     public $articleNumber;

@@ -139,8 +139,7 @@ class PackageService
         $items = array();
         foreach ($package->getItems() as $item) {
             $offset = array_search('item-'.$item->getId(), $order);
-            $package->getItems()->set($offset, $item);
-            $package->getItems()->get($offset)->setOffset($offset);
+            $item->setOffset($offset);
         }
 
         $this->orm->flush();
