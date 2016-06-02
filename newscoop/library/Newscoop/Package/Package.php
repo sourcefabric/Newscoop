@@ -7,6 +7,7 @@
 
 namespace Newscoop\Package;
 
+use Newscoop\Image\ImageInterface;
 use Newscoop\Image\Rendition;
 use Doctrine\ORM\Mapping as ORM;
 use Newscoop\View\PackageView;
@@ -142,7 +143,9 @@ class Package
 
         return $this->items->filter(
             function($item) use ($rendition) {
-               return $rendition->fits($item->image);
+               if ($item->image instanceof ImageInterface) {
+                   return $rendition->fits($item->image);
+               }
             }
         );
     }
