@@ -1,5 +1,5 @@
 <?php
-$translator = \Zend_Registry::get('container')->getService('translator'); 
+$translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <dl class="rendition">
     <dt>
@@ -16,7 +16,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
         </div>
     </dt>
     <dd class="name"><?php echo $this->escape($this->rendition->getLabel()); ?></dd>
-    <dd><small><?php echo array_shift(explode('_', $this->rendition->getSpecs())); ?> <?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?></small></dd>
+    <dd><small><?php $specs = explode('_', $this->rendition->getSpecs()); echo array_shift($specs); ?> <?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?></small></dd>
 </dl>
 <?php if (!$this->isDefault) { ?>
 <a href="<?php echo $this->url(array(

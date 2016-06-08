@@ -283,7 +283,8 @@ class RenditionService
     {
         $options = array();
         foreach ($this->getRenditions() as $name => $rendition) {
-            $options[$name] = sprintf('%s (%s %dx%d)', $name, array_shift(explode('_', $rendition->getSpecs())), $rendition->getWidth(), $rendition->getHeight());
+            $specs = explode('_', $rendition->getSpecs());
+            $options[$name] = sprintf('%s (%s %dx%d)', $name, array_shift($specs), $rendition->getWidth(), $rendition->getHeight());
         }
 
         return $options;

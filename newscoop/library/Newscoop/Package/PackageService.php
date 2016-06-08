@@ -124,6 +124,14 @@ class PackageService
         $this->orm->persist($packageItem);
         $this->orm->flush();
 
+        $this->orm->refresh($package);
+        $offset = 0;
+        foreach ($package->getItems() as $item) {
+            $item->setOffset($offset);
+            $offset++;
+        }
+        $this->orm->flush();
+
         return $packageItem;
     }
 
