@@ -231,8 +231,6 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
                 return false;
             }
 
-            if (null === $con_old_id) {continue;}
-
             // ad B 2/3)
             $con_new_id = self::InsertContent($poi);
 

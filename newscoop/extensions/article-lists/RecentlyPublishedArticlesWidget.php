@@ -19,7 +19,7 @@ class RecentlyPublishedArticlesWidget extends ArticlesWidget
     protected $count = 20;
 
     public function __construct()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $this->title = $translator->trans('Recently Published Articles', array(), 'extensions');
     }
@@ -27,6 +27,7 @@ class RecentlyPublishedArticlesWidget extends ArticlesWidget
     public function beforeRender()
     {
         $articlesParams = array(new ComparisonOperation('published', new Operator('is'), 'true'));
+        $count = 0;
 
         foreach((array) \ArticleType::GetArticleTypes(true) as $one_art_type_name) {
             $one_art_type = new \ArticleType($one_art_type_name);
@@ -42,6 +43,6 @@ class RecentlyPublishedArticlesWidget extends ArticlesWidget
                 )
         );
 
-        $this->items = Article::GetList($articlesParams, $articlesOrders, 0, self::LIMIT, $count = 0);
+        $this->items = Article::GetList($articlesParams, $articlesOrders, 0, self::LIMIT, $count);
     }
 }

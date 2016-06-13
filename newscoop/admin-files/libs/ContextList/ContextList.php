@@ -198,7 +198,7 @@ class ContextList extends BaseList
      * @param  Article $article
      * @return array
      */
-    public function processItem(Article $article)
+    public function processItem($article)
     {
         global $g_user, $Campsite;
         $translator = \Zend_Registry::get('container')->getService('translator');
@@ -225,7 +225,7 @@ class ContextList extends BaseList
      * @param array $f_request
      */
 
-    public function doData($f_request)
+    public function doData($f_request = null)
     {
         global $ADMIN_DIR, $g_user;
         foreach ($_REQUEST['args'] as $arg) {

@@ -17,7 +17,7 @@ class SaaS
         if ( file_exists( $GLOBALS['g_campsiteDir'] . '/conf/saas_config.php' )) {
             require_once($GLOBALS['g_campsiteDir'] . '/conf/saas_config.php');
         } else {
-        	$this->saasConfig = array();
+        	self::$saasConfig = array();
         }
 
     }
@@ -72,7 +72,7 @@ class SaaS
         }
 
         $hasPrivilege = TRUE;
-        if (array_key_exists('privileges', $this->saasConfig)) {
+        if (array_key_exists('privileges', self::$saasConfig)) {
             $privileges = $this->saasConfig['privileges'];
         } else {
             $privileges = array();

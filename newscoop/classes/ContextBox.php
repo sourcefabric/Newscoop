@@ -42,7 +42,7 @@ Class ContextBox extends DatabaseObject
         }
     }
 
-    public function create($p_article_no)
+    public function create($p_article_no = null)
     {
         if (empty($p_article_no)) {
             return false;

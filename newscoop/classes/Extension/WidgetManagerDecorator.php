@@ -111,7 +111,7 @@ class WidgetManagerDecorator extends DatabaseObject
      * @param array $p_columns
      * @return bool
      */
-    public function update($p_columns = NULL)
+    public function update($p_columns = NULL, $p_commit = true, $p_isSql = false)
     {
         // encode settings
         if (!empty($p_columns['settings'])) {
@@ -185,7 +185,7 @@ class WidgetManagerDecorator extends DatabaseObject
 
         // get used widgets per user
         static $used = NULL;
-        if ($used === NULL) { 
+        if ($used === NULL) {
             $queryStr = 'SELECT id, fk_widget_id
                 FROM ' . self::TABLE . '
                 WHERE fk_user_id = ' . ((int) $uid);
