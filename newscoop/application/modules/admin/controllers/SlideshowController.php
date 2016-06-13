@@ -70,7 +70,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
             if (!is_null($image) && $image !== "") {
                 try {
-                    $this->addItemToPackage(array_pop(explode('-', $image)), $slideshow);
+                    $item = explode('-', $image);
+                    $this->addItemToPackage(array_pop($item), $slideshow);
                 } catch (\InvalidArgumentException $e) {}
             }
 
@@ -114,7 +115,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
         try {
-            $item = $this->addItemToPackage(array_pop(explode('-', $this->_getParam('image'))), $slideshow);
+            $item = explode('-', $this->_getParam('image'));
+            $item = $this->addItemToPackage(array_pop($item), $slideshow);
             $this->_helper->json(array(
                 'item' => $this->view->slideshowItem($item),
             ));
@@ -141,13 +143,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
             $items[] = $this->view->slideshowItem($item);
         }
 
-        $offset = 0;
-        foreach ($slideshow->getItems() as $item) {
-            $item->setOffset($offset);
-            $offset++;
-        }
         $this->orm->flush();
-
         $this->_helper->json($items);
     }
 
