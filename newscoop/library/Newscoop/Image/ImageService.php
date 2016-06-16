@@ -71,7 +71,7 @@ class ImageService
         } catch (\Imagine\Exception\RuntimeException $e) {
             $imagine = new \Imagine\Gd\Imagine();
         }
-        
+
         return $imagine;
     }
 
@@ -276,7 +276,7 @@ class ImageService
         }
 
         $rendition = new Rendition($width, $height, $specs);
-        
+
         $image = $rendition->generateImage($this->decodePath($imagePath));
         $image->save($destFolder . '/' . $imagePath, array(
             'quality' => 90, //from 0 to 100
@@ -341,10 +341,10 @@ class ImageService
             'description' => ''
         ), $attributes);
 
-        if (isset($attributes['description'])) { $image->setDescription($attributes['description']); }
-        if (isset($attributes['photographer'])) { $image->setPhotographer($attributes['photographer']); }
-        if (isset($attributes['photographer_url'])) { $image->setPhotographerUrl($attributes['photographer_url']); }
-        if (isset($attributes['place'])) { $image->setPlace($attributes['place']); }
+        if (isset($attributes['description'])) { $image->setDescription($attributes['description']); } else { $image->setDescription(null); }
+        if (isset($attributes['photographer'])) { $image->setPhotographer($attributes['photographer']); } else { $image->setPhotographer(null); }
+        if (isset($attributes['photographer_url'])) { $image->setPhotographerUrl($attributes['photographer_url']); } else { $image->setPhotographerUrl(null); }
+        if (isset($attributes['place'])) { $image->setPlace($attributes['place']); } else { $image->setPlace(null); }
         $image->setDate($attributes['date']);
         $image->setContentType($attributes['content_type']);
         $image->setUser($attributes['user']);
