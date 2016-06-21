@@ -44,6 +44,13 @@ class TemplatesService
      */
     protected $themePath;
 
+    /**
+     * Template file name used for rendering images from article content
+     *
+     * @var string
+     */
+    protected $contentImageTemplate;
+
     public function __construct(ThemesService $themesService, PublicationService $publicationService)
     {
         $this->smarty = \CampTemplate::singleton();
@@ -52,6 +59,7 @@ class TemplatesService
         $this->publicationService = $publicationService;
         $this->originalVector = $this->smarty->campsiteVector;
         $this->themePath = $this->themesService->getThemePath();
+        $this->contentImageTemplate = 'editor_image.tpl';
         $this->preconfigureSmarty();
     }
 
@@ -119,6 +127,28 @@ class TemplatesService
     public function setVector($vector)
     {
         $this->smarty->campsiteVector = $vector;
+    }
+
+    /**
+     * Set template file name used for rendering images from article content
+     *
+     * @param string $contentImageTemplate
+     */
+    public function setContentImageTemplate($contentImageTemplate)
+    {
+        $this->contentImageTemplate = $contentImageTemplate;
+
+        return $this;
+    }
+
+    /**
+     * Get template file name used for rendering images from article content
+     *
+     * @return string
+     */
+    public function getContentImageTemplate()
+    {
+        return $this->contentImageTemplate;
     }
 
     /**

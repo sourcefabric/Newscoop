@@ -310,11 +310,12 @@ final class MetaSubtitle
                 'params' => implode('__', array(
                     $uri->article->number,
                     $imageNumber,
-                    $articleImage->getImageId()
+                    $articleImage->getImageId(),
+                    $templatesService->getContentImageTemplate()
                 ))
             )));
 
-            $image = $templatesService->fetchTemplate("editor_image.tpl", array(
+            $image = $templatesService->fetchTemplate($templatesService->getContentImageTemplate(), array(
                 'imageDetails' => $detailsArray,
                 'MediaRichTextCaptions' => $preferencesService->MediaRichTextCaptions,
                 'uri' => $uri,
