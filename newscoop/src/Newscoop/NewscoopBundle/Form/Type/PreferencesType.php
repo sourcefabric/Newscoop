@@ -18,7 +18,8 @@ class PreferencesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $timeZones = array();
-        array_walk(timezone_identifiers_list(), function ($timeZone) use (&$timeZones) {
+        $timezoneIdentifiers = timezone_identifiers_list();
+        array_walk($timezoneIdentifiers, function ($timeZone) use (&$timeZones) {
             $timeZoneGroup = (strpos($timeZone, '/') !== false) ? substr($timeZone, 0, strpos($timeZone, '/')) : $timeZone;
             $value = (strpos($timeZone, '/') !== false) ? substr($timeZone, strpos($timeZone, '/') + 1) : $timeZone;
             $value = str_replace('_', ' ', $value);

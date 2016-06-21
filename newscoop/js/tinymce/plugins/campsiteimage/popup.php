@@ -62,10 +62,10 @@ $captionLimit = $preferencesService->MediaCaptionLength;
   <title>{#campsiteimage_dlg.title}</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link href="css/campsiteimage.css" rel="stylesheet" type="text/css" />
+  <link href="/js/tinymce/plugins/campsiteimage/css/campsiteimage.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="/js/jquery/jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="/js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
-  <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="/js/tinymce/tiny_mce_popup.js"></script>
   <script type="text/javascript">
   <?php
     require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/media-archive/editor_load_tinymce.php");
@@ -77,10 +77,10 @@ $captionLimit = $preferencesService->MediaCaptionLength;
       var captionsEnabled = false;
   <?php } ?>
   </script>
-  <script type="text/javascript" src="js/campsiteimage.js?v=4.3.2"></script>
-  <script type="text/javascript" src="assets/popup.js"></script>
-  <script type="text/javascript" src="assets/dialog.js"></script>
-  <script type="text/javascript" src="assets/manager.js"></script>
+  <script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/js/campsiteimage.js?v=4.3.2"></script>
+  <script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/assets/popup.js"></script>
+  <script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/assets/dialog.js"></script>
+  <script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/assets/manager.js"></script>
 </head>
 <body>
   <form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data" onSubmit="<?php
@@ -90,7 +90,7 @@ $captionLimit = $preferencesService->MediaCaptionLength;
 ?>">
   <fieldset>
     <div class="dirs">
-      <iframe src="images.php?article_id=<?php echo $_REQUEST['article_id'] . $imageParams.'&time='.time(); ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
+      <iframe src="/js/tinymce/plugins/campsiteimage/images.php?article_id=<?php echo $_REQUEST['article_id'] . $imageParams.'&time='.time(); ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
     </div>
   </fieldset>
 

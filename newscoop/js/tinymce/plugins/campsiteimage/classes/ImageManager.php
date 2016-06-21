@@ -31,7 +31,7 @@ class ImageManager
 	 * Constructor. Create a new Image Manager instance.
 	 * @param array $config configuration array, see config.inc.php
 	 */
-	function ImageManager($config)
+	function __construct($config)
 	{
 		$this->config = $config;
 	}

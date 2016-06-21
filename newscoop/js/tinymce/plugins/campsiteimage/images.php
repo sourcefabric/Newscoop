@@ -200,9 +200,9 @@ function drawErrorBase(&$manager)
 <html>
 <head>
     <title>Image List</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="css/imagelist.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="assets/dialog.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="/js/tinymce/plugins/campsiteimage/css/imagelist.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/assets/dialog.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
 
@@ -282,9 +282,9 @@ function drawErrorBase(&$manager)
 
 /*]]>*/
 </script>
-<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-<script type="text/javascript" src="js/campsiteimage.js?v=4.3.2"></script>
-<script type="text/javascript" src="assets/images.js"></script>
+<script type="text/javascript" src="/js/tinymce/tiny_mce_popup.js"></script>
+<script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/js/campsiteimage.js?v=4.3.2"></script>
+<script type="text/javascript" src="/js/tinymce/plugins/campsiteimage/assets/images.js"></script>
 </head>
 
 <body>

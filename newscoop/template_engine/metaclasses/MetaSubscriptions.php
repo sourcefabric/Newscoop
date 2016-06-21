@@ -25,10 +25,11 @@ final class MetaSubscriptions extends MetaDbObject {
         }
     }
 
-    public function has_section($sectionNumber) {
+    public function has_section($sectionNumber)
+    {
         foreach ($this->m_dbObject as $subscription) {
             $subscription = new MetaSubscription($subscription->getSubscriptionId());
-            if($subscription->has_section($sectionNumber) && $subscription->is_active) {
+            if ($subscription->has_section($sectionNumber) && $subscription->is_active) {
                 return $subscription;
             }
         }
@@ -36,10 +37,11 @@ final class MetaSubscriptions extends MetaDbObject {
         return false;
     }
 
-    public function has_article($articleNumber) {
+    public function has_article($articleNumber)
+    {
         foreach ($this->m_dbObject as $subscription) {
             $subscription = new MetaSubscription($subscription->getSubscriptionId());
-            if($subscription->has_article($articleNumber) && $subscription->is_active) {
+            if ($subscription->has_article($articleNumber) && $subscription->is_valid) {
                 return $subscription;
             }
         }
@@ -47,10 +49,23 @@ final class MetaSubscriptions extends MetaDbObject {
         return false;
     }
 
-    public function has_issue($issueNumber) {
+    public function has_issue($issueNumber)
+    {
         foreach ($this->m_dbObject as $subscription) {
             $subscription = new MetaSubscription($subscription->getSubscriptionId());
-            if($subscription->has_issue($issueNumber) && $subscription->is_active) {
+            if ($subscription->has_issue($issueNumber) && $subscription->is_valid) {
+                return $subscription;
+            }
+        }
+
+        return false;
+    }
+
+    public function has_publication($publicationId)
+    {
+        foreach ($this->m_dbObject as $subscription) {
+            $subscription = new MetaSubscription($subscription->getSubscriptionId());
+            if ($subscription->publication->identifier == $publicationId && $subscription->is_valid) {
                 return $subscription;
             }
         }

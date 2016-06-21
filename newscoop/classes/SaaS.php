@@ -42,8 +42,8 @@ class SaaS
      */
     public function hasPermission($p_permissionString)
     {
-        if (array_key_exists('permissions', $this->saasConfig)) {
-            $permissions = $this->saasConfig['permissions'];
+        if (array_key_exists('permissions', self::$saasConfig)) {
+            $permissions = self::$saasConfig['permissions'];
         } else {
             $permissions = array();
         }
@@ -73,7 +73,7 @@ class SaaS
 
         $hasPrivilege = TRUE;
         if (array_key_exists('privileges', self::$saasConfig)) {
-            $privileges = $this->saasConfig['privileges'];
+            $privileges = self::$saasConfig['privileges'];
         } else {
             $privileges = array();
         }
@@ -102,7 +102,7 @@ class SaaS
     {
         $returnArray = array();
         if (array_key_exists('privileges', $this->saasConfig)) {
-            $privileges = $this->saasConfig['privileges'];
+            $privileges = self::$saasConfig['privileges'];
         } else {
             $privileges = array();
         }
