@@ -222,6 +222,16 @@ class UserService
             throw new \InvalidArgumentException("You can't delete yourself");
         }
 
+        // in case user logged in via e.g. FB,
+        // remove also identify so the new account
+        // with the same email can be created.
+        $identity = $this->em->getRepository('Newscoop\Entity\UserIdentity')->findOneByUser($user);
+
+        if (null !== $identity) {
+            $this->em->remove($identity);
+            $this->em->flush();
+        }
+
         $this->getRepository()->delete($user);
     }
 
