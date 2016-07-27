@@ -124,6 +124,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function getSubscriptions()
     {
+        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
+
         return new MetaSubscriptions($publicationId, $this->m_dbObject->getId());
     }
 

@@ -1,11 +1,6 @@
 <?php
-/**
- * Campsite customized Smarty plugin
- * @package Campsite
- */
 
-/**
- * Campsite render function plugin
+/* Newscoop render function plugin
  *
  * Newscoop caching save cached template file content with special vector parameters.
  * By default vector is filled with 5 parameters:
@@ -21,12 +16,12 @@
  *
  * You can also provide custom cache lifetime (or set it in admin themes management) - use "cache" parameter. Setting "cache" to off will not cache this rendered file.
  *
- * Examples: 
+ * Examples:
  *
  * {{ render file="_tpl/_html-head.tpl" cache="3200" }} - cache "_tpl/_html-head.tpl" file for 3200 seconds with current context vector
  *
  * {{ render file="_tpl/_html-head.tpl" publication="2" }} - change default publication value in vector to 2
- * 
+ *
  * {{ render file="_tpl/_html-head.tpl" article="off" cache="3200" }} - cache "_tpl/_html-head.tpl" file for 3200 seconds for all articles in current vector (section, issue, publication and language)
  *
  * Type:     function

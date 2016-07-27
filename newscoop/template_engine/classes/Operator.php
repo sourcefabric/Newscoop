@@ -34,7 +34,8 @@ class Operator
                                                      'greater' => '>',
                                                      'not' => '<>',
                                                      'like' => 'like',
-													 'match'=> 'match'
+													 'match'=> 'match',
+                                                     'in' => 'IN'
                                                ),
                                       'php' => array('is' => '==',
                                                      'smaller_equal' => '<=',
@@ -55,7 +56,8 @@ class Operator
                                                              'greater_equal',
                                                              'smaller',
                                                              'greater',
-                                                             'not'
+                                                             'not',
+                                                             'in'
                                                        ),
                                             'string'=>array('is',
 	                                                        'smaller_equal',
@@ -64,7 +66,8 @@ class Operator
 	                                                        'greater',
 	                                                        'not',
 	                                                        'like',
-                                                       		'match'
+                                                       		'match',
+                                                            'in'
 	                                                  ),
                                             'boolean'=>array('is',
 	                                                      'not'

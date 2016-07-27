@@ -21,7 +21,7 @@ class SlideshowsList extends PaginatedBaseList
         $em = \Zend_Registry::get('container')->get('em');
         $queryBuilder = $em->getRepository('Newscoop\Package\Package')
             ->getListByCriteria($criteria);
-        $list = $this->paginateList($queryBuilder, null, $criteria->maxResults);
+        $list = $this->paginateList($queryBuilder, null, $criteria->maxResults, false);
 
         $slideshows = array();
         foreach ($list->items as $slideshow) {

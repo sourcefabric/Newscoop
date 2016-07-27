@@ -493,10 +493,12 @@ class CommentsController extends Controller
                     continue;
                 }
 
-                $threadSection = $thread->getSection();
-
-                if (!$threadSection) {
+                try {
+                    $threadSection = $thread->getSection();
+                    $sectionName = $threadSection->getName();
+                } catch (\Doctrine\ORM\EntityNotFoundException $e) {
                     $thread->setSection(new Section(0, 'No section'));
+                    $sectionName = 'No section';
                 }
 
                 $commentsArray[] = array(
@@ -504,7 +506,7 @@ class CommentsController extends Controller
                     'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
                     'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
                     'issueNumber' => $thread->getIssueId(),
-                    'section' => $threadSection ? $threadSection->getName() : '',
+                    'section' => $sectionName,
                     'comment' => $comment,
                     'index' => $counter,
                     'article' => $thread

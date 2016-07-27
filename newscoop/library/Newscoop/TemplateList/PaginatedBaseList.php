@@ -87,17 +87,19 @@ abstract class PaginatedBaseList extends BaseList
             $pageNumber = $this->pageNumber;
         }
 
-        $cacheId = $this->cacheService->getCacheKey(array(
-            $this->getCacheKey(), $this->getPageNumber()
-        ), $this->getName());
+        if ($useCache) {
+            $cacheId = $this->cacheService->getCacheKey(array(
+                $this->getCacheKey(), $this->getPageNumber()
+            ), $this->getName());
 
-        if ($this->cacheService->contains($cacheId) && $useCache) {
-            $this->pagination = $this->cacheService->fetch($cacheId);
-        } else {
-            $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
-            if ($useCache) {
+            if ($this->cacheService->contains($cacheId)) {
+                $this->pagination = $this->cacheService->fetch($cacheId);
+            } else {
+                $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
                 $this->cacheService->save($cacheId, $this->pagination);
             }
+        } else {
+            $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
         }
 
         $list->count = count($this->pagination->getItems());

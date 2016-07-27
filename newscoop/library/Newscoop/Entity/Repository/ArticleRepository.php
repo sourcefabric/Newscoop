@@ -179,7 +179,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                     'ids' => $ids,
                 ));
         } else {
-            $queryBuilder->select('a', 'l', 'u', 'ap', 'p', 'aa', 'au', 't', 'im');
+            $queryBuilder->select('a', 'l', 'u', 'ap', 'p', 'aa', 'au', 't');
             if ($articleSearchCriteria->publication) {
                 $queryBuilder->andWhere('a.publication = :publication')
                     ->setParameter('publication', $articleSearchCriteria->publication);
@@ -204,8 +204,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->leftJoin('a.publication', 'ap')
             ->leftJoin('a.attachments', 'aa')
             ->leftJoin('a.authors', 'au')
-            ->leftJoin('a.topics', 't')
-            ->leftJoin('a.images', 'im');
+            ->leftJoin('a.topics', 't');
 
         if ($articleSearchCriteria->language) {
             $languageId = $em->getRepository('Newscoop\Entity\Language')

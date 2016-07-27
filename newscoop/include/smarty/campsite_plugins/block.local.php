@@ -10,7 +10,7 @@
  *
  * Type:     block
  * Name:     list_issues
- * Purpose:  Provides a...
+ * Purpose:  Provides a 
  *
  * @param string
  *     $p_params

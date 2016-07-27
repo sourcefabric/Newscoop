@@ -127,7 +127,7 @@ class Article extends DatabaseObject
      */
     public function Article($p_languageId = null, $p_articleNumber = null)
     {
-        parent::DatabaseObject($this->m_columnNames);
+        parent::__construct($this->m_columnNames);
         $this->m_data['IdLanguage'] = $p_languageId;
         $this->m_data['Number'] = $p_articleNumber;
         if ($this->keyValuesExist()) {
@@ -563,18 +563,18 @@ class Article extends DatabaseObject
         if ($this->m_data["IdPublication"] != $p_destPublicationId) {
             $columns["IdPublication"] = (int) $p_destPublicationId;
         }
-        if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
-            $issueObj = new Issue($p_destPublicationId, $this->m_data['IdLanguage'], $p_destIssueNumber);
-            $columns["NrIssue"] = (int) $p_destIssueNumber;
-            // for internall relations in entity we need also to keep issueId
-            $columns['issue_id'] = $issueObj->getIssueId();
-        }
-        if ($this->m_data["NrSection"] != $p_destSectionNumber) {
-            $sectionObj = new Section($p_destPublicationId, $p_destIssueNumber, $this->m_data['IdLanguage'], $p_destSectionNumber);
-            $columns["NrSection"] = (int) $p_destSectionNumber;
-            // for internall relations in entity we need also to keep sectionId
-            $columns['section_id'] = $sectionObj->getSectionId();
-        }
+
+        // update section and issue allways - as even if number will be this same, real section (id) can be changed.
+        $issueObj = new Issue($p_destPublicationId, $this->m_data['IdLanguage'], $p_destIssueNumber);
+        $columns["NrIssue"] = (int) $p_destIssueNumber;
+        // for internall relations in entity we need also to keep issueId
+        $columns['issue_id'] = $issueObj->getIssueId();
+
+        $sectionObj = new Section($p_destPublicationId, $p_destIssueNumber, $this->m_data['IdLanguage'], $p_destSectionNumber);
+        $columns["NrSection"] = (int) $p_destSectionNumber;
+        // for internall relations in entity we need also to keep sectionId
+        $columns['section_id'] = $sectionObj->getSectionId();
+
         $success = false;
         if (count($columns) > 0) {
             try {
@@ -2618,9 +2618,16 @@ class Article extends DatabaseObject
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
                 // regular article field, having a direct correspondent in the
                 // Article table fields
+
+                if ($comparisonOperation['symbol'] == 'IN') {
+                    $rightOperand = $comparisonOperation['right'];
+                } else {
+                    $rightOperand = $g_ado_db->escape($comparisonOperation['right']);
+                }
+
                 $whereCondition = Article::$s_regularParameters[$leftOperand]
                     . ' ' . $comparisonOperation['symbol']
-                    . " " . $g_ado_db->escape($comparisonOperation['right']) . " ";
+                    . " " . $rightOperand . " ";
                 if ($leftOperand == 'reads'
                 && strstr($comparisonOperation['symbol'], '=') !== false
                 && $comparisonOperation['right'] == 0) {
