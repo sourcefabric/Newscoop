@@ -79,7 +79,7 @@ class Js extends Zend_Controller_Plugin_Abstract
             	"{$currentUrn}{$p_request->getControllerName()}".'/'."{$p_request->getActionName()}.{$this->_fileSuffix}"
         );
 
-        foreach( $filesToAppend as $path => $urn )
+        foreach( str_replace("//", "/", str_replace('\\', '/', $filesToAppend)) as $path => $urn )
         {
             if( $path == 'script' ) {
                 $this->view->headScript()->appendScript( $urn );
