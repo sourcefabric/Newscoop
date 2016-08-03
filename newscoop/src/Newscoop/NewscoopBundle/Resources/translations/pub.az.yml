@@ -85,6 +85,7 @@ publications:
     general_settings: null
     comments_settings: null
     seo_settings: null
+    front_page_theme_settings: null
     publication_removed: null
     publication_saved: null
     remove:
@@ -112,6 +113,7 @@ publications:
         remove: null
     form_type:
         label:
+            follow_current_issue_theme: null
             name: null
             template_path: null
             short_names: null

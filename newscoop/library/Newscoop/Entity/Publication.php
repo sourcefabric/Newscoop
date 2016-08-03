@@ -164,10 +164,17 @@ class Publication
     protected $metaDescription;
 
     /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsPublication", mappedBy="publication")
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $outputSettingsPublication;
+
+    /**
      */
     public function __construct()
     {
         $this->issues = new ArrayCollection();
+        $this->outputSettingsPublication = new ArrayCollection();
     }
 
     /**
@@ -594,6 +601,45 @@ class Publication
 
         return $this;
     }
+
+    /**
+     * Getter for outputSettingsPublication
+     *
+     * @return mixed
+     */
+    public function getOutputSettingsPublication()
+    {
+        return $this->outputSettingsPublication;
+    }
+
+    /**
+     * Setter for outputSettingsPublication
+     *
+     * @return self
+     */
+    public function setOutputSettingsPublication($outputSettingsPublication)
+    {
+        $this->outputSettingsPublication = $outputSettingsPublication;
+
+        return $this;
+    }
+
+    /**
+     * Setter for outputSettingsPublication
+     *
+     * @param Newscoop\Entity\OutputSettingsPublication $outputSettingsPublication
+     *
+     * @return self
+     */
+    public function addOutputSettingsPublication($outputSettingsPublication)
+    {
+        if (!$this->outputSettingsPublication->contains($outputSettingsPublication)) {
+            $this->outputSettingsPublication->add($outputSettingsPublication);
+        }
+
+        return $this;
+    }
+
 
     /**
      * Gets the value of commentsArticleDefaultEnabled.

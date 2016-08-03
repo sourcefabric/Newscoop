@@ -59,3 +59,4 @@ Schedule: Programar
 'There was an error reading the issue parameter.': 'Hubo un error en la lectura del parámetro de edición.'
 'There was an error scheduling the $1 action on $2': 'Hubo un error en la programación de la acción $1 para el $2'
 'The action scheduled on $1 could not be deleted.': 'No se pudo eliminar la acción programada para el $1.'
+'Click to open': null

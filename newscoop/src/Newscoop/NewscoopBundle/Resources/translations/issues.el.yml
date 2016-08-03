@@ -59,3 +59,4 @@ Schedule: Πρόγραμμα
 'There was an error reading the issue parameter.': 'Υπήρξε σφάλμα κατά την ανάγνωση των παραμέτρων τεύχους.'
 'There was an error scheduling the $1 action on $2': 'Υπήρξε κάποιο σφάλμα κατά τον προγραμματισμό της $1 ενέργειας σε $2'
 'The action scheduled on $1 could not be deleted.': 'Η προγραμματισμένη ενέργεια σε $1 δεν μπόρεσε να διαγραφεί.'
+'Click to open': null

@@ -25,7 +25,11 @@ class FieldsHandler
 
         $fields = array();
         foreach ($articleData->getUserDefinedColumns() as $column) {
-            $fields[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
+            $fields[$column->getPrintName()] = \MetaSubtitle::ProcessContent(
+                $articleData->getFieldValue($column->getPrintName()),
+                $data->number,
+                $data->languageId
+            );
         }
 
         $fields['show_on_front_page'] = $data->onFrontPage == "Y" ? 1 : 0;

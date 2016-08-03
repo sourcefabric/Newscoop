@@ -85,6 +85,7 @@ publications:
     general_settings: 'Általános beállítások'
     comments_settings: 'Hozzászólások beállításai'
     seo_settings: 'Keresőoptimalizálási beállítások'
+    front_page_theme_settings: null
     publication_removed: 'A kiadvány eltávolításra került.'
     publication_saved: 'A kiadvány módosításainak mentése sikerült.'
     remove:
@@ -112,6 +113,7 @@ publications:
         remove: Eltávolítás
     form_type:
         label:
+            follow_current_issue_theme: null
             name: 'Kiadvány neve'
             template_path: 'Sablon elérési útja'
             short_names: 'Rövid név'

@@ -59,3 +59,4 @@ Schedule: Розклад
 'There was an error reading the issue parameter.': 'Помилка читання параметрів випуску.'
 'There was an error scheduling the $1 action on $2': 'Помилка планування операції $1 на $2'
 'The action scheduled on $1 could not be deleted.': 'Призначена на $1 операція не може бути відмінена'
+'Click to open': null

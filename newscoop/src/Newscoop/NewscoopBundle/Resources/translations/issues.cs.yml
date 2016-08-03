@@ -59,3 +59,4 @@ Schedule: Rozvrh
 'There was an error reading the issue parameter.': 'Vyskytla se chyba při čtení parametru vydání.'
 'There was an error scheduling the $1 action on $2': 'Nebylo možné naplánovat činnost $1 na $2'
 'The action scheduled on $1 could not be deleted.': 'Činnost naplánovaná na $1 nemohla být zrušena'
+'Click to open': null

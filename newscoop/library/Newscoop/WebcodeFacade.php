@@ -93,11 +93,7 @@ class WebcodeFacade
      */
     private function generateWebcode()
     {
-        for ($length = 5; $length < 10; $length++) {
-            for ($i = 0; $i < 10; $i++) {
-                return $this->random->getRandomString(5);
-            }
-        }
+        return $this->random->getRandomString(5);
     }
 
     /**

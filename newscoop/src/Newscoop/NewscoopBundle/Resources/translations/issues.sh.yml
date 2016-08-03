@@ -59,3 +59,4 @@ Schedule: Zakaži
 'There was an error reading the issue parameter.': 'Greška pri čitanju parametra izdanja.'
 'There was an error scheduling the $1 action on $2': 'Došlo je do greške pri zakazivanju akcije $1 za $2'
 'The action scheduled on $1 could not be deleted.': 'Akcija predviđena za $1 ne može biti obrisana.'
+'Click to open': null

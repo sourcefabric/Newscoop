@@ -59,3 +59,4 @@ Schedule: null
 'There was an error reading the issue parameter.': 'Ocorreu um erro na leitura do parametro de secção.'
 'There was an error scheduling the $1 action on $2': 'Ocorreu um erro no agendamento da tarefa de publicação $1 para $2'
 'The action scheduled on $1 could not be deleted.': 'A tarefa de publicação agendada para $1 não pode ser eliminada'
+'Click to open': null

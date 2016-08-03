@@ -321,7 +321,13 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('a', 'att')
+            ->select('a', 'att', 'p', 'i', 's', 'l', 'u', 'ap')
+            ->leftJoin('a.packages', 'p')
+            ->leftJoin('a.issue', 'i')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('a.language', 'l')
+            ->leftJoin('a.lockUser', 'u')
+            ->leftJoin('a.publication', 'ap')
             ->where('att.id = :topicId')
             ->join('a.topics', 'att')
             ->setParameter('topicId', $topicId);

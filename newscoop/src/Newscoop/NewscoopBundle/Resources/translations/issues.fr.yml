@@ -59,3 +59,4 @@ Schedule: null
 'There was an error reading the issue parameter.': 'Il y avait une erreur survenue lors de la lecture des paramètres dédition.'
 'There was an error scheduling the $1 action on $2': 'Il y a eu une erreur en planifiant laction $1 pour $2'
 'The action scheduled on $1 could not be deleted.': 'Laction planifiéé pour $1 ne peut être supprimée.'
+'Click to open': null

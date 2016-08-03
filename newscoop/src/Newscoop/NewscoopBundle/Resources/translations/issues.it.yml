@@ -59,3 +59,4 @@ Schedule: Programmazione
 'There was an error reading the issue parameter.': 'Si è verificato un errore caricando i parametri delledizione.'
 'There was an error scheduling the $1 action on $2': 'Si è verificato un errore programmando lazione $1 su $2'
 'The action scheduled on $1 could not be deleted.': 'Non è stato possibile eliminare lazione programmata su $1.'
+'Click to open': null

@@ -114,14 +114,18 @@ class IssueRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function getLastPublishedByPublication($publicationId)
+    public function getLastPublishedByPublicationAndLanguage($publicationId, $languageId)
     {
         $query = $this->createQueryBuilder('i')
-            ->select('i.id')
+            ->select('i')
             ->where('i.publication = :publicationId')
+            ->andWhere('i.workflowStatus = :publishStatus')
+            ->andWhere('i.language = :languageId')
             ->setParameter('publicationId', $publicationId)
+            ->setParameter('publishStatus', \Newscoop\Entity\Issue::STATUS_PUBLISHED)
+            ->setParameter('languageId', $languageId)
             ->setMaxResults(1)
-            ->orderBy('i.id', 'DESC');
+            ->orderBy('i.published', 'ASC');
 
         return $query->getQuery();
     }

@@ -59,3 +59,4 @@ Schedule: Расклад
 'There was an error reading the issue parameter.': 'Памылка чытаньня парамэтраў выпуску.'
 'There was an error scheduling the $1 action on $2': 'Памылка плянаваньня апэрацыi $1 на $2'
 'The action scheduled on $1 could not be deleted.': 'Прызначаная на $1апэрацыя ня можа быць адменена'
+'Click to open': null

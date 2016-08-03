@@ -145,7 +145,7 @@ class TopicsController extends FOSRestController
         }
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesForTopic($publication, $id);
+            ->getArticlesForTopic($publication, $id, false, false, 'desc');
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(

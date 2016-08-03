@@ -59,3 +59,4 @@ Schedule: Zaplanuj
 'There was an error reading the issue parameter.': 'Wystąpił błąd podczas odczytywania parametrów wydania.'
 'There was an error scheduling the $1 action on $2': 'Wystąpił błąd podczas planowania akcji $1 w dniu $2'
 'The action scheduled on $1 could not be deleted.': 'Akcja zaplanowana na $1 nie została skasowana.'
+'Click to open': null

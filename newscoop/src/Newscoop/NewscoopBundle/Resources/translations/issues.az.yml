@@ -59,3 +59,4 @@ Schedule: Cədvəl
 'There was an error reading the issue parameter.': 'Məsələ parametrlərinin oxunmasında xəta baş verdi.'
 'There was an error scheduling the $1 action on $2': '$1 addımının $2 tarixdə planlaşdırılmasında xəta baş verdi'
 'The action scheduled on $1 could not be deleted.': '$1 tarixinə planlaşdırılmış addım silinə bilmədi.'
+'Click to open': null

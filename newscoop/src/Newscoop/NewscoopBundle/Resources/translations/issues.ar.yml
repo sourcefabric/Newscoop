@@ -59,3 +59,4 @@ Schedule: جدول
 'There was an error reading the issue parameter.': 'حدث خطأ أثناء قراءة متغيرات العدد'
 'There was an error scheduling the $1 action on $2': 'حدث خطأ أثناء جدولة $1 في $2'
 'The action scheduled on $1 could not be deleted.': 'لم يحذف الإجراء المجدول في $1'
+'Click to open': null

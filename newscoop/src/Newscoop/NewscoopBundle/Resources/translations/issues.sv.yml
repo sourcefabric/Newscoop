@@ -59,3 +59,4 @@ Schedule: Schema
 'There was an error reading the issue parameter.': 'Ett fel uppstod vid läsning av utgåveparametern.'
 'There was an error scheduling the $1 action on $2': 'Ett fel uppstod när $1 schemalades $2'
 'The action scheduled on $1 could not be deleted.': 'Händelsen schemalagd $1 kunde inte raderas.'
+'Click to open': null

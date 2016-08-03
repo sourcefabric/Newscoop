@@ -82,6 +82,22 @@ Newscoop\Entity\Comment:
             serialized_name: status
             access_type: public_method
             since_version: 1.1
+        likes:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: likes
+            access_type: public_method
+            since_version: 1.1
+        dislikes:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: dislikes
+            access_type: public_method
+            since_version: 1.1
     virtual_properties:
         getCommenterName:
             type: string

@@ -98,8 +98,10 @@ class GenerateWebcodeCommand extends Console\Command\Command
             }
 
             $output->writeln('<info>Webcodes generated successfully!</info>');
+            return 0;
         } catch (\Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
+            return 1;
         }
     }
 

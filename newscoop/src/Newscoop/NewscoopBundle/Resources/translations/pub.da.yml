@@ -85,6 +85,7 @@ publications:
     general_settings: 'Generelle indstillinger'
     comments_settings: 'Indstillinger for kommentarer'
     seo_settings: 'Indstillinger for SEO'
+    front_page_theme_settings: null
     publication_removed: 'Publikationen blev fjernet'
     publication_saved: 'Ændringerne til publikationen blev gemt.'
     remove:
@@ -112,6 +113,7 @@ publications:
         remove: Fjern
     form_type:
         label:
+            follow_current_issue_theme: null
             name: 'Navn på publikation'
             template_path: 'Skabelon sti'
             short_names: 'Kort navn'
