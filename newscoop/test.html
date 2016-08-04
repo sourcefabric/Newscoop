@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>The New Custodian</title>
+    <meta name="author" content="Ljuba Rankovic" >
+    <meta name="description" content="Newscoop - The open content management system for professional journalists.">
+    <meta name="keywords" content="Newscoop, Sourcefabric, enterprise content management, open source, media, journalism" />
+    <meta name="generator" content="Bluefish 2.0.3" >
+
+    <!-- RSS & Pingback -->
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://localhost/en/static/rss/">
+
+
+    <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+    <link rel="shortcut icon" href="http://newscoop.dev/themes/publication_2/theme_1/_img/favicon.ico">
+    <link rel="apple-touch-icon" href="http://newscoop.dev/themes/publication_2/theme_1/_img/apple-touch-icon.png">
+
+
+    <!-- CSS: implied media="all" -->
+    <link rel="stylesheet" href="http://newscoop.dev/themes/publication_2/theme_1/_css/main.css?v=2">
+
+
+    <!-- Uncomment if you are specifically targeting less enabled mobile browsers
+<link rel="stylesheet" media="handheld" href="http://newscoop.dev/themes/publication_2/theme_1/_css/handheld.css?v=2"> -->
+
+
+    <!-- styles for sidebar tabs - jquery ui custom build package; not needed on article page -->
+    <link rel="stylesheet" href="http://newscoop.dev/themes/publication_2/theme_1/_css/ui-lightness/jquery-ui.custom.css" />
+
+
+    <!-- Although all JavaScript is the bottom, Jquery needs to be here for Newscoop's Geolocation/Map functionality -->
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
+
+    <script src="http://newscoop.dev/themes/publication_2/theme_1/_js/libs/jquery.min.js"></script>
+    <script src="http://newscoop.dev/js/jquery/jquery.mustache.js"></script>
+
+    <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+    <script src="http://newscoop.dev/themes/publication_2/theme_1/_js/libs/modernizr-1.7.min.js"></script>
+
+    <!-- Video.js -->
+    <link href="http://newscoop.dev/themes/publication_2/theme_1/_css/video-js.css" rel="stylesheet">
+    <script src="http://newscoop.dev/themes/publication_2/theme_1/_js/video.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('.category').click(function(){
+                var catId = $(this).attr('alt');
+                init(catId);
+            });
+
+            function init(id){
+                var template = $('#notice-tmpl').text();
+
+                var req = $.getJSON("/notice-rest/index?q="+id, {},
+                        function (data) {
+
+                            var rendered_html = $.mustache(template, data.data);
+                            $('#output-target').html(rendered_html);
+
+                        })
+                        .success(function () {
+
+                        })
+                        .error(function () {
+                            alert('There was problem loading.');
+                        })
+                        .complete(function () {
+                        });
+
+            }
+
+
+
+        });
+
+
+    </script>
+
+    <script id="notice-tmpl" type="text/html">
+        <h3>Notices</h3>
+        {{#notices}}
+            <div class="notice" style="width:300px;height:150px; float:left;padding:20px;border:1px solid;">
+                <h4>{{title}}</h4>
+                <h5>{{firstname}} {{lastname}}</h5>
+                <div>{{body}}</div>
+                <ul>
+                    {{#categories}}
+                    <li>{{title}}</li>
+                    {{/categories}}
+                </ul>
+            </div>
+
+        {{/notices}}
+    </script>
+
+</head>
+
+<body>
+<div>
+    <a href="#Allealle" alt="" class="category">Alle</a>
+    <ul>
+        <li>
+            <a href="#Berlin" alt="31" class="category">Berlin</a>
+        </li>
+        <li>
+            <a href="#Freiburg" alt="30" class="category">Freiburg</a>
+        </li>
+        <li>
+            <a href="#Basel" alt="29" class="category">Basel</a>
+        </li>
+    </ul>
+
+    <a href="#Todesanzeigen" alt="33" class="category">Todesanzeigen</a>
+    <ul>
+        <li>
+            <a href="#Berlin" alt="33/31" class="category">Berlin</a>
+        </li>
+        <li>
+            <a href="#Freiburg" alt="33/30" class="category">Freiburg</a>
+        </li>
+        <li>
+            <a href="#Basel" alt="33/29" class="category">Basel</a>
+        </li>
+    </ul>
+    <a href="#Geburtsanzeigen" alt="34" class="category">Geburtsanzeigen</a>
+
+</div>
+<div>
+    <a href="#Basel" alt="28" class="category">Ort</a>
+    <a href="#Freiburg" alt="30/33" class="category">Tod in Freiburg</a>
+    <a href="#Riehl" alt="33/31" class="category">Tod in Berlin</a>
+</div>
+
+<div id="output-target">
+    <a>Loading notices?</a>
+
+</div>
+</body>
+</html>
+

@@ -13,6 +13,11 @@ use Newscoop\Image\Rendition,
  */
 class Admin_SlideshowRestController extends Zend_Rest_Controller
 {
+
+    public function headAction()
+    {
+    }
+
     public function indexAction()
     {
         $limit = 25;

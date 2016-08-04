@@ -1,0 +1,9 @@
+<?php
+$headStyle = $this->headLink();
+$headStyle->appendStylesheet($this->baseUrl('/admin-style/notices.css'));
+?>
+<?php $this->placeholder('title')->captureStart(); ?>
+<?php putGS('Manage notice edit screen fields'); ?>
+<?php $this->placeholder('title')->captureEnd(); ?>
+
+<?php echo $this->configForm; ?>

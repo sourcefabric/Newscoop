@@ -1,0 +1,32 @@
+<?php
+$headStyle = $this->headLink();
+$headStyle->appendStylesheet($this->baseUrl('/admin-style/notices.css'));
+?>
+<?php $this->placeholder('title')->captureStart(); ?>
+<?php putGS('Manage notice categories'); ?>
+<?php $this->placeholder('title')->captureEnd(); ?>
+<div id="noticeCategories">
+
+<?php foreach ($this->Trees as $slug => $tree): ?>
+    <fieldset>
+        <legend><?php echo $tree['root']->getTitle() ?>             <a href="<?php echo $this->baseUrl('/admin/notice/deletecat/id/'.$tree['root']->getId())?>">x</a>
+        </legend>
+        <ul>
+
+    <?php foreach ($tree['children'] as $leaf): ?>
+            <?php if($leaf->getLvl() !== 0){?>
+            <li><?php echo $leaf->getTitle()?>
+            <a href="#">edit</a>
+                <a href="<?php echo $this->baseUrl('/admin/notice/deletecat/id/'.$leaf->getId())?>" onclick="if(confirm('Are you sure?')){return true;}return false;">x</a>
+            </li>
+                <?php } ?>
+        <?php endforeach; ?>
+        </ul>
+        </fieldset>
+    <?php endforeach;?>
+</div>
+
+
+
+<?php print_r($this->result); ?>
+<?php echo $this->categoryForm; ?>

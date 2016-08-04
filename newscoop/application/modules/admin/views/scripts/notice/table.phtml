@@ -1,0 +1,147 @@
+<?php
+/* @var Zend_View_Helper_HeadLink */
+$headStyle = $this->headLink();
+$headStyle->appendStylesheet($this->baseUrl('/admin-style/notices.css'));
+$headStyle->offsetSetStylesheet('table', '');
+?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.ba-iff.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.version.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/notice.js')); ?>
+
+<?php $this->placeholder('title')->set(getGS('Manage notices')); ?>
+<script>
+    function putGS(str) {
+        var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
+        for (i = 1, counti = arguments.length; i < counti; i++) {
+            msg = msg.replace(new RegExp("\\$" + i, "g"), arguments[i]);
+        }
+        return msg;
+    }
+    var serverObj = {};
+    serverObj.security = {};
+    serverObj.security = {<?php echo SecurityToken::JsParameter(); ?>};
+
+    serverObj.languageObj = [
+        'Search',
+        'Notices updated.',
+        'Notices deleted.',
+        'Notices status change to $1.',
+        'Notice updated.',
+        'Notice deleted.',
+        'Notice status change to $1.',
+        'Actions',
+        'Select status',
+        'Submitted',
+        'Published',
+        'Deleted',
+        'Unable to reach Newscoop. Please check your internet connection.',
+        'You are about to permanently delete a notice.',
+        'You are about to permanently delete multiple notice.',
+        'Are you sure you want to do it?'
+    ];
+
+    serverObj.translateObj = [
+        '<?php putGS('Search'); ?>',
+        '<?php putGS('Notices updated.'); ?>',
+        '<?php putGS('Notices deleted.'); ?>',
+        '<?php putGS('Notices status change to $1.'); ?>',
+        '<?php putGS('Notice updated.'); ?>',
+        '<?php putGS('Notice deleted.'); ?>',
+        '<?php putGS('Notice status change to $1.'); ?>',
+        '<?php putGS('Actions'); ?>',
+        '<?php putGS('Select status'); ?>',
+        '<?php putGS('Submitted'); ?>',
+        '<?php putGS('Published'); ?>',
+        '<?php putGS('Deleted'); ?>',
+        '<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>',
+    <?php echo json_encode(getGS("You are about to permanently delete a notice.")); ?>,
+    <?php echo json_encode(getGS("You are about to permanently delete multiple notices.")); ?>,
+    <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>
+    ];
+
+</script>
+
+
+<script id="notice-tmpl" type="text/html">
+                <td class="noticeId sorting_1">
+                    <input type="checkbox" name="index[]" value="{{notice.id}}" class="table-checkbox">
+                    <span>#{{notice.id}}</span>
+                </td>
+                <td class="noticeLastname">
+                        {% if (user.lastname) %}{{user.lastname}}{% endif %}
+                </td>
+
+                <td class="noticeFirstname">
+                        {% if (user.firstname) %}{{user.firstname}}{% endif %}
+                </td>
+
+                <td class="noticeTitle">
+                    <a class="goToNotice" href="{{notice.link.edit}}">{{notice.title}}</a>
+                    <p>{{notice.body}}</p>
+                </td>
+
+                <td class="noticeCategories">
+                    <p>
+                        <span>{{notice.categories}}</span>
+                    </p>
+                </td>
+                <td class="noticePriority">
+                    <p>{{notice.priority}}</p>
+
+                </td>
+                <td class="noticeAuthor">
+                    {{notice.author}}
+                </td>
+                <td class="noticeStatus">
+                        {{notice.status}}
+                </td>
+                <td class="noticePublished">
+                    {{notice.published.date}}
+                    <p>
+                        {{notice.unpublished.date}}
+                    </p>
+                </td>
+
+</script>
+
+<div class="wrapper">
+    <div class="ui-widget-content small-block block-shadow commentsHolder">
+        <div class="padded clearfix inner-tabs">
+            <div class="tabs">
+                <div id="tabs-1">
+                    <div id="showNotices">
+                        <fieldset>
+                            <legend><?php putGS('Show'); ?></legend>
+                            <ul class="status_filter">
+                                <li class="published"><input type="checkbox"
+                                                                                    id="show_published"
+                                                                                    value="published"> <label
+                                    for="show_published"><?php putGS('Published'); ?></label>
+                                </li>
+                                <li class="new"><input type="checkbox" id="show_new" value="submitted"> <label
+                                    for="show_new"><?php putGS('New'); ?></label>
+                                </li>
+                                <li class="deleted"><input type="checkbox" id="show_deleted" value="deleted"> <label
+                                    for="deleted"><?php putGS('Deleted'); ?></label>
+                                </li>
+                            </ul>
+                            <br>
+                        </fieldset>
+                    </div>
+                    <div id="actionExpand" class="dataTables_actions">
+                        <!-- <a href="javascript:;" class="sort_tread"> <span
+                                    class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order'); ?>
+                            </a>//--></div>
+                    <?php $this->renderDatatable(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="manageLinks"">
+        <p>
+            <a style="font-size:1.5em" class="goToArticle" href="<?php echo $this->baseUrl('/admin/notice/edit')?>"><b>+</b> Add Notice</a>
+        </p>
+    </div>

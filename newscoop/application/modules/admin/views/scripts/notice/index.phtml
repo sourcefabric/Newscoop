@@ -1,0 +1,69 @@
+<?php $this->placeholder('title')->captureStart(); ?>
+<?php putGS('Notices'); ?>
+<span class="inline-search">
+    <input type="text" name="q"/> <button id="notice-search" class="search"><?php putGS('Search'); ?></button>
+</span>
+<?php $this->placeholder('title')->captureEnd(); ?>
+
+<table>
+    <thead>
+    <tr class="table_list_header">
+        <th>#s</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>title</th>
+        <th>text</th>
+        <th>status</th>
+        <th>published</th>
+        <th>tags</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->noticeCollection as $notice): ?>
+    <tr>
+        <td>
+            <?php print($notice->getId()); ?>
+        </td>
+        <td>
+            <?php print($notice->getFirstname()); ?>
+        </td>
+        <td>
+            <?php print($notice->getLastname()); ?>
+        </td>
+        <td>
+            <?php print($notice->getTitle()); ?>
+        </td>
+        <td>
+            <?php print(substr($notice->getBody(),0,30)); ?>
+        </td>
+        <td>
+            <?php print($notice->getStatus()); ?>
+        </td>
+        <td>
+            <?php print($notice->getPublished()->format('Y-m-d h:m:s')); ?>
+        </td>
+        <td>
+            <ul>
+                <?php foreach ($notice->getTags() as $tag): ?>
+                <li><?php echo $tag->getName() ?></li>
+                <?php endforeach; ?>
+            </ul>
+
+        </td>
+        <td>
+        <a href="<?php echo $this->url(array('action' => 'delete','id' => $notice->getId()))?>">
+            delete
+        </a>
+            <a href="<?php echo $this->url(array('action' => 'edit','id' => $notice->getId()))?>">
+                edit
+            </a>
+        </td>
+    </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+
+<?php print_r($this->result); ?>
+<?php echo $this->noticeForm; ?>

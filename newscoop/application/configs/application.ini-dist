@@ -35,7 +35,10 @@ resources.doctrine.functions.rand = "Newscoop\Query\MysqlRandom"
 resources.doctrine.functions.dayofweek = "Newscoop\Query\MysqlDayOfWeek"
 resources.doctrine.functions.dayofmonth = "Newscoop\Query\MysqlDayOfMonth"
 resources.doctrine.functions.dayofyear = "Newscoop\Query\MysqlDayOfYear"
-resources.doctrine.functions.date_format = "Newscoop\Query\MysqlDateFormat"
+resources.doctrine.gedmo.tree = true
+resources.doctrine.gedmo.sluggable = true
+resources.doctrine.gedmo.timestampable = true
+resources.doctrine.gedmo.profile = false
 
 resources.view =
 
