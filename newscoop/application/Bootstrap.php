@@ -295,6 +295,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
+            'search',
+            new Zend_Controller_Router_Route(
+                ':language/search',
+                array(
+                    'module' => 'default',
+                    'controller' => 'search',
+                    'action' => 'index',
+                    'language' => null,
+                )
+            )
+        );
+
+
+        $router->addRoute(
             'confirm-email',
             new Zend_Controller_Router_Route('confirm-email/:user/:token', array(
                 'module' => 'default',
