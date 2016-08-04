@@ -72,6 +72,9 @@ services:
         factory_service: doctrine
         factory_method: getRepository
         arguments:  ["\\Newscoop\\Entity\\Article"]
+    comment.service:
+        class:      Newscoop\Services\CommentService
+        arguments:  ["@em", "@publication.service"]
     comment.repository:
         class:      Doctrine\Common\Persistence\ObjectRepository
         factory_service: doctrine
@@ -102,6 +105,9 @@ services:
         arguments:  ["@em"]
     stat:
         class:      Newscoop\Services\StatService
+        arguments:  ["@em"]
+    publication.service:
+        class:      Newscoop\Services\PublicationService
         arguments:  ["@em"]
     view:
         class:      Newscoop\View\ViewFactory
