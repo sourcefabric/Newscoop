@@ -2,9 +2,9 @@ Source: newscoop
 Section: web
 Priority: optional
 Maintainer: Daniel James <daniel@64studio.com>
-Build-Depends: debhelper (>= 7), po-debconf
+Build-Depends: debhelper (>= 9.20120909), po-debconf
 Standards-Version: 3.9.3
-Homepage: http://www.sourcefabric.org/en/products/newscoop_overview/
+Homepage: http://www.sourcefabric.org/en/newscoop
 
 Package: newscoop
 Architecture: all
@@ -20,7 +20,7 @@ Depends: apache2 | httpd,
  wwwconfig-common,
  ${misc:Depends}
 Recommends: php-apc | php5-xcache
-Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite
+Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite, geonames-city-data, newscoop-sample-data
 Description: Open content management system for professional journalists
  Features for the modern newsroom include multiple author management,
  issue-and-section based publishing, geolocation and multilingual content 
