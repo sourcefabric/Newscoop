@@ -19,8 +19,8 @@ use Newscoop\View\PackageView;
 class Package
 {
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer") 
+     * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      * @var int
      */
@@ -143,7 +143,7 @@ class Package
 
         return $this->items->filter(
             function($item) use ($rendition) {
-               if ($item->image instanceof ImageInterface) {
+               if (null !== $item->image && $item->image instanceof ImageInterface) {
                    return $rendition->fits($item->image);
                }
             }
