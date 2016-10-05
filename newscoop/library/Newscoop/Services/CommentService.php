@@ -11,6 +11,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Comment;
+use Newscoop\NewscoopException;
 use Newscoop\Services\PublicationService;
 use Doctrine\ORM\Query\Expr;
 
@@ -37,6 +38,9 @@ class CommentService
      *
      * @param Comment $comment
      * @param array   $attributes
+     * @param int     $userId
+     *
+     * @throws NewscoopException when user is banned from posting comments
      *
      * @return Comment
      */
@@ -54,6 +58,13 @@ class CommentService
             $attributes['status'] = "pending";
         } else {
             $attributes['status'] = "approved";
+        }
+
+        $commenterRepository = $this->em->getRepository('Newscoop\Entity\Comment\Commenter');
+        $commenter = new Comment\Commenter();
+        $commenter = $commenterRepository->save($commenter, $attributes);
+        if ($this->isBanned($commenter)) {
+            throw new NewscoopException('You are banned from submitting comments.', 405);
         }
 
         $comment = $this->em->getRepository('Newscoop\Entity\Comment')
