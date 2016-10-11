@@ -249,15 +249,13 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Method for update a comment
      *
-     * @param Comment $entity
+     * @param Comment $comment
      * @param array   $values
      *
      * @return Comment $enitity
      */
     public function update(Comment $comment, $values)
     {
-        // get the enitity manager
-        $em = $this->getEntityManager();
         if (array_key_exists('subject', $values) && !is_null($values['subject'])) {
             $comment->setSubject($values['subject']);
         }
