@@ -1,120 +1,120 @@
-'No attachment': 'No attachment'
-at: at
-'With no attachment': 'With no attachment'
-'With image attachment': 'With image attachment'
-'With document attachment': 'With document attachment'
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-Starred: Starred
-Star: Star
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
-'Reply to message': 'Reply to message'
-Reply: Reply
-Processed: Processed
-'No records found.': 'No records found.'
-'No entries to show': 'No entries to show'
-'Messages updated.': 'Messages updated.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Messages deleted.': 'Messages deleted.'
-'Message updated.': 'Message updated.'
-'Message status change to $1.': 'Message status change to $1.'
-'Message deleted.': 'Message deleted.'
-Message: Message
-Last: Last
-'Full article': 'Full article'
-First: First
-'Feedback Messages': 'Feedback Messages'
-'Display _MENU_ records': 'Display _MENU_ records'
-Deleted: Deleted
-'Change selected messages status': 'Change selected messages status'
-Attachment: Attachment
-Approved.: Approved.
-Approve: Approve
-Anonymous: Anonymous
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-User: User
-None: None
-'Coming from': 'Coming from'
-'Ban/Unban user': 'Ban/Unban user'
-Ip: Ip
-'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
-'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
-'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
-Website: Website
-'Value is not $1 characters long': 'Value is not $1 characters long'
-Username: Username
-'User id': 'User id'
-'User ban settings': 'User ban settings'
-'Update comment': 'Update comment'
-Unrecommended: Unrecommended
-Unrecommend: Unrecommend
-'Subject is not $1 characters long': 'Subject is not $1 characters long'
-'Sort by Thread order': 'Sort by Thread order'
-'Show parent comment': 'Show parent comment'
-'Show commenter details': 'Show commenter details'
-'Show commenter': 'Show commenter'
-'Show comment user details': 'Show comment user details'
-'Show comment user': 'Show comment user'
-'Show comment details': 'Show comment details'
-'Select status': 'Select status'
-'Search Type': 'Search Type'
-'Reply to comment': 'Reply to comment'
-Recommended: Recommended
-Recommend: Recommend
-'Quick edit': 'Quick edit'
-Parent: Parent
-ID: ID
-'Go to edit article': 'Go to edit article'
-Forum: Forum
-'For Column': 'For Column'
-Email: Email
-'Edit acceptance criteria': 'Edit acceptance criteria'
-E-mail: E-mail
-'Delete all comments?': 'Delete all comments?'
-'Date Created': 'Date Created'
-'Comments updated.': 'Comments updated.'
-'Comments status change to $1.': 'Comments status change to $1.'
-'Comments deleted.': 'Comments deleted.'
-'Commenter $1 saved.': 'Commenter $1 saved.'
-'Commenter $1 deleted.': 'Commenter $1 deleted.'
-Commenter: Commenter
-'Comment updated.': 'Comment updated.'
-'Comment status change to $1.': 'Comment status change to $1.'
-'Comment id': 'Comment id'
-'Comment deleted.': 'Comment deleted.'
-'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
-'Comment Acceptance': 'Comment Acceptance'
-'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
-'Comment $1 saved.': 'Comment $1 saved.'
-Column: Column
-'Change subscriber information': 'Change subscriber information'
-'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
-Ban: Ban
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-'Add rating': 'Add rating'
-'Add new comment commenter': 'Add new comment commenter'
-'Add new comment': 'Add new comment'
-'Add new acceptance criteria': 'Add new acceptance criteria'
-'Acceptance $1 saved.': 'Acceptance $1 saved.'
-'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
+'No attachment': 'Нема фајлова у прилогу'
+at: у
+'With no attachment': 'Без прилога'
+'With image attachment': 'Слика у прилогу'
+'With document attachment': 'Документ у прилогу'
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop није доступан. Проверите своју интернет везу.'
+Starred: Означено
+Star: Означите
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Приказано _START_ до _END_ од _TOTAL_ уноса'
+'Reply to message': 'Одговорите на поруку'
+Reply: Одговори
+Processed: Обрађено
+'No records found.': 'Нема записа'
+'No entries to show': 'Нема уноса за приказ'
+'Messages updated.': 'Поруке измењене.'
+'Messages status change to $1.': 'Промена статуса поруке у $1.'
+'Messages deleted.': 'Порука је обрисана.'
+'Message updated.': 'Порука измењена.'
+'Message status change to $1.': 'Промена статуса поруке у $1.'
+'Message deleted.': 'Порука је обрисана.'
+Message: Порука
+Last: Последњи
+'Full article': 'Цео текст'
+First: Први
+'Feedback Messages': 'Поруке са повратном информацијом'
+'Display _MENU_ records': 'Прикажи _MENU_ записе'
+Deleted: Обрисано
+'Change selected messages status': 'Промени статус изабраних порука'
+Attachment: 'Прикачени фајл'
+Approved.: Одобрен
+Approve: Одобри
+Anonymous: Анонимус
+' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'
+'You are about to permanently delete multiple messages.': 'Неповратно ћете избрисати више порука.'
+'You are about to permanently delete a message.': 'Неповратно ћете избрисати поруку.'
+User: Корисник
+None: Ниједан
+'Coming from': 'Стигло од'
+'Ban/Unban user': 'Блокирајте или одблокирајте корисника'
+Ip: null
+'Bans can be applied to a users name, email address or IP address.': 'Забране могу бити примењене на корисничко име, имејл адресу или ИП адресу'
+'You are about to permanently delete multiple comments.': 'Неповратно ћете избрисати више коментара.'
+'You are about to permanently delete a comment.': 'Неповратно ћете избрисати коментар.'
+Website: 'Веб сајт'
+'Value is not $1 characters long': 'Вредност није дугачка $1 карактера'
+Username: 'Корисничко име'
+'User id': 'Кориснички ид'
+'User ban settings': 'Подешавање забране за корисника'
+'Update comment': 'Измени коментар'
+Unrecommended: Непрепоручен
+Unrecommend: Непрепоручен
+'Subject is not $1 characters long': 'Наслов није дугачак $1 карактера'
+'Sort by Thread order': 'Сортирај по редоследу у дискусији'
+'Show parent comment': 'Прикажи матични коментар'
+'Show commenter details': 'Прикажи детаље о коментатору'
+'Show commenter': 'Прикажи коментатора'
+'Show comment user details': 'Прикажи детаље о коментатору'
+'Show comment user': 'Прикажи коментатора'
+'Show comment details': 'Прикажи детаље коментатора'
+'Select status': 'Изабери статус'
+'Search Type': 'Тип претраге'
+'Reply to comment': 'Одговорите на коментар'
+Recommended: Препоручени
+Recommend: Препоручен
+'Quick edit': 'Брзо уређивање'
+Parent: Матични
+ID: Ид
+'Go to edit article': 'Иди на уређивање текста'
+Forum: Форум
+'For Column': 'За колону'
+Email: email
+'Edit acceptance criteria': 'Уреди критеријум прихватљивости'
+E-mail: Имејл
+'Delete all comments?': 'Обриши све коментаре?'
+'Date Created': 'Датум креирања'
+'Comments updated.': 'Коментари измењени.'
+'Comments status change to $1.': 'Промена статуса коментара у $1.'
+'Comments deleted.': 'Коментари обрисани'
+'Commenter $1 saved.': 'Коментатор $1 сачуван.'
+'Commenter $1 deleted.': 'Коментатор $1 обрисан.'
+Commenter: Коментатор
+'Comment updated.': 'Коментар измењен.'
+'Comment status change to $1.': 'Промена статуса коментара у $1.'
+'Comment id': 'Ид коментара'
+'Comment deleted.': 'Коментар избрисан'
+'Comment delete by $1 from the article $2 ($3)': 'Коментар обрисан од стране $1 из текста $2 ($3)'
+'Comment Acceptance': 'Прихватљивост коментара'
+'Comment $4 by $1 in the article $2 ($3)': 'Коментатор $4 од $1 у тексту $2 ($3)'
+'Comment $1 saved.': 'Коментатор $1 снимљен.'
+Column: Колона
+'Change subscriber information': 'Промени информације о претплатнику'
+'Ban for commenter $1 saved.': 'Забрана за коментатора $1 сачувана.'
+Ban: Забрани
+'Are you sure you want to do it?': 'Сигурни сте да желите то да урадите?'
+'Add rating': 'додај рејтинг'
+'Add new comment commenter': 'Додај новог коментатора'
+'Add new comment': 'Додај нови коментар'
+'Add new acceptance criteria': 'Додај нови критеријум прихватљивости'
+'Acceptance $1 saved.': 'Прихватљивост $1 сачувана.'
+'Acceptance $1 deleted.': 'Прихватљивост $1 обрисана.'
 editorial:
     alert:
-        toolong: 'Message is too long.'
-        added: 'Comment has been successfully added.'
-        edited: 'Comment has been successfully edited.'
-        resolved: 'Comment has been successfully resolved.'
-        deleted: 'Comment has been successfully deleted.'
+        toolong: 'Порука је предугачка'
+        added: 'Коментар је успешно додат.'
+        edited: 'Коментар је успешно измењен.'
+        resolved: 'Коментар је успешно уређен.'
+        deleted: 'Коментар је успешно обрисан.'
     btn:
-        send: Send
-        cancel: Cancel
-        resolve: Resolve
-        save: Save
-        edit: Edit
-        delete: Delete
-        reply: Reply
+        send: Пошаљи
+        cancel: Откажи
+        resolve: Уреди
+        save: Сними
+        edit: Уреди
+        delete: Обриши
+        reply: Одговори
     label:
-        title: 'Editorial Comments'
-        post: 'Post a new comment'
-        reply: Reply...
-        nocomments: 'No comments yet.'
+        title: null
+        post: 'Пошаљи нови коментар'
+        reply: Одговори
+        nocomments: 'Још увек без коментара.'

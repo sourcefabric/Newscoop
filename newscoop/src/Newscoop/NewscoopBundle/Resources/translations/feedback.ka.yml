@@ -1,29 +1,29 @@
-'No attachment': 'No attachment'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-Approve: Approve
-Approved.: Approved.
-at: at
-Attachment: Attachment
-'Ban/Unban user': 'Ban/Unban user'
-'Change selected messages status': 'Change selected messages status'
-Deleted: Deleted
-'Full article': 'Full article'
-Message: Message
-'Message deleted.': 'Message deleted.'
-'Messages deleted.': 'Messages deleted.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Message status change to $1.': 'Message status change to $1.'
-'Messages updated.': 'Messages updated.'
-'Message updated.': 'Message updated.'
-Processed: Processed
-Reply: Reply
-'Reply to message': 'Reply to message'
-Star: Star
-Starred: Starred
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-'With document attachment': 'With document attachment'
-'With image attachment': 'With image attachment'
-'With no attachment': 'With no attachment'
-'Feedback Messages': 'Feedback Messages'
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'თქვენ ახლა სამუდამოდ წაშლით რიგ შეტყობინებებს. '
+'You are about to permanently delete a message.': 'თქვენ ახლა სამუდამოდ წაშლით შეტყობინებას. '
+'Are you sure you want to do it?': 'დაადასტურეთ, რომ გსურთ ამის გაკეთება.'
+Approve: დადასტურება
+Approved.: დადასტურებული.
+at: '-ზე'
+Attachment: დანართი
+'Ban/Unban user': 'მომხმარებლისთვის ბანის დადება/მოხსნა'
+'Change selected messages status': 'არჩეული შეტყობინების სტატუსის შეცვლა'
+Deleted: წაიშალა
+'Full article': 'მთლიანი სტატია'
+Message: შეტყობინება
+'Message deleted.': 'შეტყობინება წაშლილია. '
+'Messages deleted.': 'შეტყობინებები წაშლილია '
+'Messages status change to $1.': 'შეტყობინებების სტატუსი იცვლება $1ზე.'
+'Message status change to $1.': 'შეტყობინების სტატუსი იცვლება $1ზე.'
+'Messages updated.': 'შეტყობინებები განახლებულია. '
+'Message updated.': 'შეტყობინება განახლებულია'
+Processed: დამუშავებულია
+Reply: 'პასუხის გაცემა'
+'Reply to message': 'შეტყობინებაზე პასუხის გაცემა'
+Star: ვარსკვლავი
+Starred: 'ვარსკვლავით აღნიშნული'
+'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
+'With document attachment': 'თანდართულია დოკუმენტი'
+'With image attachment': 'თანდართულია გამოსახულება'
+'With no attachment': 'დანართის გარეშე'
+'Feedback Messages': 'შეფასების შეტყობინებები'

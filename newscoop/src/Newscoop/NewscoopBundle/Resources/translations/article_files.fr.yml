@@ -1,38 +1,38 @@
-'Files attached.': 'Files attached.'
-'File $1 unattached.': 'File $1 unattached.'
-'Attach new file': 'Attach new file'
-'Attach existing file': 'Attach existing file'
-'$1 file/s attached to article': '$1 file/s attached to article'
-'File attached.': 'File attached.'
-'The maximum file upload size was not configured in Newscoop.': 'The maximum file upload size was not configured in Newscoop.'
-'File $1 $2 unattached': 'File $1 $2 unattached'
-'File $1 $2 attached to article': 'File $1 $2 attached to article'
-'Unable to add attachment.': 'Unable to add attachment.'
-'There was a problem uploading the file.': 'There was a problem uploading the file.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini'
-'The file exceeds the allowed max file size.': 'The file exceeds the allowed max file size.'
-'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Please make sure you upgraded the database correctly: run $1 in a shell.'
-'Maximum Upload Size': 'Maximum Upload Size'
-'File Size': 'File Size'
-'File Name': 'File Name'
-Download: Download
-'File $1 updated.': 'File $1 updated.'
-'Edit article': 'Edit article'
-'You do not have the right to delete file attachments.': 'You do not have the right to delete file attachments.'
-'You must select a file to upload.': 'You must select a file to upload.'
-'You do not have the right to delete files.': 'You do not have the right to delete files.'
-'You do not have the right to change the article.': 'You do not have the right to change the article.'
-'You do not have the right to change files.': 'You do not have the right to change files.'
-'You do not have the right to add files.': 'You do not have the right to add files.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Should this file only be available for this translation of the article, or for all translations?'
-'Please enter a description for the file.': 'Please enter a description for the file.'
-'Open in the browser': 'Open in the browser'
-'Only this translation': 'Only this translation'
-'File information': 'File information'
-'Do you want this file to open in the users browser, or to automatically download?': 'Do you want this file to open in the users browser, or to automatically download?'
-'Change file information': 'Change file information'
-'Automatically download': 'Automatically download'
-Attachments: Attachments
-'Attachment does not exist.': 'Attachment does not exist.'
-'Attach File to Article': 'Attach File to Article'
-'All translations': 'All translations'
+'Files attached.': null
+'File $1 unattached.': null
+'Attach new file': null
+'Attach existing file': null
+'$1 file/s attached to article': null
+'File attached.': null
+'The maximum file upload size was not configured in Newscoop.': null
+'File $1 $2 unattached': null
+'File $1 $2 attached to article': null
+'Unable to add attachment.': null
+'There was a problem uploading the file.': null
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
+'The file exceeds the allowed max file size.': null
+'Please make sure you upgraded the database correctly: run $1 in a shell.': null
+'Maximum Upload Size': null
+'File Size': null
+'File Name': null
+Download: null
+'File $1 updated.': null
+'Edit article': 'Éditer l''article'
+'You do not have the right to delete file attachments.': 'Vous navez pas le droit de supprimer des attachements de fichier. '
+'You must select a file to upload.': 'Vous devez choisir un fichier à télécharger.'
+'You do not have the right to delete files.': 'Vous navez pas le droit de supprimer des fichiers'
+'You do not have the right to change the article.': 'Vous navez pas le droit de changer larticle. '
+'You do not have the right to change files.': 'Vous navez pas le droit de changer des fichiers. '
+'You do not have the right to add files.': 'Vous navez pas le droit dajouter des fichiers.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Ce fichier doit-il être seulement disponible pour cette traduction de larticle, ou pour toutes les traductions ? '
+'Please enter a description for the file.': 'Entrez Sil vous plaît une description pour le fichier.'
+'Open in the browser': 'Ouvrir dans le navigateur '
+'Only this translation': 'Seulement cette traduction'
+'File information': 'Information du fichier '
+'Do you want this file to open in the users browser, or to automatically download?': 'Voulez-vous que ce fichier souvre dans le navigateur de lutilisateur, ou automatiquement téléchargé ? '
+'Change file information': 'Changer l''information du fichier'
+'Automatically download': 'Automatiquement téléchargé'
+Attachments: 'Attachements '
+'Attachment does not exist.': 'L''attachement n''existe pas. '
+'Attach File to Article': 'Attacher Fichier à Article '
+'All translations': 'Toutes les traductions '

@@ -1,225 +1,225 @@
-'Password confirmation does not match your password.': 'Password confirmation does not match your password.'
-'Password Confirmation': 'Password Confirmation'
-Website: Website
-Twitter: Twitter
-'Save profile': 'Save profile'
-'Profile image': 'Profile image'
-Organisation: Organisation
-'Last Name Public': 'Last Name Public'
-Google+: Google+
-Geolocation: Geolocation
-Gender: Gender
-'First Name Public': 'First Name Public'
-Facebook: Facebook
-'Date of birth': 'Date of birth'
-'Allow sending emails': 'Allow sending emails'
-'About me': 'About me'
-'User with email %s is registered already.': 'User with email %s is registered already.'
-'Username is used. Please use another one.': 'Username is used. Please use another one.'
-Continue: Continue
-'Accepting terms of use': 'Accepting terms of use'
-'send confirmation email': 'send confirmation email'
-'edit user': 'edit user'
-'delete user': 'delete user'
-'Verified profile': 'Verified profile'
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
-'Send email to user:': 'Send email to user:'
-'No users found.': 'No users found.'
-'No records found.': 'No records found.'
-'No entries to show': 'No entries to show'
-'Display _MENU_ records': 'Display _MENU_ records'
-'Are you sure you want to {action}?': 'Are you sure you want to {action}?'
-'Active Logins': 'Active Logins'
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
-'User renamed.': 'User renamed.'
-'User attributes': 'User attributes'
-'Rename user $1': 'Rename user $1'
-'Username is used already': 'Username is used already'
-'User with id $1 not found': 'User with id $1 not found'
-'User was deleted.': 'User was deleted.'
-'User saved': 'User saved'
-'User id not specified': 'User id not specified'
-'User $1 created': 'User $1 created'
-'Send confirm email': 'Send confirm email'
-'Profile saved.': 'Profile saved.'
-Picture: Picture
-'Password updated': 'Password updated'
-None: None
-'New confirmation email was sent to user.': 'New confirmation email was sent to user.'
-'Email is used already': 'Email is used already'
-'Edit your password': 'Edit your password'
-'Edit user $1': 'Edit user $1'
-'Edit subscriptions': 'Edit subscriptions'
-'Edit profile': 'Edit profile'
-'Edit permissions': 'Edit permissions'
-'Create new account': 'Create new account'
-'Comment ban settings': 'Comment ban settings'
-'Ban for user $1 saved.': 'Ban for user $1 saved.'
-'User account is active': 'User account is active'
-'Allow users profile to be publicly displayed': 'Allow users profile to be publicly displayed'
-'Allow user access to login to site backend': 'Allow user access to login to site backend'
-Templates: Templates
-Username: Username
-'Last Name': 'Last Name'
-'First Name': 'First Name'
-Email: Email
-'You were logged out.': 'You were logged out.'
-'Newscoop Subhead': 'Newscoop Subhead'
-Filters: Filters
-'Add new Author': 'Add new Author'
-'Loading Data': 'Loading Data'
-'Delete author type': 'Delete author type'
-'Cannot remove author type.': 'Cannot remove author type.'
-'Cannot remove author alias.': 'Cannot remove author alias.'
-'Author alias removed.': 'Author alias removed.'
-'Are you sure you want to delete this author?': 'Are you sure you want to delete this author?'
-'Are you sure you want to delete this author alias?': 'Are you sure you want to delete this author alias?'
-'All Author Types': 'All Author Types'
-'Add author type': 'Add author type'
-'You do not have the permission to change authors.': 'You do not have the permission to change authors.'
-'Please fill at least first name and last name.': 'Please fill at least first name and last name.'
-'Cannot add author type, this type already exists.': 'Cannot add author type, this type already exists.'
-'Author type removed.': 'Author type removed.'
-'Author type must be at least three characters long.': 'Author type must be at least three characters long.'
-'Author type added.': 'Author type added.'
-'Are you sure you want to delete this author type?': 'Are you sure you want to delete this author type?'
-'User may change authors': 'User may change authors'
-'Unable to add new image, target directory is not writable.': 'Unable to add new image, target directory is not writable.'
-'Author saved.': 'Author saved.'
-'Author deleted.': 'Author deleted.'
-'Enable Firefox spell checking by default': 'Enable Firefox spell checking by default'
-'User may use the editor status bar': 'User may use the editor status bar'
-'User may clear up the system cache': 'User may clear up the system cache'
-'Another user is registered with that e-mail address, please choose a different one.': 'Another user is registered with that e-mail address, please choose a different one.'
-'There was an error when trying to update the user info.': 'There was an error when trying to update the user info.'
-'User may moderate comments': 'User may moderate comments'
-'User may enable comments': 'User may enable comments'
-'User may translate articles': 'User may translate articles'
-'User may move articles': 'User may move articles'
-'User may find and replace': 'User may find and replace'
-'User may change system preferences': 'User may change system preferences'
-'User may attach topics to articles': 'User may attach topics to articles'
-'User may attach images to articles': 'User may attach images to articles'
-'User may add special characters': 'User may add special characters'
-'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
-'User may delete article attachments': 'User may delete article attachments'
-'User may change article attachments': 'User may change article attachments'
-'User may add article attachments': 'User may add article attachments'
-'You do not have the right to create user accounts.': 'You do not have the right to create user accounts.'
-'You must select a $1': 'You must select a $1'
-'The password must be at least 6 characters long and both passwords should match.': 'The password must be at least 6 characters long and both passwords should match.'
-'The user account could not be created.': 'The user account could not be created.'
-'User account $1 was created successfully.': 'User account $1 was created successfully.'
-'You do not have the right to change user account permissions.': 'You do not have the right to change user account permissions.'
-'You do not have the right to change user account information.': 'You do not have the right to change user account information.'
-'The password you typed is incorrect.': 'The password you typed is incorrect.'
-'You do not have the right to delete user accounts.': 'You do not have the right to delete user accounts.'
-'User account $1 was deleted successfully.': 'User account $1 was deleted successfully.'
-'The IP Group $1 has been created.': 'The IP Group $1 has been created.'
-'There was an error creating the IP address group.': 'There was an error creating the IP address group.'
-'The IP address group $1 has been deleted.': 'The IP address group $1 has been deleted.'
-'User $1 information was changed successfully.': 'User $1 information was changed successfully.'
-'User Type': 'User Type'
-'The IP address group $1:$2 conflicts with another existing group.': 'The IP address group $1:$2 conflicts with another existing group.'
-'User may add/change publications': 'User may add/change publications'
-'Invalid value of user type parameter': 'Invalid value of user type parameter'
-'User may delete publications': 'User may delete publications'
-'User may add/change issues': 'User may add/change issues'
-'User may delete issues': 'User may delete issues'
-'User may add/change sections': 'User may add/change sections'
-'User may delete sections': 'User may delete sections'
-'User may add articles': 'User may add articles'
-'User may change articles': 'User may change articles'
-'User may delete articles': 'User may delete articles'
-'User may add images': 'User may add images'
-'User may change images': 'User may change images'
-'User may delete images': 'User may delete images'
-'User may delete templates': 'User may delete templates'
-'User may add/change staff accounts and passwords': 'User may add/change staff accounts and passwords'
-'User may add/change subscribers accounts and passwords': 'User may add/change subscribers accounts and passwords'
-'User may delete staff accounts': 'User may delete staff accounts'
-'User may manage user subscriptions': 'User may manage user subscriptions'
-'User may manage account types': 'User may manage account types'
-'User may add/change article types': 'User may add/change article types'
-'User may delete article types': 'User may delete article types'
-'User may manage templates': 'User may manage templates'
-'User may add/change country entries': 'User may add/change country entries'
-'User may add languages and manage language information': 'User may add languages and manage language information'
-'User may delete languages': 'User may delete languages'
-'User may view audit logs': 'User may view audit logs'
-'User may delete country entries': 'User may delete country entries'
-'User may manage localizer': 'User may manage localizer'
-'User may publish articles': 'User may publish articles'
-'User may manage topics': 'User may manage topics'
-'User may use bold': 'User may use bold'
-'User may use italic': 'User may use italic'
-'User may use underline': 'User may use underline'
-'User may use strikethrough': 'User may use strikethrough'
-'User may change text alignment': 'User may change text alignment'
-'User may copy, cut, and paste': 'User may copy, cut, and paste'
-'User may undo/redo': 'User may undo/redo'
-'User may change text direction': 'User may change text direction'
-'User may set indents': 'User may set indents'
-'User may add links': 'User may add links'
-'User may add subheads': 'User may add subheads'
-'User may insert images': 'User may insert images'
-'User may view the HTML source': 'User may view the HTML source'
-'User may enlarge the editor': 'User may enlarge the editor'
-'User may change the font face': 'User may change the font face'
-'User may change the font size': 'User may change the font size'
-'User may create bulleted lists': 'User may create bulleted lists'
-'User may create numbered lists': 'User may create numbered lists'
-'User may insert tables': 'User may insert tables'
-'User may insert horizontal rules': 'User may insert horizontal rules'
-'User may change the font color': 'User may change the font color'
-'User may use superscripts': 'User may use superscripts'
-'User may use subscripts': 'User may use subscripts'
-'User may backup and restore the site data': 'User may backup and restore the site data'
-Miscellaneous: Miscellaneous
-'Staff/Subscribers Management': 'Staff/Subscribers Management'
-'Editor Basic Settings': 'Editor Basic Settings'
-'Editor Advanced Font Settings': 'Editor Advanced Font Settings'
-'Editor Table Settings': 'Editor Table Settings'
-'Administrative tasks': 'Administrative tasks'
-'User will be notified on several events': 'User will be notified on several events'
-'Editor Miscellaneous Settings': 'Editor Miscellaneous Settings'
-'No such user account.': 'No such user account.'
-'User image (full-size)': 'User image (full-size)'
-'User account is highlighted as "featured account"': 'User account is highlighted as "featured account"'
-'Custom attribute...': 'Custom attribute...'
-'An author with the same full name (combination of first and last name) already exists.': 'An author with the same full name (combination of first and last name) already exists.'
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: null
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: null
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Send email to user:': null
+'No users found.': null
+'No records found.': null
+'No entries to show': null
+'Display _MENU_ records': null
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': null
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: null
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': null
+'Edit user $1': null
+'Edit subscriptions': null
+'Edit profile': null
+'Edit permissions': null
+'Create new account': null
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
+Username: null
+'Last Name': null
+'First Name': null
+Email: null
+'You were logged out.': null
+'Newscoop Subhead': null
+Filters: null
+'Add new Author': null
+'Loading Data': null
+'Delete author type': null
+'Cannot remove author type.': null
+'Cannot remove author alias.': null
+'Author alias removed.': null
+'Are you sure you want to delete this author?': null
+'Are you sure you want to delete this author alias?': null
+'All Author Types': null
+'Add author type': null
+'You do not have the permission to change authors.': null
+'Please fill at least first name and last name.': null
+'Cannot add author type, this type already exists.': null
+'Author type removed.': null
+'Author type must be at least three characters long.': null
+'Author type added.': null
+'Are you sure you want to delete this author type?': null
+'User may change authors': null
+'Unable to add new image, target directory is not writable.': null
+'Author saved.': null
+'Author deleted.': null
+'Enable Firefox spell checking by default': null
+'User may use the editor status bar': null
+'User may clear up the system cache': null
+'Another user is registered with that e-mail address, please choose a different one.': null
+'There was an error when trying to update the user info.': null
+'User may moderate comments': null
+'User may enable comments': null
+'User may translate articles': '사용자가 기사를 번역할 수 있습니다. '
+'User may move articles': '사용자가 기사를 이동할 수있습니다.'
+'User may find and replace': '사용자가 대치할 수 있습니다.'
+'User may change system preferences': '사용자가 시스템 구성를 변경할 수있습니다.'
+'User may attach topics to articles': '사용자가 기사에 토픽을 첨부할 수 있습니다.'
+'User may attach images to articles': '사용자가 기사에 이미지를 첨부할 수있습니다.'
+'User may add special characters': '사용자가 특수문자를 추가할 수 있습니다. '
+'That user name already exists, please choose a different login name.': '사용자 이름이 이미 존재합니다. 다른 아이디를 선택하시오.'
+'User may delete article attachments': '사용자가 기사 첨부를 삭제할 수있습니다. '
+'User may change article attachments': '사용자가 기사 첨부를 변경할 수 있습니다.'
+'User may add article attachments': '사용자가 기사 첨브를 추가할 수 있습니다. '
+'You do not have the right to create user accounts.': '사용자계정을 만들 권한이 없습니다. '
+'You must select a $1': '$1 을 선택하시오'
+'The password must be at least 6 characters long and both passwords should match.': '패스워드는 6글자 이상이어야 합니다. '
+'The user account could not be created.': '사용자 아이디를 생성할 수 없습니다.'
+'User account $1 was created successfully.': '사용자 아이디 $1 이 성공적으로 생성되었습니다.'
+'You do not have the right to change user account permissions.': '사용자 아이디 권한을 변경할 수 없습니다. '
+'You do not have the right to change user account information.': '사용자 아이디 정보를 변경할 권한이 없습니다. '
+'The password you typed is incorrect.': '입력한 패스워드가 틀립니다.'
+'You do not have the right to delete user accounts.': '사용자 아이디를 삭제할 권한이 없습니다. '
+'User account $1 was deleted successfully.': '사용자 아이디 $1 이 성공적으로 삭제되었습니다.'
+'The IP Group $1 has been created.': 'IP 그룹 $1 이 생성되었습니다.'
+'There was an error creating the IP address group.': ' IP 어드레스 그룹을 생성하는데 에러가 있습니다. '
+'The IP address group $1 has been deleted.': 'IP  어드레스 그룹 $1 이 삭제되었습니다. '
+'User $1 information was changed successfully.': '사용자 $1 정보가 성공적으로 변경되었습니다. '
+'User Type': '사용자 타입'
+'The IP address group $1:$2 conflicts with another existing group.': 'IP 어드레스 그룹 $1:$2 가 다른 기존 그룹과 중복됩니다. '
+'User may add/change publications': '사용자가 출판을 추가/수정할 수 있습니다.'
+'Invalid value of user type parameter': '사용자 타입 파라미터 값 비정상'
+'User may delete publications': '사용자가 출판을 삭제할 수 있습니다. '
+'User may add/change issues': '사용자가 이슈를 추가/수정할 수 있습니다.'
+'User may delete issues': '사용자가 이슈를 삭제할 수 있습니다. '
+'User may add/change sections': '사용자가 섹션을 추가/수정할 수 있습니다. '
+'User may delete sections': '사용자가 섹션을 삭제할 수 있습니다.'
+'User may add articles': '사용자가 기사를 추가할 수 있습니다.'
+'User may change articles': '사용자가 기사를 수정할 수 있습니다. '
+'User may delete articles': '사용자가 기사를 삭제 할 수 있습니다. '
+'User may add images': '사용자가 이미지를 추가할 수 있습니다. '
+'User may change images': '사용자가 이미지를 수정할 수 있습니다. '
+'User may delete images': '사용자가 이미지를 삭제할 수 있습니다.'
+'User may delete templates': '사용자가 템플레이트를 삭제할 수 있습니다. '
+'User may add/change staff accounts and passwords': '사용자가 스탭 아이디와 패스워드를 추가/수정할 수 있습니다.'
+'User may add/change subscribers accounts and passwords': '사용자가 구독자 아이디와 패스워드를 추가/수정할 수 있습니다. '
+'User may delete staff accounts': '사용자가 스탭 아이디를 삭제할 수 있습니다.'
+'User may manage user subscriptions': '사용자가 사용자 구독을 관리할 수 있습니다.'
+'User may manage account types': '사용자가 아이디 타입을 관리할 수 있습니다. '
+'User may add/change article types': '사용자가 기사 타입을 추가/수정할 수 있습니다.'
+'User may delete article types': '사용자가 기사 타입을 삭제할 수 있습니다.'
+'User may manage templates': '사용자가 템플레이트를 관리할 수 있습니다. '
+'User may add/change country entries': '사용자가 국가 엔트리를 추가/수정할 수 있습니다.'
+'User may add languages and manage language information': '사용자가 언어를 추가하고 언어정보를 관리할 수 있습니다.'
+'User may delete languages': '사용자가 언어를 삭제할 수 있습니다. '
+'User may view audit logs': '사용자가 오디트 로그를 볼 수 있습니다. '
+'User may delete country entries': '사용자가 국가 엔트리를 삭제할 수 있습니다. '
+'User may manage localizer': '사용자가 로컬라이저를 관리할 수있습니다. '
+'User may publish articles': '사용자가 기사를 출판할 수 있습니다. '
+'User may manage topics': '사용자가 토릭을 관리할 수 있습니다. '
+'User may use bold': '사용자가 볼드체를 사용할 수 있습니다. '
+'User may use italic': '사용자가 이태릭체를 사용할 수 있습니다. '
+'User may use underline': '사용자가 밑줄을 사용할 수 있습니다. '
+'User may use strikethrough': '사용자가 스트라이크스루를 사용할 수 있습니다. '
+'User may change text alignment': '사용자가 텍스트 정렬을 수정합니다. '
+'User may copy, cut, and paste': '사용자가 복사, 오려두기, 붙이기를 사용합니다. '
+'User may undo/redo': '사용자가 되돌리기/계속하기를 사용합니다. '
+'User may change text direction': '사용자가 텍스트 방향을 수정할 수 있습니다. '
+'User may set indents': '사용자가 들어가기를 사용할 수 있습니다. '
+'User may add links': '사용자가 링크를 추가할 수 있습니다. '
+'User may add subheads': '사용자가 서브헤드를 추가할 수 있습니다. '
+'User may insert images': '사용자가 이미지를 삽입합니다. '
+'User may view the HTML source': '사용자가 HTML 소스 보기를 합니다. '
+'User may enlarge the editor': '사용자가 에디터를 크게 합니다. '
+'User may change the font face': '사용자가 글자체를 수정합니다.'
+'User may change the font size': '사용자가 글자 크기를 수정합니다. '
+'User may create bulleted lists': '사용자가 뷸렛 리스트를 생성합니다. '
+'User may create numbered lists': '사용자가 넘버리스트를 생성합니다. '
+'User may insert tables': '사용자가 테이블을 삽입합니다. '
+'User may insert horizontal rules': '사용자가 수평줄자를 삽입합니다. '
+'User may change the font color': '사용자가 글자 색을 수정합니다. '
+'User may use superscripts': '사용자가 윗첨자를 사용합니다.'
+'User may use subscripts': '사용자가 아랫첨자를 사용합니다.'
+'User may backup and restore the site data': null
+Miscellaneous: 기타
+'Staff/Subscribers Management': '스탬/구독자 관리'
+'Editor Basic Settings': '에디터 기본 설정'
+'Editor Advanced Font Settings': '에디터 최신 글자 설정'
+'Editor Table Settings': '에디터 테이블 설정'
+'Administrative tasks': 관리기능
+'User will be notified on several events': '사용자가 여러 이벤트를 통보 받을 예정입니다. '
+'Editor Miscellaneous Settings': '에디터 기타 설정 '
+'No such user account.': '그런 아이디 없슴.'
+'User image (full-size)': null
+'User account is highlighted as "featured account"': null
+'Custom attribute...': null
+'An author with the same full name (combination of first and last name) already exists.': null
 users:
     label:
-        title: 'Users search'
+        title: null
     menu:
-        manage: 'Manage Users'
-    created: Created
-    updated: Updated
+        manage: null
+    created: null
+    updated: null
     status:
-        status: Status
-        registered: Registered
-        pending: Pending
-        deleted: Deleted
-        active: Active
+        status: 상태
+        registered: null
+        pending: null
+        deleted: null
+        active: 활성
     table:
         actions:
-            actions: Actions
-            edit: Edit
-            resend_email: 'Resend activation email'
-            rename: Rename
-            remove: Remove
-        confirm_remove: 'You realy want to remove this user?'
+            actions: 기능
+            edit: 편집
+            resend_email: null
+            rename: null
+            remove: 삭제
+        confirm_remove: null
         table_messages:
-            page: Page
-            perPageText: 'Show: '
-            pageText: 'Pages: '
-            recordCountPageBoundTemplate: '{pageLowerBound} to {pageUpperBound} of'
-            recordCountPageUnboundedTemplate: '{recordsShown} of'
-            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
-            recordCountFilteredTemplate: ' (filtered from {recordsTotal} total records)'
-            recordCountText: 'Showing '
-            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
-            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
-            processingText: Processing...
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: null
     chart:
-        title: 'Active Logins'
+        title: null

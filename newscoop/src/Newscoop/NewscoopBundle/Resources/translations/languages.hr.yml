@@ -1,72 +1,72 @@
-'Language id not specified': 'Language id not specified'
-'No languages.': 'No languages.'
-'Native Name': 'Native Name'
-'Name taken.': 'Name taken.'
-'Language saved.': 'Language saved.'
-'Language removed.': 'Language removed.'
-'Language not found.': 'Language not found.'
-'Language is in use and cannot be removed.': 'Language is in use and cannot be removed.'
-'Language added.': 'Language added.'
-'English language cannot be removed.': 'English language cannot be removed.'
-'Edit short month names': 'Edit short month names'
-'Edit short day names': 'Edit short day names'
-'Edit month names': 'Edit month names'
-'Edit language: $1': 'Edit language: $1'
-'Edit day names': 'Edit day names'
-'Code Page': 'Code Page'
-'Add new Language': 'Add new Language'
-'Add Language': 'Add Language'
-We: We
-Tu: Tu
-Th: Th
-Su: Su
-Sep: Sep
-Sa: Sa
-'Please enter the translation for week day short names.': 'Please enter the translation for week day short names.'
-'Please enter the translation for month short names.': 'Please enter the translation for month short names.'
-Oct: Oct
-Nov: Nov
-Mo: Mo
-Mar: Mar
-Jun: Jun
-Jul: Jul
-Jan: Jan
-Fr: Fr
-Feb: Feb
-Dec: Dec
-Aug: Aug
-Apr: Apr
-'No language.': 'No language.'
-'Delete language $1': 'Delete language $1'
-'You do not have the right to add languages.': 'You do not have the right to add languages.'
-'Please enter the translation for time units.': 'Please enter the translation for time units.'
-'You do not have the right to delete languages.': 'You do not have the right to delete languages.'
-'Are you sure you want to delete the language $1?': 'Are you sure you want to delete the language $1?'
-'Deleting language': 'Deleting language'
-'The language $1 could not be deleted.': 'The language $1 could not be deleted.'
-'Edit language': 'Edit language'
-'You do not have the right to edit languages.': 'You do not have the right to edit languages.'
-'Please enter the translation for month names.': 'Please enter the translation for month names.'
-'Please enter the translation for week day names.': 'Please enter the translation for week day names.'
-January: January
-February: February
-March: March
-April: April
-May: May
-June: June
-July: July
-August: August
-September: September
-October: October
-November: November
-December: December
-Monday: Monday
-Tuesday: Tuesday
-Wednesday: Wednesday
-Thursday: Thursday
-Friday: Friday
-Saturday: Saturday
-Sunday: Sunday
-'You do not have the right to add new languages.': 'You do not have the right to add new languages.'
-'There are $1 issue(s) left.': 'There are $1 issue(s) left.'
-'Native name': 'Native name'
+'Language id not specified': null
+'No languages.': null
+'Native Name': null
+'Name taken.': null
+'Language saved.': null
+'Language removed.': null
+'Language not found.': null
+'Language is in use and cannot be removed.': null
+'Language added.': null
+'English language cannot be removed.': null
+'Edit short month names': null
+'Edit short day names': null
+'Edit month names': null
+'Edit language: $1': null
+'Edit day names': null
+'Code Page': null
+'Add new Language': null
+'Add Language': null
+We: null
+Tu: null
+Th: null
+Su: null
+Sep: null
+Sa: null
+'Please enter the translation for week day short names.': null
+'Please enter the translation for month short names.': null
+Oct: null
+Nov: null
+Mo: null
+Mar: null
+Jun: null
+Jul: null
+Jan: null
+Fr: null
+Feb: null
+Dec: null
+Aug: null
+Apr: null
+'No language.': 'Nema tog jezika'
+'Delete language $1': 'Izbriši jezik $1'
+'You do not have the right to add languages.': 'Nemate ovlasti dodavati jezike.'
+'Please enter the translation for time units.': 'Molim unesite prijevod za jedinice vremena.'
+'You do not have the right to delete languages.': 'Nemate ovlasti brisati jezike.'
+'Are you sure you want to delete the language $1?': 'Jeste li sigurni da želite obrisati $1 jezik?'
+'Deleting language': 'Brisanje jezika'
+'The language $1 could not be deleted.': '$1 jezik se ne može obrisati.'
+'Edit language': 'Uredi jezik.'
+'You do not have the right to edit languages.': 'Nemate ovlasti uređivati jezike.'
+'Please enter the translation for month names.': 'Molim prevedite imena mjeseci u godini.'
+'Please enter the translation for week day names.': 'Molim prevedite imena dana u tjednu.'
+January: Siječanj
+February: Veljača
+March: Ožujak
+April: Travanj
+May: Svibanj
+June: Lipanj
+July: Srpanj
+August: Kolovoz
+September: Rujan
+October: Listopad
+November: Studeni
+December: Prosinac
+Monday: Ponedjeljak
+Tuesday: Utorak
+Wednesday: Srijeda
+Thursday: Četvrtak
+Friday: Petak
+Saturday: Subota
+Sunday: Nedjelja
+'You do not have the right to add new languages.': 'Nemate prava dodavati nove jezike.'
+'There are $1 issue(s) left.': 'Ostalo je $1 izdanja.'
+'Native name': 'Izvorno ime'

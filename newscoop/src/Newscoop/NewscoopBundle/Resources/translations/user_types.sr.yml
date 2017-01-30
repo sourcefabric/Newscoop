@@ -1,81 +1,81 @@
-get: get
+get: null
 Soundcloud: SoundCloud
-Templates: Templates
-'Feedback Messages': 'Feedback Messages'
-'Article Playlists': 'Article Playlists'
-'Check all': 'Check all'
-view: view
+Templates: Шаблони
+'Feedback Messages': 'Поруке са повратном информацијом'
+'Article Playlists': 'Плејлисте текстова'
+'Check all': 'Означи све'
+view: погледај
 undo/redo: undo/redo
-underline: underline
-translate: translate
-'text direction': 'text direction'
-'text alignment': 'text alignment'
-table: table
-superscript: superscript
-subscript: subscript
-subhead: subhead
-strikethrough: strikethrough
-statusbar: statusbar
-'spell checker enabled': 'spell checker enabled'
-'source view': 'source view'
-publish: publish
-notify: notify
-moderate: moderate
-manage: manage
-'list number': 'list number'
-'list bullet': 'list bullet'
-link: link
-italic: italic
-indent: indent
-image: image
-'horizontal rule': 'horizontal rule'
-handle: handle
-guest: guest
-'font size': 'font size'
-'font face': 'font face'
-'font color': 'font color'
-find/replace: find/replace
-enlarge: enlarge
-enable: enable
-edit: edit
-delete: delete
-copy/cut/paste: copy/cut/paste
-clear: clear
-'character map': 'character map'
-bold: bold
-attach: attach
-'any resource': 'any resource'
-admin: admin
-add: add
-'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
-'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
-'User type saved.': 'User type saved.'
-'User type deleted.': 'User type deleted.'
-'User type added.': 'User type added.'
-'User Groups': 'User Groups'
-Themes: Themes
-'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
-System: System
-Structure: Structure
-'Search Indexer': 'Search Indexer'
-'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
-ReCaptcha: ReCaptcha
-Polls: Polls
-'Permissions:': 'Permissions:'
-'Permissions updated': 'Permissions updated'
-Notification: Notification
-Log: Log
-Layout: Layout
-Global: Global
-Files: Files
-'Error: ': 'Error: '
-'Edit user type $1': 'Edit user type $1'
-Deny: Deny
-'Delete user type $1': 'Delete user type $1'
-'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
-Cache: Cache
-Backup: Backup
-Authoring: Authoring
-Allow: Allow
-'User types': 'User types'
-'No user types.': 'No user types.'
+underline: подвучено
+translate: преведи
+'text direction': 'орјентација текста'
+'text alignment': 'поравнавање текста'
+table: табела
+superscript: 'текст у експоненту'
+subscript: 'текст у индексу'
+subhead: поднаслов
+strikethrough: прецртано
+statusbar: 'статусна линија'
+'spell checker enabled': 'провера правописа омогућена'
+'source view': 'преглед извора'
+publish: објави
+notify: обавести
+moderate: уређуј
+manage: управљај
+'list number': 'бројевна листа'
+'list bullet': 'листа ставки'
+link: линк
+italic: италик
+indent: увлачење
+image: слика
+'horizontal rule': 'водоравни лењир'
+handle: руковање
+guest: гост
+'font size': 'величина писма'
+'font face': 'врста писма'
+'font color': 'боја писма'
+find/replace: пронађи/замени
+enlarge: увећај
+enable: омогући
+edit: уреди
+delete: обриши
+copy/cut/paste: копирај/исеци/залепи
+clear: очисти
+'character map': 'мапа карактера'
+bold: црно
+attach: прикачи
+'any resource': 'било који ресурс'
+admin: админ
+add: додај
+'You cant deny yourself to manage $1': 'Не можете оспорити себи управљање $1'
+'You are not allowed to $1 $2.': 'Немате право да $1 $2.'
+'User type saved.': 'Тип корисника сачуван.'
+'User type deleted.': 'Тип корисника обрисан'
+'User type added.': 'Тип корисника додат.'
+'User Groups': 'Групе корисника'
+Themes: Теме
+'That type name already exists, please choose a different name.': 'Такво име типа већ постоји, изаберите неко друго'
+System: систем
+Structure: Структура
+'Search Indexer': 'Индексер претраге'
+'Rich-Text Editor Preferences': 'Подешавање едитора текста'
+ReCaptcha: РиКепчаReCaptcha
+Polls: Анкете
+'Permissions:': 'Права:'
+'Permissions updated': 'Права измењена'
+Notification: Обавештења
+Log: Лог
+Layout: Изглед
+Global: Глобално
+Files: Фајлова
+'Error: ': 'Грешка:'
+'Edit user type $1': 'Уреди тип корисника $1'
+Deny: Оспори
+'Delete user type $1': 'Обриши тип корисника $1'
+'Can not delete a user type with assigned users.': 'Није могуће обрисати тип корисника са додељеним корисницима.'
+Cache: Кеш
+Backup: Бекап
+Authoring: Ауторизовање
+Allow: Дозволи
+'User types': 'Типови корисника'
+'No user types.': 'Нема типова корисника'

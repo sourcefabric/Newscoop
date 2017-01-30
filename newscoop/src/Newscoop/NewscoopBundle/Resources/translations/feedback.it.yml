@@ -1,29 +1,29 @@
-'No attachment': 'No attachment'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-Approve: Approve
-Approved.: Approved.
-at: at
-Attachment: Attachment
-'Ban/Unban user': 'Ban/Unban user'
-'Change selected messages status': 'Change selected messages status'
-Deleted: Deleted
-'Full article': 'Full article'
-Message: Message
-'Message deleted.': 'Message deleted.'
-'Messages deleted.': 'Messages deleted.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Message status change to $1.': 'Message status change to $1.'
-'Messages updated.': 'Messages updated.'
-'Message updated.': 'Message updated.'
-Processed: Processed
-Reply: Reply
-'Reply to message': 'Reply to message'
-Star: Star
-Starred: Starred
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-'With document attachment': 'With document attachment'
-'With image attachment': 'With image attachment'
-'With no attachment': 'With no attachment'
-'Feedback Messages': 'Feedback Messages'
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Stai per cancellare definitivamente più messaggi.'
+'You are about to permanently delete a message.': 'Stai per cancellare definitivamente un messaggio.'
+'Are you sure you want to do it?': 'Sei sicuro di volerlo fare?'
+Approve: Approva
+Approved.: Approvato
+at: in
+Attachment: Allegato
+'Ban/Unban user': 'Blocca/sblocca utente'
+'Change selected messages status': 'Cambia lo stato dei messaggi selezionati'
+Deleted: Cancellato
+'Full article': 'Articolo intero'
+Message: Messaggio
+'Message deleted.': 'Messaggio cancellati.'
+'Messages deleted.': 'Messaggi cancellati.'
+'Messages status change to $1.': 'Stato dei messaggi cambiato in $1.'
+'Message status change to $1.': 'Stato del messaggio cambiato in $1.'
+'Messages updated.': 'Messaggi aggiornati.'
+'Message updated.': 'Messaggi aggiornati.'
+Processed: Processato
+Reply: Risposta
+'Reply to message': 'Rispondi al messaggio'
+Star: Stellina
+Starred: Evidenziato
+'Unable to reach Newscoop. Please check your internet connection.': 'Impossibile raggiungere Newscoop. Verifica la connessione internet.'
+'With document attachment': 'Con documento allegato'
+'With image attachment': 'Con immagine allegata'
+'With no attachment': 'Senza allegati'
+'Feedback Messages': 'Messaggi di feedback'

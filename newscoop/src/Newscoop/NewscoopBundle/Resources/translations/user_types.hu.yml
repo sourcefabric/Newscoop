@@ -1,81 +1,81 @@
-get: get
+get: kap
 Soundcloud: SoundCloud
-Templates: Templates
-'Feedback Messages': 'Feedback Messages'
-'Article Playlists': 'Article Playlists'
-'Check all': 'Check all'
-view: view
-undo/redo: undo/redo
-underline: underline
-translate: translate
-'text direction': 'text direction'
-'text alignment': 'text alignment'
-table: table
-superscript: superscript
-subscript: subscript
-subhead: subhead
-strikethrough: strikethrough
-statusbar: statusbar
-'spell checker enabled': 'spell checker enabled'
-'source view': 'source view'
-publish: publish
-notify: notify
-moderate: moderate
-manage: manage
-'list number': 'list number'
-'list bullet': 'list bullet'
-link: link
-italic: italic
-indent: indent
-image: image
-'horizontal rule': 'horizontal rule'
-handle: handle
-guest: guest
-'font size': 'font size'
-'font face': 'font face'
-'font color': 'font color'
-find/replace: find/replace
-enlarge: enlarge
-enable: enable
-edit: edit
-delete: delete
-copy/cut/paste: copy/cut/paste
-clear: clear
-'character map': 'character map'
-bold: bold
-attach: attach
-'any resource': 'any resource'
-admin: admin
-add: add
-'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
-'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
-'User type saved.': 'User type saved.'
-'User type deleted.': 'User type deleted.'
-'User type added.': 'User type added.'
-'User Groups': 'User Groups'
-Themes: Themes
-'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
-System: System
-Structure: Structure
-'Search Indexer': 'Search Indexer'
-'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
-ReCaptcha: ReCaptcha
-Polls: Polls
-'Permissions:': 'Permissions:'
-'Permissions updated': 'Permissions updated'
-Notification: Notification
-Log: Log
-Layout: Layout
-Global: Global
-Files: Files
-'Error: ': 'Error: '
-'Edit user type $1': 'Edit user type $1'
-Deny: Deny
-'Delete user type $1': 'Delete user type $1'
-'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
-Cache: Cache
-Backup: Backup
-Authoring: Authoring
-Allow: Allow
-'User types': 'User types'
-'No user types.': 'No user types.'
+Templates: Sablonok
+'Feedback Messages': 'Visszajelző üzenetek'
+'Article Playlists': 'Cikk lejátszási listák'
+'Check all': 'Az összes bejelölése'
+view: megtekintés
+undo/redo: visszavonás/ismét
+underline: aláhúzás
+translate: fordítás
+'text direction': szövegirány
+'text alignment': 'szöveg igazítása'
+table: táblázat
+superscript: 'felső index'
+subscript: 'alsó index'
+subhead: alcím
+strikethrough: áthúzás
+statusbar: állapotsor
+'spell checker enabled': 'helyesírás-ellenőrző engedélyezve'
+'source view': 'forrás megtekintése'
+publish: közzétesz
+notify: értesít
+moderate: moderál
+manage: kezel
+'list number': listaszám
+'list bullet': 'lista felsorolásjel'
+link: hivatkozás
+italic: dőlt
+indent: behúzás
+image: kép
+'horizontal rule': 'vízszintes vonal'
+handle: kezel
+guest: vendég
+'font size': betűméret
+'font face': betűtípus
+'font color': betűszín
+find/replace: keresés/csere
+enlarge: nagyít
+enable: engedélyez
+edit: szerkeszt
+delete: töröl
+copy/cut/paste: másolás/kivágás/beillesztés
+clear: tisztít
+'character map': karaktertábla
+bold: félkövér
+attach: csatol
+'any resource': 'bármely erőforrás'
+admin: adminisztrátor
+add: hozzáad
+'You cant deny yourself to manage $1': 'Nem tagadhatod meg magadtól a/z $1 kezelését'
+'You are not allowed to $1 $2.': 'A/z $1 $2 nem engedélyezett a számodra.'
+'User type saved.': 'A felhasználótípus mentése megtörtént.'
+'User type deleted.': 'A felhasználótípus törlése megtörtént.'
+'User type added.': 'A felhasználótípus hozzáadása megtörtént.'
+'User Groups': Felhasználócsoportok
+Themes: Témák
+'That type name already exists, please choose a different name.': 'Ez a típusnév már létezik, válassz másik nevet.'
+System: Rendszer
+Structure: Szerkezet
+'Search Indexer': 'Keresési indexelő szolgáltatás'
+'Rich-Text Editor Preferences': 'Rich Text szerkesztő beállításai'
+ReCaptcha: reCAPTCHA
+Polls: Szavazások
+'Permissions:': 'Engedélyek:'
+'Permissions updated': 'Az engedélyek frissítése megtörtént'
+Notification: Értesítés
+Log: Napló
+Layout: Elrendezés
+Global: Globális
+Files: Fájlok
+'Error: ': 'Hiba:'
+'Edit user type $1': 'A/z $1 felhasználótípus szerkesztése'
+Deny: Megtagadás
+'Delete user type $1': 'A/z $1 felhasználótípus törlése'
+'Can not delete a user type with assigned users.': 'Nem lehet törölni hozzárendelt felhasználókat tartalmazó felhasználótípust.'
+Cache: Gyorsítótár
+Backup: 'Biztonsági mentés'
+Authoring: Szerkesztés
+Allow: Engedélyezés
+'User types': Felhasználótípusok
+'No user types.': 'Nincsenek felhasználótípusok.'

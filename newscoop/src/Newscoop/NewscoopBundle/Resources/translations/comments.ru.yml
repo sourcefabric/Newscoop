@@ -1,120 +1,120 @@
-'No attachment': 'No attachment'
-at: at
-'With no attachment': 'With no attachment'
-'With image attachment': 'With image attachment'
-'With document attachment': 'With document attachment'
-'Unable to reach Newscoop. Please check your internet connection.': 'Unable to reach Newscoop. Please check your internet connection.'
-Starred: Starred
-Star: Star
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
-'Reply to message': 'Reply to message'
-Reply: Reply
-Processed: Processed
-'No records found.': 'No records found.'
-'No entries to show': 'No entries to show'
-'Messages updated.': 'Messages updated.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Messages deleted.': 'Messages deleted.'
-'Message updated.': 'Message updated.'
-'Message status change to $1.': 'Message status change to $1.'
-'Message deleted.': 'Message deleted.'
-Message: Message
-Last: Last
-'Full article': 'Full article'
-First: First
-'Feedback Messages': 'Feedback Messages'
-'Display _MENU_ records': 'Display _MENU_ records'
-Deleted: Deleted
-'Change selected messages status': 'Change selected messages status'
-Attachment: Attachment
-Approved.: Approved.
-Approve: Approve
-Anonymous: Anonymous
-' - filtering from _MAX_ records': ' - filtering from _MAX_ records'
-'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
-'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
-User: User
-None: None
-'Coming from': 'Coming from'
-'Ban/Unban user': 'Ban/Unban user'
+'No attachment': 'Нет приложений'
+at: на
+'With no attachment': 'Без вложения'
+'With image attachment': 'С приложенным изображением'
+'With document attachment': 'С приложенным документом'
+'Unable to reach Newscoop. Please check your internet connection.': 'Невозможно связаться с Newscoop. Пожалуйста, проверьте ваше интернет-соединение.'
+Starred: 'Отмеченные звездочкой'
+Star: Звездочка
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показано _START_ до _END_ / _TOTAL_ записей'
+'Reply to message': 'Ответить на собщение'
+Reply: Ответ
+Processed: Обработанное
+'No records found.': 'Не выбрана ни одна из записей'
+'No entries to show': 'Нет записей для просмотра'
+'Messages updated.': 'Сообщения обновлены'
+'Messages status change to $1.': 'Статус сообщения изменен на $1.'
+'Messages deleted.': 'Сообщения удалены.'
+'Message updated.': 'Сообщение обновлено'
+'Message status change to $1.': 'Статус сообщения изменен на $1.'
+'Message deleted.': 'Сообщение удалено.'
+Message: Сообщение
+Last: Последняя
+'Full article': 'Полный текст статьи'
+First: Первая
+'Feedback Messages': 'Ответ на сообщения '
+'Display _MENU_ records': 'Отобразить _MENU_ записи'
+Deleted: 'Удалено '
+'Change selected messages status': 'Изменить статус выделенных сообщений'
+Attachment: 'Прикрепленный файл'
+Approved.: Утверждено
+Approve: Утвердить
+Anonymous: Анонимный
+' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
+'You are about to permanently delete multiple messages.': 'Вы пришли на страницу, чтобы навсегда удалить множественные сообщения.'
+'You are about to permanently delete a message.': 'Вы пришли на страницу, чтобы удалить сообщение.'
+User: Пользователь
+None: 'Ни один'
+'Coming from': Отправлено
+'Ban/Unban user': 'Запретить/разрешить пользователю комментировать'
 Ip: Ip
-'Bans can be applied to a users name, email address or IP address.': 'Bans can be applied to a users name, email address or IP address.'
-'You are about to permanently delete multiple comments.': 'You are about to permanently delete multiple comments.'
-'You are about to permanently delete a comment.': 'You are about to permanently delete a comment.'
-Website: Website
-'Value is not $1 characters long': 'Value is not $1 characters long'
-Username: Username
-'User id': 'User id'
-'User ban settings': 'User ban settings'
-'Update comment': 'Update comment'
-Unrecommended: Unrecommended
-Unrecommend: Unrecommend
-'Subject is not $1 characters long': 'Subject is not $1 characters long'
-'Sort by Thread order': 'Sort by Thread order'
-'Show parent comment': 'Show parent comment'
-'Show commenter details': 'Show commenter details'
-'Show commenter': 'Show commenter'
-'Show comment user details': 'Show comment user details'
-'Show comment user': 'Show comment user'
-'Show comment details': 'Show comment details'
-'Select status': 'Select status'
-'Search Type': 'Search Type'
-'Reply to comment': 'Reply to comment'
-Recommended: Recommended
-Recommend: Recommend
-'Quick edit': 'Quick edit'
-Parent: Parent
+'Bans can be applied to a users name, email address or IP address.': 'Запретить комментировать можно по имени пользователя, email или IP адресу.'
+'You are about to permanently delete multiple comments.': 'Вы собираетесь окончательно удалить комментарии.'
+'You are about to permanently delete a comment.': 'Вы собираетесь окончательно удалить комментарий.'
+Website: Web-сайт
+'Value is not $1 characters long': 'Значение не содержит $ знаков'
+Username: 'Имя пользователя'
+'User id': 'id пользователя'
+'User ban settings': 'Настройки запрета на комментарии'
+'Update comment': 'Обновить комментарии'
+Unrecommended: 'Не рекомендовано'
+Unrecommend: 'Не рекомендовать'
+'Subject is not $1 characters long': 'Тема не содержит $1 знаков'
+'Sort by Thread order': 'Сортировать по порядку сообщений'
+'Show parent comment': 'Показать изначальный комментарий'
+'Show commenter details': 'Показать информацию о комментаторе'
+'Show commenter': 'Показать комментатора'
+'Show comment user details': 'Показать данные '
+'Show comment user': 'Показать пользователя комментария'
+'Show comment details': 'Показать информацию о комментарии'
+'Select status': 'Выбрать статус'
+'Search Type': 'Искать тип'
+'Reply to comment': 'Ответить на комментарий'
+Recommended: Рекомендовано
+Recommend: Рекомендовать
+'Quick edit': 'Быстрое редактирование'
+Parent: Источник
 ID: ID
-'Go to edit article': 'Go to edit article'
-Forum: Forum
-'For Column': 'For Column'
+'Go to edit article': 'Перейти к редактируемой статье'
+Forum: Форум
+'For Column': 'Для колонки'
 Email: Email
-'Edit acceptance criteria': 'Edit acceptance criteria'
+'Edit acceptance criteria': 'Редактировать критерии допустимости'
 E-mail: E-mail
-'Delete all comments?': 'Delete all comments?'
-'Date Created': 'Date Created'
-'Comments updated.': 'Comments updated.'
-'Comments status change to $1.': 'Comments status change to $1.'
-'Comments deleted.': 'Comments deleted.'
-'Commenter $1 saved.': 'Commenter $1 saved.'
-'Commenter $1 deleted.': 'Commenter $1 deleted.'
-Commenter: Commenter
-'Comment updated.': 'Comment updated.'
-'Comment status change to $1.': 'Comment status change to $1.'
-'Comment id': 'Comment id'
-'Comment deleted.': 'Comment deleted.'
-'Comment delete by $1 from the article $2 ($3)': 'Comment delete by $1 from the article $2 ($3)'
-'Comment Acceptance': 'Comment Acceptance'
-'Comment $4 by $1 in the article $2 ($3)': 'Comment $4 by $1 in the article $2 ($3)'
-'Comment $1 saved.': 'Comment $1 saved.'
-Column: Column
-'Change subscriber information': 'Change subscriber information'
-'Ban for commenter $1 saved.': 'Ban for commenter $1 saved.'
-Ban: Ban
-'Are you sure you want to do it?': 'Are you sure you want to do it?'
-'Add rating': 'Add rating'
-'Add new comment commenter': 'Add new comment commenter'
-'Add new comment': 'Add new comment'
-'Add new acceptance criteria': 'Add new acceptance criteria'
-'Acceptance $1 saved.': 'Acceptance $1 saved.'
-'Acceptance $1 deleted.': 'Acceptance $1 deleted.'
+'Delete all comments?': 'Удалить все комментарии?'
+'Date Created': 'Дата создана'
+'Comments updated.': 'Комментарии обновлены.'
+'Comments status change to $1.': 'Статус комментариев изменяется на $1.'
+'Comments deleted.': 'Комментарии удалены.'
+'Commenter $1 saved.': 'Комментатор $1 сохранен.'
+'Commenter $1 deleted.': 'Комментатор $1 удален.'
+Commenter: Комментатор
+'Comment updated.': 'Комментарий обновлен.'
+'Comment status change to $1.': 'Статус комментария изменяется на $1.'
+'Comment id': 'id комментария'
+'Comment deleted.': 'Комментарий удален.'
+'Comment delete by $1 from the article $2 ($3)': 'Комментарий удален пользователем $1 из статьи $2 ($3)'
+'Comment Acceptance': 'Приемлемость комментария'
+'Comment $4 by $1 in the article $2 ($3)': 'Комментарий $4 пользователя $1 в статье $2 ($3)'
+'Comment $1 saved.': 'Комментарий $1 сохранен.'
+Column: Колонка
+'Change subscriber information': 'Изменить информацию о подписчике'
+'Ban for commenter $1 saved.': 'Запрет для комментатора $1 сохранен.'
+Ban: Запретить
+'Are you sure you want to do it?': 'Вы уверены, что хотите это сделать?'
+'Add rating': 'Добавить рейтинг'
+'Add new comment commenter': 'Добавить нового комментатора комментариев'
+'Add new comment': 'Добавить новый комментарий'
+'Add new acceptance criteria': 'Добавить новые критерии допустимости комментария'
+'Acceptance $1 saved.': 'Критерий $1 сохранен.'
+'Acceptance $1 deleted.': 'Критерий $1 удален.'
 editorial:
     alert:
-        toolong: 'Message is too long.'
-        added: 'Comment has been successfully added.'
-        edited: 'Comment has been successfully edited.'
-        resolved: 'Comment has been successfully resolved.'
-        deleted: 'Comment has been successfully deleted.'
+        toolong: 'Слишком длинное сообщение.'
+        added: 'Комментарий успешно добавлен.'
+        edited: 'Комментарий успешно отредактирован.'
+        resolved: 'Замечание успешно устранено.'
+        deleted: 'Комментарий успешно удален.'
     btn:
-        send: Send
-        cancel: Cancel
-        resolve: Resolve
-        save: Save
-        edit: Edit
-        delete: Delete
-        reply: Reply
+        send: Отправить
+        cancel: Отменить
+        resolve: Устранить
+        save: Сохранить
+        edit: Правка
+        delete: Удалить
+        reply: Ответ
     label:
-        title: 'Editorial Comments'
-        post: 'Post a new comment'
-        reply: Reply...
-        nocomments: 'No comments yet.'
+        title: 'Комментарии автора:'
+        post: 'Отправить новый комментарий'
+        reply: Ответить...
+        nocomments: 'Нет комментариев.'

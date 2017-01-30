@@ -1,81 +1,81 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'If you continue, topic and all subtopics will be detached from all articles, and deleted.'
-'Delete anyway': 'Delete anyway'
-'Reset order': 'Reset order'
-'Order changes will be lost. Are you sure you want to continue?': 'Order changes will be lost. Are you sure you want to continue?'
-'Topics order saved.': 'Topics order saved.'
-'Show languages': 'Show languages'
-'Save order': 'Save order'
-'Click to edit': 'Click to edit'
-'Add root topic': 'Add root topic'
-'Topic was deleted.': 'Topic was deleted.'
-'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
-'You must enter a name for the topic.': 'You must enter a name for the topic.'
-'You must choose a language for the topic.': 'You must choose a language for the topic.'
-'This topic has subtopics, therefore it cannot be deleted.': 'This topic has subtopics, therefore it cannot be deleted.'
-'Add translation:': 'Add translation:'
-'Add subtopic:': 'Add subtopic:'
-Top: Top
-'You do not have the right to add topics.': 'You do not have the right to add topics.'
-'You do not have the right to delete topics.': 'You do not have the right to delete topics.'
-'Are you sure you want to delete the topic $1?': 'Are you sure you want to delete the topic $1?'
-'You do not have the right to change topic name.': 'You do not have the right to change topic name.'
-'The topic $1 could not be deleted.': 'The topic $1 could not be deleted.'
-'Adding new topic': 'Adding new topic'
-'Deleting topic': 'Deleting topic'
-'Change topic name': 'Change topic name'
-'There are $1 articles using the topic.': 'There are $1 articles using the topic.'
-'Search for topics': 'Search for topics'
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'Ha folytatod, akkor a téma és minden altéma leválasztásra kerül az összes cikkről, és törlésre fog kerülni.'
+'Delete anyway': 'Törlés mindenképp'
+'Reset order': 'Sorrend visszaállítása'
+'Order changes will be lost. Are you sure you want to continue?': 'El fognak veszni a sorrend módosításai. Biztosan folytatni akarod?'
+'Topics order saved.': 'A témák sorrendjének mentése megtörtént.'
+'Show languages': 'Nyelvek megjelenítése'
+'Save order': 'Sorrend mentése'
+'Click to edit': 'Kattints a szerkesztéshez'
+'Add root topic': 'Gyökértéma hozzáadása'
+'Topic was deleted.': 'A téma törlése megtörtént.'
+'The topic name is already in use by another topic.': 'Már használja egy másik téma a téma nevét.'
+'You must enter a name for the topic.': 'Meg kell adnod a téma nevét.'
+'You must choose a language for the topic.': 'Ki kell választanod a téma nyelvét.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Ez a téma tartalmaz altémákat, ezért nem törölhető.'
+'Add translation:': 'Fordítás hozzáadása:'
+'Add subtopic:': 'Altéma hozzáadása:'
+Top: null
+'You do not have the right to add topics.': 'Nincs jogod a témák hozzáadásához.'
+'You do not have the right to delete topics.': 'Nincs jogod a témák törléséhez.'
+'Are you sure you want to delete the topic $1?': 'Biztosan törölni akarod a/z $1 témát?'
+'You do not have the right to change topic name.': 'Nincs jogod a téma nevének módosításához.'
+'The topic $1 could not be deleted.': 'A/z $1 témát nem lehet törölni.'
+'Adding new topic': 'Új téma hozzáadása'
+'Deleting topic': 'Téma törlése'
+'Change topic name': 'Téma nevének módosítása'
+'There are $1 articles using the topic.': 'Jelenleg $1 cikk használja a témát.'
+'Search for topics': 'Témák keresése'
 topics:
-    tip: 'In Newscoop, topics are the subject matters assigned by editors and journalists to articles, so that related articles can be identified and displayed together. A root topic can have many subtopics; for example: the sports root topic could have the subtopics football, basketball, and water polo. An individual article may have several root topics or subtopics assigned to it.'
+    tip: null
     label:
-        all: All
-        filterbylang: 'Show topics in language'
-        search: Search
-        filterplaceholder: 'Type a part of any topic name...'
-        addroot: 'Add root topic'
-        topicname: 'Topic name'
-        expandcollapse: expand/collapse
-        changename: 'Change topic name'
-        for: for
-        addsubtopic: 'Add subtopic'
-        subtopicname: 'Subtopic name'
-        addtranslation: 'Add translation'
-        topictranslations: 'Topic translations'
-        choose: Choose...
-        translationstring: 'Translation string'
-        tree: 'Tree of topics'
-    title: Topics
+        all: null
+        filterbylang: null
+        search: null
+        filterplaceholder: 'Írd be valanelyik téma nevének egy részét...'
+        addroot: null
+        topicname: 'Téma neve'
+        expandcollapse: null
+        changename: null
+        for: null
+        addsubtopic: 'Altéma hozzáadása'
+        subtopicname: 'Altéma neve'
+        addtranslation: 'Fordítás hozzáadása'
+        topictranslations: null
+        choose: null
+        translationstring: 'Fordítási karakterlánc'
+        tree: Témák
+    title: null
     btn:
-        hide: Hide
-        remove: 'Remove topic'
-        edit: 'Edit topic'
-        close: Close
-        add: Add
-        save: Save
-        saveandclose: 'Save and Close'
-        removetrans: 'Remove Topic''s translation'
+        hide: null
+        remove: 'Téma eltávolítása'
+        edit: 'Téma szerkesztése'
+        close: null
+        add: null
+        save: null
+        saveandclose: null
+        removetrans: 'A téma fordításának eltávolítása'
     alerts:
-        languagenotfound: 'Could not find language by locale: %locale%'
-        translationadded: 'Translation was added'
-        translationexists: 'Translation for locale %locale% already exists!'
-        beforedelete: 'Are you sure you want to delete this topic?'
-        wrongparams: 'Number of sorted root topics must be the same as number of all root topics'
-        ordersaved: 'Order saved.'
-        saved: 'Successfully saved.'
-        beforedeleteinfo: 'When deleting topic with subtopics, all subtopics together with translations will be removed permanently. Are you sure?'
-    added: 'Topic was added'
-    failedfind: 'Failed to find Topic by id: %id%'
-    failedfindTranslation: 'Failed to find Topic''s translation by id: %id%'
-    removed: 'Topic %title% was removed'
-    exists: 'Topic already exists'
-    existsname: 'Topic name already exists!'
-    removedTranslation: 'Topic''s translation was removed'
-    failedremoveTranslation: 'Can not remove default topic''s translation. Remove topic instead.'
-    updated: 'Topic was updated'
-    error: 'Error occurred, please try again later.'
-    csrfinvalid: 'The CSRF token is invalid. Please try to resubmit the form.'
-    tooshort: 'Topic name is too short!'
-    toolong: 'Topic name is too long!'
-    attachtopics: 'Attach topics'
-    attachedtopics: 'Attached topics'
-    attached: 'This topic is attached to %occurence% article(s). When you remove this topic, it will be automatically detached from all articles it is attached to. If the topic has children topics, they will be also detached.'
+        languagenotfound: 'Nem található a nyelv a következő területi beállítás szerint: %locale%'
+        translationadded: 'A fordítás hozzáadásra került'
+        translationexists: 'Már létezik %locale% nyelvű fordítás!'
+        beforedelete: 'Biztosan törölni akarod ezt a témát?'
+        wrongparams: 'A rendszerezett gyökértémák számának azonosnak kell lennie az összes gyökértéma számával.'
+        ordersaved: null
+        saved: null
+        beforedeleteinfo: 'Altémákat tartalmazó témák törlésekor végleg eltávolításra fog kerülni az összes altéma a fordításokkal együtt. Biztos vagy benne?'
+    added: 'A téma hozzáadása megtörtént'
+    failedfind: 'Nem sikerült megtalálni a témát az azonosító alapján: %id%'
+    failedfindTranslation: 'Nem sikerült megtalálni a téma fordítását az azonosító alapján: %id%'
+    removed: 'A/z %title% téma eltávolításra került'
+    exists: null
+    existsname: null
+    removedTranslation: 'A téma fordítása eltávolításra került'
+    failedremoveTranslation: 'Nem távolítható el az alapértelmezett téma fordítása. Távolítsd el inkább a témát.'
+    updated: 'A téma frissítésre került'
+    error: 'Hiba történt, próbálkozz később.'
+    csrfinvalid: 'A CSRF-jogkivonat érvénytelen. Próbáld meg ismét beküldeni az űrlapot.'
+    tooshort: 'Túl rövid a téma neve!'
+    toolong: 'Túl hosszú a téma neve!'
+    attachtopics: null
+    attachedtopics: null
+    attached: null
