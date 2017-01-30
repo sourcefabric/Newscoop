@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: 'Управљање коментарима'
-        menu: Коментари
-        banned: Забрањен
-        anonymous: Анонимус
-        at: у
-        noentries: 'Нема уноса за тражено.'
-        showing: Приказивање
-        of: од
-        to: ка
-        entries: уноси
-        fullarticle: 'Цео текст'
-        hidden: Сакривен
-        approved: Одобрен
-        new: Нови
-        editarticle: 'Иди на уређивање текста'
-        section: Рубрика
-        comment: Коментар
-        replyto: 'Одговорите на коментар'
-        subject: Наслов
-        ban: 'Блокирајте или одблокирајте корисника'
-        author: аутор
-        date: 'Датум / Коментари'
-        article: Текст
-        search: Тражи
-        show: Прикажи
-        recommended: Препоручени
-        unrecommended: Непрепоручен
-        editcomment: 'Брзо уређивање коментара'
-        actions: Акције
-        selectstatus: 'Изабери статус'
-        deleted: Обрисано
-        alert: Упозорење
-        searchholder: 'Претраживање...(име, мејл, наслов, коментар, наслов чланка)'
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: Батали
-        submit: Пошаљи
-        unrecommend: Непрепоручен
-        recommend: Препоручен
-        delete: Обриши
-        reply: Одговори
-        edit: 'Брзо уређивање'
-        close: Затвори
-        okay: OK
-        filter: Филтер
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
+        okay: Ok
+        filter: Filter
     msg:
-        deleted: 'Коментар избрисан'
-        commentinarticle: 'Коментатор $4 од $1 у тексту $2 ($3)'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: нови
-            approved: одобрен
-            hidden: сакривен
-            single: 'Статус коментара промењен у'
-            all: 'Статус коментара промењен у'
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'Newscoop није доступан. Проверите своју интернет везу.'
-            deletefromarticle: 'Коментар обрисан од стране $1 из текста $2 ($3)'
-            statuschange: 'Грешка приликом промене статуса коментара'
-            delete: 'Није могуће обрисати овај коментар'
-            update: 'Поља не могу остати празна'
-        sure: 'Неповратно ћете избрисати коментар.'
-        suremultiple: 'Неповратно ћете избрисати коментаре.'
-        first: 'Прво изаберите коментаре!'
-        surequestion: 'Сигурни сте да желите то да урадите?'
-        updated: 'Коментар измењен.'
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

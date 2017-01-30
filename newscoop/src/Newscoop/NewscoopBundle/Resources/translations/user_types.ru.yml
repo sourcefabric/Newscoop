@@ -1,81 +1,81 @@
 get: get
 Soundcloud: SoundCloud
-Templates: Шаблоны
-'Feedback Messages': 'Ответ на сообщения '
-'Article Playlists': 'Плейлисты статьи'
-'Check all': 'Проверить все'
-view: просмотр
-undo/redo: отменить/повторить
-underline: подчеркнуть
-translate: перевести
-'text direction': 'направление текста'
-'text alignment': 'выравнивание текста'
-table: таблица
-superscript: 'верхний индекс'
-subscript: 'нижний индекс'
-subhead: подзаголовок
-strikethrough: перечеркивание
-statusbar: 'строка состояния '
-'spell checker enabled': 'проверка орфографии включена'
-'source view': 'просмотр источника '
-publish: публиковать
-notify: извещать
-moderate: модерировать
-manage: управлять
-'list number': 'нумерованный список'
-'list bullet': 'маркированный список'
-link: ссылка
-italic: курсив
-indent: абзац
-image: изображение
-'horizontal rule': 'горизонтальная линейка'
-handle: 'дескриптор '
-guest: гость
-'font size': 'размер шрифта'
+Templates: Templates
+'Feedback Messages': 'Feedback Messages'
+'Article Playlists': 'Article Playlists'
+'Check all': 'Check all'
+view: view
+undo/redo: undo/redo
+underline: underline
+translate: translate
+'text direction': 'text direction'
+'text alignment': 'text alignment'
+table: table
+superscript: superscript
+subscript: subscript
+subhead: subhead
+strikethrough: strikethrough
+statusbar: statusbar
+'spell checker enabled': 'spell checker enabled'
+'source view': 'source view'
+publish: publish
+notify: notify
+moderate: moderate
+manage: manage
+'list number': 'list number'
+'list bullet': 'list bullet'
+link: link
+italic: italic
+indent: indent
+image: image
+'horizontal rule': 'horizontal rule'
+handle: handle
+guest: guest
+'font size': 'font size'
 'font face': 'font face'
-'font color': 'цвет шрифта'
-find/replace: найти/заменить
-enlarge: увеличить
-enable: включить
-edit: редактировать
-delete: удалить
-copy/cut/paste: копировать/вырезать/вставить
-clear: очистить
-'character map': 'карта знаков'
-bold: жирный
-attach: приложить
-'any resource': 'любой источник'
-admin: администратор
-add: добавить
-'You cant deny yourself to manage $1': 'Вы не можете отказаться управлять $1'
-'You are not allowed to $1 $2.': 'Вам не разрешено $1 $2.'
-'User type saved.': 'Тип пользователя сохранен.'
-'User type deleted.': 'Тип пользователя удален.'
-'User type added.': 'Тип пользователя добавлен.'
-'User Groups': 'Группы пользователей'
-Themes: 'Темы (Шаблоны)'
-'That type name already exists, please choose a different name.': 'Это название типа уже существует, пожалуйста, выберите другое название.'
-System: Система
-Structure: Структура
-'Search Indexer': 'Индексатор поиска'
-'Rich-Text Editor Preferences': 'Права редактора RTF'
+'font color': 'font color'
+find/replace: find/replace
+enlarge: enlarge
+enable: enable
+edit: edit
+delete: delete
+copy/cut/paste: copy/cut/paste
+clear: clear
+'character map': 'character map'
+bold: bold
+attach: attach
+'any resource': 'any resource'
+admin: admin
+add: add
+'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
+'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
+'User type saved.': 'User type saved.'
+'User type deleted.': 'User type deleted.'
+'User type added.': 'User type added.'
+'User Groups': 'User Groups'
+Themes: Themes
+'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+System: System
+Structure: Structure
+'Search Indexer': 'Search Indexer'
+'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
 ReCaptcha: ReCaptcha
-Polls: Опросы
-'Permissions:': 'Права доступа:'
-'Permissions updated': 'Права обновлены'
-Notification: Уведомление
-Log: Лог
-Layout: Разметка
-Global: Всеобщий
-Files: Файлы
-'Error: ': 'Ошибка:'
-'Edit user type $1': 'Редактировать тип пользователя $1'
-Deny: Отказать
-'Delete user type $1': 'Удалить тип пользователя  $1'
-'Can not delete a user type with assigned users.': 'Невозможно удалить тип пользователя, если он установлен для пользователей.'
-Cache: Кэш
-Backup: 'Резервная копия'
-Authoring: Авторинг
-Allow: Разрешить
-'User types': 'Типы пользователей'
-'No user types.': 'Нет типов пользователей.'
+Polls: Polls
+'Permissions:': 'Permissions:'
+'Permissions updated': 'Permissions updated'
+Notification: Notification
+Log: Log
+Layout: Layout
+Global: Global
+Files: Files
+'Error: ': 'Error: '
+'Edit user type $1': 'Edit user type $1'
+Deny: Deny
+'Delete user type $1': 'Delete user type $1'
+'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
+Cache: Cache
+Backup: Backup
+Authoring: Authoring
+Allow: Allow
+'User types': 'User types'
+'No user types.': 'No user types.'

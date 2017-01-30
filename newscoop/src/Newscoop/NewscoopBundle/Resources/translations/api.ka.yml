@@ -1,108 +1,108 @@
-'No such article type': 'ასეთი სტატიის ტიპი არ არსებობს'
-'Multi-line Text': 'მრავალხაზიანი ტექსტი'
-'Filter saved': 'ფილტრი დამახსოვრებულია'
-'Filter not saved': 'ფილტრი არ არის დამახსოვრებული'
-'Not a color': 'ეს ფერი არ არის'
-'No such field': 'ასეთი ველი არ არსებობს'
-'Color saved': 'ფერი დამახსოვრებულია'
-'Color not saved': 'ფერი არ არის დამახსოვრებული'
-'Topic created': 'თემა შექმნილია'
-'The topic name is already in use by another topic.': 'თემის სათაური უკვე გამოყენებულია სხვა თემაზე.'
-'Complex Date': 'კომპლექსური თარიღი '
-vertices: მწვერვალი
-'There was a problem trying to execute the XML RPC function.': 'XML RPC ფუნქციის შესრულებისას დაფიქსირდა პრობლემა.'
-'The Campcaster server configuration is invalid.': 'კემპკასტერის სერვერის კონფიგურაცია არასწორია'
-'Pan Map': 'ინტერაქტიული რუკა'
-'Open large map': 'გახსენით დიდი რუკა'
-'No news available.': 'ახალი ამბები არ არის.'
-'Edit Polygon': 'პოლიგონის რედაქტირება'
-'Create Polygon': 'პოლიგონის შექმნა'
-'Communication error: ': 'კომუნიკაციის ხარვეზი:'
-'Cant fetch news from $1': '$1-დან ნიუსი არ მოდის'
-Loading...: იტვირთება...
-Version: ვერსია
-License: ლიცენზია
-Homepage: მთავარი
-'Show original map': 'მაჩვენე ორიგინალი რუკა'
-'The uploaded archive does not contain an valid newscoop plugin.': 'ატვირთული არქივი არ შეიცავს ნიუსქუფის მუშა ფლაგინს.'
-Map: რუკა
-Center: ცენტრი
-Title: სათაური
-'Invalid security token.': 'არასწორია უსაფრთხოების სიმბოლო'
-'Callback $1 is not callable.': 'უკან გაწვევა $1 არ ექვემდებარება გაწვევას. '
-'Article translated to $4 ($5)': 'სტატია ითარგმნა $4 ($5) ენაზე'
-'Article status changed from $1 to $2.': 'სტატიის სტატუსი შეიცვალა $1-დან $2-სკენ'
-'Article deleted.': 'სტატია წაიშალა.'
-'Article created.': 'სტატია შეიქმნა.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'სტატია დაკოპირდა $4 სტატიაში (პუბლიკაცია $5, გამოცემა $6, სექცია $7).'
-'Article URL': 'სტატიის URL'
-'Article Number': 'სტატიის ნომერი'
-'Access denied.': 'წვდომა აკრძალულია'
-'Publish with issue': 'გამოქვეყნება გამოცემასთან ერთად'
-'Article "$1" not processed': null
-unknown: უცნობი
-Switch: გადართვა
-Numeric: რიცხვითი
-'The uploaded file format is unsupported.': 'ატვირთული ფაილის ფორმატი შეუსაბამოა'
-'The following fields are mandatory:': 'ეს ველები არის სავალდებულო'
-'Missing value for $1': '$1-ის დანიშნულება არ არსებობს'
-'Manage Plugins': 'პლაგინების მართვა'
-'* Marked fields are mandatory.': '*-ით მონიშნული ველები სავალდებულოა'
-'$1 is of type $2': '$1 არის $2 ტიპის'
-'Invalid resize width/height.': 'არასწორი სიმაღლის/სიგანის ზომა'
-'Image type $1 is not supported.': 'სურათის ტიპი $1 შეუსაბამოა'
-'The file uploaded is not an image.': 'ატვირთული ფაილი არ არის სურათი'
-'Could not delete record from the database.': 'მონაცემის ბაზიდან წაშლა უშედეგოდ დასრულდა'
-'template path': 'შაბლონის ბმული'
-'short names': 'მოკლე სახელები'
-'Unable to fetch image from remote server.': 'ამ სურათის სერვერიდან აგრეგირება შეუძლებელია'
-Last: ბოლო
-First: პირველი
-'Single-line Text': 'ერთ-ხაზიანი ტექსტი'
-'Multi-line Text with WYSIWYG': 'მრავალ-ხაზიანი ტექსტი WYSIWYG-ით'
-'URL $1 is invalid or is not an image.': '$1 URL არასწორია, ან არ არის სურათი'
-'URL $1 is not an image.': '$1 URL არ არის სურათი'
+'No such article type': 'No such article type'
+'Multi-line Text': 'Multi-line Text'
+'Filter saved': 'Filter saved'
+'Filter not saved': 'Filter not saved'
+'Not a color': 'Not a color'
+'No such field': 'No such field'
+'Color saved': 'Color saved'
+'Color not saved': 'Color not saved'
+'Topic created': 'Topic created'
+'The topic name is already in use by another topic.': 'The topic name is already in use by another topic.'
+'Complex Date': 'Complex Date'
+vertices: vertices
+'There was a problem trying to execute the XML RPC function.': 'There was a problem trying to execute the XML RPC function.'
+'The Campcaster server configuration is invalid.': 'The Campcaster server configuration is invalid.'
+'Pan Map': 'Pan Map'
+'Open large map': 'Open large map'
+'No news available.': 'No news available.'
+'Edit Polygon': 'Edit Polygon'
+'Create Polygon': 'Create Polygon'
+'Communication error: ': 'Communication error: '
+'Cant fetch news from $1': 'Cant fetch news from $1'
+Loading...: Loading...
+Version: Version
+License: License
+Homepage: Homepage
+'Show original map': 'Show original map'
+'The uploaded archive does not contain an valid newscoop plugin.': 'The uploaded archive does not contain an valid newscoop plugin.'
+Map: Map
+Center: Center
+Title: Title
+'Invalid security token.': 'Invalid security token.'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Article translated to $4 ($5)'
+'Article status changed from $1 to $2.': 'Article status changed from $1 to $2.'
+'Article deleted.': 'Article deleted.'
+'Article created.': 'Article created.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Article copied to Article $4 (publication $5, issue $6, section $7).'
+'Article URL': 'Article URL'
+'Article Number': 'Article Number'
+'Access denied.': 'Access denied.'
+'Publish with issue': 'Publish with issue'
+'Article "$1" not processed': 'Article "$1" not processed'
+unknown: unknown
+Switch: Switch
+Numeric: Numeric
+'The uploaded file format is unsupported.': 'The uploaded file format is unsupported.'
+'The following fields are mandatory:': 'The following fields are mandatory:'
+'Missing value for $1': 'Missing value for $1'
+'Manage Plugins': 'Manage Plugins'
+'* Marked fields are mandatory.': '* Marked fields are mandatory.'
+'$1 is of type $2': '$1 is of type $2'
+'Invalid resize width/height.': 'Invalid resize width/height.'
+'Image type $1 is not supported.': 'Image type $1 is not supported.'
+'The file uploaded is not an image.': 'The file uploaded is not an image.'
+'Could not delete record from the database.': 'Could not delete record from the database.'
+'template path': 'template path'
+'short names': 'short names'
+'Unable to fetch image from remote server.': 'Unable to fetch image from remote server.'
+Last: Last
+First: First
+'Single-line Text': 'Single-line Text'
+'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
+'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
 publicresources:
-    updated: null
+    updated: 'Public resources was updated'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
         tabs:
-            resources: null
-            clients: null
+            resources: 'Public Resources'
+            clients: Clients
         resources:
-            info: null
-            api_docs: null
-            add_button: null
+            info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+            api_docs: 'A full documentation of the API can be found on your instance (and it''s public)'
+            add_button: 'Add Client'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: null
-                redirect: null
-                publication: პუბლიკაცია
-                actions: მოქმედება
+                name: 'Client name'
+                id: 'Client id'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect Uris'
+                publication: Publication
+                actions: Actions
                 actions_buttons:
-                    remove: მოხსნა
+                    remove: Remove
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'You sure that you want remove this client?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
-                trusted: null
-                save: შენახვა
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect uris for your client:'
+                trusted: 'Trusted?'
+                save: Save
         PublicResources:
             label:
-                routes: null
-                save: შენახვა
+                routes: 'Choose resources to make public:'
+                save: Save

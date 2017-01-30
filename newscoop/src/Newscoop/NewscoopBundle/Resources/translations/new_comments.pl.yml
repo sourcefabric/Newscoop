@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: 'Zarządzanie komentarzami'
-        menu: Komentarze
-        banned: Zablokowany
-        anonymous: Anonim
-        at: w
-        noentries: 'Nie znaleziono wyników.'
-        showing: Pokazuje
-        of: z
-        to: do
-        entries: wyników
-        fullarticle: 'Pełny artykuł'
-        hidden: Ukryte
-        approved: Zaakceptowane
-        new: Nowy
-        editarticle: 'Przejdź do edycji artykulu'
-        section: Sekcja
-        comment: Komentarz
-        replyto: 'Odpowiedz na komentarz'
-        subject: Temat
-        ban: 'Zablokuj/Odblokuj użytkownika'
-        author: Autor
-        date: 'Data / Komentarz'
-        article: Artykuł
-        search: Szukaj
-        show: Pokaż
-        recommended: Polecany
-        unrecommended: Niepolecany
-        editcomment: 'Szybka edycja'
-        actions: Akcje
-        selectstatus: 'Wybierz status'
-        deleted: Usunięty
-        alert: Uwaga
-        searchholder: 'Szukaj... (np. imię, email, temat, treść komentarza, tytuł artykułu)'
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: Anuluj
-        submit: Wyślij
-        unrecommend: 'Niepolecany '
-        recommend: Poleć
-        delete: Usuń
-        reply: Odpowiedz
-        edit: 'Szybka edycja'
-        close: Zamknij
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
         okay: Ok
-        filter: Filtrowanie
+        filter: Filter
     msg:
-        deleted: 'Komentarz został usunięty'
-        commentinarticle: 'Komentarz $4 przez $1 w artykule $2 ($3)'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: nowy
-            approved: zatwierdzony
-            hidden: ukryty
-            single: 'Status komentarza został zmieniony na'
-            all: 'Status komentarzy został zmieniony na'
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
-            deletefromarticle: 'Komentarz został usunięty z artykułu $2 przez $1 ($3)'
-            statuschange: 'Wystąpił błąd podczas zmieniania statusu dla kometarza'
-            delete: 'Nie można usunąć tego komentarza'
-            update: 'Pola nie mogą być puste'
-        sure: 'Chcesz bezpowrotnie usunąć wiadomość'
-        suremultiple: 'Zamierzasz bezpowrotnie usunąć wybrane komentarze.'
-        first: 'Musisz najpierw wybrać komentarz/komentarze!'
-        surequestion: 'Jesteś pewien że chcesz to zrobić?'
-        updated: 'Komentarz zaktualizowany.'
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: null
-        menu: Commenti
-        banned: null
-        anonymous: null
-        at: in
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
-        fullarticle: 'Articolo intero'
-        hidden: Nascosto
-        approved: Approvato
-        new: Nuovo
-        editarticle: 'Vai alla modifica articolo'
-        section: Sezione
-        comment: Commento
-        replyto: 'Rispondi al commento'
-        subject: Oggetto
-        ban: 'Blocca/sblocca utente'
-        author: Autore
-        date: null
-        article: Articolo
-        search: Cerca
-        show: Mostra
-        recommended: Consigliato
-        unrecommended: Sconsigliato
-        editcomment: null
-        actions: Azioni
-        selectstatus: 'Scegli stato'
-        deleted: Cancellato
-        alert: null
-        searchholder: null
+        comments: 'Comments management'
+        menu: Comments
+        banned: Banned
+        anonymous: Anonymous
+        at: at
+        noentries: 'No entries found.'
+        showing: Showing
+        of: of
+        to: to
+        entries: entries
+        fullarticle: 'Full article'
+        hidden: Hidden
+        approved: Approved
+        new: New
+        editarticle: 'Go to edit article'
+        section: Section
+        comment: Comment
+        replyto: 'Reply to comment'
+        subject: Subject
+        ban: 'Ban/Unban user'
+        author: Author
+        date: 'Date / Comment'
+        article: Article
+        search: Search
+        show: Show
+        recommended: Recommended
+        unrecommended: Unrecommended
+        editcomment: 'Quick comment edit'
+        actions: Actions
+        selectstatus: 'Select status'
+        deleted: Deleted
+        alert: Alert
+        searchholder: 'Search... (e.g. name, email, subject, comment, article title)'
     btn:
-        cancel: Annulla
-        submit: Salva
-        unrecommend: Sconsiglia
-        recommend: Consiglia
-        delete: Elimina
-        reply: Risposta
-        edit: 'Modifica rapida'
-        close: Chiudi
-        okay: null
-        filter: Filtro
+        cancel: Cancel
+        submit: Submit
+        unrecommend: Unrecommend
+        recommend: Recommend
+        delete: Delete
+        reply: Reply
+        edit: 'Quick edit'
+        close: Close
+        okay: Ok
+        filter: Filter
     msg:
-        deleted: 'Commento cencellato.'
-        commentinarticle: 'Commento $4 da $1 nellarticolo $2 ($3)'
+        deleted: 'Comment deleted.'
+        commentinarticle: 'Comment $4 by $1 in the article $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: new
+            approved: approved
+            hidden: hidden
+            single: 'Comment status change to'
+            all: 'Comments status change to'
         error:
-            reach: 'Impossibile raggiungere Newscoop. Verifica la connessione internet.'
-            deletefromarticle: 'Cancellazione commento da $1 dallarticolo $2 ($3)'
-            statuschange: null
-            delete: null
-            update: null
-        sure: 'Stai per eliminare definitivamente un commento.'
-        suremultiple: null
-        first: null
-        surequestion: 'Sei sicuro di volerlo fare?'
-        updated: 'Commento aggiornato.'
+            reach: 'Unable to reach Newscoop. Please check your internet connection.'
+            deletefromarticle: 'Comment delete by $1 from the article $2 ($3)'
+            statuschange: 'Error changing comment status'
+            delete: 'Could not delete this comment'
+            update: 'Fields cannot be empty'
+        sure: 'You are about to permanently delete a comment.'
+        suremultiple: 'You are about to permanently delete comments.'
+        first: 'Please, select comment/comments first!'
+        surequestion: 'Are you sure you want to do it?'
+        updated: 'Comment updated.'

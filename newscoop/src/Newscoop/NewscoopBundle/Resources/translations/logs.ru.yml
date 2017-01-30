@@ -1,11 +1,11 @@
-show: Показывать
-hide: Спрятать
-Title: Заголовок
-'Resource Type:': 'Тип источника:'
-'Resource Type': 'Тип источника'
-Resource: Источник
-Diff: Разница
-'Broken data': 'Неполные данные'
-'Action Type:': 'Тип действия'
-'No logs.': 'Нет записей в журнале.'
-User: Пользователь
+show: show
+hide: hide
+Title: Title
+'Resource Type:': 'Resource Type:'
+'Resource Type': 'Resource Type'
+Resource: Resource
+Diff: Diff
+'Broken data': 'Broken data'
+'Action Type:': 'Action Type:'
+'No logs.': 'No logs.'
+User: User

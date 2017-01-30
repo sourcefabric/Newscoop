@@ -1,51 +1,51 @@
-newscoop.plugins_manager.manager: null
-newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
-newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
-newscoop.plugins_manager.installed_table.name: Naslov
-newscoop.plugins_manager.installed_table.description: Opis
-newscoop.plugins_manager.installed_table.enabled: Omogućeni
-newscoop.plugins_manager.installed_table.version: Verzija
-newscoop.plugins_manager.installed_table.license: Licenca
-newscoop.plugins_manager.installed_table.installed_at: null
-newscoop.plugins_manager.installed_table.updated_at: null
-newscoop.plugins_manager.installed_table.actions: Akcije
-newscoop.plugins_manager.installed_table.update_plugin: null
-newscoop.plugins_manager.installed_table.remove_plugin: Ukloni
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
-newscoop.plugins_manager.upload.private: null
-newscoop.plugins_manager.search_for_plugins: null
-newscoop.plugins_manager.form.package: null
-newscoop.plugins_manager.form.submit: Aplouduj
-newscoop.plugins_manager.runcommand: null
-newscoop.plugins_manager.openterminal: null
-newscoop.plugins_manager.installassets: null
-newscoop.plugins_manager.done: null
-newscoop.plugins_manager.close: null
-newscoop.plugins_manager.update: null
-newscoop.plugins_manager.install: null
-newscoop.plugins_manager.remove: null
-newscoop.plugins_manager.installed: null
-newscoop.plugins_manager.clipboard: null
-newscoop.plugins_manager.downloads: null
-newscoop.plugins_manager.favers: null
-newscoop.plugins_manager.private_plugins_not_writable: null
-newscoop.plugins_manager.private_plugins_not_writable_commands: null
+newscoop.plugins_manager.manager: 'Plugins Manager'
+newscoop.plugins_manager.legacy_manager: 'Legacy Plugins Manager'
+newscoop.plugins_manager.public_plugins: 'Public plugins'
+newscoop.plugins_manager.private_plugins: 'Private plugins'
+newscoop.plugins_manager.install.public: 'Install new plugins'
+newscoop.plugins_manager.installed_table.name: Name
+newscoop.plugins_manager.installed_table.description: Description
+newscoop.plugins_manager.installed_table.enabled: Enabled
+newscoop.plugins_manager.installed_table.version: Version
+newscoop.plugins_manager.installed_table.license: License
+newscoop.plugins_manager.installed_table.installed_at: 'Installed At'
+newscoop.plugins_manager.installed_table.updated_at: 'Updated At'
+newscoop.plugins_manager.installed_table.actions: Actions
+newscoop.plugins_manager.installed_table.update_plugin: Update
+newscoop.plugins_manager.installed_table.remove_plugin: Remove
+newscoop.plugins_manager.installed_table.install_plugin: Install
+newscoop.plugins_manager.installed_table.plugin_installed: Installed
+newscoop.plugins_manager.upload.private: 'Upload private plugin'
+newscoop.plugins_manager.search_for_plugins: 'Search for plugins'
+newscoop.plugins_manager.form.package: 'Package must be a zip file.'
+newscoop.plugins_manager.form.submit: Upload
+newscoop.plugins_manager.runcommand: 'Run command'
+newscoop.plugins_manager.openterminal: 'Open terminal and run command'
+newscoop.plugins_manager.installassets: 'Install assets'
+newscoop.plugins_manager.done: 'Done. Close this window and refresh page.'
+newscoop.plugins_manager.close: Close
+newscoop.plugins_manager.update: 'How to update this plugin?'
+newscoop.plugins_manager.install: 'How to install this plugin?'
+newscoop.plugins_manager.remove: 'How to remove this plugin?'
+newscoop.plugins_manager.installed: 'Done. Refresh this page. Plugin should be now visible in your list of installed plugins.'
+newscoop.plugins_manager.clipboard: 'Copy to clipboard: Ctrl+C (Cmd + C for Mac), Enter'
+newscoop.plugins_manager.downloads: downloads
+newscoop.plugins_manager.favers: favers
+newscoop.plugins_manager.private_plugins_not_writable: '%privatePluginsPath% is not writable by your web server.'
+newscoop.plugins_manager.private_plugins_not_writable_commands: 'On a Linux server you can fix this with the commands:'
 newscoop:
     datatable:
         table:
-            info: 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
-            noentries: 'Nema unosa za prikaz'
-            filtering: '- filtriranje među _MAX_ zapisa'
-            menu: 'Prikaži _MENU_ zapise'
+            info: 'Showing _START_ to _END_ of _TOTAL_ entries'
+            noentries: 'No entries to show'
+            filtering: ' - filtering from _MAX_ records'
+            menu: 'Display _MENU_ records'
         label:
-            search: Traži
+            search: Search
             filter: Filter
-            processing: Obrađujem...
-            last: Poslednji
-            next: Sledeći
-            first: Prvi
-            previous: Prethodni
-            norecords: 'Nema zapisa'
+            processing: Processing...
+            last: Last
+            next: Next
+            first: First
+            previous: Previous
+            norecords: 'No records found.'

@@ -1,81 +1,81 @@
-get: მიღება
+get: get
 Soundcloud: SoundCloud
-Templates: შაბლონები
-'Feedback Messages': 'შეფასების შეტყობინებები'
-'Article Playlists': 'სტატიების სია'
-'Check all': 'ყველას მონიშვნა'
-view: ჩვენება
-undo/redo: უკუგდება/გამეორება
-underline: ხაზგასმა
-translate: თარგმნა
-'text direction': 'ტექსტის მიმართულება'
-'text alignment': 'ტექსტის გამწკრივება'
-table: ცხრილი
-superscript: 'ზედა ინდექსი '
-subscript: 'ქვედა ინდექსი'
-subhead: ქვეთავი
-strikethrough: ხაზგადასმა
-statusbar: სტატუს-პანელი
-'spell checker enabled': 'ორთოგრაფი ჩართულია'
-'source view': 'წყაროს ნახვა'
-publish: გამოქვეყნება
-notify: შეტყობინება
-moderate: მოდერაცია
-manage: მართვა
-'list number': 'რიცხვებიანი სია'
-'list bullet': 'წერტილებიანი სია'
-link: ბმული
-italic: 'დახრილი (italic)'
-indent: აბზაცი
-image: გამოსახულება
-'horizontal rule': 'ჰორიზონტალური სახაზავი'
-handle: 'სახელური '
-guest: სტუმარი
-'font size': 'შრიფტის ზომა'
-'font face': შრიფტი
-'font color': 'შრიფტის ფერი'
-find/replace: ნახვა/შეცვლა
-enlarge: გადიდება
-enable: ჩართვა
-edit: რედაქტირება
-delete: წაშლა
-copy/cut/paste: კოპირება/ამოჭრა/ჩასმა
-clear: გაწმენდა
-'character map': 'სიმბოლოთა ცხრილი'
-bold: 'მუქი (bold)'
-attach: მიბმა
-'any resource': 'ნებისმიერი რესურსი'
-admin: ადმინი
-add: დამატება
-'You cant deny yourself to manage $1': 'თქვენ არ შეგიძლია საკუთარი თავისთვის $1-ის მართვის გამორთვა'
-'You are not allowed to $1 $2.': 'თქვენ არ გაქვთ ამის უფლება: $1 $2'
-'User type saved.': 'მომხმარებლის ტიპი დამახსოვრდა'
-'User type deleted.': 'მომხმარებლის ტიპი წაიშალა.'
-'User type added.': 'მომხმარებლის ტიპი დაემატა'
-'User Groups': 'მომხმარებელთა ჯგუფი'
-Themes: თემები
-'That type name already exists, please choose a different name.': 'ასეთი ტიპის სახელი უკვე არსებობს, გთხოვთ აირჩიოთ სხვა.'
-System: სისტემა
-Structure: სტრუქტურა
-'Search Indexer': 'ტერმინოლოგიური საძიებელი'
-'Rich-Text Editor Preferences': 'ტექსტის დაფორმატების ველის პარამეტრები'
+Templates: Templates
+'Feedback Messages': 'Feedback Messages'
+'Article Playlists': 'Article Playlists'
+'Check all': 'Check all'
+view: view
+undo/redo: undo/redo
+underline: underline
+translate: translate
+'text direction': 'text direction'
+'text alignment': 'text alignment'
+table: table
+superscript: superscript
+subscript: subscript
+subhead: subhead
+strikethrough: strikethrough
+statusbar: statusbar
+'spell checker enabled': 'spell checker enabled'
+'source view': 'source view'
+publish: publish
+notify: notify
+moderate: moderate
+manage: manage
+'list number': 'list number'
+'list bullet': 'list bullet'
+link: link
+italic: italic
+indent: indent
+image: image
+'horizontal rule': 'horizontal rule'
+handle: handle
+guest: guest
+'font size': 'font size'
+'font face': 'font face'
+'font color': 'font color'
+find/replace: find/replace
+enlarge: enlarge
+enable: enable
+edit: edit
+delete: delete
+copy/cut/paste: copy/cut/paste
+clear: clear
+'character map': 'character map'
+bold: bold
+attach: attach
+'any resource': 'any resource'
+admin: admin
+add: add
+'You cant deny yourself to manage $1': 'You cant deny yourself to manage $1'
+'You are not allowed to $1 $2.': 'You are not allowed to $1 $2.'
+'User type saved.': 'User type saved.'
+'User type deleted.': 'User type deleted.'
+'User type added.': 'User type added.'
+'User Groups': 'User Groups'
+Themes: Themes
+'That type name already exists, please choose a different name.': 'That type name already exists, please choose a different name.'
+System: System
+Structure: Structure
+'Search Indexer': 'Search Indexer'
+'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
 ReCaptcha: ReCaptcha
-Polls: გამოკითხვები
-'Permissions:': 'უფლებები:'
-'Permissions updated': 'უფლებები განახლდა'
-Notification: შეტყობინება
-Log: აღრიცხვა
-Layout: გეგმა
-Global: გლობალური
-Files: ფაილები
-'Error: ': 'შეცდომა:'
-'Edit user type $1': '$1 მომხმარებლის ტიპის რედაქტირება'
-Deny: უარყოფა
-'Delete user type $1': '$1 მომხმარებლის ტიპის წაშლა'
-'Can not delete a user type with assigned users.': 'შეუძლებელია მომხმარებლის ტიპის წაშლა, რომელსაც მომხმარებლები აქვს მიბმული.'
-Cache: ქეში
-Backup: 'სარეზერვო ასლი'
-Authoring: 'საავტორო სისტება'
-Allow: 'ნების დართვა'
-'User types': 'მომხმარებლის ტიპი'
-'No user types.': 'მომხმარებლის ტიპები არ არსებობს.'
+Polls: Polls
+'Permissions:': 'Permissions:'
+'Permissions updated': 'Permissions updated'
+Notification: Notification
+Log: Log
+Layout: Layout
+Global: Global
+Files: Files
+'Error: ': 'Error: '
+'Edit user type $1': 'Edit user type $1'
+Deny: Deny
+'Delete user type $1': 'Delete user type $1'
+'Can not delete a user type with assigned users.': 'Can not delete a user type with assigned users.'
+Cache: Cache
+Backup: Backup
+Authoring: Authoring
+Allow: Allow
+'User types': 'User types'
+'No user types.': 'No user types.'

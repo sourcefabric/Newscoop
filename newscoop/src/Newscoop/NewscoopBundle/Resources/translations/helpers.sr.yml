@@ -1,9 +1,9 @@
 dynatable:
-    page: Страна
-    perPageText: 'Прикажи:'
-    pageText: 'Стране:'
-    recordCountPageBoundTemplate: null
-    recordCountPageUnboundedTemplate: null
-    recordCountFilteredTemplate: null
-    recordCountText: Приказивање
-    processingText: Обрађујем...
+    page: Page
+    perPageText: 'Show: '
+    pageText: 'Pages: '
+    recordCountPageBoundTemplate: '{pageLowerBound} to {pageUpperBound} of'
+    recordCountPageUnboundedTemplate: '{recordsShown} of'
+    recordCountFilteredTemplate: ' (filtered from {recordsTotal} total records)'
+    recordCountText: 'Showing '
+    processingText: Processing...

@@ -1,11 +1,11 @@
-show: megjelenítés
-hide: elrejtés
-Title: Cím
-'Resource Type:': 'Erőforrás típusa:'
-'Resource Type': 'Erőforrás típusa'
-Resource: Erőforrás
-Diff: Eltérés
-'Broken data': 'Hibás adat'
-'Action Type:': 'Művelettípus:'
-'No logs.': 'Nincsenek naplók.'
-User: Felhasználó
+show: show
+hide: hide
+Title: Title
+'Resource Type:': 'Resource Type:'
+'Resource Type': 'Resource Type'
+Resource: Resource
+Diff: Diff
+'Broken data': 'Broken data'
+'Action Type:': 'Action Type:'
+'No logs.': 'No logs.'
+User: User

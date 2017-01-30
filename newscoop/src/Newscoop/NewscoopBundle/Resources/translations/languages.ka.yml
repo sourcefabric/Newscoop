@@ -1,72 +1,72 @@
-'Language id not specified': 'ენის საიდენტიფიკაციო ნომერი არ არის მითითებული'
-'No languages.': 'ენები არ არის.'
-'Native Name': 'მშობლიური ენა'
-'Name taken.': 'სახელი გამოყენებულია.'
-'Language saved.': 'ენა დამახსოვრებულია.'
-'Language removed.': 'ენა მოიხსნა.'
-'Language not found.': 'ენა ვერ მოიძებნა.'
-'Language is in use and cannot be removed.': 'ენა ამჟამად გამოყენებაშია და მისი მოხსნა შეუძლებელია.'
-'Language added.': 'ენა დაემატა.'
-'English language cannot be removed.': 'ინგლისური ენის მოხსნა შეუძლებელია.'
-'Edit short month names': 'თვეების მოკლე სახელების რედაქტირება.'
-'Edit short day names': 'დღეების მოკლე სახელების რედაქტირება.'
-'Edit month names': 'თვეების სახელების რედაქტირება.'
-'Edit language: $1': '$1 ენის რედაქტირება'
-'Edit day names': 'დღეების სახელების რედაქტირება'
-'Code Page': 'კოდის გვერდი'
-'Add new Language': 'ახალი ენის დამატება'
-'Add Language': 'ენის დამატება'
-We: ოთხ
-Tu: სამ
-Th: ხუთ
-Su: კვი
-Sep: სექ
-Sa: შაბ
-'Please enter the translation for week day short names.': 'მიუთითეთ კვირის დღეების მოკლე სახელების თარგმანი.'
-'Please enter the translation for month short names.': 'მიუთითეთ თვეების სახელების მოკლე თარგმანი.'
-Oct: ოქტ
-Nov: ნოე
-Mo: ორშ
-Mar: მარ
-Jun: ივნ
-Jul: ივლ
-Jan: იან
-Fr: პარ
-Feb: თებ
-Dec: დეკ
-Aug: აგვ
-Apr: აპრ
-'No language.': 'ენა არ არის.'
-'Delete language $1': '$1 ენის წაშლა'
-'You do not have the right to add languages.': 'თქვენ არ გაქვთ ენების დამატების უფლება.'
-'Please enter the translation for time units.': 'მიუთითეთ დროის ერთეულების თარგმანი.'
-'You do not have the right to delete languages.': 'თქვენ არ გაქვთ ენების წაშლის უფლება.'
-'Are you sure you want to delete the language $1?': 'დარწმუნებული ხართ რომ გსურთ $1 ენის წაშლა'
-'Deleting language': 'ენის წაშლა'
-'The language $1 could not be deleted.': '$1 ენა ვერ წაიშალა.'
-'Edit language': 'ენის რედაქტირება'
-'You do not have the right to edit languages.': 'თქვენ არ გაქვთ ენების რედაქტირების უფლება.'
-'Please enter the translation for month names.': 'მიუთითეთ თვეების სახელების თარგმანი.'
-'Please enter the translation for week day names.': 'მიუთითეთ კვირის დღეების სახელების თარგმანი'
-January: იანვარი
-February: თებერვალი
-March: მარტი
-April: აპრილი
-May: მაისი
-June: ივნისი
-July: ივლისი
-August: აგვისტო
-September: სექტემბერი
-October: ოქტომბერი
-November: ნოემბერი
-December: დეკემბერი
-Monday: ორშაბათი
-Tuesday: სამშაბათი
-Wednesday: ოთხშაბათი
-Thursday: ხუთშაბათი
-Friday: პარასკევი
-Saturday: შაბათი
-Sunday: კვირა
-'You do not have the right to add new languages.': 'თქვენ არ გაქვთ ახალი ენის დამატების უფლება'
-'There are $1 issue(s) left.': 'დარჩა $1 ნომერი/ჟურნალი/გამოშვება'
-'Native name': 'მშობლიური ენა'
+'Language id not specified': 'Language id not specified'
+'No languages.': 'No languages.'
+'Native Name': 'Native Name'
+'Name taken.': 'Name taken.'
+'Language saved.': 'Language saved.'
+'Language removed.': 'Language removed.'
+'Language not found.': 'Language not found.'
+'Language is in use and cannot be removed.': 'Language is in use and cannot be removed.'
+'Language added.': 'Language added.'
+'English language cannot be removed.': 'English language cannot be removed.'
+'Edit short month names': 'Edit short month names'
+'Edit short day names': 'Edit short day names'
+'Edit month names': 'Edit month names'
+'Edit language: $1': 'Edit language: $1'
+'Edit day names': 'Edit day names'
+'Code Page': 'Code Page'
+'Add new Language': 'Add new Language'
+'Add Language': 'Add Language'
+We: We
+Tu: Tu
+Th: Th
+Su: Su
+Sep: Sep
+Sa: Sa
+'Please enter the translation for week day short names.': 'Please enter the translation for week day short names.'
+'Please enter the translation for month short names.': 'Please enter the translation for month short names.'
+Oct: Oct
+Nov: Nov
+Mo: Mo
+Mar: Mar
+Jun: Jun
+Jul: Jul
+Jan: Jan
+Fr: Fr
+Feb: Feb
+Dec: Dec
+Aug: Aug
+Apr: Apr
+'No language.': 'No language.'
+'Delete language $1': 'Delete language $1'
+'You do not have the right to add languages.': 'You do not have the right to add languages.'
+'Please enter the translation for time units.': 'Please enter the translation for time units.'
+'You do not have the right to delete languages.': 'You do not have the right to delete languages.'
+'Are you sure you want to delete the language $1?': 'Are you sure you want to delete the language $1?'
+'Deleting language': 'Deleting language'
+'The language $1 could not be deleted.': 'The language $1 could not be deleted.'
+'Edit language': 'Edit language'
+'You do not have the right to edit languages.': 'You do not have the right to edit languages.'
+'Please enter the translation for month names.': 'Please enter the translation for month names.'
+'Please enter the translation for week day names.': 'Please enter the translation for week day names.'
+January: January
+February: February
+March: March
+April: April
+May: May
+June: June
+July: July
+August: August
+September: September
+October: October
+November: November
+December: December
+Monday: Monday
+Tuesday: Tuesday
+Wednesday: Wednesday
+Thursday: Thursday
+Friday: Friday
+Saturday: Saturday
+Sunday: Sunday
+'You do not have the right to add new languages.': 'You do not have the right to add new languages.'
+'There are $1 issue(s) left.': 'There are $1 issue(s) left.'
+'Native name': 'Native name'

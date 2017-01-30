@@ -1,93 +1,93 @@
-'Duplicate assignment': null
-Templates: null
-'Import theme': null
-'Import succeeded!': null
-'Import failed!': null
-'Edit template: $1': null
-'Set new name to': null
-'Rename file': null
-'Caching templates in:': null
-'Caching templates finished': null
-'Theme name': null
-'Theme is assigned and can not be deleted': null
-'Theme export was not successful. Check please that the server is not out of disk space.': null
-'The theme can not be unassigned because it is in use by issues ($1) in this publication': null
-zip: null
-version: null
-uploaded: null
-updated: null
-'or higher': null
-moved: null
-installed: null
-deleted: null
-'You must select at least one template to perform an action.': null
-Upload: null
-'Unassign theme': null
-'Unassign successful': null
-Unassign: null
-'Theme version': null
-'Theme settings updated.': null
-'Theme settings saved.': null
-'Theme name / version': null
-'Theme management': null
-'Theme $1': null
-'The file $1 is empty.': null
-'Template object $1 was renamed to $2.': null
-'Template object $1 was deleted.': null
-'Template $1 was duplicated into $2.': null
-'Template $1 $2.': null
-'Something broke': null
-'Section page template': null
-Saving..: null
-'Saving settings failed.': null
-'Save All': 'Salvează totul'
-'Required Newscoop version': null
-Replace: Înlocuieşte
-'New template $1 created.': null
-'New name': null
-'Name cant be empty': null
-'Last modified': 'Ultima modificare'
-'Issue page': null
-'Go to parent': null
-'Go to $1': null
-'Geo Filtering': null
-'Front page template': null
-'File size': null
-'File name': null
-'File $1 was replaced.': null
-'Failed unassigning theme': null
-Export: null
-'Error page template': null
-'Edit $1': null
-'Done uploading': null
-'Do you want to override $1?': null
-'Directory is empty': null
-'Directory $1 created.': 'Directorul $1 a fost creat.'
-Design: null
-'Delete theme': null
-'Current directory:': null
-'Create folder': null
-'Create file': null
-'Copy to available themes': null
-'Copied successfully': null
-Compatibility: null
-'Click to enlarge': null
-'Choose destination': null
-'Cant override directory $1.': null
-'Cache Lifetime': null
-'Browse for the theme': null
-'Assigned successfully': null
-'Article page template': null
-'Article page': null
-'Are you sure you want to unassign this theme?': null
-'Are you sure you want to delete this theme?': null
-'Add to publication': null
-'$1 is not writable': null
-'$1 $2': null
-'$1 files $2': null
-'Available themes': null
-'Update cached data': null
-'Assigned templates': null
-'Cached informations about theme playlists are not up to date!': null
-'The theme''s configuration file does not contain information about the list of used featured articles.': null
-'Below code should be placed into theme.xml (between ''theme'' nodes) file to make it work. This file is located in every theme''s main directory.': null
+'Duplicate assignment': 'Duplicate assignment'
+Templates: Templates
+'Import theme': 'Import theme'
+'Import succeeded!': 'Import succeeded!'
+'Import failed!': 'Import failed!'
+'Edit template: $1': 'Edit template: $1'
+'Set new name to': 'Set new name to'
+'Rename file': 'Rename file'
+'Caching templates in:': 'Caching templates in:'
+'Caching templates finished': 'Caching templates finished'
+'Theme name': 'Theme name'
+'Theme is assigned and can not be deleted': 'Theme is assigned and can not be deleted'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Theme export was not successful. Check please that the server is not out of disk space.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'The theme can not be unassigned because it is in use by issues ($1) in this publication'
+zip: zip
+version: version
+uploaded: uploaded
+updated: updated
+'or higher': 'or higher'
+moved: moved
+installed: installed
+deleted: deleted
+'You must select at least one template to perform an action.': 'You must select at least one template to perform an action.'
+Upload: Upload
+'Unassign theme': 'Unassign theme'
+'Unassign successful': 'Unassign successful'
+Unassign: Unassign
+'Theme version': 'Theme version'
+'Theme settings updated.': 'Theme settings updated.'
+'Theme settings saved.': 'Theme settings saved.'
+'Theme name / version': 'Theme name / version'
+'Theme management': 'Theme management'
+'Theme $1': 'Theme $1'
+'The file $1 is empty.': 'The file $1 is empty.'
+'Template object $1 was renamed to $2.': 'Template object $1 was renamed to $2.'
+'Template object $1 was deleted.': 'Template object $1 was deleted.'
+'Template $1 was duplicated into $2.': 'Template $1 was duplicated into $2.'
+'Template $1 $2.': 'Template $1 $2.'
+'Something broke': 'Something broke'
+'Section page template': 'Section page template'
+Saving..: Saving..
+'Saving settings failed.': 'Saving settings failed.'
+'Save All': 'Save All'
+'Required Newscoop version': 'Required Newscoop version'
+Replace: Replace
+'New template $1 created.': 'New template $1 created.'
+'New name': 'New name'
+'Name cant be empty': 'Name cant be empty'
+'Last modified': 'Last modified'
+'Issue page': 'Issue page'
+'Go to parent': 'Go to parent'
+'Go to $1': 'Go to $1'
+'Geo Filtering': 'Geo Filtering'
+'Front page template': 'Front page template'
+'File size': 'File size'
+'File name': 'File name'
+'File $1 was replaced.': 'File $1 was replaced.'
+'Failed unassigning theme': 'Failed unassigning theme'
+Export: Export
+'Error page template': 'Error page template'
+'Edit $1': 'Edit $1'
+'Done uploading': 'Done uploading'
+'Do you want to override $1?': 'Do you want to override $1?'
+'Directory is empty': 'Directory is empty'
+'Directory $1 created.': 'Directory $1 created.'
+Design: Design
+'Delete theme': 'Delete theme'
+'Current directory:': 'Current directory:'
+'Create folder': 'Create folder'
+'Create file': 'Create file'
+'Copy to available themes': 'Copy to available themes'
+'Copied successfully': 'Copied successfully'
+Compatibility: Compatibility
+'Click to enlarge': 'Click to enlarge'
+'Choose destination': 'Choose destination'
+'Cant override directory $1.': 'Cant override directory $1.'
+'Cache Lifetime': 'Cache Lifetime'
+'Browse for the theme': 'Browse for the theme'
+'Assigned successfully': 'Assigned successfully'
+'Article page template': 'Article page template'
+'Article page': 'Article page'
+'Are you sure you want to unassign this theme?': 'Are you sure you want to unassign this theme?'
+'Are you sure you want to delete this theme?': 'Are you sure you want to delete this theme?'
+'Add to publication': 'Add to publication'
+'$1 is not writable': '$1 is not writable'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 files $2'
+'Available themes': 'Available themes'
+'Update cached data': 'Update cached data'
+'Assigned templates': 'Assigned templates'
+'Cached informations about theme playlists are not up to date!': 'Cached informations about theme playlists are not up to date!'
+'The theme''s configuration file does not contain information about the list of used featured articles.': 'The theme''s configuration file does not contain information about the list of used featured articles.'
+'Below code should be placed into theme.xml (between ''theme'' nodes) file to make it work. This file is located in every theme''s main directory.': 'Below code should be placed into theme.xml (between ''theme'' nodes) file to make it work. This file is located in every theme''s main directory.'
