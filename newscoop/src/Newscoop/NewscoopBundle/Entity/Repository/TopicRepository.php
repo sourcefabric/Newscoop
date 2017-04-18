@@ -41,7 +41,7 @@ class TopicRepository extends NestedTreeRepository
                 ->setParameter('locale', $languageCode);
         }
 
-        $countQueryBuilder = clone($queryBuilder);
+        $countQueryBuilder = clone $queryBuilder;
         $countQueryBuilder->select('count(t)');
 
         $queryBuilder->select('t');
@@ -498,7 +498,7 @@ class TopicRepository extends NestedTreeRepository
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRootNodes($locale = null, $sortByField = null, $direction = 'asc')
     {
@@ -534,7 +534,7 @@ class TopicRepository extends NestedTreeRepository
             ->setParameters(array(
                 'content' => $name,
                 'locale' => $languageCode,
-                'field' => 'title'
+                'field' => 'title',
             ))
             ->getQuery();
     }
