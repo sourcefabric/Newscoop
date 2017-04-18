@@ -1,14 +1,13 @@
 <?php
 /**
- * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\AuditEvent;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\AuditEvent;
 
 /**
  * Audit repository.
@@ -30,14 +29,15 @@ class AuditRepository extends EntityRepository
             $event->setUser($user);
         }
 
-        $em->persist($event);
+        $em->merge($event);
         $em->flush();
     }
-    
+
     /**
-     * Get event count
+     * Get event count.
      *
      * @param array $criteria
+     *
      * @return int
      */
     public function countBy(array $criteria)
@@ -63,9 +63,10 @@ class AuditRepository extends EntityRepository
     }
 
     /**
-     * Get events to archive
+     * Get events to archive.
      *
      * @param DateTime $date
+     *
      * @return array
      */
     public function getFlushableEvents(\DateTime $date)
