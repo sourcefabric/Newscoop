@@ -188,6 +188,7 @@ Miscellaneous: Miscellaneous
 'User account is highlighted as "featured account"': 'User account is highlighted as "featured account"'
 'Custom attribute...': 'Custom attribute...'
 'An author with the same full name (combination of first and last name) already exists.': 'An author with the same full name (combination of first and last name) already exists.'
+Location: Location
 
 users:
     label:

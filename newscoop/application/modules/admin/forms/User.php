@@ -148,6 +148,11 @@ class Admin_Form_User extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
+        $profile->addElement('text', 'location', array(
+            'label' => $translator->trans('Location', array(), 'users'),
+            'filters' => array('stringTrim'),
+        ));
+
         $this->addSubForm($profile, 'attributes');
 
         $this->addElement('multiCheckbox', 'user_type', array(
