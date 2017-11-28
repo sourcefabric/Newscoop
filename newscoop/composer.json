@@ -41,7 +41,7 @@
         "knplabs\/knp-components":"1.2.4",
         "jms\/serializer-bundle":"0.13.0",
         "jms\/serializer":"0.16.0",
-        "hybridauth\/hybridauth":"v2.4.1",
+        "hybridauth/hybridauth":"v2.9.6",
         "smarty\/smarty":"3.1.20 as 3.1.21",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
         "knplabs\/knp-menu":"2.0.1",
