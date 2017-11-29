@@ -173,21 +173,46 @@ class Section extends DatabaseObject
      */
     public function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
     {
-        $numArticlesDeleted = 0;
+        $articlesCount = 0;
         if ($p_deleteArticles) {
             $languageId = null;
             if (!$p_deleteArticleTranslations) {
                 $languageId = $this->m_data['IdLanguage'];
             }
-            $articles = Article::GetArticles($this->m_data['IdPublication'],
-                        $this->m_data['NrIssue'],
-                        $this->m_data['Number'],
-                        $languageId);
-            $numArticlesDeleted = count($articles);
-            foreach ($articles as $deleteMe) {
-                $deleteMe->delete();
+
+            $articlesCount = Article::GetArticles(
+                $this->m_data['IdPublication'],
+                $this->m_data['NrIssue'],
+                $this->m_data['Number'],
+                $languageId,
+                null,
+                true
+            );
+
+            $batch = 30;
+            $steps = ($articlesCount > $batch) ? ceil($articlesCount / $batch) : 1;
+
+            for ($i = 0; $i < $steps; $i++) {
+                $offset = $i * $batch;
+                $articles = Article::GetArticles(
+                    $this->m_data['IdPublication'],
+                    $this->m_data['NrIssue'],
+                    $this->m_data['Number'],
+                    $languageId,
+                    array(
+                        'LIMIT' => array(
+                            'START' => $offset,
+                            'MAX_ROWS' => $batch
+                        )
+                    )
+                );
+
+                foreach ($articles as $article) {
+                    $article->delete();
+                }
             }
         }
+
         $tmpData = $this->m_data;
         $success = parent::delete();
         if ($success) {
@@ -197,7 +222,7 @@ class Section extends DatabaseObject
             }
         }
 
-        return $numArticlesDeleted;
+        return $articlesCount;
     } // fn delete
 
     /* --------------------------------------------------------------- */
