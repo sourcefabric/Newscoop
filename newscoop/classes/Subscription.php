@@ -7,10 +7,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 
 class Subscription extends DatabaseObject
 {
-	var $m_dbTableName = 'Subscriptions';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array(
+	protected $m_dbTableName = 'Subscriptions';
+	protected $m_keyColumnNames = array('Id');
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_columnNames = array(
 		'Id',
 		'IdUser',
 		'IdPublication',
@@ -26,7 +26,7 @@ class Subscription extends DatabaseObject
 	 * @param int $p_id
 	 * @return Subscription
 	 */
-	public function Subscription($p_id = null)
+	public function __construct($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_id;

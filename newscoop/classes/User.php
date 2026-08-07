@@ -16,11 +16,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
  * @package Campsite
  */
 class User extends DatabaseObject {
-    var $m_dbTableName = 'liveuser_users';
-    var $m_keyColumnNames = array('Id');
-    var $m_keyIsAutoIncrement = true;
-    var $m_config = array();
-    var $m_columnNames = array(
+    protected $m_dbTableName = 'liveuser_users';
+    protected $m_keyColumnNames = array('Id');
+    protected $m_keyIsAutoIncrement = true;
+    protected $m_config = array();
+    protected $m_columnNames = array(
         'Id',
         'KeyId',
         'Name',
@@ -76,7 +76,7 @@ class User extends DatabaseObject {
      *
      * @param int $p_userId
      */
-    public function User($p_userId = null)
+    public function __construct($p_userId = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         if (is_numeric($p_userId) && ($p_userId > 0)) {

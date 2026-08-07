@@ -191,7 +191,7 @@ class PEAR_Builder extends PEAR_Common
 
         $ret = true;
         while (($ent = readdir($d)) !== false) {
-            if ($ent{0} == '.')
+            if ($ent[0] == '.')
                 continue;
 
             $full = $dirname . DIRECTORY_SEPARATOR . $ent;
@@ -414,7 +414,7 @@ class PEAR_Builder extends PEAR_Common
             return;
         }
         $matches = array();
-        if (preg_match('/^\s+(\S[^:]+):\s+(\d{8})/', $data, $matches)) {
+        if (preg_match('/^\s+(\S[^:]+):\s+(\d[8])/', $data, $matches)) {
             $member = preg_replace('/[^a-z]/', '_', strtolower($matches[1]));
             $apino = (int)$matches[2];
             if (isset($this->$member)) {

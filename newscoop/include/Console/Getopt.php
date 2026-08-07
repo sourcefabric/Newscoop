@@ -120,10 +120,10 @@ class Console_Getopt {
                 break;
             }
 
-            if ($arg{0} != '-' || (strlen($arg) > 1 && $arg{1} == '-' && !$long_options)) {
+            if ($arg[0] != '-' || (strlen($arg) > 1 && $arg[1] == '-' && !$long_options)) {
                 $non_opts = array_merge($non_opts, array_slice($args, $i));
                 break;
-            } elseif (strlen($arg) > 1 && $arg{1} == '-') {
+            } elseif (strlen($arg) > 1 && $arg[1] == '-') {
                 $error = Console_Getopt::_parseLongOption(substr($arg, 2), $long_options, $opts, $args);
                 if (PEAR::isError($error))
                     return $error;
@@ -157,8 +157,8 @@ class Console_Getopt {
                 return PEAR::raiseError("Console_Getopt: unrecognized option -- $opt");
             }
 
-            if (strlen($spec) > 1 && $spec{1} == ':') {
-                if (strlen($spec) > 2 && $spec{2} == ':') {
+            if (strlen($spec) > 1 && $spec[1] == ':') {
+                if (strlen($spec) > 2 && $spec[2] == ':') {
                     if ($i + 1 < strlen($arg)) {
                         /* Option takes an optional argument. Use the remainder of
                            the arg string if there is anything left. */
@@ -233,11 +233,11 @@ class Console_Getopt {
             } else {
                 $next_option_rest = '';
             }
-            if ($opt_rest != '' && $opt{0} != '=' &&
+            if ($opt_rest != '' && $opt[0] != '=' &&
                 $i + 1 < count($long_options) &&
                 $opt == substr($long_options[$i+1], 0, $opt_len) &&
                 $next_option_rest != '' &&
-                $next_option_rest{0} != '=') {
+                $next_option_rest[0] != '=') {
                 return PEAR::raiseError("Console_Getopt: option --$opt is ambiguous");
             }
 

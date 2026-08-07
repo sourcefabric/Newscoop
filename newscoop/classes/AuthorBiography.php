@@ -15,9 +15,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  */
 class AuthorBiography extends DatabaseObject
 {
-    var $m_dbTableName = 'AuthorBiographies';
-    var $m_keyColumnNames = array('fk_author_id', 'fk_language_id');
-    var $m_columnNames = array('fk_author_id', 'fk_language_id',
+    protected $m_dbTableName = 'AuthorBiographies';
+    protected $m_keyColumnNames = array('fk_author_id', 'fk_language_id');
+    protected $m_columnNames = array('fk_author_id', 'fk_language_id',
                                'biography', 'first_name', 'last_name');
 
     /**

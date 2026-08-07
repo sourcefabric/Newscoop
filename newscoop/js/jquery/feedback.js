@@ -23,13 +23,6 @@ var datatableCallback = {
 					});
 				}
 			}
-			else {
-				if (that.serverData[i]) {
-					aoData.push({
-						"name": "sFilter[attachmentType][]",
-						"value": i
-					});
-				}
 			}
         }
         $.getJSON(sSource, aoData, function (json) {
@@ -116,11 +109,6 @@ $(function () {
             $("#commentFilterSearch").css("display", "block");
             $(this).addClass("collapsed");
             commentFilterTriggerCount = 1;
-        } else {
-            $("#commentFilterSearch").css("display", "none");
-            $(this).removeClass("collapsed");
-            commentFilterTriggerCount = 0;
-        }
     });
 
     $(".addFilterBtn").click(function () {
@@ -179,13 +167,13 @@ $(function () {
      * Action to fire
      * when action select is triggered
      */
-    $('.datatable .action').live('click', function () {
-        var el = $(this);
-        var id = el.attr('id');
-        var ids = [id.match(/\d+/)[0]];
-        var status = id.match(/[^_]+/)[0];
+    $(document).on('click', '.datatable .action', function () {
+        const el = $(this);
+        const id = el.attr('id');
+        const ids = [id.match(/\d+/)[0]];
+        const status = id.match(/[^_]+/)[0];
 
-        if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a message.') + '\n' + putGS('Are you sure you want to do it?'))) {
+        if (status === 'deleted' && !confirm(putGS('You are about to permanently delete a message.') + '\n' + putGS('Are you sure you want to do it?'))) {
             return false;
         }
 
@@ -213,8 +201,8 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
-    $('.approval form').live('submit', function () {
-        var that = this;
+    $(document).on('submit', '.approval form', function () {
+        const that = this;
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
@@ -235,8 +223,8 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
-    $('.dateCommentHolderReply form').live('submit', function () {
-        var that = this;
+    $(document).on('submit', '.dateCommentHolderReply form', function () {
+        const that = this;
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
@@ -253,10 +241,10 @@ $(function () {
         });
         return false;
     });
-    $('.dateCommentHolderReply .reply-cancel').live('click', function () {
-        var el = $(this);
-        var td = el.parents('td');
-        var form = el.parents('form');
+    $(document).on('click', '.dateCommentHolderReply .reply-cancel', function () {
+        const el = $(this);
+        const td = el.parents('td');
+        const form = el.parents('form');
         $(form).each(function () {
             this.reset();
         });
@@ -264,9 +252,9 @@ $(function () {
         td.find('.content-reply').hide();
     });
 
-    $('.datatable .action-reply').live('click', function () {
-        var el = $(this);
-        var td = el.parents('td');
+    $(document).on('click', '.datatable .action-reply', function () {
+        const el = $(this);
+        const td = el.parents('td');
         td.find('.content-reply').toggle("fast");
     });
     // Dialog
@@ -282,15 +270,15 @@ $(function () {
         }
     });
     // Dialog Link
-    $('.articleLink').live('click', function () {
-        var that = this;
+    $(document).on('click', '.articleLink', function (e) { e.preventDefault();
+        const that = this;
         $.ajax({
             type: 'GET',
             url: $(this).attr('href'),
             success: function (data) {
                 data = $.parseJSON(data);
-                var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
-                for (i in data) {
+                let content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
+                for (const i in data) {
                     content += '<h4>' + i + '</h4>';
                     content += '<p>' + data[i] + '</p>';
                 }
@@ -301,8 +289,6 @@ $(function () {
                 if (status == 0 || status == -1) {
                     flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
                 }
-                else {
-				}
             }
         });
         return false;

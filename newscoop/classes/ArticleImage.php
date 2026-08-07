@@ -17,10 +17,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
  * @package Campsite
  */
 class ArticleImage extends DatabaseObject {
-	var $m_keyColumnNames = array('NrArticle','IdImage');
-	var $m_dbTableName = 'ArticleImages';
-	var $m_columnNames = array('NrArticle', 'IdImage', 'Number', 'id');
-	var $m_image = null;
+	protected $m_keyColumnNames = array('NrArticle','IdImage');
+	protected $m_dbTableName = 'ArticleImages';
+	protected $m_columnNames = array('NrArticle', 'IdImage', 'Number', 'id');
+	protected $m_image = null;
 
     private static $s_defaultOrder = array(array('field'=>'default', 'dir'=>'ASC'));
 
@@ -32,7 +32,7 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_templateId
 	 * @return ArticleImage
 	 */
-	public function ArticleImage($p_articleNumber = null, $p_imageId = null,
+	public function __construct($p_articleNumber = null, $p_imageId = null,
 	                             $p_templateId = null)
 	{
 		if (!is_null($p_articleNumber) && !is_null($p_imageId)) {

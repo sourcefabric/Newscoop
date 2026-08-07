@@ -15,10 +15,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  */
 class AuthorAlias extends DatabaseObject
 {
-    var $m_dbTableName = 'AuthorAliases';
-    var $m_keyColumnNames = array('id');
-    var $m_keyIsAutoIncrement = true;
-    var $m_columnNames = array('id', 'fk_author_id', 'alias');
+    protected $m_dbTableName = 'AuthorAliases';
+    protected $m_keyColumnNames = array('id');
+    protected $m_keyIsAutoIncrement = true;
+    protected $m_columnNames = array('id', 'fk_author_id', 'alias');
 
     /**
      * Constructor.

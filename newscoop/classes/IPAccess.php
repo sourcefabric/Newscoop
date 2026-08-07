@@ -16,9 +16,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
  * @package Campsite
  */
 class IPAccess extends DatabaseObject {
-	var $m_dbTableName = 'SubsByIP';
-	var $m_keyColumnNames = array('IdUser', 'StartIP');
-	var $m_columnNames = array(
+	protected $m_dbTableName = 'SubsByIP';
+	protected $m_keyColumnNames = array('IdUser', 'StartIP');
+	protected $m_columnNames = array(
 		'IdUser',
 		'StartIP',
 		'Addresses');
@@ -75,7 +75,7 @@ class IPAccess extends DatabaseObject {
 	 * @param int $p_startIP
 	 * @param int $p_addresses
 	 */
-	public function IPAccess($p_userId = null, $p_startIP = null, $p_addresses = null)
+	public function __construct($p_userId = null, $p_startIP = null, $p_addresses = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdUser'] = $p_userId;

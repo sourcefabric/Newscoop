@@ -14,17 +14,17 @@ class DbReplication {
 	/**
 	 * Remote (Online) db server connection details.
 	 */
-	var $m_rDbName = null;
-	var $m_rDbHost = null;
-	var $m_rDbUser = null;
-	var $m_rDbPass = null;
+	protected $m_rDbName = null;
+	protected $m_rDbHost = null;
+	protected $m_rDbUser = null;
+	protected $m_rDbPass = null;
 
 	/**
 	 * Constructor
 	 *
 	 * @return void
 	 */
-	public function DbReplication() {}
+	public function __construct() {}
 
 	/**
 	 * Try to connect the resource based on supplied parameter.

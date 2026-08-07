@@ -29,7 +29,7 @@ class ArticleData extends DatabaseObject
      * @param int    $p_articleNumber
      * @param int    $p_languageId
      */
-    public function ArticleData($p_articleType, $p_articleNumber, $p_languageId)
+    public function __construct($p_articleType, $p_articleNumber, $p_languageId)
     {
         $this->m_articleTypeName = $p_articleType;
         $this->m_dbTableName = 'X'.$p_articleType;

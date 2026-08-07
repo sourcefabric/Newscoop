@@ -9,10 +9,10 @@ require_once('DatabaseObject.php');
  * @package Campsite
  */
 class Log extends DatabaseObject {
-	var $m_keyColumnNames = array('time_created', 'fk_event_id', 'text');
-	var $m_keyIsAutoIncrement = false;
-	var $m_dbTableName = 'Log';
-	var $m_columnNames = array(
+	protected $m_keyColumnNames = array('time_created', 'fk_event_id', 'text');
+	protected $m_keyIsAutoIncrement = false;
+	protected $m_dbTableName = 'Log';
+	protected $m_columnNames = array(
 		'time_created',
 		'fk_event_id',
 		'fk_user_id',

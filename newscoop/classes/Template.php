@@ -7,10 +7,10 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
  * @Annotation()
  */
 class Template extends DatabaseObject {
-    var $m_dbTableName = 'Templates';
-    var $m_keyColumnNames = array('Id');
-    var $m_keyIsAutoIncrement = true;
-    var $m_columnNames = array('Id', 'Name', 'Type', 'Level', 'CacheLifetime');
+    protected $m_dbTableName = 'Templates';
+    protected $m_keyColumnNames = array('Id');
+    protected $m_keyIsAutoIncrement = true;
+    protected $m_columnNames = array('Id', 'Name', 'Type', 'Level', 'CacheLifetime');
 
     /**
      * A template is an HTML file with Campsite parser tags inside.
@@ -20,7 +20,7 @@ class Template extends DatabaseObject {
      * 		to the template base directory.
      *
      */
-    public function Template($p_templateIdOrName = null)
+    public function __construct($p_templateIdOrName = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         if (is_numeric($p_templateIdOrName)) {

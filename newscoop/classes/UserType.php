@@ -37,7 +37,7 @@ class UserType extends DatabaseObject
      *
      * @return void
      */
-    public function UserType($p_userTypeId = null)
+    public function __construct($p_userTypeId = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         if (is_numeric($p_userTypeId) && $p_userTypeId > 0) {

@@ -21,39 +21,39 @@ class DatabaseObject
 	 * Redefine this in the subclass.
 	 * @var string
 	 */
-	var $m_dbTableName = '';
+protected $m_dbTableName = '';
 
 	/**
 	 * The names of the columns in the database table.
 	 * Redefine this in the subclass.
 	 * @var array
 	 */
-	var $m_columnNames = array();
+protected $m_columnNames = array();
 
 	/**
 	 * The column names used for the key.
 	 * Redefine this in the subclass.
 	 * @var array
 	 */
-	var $m_keyColumnNames = array();
+protected $m_keyColumnNames = array();
 
 	/**
 	 * Whether or not the primary key is an auto-increment field.
 	 * @var boolean
 	 */
-	var $m_keyIsAutoIncrement = false;
+protected $m_keyIsAutoIncrement = false;
 
 	/**
 	 * An array of (ColumnName => Value).
 	 * @var array
 	 */
-	var $m_data = array();
+protected $m_data = array();
 
 	/**
 	 * TRUE if the object exists in the database, FALSE if not, NULL if unknown.
 	 * @var boolean
 	 */
-	var $m_exists = null;
+protected $m_exists = null;
 
 	/**
 	 * If the key values of an object are changed, we need to remember the old
@@ -61,7 +61,7 @@ class DatabaseObject
 	 * old values.
 	 * @var array
 	 */
-	var $m_oldKeyValues = array();
+protected $m_oldKeyValues = array();
 
     /** @var EventDispatcher */
     protected static $eventDispatcher = null;
@@ -78,7 +78,7 @@ class DatabaseObject
 	 *		The column names of this table.  These are optional.
 	 *
 	 */
-	public function DatabaseObject($p_columnNames = null)
+	public function __construct($p_columnNames = null)
 	{
 	    if (!is_null($p_columnNames)) {
 	    	$this->setColumnNames($p_columnNames);

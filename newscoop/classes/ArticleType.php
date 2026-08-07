@@ -39,7 +39,7 @@ class ArticleType {
 	 *
 	 * @param string $p_articleType
 	 */
-	public function ArticleType($p_articleType)
+	public function __construct($p_articleType)
 	{
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_articleType), 'article_type');

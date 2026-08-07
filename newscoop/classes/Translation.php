@@ -1,14 +1,14 @@
 <?php
 
 class Translation extends DatabaseObject {
-	var $m_dbTableName = 'Translations';
-	var $m_keyColumnNames = array('phrase_id', 'fk_language_id');
-	var $m_keyIsAutoIncrement = false;
-	var $m_columnNames = array('phrase_id',
+	protected $m_dbTableName = 'Translations';
+	protected $m_keyColumnNames = array('phrase_id', 'fk_language_id');
+	protected $m_keyIsAutoIncrement = false;
+	protected $m_columnNames = array('phrase_id',
 	                           'fk_language_id',
 	                           'translation_text');
 
-	public function Translation($p_languageId = null, $p_phraseId = null)
+	public function __construct($p_languageId = null, $p_phraseId = null)
 	{
 		if (is_numeric($p_phraseId)) {
 			$this->m_data['phrase_id'] = $p_phraseId;

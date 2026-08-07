@@ -1194,7 +1194,7 @@ class PEAR_Registry extends PEAR
 
         $dp = opendir($this->channelsdir);
         while ($ent = readdir($dp)) {
-            if ($ent{0} == '.' || substr($ent, -4) != '.reg') {
+            if ($ent[0] == '.' || substr($ent, -4) != '.reg') {
                 continue;
             }
 
@@ -1245,7 +1245,7 @@ class PEAR_Registry extends PEAR
         }
 
         while ($ent = readdir($dp)) {
-            if ($ent{0} == '.' || substr($ent, -4) != '.reg') {
+            if ($ent[0] == '.' || substr($ent, -4) != '.reg') {
                 continue;
             }
 
@@ -1269,7 +1269,7 @@ class PEAR_Registry extends PEAR
         }
 
         while ($ent = readdir($dp)) {
-            if ($ent{0} == '.' || substr($ent, -4) != '.reg') {
+            if ($ent[0] == '.' || substr($ent, -4) != '.reg') {
                 continue;
             }
             $pkglist[] = substr($ent, 0, -4);

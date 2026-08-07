@@ -12,10 +12,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
  * @package Campsite
  */
 class Session extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_keyIsAutoIncrement = false;
-	var $m_dbTableName = 'Sessions';
-	var $m_columnNames = array('id',
+	protected $m_keyColumnNames = array('id');
+	protected $m_keyIsAutoIncrement = false;
+	protected $m_dbTableName = 'Sessions';
+	protected $m_columnNames = array('id',
 							   'start_time',
 	                           'user_id');
 

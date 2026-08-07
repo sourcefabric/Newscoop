@@ -315,7 +315,7 @@ and uninstall).
         $root = preg_replace(array('!\\\\+!', '!/+!', "!$ds2+!"),
                              array('/', '/', '/'),
                             $root);
-        if ($root{0} != '/') {
+        if ($root[0] != '/') {
             if (!isset($options['windows'])) {
                 return PEAR::raiseError('Root directory must be an absolute path beginning ' .
                     'with "/", was: "' . $root . '"');

@@ -16,9 +16,9 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.ph
  * @package Campsite
  */
 class ArticleAttachment extends DatabaseObject {
-	var $m_keyColumnNames = array('fk_article_number', 'fk_attachment_id');
-	var $m_dbTableName = 'ArticleAttachments';
-	var $m_columnNames = array('fk_article_number', 'fk_attachment_id');
+	protected $m_keyColumnNames = array('fk_article_number', 'fk_attachment_id');
+	protected $m_dbTableName = 'ArticleAttachments';
+	protected $m_columnNames = array('fk_article_number', 'fk_attachment_id');
 
 	/**
 	 * The article attachment table links together articles with Attachments.
@@ -27,7 +27,7 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_attachmentId
 	 * @return ArticleAttachment
 	 */
-	public function ArticleAttachment($p_articleNumber = null, $p_attachmentId = null)
+	public function __construct($p_articleNumber = null, $p_attachmentId = null)
 	{
 		if (is_numeric($p_articleNumber)) {
 			$this->m_data['fk_article_number'] = $p_articleNumber;

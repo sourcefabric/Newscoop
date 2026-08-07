@@ -15,17 +15,17 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
  * @package Campsite
  */
 class Country extends DatabaseObject {
-	var $m_dbTableName = 'Countries';
-	var $m_keyColumnNames = array('Code', 'IdLanguage');
-	var $m_keyIsAutoIncrement = false;
-	var $m_columnNames = array('Code', 'IdLanguage', 'Name');
+	protected $m_dbTableName = 'Countries';
+	protected $m_keyColumnNames = array('Code', 'IdLanguage');
+	protected $m_keyIsAutoIncrement = false;
+	protected $m_columnNames = array('Code', 'IdLanguage', 'Name');
 
 	/**
 	 * Constructor.
 	 * @param string $p_code
 	 * @param int $p_languageId
 	 */
-	public function Country($p_code = null, $p_languageId = null)
+	public function __construct($p_code = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Code'] = $p_code;

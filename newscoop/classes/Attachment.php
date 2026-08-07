@@ -16,10 +16,10 @@ require_once($GLOBALS['g_campsiteDir'].'/include/mime_content_type.php');
  * @package Campsite
  */
 class Attachment extends DatabaseObject {
-    var $m_keyColumnNames = array('id');
-    var $m_keyIsAutoIncrement = true;
-    var $m_dbTableName = 'Attachments';
-    var $m_columnNames = array(
+    protected $m_keyColumnNames = array('id');
+    protected $m_keyIsAutoIncrement = true;
+    protected $m_dbTableName = 'Attachments';
+    protected $m_columnNames = array(
 		'id',
 		'fk_language_id',
 		'file_name',
@@ -36,7 +36,7 @@ class Attachment extends DatabaseObject {
 		'Status'
 	);
 
-    public function Attachment($p_id = null)
+    public function __construct($p_id = null)
     {
         if (!is_null($p_id)) {
             $this->m_data['id'] = $p_id;

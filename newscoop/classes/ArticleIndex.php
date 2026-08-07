@@ -14,7 +14,7 @@ require_once $GLOBALS['g_campsiteDir'].'/include/campsite_init.php';
  */
 class ArticleIndex extends DatabaseObject
 {
-    var $m_keyColumnNames = array(
+    protected $m_keyColumnNames = array(
         'IdPublication',
         'IdLanguage',
         'IdKeyword',
@@ -22,7 +22,7 @@ class ArticleIndex extends DatabaseObject
         'NrSection',
         'NrArticle', );
     public $m_dbTableName = 'ArticleIndex';
-    var $m_columnNames = array(
+    protected $m_columnNames = array(
         'IdPublication',
         'IdLanguage',
         'IdKeyword',
@@ -30,7 +30,7 @@ class ArticleIndex extends DatabaseObject
         'NrSection',
         'NrArticle', );
 
-    public function ArticleIndex()
+    public function __construct()
     {
         parent::DatabaseObject($this->m_columnNames);
     } // constructor

@@ -13,12 +13,12 @@ function addslashes_walk(&$p_item, $p_key, $p_userData = null)
 
 class ModuleConfiguration
 {
-	var $m_moduleName;
-	var $m_directory;
-	var $m_variables;
-	var $m_variablesList;
+	protected $m_moduleName;
+	protected $m_directory;
+	protected $m_variables;
+	protected $m_variablesList;
 
-	public function ModuleConfiguration($module_name = "", $directory = "")
+	public function __construct($module_name = "", $directory = "")
 	{
 		if ($module_name != "")
 			return $this->read($module_name, $directory);

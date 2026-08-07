@@ -15,10 +15,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
  * @package Campsite
  */
 class Publication extends DatabaseObject {
-	var $m_dbTableName = 'Publications';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id',
+	protected $m_dbTableName = 'Publications';
+	protected $m_keyColumnNames = array('Id');
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_columnNames = array('Id',
 	                           'Name',
 	                           'IdDefaultLanguage',
 	                           'IdDefaultAlias',
@@ -48,7 +48,7 @@ class Publication extends DatabaseObject {
 	 *
 	 * @param int $p_publicationId
 	 */
-	public function Publication($p_publicationId = null)
+	public function __construct($p_publicationId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_publicationId;

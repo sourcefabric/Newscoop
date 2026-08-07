@@ -247,7 +247,7 @@ class PEAR_Installer_Role
         }
 
         while ($entry = readdir($dp)) {
-            if ($entry{0} == '.' || substr($entry, -4) != '.xml') {
+            if ($entry[0] == '.' || substr($entry, -4) != '.xml') {
                 continue;
             }
 

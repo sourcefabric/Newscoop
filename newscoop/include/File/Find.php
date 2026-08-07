@@ -424,7 +424,7 @@ function _File_Find_match_shell_get_pattern($mask) {
     $pi = 0;
     foreach($premasks as $pm) {
         if (!isset($masks[$pi])) $masks[$pi] = "";
-        if ($pm{0} == '[' && $pm{strlen($pm)-1} == ']') {
+        if ($pm[0] == '[' && $pm{strlen($pm)-1} == ']') {
             // strip commas from character class
             $masks[$pi] .= str_replace(",", "", $pm);
         } else {

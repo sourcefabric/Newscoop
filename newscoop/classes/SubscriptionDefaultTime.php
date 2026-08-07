@@ -10,16 +10,16 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 
 class SubscriptionDefaultTime extends DatabaseObject
 {
-	var $m_dbTableName = 'SubsDefTime';
-	var $m_keyColumnNames = array('CountryCode', 'IdPublication');
-	var $m_columnNames = array(
+	protected $m_dbTableName = 'SubsDefTime';
+	protected $m_keyColumnNames = array('CountryCode', 'IdPublication');
+	protected $m_columnNames = array(
 		'CountryCode',
 		'IdPublication',
 		'TrialTime',
 		'PaidTime'
 		);
 
-  	public function SubscriptionDefaultTime($p_countryCode = null, $p_publicationId = null)
+  	public function __construct($p_countryCode = null, $p_publicationId = null)
   	{
   		parent::DatabaseObject($this->m_columnNames);
   		$this->m_data['CountryCode'] = $p_countryCode;

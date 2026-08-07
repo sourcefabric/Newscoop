@@ -125,7 +125,7 @@ class Article extends DatabaseObject
      * @param int $p_articleNumber
      *                             Not required when creating an article.
      */
-    public function Article($p_languageId = null, $p_articleNumber = null)
+    public function __construct($p_languageId = null, $p_articleNumber = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         $this->m_data['IdLanguage'] = $p_languageId;

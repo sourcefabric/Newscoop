@@ -13,10 +13,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
  * @package Campsite
  */
 class ObjectType extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_dbTableName = 'ObjectTypes';
-	var $m_columnNames = array('id',
+	protected $m_keyColumnNames = array('id');
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_dbTableName = 'ObjectTypes';
+	protected $m_columnNames = array('id',
 							   'name');
 
 	public function __construct($p_idOrName = null)

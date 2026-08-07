@@ -16,10 +16,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
  * @package Campsite
  */
 class Language extends DatabaseObject {
-	var $m_dbTableName = 'Languages';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName',
+	protected $m_dbTableName = 'Languages';
+	protected $m_keyColumnNames = array('Id');
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName',
 	    'Code', 'RFC3066bis', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5',
 	    'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11',
 	    'Month12', 'WDay1', 'WDay2', 'WDay3', 'WDay4', 'WDay5', 'WDay6',
@@ -33,7 +33,7 @@ class Language extends DatabaseObject {
 	 * Constructor.
 	 * @param int $p_languageId
 	 */
-	public function Language($p_languageId = null)
+	public function __construct($p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_languageId)) {

@@ -14,16 +14,16 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  * @package Campsite
  */
 class Alias extends DatabaseObject {
-	var $m_dbTableName = 'Aliases';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'IdPublication');
+	protected $m_dbTableName = 'Aliases';
+	protected $m_keyColumnNames = array('Id');
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_columnNames = array('Id', 'Name', 'IdPublication');
 
 	/**
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	public function Alias($p_idOrName = null)
+	public function __construct($p_idOrName = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (is_numeric($p_idOrName)) {

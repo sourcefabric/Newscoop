@@ -14,16 +14,16 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  * @package Campsite
  */
 class UrlType extends DatabaseObject {
-	var $m_dbTableName = 'URLTypes';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'Description');
+	protected $m_dbTableName = 'URLTypes';
+	protected $m_keyColumnNames = array('Id');
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_columnNames = array('Id', 'Name', 'Description');
 
 	/**
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	public function UrlType($p_id = null)
+	public function __construct($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_id)) {

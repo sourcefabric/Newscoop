@@ -23,7 +23,7 @@ class ArticleTopic extends DatabaseObject
     public $m_dbTableName = 'ArticleTopics';
     public $m_columnNames = array('NrArticle', 'TopicId');
 
-    public function ArticleTopic()
+    public function __construct()
     {
         parent::DatabaseObject($this->m_columnNames);
     } // constructor

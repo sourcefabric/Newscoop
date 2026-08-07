@@ -243,7 +243,7 @@ class PEAR_Command
         }
 
         while ($file = readdir($dp)) {
-            if ($file{0} == '.' || substr($file, -4) != '.xml') {
+            if ($file[0] == '.' || substr($file, -4) != '.xml') {
                 continue;
             }
 

@@ -213,7 +213,7 @@ class PEAR_Validate
                 }
                 $vlen = strlen($test);
                 $majver = substr($name, strlen($name) - $vlen);
-                while ($majver && !is_numeric($majver{0})) {
+                while ($majver && !is_numeric($majver[0])) {
                     $majver = substr($majver, 1);
                 }
                 if ($majver != $test) {
@@ -332,7 +332,7 @@ class PEAR_Validate
                 } else {
                     $vlen = strlen($versioncomponents[0] . '');
                     $majver = substr($name, strlen($name) - $vlen);
-                    while ($majver && !is_numeric($majver{0})) {
+                    while ($majver && !is_numeric($majver[0])) {
                         $majver = substr($majver, 1);
                     }
                     if (($versioncomponents[0] != 0) && $majver != $versioncomponents[0]) {
@@ -402,7 +402,7 @@ class PEAR_Validate
                 if ($this->_packagexml->getExtends()) {
                     $vlen = strlen($versioncomponents[0] . '');
                     $majver = substr($name, strlen($name) - $vlen);
-                    while ($majver && !is_numeric($majver{0})) {
+                    while ($majver && !is_numeric($majver[0])) {
                         $majver = substr($majver, 1);
                     }
                     if (($versioncomponents[0] != 0) && $majver != $versioncomponents[0]) {
@@ -480,7 +480,7 @@ class PEAR_Validate
                 return false;
             }
 
-            $result = preg_match('|\d{2}\:\d{2}\:\d{2}|', $this->_packagexml->getTime(), $matches);
+            $result = preg_match('|\d[2]\:\d[2]\:\d[2]|', $this->_packagexml->getTime(), $matches);
             if ($result === false || empty($matches)) {
                 $this->_addFailure('time', 'invalid release time "' .
                     $this->_packagexml->getTime() . '"');

@@ -7,9 +7,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 
 class SubscriptionSection extends DatabaseObject
 {
-	var $m_dbTableName = 'SubsSections';
-	var $m_keyColumnNames = array('IdSubscription', 'SectionNumber', 'IdLanguage');
-	var $m_columnNames = array(
+	protected $m_dbTableName = 'SubsSections';
+	protected $m_keyColumnNames = array('IdSubscription', 'SectionNumber', 'IdLanguage');
+	protected $m_columnNames = array(
 		'IdSubscription',
 		'SectionNumber',
 		'IdLanguage',
@@ -27,7 +27,7 @@ class SubscriptionSection extends DatabaseObject
 	 * @param int $p_languageId
 	 * @return SubscriptionSection
 	 */
-	public function SubscriptionSection($p_subscriptionId = null,
+	public function __construct($p_subscriptionId = null,
 	                                    $p_sectionNumber = null,
 	                                    $p_languageId = null)
 	{

@@ -241,7 +241,7 @@ class OS_Guess
             fclose($fp);
             $cpp = popen("/usr/bin/cpp $tmpfile", "r");
             while ($line = fgets($cpp, 1024)) {
-                if ($line{0} == '#' || trim($line) == '') {
+                if ($line[0] == '#' || trim($line) == '') {
                     continue;
                 }
 

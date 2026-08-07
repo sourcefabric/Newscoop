@@ -16,10 +16,10 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
  * @package Campsite
  */
 class ArticlePublish extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = 'ArticlePublish';
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('id',
+	protected $m_keyColumnNames = array('id');
+	protected $m_dbTableName = 'ArticlePublish';
+	protected $m_keyIsAutoIncrement = true;
+	protected $m_columnNames = array('id',
 							   'fk_article_number',
 							   'fk_language_id',
 							   'time_action',
@@ -33,7 +33,7 @@ class ArticlePublish extends DatabaseObject {
 	 *
 	 * @param int $p_id
 	 */
-	public function ArticlePublish($p_id = null)
+	public function __construct($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['id'] = $p_id;

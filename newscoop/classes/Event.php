@@ -14,13 +14,13 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  * @package Campsite
  */
 class Event extends DatabaseObject {
-	var $m_keyColumnNames = array('Id', 'IdLanguage');
+	protected $m_keyColumnNames = array('Id', 'IdLanguage');
 
-	var $m_dbTableName = 'Events';
+	protected $m_dbTableName = 'Events';
 
-	var $m_columnNames = array('Id', 'IdLanguage', 'Name', 'Notify');
+	protected $m_columnNames = array('Id', 'IdLanguage', 'Name', 'Notify');
 
-	public function Event($p_id = null, $p_languageId = null)
+	public function __construct($p_id = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_id;

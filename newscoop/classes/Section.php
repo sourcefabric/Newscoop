@@ -48,7 +48,7 @@ class Section extends DatabaseObject
      * @param int $p_languageId
      * @param int $p_sectionNumber
      */
-    public function Section($p_publicationId = null, $p_issueNumber = null,
+    public function __construct($p_publicationId = null, $p_issueNumber = null,
                             $p_languageId = null, $p_sectionNumber = null)
     {
         parent::DatabaseObject($this->m_columnNames);

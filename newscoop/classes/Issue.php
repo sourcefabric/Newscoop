@@ -24,9 +24,9 @@ use Newscoop\Entity\Output\OutputSettingsIssue;
  * @package Campsite
  */
 class Issue extends DatabaseObject {
-	var $m_dbTableName = 'Issues';
-	var $m_keyColumnNames = array('IdPublication', 'Number', 'IdLanguage');
-	var $m_columnNames = array(
+	protected $m_dbTableName = 'Issues';
+	protected $m_keyColumnNames = array('IdPublication', 'Number', 'IdLanguage');
+	protected $m_columnNames = array(
 		'id',
 		'IdPublication',
 		'Number',
@@ -38,7 +38,7 @@ class Issue extends DatabaseObject {
 		'SectionTplId',
 		'ArticleTplId',
 		'ShortName');
-	var $m_languageName = null;
+	protected $m_languageName = null;
 
 	/**
 	 * A publication has Issues, Issues have Sections and Articles.
@@ -46,7 +46,7 @@ class Issue extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @param int $p_issueNumber
 	 */
-	public function Issue($p_publicationId = null, $p_languageId = null,
+	public function __construct($p_publicationId = null, $p_languageId = null,
 	$p_issueNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
